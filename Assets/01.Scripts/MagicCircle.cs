@@ -119,7 +119,7 @@ public class MagicCircle : MonoBehaviour
         {
             for (int i = 0; i < _runeDict[RuneType.Assist].Count; i++)
             {
-                damage += _runeDict[RuneType.Assist][i]._runeSO.assistRuneValue;
+                //damage += _runeDict[RuneType.Assist][i]._runeSO.assistRuneValue;
             }
         }
 
@@ -127,7 +127,7 @@ public class MagicCircle : MonoBehaviour
         {
             for (int i = 0; i < _runeDict[RuneType.Main].Count; i++)
             {
-                damage += _runeDict[RuneType.Main][i]._runeSO.mainRuneValue;
+                //damage += _runeDict[RuneType.Main][i]._runeSO.mainRuneValue;
             }
         }
 
