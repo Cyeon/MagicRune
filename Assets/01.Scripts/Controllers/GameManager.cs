@@ -11,27 +11,35 @@ public enum GameTurn
 
 public class GameManager : MonoSingleton<GameManager>
 {
-    public GameTurn gameTurn = GameTurn.Unknown;
+    private GameTurn gameTurn = GameTurn.Unknown;
+    public GameTurn GameTurn => gameTurn;
 
-    private void Awake()
+    private void Update()
     {
-        EventManager.StartListening(Define.ON_START_PLAYER_TRUN, OnPlayerTurn);
-        EventManager.StartListening(Define.ON_START_MONSTER_TURN, OnMonsterTurn);
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            OnPlayerTurn();
+        }
+        else if (Input.GetKeyDown(KeyCode.M))
+        {
+            OnMonsterTurn();
+        }
     }
 
-    private void OnPlayerTurn()
+    public void OnPlayerTurn()
     {
         gameTurn = GameTurn.Player;
+        EventManager.TriggerEvent(Define.ON_START_PLAYER_TURN);
+        EventManager<bool>.TriggerEvent(Define.ON_START_PLAYER_TURN, true);
     }
 
-    private void OnMonsterTurn()
+    public void OnMonsterTurn()
     {
+        EventManager.TriggerEvent(Define.ON_END_PLAYER_TURN);
         gameTurn = GameTurn.Monster;
+        EventManager<bool>.TriggerEvent(Define.ON_END_PLAYER_TURN, false);
+
+        EventManager.TriggerEvent(Define.ON_START_MONSTER_TURN);
     }
 
-    private void OnDestroy()
-    {
-        EventManager.StopListening(Define.ON_START_PLAYER_TRUN, OnPlayerTurn);
-        EventManager.StopListening(Define.ON_START_MONSTER_TURN, OnMonsterTurn);
-    }
 }

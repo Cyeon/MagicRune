@@ -52,21 +52,15 @@ public class CardCollector : MonoBehaviour
     private void Awake()
     {
         _cardList = new List<Card>();
+        EventManager.StartListening(Define.ON_START_PLAYER_TURN, CardCreate);
+        EventManager.StartListening(Define.ON_END_PLAYER_TURN, CardDestroy);
     }
 
     // 2960 * 1440
     private void Start()
     {
-        for (int i = 0; i < _cardCnt; i++)
-        {
-            GameObject go = Instantiate(_cardTemplate.gameObject, this.transform);
-            RectTransform rect = go.GetComponent<RectTransform>();
-            _cardList.Add(go.GetComponent<Card>());
-            rect.anchoredPosition = Vector3.zero;
-            go.transform.rotation = Quaternion.identity;
-        }
 
-        CardSort();
+
     }
 
     private void Update()
@@ -76,21 +70,12 @@ public class CardCollector : MonoBehaviour
             SelectCard.GetComponent<RectTransform>().anchoredPosition = Input.mousePosition;
         }
 
-        Debug.Log(0);
+        //Debug.Log(0);
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            Debug.Log(1);
+            //Debug.Log(1);
 
-            for (int i = 0; i < _cardCnt; i++)
-            {
-                GameObject go = Instantiate(_cardTemplate.gameObject, this.transform);
-                RectTransform rect = go.GetComponent<RectTransform>();
-                _cardList.Add(go.GetComponent<Card>());
-                rect.anchoredPosition = Vector3.zero;
-                go.transform.rotation = Quaternion.identity;
-            }
-
-            CardSort();
+            CardCreate();
         }
     }
 
@@ -107,5 +92,32 @@ public class CardCollector : MonoBehaviour
     public void CardSelect(Card card)
     {
         SelectCard = card;
+    }
+    public void CardCreate()
+    {
+        for (int i = 0; i < _cardCnt; i++)
+        {
+            GameObject go = Instantiate(_cardTemplate.gameObject, this.transform);
+            RectTransform rect = go.GetComponent<RectTransform>();
+            _cardList.Add(go.GetComponent<Card>());
+            rect.anchoredPosition = Vector3.zero;
+            go.transform.rotation = Quaternion.identity;
+        }
+        CardSort();
+    }
+
+    public void CardDestroy()
+    {
+        for (int i = 0; i < _cardList.Count; i++)
+        {
+            Destroy(_cardList[i].gameObject);
+        }
+        _cardList.Clear();
+    }
+
+    private void OnDestroy()
+    {
+        EventManager.StopListening(Define.ON_START_PLAYER_TURN, CardCreate);
+        EventManager.StopListening(Define.ON_END_PLAYER_TURN, CardDestroy);
     }
 }
