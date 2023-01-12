@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Security.Cryptography;
 using UnityEngine;
+using static UnityEngine.UIElements.UxmlAttributeDescription;
 
 public enum RuneType
 {
@@ -11,7 +12,7 @@ public enum RuneType
 
 public class MagicCircle : MonoBehaviour
 {
-    private Dictionary<RuneType, List<Rune>> _runeDict;
+    private Dictionary<RuneType, List<Card>> _runeDict;
 
     [SerializeField]
     private int _mainRuneCnt = 1;
@@ -25,15 +26,15 @@ public class MagicCircle : MonoBehaviour
     private float _cardAreaDistance = 5f;
 
     [SerializeField]
-    private Rune _runeTemplate;
+    private Card _runeTemplate;
     [SerializeField]
-    private Rune _mainRuneTemplate;
+    private Card _mainRuneTemplate;
 
     public Enemy enemy;
 
     public void Awake()
     {
-        _runeDict = new Dictionary<RuneType, List<Rune>>();
+        _runeDict = new Dictionary<RuneType, List<Card>>();
     }
 
     public void SortCard()
@@ -71,16 +72,18 @@ public class MagicCircle : MonoBehaviour
                 }
 
                 GameObject go = Instantiate(_mainRuneTemplate.gameObject, this.transform);
-                Rune rune = go.GetComponent<Rune>();
+                Card rune = go.GetComponent<Card>();
                 rune.SetRune(card.Rune);
+                rune.SetCoolTime(card.Rune.MainRune.DelayTurn);
                 _runeDict[RuneType.Main].Add(rune);
             }
             else
             {
                 GameObject go = Instantiate(_mainRuneTemplate.gameObject, this.transform);
-                Rune rune = go.GetComponent<Rune>();
+                Card rune = go.GetComponent<Card>();
                 rune.SetRune(card.Rune);
-                _runeDict.Add(RuneType.Main, new List<Rune>() { rune });
+                rune.SetCoolTime(card.Rune.MainRune.DelayTurn);
+                _runeDict.Add(RuneType.Main, new List<Card>() { rune });
             }
         }
         else
@@ -93,16 +96,18 @@ public class MagicCircle : MonoBehaviour
                     return false;
                 }
                 GameObject go = Instantiate(_runeTemplate.gameObject, this.transform);
-                Rune rune = go.GetComponent<Rune>();
+                Card rune = go.GetComponent<Card>();
                 rune.SetRune(card.Rune);
+                rune.SetCoolTime(card.Rune.AssistRune.DelayTurn);
                 _runeDict[RuneType.Assist].Add(rune);
             }
             else
             {
                 GameObject go = Instantiate(_runeTemplate.gameObject, this.transform);
-                Rune rune = go.GetComponent<Rune>();
+                Card rune = go.GetComponent<Card>();
                 rune.SetRune(card.Rune);
-                _runeDict.Add(RuneType.Assist, new List<Rune>() { rune });
+                rune.SetCoolTime(card.Rune.AssistRune.DelayTurn);
+                _runeDict.Add(RuneType.Assist, new List<Card>() { rune });
             }
         }
 
@@ -119,7 +124,8 @@ public class MagicCircle : MonoBehaviour
         {
             for (int i = 0; i < _runeDict[RuneType.Assist].Count; i++)
             {
-                damage += _runeDict[RuneType.Assist][i]._runeSO.assistRuneValue;
+                //damage += _runeDict[RuneType.Assist][i]._runeSO.assistRuneValue;
+                //damage += _runeDict[RuneType.Assist][i].Rune.AssistRune.EffectPair
             }
         }
 
@@ -127,7 +133,7 @@ public class MagicCircle : MonoBehaviour
         {
             for (int i = 0; i < _runeDict[RuneType.Main].Count; i++)
             {
-                damage += _runeDict[RuneType.Main][i]._runeSO.mainRuneValue;
+                //damage += _runeDict[RuneType.Main][i]._runeSO.mainRuneValue;
             }
         }
 

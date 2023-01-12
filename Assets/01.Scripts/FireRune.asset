@@ -12,8 +12,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b089f4c99f402c419e87fb17ecd4ab5, type: 3}
   m_Name: FireRune
   m_EditorClassIdentifier: 
-  cardName: Fire
-  cost: 1
-  cardDescription: Fire
-  mainRuneValue: 5
-  assistRuneValue: 1
+  CardName: Fire
+  CardDescription: "\uD654?\uC5FC"
+  MainRune:
+    Attribute: 0
+    Cost: 2
+    DelayTurn: 1
+    EffectPair:
+    - Condition:
+        ConditionName: 
+      Not: 0
+      Effect:
+        effectName: Damage
+        paramater: 5
+    - Condition:
+        ConditionName: 
+      Not: 0
+      Effect:
+        effectName: "\uD654\uC0C1\uBD80\uC5EC \uD568\uC218 \uC774\uB984"
+        paramater: 1
+  AssistRune:
+    Attribute: 0
+    Cost: 0
+    DelayTurn: 0
+    EffectPair:
+    - Condition:
+        ConditionName: 
+      Not: 0
+      Effect:
+        effectName: Damage
+        paramater: 3
