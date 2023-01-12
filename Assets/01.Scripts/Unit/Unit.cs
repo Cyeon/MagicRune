@@ -5,18 +5,33 @@ using UnityEngine.Events;
 
 public class Unit : MonoBehaviour
 {
-    public float health; // 체력
+    protected float _maxHealth;
+    private float _health = 0f;
+    public float HP 
+    {
+        get => _health;
+        protected set
+        {
+            _health = value;
+            if(_health > _maxHealth)
+            {
+                _health = _maxHealth;
+            }
+        }
+    }
+
 
     [field:SerializeField] public UnityEvent<float> OnTakeDamage {get;set;}
-    [field:SerializeField] public UnityEvent<float> OnAttack {get;set;}
 
     [field:SerializeField] public UnityEvent OnTakeDamageFeedback {get;set;}
-    [field:SerializeField] public UnityEvent OnAttackFeedback {get;set;}
 
-    protected virtual void Attack() { }
+    public List<Status> OnTurnStartStatus = new List<Status>();
+    public List<Status> OnAttackStatus = new List<Status>();
+    public List<Status> OnTurnStopStatus = new List<Status>();
     
     protected void TakeDamage(float damage)
     {
+        HP -= damage;
         OnTakeDamage?.Invoke(damage);
         OnTakeDamageFeedback?.Invoke();
     }

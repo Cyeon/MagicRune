@@ -7,8 +7,8 @@ using static UnityEngine.UIElements.UxmlAttributeDescription;
 
 public enum RuneType
 {
-    Assist, // º¸Á¶
-    Main, // ¸ÞÀÎ
+    Assist, // ï¿½ï¿½ï¿½ï¿½
+    Main, // ï¿½ï¿½ï¿½ï¿½
 }
 
 public class MagicCircle : MonoBehaviour
@@ -64,14 +64,14 @@ public class MagicCircle : MonoBehaviour
 
     public bool AddCard(Card card)
     {
-        // ¹Ì¸® º¸¿©ÁØ º¸Á¶ ·é ±ÙÃ¼¿¡¼­ ¼Õ°¡¶ôÀ» ¶§¸é ±× º¸Á¶·é¿¡ ÀåÂø½ÃÅ°±â
+        // ï¿½Ì¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½Ã¼ï¿½ï¿½ï¿½ï¿½ ï¿½Õ°ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½é¿¡ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Å°ï¿½ï¿½
         if(_runeDict.ContainsKey(RuneType.Main) == false || (_runeDict[RuneType.Main].Count == 0))
         {
             if (_runeDict.ContainsKey(RuneType.Main))
             {
                 if (_runeDict[RuneType.Main].Count >= _mainRuneCnt)
                 {
-                    Debug.Log("¸ÞÀÎ ·éÀÌ ²ËÂ÷ ÀÖ½À´Ï´Ù.");
+                    Debug.Log("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ö½ï¿½ï¿½Ï´ï¿½.");
                     return false;
                 }
 
@@ -133,7 +133,7 @@ public class MagicCircle : MonoBehaviour
             {
                 if (_runeDict[RuneType.Assist].Count >= _assistRuneCnt)
                 {
-                    Debug.Log("º¸Á¶ ·éÀÌ ²ËÂ÷ ÀÖ½À´Ï´Ù.");
+                    Debug.Log("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ö½ï¿½ï¿½Ï´ï¿½.");
                     return false;
                 }
                 GameObject go = Instantiate(_runeTemplate.gameObject, this.transform);
@@ -152,9 +152,9 @@ public class MagicCircle : MonoBehaviour
             }
             */
 
-            // ±ÙÃ³¿¡ ÀÖ´Â º¸Á¶ ·éÀ¸·Î µé¾î°¡±â
+            // ï¿½ï¿½Ã³ï¿½ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½î°¡ï¿½ï¿½
 
-            // ÀüÃ¼ Å½»ö ÈÄ ÀÚ±ê°úÀÇ °Å¸® ºñ±³ °¡Àå °¡±î¿î ¾Ö·Î ±³Ã¼
+            // ï¿½ï¿½Ã¼ Å½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ú±ï¿½ï¿½ï¿½ï¿½ ï¿½Å¸ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö·ï¿½ ï¿½ï¿½Ã¼
 
             int changeIndex = -1;
             for(int i = 0; i < _runeDict[RuneType.Assist].Count; i++)
@@ -196,7 +196,7 @@ public class MagicCircle : MonoBehaviour
             }
         }
 
-        enemy.Damage(damage);
+        //enemy.Damage(damage);
 
         if (_runeDict.ContainsKey(RuneType.Assist))
         {
