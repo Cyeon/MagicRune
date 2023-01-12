@@ -88,6 +88,7 @@ public class MagicCircle : MonoBehaviour
                     Card grune = ggo.GetComponent<Card>();
                     grune.SetRune(null);
                     grune.SetIsEquip(true);
+                    grune.CardAnimation();
                     if (_runeDict.ContainsKey(RuneType.Assist))
                     {
                         _runeDict[RuneType.Assist].Add(grune);
@@ -113,6 +114,7 @@ public class MagicCircle : MonoBehaviour
                     Card grune = ggo.GetComponent<Card>();
                     grune.SetRune(null);
                     grune.SetIsEquip(true);
+                    grune.CardAnimation();
                     if (_runeDict.ContainsKey(RuneType.Assist))
                     {
                         _runeDict[RuneType.Assist].Add(grune);
