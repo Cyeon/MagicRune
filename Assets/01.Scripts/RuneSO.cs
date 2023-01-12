@@ -2,14 +2,17 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
+using NaughtyAttributes;
 
-public enum EffectType
+/// <summary>
+/// 속성 Enum
+/// </summary>
+public enum AttributeType
 {
-    Damage, // 데미지 주는 거
-    Defence, // 방어
-    Utill, // 유틸
-    BufAndDebuf, // 버프&디버프
+    Fire, // 불
+    Ice, // 얼음
+    Wind, // 바람
+    None, // 무속성
 }
 
 /// <summary>
@@ -18,7 +21,9 @@ public enum EffectType
 [Serializable]
 public class Condition
 {
-    public UnityEvent OnConditionEvent;
+    public string ConditionName;
+    
+    // 여기도 인자값 필요하면 넣으면됨
 }
 
 /// <summary>
@@ -27,7 +32,9 @@ public class Condition
 [Serializable]
 public class Effect
 {
-    public UnityEvent OnEffectEvent;
+    public string effectName;
+
+    public string paramater; // string은 신이야
 }
 
 [Serializable]
@@ -35,9 +42,9 @@ public class EffectPair
 {
     // 많은 개선 필요
 
-    public string ConditionString; // 조건
+    public Condition Condition;
     public bool Not; // 조건 반대로 하기
-    public string EffectString; // 효과
+    public Effect Effect;
 }
 
 /// <summary>
@@ -46,8 +53,8 @@ public class EffectPair
 [Serializable]
 public class RuneProperty
 {
-    // 유형 Enum
-    // 속성 Enum
+    // 유형 Enum ? 필요한가?
+    public AttributeType Attribute;
     [Min(0)]
     public int Cost; // 코스트
     [Min(0)]
