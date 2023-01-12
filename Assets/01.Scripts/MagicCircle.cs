@@ -78,6 +78,7 @@ public class MagicCircle : MonoBehaviour
                 GameObject go = Instantiate(_mainRuneTemplate.gameObject, this.transform);
                 Card rune = go.GetComponent<Card>();
                 rune.SetRune(card.Rune);
+                rune.SetIsEquip(true);
                 rune.SetCoolTime(card.Rune.MainRune.DelayTurn);
                 _runeDict[RuneType.Main].Add(rune);
 
@@ -86,6 +87,7 @@ public class MagicCircle : MonoBehaviour
                     GameObject ggo = Instantiate(_runeTemplate.gameObject, this.transform);
                     Card grune = ggo.GetComponent<Card>();
                     grune.SetRune(null);
+                    grune.SetIsEquip(true);
                     if (_runeDict.ContainsKey(RuneType.Assist))
                     {
                         _runeDict[RuneType.Assist].Add(grune);
@@ -101,6 +103,7 @@ public class MagicCircle : MonoBehaviour
                 GameObject go = Instantiate(_mainRuneTemplate.gameObject, this.transform);
                 Card rune = go.GetComponent<Card>();
                 rune.SetRune(card.Rune);
+                rune.SetIsEquip(true);
                 rune.SetCoolTime(card.Rune.MainRune.DelayTurn);
                 _runeDict.Add(RuneType.Main, new List<Card>() { rune });
 
@@ -109,6 +112,7 @@ public class MagicCircle : MonoBehaviour
                     GameObject ggo = Instantiate(_runeTemplate.gameObject, this.transform);
                     Card grune = ggo.GetComponent<Card>();
                     grune.SetRune(null);
+                    grune.SetIsEquip(true);
                     if (_runeDict.ContainsKey(RuneType.Assist))
                     {
                         _runeDict[RuneType.Assist].Add(grune);
