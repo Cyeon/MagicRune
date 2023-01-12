@@ -148,6 +148,7 @@ public class MagicCircle : MonoBehaviour
             seq.AppendCallback(() =>
             {
                 GameObject g = Instantiate(_garbageRuneTemplate.gameObject, this.transform);
+                card.GetComponent<RectTransform>().anchoredPosition = Input.mousePosition;
                 card.transform.SetParent(this.transform);
                 g.GetComponent<RectTransform>().anchoredPosition = card.GetComponent<RectTransform>().anchoredPosition;
                 g.GetComponent<RectTransform>().DOAnchorPos(_runeDict[RuneType.Assist][changeIndex].transform.GetChild(0).GetComponent<RectTransform>().anchoredPosition, 0.3f).OnComplete(() =>
