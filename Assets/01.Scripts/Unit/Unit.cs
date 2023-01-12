@@ -5,7 +5,7 @@ using UnityEngine.Events;
 
 public class Unit : MonoBehaviour
 {
-    public int health;
+    public float health; // 체력
 
     [field:SerializeField] public UnityEvent<float> OnTakeDamage {get;set;}
     [field:SerializeField] public UnityEvent<float> OnAttack {get;set;}
