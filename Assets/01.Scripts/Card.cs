@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
@@ -24,6 +25,15 @@ public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     public void SetRune(RuneSO rune)
     {
         _rune = rune;
+
+        if(_rune == null)
+        {
+            this.transform.GetChild(0).GetComponent<Image>().color = Color.black;
+        }
+        else
+        {
+            this.transform.GetChild(0).GetComponent<Image>().color = Color.red;
+        }
     }
 
     public void SetIsEquip(bool value)

@@ -66,9 +66,19 @@ public class RuneProperty
 [CreateAssetMenu(menuName = "SO/Rune")]
 public class RuneSO : ScriptableObject
 {
-    public string CardName; // 카드 이름
-    public string CardDescription; // 카드 설명
+    [Tooltip("카드 이름")]
+    public string CardName;
+    [ShowAssetPreview(32, 32), Tooltip("카드 이미지")]
+    public Sprite CardImage;
+    [ShowAssetPreview(32, 32), Tooltip("룬 이미지")]
+    public Sprite RuneImage;
+    [Tooltip("카드 설명"), ResizableTextArea]
+    public string CardDescription;
+    [Min(1), Tooltip("보조 룬 개수")]
+    public int AssistRuneCount = 5;
 
+    [Tooltip("메인 룬의 속성")]
     public RuneProperty MainRune;
+    [Tooltip("보조 룬의 속성")]
     public RuneProperty AssistRune;
 }

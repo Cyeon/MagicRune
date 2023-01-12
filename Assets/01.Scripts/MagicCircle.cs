@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using System.Security.Cryptography;
@@ -45,9 +46,12 @@ public class MagicCircle : MonoBehaviour
 
             for (int i = 0; i < _runeDict[RuneType.Assist].Count; i++)
             {
-                _runeDict[RuneType.Assist][i].GetComponent<RectTransform>().transform.rotation = Quaternion.Euler(0, 0, angle * (i + 1) + 90);
+                _runeDict[RuneType.Assist][i].GetComponent<RectTransform>().transform.rotation = Quaternion.Euler(0, 0, -1 * angle * i + 90);
                 //_runeDict[RuneType.Assist][i].GetComponent<RectTransform>().anchoredPosition = new Vector3(_assistRuneDistance, 0, 0);
                 _runeDict[RuneType.Assist][i].GetComponent<RectTransform>().anchoredPosition = new Vector3(0, 0, 0);
+                //float height = Mathf.Sin(angle * (i + 1)) * _assistRuneDistance;
+                //float width = Mathf.Cos(angle * (i + 1)) *_assistRuneDistance;
+                //_runeDict[RuneType.Assist][i].GetComponent<RectTransform>().anchoredPosition = new Vector3(width, height, 0);
             }
         }
 
@@ -60,8 +64,8 @@ public class MagicCircle : MonoBehaviour
 
     public bool AddCard(Card card)
     {
-        float distance = Vector2.Distance(card.GetComponent<RectTransform>().anchoredPosition, transform.position);
-        if(distance <= _cardAreaDistance)
+        // 미리 보여준 보조 룬 근체에서 손가락을 때면 그 보조룬에 장착시키기
+        if(_runeDict.ContainsKey(RuneType.Main) == false || (_runeDict[RuneType.Main].Count == 0))
         {
             if (_runeDict.ContainsKey(RuneType.Main))
             {
@@ -76,6 +80,21 @@ public class MagicCircle : MonoBehaviour
                 rune.SetRune(card.Rune);
                 rune.SetCoolTime(card.Rune.MainRune.DelayTurn);
                 _runeDict[RuneType.Main].Add(rune);
+
+                for(int i = 0; i < _runeDict[RuneType.Main][0].Rune.AssistRuneCount; i++)
+                {
+                    GameObject ggo = Instantiate(_runeTemplate.gameObject, this.transform);
+                    Card grune = ggo.GetComponent<Card>();
+                    grune.SetRune(null);
+                    if (_runeDict.ContainsKey(RuneType.Assist))
+                    {
+                        _runeDict[RuneType.Assist].Add(grune);
+                    }
+                    else
+                    {
+                        _runeDict.Add(RuneType.Assist, new List<Card> { grune });
+                    }
+                }
             }
             else
             {
@@ -84,15 +103,31 @@ public class MagicCircle : MonoBehaviour
                 rune.SetRune(card.Rune);
                 rune.SetCoolTime(card.Rune.MainRune.DelayTurn);
                 _runeDict.Add(RuneType.Main, new List<Card>() { rune });
+
+                for (int i = 0; i < _runeDict[RuneType.Main][0].Rune.AssistRuneCount; i++)
+                {
+                    GameObject ggo = Instantiate(_runeTemplate.gameObject, this.transform);
+                    Card grune = ggo.GetComponent<Card>();
+                    grune.SetRune(null);
+                    if (_runeDict.ContainsKey(RuneType.Assist))
+                    {
+                        _runeDict[RuneType.Assist].Add(grune);
+                    }
+                    else
+                    {
+                        _runeDict.Add(RuneType.Assist, new List<Card> { grune });
+                    }
+                }
             }
         }
         else
         {
+            /*
             if (_runeDict.ContainsKey(RuneType.Assist))
             {
                 if (_runeDict[RuneType.Assist].Count >= _assistRuneCnt)
                 {
-                    Debug.Log("보조  룬이 꽉차 있습니다.");
+                    Debug.Log("보조 룬이 꽉차 있습니다.");
                     return false;
                 }
                 GameObject go = Instantiate(_runeTemplate.gameObject, this.transform);
@@ -109,6 +144,24 @@ public class MagicCircle : MonoBehaviour
                 rune.SetCoolTime(card.Rune.AssistRune.DelayTurn);
                 _runeDict.Add(RuneType.Assist, new List<Card>() { rune });
             }
+            */
+
+            // 근처에 있는 보조 룬으로 들어가기
+
+            // 전체 탐색 후 자깃과의 거리 비교 가장 가까운 애로 교체
+
+            int changeIndex = -1;
+            for(int i = 0; i < _runeDict[RuneType.Assist].Count; i++)
+            {
+                if (_runeDict[RuneType.Assist][i].Rune == null)
+                {
+                    changeIndex = i;
+                    break;
+                }
+            }
+
+            if (changeIndex == -1) return false;
+            _runeDict[RuneType.Assist][changeIndex].SetRune(card.Rune);
         }
 
         SortCard();
