@@ -37,7 +37,7 @@ public class CardCollector : MonoBehaviour
             }
             else
             {
-                // ¸¸¾à ¼±ÅÃ Ä«µå°¡ ¸¶¹ýÁø ¾È¿¡ ÀÖ´Ù¸é?
+                // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Ä«ï¿½å°¡ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½È¿ï¿½ ï¿½Ö´Ù¸ï¿½?
                 Vector2 mousePos = Input.mousePosition;
                 RectTransform circleRect = _magicCircle.GetComponent<RectTransform>();
                 if (mousePos.x >= circleRect.anchoredPosition.x - circleRect.sizeDelta.x / 2 && mousePos.x <= circleRect.anchoredPosition.x + circleRect.sizeDelta.x / 2
@@ -51,7 +51,7 @@ public class CardCollector : MonoBehaviour
                         Destroy(SelectCard.gameObject);
                     }
                 }
-                // YES : ¸¶¹ýÁø ¾È¿¡ ³Ö±â, ¸®½ºÆ® ¾È¿¡ Ä«µå Áö¿ì±â
+                // YES : ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½È¿ï¿½ ï¿½Ö±ï¿½, ï¿½ï¿½ï¿½ï¿½Æ® ï¿½È¿ï¿½ Ä«ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½
                 _selectCard.GetComponent<RectTransform>().anchoredPosition = _cardOriginPos;
                 _selectCard = value;
                 CardSort();
@@ -81,8 +81,7 @@ public class CardCollector : MonoBehaviour
             SelectCard.GetComponent<RectTransform>().anchoredPosition = Input.mousePosition;
         }
 
-        //Debug.Log(0);
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space)) // ï¿½Ûµï¿½?ï¿½ï¿½ï¿½ï¿½?
         {
             //Debug.Log(1);
 

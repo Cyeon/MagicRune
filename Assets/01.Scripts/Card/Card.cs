@@ -2,8 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
+using DG.Tweening;
 
-public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
+public abstract class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
     [SerializeField]
     private GameObject cardPrefab = null;
@@ -41,7 +43,7 @@ public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         }
     }
 
-    private void Start()
+    protected virtual void Start()
     {
         _collector = GetComponentInParent<CardCollector>();
     }
@@ -49,6 +51,15 @@ public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     public void SetRune(CardSO rune)
     {
         _rune = rune;
+
+        if(_rune == null)
+        {
+            this.transform.GetChild(0).GetComponent<Image>().color = Color.black;
+        }
+        else
+        {
+            this.transform.GetChild(0).GetComponent<Image>().color = Color.red;
+        }
     }
 
     public void SetIsEquip(bool value)
@@ -76,4 +87,6 @@ public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
             _collector.CardSelect(null);
         }
     }
+
+    public abstract void UseEffect();
 }

@@ -13,6 +13,9 @@ public class GameManager : MonoSingleton<GameManager>
 {
     private GameTurn gameTurn = GameTurn.Unknown;
     public GameTurn GameTurn => gameTurn;
+    public Player player = null;
+    public Unit currentUnit = null;
+
 
     private void Update()
     {
@@ -24,6 +27,8 @@ public class GameManager : MonoSingleton<GameManager>
         {
             OnMonsterTurn();
         }
+        player = FindObjectOfType<Player>();
+
     }
 
     public void OnPlayerTurn()
