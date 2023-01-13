@@ -64,7 +64,7 @@ public class RuneProperty
 }
 
 [CreateAssetMenu(menuName = "SO/Rune")]
-public class RuneSO : ScriptableObject
+public class CardSO : ScriptableObject
 {
     public string CardName; // 카드 이름
     public string CardDescription; // 카드 설명

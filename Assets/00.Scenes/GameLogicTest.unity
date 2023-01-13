@@ -676,10 +676,10 @@ RectTransform:
   m_Father: {fileID: 424719286}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &688029419
 MonoBehaviour:
@@ -694,7 +694,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   magicCirclePanel: {fileID: 1977329474}
-  turnOffButton: {fileID: 0}
+  turnEndButton: {fileID: 1564179388}
 --- !u!1 &929309843
 GameObject:
   m_ObjectHideFlags: 0
@@ -1122,6 +1122,8 @@ MonoBehaviour:
   _runeTemplate: {fileID: -1023437132678081477, guid: dd5939c7de9f7c84da13082ea7f45c72, type: 3}
   _mainRuneTemplate: {fileID: 3524106543823270734, guid: 251da307d95cacf4583a2aa2c5d719cd, type: 3}
   enemy: {fileID: 2146048676}
+  _handCards: {fileID: 0}
+  _restCards: {fileID: 0}
 --- !u!1 &1564179388
 GameObject:
   m_ObjectHideFlags: 0
@@ -1140,7 +1142,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1564179389
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1308,6 +1310,9 @@ MonoBehaviour:
   _magicCircle: {fileID: 1502645725}
   _cardTemplate: {fileID: 263579374165528353, guid: cce69109ee5fc73409b8597097f58568, type: 3}
   _cardCnt: 8
+  _deckCards: {fileID: 11400000, guid: 96b208de205eb02419e6f6e36b7e4bc7, type: 2}
+  _handCards: {fileID: 11400000, guid: 06605879d4d12154bb3c11883c0e144e, type: 2}
+  _restCards: {fileID: 11400000, guid: 30538d288f8824243827ca6389c3ea85, type: 2}
 --- !u!1 &1661102361
 GameObject:
   m_ObjectHideFlags: 0
@@ -1559,7 +1564,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1977329475
 RectTransform:
   m_ObjectHideFlags: 0

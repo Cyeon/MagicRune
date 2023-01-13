@@ -32,6 +32,11 @@ public class MagicCircle : MonoBehaviour
 
     public Enemy enemy;
 
+    [SerializeField]
+    private CardListSO _handCards = null;
+    [SerializeField]
+    private CardListSO _restCards = null;
+
     public void Awake()
     {
         _runeDict = new Dictionary<RuneType, List<Card>>();
@@ -61,7 +66,7 @@ public class MagicCircle : MonoBehaviour
     public bool AddCard(Card card)
     {
         float distance = Vector2.Distance(card.GetComponent<RectTransform>().anchoredPosition, transform.position);
-        if(distance <= _cardAreaDistance)
+        if (distance <= _cardAreaDistance)
         {
             if (_runeDict.ContainsKey(RuneType.Main))
             {
@@ -110,7 +115,8 @@ public class MagicCircle : MonoBehaviour
                 _runeDict.Add(RuneType.Assist, new List<Card>() { rune });
             }
         }
-
+        _handCards.cards.Remove(card);
+        _restCards.cards.Add(card);
         SortCard();
 
         return true;

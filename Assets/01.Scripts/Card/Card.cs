@@ -6,29 +6,54 @@ using UnityEngine.EventSystems;
 public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
     [SerializeField]
-    private RuneSO _rune;
+    private GameObject cardPrefab = null;
+    public GameObject CardPrefab => cardPrefab;
 
     [SerializeField]
-    private bool _isEquip = false;
-    public RuneSO Rune => _rune;
+    private CardSO _rune;
+
+    [SerializeField]
+    private bool _isEquipMagicCircle = false;
+    public CardSO Rune => _rune;
 
     private CardCollector _collector;
+    private bool _isRest = false;
+    public bool IsRest => _isRest;
 
     private int _coolTime;
+    public int CoolTime
+    {
+        get
+        {
+            return _coolTime;
+        }
+        set
+        {
+            _coolTime = value;
+            if (_coolTime <= 0)
+            {
+                _isRest = false;
+            }
+            else
+            {
+                _isRest = true;
+            }
+        }
+    }
 
     private void Start()
     {
         _collector = GetComponentInParent<CardCollector>();
     }
 
-    public void SetRune(RuneSO rune)
+    public void SetRune(CardSO rune)
     {
         _rune = rune;
     }
 
     public void SetIsEquip(bool value)
     {
-        _isEquip = value;
+        _isEquipMagicCircle = value;
     }
 
     public void SetCoolTime(int coolTime)
@@ -38,7 +63,7 @@ public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        if(_isEquip == false)
+        if (_isEquipMagicCircle == false)
         {
             _collector.CardSelect(this);
         }
@@ -46,7 +71,7 @@ public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
     public void OnPointerUp(PointerEventData eventData)
     {
-        if (_isEquip == false)
+        if (_isEquipMagicCircle == false)
         {
             _collector.CardSelect(null);
         }
