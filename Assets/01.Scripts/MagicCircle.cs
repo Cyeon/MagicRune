@@ -101,6 +101,9 @@ public class MagicCircle : MonoBehaviour
                         _runeDict.Add(RuneType.Assist, new List<Card> { grune });
                     }
                 }
+
+                SortCard();
+                AssistRuneAnimanation();
             }
             else
             {
@@ -127,6 +130,8 @@ public class MagicCircle : MonoBehaviour
                         _runeDict.Add(RuneType.Assist, new List<Card> { grune });
                     }
                 }
+                SortCard();
+                AssistRuneAnimanation();
             }
         }
         else
@@ -157,11 +162,19 @@ public class MagicCircle : MonoBehaviour
                     _runeDict[RuneType.Assist][changeIndex].SetRune(card.Rune);
                 });
             });
+
+            SortCard();
         }
 
-        SortCard();
-
         return true;
+    }
+
+    public void AssistRuneAnimanation()
+    {
+        foreach(var r in _runeDict[RuneType.Assist])
+        {
+            r.GetComponent<RectTransform>().DOAnchorPos(Vector2.zero, 0.3f).From();
+        }
     }
 
     public void Damage()
