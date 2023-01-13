@@ -26,13 +26,4 @@ public class Status
         this.durationTurn = status.durationTurn;
         this.statusFunc = status.statusFunc;
     }
-
-    public void RemDuration(Unit unit)
-    {
-        durationTurn -= 1;
-        if(durationTurn <= 0)
-        {
-            StatusManager.Instance.RemStatus(unit, this);
-        }
-    }
 }

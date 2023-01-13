@@ -9,6 +9,7 @@ public class Enemy : Unit
     public void Init(EnemySO so)
     {
         enemyInfo = so;
-        _maxHealth = HP = enemyInfo.health;
+        _maxHealth = enemyInfo.health;
+        HP = enemyInfo.health;
     }
 }
