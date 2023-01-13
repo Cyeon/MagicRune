@@ -10,7 +10,7 @@ public class StatusManager : MonoSingleton<StatusManager>
     // 상태이상 효과 발동
     public void StatusFuncInvoke(List<Status> status)
     {
-        status.ForEach(x => x.StatusInvoke());
+        status.ForEach(x => x.statusFunc.Invoke());
     }
 
     // 상태이상 목록에서 가져오기
@@ -30,64 +30,44 @@ public class StatusManager : MonoSingleton<StatusManager>
         }
 
         Status newStatus = new Status(status);
-
-        switch(status.invokeTime)
-        {
-            case StatusInvokeTime.Start:
-                AddStatus(unit.OnTurnStartStatus, newStatus);
-                break;
-
-            case StatusInvokeTime.Attack:
-                AddStatus(unit.OnAttackStatus, newStatus);
-                break;
-
-            case StatusInvokeTime.End:
-                AddStatus(unit.OnTurnStopStatus, newStatus);
-                break;
-        }
         
-    }
-
-    private void AddStatus(List<Status> list, Status status)
-    {
-        if(list.Contains(status))
+        List<Status> statusList = new List<Status>();
+        if(unit.unitStatusDic.TryGetValue(status.invokeTime, out statusList))
         {
-            Status currentStauts = list.Where(e => e.statusName == status.statusName).FirstOrDefault();
-            currentStauts.currentTurn += status.durationTurn;
-        }
-        else
-        {
-            list.Add(status);
+            if(statusList.Contains(status))
+            {
+                Status currentStauts = statusList.Where(e => e.statusName == status.statusName).FirstOrDefault();
+                currentStauts.durationTurn += status.durationTurn;
+            }
+            else
+            {
+                unit.unitStatusDic[status.invokeTime].Add(status);
+            }
         }
     }
 
     // 상태이상 제거
     public void RemStatus(Unit unit, Status status)
     {
-        switch(status.invokeTime)
+        List<Status> statusList = new List<Status>();
+        if(unit.unitStatusDic.TryGetValue(status.invokeTime, out statusList))
         {
-            case StatusInvokeTime.Start:
-                RemStatus(unit.OnTurnStartStatus, status);
-                break;
+            if(!statusList.Contains(status))
+            {
+                Debug.LogWarning(string.Format("{0} status is not found. Can't Remove do it.", status.statusName));
+                return;
+            }
 
-            case StatusInvokeTime.Attack:
-                RemStatus(unit.OnAttackStatus, status);
-                break;
-
-            case StatusInvokeTime.End:
-                RemStatus(unit.OnTurnStopStatus, status);
-                break;
+            unit.unitStatusDic[status.invokeTime].Remove(status);
         }
     }
 
-    private void RemStatus(List<Status> list, Status status)
+    public void StatusTurnChange(Unit unit)
     {
-        if(!list.Contains(status))
+        foreach(var x in unit.unitStatusDic)
         {
-            Debug.LogWarning(string.Format("{0} status is not found. Can't Remove do it."));
-            return;
+            if(x.Value.Count > 0)
+                x.Value.ForEach(x => x.RemDuration(unit));
         }
-
-        list.Remove(status);
     }
 }
