@@ -8,8 +8,8 @@ using static UnityEngine.UIElements.UxmlAttributeDescription;
 
 public enum RuneType
 {
-    Assist, // º¸Á¶
-    Main, // ¸ÞÀÎ
+    Assist, // ï¿½ï¿½ï¿½ï¿½
+    Main, // ï¿½ï¿½ï¿½ï¿½
 }
 
 public class MagicCircle : MonoBehaviour
@@ -74,7 +74,7 @@ public class MagicCircle : MonoBehaviour
             {
                 if (_runeDict[RuneType.Main].Count >= _mainRuneCnt)
                 {
-                    Debug.Log("¸ÞÀÎ ·éÀÌ ²ËÂ÷ ÀÖ½À´Ï´Ù.");
+                    Debug.Log("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ö½ï¿½ï¿½Ï´ï¿½.");
                     return false;
                 }
 
@@ -199,7 +199,7 @@ public class MagicCircle : MonoBehaviour
             }
         }
 
-        enemy.Damage(damage);
+        //enemy.Damage(damage);
 
         if (_runeDict.ContainsKey(RuneType.Assist))
         {

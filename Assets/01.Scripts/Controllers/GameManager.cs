@@ -11,10 +11,15 @@ public enum GameTurn
 
 public class GameManager : MonoSingleton<GameManager>
 {
+    public Player player = null;
+    public Unit currentUnit = null;
+
     public GameTurn gameTurn = GameTurn.Unknown;
 
     private void Awake()
     {
+        player = FindObjectOfType<Player>();
+
         EventManager.StartListening(Define.ON_START_PLAYER_TRUN, OnPlayerTurn);
         EventManager.StartListening(Define.ON_START_MONSTER_TURN, OnMonsterTurn);
     }
