@@ -33,6 +33,7 @@ public class Condition
 public class Effect
 {
     public string effectName;
+    public Card effectCard;
 
     public string paramater; // string은 신이야
 }

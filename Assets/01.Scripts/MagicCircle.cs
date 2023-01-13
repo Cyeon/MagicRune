@@ -52,7 +52,7 @@ public class MagicCircle : MonoBehaviour
                 //_runeDict[RuneType.Assist][i].GetComponent<RectTransform>().transform.rotation = Quaternion.Euler(0, 0, -1 * angle * i + 90);
                 //_runeDict[RuneType.Assist][i].GetComponent<RectTransform>().anchoredPosition = new Vector3(_assistRuneDistance, 0, 0);
                 _runeDict[RuneType.Assist][i].GetComponent<RectTransform>().anchoredPosition = new Vector3(0, 0, 0);
-                float height = Mathf.Sin(angle * i + (90 * Mathf.Deg2Rad)) * _assistRuneDistance;
+                float height = Mathf.Sin(-1 * angle * i + (90 * Mathf.Deg2Rad)) * _assistRuneDistance;
                 float width = Mathf.Cos(angle * i + (90 * Mathf.Deg2Rad)) * _assistRuneDistance;
                 _runeDict[RuneType.Assist][i].GetComponent<RectTransform>().anchoredPosition = new Vector3(width, height, 0);
             }
@@ -156,7 +156,7 @@ public class MagicCircle : MonoBehaviour
                 card.GetComponent<RectTransform>().anchoredPosition = Input.mousePosition;
                 card.transform.SetParent(this.transform);
                 g.GetComponent<RectTransform>().anchoredPosition = card.GetComponent<RectTransform>().anchoredPosition;
-                g.GetComponent<RectTransform>().DOAnchorPos(_runeDict[RuneType.Assist][changeIndex].transform.GetChild(0).GetComponent<RectTransform>().anchoredPosition, 0.3f).OnComplete(() =>
+                g.GetComponent<RectTransform>().DOAnchorPos(_runeDict[RuneType.Assist][changeIndex].GetComponent<RectTransform>().anchoredPosition, 0.3f).OnComplete(() =>
                 {
                     Destroy(g);
                     _runeDict[RuneType.Assist][changeIndex].SetRune(card.Rune);
@@ -187,6 +187,7 @@ public class MagicCircle : MonoBehaviour
             {
                 //damage += _runeDict[RuneType.Assist][i]._runeSO.assistRuneValue;
                 //damage += _runeDict[RuneType.Assist][i].Rune.AssistRune.EffectPair
+                // _runeDict[RuneType.Assist][i].Rune.AssistRune.EffectPair[i].Effect.effectCard.UseEffect(); // 이런 식으로 하면 되겠다.    
             }
         }
 

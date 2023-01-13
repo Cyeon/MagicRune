@@ -5,22 +5,20 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using DG.Tweening;
 
-public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
+public abstract class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
     [SerializeField]
-    private RuneSO _rune;
+    protected RuneSO _rune;
 
     [SerializeField]
-    private bool _isEquip = false;
-    [SerializeField]
-    private float _distance = 350;
+    protected bool _isEquip = false;
     public RuneSO Rune => _rune;
 
     private CardCollector _collector;
 
     private int _coolTime;
 
-    private void Start()
+    protected virtual void Start()
     {
         _collector = GetComponentInParent<CardCollector>();
     }
@@ -37,12 +35,6 @@ public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         {
             this.transform.GetChild(0).GetComponent<Image>().color = Color.red;
         }
-    }
-
-    public void CardAnimation()
-    {
-        this.transform.GetChild(0).GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
-        this.transform.GetChild(0).GetComponent<RectTransform>().DOLocalMoveX(_distance, 0.3f);
     }
 
     public void SetIsEquip(bool value)
@@ -70,4 +62,6 @@ public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
             _collector.CardSelect(null);
         }
     }
+
+    public abstract void UseEffect();
 }
