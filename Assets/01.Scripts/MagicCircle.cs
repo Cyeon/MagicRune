@@ -179,6 +179,14 @@ public class MagicCircle : MonoBehaviour
 
     public void Damage()
     {
+        // 그냥 로직만 적어놓는다는 느낌, 다른 곳에다가 옮길 예정
+
+        // 마법진 회전 효과
+        // 사이에 추가로 다른 효과도 있겠지
+        // 그 후에 공격
+
+        this.transform.DORotate(new Vector3(0, 0, 360 * 5), 0.7f, RotateMode.LocalAxisAdd).SetEase(Ease.OutQuad);
+
         int damage = 0;
 
         if (_runeDict.ContainsKey(RuneType.Assist))
