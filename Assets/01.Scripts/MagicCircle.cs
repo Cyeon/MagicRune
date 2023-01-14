@@ -16,10 +16,7 @@ public class MagicCircle : MonoBehaviour
 {
     private Dictionary<RuneType, List<Card>> _runeDict;
 
-    [SerializeField]
-    private int _mainRuneCnt = 1;
-    [SerializeField]
-    private int _assistRuneCnt = 5;
+    private const int _mainRuneCnt = 1;
 
     [SerializeField]
     private float _assistRuneDistance = 3f;
@@ -29,8 +26,6 @@ public class MagicCircle : MonoBehaviour
 
     [SerializeField]
     private Card _runeTemplate;
-    [SerializeField]
-    private Card _mainRuneTemplate;
     [SerializeField]
     private Card _garbageRuneTemplate;
 
@@ -78,7 +73,7 @@ public class MagicCircle : MonoBehaviour
                     return false;
                 }
 
-                GameObject go = Instantiate(_mainRuneTemplate.gameObject, this.transform);
+                GameObject go = Instantiate(_runeTemplate.gameObject, this.transform);
                 Card rune = go.GetComponent<Card>();
                 rune.SetRune(card.Rune);
                 rune.SetIsEquip(true);
@@ -107,7 +102,7 @@ public class MagicCircle : MonoBehaviour
             }
             else
             {
-                GameObject go = Instantiate(_mainRuneTemplate.gameObject, this.transform);
+                GameObject go = Instantiate(_runeTemplate.gameObject, this.transform);
                 Card rune = go.GetComponent<Card>();
                 rune.SetRune(card.Rune);
                 rune.SetIsEquip(true);
@@ -185,47 +180,73 @@ public class MagicCircle : MonoBehaviour
         // 사이에 추가로 다른 효과도 있겠지
         // 그 후에 공격
 
-        this.transform.DORotate(new Vector3(0, 0, 360 * 5), 0.7f, RotateMode.LocalAxisAdd).SetEase(Ease.OutQuad);
-
-        int damage = 0;
-
-        if (_runeDict.ContainsKey(RuneType.Assist))
+        if (_runeDict[RuneType.Main].Count == 0 || _runeDict[RuneType.Main][0].Rune == null)
         {
-            for (int i = 0; i < _runeDict[RuneType.Assist].Count; i++)
-            {
-                //damage += _runeDict[RuneType.Assist][i]._runeSO.assistRuneValue;
-                //damage += _runeDict[RuneType.Assist][i].Rune.AssistRune.EffectPair
-                // _runeDict[RuneType.Assist][i].Rune.AssistRune.EffectPair[i].Effect.effectCard.UseEffect(); // 이런 식으로 하면 되겠다.    
-            }
+            // 공격 안되는 이펙트
+            // 뭐.. 카메라 흔들림이라던지
+            return;
         }
 
-        if (_runeDict.ContainsKey(RuneType.Main))
-        {
-            for (int i = 0; i < _runeDict[RuneType.Main].Count; i++)
-            {
-                //damage += _runeDict[RuneType.Main][i]._runeSO.mainRuneValue;
-            }
-        }
+        Sequence seq = DOTween.Sequence();
+        seq.Append(this.transform.DORotate(new Vector3(0, 0, 360 * 5), 0.7f, RotateMode.LocalAxisAdd).SetEase(Ease.OutCubic));
 
+        //int damage = 0;
+
+        seq.AppendCallback(() =>
+        {
+            if (_runeDict.ContainsKey(RuneType.Assist))
+            {
+                for (int i = 0; i < _runeDict[RuneType.Assist].Count; i++)
+                {
+                    //damage += _runeDict[RuneType.Assist][i]._runeSO.assistRuneValue;
+                    //damage += _runeDict[RuneType.Assist][i].Rune.AssistRune.EffectPair
+                    Card card = _runeDict[RuneType.Assist][i];
+                    if (card.Rune != null)
+                    {
+                        card.UseAssistEffect();
+                    }
+                }
+
+                if (_runeDict.ContainsKey(RuneType.Assist))
+                {
+                    for (int i = 0; i < _runeDict[RuneType.Assist].Count; i++)
+                    {
+                        Destroy(_runeDict[RuneType.Assist][i].gameObject);
+                    }
+                }
+            }
+        });
+        seq.AppendInterval(0.5f);
+        seq.AppendCallback(() =>
+        {
+            if (_runeDict.ContainsKey(RuneType.Main))
+            {
+                for (int i = 0; i < _runeDict[RuneType.Main].Count; i++)
+                {
+                    //damage += _runeDict[RuneType.Main][i]._runeSO.mainRuneValue;
+                    Card card = _runeDict[RuneType.Main][i];
+                    if (card.Rune != null)
+                    {
+                        card.UseMainEffect();
+                    }
+                }
+
+                if (_runeDict.ContainsKey(RuneType.Main))
+                {
+                    for (int i = 0; i < _runeDict[RuneType.Main].Count; i++)
+                    {
+                        Destroy(_runeDict[RuneType.Main][i].gameObject);
+                    }
+                }
+            }
+        });
+        seq.AppendCallback(() => Debug.Log("Attack Complate"));
+        seq.AppendCallback(() =>
+        {
+            _runeDict.Clear();
+        });
+        
         //enemy.Damage(damage);
-
-        if (_runeDict.ContainsKey(RuneType.Assist))
-        {
-            for (int i = 0; i < _runeDict[RuneType.Assist].Count; i++)
-            {
-                Destroy(_runeDict[RuneType.Assist][i].gameObject);
-            }
-        }
-
-        if (_runeDict.ContainsKey(RuneType.Main))
-        {
-            for (int i = 0; i < _runeDict[RuneType.Main].Count; i++)
-            {
-                Destroy(_runeDict[RuneType.Main][i].gameObject);
-            }
-        }
-
-        _runeDict.Clear();
     }
 
 #if UNITY_EDITOR

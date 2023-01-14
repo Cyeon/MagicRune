@@ -63,5 +63,6 @@ public abstract class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         }
     }
 
-    public abstract void UseEffect();
+    public abstract void UseMainEffect();
+    public abstract void UseAssistEffect();
 }
