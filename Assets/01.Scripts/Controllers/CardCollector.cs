@@ -140,7 +140,7 @@ public class CardCollector : MonoBehaviour
         {
             Card card = _handCards.cards[i];
             _deckCards.cards.Add(card);
-            Destroy(card.gameObject);
+            //Destroy(card.gameObject);
         }
         _handCards.cards.Clear();
     }

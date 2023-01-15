@@ -1011,6 +1011,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6c56095b31cbc9439a2e698da204317, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 0}
+  currentUnit: {fileID: 0}
 --- !u!4 &1397258298
 Transform:
   m_ObjectHideFlags: 0
@@ -1119,8 +1121,9 @@ MonoBehaviour:
   _assistRuneCnt: 5
   _assistRuneDistance: 350
   _cardAreaDistance: 300
-  _runeTemplate: {fileID: -1023437132678081477, guid: dd5939c7de9f7c84da13082ea7f45c72, type: 3}
-  _mainRuneTemplate: {fileID: 3524106543823270734, guid: 251da307d95cacf4583a2aa2c5d719cd, type: 3}
+  _runeTemplate: {fileID: 0}
+  _mainRuneTemplate: {fileID: 0}
+  _garbageRuneTemplate: {fileID: 0}
   enemy: {fileID: 2146048676}
   _handCards: {fileID: 0}
   _restCards: {fileID: 0}
@@ -1308,7 +1311,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _magicCircle: {fileID: 1502645725}
-  _cardTemplate: {fileID: 263579374165528353, guid: cce69109ee5fc73409b8597097f58568, type: 3}
+  _cardTemplate: {fileID: 0}
   _cardCnt: 8
   _deckCards: {fileID: 11400000, guid: 96b208de205eb02419e6f6e36b7e4bc7, type: 2}
   _handCards: {fileID: 11400000, guid: 06605879d4d12154bb3c11883c0e144e, type: 2}
