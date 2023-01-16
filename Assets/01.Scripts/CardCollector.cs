@@ -76,7 +76,6 @@ public class CardCollector : MonoBehaviour
             SelectCard.GetComponent<RectTransform>().anchoredPosition = Input.mousePosition;
         }
 
-        Debug.Log(0);
         if (Input.GetKeyDown(KeyCode.Space))
         {
             Debug.Log(1);

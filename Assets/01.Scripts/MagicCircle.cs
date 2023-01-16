@@ -67,6 +67,11 @@ public class MagicCircle : MonoBehaviour
         // 미리 보여준 보조 룬 근체에서 손가락을 때면 그 보조룬에 장착시키기
         if(_runeDict.ContainsKey(RuneType.Main) == false || (_runeDict[RuneType.Main].Count == 0))
         {
+            if (!DummyCost.Instance.CanUseMainRune(card.Rune.MainRune.Cost))
+            {
+                Debug.Log("메인 룬을 사용하기 위한 마나가 부족합니다.");
+                return false;
+            }
             if (_runeDict.ContainsKey(RuneType.Main))
             {
                 if (_runeDict[RuneType.Main].Count >= _mainRuneCnt)
@@ -156,6 +161,12 @@ public class MagicCircle : MonoBehaviour
 
             // 전체 탐색 후 자깃과의 거리 비교 가장 가까운 애로 교체
 
+            if (!DummyCost.Instance.CanUseSubRune(card.Rune.AssistRune.Cost))
+            {
+                Debug.Log("보조 룬을 사용하기 위한 마나가 부족합니다.");
+                return false;
+            }
+
             int changeIndex = -1;
             for(int i = 0; i < _runeDict[RuneType.Assist].Count; i++)
             {
@@ -193,6 +204,7 @@ public class MagicCircle : MonoBehaviour
             for (int i = 0; i < _runeDict[RuneType.Main].Count; i++)
             {
                 //damage += _runeDict[RuneType.Main][i]._runeSO.mainRuneValue;
+                
             }
         }
 
