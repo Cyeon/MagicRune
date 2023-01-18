@@ -31,11 +31,13 @@ public abstract class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
 
         if(_rune == null)
         {
-            this.transform.GetChild(0).GetComponent<Image>().color = Color.black;
+            this.GetComponent<Image>().color = Color.black;
         }
         else
         {
-            this.transform.GetChild(0).GetComponent<Image>().color = Color.red;
+            this.GetComponent<Image>().color = Color.white;
+            this.GetComponent<Image>().sprite = rune.RuneImage;
+
         }
     }
 

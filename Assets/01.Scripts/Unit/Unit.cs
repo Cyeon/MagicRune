@@ -21,7 +21,7 @@ public class Unit : MonoBehaviour
         }
     }
 
-    #region  상태이상 관련 변수
+    #region  ?�태?�상 관??변??
 
     public float currentDmg = 0;
 

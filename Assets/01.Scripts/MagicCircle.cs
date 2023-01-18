@@ -4,6 +4,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Security.Cryptography;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 using static UnityEngine.UIElements.UxmlAttributeDescription;
 
 public enum RuneType
@@ -12,7 +14,7 @@ public enum RuneType
     Main, // 占쏙옙占쏙옙
 }
 
-public class MagicCircle : MonoBehaviour
+public class MagicCircle : MonoBehaviour, IPointerClickHandler
 {
     private Dictionary<RuneType, List<Card>> _runeDict;
 
@@ -23,17 +25,73 @@ public class MagicCircle : MonoBehaviour
 
     [SerializeField]
     private float _cardAreaDistance = 5f;
+    public float CardAreaDistance => _cardAreaDistance;
+
 
     [SerializeField]
     private Card _runeTemplate;
     [SerializeField]
     private Card _garbageRuneTemplate;
+    [SerializeField]
+    private GameObject _bgPanel;
 
     public Enemy enemy;
+    private Vector2 touchBeganPos;
+    private Vector2 touchEndedPos;
+    private Vector2 touchDif;
+    [SerializeField]
+    private float swipeSensitivity;
+
+    private bool _isBig = false;
+
+    public bool IsBig
+    {
+        get => _isBig;
+        set
+        {
+            if (_isBig == value) return;
+
+            _isBig = value;
+
+            if (_isBig)
+            {
+                // 크기 기우기
+                this.transform.DOScale(Vector3.one, 0.2f);
+                //_bgPanel.GetComponent<Image>().DOFade(0.7f, 0.2f);
+                _bgPanel.GetComponent<CanvasGroup>().DOFade(0.7f, 0.2f);
+                this.transform.DOLocalMoveY(1100, 0.2f).SetRelative();
+                _bgPanel.GetComponent<Image>().raycastTarget = true;
+            }
+            else
+            {
+                // 꼭 여기만 클릭해야되는건 아님
+                // 마법진 클릭 시 커짐
+
+                // 카드 선택 시 커짐
+
+                // 카드 놓으면 작아짐
+
+                // 작게 만들기
+                this.transform.DOScale(new Vector3(0.3f, 0.3f, 1), 0.2f);
+                //_bgPanel.GetComponent<Image>().DOFade(0, 0.2f);
+                _bgPanel.GetComponent<CanvasGroup>().DOFade(0, 0.2f);
+                this.transform.DOLocalMoveY(-1100, 0.2f).SetRelative();
+                _bgPanel.GetComponent<Image>().raycastTarget = false;
+            }
+        }
+    }
 
     public void Awake()
     {
         _runeDict = new Dictionary<RuneType, List<Card>>();
+    }
+
+    private void Update()
+    {
+        if (IsBig == true)
+        {
+            Swipe1();
+        }
     }
 
     public void SortCard()
@@ -62,6 +120,8 @@ public class MagicCircle : MonoBehaviour
 
     public bool AddCard(Card card)
     {
+        if (_isBig == false) return false;
+
         // 미리 보여준 보조 룬 근체에서 손가락을 때면 그 보조룬에 장착시키기
         if (_runeDict.ContainsKey(RuneType.Main) == false || (_runeDict[RuneType.Main].Count == 0))
         {
@@ -78,92 +138,96 @@ public class MagicCircle : MonoBehaviour
                     return false;
                 }
 
-                GameObject go = Instantiate(_runeTemplate.gameObject, this.transform);
-                Card rune = go.GetComponent<Card>();
-                rune.SetRune(card.Rune);
-                rune.SetIsEquip(true);
-                rune.SetCoolTime(card.Rune.MainRune.DelayTurn);
-                _runeDict[RuneType.Main].Add(rune);
-
-                for (int i = 0; i < _runeDict[RuneType.Main][0].Rune.AssistRuneCount; i++)
+                Sequence seq = DOTween.Sequence();
+                seq.AppendCallback(() =>
                 {
-                    GameObject ggo = Instantiate(_runeTemplate.gameObject, this.transform);
-                    Card grune = ggo.GetComponent<Card>();
-                    grune.SetRune(null);
-                    grune.SetIsEquip(true);
-                    //grune.CardAnimation();
-                    if (_runeDict.ContainsKey(RuneType.Assist))
+                    GameObject g = Instantiate(_garbageRuneTemplate.gameObject, this.transform);
+                    card.GetComponent<RectTransform>().anchoredPosition = Input.mousePosition;
+                    card.transform.SetParent(this.transform);
+                    g.GetComponent<RectTransform>().anchoredPosition = card.GetComponent<RectTransform>().anchoredPosition;
+                    g.GetComponent<RectTransform>().DOAnchorPos(GetComponent<RectTransform>().anchoredPosition, 0.3f).OnComplete(() =>
                     {
-                        _runeDict[RuneType.Assist].Add(grune);
-                    }
-                    else
-                    {
-                        _runeDict.Add(RuneType.Assist, new List<Card> { grune });
-                    }
-                }
+                        Destroy(g);
 
-                SortCard();
-                AssistRuneAnimanation();
+                        GameObject go = Instantiate(_runeTemplate.gameObject, this.transform);
+                        Card rune = go.GetComponent<Card>();
+                        rune.SetRune(card.Rune);
+                        rune.SetIsEquip(true);
+                        rune.SetCoolTime(card.Rune.MainRune.DelayTurn);
+                        _runeDict[RuneType.Main].Add(rune);
+
+                        for (int i = 0; i < _runeDict[RuneType.Main][0].Rune.AssistRuneCount; i++)
+                        {
+                            GameObject ggo = Instantiate(_runeTemplate.gameObject, this.transform);
+                            Card grune = ggo.GetComponent<Card>();
+                            grune.SetRune(null);
+                            grune.SetIsEquip(true);
+                            //grune.CardAnimation();
+                            if (_runeDict.ContainsKey(RuneType.Assist))
+                            {
+                                _runeDict[RuneType.Assist].Add(grune);
+                            }
+                            else
+                            {
+                                _runeDict.Add(RuneType.Assist, new List<Card> { grune });
+                            }
+                        }
+
+                        SortCard();
+                        AssistRuneAnimanation();
+                    });
+                });
             }
             else
             {
-                GameObject go = Instantiate(_runeTemplate.gameObject, this.transform);
-                Card rune = go.GetComponent<Card>();
-                rune.SetRune(card.Rune);
-                rune.SetIsEquip(true);
-                rune.SetCoolTime(card.Rune.MainRune.DelayTurn);
-                _runeDict.Add(RuneType.Main, new List<Card>() { rune });
-
-                for (int i = 0; i < _runeDict[RuneType.Main][0].Rune.AssistRuneCount; i++)
+                Debug.Log(card);
+                Sequence seq = DOTween.Sequence();
+                seq.AppendCallback(() =>
                 {
-                    GameObject ggo = Instantiate(_runeTemplate.gameObject, this.transform);
-                    Card grune = ggo.GetComponent<Card>();
-                    grune.SetRune(null);
-                    grune.SetIsEquip(true);
-                    //grune.CardAnimation();
-                    if (_runeDict.ContainsKey(RuneType.Assist))
+                    GameObject g = Instantiate(_garbageRuneTemplate.gameObject, this.transform);
+                    Debug.Log(card);
+                    card.GetComponent<RectTransform>().anchoredPosition = Input.mousePosition;
+                    card.transform.SetParent(this.transform);
+                    g.GetComponent<RectTransform>().anchoredPosition = card.GetComponent<RectTransform>().anchoredPosition;
+                    g.GetComponent<RectTransform>().DOAnchorPos(Vector2.zero, 0.3f).OnComplete(() =>
                     {
-                        _runeDict[RuneType.Assist].Add(grune);
-                    }
-                    else
+                        Destroy(g);
+                    });
+                });
+                seq.AppendInterval(0.3f);
+                seq.AppendCallback(() =>
+                {
+                    GameObject go = Instantiate(_runeTemplate.gameObject, this.transform);
+                    Card rune = go.GetComponent<Card>();
+                    rune.SetRune(card.Rune);
+                    rune.SetIsEquip(true);
+                    rune.SetCoolTime(card.Rune.MainRune.DelayTurn);
+                    _runeDict.Add(RuneType.Main, new List<Card>() { rune });
+
+                    for (int i = 0; i < _runeDict[RuneType.Main][0].Rune.AssistRuneCount; i++)
                     {
-                        _runeDict.Add(RuneType.Assist, new List<Card> { grune });
+                        GameObject ggo = Instantiate(_runeTemplate.gameObject, this.transform);
+                        Card grune = ggo.GetComponent<Card>();
+                        grune.SetRune(null);
+                        grune.SetIsEquip(true);
+                        //grune.CardAnimation();
+                        if (_runeDict.ContainsKey(RuneType.Assist))
+                        {
+                            _runeDict[RuneType.Assist].Add(grune);
+                        }
+                        else
+                        {
+                            _runeDict.Add(RuneType.Assist, new List<Card> { grune });
+                        }
                     }
-                }
-                SortCard();
-                AssistRuneAnimanation();
+                    SortCard();
+                    AssistRuneAnimanation();
+                });
+                
             }
         }
         else
         {
-            /*
-            if (_runeDict.ContainsKey(RuneType.Assist))
-            {
-                if (_runeDict[RuneType.Assist].Count >= _assistRuneCnt)
-                {
-                    Debug.Log("보조 룬이 꽉차 있습니다.");
-                    return false;
-                }
-                GameObject go = Instantiate(_runeTemplate.gameObject, this.transform);
-                Card rune = go.GetComponent<Card>();
-                rune.SetRune(card.Rune);
-                rune.SetCoolTime(card.Rune.AssistRune.DelayTurn);
-                _runeDict[RuneType.Assist].Add(rune);
-            }
-            else
-            {
-                GameObject go = Instantiate(_runeTemplate.gameObject, this.transform);
-                Card rune = go.GetComponent<Card>();
-                rune.SetRune(card.Rune);
-                rune.SetCoolTime(card.Rune.AssistRune.DelayTurn);
-                _runeDict.Add(RuneType.Assist, new List<Card>() { rune });
-            }
-            */
-
-            // 근처에 있는 보조 룬으로 들어가기
-
-            // 전체 탐색 후 자깃과의 거리 비교 가장 가까운 애로 교체
-
             if (!DummyCost.Instance.CanUseSubRune(card.Rune.AssistRune.Cost))
             {
                 Debug.Log("보조 룬을 사용하기 위한 마나가 부족합니다.");
@@ -194,9 +258,12 @@ public class MagicCircle : MonoBehaviour
                 {
                     Destroy(g);
                     _runeDict[RuneType.Assist][changeIndex].SetRune(card.Rune);
+
+                    Sequence seq2 = DOTween.Sequence();
+                    seq2.AppendInterval(0.2f);
+                    seq2.AppendCallback(() => { IsBig = false; });
                 });
             });
-
             SortCard();
         }
 
@@ -205,11 +272,62 @@ public class MagicCircle : MonoBehaviour
 
     public void AssistRuneAnimanation()
     {
-        foreach(var r in _runeDict[RuneType.Assist])
+        Sequence seq = DOTween.Sequence();
+        foreach (var r in _runeDict[RuneType.Assist])
         {
-            r.GetComponent<RectTransform>().DOAnchorPos(Vector2.zero, 0.3f).From();
+            seq.Join(r.GetComponent<RectTransform>().DOAnchorPos(Vector2.zero, 0.3f).From());
+        }
+        seq.AppendInterval(0.2f);
+        seq.AppendCallback(() => { IsBig = false; });
+    }
+
+    public void Swipe1()
+    {
+        if (Input.touchCount > 0)
+        {
+            Touch touch = Input.GetTouch(0);
+
+
+            if (touch.phase == TouchPhase.Began)
+            {
+                touchBeganPos = touch.position;
+            }
+            if (touch.phase == TouchPhase.Ended)
+            {
+                touchEndedPos = touch.position;
+                touchDif = (touchEndedPos - touchBeganPos);
+
+                //스와이프. 터치의 x이동거리나 y이동거리가 민감도보다 크면
+                if (Mathf.Abs(touchDif.y) > swipeSensitivity || Mathf.Abs(touchDif.x) > swipeSensitivity)
+                {
+                    if (touchDif.y > 0 && Mathf.Abs(touchDif.y) > Mathf.Abs(touchDif.x))
+                    {
+                        Debug.Log("up");
+                    }
+                    else if (touchDif.y < 0 && Mathf.Abs(touchDif.y) > Mathf.Abs(touchDif.x))
+                    {
+                        Debug.Log("down");
+                    }
+                    else if (touchDif.x > 0 && Mathf.Abs(touchDif.y) < Mathf.Abs(touchDif.x))
+                    {
+                        Debug.Log("right");
+                        Debug.Log("Attack");
+                        Damage();
+                    }
+                    else if (touchDif.x < 0 && Mathf.Abs(touchDif.y) < Mathf.Abs(touchDif.x))
+                    {
+                        Debug.Log("Left");
+                    }
+                }
+                //터치.
+                else
+                {
+                    Debug.Log("touch");
+                }
+            }
         }
     }
+
 
     public void Damage()
     {
@@ -219,10 +337,11 @@ public class MagicCircle : MonoBehaviour
         // 사이에 추가로 다른 효과도 있겠지
         // 그 후에 공격
 
-        if (_runeDict[RuneType.Main].Count == 0 || _runeDict[RuneType.Main][0].Rune == null)
+        if (_runeDict.ContainsKey(RuneType.Main) == false || _runeDict[RuneType.Main].Count == 0 || _runeDict[RuneType.Main][0].Rune == null)
         {
             // 공격 안되는 이펙트
             // 뭐.. 카메라 흔들림이라던지
+            Debug.Log("메인 룬 없음");
             return;
         }
 
@@ -246,19 +365,13 @@ public class MagicCircle : MonoBehaviour
                     }
                 }
 
-                if (_runeDict.ContainsKey(RuneType.Assist))
+                for (int i = 0; i < _runeDict[RuneType.Assist].Count; i++)
                 {
-                    for (int i = 0; i < _runeDict[RuneType.Assist].Count; i++)
-                    {
-                        Destroy(_runeDict[RuneType.Assist][i].gameObject);
-                    }
+                    Destroy(_runeDict[RuneType.Assist][i].gameObject);
                 }
                 //damage += _runeDict[RuneType.Main][i]._runeSO.mainRuneValue;
             }
-        });
-        seq.AppendInterval(0.5f);
-        seq.AppendCallback(() =>
-        {
+
             if (_runeDict.ContainsKey(RuneType.Main))
             {
                 for (int i = 0; i < _runeDict[RuneType.Main].Count; i++)
@@ -271,22 +384,29 @@ public class MagicCircle : MonoBehaviour
                     }
                 }
 
-                if (_runeDict.ContainsKey(RuneType.Main))
+                for (int i = 0; i < _runeDict[RuneType.Main].Count; i++)
                 {
-                    for (int i = 0; i < _runeDict[RuneType.Main].Count; i++)
-                    {
-                        Destroy(_runeDict[RuneType.Main][i].gameObject);
-                    }
+                    Destroy(_runeDict[RuneType.Main][i].gameObject);
                 }
             }
         });
-        seq.AppendCallback(() => Debug.Log("Attack Complate"));
         seq.AppendCallback(() =>
         {
+            Debug.Log("Attack Complate");
             _runeDict.Clear();
+
+            IsBig = false;
         });
-        
+
         //enemy.Damage(damage);
+    }
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        if(IsBig == false)
+        {
+            IsBig = true;
+        }
     }
 
 #if UNITY_EDITOR

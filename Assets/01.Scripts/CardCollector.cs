@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CardCollector : MonoBehaviour
 {
@@ -26,14 +27,12 @@ public class CardCollector : MonoBehaviour
             {
                 _selectCard = value;
                 _cardOriginPos = _selectCard.GetComponent<RectTransform>().anchoredPosition;
+                _magicCircle.IsBig = true;
             }
             else
             {
-                // 만약 선택 카드가 마법진 안에 있다면?
-                Vector2 mousePos = Input.mousePosition;
-                RectTransform circleRect = _magicCircle.GetComponent<RectTransform>();
-                if (mousePos.x >= circleRect.anchoredPosition.x - circleRect.sizeDelta.x / 2 && mousePos.x <= circleRect.anchoredPosition.x + circleRect.sizeDelta.x / 2
-                    && mousePos.y >= circleRect.anchoredPosition.y - circleRect.sizeDelta.y / 2 && mousePos.y <= circleRect.anchoredPosition.y + circleRect.sizeDelta.y / 2)
+                if (Vector2.Distance(SelectCard.GetComponent<RectTransform>().anchoredPosition, _magicCircle.GetComponent<RectTransform>().anchoredPosition)
+                <= _magicCircle.CardAreaDistance)
                 {
                     bool isAdd = _magicCircle.AddCard(SelectCard);
                     if (isAdd)
@@ -42,10 +41,14 @@ public class CardCollector : MonoBehaviour
                         Destroy(SelectCard.gameObject);
                     }
                 }
-                // YES : 마법진 안에 넣기, 리스트 안에 카드 지우기
+                else
+                {
+                    _magicCircle.IsBig = false;
+                }
                 _selectCard.GetComponent<RectTransform>().anchoredPosition = _cardOriginPos;
                 _selectCard = value;
                 CardSort();
+                //_magicCircle.IsBig = false;
             }
         }
     }
@@ -75,22 +78,18 @@ public class CardCollector : MonoBehaviour
         if (SelectCard != null)
         {
             SelectCard.GetComponent<RectTransform>().anchoredPosition = Input.mousePosition;
-        }
 
-        if (Input.GetKeyDown(KeyCode.Space)) // 작동?안함?
-        {
-            Debug.Log(1);
-
-            for (int i = 0; i < _cardCnt; i++)
+            if (Vector2.Distance(SelectCard.GetComponent<RectTransform>().anchoredPosition, _magicCircle.GetComponent<RectTransform>().anchoredPosition)
+                <= _magicCircle.CardAreaDistance)
             {
-                GameObject go = Instantiate(_cardTemplate.gameObject, this.transform);
-                RectTransform rect = go.GetComponent<RectTransform>();
-                _cardList.Add(go.GetComponent<Card>());
-                rect.anchoredPosition = Vector3.zero;
-                go.transform.rotation = Quaternion.identity;
+                SelectCard.GetComponent<Image>().sprite = SelectCard.Rune.RuneImage;
+                SelectCard.GetComponent<RectTransform>().sizeDelta = new Vector2(128, 128);
             }
-
-            CardSort();
+            else
+            {
+                SelectCard.GetComponent<Image>().sprite = SelectCard.Rune.CardImage;
+                SelectCard.GetComponent<RectTransform>().sizeDelta = new Vector2(300, 500);
+            }
         }
     }
 
@@ -106,10 +105,12 @@ public class CardCollector : MonoBehaviour
 
     public void CardSelect(Card card)
     {
-        if(card == null)
+        if (card == null)
         {
             SelectCard.transform.SetSiblingIndex(_uiIndex);
             _uiIndex = -1;
+            SelectCard.GetComponent<Image>().sprite = SelectCard.Rune.CardImage;
+            SelectCard.GetComponent<RectTransform>().sizeDelta = new Vector2(300, 500);
         }
         else
         {

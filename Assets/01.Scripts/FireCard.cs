@@ -6,11 +6,11 @@ public class FireCard : Card
 {
     public override void UseAssistEffect()
     {
-        Debug.Log("1 damage");
+        GameManager.Instance.player.Attack(1);
     }
 
     public override void UseMainEffect()
     {
-        Debug.Log("5 damage");
+        GameManager.Instance.player.Attack(5);
     }
 }
