@@ -65,6 +65,11 @@ public class MagicCircle : MonoBehaviour
         // 미리 보여준 보조 룬 근체에서 손가락을 때면 그 보조룬에 장착시키기
         if (_runeDict.ContainsKey(RuneType.Main) == false || (_runeDict[RuneType.Main].Count == 0))
         {
+            if (!DummyCost.Instance.CanUseMainRune(card.Rune.MainRune.Cost))
+            {
+                Debug.Log("메인 룬을 사용하기 위한 마나가 부족합니다.");
+                return false;
+            }
             if (_runeDict.ContainsKey(RuneType.Main))
             {
                 if (_runeDict[RuneType.Main].Count >= _mainRuneCnt)
@@ -131,6 +136,40 @@ public class MagicCircle : MonoBehaviour
         }
         else
         {
+            /*
+            if (_runeDict.ContainsKey(RuneType.Assist))
+            {
+                if (_runeDict[RuneType.Assist].Count >= _assistRuneCnt)
+                {
+                    Debug.Log("보조 룬이 꽉차 있습니다.");
+                    return false;
+                }
+                GameObject go = Instantiate(_runeTemplate.gameObject, this.transform);
+                Card rune = go.GetComponent<Card>();
+                rune.SetRune(card.Rune);
+                rune.SetCoolTime(card.Rune.AssistRune.DelayTurn);
+                _runeDict[RuneType.Assist].Add(rune);
+            }
+            else
+            {
+                GameObject go = Instantiate(_runeTemplate.gameObject, this.transform);
+                Card rune = go.GetComponent<Card>();
+                rune.SetRune(card.Rune);
+                rune.SetCoolTime(card.Rune.AssistRune.DelayTurn);
+                _runeDict.Add(RuneType.Assist, new List<Card>() { rune });
+            }
+            */
+
+            // 근처에 있는 보조 룬으로 들어가기
+
+            // 전체 탐색 후 자깃과의 거리 비교 가장 가까운 애로 교체
+
+            if (!DummyCost.Instance.CanUseSubRune(card.Rune.AssistRune.Cost))
+            {
+                Debug.Log("보조 룬을 사용하기 위한 마나가 부족합니다.");
+                return false;
+            }
+
             int changeIndex = -1;
             for (int i = 0; i < _runeDict[RuneType.Assist].Count; i++)
             {
@@ -214,6 +253,7 @@ public class MagicCircle : MonoBehaviour
                         Destroy(_runeDict[RuneType.Assist][i].gameObject);
                     }
                 }
+                //damage += _runeDict[RuneType.Main][i]._runeSO.mainRuneValue;
             }
         });
         seq.AppendInterval(0.5f);
