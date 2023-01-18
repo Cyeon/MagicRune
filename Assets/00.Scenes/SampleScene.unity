@@ -219,6 +219,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1502645725}
+        m_TargetAssemblyTypeName: MagicCircle, Assembly-CSharp
+        m_MethodName: Damage
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &37206933
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -978,13 +990,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9dafadea4d0683e46ab4617e002cae19, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _mainRuneCnt: 1
-  _assistRuneCnt: 5
   _assistRuneDistance: 350
   _cardAreaDistance: 300
-  _runeTemplate: {fileID: -1023437132678081477, guid: dd5939c7de9f7c84da13082ea7f45c72, type: 3}
-  _mainRuneTemplate: {fileID: 3524106543823270734, guid: 251da307d95cacf4583a2aa2c5d719cd, type: 3}
-  enemy: {fileID: 2146048676}
+  _runeTemplate: {fileID: 658511538511750373, guid: 251da307d95cacf4583a2aa2c5d719cd, type: 3}
+  _garbageRuneTemplate: {fileID: 8363697945999875843, guid: ad53e8f0939141a4ea08b0fc365a9f78, type: 3}
+  enemy: {fileID: 0}
 --- !u!1 &1615914771
 GameObject:
   m_ObjectHideFlags: 0
@@ -1035,7 +1045,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _magicCircle: {fileID: 1502645725}
-  _cardTemplate: {fileID: 263579374165528353, guid: cce69109ee5fc73409b8597097f58568, type: 3}
+  _cardTemplate: {fileID: 8683681480207833223, guid: cce69109ee5fc73409b8597097f58568, type: 3}
   _cardCnt: 8
 --- !u!1 &1619516169
 GameObject:
@@ -1450,7 +1460,6 @@ GameObject:
   - component: {fileID: 2146048673}
   - component: {fileID: 2146048675}
   - component: {fileID: 2146048674}
-  - component: {fileID: 2146048676}
   m_Layer: 5
   m_Name: Image
   m_TagString: Untagged
@@ -1519,15 +1528,3 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2146048672}
   m_CullTransparentMesh: 1
---- !u!114 &2146048676
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2146048672}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d9965c2a06470384ab6c72cfb82c7673, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
