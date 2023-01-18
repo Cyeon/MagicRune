@@ -66,8 +66,17 @@ public class StatusManager : MonoSingleton<StatusManager>
     {
         foreach(var x in unit.unitStatusDic)
         {
-            if(x.Value.Count > 0)
-                x.Value.ForEach(x => x.RemDuration(unit));
+            List<int> indexes = new List<int>();
+            for(int i = 0; i < x.Value.Count; i++)
+            {
+                x.Value[i].durationTurn--;
+                if(x.Value[i].durationTurn <= 0)
+                {
+                    indexes.Add(i);
+                }
+            }
+
+            indexes.ForEach(e => RemStatus(unit, x.Value[e]));
         }
     }
 }
