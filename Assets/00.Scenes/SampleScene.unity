@@ -207,15 +207,15 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1502645725}
-        m_TargetAssemblyTypeName: MagicCircle, Assembly-CSharp
-        m_MethodName: Damage
-        m_Mode: 1
+      - m_Target: {fileID: 1767116410}
+        m_TargetAssemblyTypeName: Player, Assembly-CSharp
+        m_MethodName: Attack
+        m_Mode: 4
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
-          m_FloatArgument: 0
+          m_FloatArgument: 5
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
@@ -459,10 +459,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 1
+  m_UiScaleMode: 0
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 1440, y: 2560}
+  m_ReferenceResolution: {x: 800, y: 600}
   m_ScreenMatchMode: 0
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
@@ -642,13 +642,42 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   statusList:
-  - statusName: Test
-    invokeTime: 0
+  - statusName: "\uC57D\uC1C4"
+    invokeTime: 2
     durationTurn: 2
     statusFunc:
       m_PersistentCalls:
-        m_Calls: []
-    currentTurn: 0
+        m_Calls:
+        - m_Target: {fileID: 857711283}
+          m_TargetAssemblyTypeName: StatusFuncList, Assembly-CSharp
+          m_MethodName: AddGetDamage
+          m_Mode: 4
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 5
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - statusName: "\uD134\uB118\uAE30\uAE30"
+    invokeTime: 0
+    durationTurn: 10
+    statusFunc:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 857711283}
+          m_TargetAssemblyTypeName: StatusFuncList, Assembly-CSharp
+          m_MethodName: TurnChange
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 5
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!4 &857711285
 Transform:
   m_ObjectHideFlags: 0
@@ -746,6 +775,52 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 962776911}
   m_CullTransparentMesh: 1
+--- !u!1 &1239761703
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1239761705}
+  - component: {fileID: 1239761704}
+  m_Layer: 0
+  m_Name: EnemyManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1239761704
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1239761703}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 38cdd1af2214ed24da8589d6f837690d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyList:
+  - {fileID: 11400000, guid: 86bf330ac11acb9449a85e6c3dc0ed14, type: 2}
+--- !u!4 &1239761705
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1239761703}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 596.07, y: 1495.5493, z: -11.954757}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1267521380
 GameObject:
   m_ObjectHideFlags: 0
@@ -907,9 +982,8 @@ MonoBehaviour:
   _assistRuneCnt: 5
   _assistRuneDistance: 350
   _cardAreaDistance: 300
-  _runeTemplate: {fileID: 658511538511750373, guid: 251da307d95cacf4583a2aa2c5d719cd, type: 3}
-  _mainRuneTemplate: {fileID: 658511538511750373, guid: 251da307d95cacf4583a2aa2c5d719cd, type: 3}
-  _garbageRuneTemplate: {fileID: 8363697945999875843, guid: ad53e8f0939141a4ea08b0fc365a9f78, type: 3}
+  _runeTemplate: {fileID: -1023437132678081477, guid: dd5939c7de9f7c84da13082ea7f45c72, type: 3}
+  _mainRuneTemplate: {fileID: 3524106543823270734, guid: 251da307d95cacf4583a2aa2c5d719cd, type: 3}
   enemy: {fileID: 2146048676}
 --- !u!1 &1615914771
 GameObject:
@@ -961,7 +1035,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _magicCircle: {fileID: 1502645725}
-  _cardTemplate: {fileID: 8683681480207833223, guid: cce69109ee5fc73409b8597097f58568, type: 3}
+  _cardTemplate: {fileID: 263579374165528353, guid: cce69109ee5fc73409b8597097f58568, type: 3}
   _cardCnt: 8
 --- !u!1 &1619516169
 GameObject:
@@ -993,6 +1067,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
+  enemy: {fileID: 0}
   currentUnit: {fileID: 0}
   gameTurn: 2
 --- !u!4 &1619516171
@@ -1275,15 +1350,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1a68e167d080b040af1b7d7ac5a5e5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _health: 0
+  currentDmg: 0
   <OnTakeDamage>k__BackingField:
     m_PersistentCalls:
       m_Calls: []
   <OnTakeDamageFeedback>k__BackingField:
     m_PersistentCalls:
       m_Calls: []
-  OnTurnStartStatus: []
-  OnAttackStatus: []
-  OnTurnStopStatus: []
   cost: 0
 --- !u!4 &1767116411
 Transform:
@@ -1299,6 +1373,71 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1985436755
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1985436757}
+  - component: {fileID: 1985436756}
+  m_Layer: 0
+  m_Name: Unity
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1985436756
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1985436755}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb6fc7c86da139e429a4f9ab546877a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _health: 100
+  currentDmg: 0
+  <OnTakeDamage>k__BackingField:
+    m_PersistentCalls:
+      m_Calls: []
+  <OnTakeDamageFeedback>k__BackingField:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1619516170}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: TurnChange
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  enemyInfo: {fileID: 11400000, guid: 86bf330ac11acb9449a85e6c3dc0ed14, type: 2}
+--- !u!4 &1985436757
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1985436755}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 596.07, y: 1495.5493, z: -11.954757}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2146048672
 GameObject:
@@ -1392,7 +1531,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9965c2a06470384ab6c72cfb82c7673, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hpImage: {fileID: 100359638}
-  HP: 100
-  MaxHp: 100
-  text: {fileID: 1681371175}
