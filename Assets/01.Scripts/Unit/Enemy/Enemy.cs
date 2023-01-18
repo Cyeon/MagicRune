@@ -11,5 +11,7 @@ public class Enemy : Unit
         enemyInfo = so;
         _maxHealth = enemyInfo.health;
         HP = enemyInfo.health;
+
+        UIManager.Instance.EnemyHealthbarInit(_maxHealth);
     }
 }
