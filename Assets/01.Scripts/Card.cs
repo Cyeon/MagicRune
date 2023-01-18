@@ -14,13 +14,15 @@ public abstract class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     protected bool _isEquip = false;
     public RuneSO Rune => _rune;
 
-    private CardCollector _collector;
-
     private int _coolTime;
+
+    private CardCollector _collector;
+    private RectTransform _rect;
 
     protected virtual void Start()
     {
         _collector = GetComponentInParent<CardCollector>();
+        _rect = GetComponent<RectTransform>();
     }
 
     public void SetRune(RuneSO rune)
@@ -52,6 +54,7 @@ public abstract class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         if(_isEquip == false)
         {
             _collector.CardSelect(this);
+            transform.localScale = new Vector3(1.5f, 1.5f, 1);
         }
     }
 
@@ -60,6 +63,7 @@ public abstract class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         if (_isEquip == false)
         {
             _collector.CardSelect(null);
+            transform.localScale = Vector3.one;
         }
     }
 

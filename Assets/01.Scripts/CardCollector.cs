@@ -14,6 +14,7 @@ public class CardCollector : MonoBehaviour
 
     private List<Card> _cardList;
 
+    private int _uiIndex;
     private Vector2 _cardOriginPos;
     private Card _selectCard;
     public Card SelectCard
@@ -105,6 +106,16 @@ public class CardCollector : MonoBehaviour
 
     public void CardSelect(Card card)
     {
+        if(card == null)
+        {
+            SelectCard.transform.SetSiblingIndex(_uiIndex);
+            _uiIndex = -1;
+        }
+        else
+        {
+            _uiIndex = card.transform.GetSiblingIndex();
+            card.transform.SetAsLastSibling();
+        }
         SelectCard = card;
     }
 }
