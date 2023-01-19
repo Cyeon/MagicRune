@@ -27,7 +27,7 @@ public class CardCollector : MonoBehaviour
             {
                 _selectCard = value;
                 _cardOriginPos = _selectCard.GetComponent<RectTransform>().anchoredPosition;
-                _magicCircle.IsBig = true;
+                //_magicCircle.IsBig = true;
             }
             else
             {
@@ -41,10 +41,10 @@ public class CardCollector : MonoBehaviour
                         Destroy(SelectCard.gameObject);
                     }
                 }
-                else
-                {
-                    _magicCircle.IsBig = false;
-                }
+                //else
+                //{
+                //    _magicCircle.IsBig = false;
+                //}
                 _selectCard.GetComponent<RectTransform>().anchoredPosition = _cardOriginPos;
                 _selectCard = value;
                 CardSort();
@@ -79,16 +79,19 @@ public class CardCollector : MonoBehaviour
         {
             SelectCard.GetComponent<RectTransform>().anchoredPosition = Input.mousePosition;
 
-            if (Vector2.Distance(SelectCard.GetComponent<RectTransform>().anchoredPosition, _magicCircle.GetComponent<RectTransform>().anchoredPosition)
-                <= _magicCircle.CardAreaDistance)
+            if (_magicCircle.IsBig == true)
             {
-                SelectCard.GetComponent<Image>().sprite = SelectCard.Rune.RuneImage;
-                SelectCard.GetComponent<RectTransform>().sizeDelta = new Vector2(128, 128);
-            }
-            else
-            {
-                SelectCard.GetComponent<Image>().sprite = SelectCard.Rune.CardImage;
-                SelectCard.GetComponent<RectTransform>().sizeDelta = new Vector2(300, 500);
+                if (Vector2.Distance(SelectCard.GetComponent<RectTransform>().anchoredPosition, _magicCircle.GetComponent<RectTransform>().anchoredPosition)
+                    <= _magicCircle.CardAreaDistance)
+                {
+                    SelectCard.GetComponent<Image>().sprite = SelectCard.Rune.RuneImage;
+                    SelectCard.GetComponent<RectTransform>().sizeDelta = new Vector2(128, 128);
+                }
+                else
+                {
+                    SelectCard.GetComponent<Image>().sprite = SelectCard.Rune.CardImage;
+                    SelectCard.GetComponent<RectTransform>().sizeDelta = new Vector2(300, 500);
+                }
             }
         }
     }

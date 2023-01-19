@@ -56,11 +56,12 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
             if (_isBig)
             {
                 // 크기 기우기
+                transform.DOComplete();
                 this.transform.DOScale(Vector3.one, 0.2f);
                 //_bgPanel.GetComponent<Image>().DOFade(0.7f, 0.2f);
                 _bgPanel.GetComponent<CanvasGroup>().DOFade(0.7f, 0.2f);
-                this.transform.DOLocalMoveY(1100, 0.2f).SetRelative();
-                _bgPanel.GetComponent<Image>().raycastTarget = true;
+                this.transform.DOLocalMoveY(400, 0.2f).SetRelative();
+                _bgPanel.transform.GetChild(0).GetComponent<Image>().raycastTarget = true;
             }
             else
             {
@@ -72,11 +73,13 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                 // 카드 놓으면 작아짐
 
                 // 작게 만들기
+                transform.DOComplete();
                 this.transform.DOScale(new Vector3(0.3f, 0.3f, 1), 0.2f);
                 //_bgPanel.GetComponent<Image>().DOFade(0, 0.2f);
                 _bgPanel.GetComponent<CanvasGroup>().DOFade(0, 0.2f);
-                this.transform.DOLocalMoveY(-1100, 0.2f).SetRelative();
-                _bgPanel.GetComponent<Image>().raycastTarget = false;
+                this.transform.DOLocalMoveY(-400, 0.2f).SetRelative();
+                _bgPanel.transform.GetChild(0).GetComponent<Image>().raycastTarget = false;
+                this.transform.rotation = Quaternion.Euler(0, 0, 0);
             }
         }
     }
@@ -259,9 +262,9 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                     Destroy(g);
                     _runeDict[RuneType.Assist][changeIndex].SetRune(card.Rune);
 
-                    Sequence seq2 = DOTween.Sequence();
-                    seq2.AppendInterval(0.2f);
-                    seq2.AppendCallback(() => { IsBig = false; });
+                    //Sequence seq2 = DOTween.Sequence();
+                    //seq2.AppendInterval(0.2f);
+                    //seq2.AppendCallback(() => { IsBig = false; });
                 });
             });
             SortCard();
@@ -277,8 +280,8 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
         {
             seq.Join(r.GetComponent<RectTransform>().DOAnchorPos(Vector2.zero, 0.3f).From());
         }
-        seq.AppendInterval(0.2f);
-        seq.AppendCallback(() => { IsBig = false; });
+        //seq.AppendInterval(0.2f);
+        //seq.AppendCallback(() => { IsBig = false; });
     }
 
     public void Swipe1()
@@ -312,7 +315,11 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                     {
                         Debug.Log("right");
                         Debug.Log("Attack");
-                        Damage();
+                        if(touchBeganPos.y <= this.GetComponent<RectTransform>().anchoredPosition.y + this.GetComponent<RectTransform>().sizeDelta.y / 2
+                            && touchBeganPos.y >= this.GetComponent<RectTransform>().anchoredPosition.y - this.GetComponent<RectTransform>().sizeDelta.y / 2)
+                        {
+                            Damage();
+                        }
                     }
                     else if (touchDif.x < 0 && Mathf.Abs(touchDif.y) < Mathf.Abs(touchDif.x))
                     {
