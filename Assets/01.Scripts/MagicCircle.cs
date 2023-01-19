@@ -287,7 +287,7 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                 {
                     if (_runeDict[RuneType.Assist][i].Rune != null)
                     {
-                        name += _runeDict[RuneType.Assist][i].Rune.AssistRune.Name;
+                        name += _runeDict[RuneType.Assist][i].Rune.AssistRune.Name + " ";
 
                         if(i == 2)
                         {
@@ -301,6 +301,7 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                 }
                 else
                 {
+                    name = name.Substring(0, name.Length - 1);
                     name += $"ÀÇ {_runeDict[RuneType.Main][0].Rune.MainRune.Name}";
                 }
                 _nameText.text = name;
