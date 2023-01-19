@@ -13,15 +13,17 @@ public class CardCollector : MonoBehaviour
     private int _cardCnt;
 
     //private List<Card> _cardList;
+    [SerializeField]
+    private CardListSO _deck = null;
 
     [SerializeField]
-    private CardListSO _deckCards = null;
+    private List<Card> _deckCards = null;
 
     [SerializeField]
-    private CardListSO _handCards = null;
+    private List<Card> _handCards = null;
 
     [SerializeField]
-    private CardListSO _restCards = null;
+    private List<Card> _restCards = null;
 
     private Vector2 _cardOriginPos;
     private Card _selectCard;
@@ -61,17 +63,18 @@ public class CardCollector : MonoBehaviour
 
     private void Awake()
     {
+        CardListClear();
+        for (int i = 0; i < _deck.cards.Count; i++)
+        {
+            GameObject card = Instantiate(_deck.cards[i], this.transform);
+            _deckCards.Add(card.GetComponent<Card>());
+            card.SetActive(false);
+        }
+
         //_cardList = new List<Card>();
         EventManager.StartListening(Define.ON_START_PLAYER_TURN, CardCreate);
         EventManager.StartListening(Define.ON_END_PLAYER_TURN, CardDestroy);
         EventManager.StartListening(Define.ON_END_MONSTER_TURN, CoolTimeDecrease);
-    }
-
-    // 2960 * 1440
-    private void Start()
-    {
-
-
     }
 
     private void Update()
@@ -90,12 +93,19 @@ public class CardCollector : MonoBehaviour
 
     }
 
+    private void CardListClear()
+    {
+        _deckCards.Clear();
+        _handCards.Clear();
+        _restCards.Clear();
+    }
+
     public void CardSort()
     {
-        for (int i = 0; i < _handCards.cards.Count; i++)
+        for (int i = 0; i < _handCards.Count; i++)
         {
-            RectTransform rect = _handCards.cards[i].GetComponent<RectTransform>();
-            float xDelta = 1440f / _handCards.cards.Count;
+            RectTransform rect = _handCards[i].gameObject.GetComponent<RectTransform>();
+            float xDelta = 1440f / _handCards.Count;
             rect.anchoredPosition = new Vector3(i * xDelta + rect.sizeDelta.x / 2, rect.sizeDelta.y / 2, 0);
         }
     }
@@ -107,17 +117,17 @@ public class CardCollector : MonoBehaviour
 
     public void CardDraw()
     {
-        if (_deckCards.cards.Count == 0)
+        if (_deckCards.Count == 0)
         {
             Debug.LogWarning("Deck is Empty");
             return;
         }
 
-        int idx = Random.Range(0, _deckCards.cards.Count);
+        int idx = Random.Range(0, _deckCards.Count);
         Debug.Log(idx);
-        Card card = _deckCards.cards[idx];
-        _deckCards.cards.Remove(card);
-        _handCards.cards.Add(card);
+        Card card = _deckCards[idx];
+        _deckCards.Remove(card);
+        _handCards.Add(card);
     }
 
     public void CardCreate()
@@ -125,7 +135,9 @@ public class CardCollector : MonoBehaviour
         for (int i = 0; i < _cardCnt; i++)
         {
             CardDraw();
-            GameObject go = Instantiate(_handCards.cards[_handCards.cards.Count - 1].CardPrefab, this.transform);
+
+            GameObject go = _handCards[i].gameObject/*Instantiate(_handCards[_handCards.Count - 1].CardPrefab, this.transform)*/;
+            go.SetActive(true);
             RectTransform rect = go.GetComponent<RectTransform>();
             //_cardList.Add(go.GetComponent<Card>());
             rect.anchoredPosition = Vector3.zero;
@@ -136,18 +148,22 @@ public class CardCollector : MonoBehaviour
 
     public void CardDestroy()
     {
-        for (int i = 0; i < _handCards.cards.Count; i++)
+        for (int i = 0; i < _handCards.Count; i++)
         {
-            Card card = _handCards.cards[i];
-            _deckCards.cards.Add(card);
+            Card card = _handCards[i];
+
+            _deckCards.Add(card);
+            _handCards[i].gameObject.SetActive(false);
+            //Destroy(_handCards[i].gameObject);
+            //Debug.Log(card.gameObject.name);
             //Destroy(card.gameObject);
         }
-        _handCards.cards.Clear();
+        _handCards.Clear();
     }
 
     private void CoolTimeDecrease()
     {
-        foreach (Card card in _restCards.cards)
+        foreach (Card card in _restCards)
         {
             card.CoolTime--;
             if (!card.IsRest)
@@ -157,10 +173,9 @@ public class CardCollector : MonoBehaviour
 
     private void RestCardToDeck(Card card)
     {
-        _deckCards.cards.Add(card);
-        _restCards.cards.Remove(card);
+        _deckCards.Add(card);
+        _restCards.Remove(card);
     }
-
 
     private void OnDestroy()
     {

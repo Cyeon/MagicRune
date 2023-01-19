@@ -37,9 +37,9 @@ public class MagicCircle : MonoBehaviour
     public Enemy enemy;
 
     [SerializeField]
-    private CardListSO _handCards = null;
+    private List<Card> _handCards = null;
     [SerializeField]
-    private CardListSO _restCards = null;
+    private List<Card> _restCards = null;
 
     public void Awake()
     {
@@ -167,8 +167,8 @@ public class MagicCircle : MonoBehaviour
                     _runeDict[RuneType.Assist][changeIndex].SetRune(card.Rune);
                 });
             });
-            _handCards.cards.Remove(card);
-            _restCards.cards.Add(card);
+            _handCards.Remove(card);
+            _restCards.Add(card);
             SortCard();
         }
 
@@ -177,7 +177,7 @@ public class MagicCircle : MonoBehaviour
 
     public void AssistRuneAnimanation()
     {
-        foreach(var r in _runeDict[RuneType.Assist])
+        foreach (var r in _runeDict[RuneType.Assist])
         {
             r.GetComponent<RectTransform>().DOAnchorPos(Vector2.zero, 0.3f).From();
         }
