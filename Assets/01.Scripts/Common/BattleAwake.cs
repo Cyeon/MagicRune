@@ -10,6 +10,6 @@ public class BattleAwake : MonoBehaviour
     }
     private void Start()
     {
-        GameManager.Instance.OnPlayerTurn();
+        //GameManager.Instance.OnPlayerTurn();
     }
 }

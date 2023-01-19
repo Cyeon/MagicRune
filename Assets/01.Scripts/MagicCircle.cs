@@ -16,10 +16,7 @@ public class MagicCircle : MonoBehaviour
 {
     private Dictionary<RuneType, List<Card>> _runeDict;
 
-    [SerializeField]
-    private int _mainRuneCnt = 1;
-    [SerializeField]
-    private int _assistRuneCnt = 5;
+    private const int _mainRuneCnt = 1;
 
     [SerializeField]
     private float _assistRuneDistance = 3f;
@@ -30,16 +27,9 @@ public class MagicCircle : MonoBehaviour
     [SerializeField]
     private Card _runeTemplate;
     [SerializeField]
-    private Card _mainRuneTemplate;
-    [SerializeField]
     private Card _garbageRuneTemplate;
 
     public Enemy enemy;
-
-    [SerializeField]
-    private List<Card> _handCards = null;
-    [SerializeField]
-    private List<Card> _restCards = null;
 
     public void Awake()
     {
@@ -72,9 +62,14 @@ public class MagicCircle : MonoBehaviour
 
     public bool AddCard(Card card)
     {
-        // ï¿½Ì¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½Ã¼ï¿½ï¿½ï¿½ï¿½ ï¿½Õ°ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½é¿¡ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Å°ï¿½ï¿½
+        // ¹Ì¸® º¸¿©ÁØ º¸Á¶ ·é ±ÙÃ¼¿¡¼­ ¼Õ°¡¶ôÀ» ¶§¸é ±× º¸Á¶·é¿¡ ÀåÂø½ÃÅ°±â
         if (_runeDict.ContainsKey(RuneType.Main) == false || (_runeDict[RuneType.Main].Count == 0))
         {
+            if (!DummyCost.Instance.CanUseMainRune(card.Rune.MainRune.Cost))
+            {
+                Debug.Log("¸ÞÀÎ ·éÀ» »ç¿ëÇÏ±â À§ÇÑ ¸¶³ª°¡ ºÎÁ·ÇÕ´Ï´Ù.");
+                return false;
+            }
             if (_runeDict.ContainsKey(RuneType.Main))
             {
                 if (_runeDict[RuneType.Main].Count >= _mainRuneCnt)
@@ -83,7 +78,7 @@ public class MagicCircle : MonoBehaviour
                     return false;
                 }
 
-                GameObject go = Instantiate(_mainRuneTemplate.gameObject, this.transform);
+                GameObject go = Instantiate(_runeTemplate.gameObject, this.transform);
                 Card rune = go.GetComponent<Card>();
                 rune.SetRune(card.Rune);
                 rune.SetIsEquip(true);
@@ -112,7 +107,7 @@ public class MagicCircle : MonoBehaviour
             }
             else
             {
-                GameObject go = Instantiate(_mainRuneTemplate.gameObject, this.transform);
+                GameObject go = Instantiate(_runeTemplate.gameObject, this.transform);
                 Card rune = go.GetComponent<Card>();
                 rune.SetRune(card.Rune);
                 rune.SetIsEquip(true);
@@ -141,6 +136,40 @@ public class MagicCircle : MonoBehaviour
         }
         else
         {
+            /*
+            if (_runeDict.ContainsKey(RuneType.Assist))
+            {
+                if (_runeDict[RuneType.Assist].Count >= _assistRuneCnt)
+                {
+                    Debug.Log("º¸Á¶ ·éÀÌ ²ËÂ÷ ÀÖ½À´Ï´Ù.");
+                    return false;
+                }
+                GameObject go = Instantiate(_runeTemplate.gameObject, this.transform);
+                Card rune = go.GetComponent<Card>();
+                rune.SetRune(card.Rune);
+                rune.SetCoolTime(card.Rune.AssistRune.DelayTurn);
+                _runeDict[RuneType.Assist].Add(rune);
+            }
+            else
+            {
+                GameObject go = Instantiate(_runeTemplate.gameObject, this.transform);
+                Card rune = go.GetComponent<Card>();
+                rune.SetRune(card.Rune);
+                rune.SetCoolTime(card.Rune.AssistRune.DelayTurn);
+                _runeDict.Add(RuneType.Assist, new List<Card>() { rune });
+            }
+            */
+
+            // ±ÙÃ³¿¡ ÀÖ´Â º¸Á¶ ·éÀ¸·Î µé¾î°¡±â
+
+            // ÀüÃ¼ Å½»ö ÈÄ ÀÚ±ê°úÀÇ °Å¸® ºñ±³ °¡Àå °¡±î¿î ¾Ö·Î ±³Ã¼
+
+            if (!DummyCost.Instance.CanUseSubRune(card.Rune.AssistRune.Cost))
+            {
+                Debug.Log("º¸Á¶ ·éÀ» »ç¿ëÇÏ±â À§ÇÑ ¸¶³ª°¡ ºÎÁ·ÇÕ´Ï´Ù.");
+                return false;
+            }
+
             int changeIndex = -1;
             for (int i = 0; i < _runeDict[RuneType.Assist].Count; i++)
             {
@@ -153,7 +182,7 @@ public class MagicCircle : MonoBehaviour
 
             if (changeIndex == -1) return false;
 
-            // ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ ï¿½Ú·ï¿½ ï¿½Ì·ï¿½ï¿½
+            // ¾Ö´Ï¸ÞÀÌ¼Ç µÚ·Î ¹Ì·ç±â
             Sequence seq = DOTween.Sequence();
             seq.AppendCallback(() =>
             {
@@ -167,8 +196,7 @@ public class MagicCircle : MonoBehaviour
                     _runeDict[RuneType.Assist][changeIndex].SetRune(card.Rune);
                 });
             });
-            _handCards.Remove(card);
-            _restCards.Add(card);
+
             SortCard();
         }
 
@@ -177,7 +205,7 @@ public class MagicCircle : MonoBehaviour
 
     public void AssistRuneAnimanation()
     {
-        foreach (var r in _runeDict[RuneType.Assist])
+        foreach(var r in _runeDict[RuneType.Assist])
         {
             r.GetComponent<RectTransform>().DOAnchorPos(Vector2.zero, 0.3f).From();
         }
@@ -185,45 +213,80 @@ public class MagicCircle : MonoBehaviour
 
     public void Damage()
     {
-        int damage = 0;
+        // ±×³É ·ÎÁ÷¸¸ Àû¾î³õ´Â´Ù´Â ´À³¦, ´Ù¸¥ °÷¿¡´Ù°¡ ¿Å±æ ¿¹Á¤
 
-        if (_runeDict.ContainsKey(RuneType.Assist))
+        // ¸¶¹ýÁø È¸Àü È¿°ú
+        // »çÀÌ¿¡ Ãß°¡·Î ´Ù¸¥ È¿°úµµ ÀÖ°ÚÁö
+        // ±× ÈÄ¿¡ °ø°Ý
+
+        if (_runeDict[RuneType.Main].Count == 0 || _runeDict[RuneType.Main][0].Rune == null)
         {
-            for (int i = 0; i < _runeDict[RuneType.Assist].Count; i++)
-            {
-                //damage += _runeDict[RuneType.Assist][i]._runeSO.assistRuneValue;
-                //damage += _runeDict[RuneType.Assist][i].Rune.AssistRune.EffectPair
-                // _runeDict[RuneType.Assist][i].Rune.AssistRune.EffectPair[i].Effect.effectCard.UseEffect(); // ï¿½Ì·ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ï¸ï¿½ ï¿½Ç°Ú´ï¿½.    
-            }
+            // °ø°Ý ¾ÈµÇ´Â ÀÌÆåÆ®
+            // ¹¹.. Ä«¸Þ¶ó Èçµé¸²ÀÌ¶ó´øÁö
+            return;
         }
 
-        if (_runeDict.ContainsKey(RuneType.Main))
+        Sequence seq = DOTween.Sequence();
+        seq.Append(this.transform.DORotate(new Vector3(0, 0, 360 * 5), 0.7f, RotateMode.LocalAxisAdd).SetEase(Ease.OutCubic));
+
+        //int damage = 0;
+        seq.AppendInterval(0.1f);
+        seq.AppendCallback(() =>
         {
-            for (int i = 0; i < _runeDict[RuneType.Main].Count; i++)
+            if (_runeDict.ContainsKey(RuneType.Assist))
             {
+                for (int i = 0; i < _runeDict[RuneType.Assist].Count; i++)
+                {
+                    //damage += _runeDict[RuneType.Assist][i]._runeSO.assistRuneValue;
+                    //damage += _runeDict[RuneType.Assist][i].Rune.AssistRune.EffectPair
+                    Card card = _runeDict[RuneType.Assist][i];
+                    if (card.Rune != null)
+                    {
+                        card.UseAssistEffect();
+                    }
+                }
+
+                if (_runeDict.ContainsKey(RuneType.Assist))
+                {
+                    for (int i = 0; i < _runeDict[RuneType.Assist].Count; i++)
+                    {
+                        Destroy(_runeDict[RuneType.Assist][i].gameObject);
+                    }
+                }
                 //damage += _runeDict[RuneType.Main][i]._runeSO.mainRuneValue;
             }
-        }
+        });
+        seq.AppendInterval(0.5f);
+        seq.AppendCallback(() =>
+        {
+            if (_runeDict.ContainsKey(RuneType.Main))
+            {
+                for (int i = 0; i < _runeDict[RuneType.Main].Count; i++)
+                {
+                    //damage += _runeDict[RuneType.Main][i]._runeSO.mainRuneValue;
+                    Card card = _runeDict[RuneType.Main][i];
+                    if (card.Rune != null)
+                    {
+                        card.UseMainEffect();
+                    }
+                }
 
+                if (_runeDict.ContainsKey(RuneType.Main))
+                {
+                    for (int i = 0; i < _runeDict[RuneType.Main].Count; i++)
+                    {
+                        Destroy(_runeDict[RuneType.Main][i].gameObject);
+                    }
+                }
+            }
+        });
+        seq.AppendCallback(() => Debug.Log("Attack Complate"));
+        seq.AppendCallback(() =>
+        {
+            _runeDict.Clear();
+        });
+        
         //enemy.Damage(damage);
-
-        if (_runeDict.ContainsKey(RuneType.Assist))
-        {
-            for (int i = 0; i < _runeDict[RuneType.Assist].Count; i++)
-            {
-                Destroy(_runeDict[RuneType.Assist][i].gameObject);
-            }
-        }
-
-        if (_runeDict.ContainsKey(RuneType.Main))
-        {
-            for (int i = 0; i < _runeDict[RuneType.Main].Count; i++)
-            {
-                Destroy(_runeDict[RuneType.Main][i].gameObject);
-            }
-        }
-
-        _runeDict.Clear();
     }
 
 #if UNITY_EDITOR

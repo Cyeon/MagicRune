@@ -16,52 +16,21 @@ public enum AttributeType
 }
 
 /// <summary>
-/// 조건 클래스
-/// </summary>
-[Serializable]
-public class Condition
-{
-    public string ConditionName;
-    
-    // 여기도 인자값 필요하면 넣으면됨
-}
-
-/// <summary>
-/// 효과 클래스
-/// </summary>
-[Serializable]
-public class Effect
-{
-    public string effectName;
-    public Card effectCard;
-
-    public string paramater; // string은 신이야
-}
-
-[Serializable]
-public class EffectPair
-{
-    // 많은 개선 필요
-
-    public Condition Condition;
-    public bool Not; // 조건 반대로 하기
-    public Effect Effect;
-}
-
-/// <summary>
 /// 룬 정보 클래스
 /// </summary>
 [Serializable]
 public class RuneProperty
 {
     // 유형 Enum ? 필요한가?
+    [Tooltip("속성")]
     public AttributeType Attribute;
-    [Min(0)]
+    [Min(0), Tooltip("코스트")]
     public int Cost; // 코스트
-    [Min(0)]
+    [Min(0), Tooltip("재사용 가능 턴")]
     public int DelayTurn; // 재사용 가능 턴
 
-    public List<EffectPair> EffectPair; // 효과와 조건을 담은 리스트
+    // 연걸이 안됨
+    //public Card Effect; // 효과 함수를 갇고 있는 카드
 }
 
 [CreateAssetMenu(menuName = "SO/Rune")]
@@ -69,9 +38,9 @@ public class CardSO : ScriptableObject
 {
     [Tooltip("카드 이름")]
     public string CardName;
-    [ShowAssetPreview(32, 32), Tooltip("카드 이미지")]
+    [ShowAssetPreview(32, 32), Tooltip("카드에 들어갈 이미지")]
     public Sprite CardImage;
-    [ShowAssetPreview(32, 32), Tooltip("룬 이미지")]
+    [ShowAssetPreview(32, 32), Tooltip("마법진에 들어갈 룬 이미지")]
     public Sprite RuneImage;
     [Tooltip("카드 설명"), ResizableTextArea]
     public string CardDescription;

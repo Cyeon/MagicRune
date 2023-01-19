@@ -4,8 +4,13 @@ using UnityEngine;
 
 public class FireCard : Card
 {
-    public override void UseEffect()
+    public override void UseAssistEffect()
     {
-        Debug.Log("1");
+        Debug.Log("1 damage");
+    }
+
+    public override void UseMainEffect()
+    {
+        Debug.Log("5 damage");
     }
 }
