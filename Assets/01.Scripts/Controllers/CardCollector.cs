@@ -49,6 +49,7 @@ public class CardCollector : MonoBehaviour
                     if (isAdd)
                     {
                         _handCards.Remove(SelectCard);
+                        //SelectCard.IsRest = true;
                         _restCards.Add(SelectCard);
                         SelectCard.gameObject.SetActive(false);
                     }
@@ -132,10 +133,11 @@ public class CardCollector : MonoBehaviour
 
     private void CoolTimeDecrease()
     {
-        foreach (Card card in _restCards)
+        for (int i = _restCards.Count - 1; i >= 0; i--)
         {
+            Card card = _restCards[i];
             card.CoolTime--;
-            if (!card.IsRest)
+            if (card.CoolTime <= 0)
             {
                 _deckCards.Add(card);
                 _restCards.Remove(card);
