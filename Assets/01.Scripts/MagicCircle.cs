@@ -205,7 +205,7 @@ public class MagicCircle : MonoBehaviour
 
     public void AssistRuneAnimanation()
     {
-        foreach(var r in _runeDict[RuneType.Assist])
+        foreach (var r in _runeDict[RuneType.Assist])
         {
             r.GetComponent<RectTransform>().DOAnchorPos(Vector2.zero, 0.3f).From();
         }
@@ -285,7 +285,7 @@ public class MagicCircle : MonoBehaviour
         {
             _runeDict.Clear();
         });
-        
+
         //enemy.Damage(damage);
     }
 

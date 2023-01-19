@@ -17,7 +17,7 @@ public class GameManager : MonoSingleton<GameManager>
     public Enemy enemy = null;
     public Unit currentUnit = null;
 
-    private void Update()
+    private void Awake()
     {
         EventManager.StartListening(Define.ON_START_PLAYER_TURN, OnPlayerTurn);
         EventManager.StartListening(Define.ON_START_MONSTER_TURN, OnMonsterTurn);
@@ -35,12 +35,23 @@ public class GameManager : MonoSingleton<GameManager>
         StatusManager.Instance.AddStatus(enemy, "약쇄");
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.M))
+        {
+            OnMonsterTurn();
+        }
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            OnPlayerTurn();
+        }
+    }
+
     private void OnPlayerTurn()
     {
+        EventManager.TriggerEvent(Define.ON_END_MONSTER_TURN);
         Debug.Log("Player Turn!");
         gameTurn = GameTurn.Player;
-        EventManager.TriggerEvent(Define.ON_START_PLAYER_TURN);
-        EventManager<bool>.TriggerEvent(Define.ON_START_PLAYER_TURN, true);
         currentUnit = player;
 
         StatusManager.Instance.StatusTurnChange(player);
@@ -49,11 +60,6 @@ public class GameManager : MonoSingleton<GameManager>
 
     public void OnMonsterTurn()
     {
-        EventManager.TriggerEvent(Define.ON_END_PLAYER_TURN);
-        gameTurn = GameTurn.Monster;
-        EventManager<bool>.TriggerEvent(Define.ON_END_PLAYER_TURN, false);
-
-        EventManager.TriggerEvent(Define.ON_START_MONSTER_TURN);
         Debug.Log("Enemy Turn!");
         gameTurn = GameTurn.Monster;
         currentUnit = enemy;
