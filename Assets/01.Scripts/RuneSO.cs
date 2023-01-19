@@ -24,6 +24,8 @@ public class RuneProperty
     [Tooltip("카드 이름")]
     public string Name;
     // 유형 Enum ? 필요한가?
+    [ResizableTextArea, Tooltip("카드 효과 텍스트")]
+    public string Effect;
     [Tooltip("속성")]
     public AttributeType Attribute;
     [Min(0), Tooltip("코스트")]
