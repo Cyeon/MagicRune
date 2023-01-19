@@ -34,6 +34,8 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
     private Card _garbageRuneTemplate;
     [SerializeField]
     private GameObject _bgPanel;
+    [SerializeField]
+    private Text _nameText;
 
     public Enemy enemy;
     private Vector2 touchBeganPos;
@@ -226,7 +228,7 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                     SortCard();
                     AssistRuneAnimanation();
                 });
-                
+
             }
         }
         else
@@ -261,7 +263,8 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                 {
                     Destroy(g);
                     _runeDict[RuneType.Assist][changeIndex].SetRune(card.Rune);
-
+                    _runeDict[RuneType.Assist][changeIndex].SetCoolTime(card.Rune.AssistRune.DelayTurn);
+                    UpdateMagicName();
                     //Sequence seq2 = DOTween.Sequence();
                     //seq2.AppendInterval(0.2f);
                     //seq2.AppendCallback(() => { IsBig = false; });
@@ -273,6 +276,38 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
         return true;
     }
 
+    private void UpdateMagicName()
+    {
+        if (_runeDict.ContainsKey(RuneType.Main))
+        {
+            if (_runeDict[RuneType.Main].Count > 0 && _runeDict[RuneType.Main][0].Rune != null)
+            {
+                string name = "";
+                for (int i = 0; i < _runeDict[RuneType.Assist].Count; i++)
+                {
+                    if (_runeDict[RuneType.Assist][i].Rune != null)
+                    {
+                        name += _runeDict[RuneType.Assist][i].Rune.AssistRune.Name;
+
+                        if(i == 2)
+                        {
+                            name += "\n";
+                        }
+                    }
+                }
+                if (name == "")
+                {
+                    name = _runeDict[RuneType.Main][0].Rune.MainRune.Name;
+                }
+                else
+                {
+                    name += $"ÀÇ {_runeDict[RuneType.Main][0].Rune.MainRune.Name}";
+                }
+                _nameText.text = name;
+            }
+        }
+    }
+
     public void AssistRuneAnimanation()
     {
         Sequence seq = DOTween.Sequence();
@@ -280,6 +315,7 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
         {
             seq.Join(r.GetComponent<RectTransform>().DOAnchorPos(Vector2.zero, 0.3f).From());
         }
+        seq.AppendCallback(() => { UpdateMagicName(); });
         //seq.AppendInterval(0.2f);
         //seq.AppendCallback(() => { IsBig = false; });
     }
@@ -315,7 +351,7 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                     {
                         Debug.Log("right");
                         Debug.Log("Attack");
-                        if(touchBeganPos.y <= this.GetComponent<RectTransform>().anchoredPosition.y + this.GetComponent<RectTransform>().sizeDelta.y / 2
+                        if (touchBeganPos.y <= this.GetComponent<RectTransform>().anchoredPosition.y + this.GetComponent<RectTransform>().sizeDelta.y / 2
                             && touchBeganPos.y >= this.GetComponent<RectTransform>().anchoredPosition.y - this.GetComponent<RectTransform>().sizeDelta.y / 2)
                         {
                             Damage();
@@ -410,7 +446,7 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        if(IsBig == false)
+        if (IsBig == false)
         {
             IsBig = true;
         }

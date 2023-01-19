@@ -22,7 +22,7 @@ public enum AttributeType
 public class RuneProperty
 {
     [Tooltip("카드 이름")]
-    public string CardName;
+    public string Name;
     // 유형 Enum ? 필요한가?
     [Tooltip("속성")]
     public AttributeType Attribute;

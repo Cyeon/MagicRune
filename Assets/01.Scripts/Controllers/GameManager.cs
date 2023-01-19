@@ -29,8 +29,8 @@ public class GameManager : MonoSingleton<GameManager>
 
     private void Start() {
         //enemy = EnemyManager.Instance.SpawnEnemy();
-        StatusManager.Instance.AddStatus(enemy, "약쇄");
-        StatusManager.Instance.AddStatus(enemy, "턴넘기기");
+        StatusManager.Instance.AddStatus(enemy, "?�쇄");
+        StatusManager.Instance.AddStatus(enemy, "?�넘기기");
     }
 
     private void OnPlayerTurn()
