@@ -11,6 +11,7 @@ public class UIManager : MonoSingleton<UIManager>
     [SerializeField] private TextMeshProUGUI _enemyHealthText;
     [SerializeField] private Slider _playerHealthSlider;
     [SerializeField] private TextMeshProUGUI _playerHealthText;
+    [SerializeField] private Image _enemyPatternIcon;
 
     public void EnemyHealthbarInit(float health)
     {
@@ -39,5 +40,10 @@ public class UIManager : MonoSingleton<UIManager>
         Sequence seq = DOTween.Sequence();
         seq.Append(_playerHealthSlider.DOValue(GameManager.instance.player.HP, 0.2f));
         seq.AppendCallback(() => _playerHealthText.text = string.Format("{0} / {1}", _playerHealthSlider.value, _playerHealthSlider.maxValue));
+    }
+
+    public void ReloadPatternIcon(Sprite sprite)
+    {
+        _enemyPatternIcon.sprite = sprite;
     }
 }

@@ -5,7 +5,8 @@ using UnityEngine;
 public class Enemy : Unit
 {
     public EnemySO enemyInfo;
-    [SerializeField] private float atkDamage;
+    public float atkDamage;
+    public Pattern pattern;
 
     public void Init(EnemySO so)
     {
@@ -18,10 +19,10 @@ public class Enemy : Unit
 
     public void TurnStart()
     {
-        Attack();
+        pattern.Turn();
     }
 
-    private void Attack()
+    public void Attack()
     {
         currentDmg = atkDamage;
 
