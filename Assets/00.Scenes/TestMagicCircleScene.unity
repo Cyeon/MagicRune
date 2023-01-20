@@ -207,7 +207,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1502645725}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: MagicCircle, Assembly-CSharp
         m_MethodName: Damage
         m_Mode: 1
@@ -671,7 +671,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5873349324a456747b5aff3cfdfc398d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _magicCircle: {fileID: 1502645725}
+  _magicCircle: {fileID: 0}
+  _testMagicCircle: {fileID: 1502645725}
 --- !u!1 &424719282
 GameObject:
   m_ObjectHideFlags: 0
@@ -1485,17 +1486,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 1502645721}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9dafadea4d0683e46ab4617e002cae19, type: 3}
+  m_Script: {fileID: 11500000, guid: f08920395990228438a880152dce6a88, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _assistRuneDistance: 350
   _cardAreaDistance: 450
-  _runeTemplate: {fileID: 658511538511750373, guid: 251da307d95cacf4583a2aa2c5d719cd, type: 3}
-  _garbageRuneTemplate: {fileID: 8363697945999875843, guid: ad53e8f0939141a4ea08b0fc365a9f78, type: 3}
+  _runeTemplate: {fileID: 7204125268496756620, guid: a28714deb0305ca44a3cf7e21093f78b, type: 3}
+  _garbageRuneTemplate: {fileID: 3300138471252233031, guid: 9fd2726584af81e48bfaf8021c90f15d, type: 3}
   _bgPanel: {fileID: 156001636}
   _nameText: {fileID: 2117565520}
   enemy: {fileID: 0}
-  swipeSensitivity: 10
+  swipeSensitivity: 0
 --- !u!1 &1615914771
 GameObject:
   m_ObjectHideFlags: 0
@@ -1542,12 +1543,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1615914771}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62519adf4c254054c8c4f9646d34d7be, type: 3}
+  m_Script: {fileID: 11500000, guid: a8d65122e2988534bb3b4b92c9a0dded, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _magicCircle: {fileID: 1502645725}
-  _cardTemplate: {fileID: 8683681480207833223, guid: cce69109ee5fc73409b8597097f58568, type: 3}
-  _cardCnt: 8
+  _cardTemplate: {fileID: -257089530510575117, guid: 7afe6bf9b083f844fb3357795a634ae0, type: 3}
+  _cardCnt: 9
 --- !u!1 &1619516169
 GameObject:
   m_ObjectHideFlags: 0
@@ -1869,7 +1870,7 @@ MonoBehaviour:
   <OnTakeDamageFeedback>k__BackingField:
     m_PersistentCalls:
       m_Calls: []
-  cost: 0
+  cost: 10
 --- !u!4 &1767116411
 Transform:
   m_ObjectHideFlags: 0

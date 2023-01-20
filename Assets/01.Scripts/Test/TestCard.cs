@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using DG.Tweening;
 
-public abstract class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
+public abstract class TestCard : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
     [SerializeField]
     protected RuneSO _rune;
@@ -16,12 +15,12 @@ public abstract class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
 
     private int _coolTime;
 
-    private CardCollector _collector;
+    private TestCardCollector _collector;
     private RectTransform _rect;
 
     protected virtual void Start()
     {
-        _collector = GetComponentInParent<CardCollector>();
+        _collector = GetComponentInParent<TestCardCollector>();
         _rect = GetComponent<RectTransform>();
     }
 
@@ -29,7 +28,7 @@ public abstract class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     {
         _rune = rune;
 
-        if(_rune == null)
+        if (_rune == null)
         {
             this.GetComponent<Image>().color = Color.black;
         }
@@ -53,7 +52,7 @@ public abstract class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        if(_isEquip == false)
+        if (_isEquip == false)
         {
             _collector.CardSelect(this);
 
