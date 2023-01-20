@@ -12,7 +12,18 @@ public class CardCollector : MonoBehaviour
     [SerializeField]
     private int _cardCnt;
 
-    private List<Card> _cardList;
+    //private List<Card> _cardList;
+    [SerializeField]
+    private CardListSO _deck = null;
+
+    [SerializeField]
+    private List<Card> _deckCards = null;
+
+    [SerializeField]
+    private List<Card> _handCards = null;
+
+    [SerializeField]
+    private List<Card> _restCards = null;
 
     private Vector2 _cardOriginPos;
     private Card _selectCard;
@@ -28,7 +39,7 @@ public class CardCollector : MonoBehaviour
             }
             else
             {
-                // ∏∏æ‡ º±≈√ ƒ´µÂ∞° ∏∂π˝¡¯ æ»ø° ¿÷¥Ÿ∏È?
+                // ÎßåÏïΩ ÏÑ†ÌÉù Ïπ¥ÎìúÍ∞Ä ÎßàÎ≤ïÏßÑ ÏïàÏóê ÏûàÎã§Î©¥?
                 Vector2 mousePos = Input.mousePosition;
                 RectTransform circleRect = _magicCircle.GetComponent<RectTransform>();
                 if (mousePos.x >= circleRect.anchoredPosition.x - circleRect.sizeDelta.x / 2 && mousePos.x <= circleRect.anchoredPosition.x + circleRect.sizeDelta.x / 2
@@ -37,11 +48,13 @@ public class CardCollector : MonoBehaviour
                     bool isAdd = _magicCircle.AddCard(SelectCard);
                     if (isAdd)
                     {
-                        _cardList.Remove(SelectCard);
-                        Destroy(SelectCard.gameObject);
+                        _handCards.Remove(SelectCard);
+                        //SelectCard.IsRest = true;
+                        _restCards.Add(SelectCard);
+                        SelectCard.gameObject.SetActive(false);
                     }
                 }
-                // YES : ∏∂π˝¡¯ æ»ø° ≥÷±‚, ∏ÆΩ∫∆Æ æ»ø° ƒ´µÂ ¡ˆøÏ±‚
+                // YES : ÎßàÎ≤ïÏßÑ ÏïàÏóê ÎÑ£Í∏∞, Î¶¨Ïä§Ìä∏ ÏïàÏóê Ïπ¥Îìú ÏßÄÏö∞Í∏∞
                 _selectCard.GetComponent<RectTransform>().anchoredPosition = _cardOriginPos;
                 _selectCard = value;
                 CardSort();
@@ -51,17 +64,27 @@ public class CardCollector : MonoBehaviour
 
     private void Awake()
     {
-        _cardList = new List<Card>();
+        //_cardList = new List<Card>();
+        EventManager.StartListening(Define.ON_END_MONSTER_TURN, CoolTimeDecrease);
     }
 
     // 2960 * 1440
     private void Start()
     {
+        for (int i = 0; i < _deck.cards.Count; i++)
+        {
+            GameObject go = Instantiate(_deck.cards[i], this.transform);
+            _deckCards.Add(go.GetComponent<Card>());
+            go.SetActive(false);
+        }
+
         for (int i = 0; i < _cardCnt; i++)
         {
-            GameObject go = Instantiate(_cardTemplate.gameObject, this.transform);
+            GameObject go = _deckCards[i].gameObject /*Instantiate(_cardTemplate.gameObject, this.transform)*/;
+            _deckCards.Remove(_deckCards[i]);
+            go.SetActive(true);
             RectTransform rect = go.GetComponent<RectTransform>();
-            _cardList.Add(go.GetComponent<Card>());
+            _handCards.Add(go.GetComponent<Card>());
             rect.anchoredPosition = Vector3.zero;
             go.transform.rotation = Quaternion.identity;
         }
@@ -76,7 +99,7 @@ public class CardCollector : MonoBehaviour
             SelectCard.GetComponent<RectTransform>().anchoredPosition = Input.mousePosition;
         }
 
-        if (Input.GetKeyDown(KeyCode.Space)) // ¿€µø?æ»«‘?
+        if (Input.GetKeyDown(KeyCode.Space)) // ÏûëÎèô?ÏïàÌï®?
         {
             Debug.Log(1);
 
@@ -84,7 +107,7 @@ public class CardCollector : MonoBehaviour
             {
                 GameObject go = Instantiate(_cardTemplate.gameObject, this.transform);
                 RectTransform rect = go.GetComponent<RectTransform>();
-                _cardList.Add(go.GetComponent<Card>());
+                _handCards.Add(go.GetComponent<Card>());
                 rect.anchoredPosition = Vector3.zero;
                 go.transform.rotation = Quaternion.identity;
             }
@@ -95,10 +118,10 @@ public class CardCollector : MonoBehaviour
 
     public void CardSort()
     {
-        for (int i = 0; i < _cardList.Count; i++)
+        for (int i = 0; i < _handCards.Count; i++)
         {
-            RectTransform rect = _cardList[i].GetComponent<RectTransform>();
-            float xDelta = 1440f / _cardList.Count;
+            RectTransform rect = _handCards[i].GetComponent<RectTransform>();
+            float xDelta = 1440f / _handCards.Count;
             rect.anchoredPosition = new Vector3(i * xDelta + rect.sizeDelta.x / 2, rect.sizeDelta.y / 2, 0);
         }
     }
@@ -106,5 +129,23 @@ public class CardCollector : MonoBehaviour
     public void CardSelect(Card card)
     {
         SelectCard = card;
+    }
+
+    private void CoolTimeDecrease()
+    {
+        for (int i = _restCards.Count - 1; i >= 0; i--)
+        {
+            Card card = _restCards[i];
+            card.CoolTime--;
+            if (card.CoolTime <= 0)
+            {
+                _deckCards.Add(card);
+                _restCards.Remove(card);
+            }
+        }
+    }
+    private void OnDestroy()
+    {
+        EventManager.StopListening(Define.ON_END_MONSTER_TURN, CoolTimeDecrease);
     }
 }

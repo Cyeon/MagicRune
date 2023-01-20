@@ -34,7 +34,7 @@ public class RuneProperty
 }
 
 [CreateAssetMenu(menuName = "SO/Rune")]
-public class RuneSO : ScriptableObject
+public class CardSO : ScriptableObject
 {
     [Tooltip("카드 이름")]
     public string CardName;
