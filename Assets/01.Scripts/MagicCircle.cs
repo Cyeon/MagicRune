@@ -196,7 +196,7 @@ public class MagicCircle : MonoBehaviour
                     _runeDict[RuneType.Assist][changeIndex].SetRune(card.Rune);
                 });
             });
-
+            //card.transform.SetParent()
             SortCard();
         }
 
