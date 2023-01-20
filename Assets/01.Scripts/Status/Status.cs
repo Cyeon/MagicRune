@@ -17,6 +17,7 @@ public class Status
     public string statusName;
     public  StatusInvokeTime invokeTime;
     public int durationTurn;
+    public Sprite icon;
     public UnityEvent statusFunc;
 
     public Status(Status status)
