@@ -182,15 +182,16 @@ public class TestMagicCircle : MonoBehaviour, IPointerClickHandler
                 Sequence seq = DOTween.Sequence();
                 seq.AppendCallback(() =>
                 {
+                    Sequence seq2 = DOTween.Sequence();
                     GameObject g = Instantiate(_garbageRuneTemplate.gameObject, this.transform);
-                    Debug.Log(card);
-                    card.GetComponent<RectTransform>().anchoredPosition = Input.mousePosition;
-                    card.transform.SetParent(this.transform);
-                    g.GetComponent<RectTransform>().anchoredPosition = card.GetComponent<RectTransform>().anchoredPosition;
-                    g.GetComponent<RectTransform>().DOAnchorPos(Vector2.zero, 0.3f).OnComplete(() =>
+                    seq2.AppendCallback(() =>
                     {
-                        Destroy(g);
+                        card.GetComponent<RectTransform>().anchoredPosition = Input.mousePosition;
+                        card.transform.SetParent(this.transform);
+                        g.GetComponent<RectTransform>().anchoredPosition = card.GetComponent<RectTransform>().anchoredPosition;
+                        g.GetComponent<RectTransform>().DOLocalMove(Vector2.zero, 0.3f);
                     });
+                    seq2.AppendCallback(() => Destroy(g));
                 });
                 seq.AppendInterval(0.3f);
                 seq.AppendCallback(() =>

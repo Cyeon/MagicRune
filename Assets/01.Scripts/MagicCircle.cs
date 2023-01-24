@@ -228,7 +228,6 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                     SortCard();
                     AssistRuneAnimanation();
                 });
-
             }
         }
         else
