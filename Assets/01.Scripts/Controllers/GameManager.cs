@@ -24,9 +24,7 @@ public class GameManager : MonoSingleton<GameManager>
     }
 
     private void Start() {
-        //enemy = EnemyManager.Instance.SpawnEnemy();
-        StatusManager.Instance.AddStatus(enemy, "?�쇄");
-        StatusManager.Instance.AddStatus(enemy, "?�넘기기");
+
         enemy = EnemyManager.Instance.SpawnEnemy();
         player = FindObjectOfType<Player>();
 
