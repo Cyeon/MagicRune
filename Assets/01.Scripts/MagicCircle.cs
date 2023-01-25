@@ -302,7 +302,7 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                 else
                 {
                     name = name.Substring(0, name.Length - 1);
-                    name += $"�� {_runeDict[RuneType.Main][0].Rune.MainRune.Name}";
+                    name += $"의 {_runeDict[RuneType.Main][0].Rune.MainRune.Name}";
                 }
                 _nameText.text = name;
             }

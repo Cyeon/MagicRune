@@ -7,11 +7,11 @@ using UnityEngine.UI;
 public abstract class TestCard : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
     [SerializeField]
-    protected RuneSO _rune;
+    protected CardSO _rune;
 
     [SerializeField]
     protected bool _isEquip = false;
-    public RuneSO Rune => _rune;
+    public CardSO Rune => _rune;
 
     private int _coolTime;
 
@@ -24,7 +24,7 @@ public abstract class TestCard : MonoBehaviour, IPointerDownHandler, IPointerUpH
         _rect = GetComponent<RectTransform>();
     }
 
-    public void SetRune(RuneSO rune)
+    public void SetRune(CardSO rune)
     {
         _rune = rune;
 

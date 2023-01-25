@@ -1549,6 +1549,10 @@ MonoBehaviour:
   _magicCircle: {fileID: 1502645725}
   _cardTemplate: {fileID: 8683681480207833223, guid: cce69109ee5fc73409b8597097f58568, type: 3}
   _cardCnt: 8
+  _deck: {fileID: 11400000, guid: 96b208de205eb02419e6f6e36b7e4bc7, type: 2}
+  _deckCards: []
+  _handCards: []
+  _restCards: []
 --- !u!1 &1619516169
 GameObject:
   m_ObjectHideFlags: 0
@@ -1581,7 +1585,6 @@ MonoBehaviour:
   player: {fileID: 0}
   enemy: {fileID: 0}
   currentUnit: {fileID: 0}
-  gameTurn: 2
 --- !u!4 &1619516171
 Transform:
   m_ObjectHideFlags: 0
@@ -1862,7 +1865,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1a68e167d080b040af1b7d7ac5a5e5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _maxHealth: 0
   _health: 0
+  _shield: 0
   currentDmg: 0
   <OnTakeDamage>k__BackingField:
     m_PersistentCalls:
@@ -1915,7 +1920,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb6fc7c86da139e429a4f9ab546877a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _maxHealth: 0
   _health: 100
+  _shield: 0
   currentDmg: 0
   <OnTakeDamage>k__BackingField:
     m_PersistentCalls:
@@ -1936,6 +1943,19 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   enemyInfo: {fileID: 11400000, guid: 86bf330ac11acb9449a85e6c3dc0ed14, type: 2}
+  atkDamage: 0
+  pattern:
+    patternName: 
+    icon: {fileID: 0}
+    patternStartFunc:
+      m_PersistentCalls:
+        m_Calls: []
+    patternTurnFunc:
+      m_PersistentCalls:
+        m_Calls: []
+    patternEndFunc:
+      m_PersistentCalls:
+        m_Calls: []
 --- !u!4 &1985436757
 Transform:
   m_ObjectHideFlags: 0
