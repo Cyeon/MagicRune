@@ -26,6 +26,17 @@ public class UIManager : MonoSingleton<UIManager>
     [SerializeField] private Transform _statusPlayerPanel;
     [SerializeField] private Transform _statusEnemyPanel;
 
+    [Header("Panel")]
+    [SerializeField] private GameObject _turnPanel;
+    private Image _turnBackground;
+    private TextMeshProUGUI _turnText;
+
+    private void Awake()
+    {
+        _turnBackground = _turnPanel?.GetComponent<Image>();
+        _turnText = _turnPanel?.GetComponentInChildren<TextMeshProUGUI>();
+    }
+
     public void EnemyHealthbarInit(float health)
     {
         _enemyHealthSlider.maxValue = health;
@@ -102,5 +113,20 @@ public class UIManager : MonoSingleton<UIManager>
             _playerShieldText.text = shield.ToString();
         else
             _enemyShieldText.text = shield.ToString();
+    }
+
+    public void Turn(string text)
+    {
+        _turnPanel.SetActive(true);
+        _turnText.text = text;
+
+        Sequence seq = DOTween.Sequence();
+        seq.Append(_turnBackground.DOFade(0.5f, 0.5f));
+        seq.Join(_turnText.DOFade(1f, 0.5f));
+        seq.AppendInterval(0.5f);
+        seq.Append(_turnBackground.DOFade(0, 0.5f));
+        seq.Join(_turnText.DOFade(0, 0.5f));
+        seq.AppendCallback(() => _turnPanel.SetActive(false));
+        seq.AppendCallback(() =>GameManager.Instance.TurnChange());
     }
 }
