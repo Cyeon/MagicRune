@@ -8,11 +8,16 @@ using System.Runtime.CompilerServices;
 
 public class UIManager : MonoSingleton<UIManager>
 {
+    [Header("Enemy UI")]
     [SerializeField] private Slider _enemyHealthSlider;
     [SerializeField] private TextMeshProUGUI _enemyHealthText;
+    [SerializeField] private Image _enemyPatternIcon;
+    [SerializeField] private TextMeshProUGUI _enemyShieldText;
+
+    [Header("Player UI")]
     [SerializeField] private Slider _playerHealthSlider;
     [SerializeField] private TextMeshProUGUI _playerHealthText;
-    [SerializeField] private Image _enemyPatternIcon;
+    [SerializeField] private TextMeshProUGUI _playerShieldText;
 
     [Header("상태이상 UI")]
     [SerializeField] private GameObject _statusPrefab;
@@ -89,5 +94,13 @@ public class UIManager : MonoSingleton<UIManager>
         }
 
         obj.GetComponent<StatusPanel>().duration.text = duration.ToString();
+    }
+
+    public void UpdateShieldText(bool isPlayer, float shield)
+    {
+        if (isPlayer)
+            _playerShieldText.text = shield.ToString();
+        else
+            _enemyShieldText.text = shield.ToString();
     }
 }

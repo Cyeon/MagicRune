@@ -6,6 +6,11 @@ public class Player : Unit
 {
     public int cost = 10; // 마나
 
+    private void Awake()
+    {
+        isPlayer = true;
+    }
+
     public void Attack(float dmg)
     {
         currentDmg = dmg;

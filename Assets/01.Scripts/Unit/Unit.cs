@@ -6,6 +6,8 @@ using UnityEngine.Rendering;
 
 public class Unit : MonoBehaviour
 {
+    protected bool isPlayer = false;
+
     [SerializeField] protected float _maxHealth;
     [SerializeField] private float _health = 10f;
     public float HP
@@ -22,7 +24,15 @@ public class Unit : MonoBehaviour
     }
 
     [SerializeField] private float _shield = 0f;
-    public float Shield { get => _shield; set => _shield= value; }
+    public float Shield 
+    { 
+        get => _shield; 
+        set
+        {
+            _shield = value;
+            UIManager.Instance.UpdateShieldText(isPlayer, _shield);
+        }
+    }
 
     
 
@@ -56,15 +66,15 @@ public class Unit : MonoBehaviour
         InvokeStatus(StatusInvokeTime.GetDamage);
 
         // 만약 쉴드가 있다면
-        if(_shield > 0)
+        if(Shield > 0)
         {
             // 받는 데미지가 쉴드보다 크다면
-            if (_shield - currentDmg >= 0)
-                _shield -= currentDmg; // 쉴드 깎기
+            if (Shield - currentDmg >= 0)
+                Shield -= currentDmg; // 쉴드 깎기
             else // 아니면
             {
                 // 쉴드 없애고 남은 데미지만큼 체력 깎기
-                currentDmg -= _shield;
+                currentDmg -= Shield;
                 HP -= currentDmg;
             }
         }
