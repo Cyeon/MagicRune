@@ -75,6 +75,14 @@ public class GameManager : MonoSingleton<GameManager>
 
         switch(gameTurn)
         {
+            case GameTurn.Unknown:
+                enemy.pattern = PatternManager.Instance.GetPattern();
+                enemy.pattern?.Start();
+
+                UIManager.Instance.Turn("Player Turn");
+                gameTurn = GameTurn.MonsterWait;
+                break;
+
             case GameTurn.Player:
                 UIManager.Instance.Turn("Enemy Turn");
                 gameTurn = GameTurn.PlayerWait;
@@ -85,7 +93,6 @@ public class GameManager : MonoSingleton<GameManager>
                 break;
 
             case GameTurn.Monster:
-            case GameTurn.Unknown:
                 StatusManager.Instance.StatusTurnChange(player);
                 StatusManager.Instance.StatusTurnChange(enemy);
 
@@ -102,6 +109,8 @@ public class GameManager : MonoSingleton<GameManager>
                 OnPlayerTurn();
                 break;
         }
+
+        Debug.Log(string.Format("Turn Change: {0}", gameTurn));
 
         if (gameTurn == GameTurn.PlayerWait || gameTurn == GameTurn.MonsterWait)
             currentUnit?.InvokeStatus(StatusInvokeTime.Start);
