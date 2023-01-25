@@ -6,9 +6,9 @@ public class StatusFuncList : MonoBehaviour
 {
     public void AddGetDamage(float dmg)
     {
-        if(GameManager.Instance.gameTurn == GameTurn.Player)
+        if(GameManager.Instance.GameTurn == GameTurn.Player)
             GameManager.Instance.enemy.currentDmg += dmg;
-        else if(GameManager.Instance.gameTurn == GameTurn.Monster)
+        else if(GameManager.Instance.GameTurn == GameTurn.Monster)
             GameManager.Instance.player.currentDmg += dmg;
     }
 

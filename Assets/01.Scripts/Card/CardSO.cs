@@ -38,7 +38,7 @@ public class RuneProperty
 }
 
 [CreateAssetMenu(menuName = "SO/Rune")]
-public class RuneSO : ScriptableObject
+public class CardSO : ScriptableObject
 {
     [ShowAssetPreview(32, 32), Tooltip("카드에 들어갈 이미지")]
     public Sprite CardImage;

@@ -8,13 +8,40 @@ using DG.Tweening;
 public abstract class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
     [SerializeField]
-    protected RuneSO _rune;
+    private GameObject cardPrefab = null;
+    public GameObject CardPrefab => cardPrefab;
 
     [SerializeField]
-    protected bool _isEquip = false;
-    public RuneSO Rune => _rune;
+    private CardSO _rune;
+
+    [SerializeField]
+    private bool _isEquipMagicCircle = false;
+    public CardSO Rune => _rune;
+
+    private CardCollector _collector;
+    private bool _isRest = false;
+    public bool IsRest => _isRest;
 
     private int _coolTime;
+    public int CoolTime
+    {
+        get
+        {
+            return _coolTime;
+        }
+        set
+        {
+            _coolTime = value;
+            if (_coolTime <= 0)
+            {
+                _isRest = false;
+            }
+            else
+            {
+                _isRest = true;
+            }
+        }
+    }
 
     private CardCollector _collector;
     private RectTransform _rect;
@@ -25,7 +52,7 @@ public abstract class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         _rect = GetComponent<RectTransform>();
     }
 
-    public void SetRune(RuneSO rune)
+    public void SetRune(CardSO rune)
     {
         _rune = rune;
 
@@ -43,7 +70,7 @@ public abstract class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
 
     public void SetIsEquip(bool value)
     {
-        _isEquip = value;
+        _isEquipMagicCircle = value;
     }
 
     public void SetCoolTime(int coolTime)
@@ -53,7 +80,7 @@ public abstract class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        if(_isEquip == false)
+        if (_isEquipMagicCircle == false)
         {
             _collector.CardSelect(this);
 
@@ -63,7 +90,7 @@ public abstract class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
 
     public void OnPointerUp(PointerEventData eventData)
     {
-        if (_isEquip == false)
+        if (_isEquipMagicCircle == false)
         {
             _collector.CardSelect(null);
             transform.localScale = Vector3.one;

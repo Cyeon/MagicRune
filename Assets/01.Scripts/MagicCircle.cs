@@ -57,7 +57,7 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
 
             if (_isBig)
             {
-                // Å©±â ±â¿ì±â
+                // Å©ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
                 transform.DOComplete();
                 this.transform.DOScale(Vector3.one, 0.2f);
                 //_bgPanel.GetComponent<Image>().DOFade(0.7f, 0.2f);
@@ -67,14 +67,14 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
             }
             else
             {
-                // ²À ¿©±â¸¸ Å¬¸¯ÇØ¾ßµÇ´Â°Ç ¾Æ´Ô
-                // ¸¶¹ýÁø Å¬¸¯ ½Ã Ä¿Áü
+                // ï¿½ï¿½ ï¿½ï¿½ï¿½â¸¸ Å¬ï¿½ï¿½ï¿½Ø¾ßµÇ´Â°ï¿½ ï¿½Æ´ï¿½
+                // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Å¬ï¿½ï¿½ ï¿½ï¿½ Ä¿ï¿½ï¿½
 
-                // Ä«µå ¼±ÅÃ ½Ã Ä¿Áü
+                // Ä«ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ Ä¿ï¿½ï¿½
 
-                // Ä«µå ³õÀ¸¸é ÀÛ¾ÆÁü
+                // Ä«ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Û¾ï¿½ï¿½ï¿½
 
-                // ÀÛ°Ô ¸¸µé±â
+                // ï¿½Û°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½
                 transform.DOComplete();
                 this.transform.DOScale(new Vector3(0.3f, 0.3f, 1), 0.2f);
                 //_bgPanel.GetComponent<Image>().DOFade(0, 0.2f);
@@ -127,12 +127,12 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
     {
         if (_isBig == false) return false;
 
-        // ¹Ì¸® º¸¿©ÁØ º¸Á¶ ·é ±ÙÃ¼¿¡¼­ ¼Õ°¡¶ôÀ» ¶§¸é ±× º¸Á¶·é¿¡ ÀåÂø½ÃÅ°±â
+        // ï¿½Ì¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½Ã¼ï¿½ï¿½ï¿½ï¿½ ï¿½Õ°ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½é¿¡ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Å°ï¿½ï¿½
         if (_runeDict.ContainsKey(RuneType.Main) == false || (_runeDict[RuneType.Main].Count == 0))
         {
             if (!DummyCost.Instance.CanUseMainRune(card.Rune.MainRune.Cost))
             {
-                Debug.Log("¸ÞÀÎ ·éÀ» »ç¿ëÇÏ±â À§ÇÑ ¸¶³ª°¡ ºÎÁ·ÇÕ´Ï´Ù.");
+                Debug.Log("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ï±ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Õ´Ï´ï¿½.");
                 return false;
             }
             if (_runeDict.ContainsKey(RuneType.Main))
@@ -234,7 +234,7 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
         {
             if (!DummyCost.Instance.CanUseSubRune(card.Rune.AssistRune.Cost))
             {
-                Debug.Log("º¸Á¶ ·éÀ» »ç¿ëÇÏ±â À§ÇÑ ¸¶³ª°¡ ºÎÁ·ÇÕ´Ï´Ù.");
+                Debug.Log("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ï±ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Õ´Ï´ï¿½.");
                 return false;
             }
 
@@ -250,7 +250,7 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
 
             if (changeIndex == -1) return false;
 
-            // ¾Ö´Ï¸ÞÀÌ¼Ç µÚ·Î ¹Ì·ç±â
+            // ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ ï¿½Ú·ï¿½ ï¿½Ì·ï¿½ï¿½
             Sequence seq = DOTween.Sequence();
             seq.AppendCallback(() =>
             {
@@ -269,6 +269,7 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                     //seq2.AppendCallback(() => { IsBig = false; });
                 });
             });
+            //card.transform.SetParent()
             SortCard();
         }
 
@@ -301,7 +302,7 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                 else
                 {
                     name = name.Substring(0, name.Length - 1);
-                    name += $"ÀÇ {_runeDict[RuneType.Main][0].Rune.MainRune.Name}";
+                    name += $"ï¿½ï¿½ {_runeDict[RuneType.Main][0].Rune.MainRune.Name}";
                 }
                 _nameText.text = name;
             }
@@ -336,7 +337,7 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                 touchEndedPos = touch.position;
                 touchDif = (touchEndedPos - touchBeganPos);
 
-                //½º¿ÍÀÌÇÁ. ÅÍÄ¡ÀÇ xÀÌµ¿°Å¸®³ª yÀÌµ¿°Å¸®°¡ ¹Î°¨µµº¸´Ù Å©¸é
+                //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½. ï¿½ï¿½Ä¡ï¿½ï¿½ xï¿½Ìµï¿½ï¿½Å¸ï¿½ï¿½ï¿½ yï¿½Ìµï¿½ï¿½Å¸ï¿½ï¿½ï¿½ ï¿½Î°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Å©ï¿½ï¿½
                 if (Mathf.Abs(touchDif.y) > swipeSensitivity || Mathf.Abs(touchDif.x) > swipeSensitivity)
                 {
                     if (touchDif.y > 0 && Mathf.Abs(touchDif.y) > Mathf.Abs(touchDif.x))
@@ -362,7 +363,7 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                         Debug.Log("Left");
                     }
                 }
-                //ÅÍÄ¡.
+                //ï¿½ï¿½Ä¡.
                 else
                 {
                     Debug.Log("touch");
@@ -374,17 +375,17 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
 
     public void Damage()
     {
-        // ±×³É ·ÎÁ÷¸¸ Àû¾î³õ´Â´Ù´Â ´À³¦, ´Ù¸¥ °÷¿¡´Ù°¡ ¿Å±æ ¿¹Á¤
+        // ï¿½×³ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â´Ù´ï¿½ ï¿½ï¿½ï¿½ï¿½, ï¿½Ù¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ù°ï¿½ ï¿½Å±ï¿½ ï¿½ï¿½ï¿½ï¿½
 
-        // ¸¶¹ýÁø È¸Àü È¿°ú
-        // »çÀÌ¿¡ Ãß°¡·Î ´Ù¸¥ È¿°úµµ ÀÖ°ÚÁö
-        // ±× ÈÄ¿¡ °ø°Ý
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ È¸ï¿½ï¿½ È¿ï¿½ï¿½
+        // ï¿½ï¿½ï¿½Ì¿ï¿½ ï¿½ß°ï¿½ï¿½ï¿½ ï¿½Ù¸ï¿½ È¿ï¿½ï¿½ï¿½ï¿½ ï¿½Ö°ï¿½ï¿½ï¿½
+        // ï¿½ï¿½ ï¿½Ä¿ï¿½ ï¿½ï¿½ï¿½ï¿½
 
         if (_runeDict.ContainsKey(RuneType.Main) == false || _runeDict[RuneType.Main].Count == 0 || _runeDict[RuneType.Main][0].Rune == null)
         {
-            // °ø°Ý ¾ÈµÇ´Â ÀÌÆåÆ®
-            // ¹¹.. Ä«¸Þ¶ó Èçµé¸²ÀÌ¶ó´øÁö
-            Debug.Log("¸ÞÀÎ ·é ¾øÀ½");
+            // ï¿½ï¿½ï¿½ï¿½ ï¿½ÈµÇ´ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®
+            // ï¿½ï¿½.. Ä«ï¿½Þ¶ï¿½ ï¿½ï¿½é¸²ï¿½Ì¶ï¿½ï¿½ï¿½ï¿½
+            Debug.Log("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
             return;
         }
 

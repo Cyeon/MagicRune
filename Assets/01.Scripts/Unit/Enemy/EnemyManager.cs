@@ -10,10 +10,10 @@ public class EnemyManager : MonoSingleton<EnemyManager>
     {
         if(enemyList.Count > 0)
         {
-            GameObject obj = new GameObject();
-            Enemy enemy = obj.AddComponent<Enemy>();
+            int index = Random.Range(0, enemyList.Count);
+            GameObject obj = Instantiate(enemyList[0].prefab);
+            Enemy enemy = obj.GetComponent<Enemy>();
             enemy.Init(enemyList[0]);
-            enemy.gameObject.name = enemy.enemyInfo.enemyName;
             return enemy;
         }
 
