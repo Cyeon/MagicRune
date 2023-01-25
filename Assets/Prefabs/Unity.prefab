@@ -46,6 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _maxHealth: 0
   _health: 0
+  _shield: 0
   currentDmg: 0
   <OnTakeDamage>k__BackingField:
     m_PersistentCalls:
@@ -54,4 +55,16 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   enemyInfo: {fileID: 11400000, guid: 86bf330ac11acb9449a85e6c3dc0ed14, type: 2}
-  atkDamage: 10
+  atkDamage: 0
+  pattern:
+    patternName: 
+    icon: {fileID: 0}
+    patternStartFunc:
+      m_PersistentCalls:
+        m_Calls: []
+    patternTurnFunc:
+      m_PersistentCalls:
+        m_Calls: []
+    patternEndFunc:
+      m_PersistentCalls:
+        m_Calls: []
