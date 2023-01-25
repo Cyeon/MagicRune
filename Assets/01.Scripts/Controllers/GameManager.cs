@@ -24,6 +24,7 @@ public class GameManager : MonoSingleton<GameManager>
     }
 
     private void Start() {
+
         enemy = EnemyManager.Instance.SpawnEnemy();
         player = FindObjectOfType<Player>();
 
@@ -31,7 +32,7 @@ public class GameManager : MonoSingleton<GameManager>
 
         enemy.OnTakeDamageFeedback.AddListener(() => TurnChange());
         enemy.OnTakeDamageFeedback.AddListener(() => UIManager.instance.UpdateEnemyHealthbar());
-        StatusManager.Instance.AddStatus(enemy, "약쇄");
+        // StatusManager.Instance.AddStatus(enemy, "약쇄");
 
         TurnChange();
     }
@@ -51,18 +52,10 @@ public class GameManager : MonoSingleton<GameManager>
     private void OnPlayerTurn()
     {
         EventManager.TriggerEvent(Define.ON_END_MONSTER_TURN);
-        enemy.pattern?.End();
-
-        StatusManager.Instance.StatusTurnChange(player);
-        StatusManager.Instance.StatusTurnChange(enemy);
 
         Debug.Log("Player Turn!");
         gameTurn = GameTurn.Player;
         currentUnit = player;
-
-        enemy.pattern = PatternManager.Instance.GetPattern();
-        enemy.pattern?.Start();
-        Debug.Log(enemy.pattern.patternName);
     }
 
     public void OnMonsterTurn()
@@ -80,9 +73,23 @@ public class GameManager : MonoSingleton<GameManager>
         currentUnit?.InvokeStatus(StatusInvokeTime.End);
 
         if(gameTurn == GameTurn.Player)
+        {
             OnMonsterTurn();
+        }
         else
+        {
+            StatusManager.Instance.StatusTurnChange(player);
+            StatusManager.Instance.StatusTurnChange(enemy);
+
+            enemy.pattern?.End();
+
+            enemy.pattern = PatternManager.Instance.GetPattern();
+            enemy.pattern?.Start();
+            Debug.Log(enemy.pattern.patternName);
+
             OnPlayerTurn();
+        }
+           
 
         currentUnit?.InvokeStatus(StatusInvokeTime.Start);
     }

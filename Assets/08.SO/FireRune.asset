@@ -12,39 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b089f4c99f402c419e87fb17ecd4ab5, type: 3}
   m_Name: FireRune
   m_EditorClassIdentifier: 
-  CardName: Fire
-  CardImage: {fileID: 0}
-  RuneImage: {fileID: 0}
+  CardImage: {fileID: 21300000, guid: 192e12af0e981804ca76f423b3af7d6e, type: 3}
+  RuneImage: {fileID: 21300000, guid: 626b9cddb29049e4cac50cd87b419945, type: 3}
   CardDescription: "\uD654?\uC5FC"
   AssistRuneCount: 5
   MainRune:
+    Name: "\uD654\uC5FC"
     Attribute: 0
     Cost: 2
     DelayTurn: 1
-    EffectPair:
-    - Condition:
-        ConditionName: 
-      Not: 0
-      Effect:
-        effectName: Damage
-        effectCard: {fileID: 0}
-        paramater: 5
-    - Condition:
-        ConditionName: 
-      Not: 0
-      Effect:
-        effectName: "\uD654\uC0C1\uBD80\uC5EC \uD568\uC218 \uC774\uB984"
-        effectCard: {fileID: 0}
-        paramater: 1
   AssistRune:
+    Name: "\uBD88\uAF43"
     Attribute: 0
     Cost: 0
     DelayTurn: 0
-    EffectPair:
-    - Condition:
-        ConditionName: 
-      Not: 0
-      Effect:
-        effectName: Damage
-        effectCard: {fileID: 0}
-        paramater: 3

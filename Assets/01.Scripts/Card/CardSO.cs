@@ -21,7 +21,11 @@ public enum AttributeType
 [Serializable]
 public class RuneProperty
 {
+    [Tooltip("카드 이름")]
+    public string Name;
     // 유형 Enum ? 필요한가?
+    [ResizableTextArea, Tooltip("카드 효과 텍스트")]
+    public string Effect;
     [Tooltip("속성")]
     public AttributeType Attribute;
     [Min(0), Tooltip("코스트")]
@@ -36,8 +40,6 @@ public class RuneProperty
 [CreateAssetMenu(menuName = "SO/Rune")]
 public class CardSO : ScriptableObject
 {
-    [Tooltip("카드 이름")]
-    public string CardName;
     [ShowAssetPreview(32, 32), Tooltip("카드에 들어갈 이미지")]
     public Sprite CardImage;
     [ShowAssetPreview(32, 32), Tooltip("마법진에 들어갈 룬 이미지")]

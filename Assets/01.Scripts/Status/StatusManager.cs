@@ -34,14 +34,16 @@ public class StatusManager : MonoSingleton<StatusManager>
         List<Status> statusList = new List<Status>();
         if(unit.unitStatusDic.TryGetValue(status.invokeTime, out statusList))
         {
-            if(statusList.Contains(status))
+            Status currentStauts = statusList.Where(e => e.statusName == status.statusName).FirstOrDefault();
+            if(currentStauts != null)
             {
-                Status currentStauts = statusList.Where(e => e.statusName == status.statusName).FirstOrDefault();
                 currentStauts.durationTurn += status.durationTurn;
+                UIManager.Instance.ReloadStatusPanel(unit, currentStauts.statusName, currentStauts.durationTurn);
             }
             else
             {
-                unit.unitStatusDic[status.invokeTime].Add(status);
+                unit.unitStatusDic[newStatus.invokeTime].Add(newStatus);
+                UIManager.Instance.AddStatus(unit, newStatus);
             }
         }
     }
@@ -52,13 +54,15 @@ public class StatusManager : MonoSingleton<StatusManager>
         List<Status> statusList = new List<Status>();
         if(unit.unitStatusDic.TryGetValue(status.invokeTime, out statusList))
         {
-            if(!statusList.Contains(status))
+            Status currentStauts = statusList.Where(e => e.statusName == status.statusName).FirstOrDefault();
+            if (currentStauts != null)
+            {
+                unit.unitStatusDic[status.invokeTime].Remove(status);
+            }
+            else
             {
                 Debug.LogWarning(string.Format("{0} status is not found. Can't Remove do it.", status.statusName));
-                return;
             }
-
-            unit.unitStatusDic[status.invokeTime].Remove(status);
         }
     }
 
@@ -70,7 +74,8 @@ public class StatusManager : MonoSingleton<StatusManager>
             for(int i = 0; i < x.Value.Count; i++)
             {
                 x.Value[i].durationTurn--;
-                if(x.Value[i].durationTurn <= 0)
+                UIManager.Instance.ReloadStatusPanel(unit, x.Value[i].statusName, x.Value[i].durationTurn);
+                if (x.Value[i].durationTurn <= 0)
                 {
                     indexes.Add(i);
                 }

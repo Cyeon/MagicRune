@@ -2,15 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FireCard : Card
+public class TestFireCard : TestCard
 {
     public override void UseAssistEffect()
     {
-        GameManager.Instance.player.Attack(1);
+        Debug.Log(1);
     }
 
     public override void UseMainEffect()
     {
-        GameManager.Instance.player.Attack(5);
+        Debug.Log(5);
     }
 }

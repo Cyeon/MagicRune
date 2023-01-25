@@ -3,51 +3,24 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using DG.Tweening;
 
-public abstract class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
+public abstract class TestCard : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
     [SerializeField]
-    private GameObject cardPrefab = null;
-    public GameObject CardPrefab => cardPrefab;
+    protected CardSO _rune;
 
     [SerializeField]
-    private CardSO _rune;
-
-    [SerializeField]
-    private bool _isEquipMagicCircle = false;
+    protected bool _isEquip = false;
     public CardSO Rune => _rune;
 
-    private CardCollector _collector;
-    private bool _isRest = false;
-    public bool IsRest => _isRest;
-
     private int _coolTime;
-    public int CoolTime
-    {
-        get
-        {
-            return _coolTime;
-        }
-        set
-        {
-            _coolTime = value;
-            if (_coolTime <= 0)
-            {
-                _isRest = false;
-            }
-            else
-            {
-                _isRest = true;
-            }
-        }
-    }
 
+    private TestCardCollector _collector;
     private RectTransform _rect;
 
     protected virtual void Start()
     {
-        _collector = GetComponentInParent<CardCollector>();
+        _collector = GetComponentInParent<TestCardCollector>();
         _rect = GetComponent<RectTransform>();
     }
 
@@ -55,7 +28,7 @@ public abstract class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     {
         _rune = rune;
 
-        if(_rune == null)
+        if (_rune == null)
         {
             this.GetComponent<Image>().color = Color.black;
         }
@@ -69,7 +42,7 @@ public abstract class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
 
     public void SetIsEquip(bool value)
     {
-        _isEquipMagicCircle = value;
+        _isEquip = value;
     }
 
     public void SetCoolTime(int coolTime)
@@ -79,7 +52,7 @@ public abstract class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        if (_isEquipMagicCircle == false)
+        if (_isEquip == false)
         {
             _collector.CardSelect(this);
 
@@ -89,7 +62,7 @@ public abstract class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
 
     public void OnPointerUp(PointerEventData eventData)
     {
-        if (_isEquipMagicCircle == false)
+        if (_isEquip == false)
         {
             _collector.CardSelect(null);
             transform.localScale = Vector3.one;

@@ -6,17 +6,10 @@ using System.Security.Cryptography;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using static UnityEngine.UIElements.UxmlAttributeDescription;
 
-public enum RuneType
+public class TestMagicCircle : MonoBehaviour, IPointerClickHandler
 {
-    Assist, // ï¿½ï¿½ï¿½ï¿½
-    Main, // ï¿½ï¿½ï¿½ï¿½
-}
-
-public class MagicCircle : MonoBehaviour, IPointerClickHandler
-{
-    private Dictionary<RuneType, List<Card>> _runeDict;
+    private Dictionary<RuneType, List<TestCard>> _runeDict;
 
     private const int _mainRuneCnt = 1;
 
@@ -29,9 +22,9 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
 
 
     [SerializeField]
-    private Card _runeTemplate;
+    private TestCard _runeTemplate;
     [SerializeField]
-    private Card _garbageRuneTemplate;
+    private TestCard _garbageRuneTemplate;
     [SerializeField]
     private GameObject _bgPanel;
     [SerializeField]
@@ -57,7 +50,7 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
 
             if (_isBig)
             {
-                // Å©ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+                // Å©±â ±â¿ì±â
                 transform.DOComplete();
                 this.transform.DOScale(Vector3.one, 0.2f);
                 //_bgPanel.GetComponent<Image>().DOFade(0.7f, 0.2f);
@@ -67,14 +60,14 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
             }
             else
             {
-                // ï¿½ï¿½ ï¿½ï¿½ï¿½â¸¸ Å¬ï¿½ï¿½ï¿½Ø¾ßµÇ´Â°ï¿½ ï¿½Æ´ï¿½
-                // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Å¬ï¿½ï¿½ ï¿½ï¿½ Ä¿ï¿½ï¿½
+                // ²À ¿©±â¸¸ Å¬¸¯ÇØ¾ßµÇ´Â°Ç ¾Æ´Ô
+                // ¸¶¹ýÁø Å¬¸¯ ½Ã Ä¿Áü
 
-                // Ä«ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ Ä¿ï¿½ï¿½
+                // Ä«µå ¼±ÅÃ ½Ã Ä¿Áü
 
-                // Ä«ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Û¾ï¿½ï¿½ï¿½
+                // Ä«µå ³õÀ¸¸é ÀÛ¾ÆÁü
 
-                // ï¿½Û°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½
+                // ÀÛ°Ô ¸¸µé±â
                 transform.DOComplete();
                 this.transform.DOScale(new Vector3(0.3f, 0.3f, 1), 0.2f);
                 //_bgPanel.GetComponent<Image>().DOFade(0, 0.2f);
@@ -88,7 +81,7 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
 
     public void Awake()
     {
-        _runeDict = new Dictionary<RuneType, List<Card>>();
+        _runeDict = new Dictionary<RuneType, List<TestCard>>();
     }
 
     private void Update()
@@ -123,16 +116,16 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
         }
     }
 
-    public bool AddCard(Card card)
+    public bool AddCard(TestCard card)
     {
-        if (_isBig == false) return false;
+        //if (_isBig == false) return false;
 
-        // ï¿½Ì¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½Ã¼ï¿½ï¿½ï¿½ï¿½ ï¿½Õ°ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½é¿¡ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Å°ï¿½ï¿½
+        // ¹Ì¸® º¸¿©ÁØ º¸Á¶ ·é ±ÙÃ¼¿¡¼­ ¼Õ°¡¶ôÀ» ¶§¸é ±× º¸Á¶·é¿¡ ÀåÂø½ÃÅ°±â
         if (_runeDict.ContainsKey(RuneType.Main) == false || (_runeDict[RuneType.Main].Count == 0))
         {
             if (!DummyCost.Instance.CanUseMainRune(card.Rune.MainRune.Cost))
             {
-                Debug.Log("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ï±ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Õ´Ï´ï¿½.");
+                Debug.Log("¸ÞÀÎ ·éÀ» »ç¿ëÇÏ±â À§ÇÑ ¸¶³ª°¡ ºÎÁ·ÇÕ´Ï´Ù.");
                 return false;
             }
             if (_runeDict.ContainsKey(RuneType.Main))
@@ -155,7 +148,7 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                         Destroy(g);
 
                         GameObject go = Instantiate(_runeTemplate.gameObject, this.transform);
-                        Card rune = go.GetComponent<Card>();
+                        TestCard rune = go.GetComponent<TestCard>();
                         rune.SetRune(card.Rune);
                         rune.SetIsEquip(true);
                         rune.SetCoolTime(card.Rune.MainRune.DelayTurn);
@@ -164,7 +157,7 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                         for (int i = 0; i < _runeDict[RuneType.Main][0].Rune.AssistRuneCount; i++)
                         {
                             GameObject ggo = Instantiate(_runeTemplate.gameObject, this.transform);
-                            Card grune = ggo.GetComponent<Card>();
+                            TestCard grune = ggo.GetComponent<TestCard>();
                             grune.SetRune(null);
                             grune.SetIsEquip(true);
                             //grune.CardAnimation();
@@ -174,7 +167,7 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                             }
                             else
                             {
-                                _runeDict.Add(RuneType.Assist, new List<Card> { grune });
+                                _runeDict.Add(RuneType.Assist, new List<TestCard> { grune });
                             }
                         }
 
@@ -189,30 +182,31 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                 Sequence seq = DOTween.Sequence();
                 seq.AppendCallback(() =>
                 {
+                    Sequence seq2 = DOTween.Sequence();
                     GameObject g = Instantiate(_garbageRuneTemplate.gameObject, this.transform);
-                    Debug.Log(card);
-                    card.GetComponent<RectTransform>().anchoredPosition = Input.mousePosition;
-                    card.transform.SetParent(this.transform);
-                    g.GetComponent<RectTransform>().anchoredPosition = card.GetComponent<RectTransform>().anchoredPosition;
-                    g.GetComponent<RectTransform>().DOAnchorPos(Vector2.zero, 0.3f).OnComplete(() =>
+                    seq2.AppendCallback(() =>
                     {
-                        Destroy(g);
+                        card.GetComponent<RectTransform>().anchoredPosition = Input.mousePosition;
+                        card.transform.SetParent(this.transform);
+                        g.GetComponent<RectTransform>().anchoredPosition = card.GetComponent<RectTransform>().anchoredPosition;
+                        g.GetComponent<RectTransform>().DOLocalMove(Vector2.zero, 0.3f);
                     });
+                    seq2.AppendCallback(() => Destroy(g));
                 });
                 seq.AppendInterval(0.3f);
                 seq.AppendCallback(() =>
                 {
                     GameObject go = Instantiate(_runeTemplate.gameObject, this.transform);
-                    Card rune = go.GetComponent<Card>();
+                    TestCard rune = go.GetComponent<TestCard>();
                     rune.SetRune(card.Rune);
                     rune.SetIsEquip(true);
                     rune.SetCoolTime(card.Rune.MainRune.DelayTurn);
-                    _runeDict.Add(RuneType.Main, new List<Card>() { rune });
+                    _runeDict.Add(RuneType.Main, new List<TestCard>() { rune });
 
                     for (int i = 0; i < _runeDict[RuneType.Main][0].Rune.AssistRuneCount; i++)
                     {
                         GameObject ggo = Instantiate(_runeTemplate.gameObject, this.transform);
-                        Card grune = ggo.GetComponent<Card>();
+                        TestCard grune = ggo.GetComponent<TestCard>();
                         grune.SetRune(null);
                         grune.SetIsEquip(true);
                         //grune.CardAnimation();
@@ -222,19 +216,20 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                         }
                         else
                         {
-                            _runeDict.Add(RuneType.Assist, new List<Card> { grune });
+                            _runeDict.Add(RuneType.Assist, new List<TestCard> { grune });
                         }
                     }
                     SortCard();
                     AssistRuneAnimanation();
                 });
+
             }
         }
         else
         {
             if (!DummyCost.Instance.CanUseSubRune(card.Rune.AssistRune.Cost))
             {
-                Debug.Log("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ï±ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Õ´Ï´ï¿½.");
+                Debug.Log("º¸Á¶ ·éÀ» »ç¿ëÇÏ±â À§ÇÑ ¸¶³ª°¡ ºÎÁ·ÇÕ´Ï´Ù.");
                 return false;
             }
 
@@ -250,7 +245,7 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
 
             if (changeIndex == -1) return false;
 
-            // ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ ï¿½Ú·ï¿½ ï¿½Ì·ï¿½ï¿½
+            // ¾Ö´Ï¸ÞÀÌ¼Ç µÚ·Î ¹Ì·ç±â
             Sequence seq = DOTween.Sequence();
             seq.AppendCallback(() =>
             {
@@ -269,7 +264,6 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                     //seq2.AppendCallback(() => { IsBig = false; });
                 });
             });
-            //card.transform.SetParent()
             SortCard();
         }
 
@@ -289,7 +283,7 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                     {
                         name += _runeDict[RuneType.Assist][i].Rune.AssistRune.Name + " ";
 
-                        if(i == 2)
+                        if (i == 2)
                         {
                             name += "\n";
                         }
@@ -302,7 +296,7 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                 else
                 {
                     name = name.Substring(0, name.Length - 1);
-                    name += $"ì˜ {_runeDict[RuneType.Main][0].Rune.MainRune.Name}";
+                    name += $"ÀÇ {_runeDict[RuneType.Main][0].Rune.MainRune.Name}";
                 }
                 _nameText.text = name;
             }
@@ -337,7 +331,7 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                 touchEndedPos = touch.position;
                 touchDif = (touchEndedPos - touchBeganPos);
 
-                //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½. ï¿½ï¿½Ä¡ï¿½ï¿½ xï¿½Ìµï¿½ï¿½Å¸ï¿½ï¿½ï¿½ yï¿½Ìµï¿½ï¿½Å¸ï¿½ï¿½ï¿½ ï¿½Î°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Å©ï¿½ï¿½
+                //½º¿ÍÀÌÇÁ. ÅÍÄ¡ÀÇ xÀÌµ¿°Å¸®³ª yÀÌµ¿°Å¸®°¡ ¹Î°¨µµº¸´Ù Å©¸é
                 if (Mathf.Abs(touchDif.y) > swipeSensitivity || Mathf.Abs(touchDif.x) > swipeSensitivity)
                 {
                     if (touchDif.y > 0 && Mathf.Abs(touchDif.y) > Mathf.Abs(touchDif.x))
@@ -363,7 +357,7 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                         Debug.Log("Left");
                     }
                 }
-                //ï¿½ï¿½Ä¡.
+                //ÅÍÄ¡.
                 else
                 {
                     Debug.Log("touch");
@@ -375,22 +369,22 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
 
     public void Damage()
     {
-        // ï¿½×³ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â´Ù´ï¿½ ï¿½ï¿½ï¿½ï¿½, ï¿½Ù¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ù°ï¿½ ï¿½Å±ï¿½ ï¿½ï¿½ï¿½ï¿½
+        // ±×³É ·ÎÁ÷¸¸ Àû¾î³õ´Â´Ù´Â ´À³¦, ´Ù¸¥ °÷¿¡´Ù°¡ ¿Å±æ ¿¹Á¤
 
-        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ È¸ï¿½ï¿½ È¿ï¿½ï¿½
-        // ï¿½ï¿½ï¿½Ì¿ï¿½ ï¿½ß°ï¿½ï¿½ï¿½ ï¿½Ù¸ï¿½ È¿ï¿½ï¿½ï¿½ï¿½ ï¿½Ö°ï¿½ï¿½ï¿½
-        // ï¿½ï¿½ ï¿½Ä¿ï¿½ ï¿½ï¿½ï¿½ï¿½
+        // ¸¶¹ýÁø È¸Àü È¿°ú
+        // »çÀÌ¿¡ Ãß°¡·Î ´Ù¸¥ È¿°úµµ ÀÖ°ÚÁö
+        // ±× ÈÄ¿¡ °ø°Ý
 
         if (_runeDict.ContainsKey(RuneType.Main) == false || _runeDict[RuneType.Main].Count == 0 || _runeDict[RuneType.Main][0].Rune == null)
         {
-            // ï¿½ï¿½ï¿½ï¿½ ï¿½ÈµÇ´ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®
-            // ï¿½ï¿½.. Ä«ï¿½Þ¶ï¿½ ï¿½ï¿½é¸²ï¿½Ì¶ï¿½ï¿½ï¿½ï¿½
-            Debug.Log("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
+            // °ø°Ý ¾ÈµÇ´Â ÀÌÆåÆ®
+            // ¹¹.. Ä«¸Þ¶ó Èçµé¸²ÀÌ¶ó´øÁö
+            Debug.Log("¸ÞÀÎ ·é ¾øÀ½");
             return;
         }
 
         Sequence seq = DOTween.Sequence();
-        seq.Append(this.transform.DORotate(new Vector3(0, 0, -360 * 5), 0.7f, RotateMode.LocalAxisAdd).SetEase(Ease.OutCubic));
+        seq.Append(this.transform.DORotate(new Vector3(0, 0, 360 * 5), 0.7f, RotateMode.LocalAxisAdd).SetEase(Ease.OutCubic));
 
         //int damage = 0;
         seq.AppendInterval(0.1f);
@@ -402,7 +396,7 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                 {
                     //damage += _runeDict[RuneType.Assist][i]._runeSO.assistRuneValue;
                     //damage += _runeDict[RuneType.Assist][i].Rune.AssistRune.EffectPair
-                    Card card = _runeDict[RuneType.Assist][i];
+                    TestCard card = _runeDict[RuneType.Assist][i];
                     if (card.Rune != null)
                     {
                         card.UseAssistEffect();
@@ -421,7 +415,7 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                 for (int i = 0; i < _runeDict[RuneType.Main].Count; i++)
                 {
                     //damage += _runeDict[RuneType.Main][i]._runeSO.mainRuneValue;
-                    Card card = _runeDict[RuneType.Main][i];
+                    TestCard card = _runeDict[RuneType.Main][i];
                     if (card.Rune != null)
                     {
                         card.UseMainEffect();
