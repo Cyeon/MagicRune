@@ -27,7 +27,7 @@ public class CardCollector : MonoBehaviour
             {
                 _selectCard = value;
                 _cardOriginPos = _selectCard.GetComponent<RectTransform>().anchoredPosition;
-                //_magicCircle.IsBig = true;
+                _magicCircle.IsBig = true;
             }
             else
             {
