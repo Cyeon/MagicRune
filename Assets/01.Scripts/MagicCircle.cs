@@ -389,7 +389,7 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
         }
 
         Sequence seq = DOTween.Sequence();
-        seq.Append(this.transform.DORotate(new Vector3(0, 0, 360 * 5), 0.7f, RotateMode.LocalAxisAdd).SetEase(Ease.OutCubic));
+        seq.Append(this.transform.DORotate(new Vector3(0, 0, -360 * 5), 0.7f, RotateMode.LocalAxisAdd).SetEase(Ease.OutCubic));
 
         //int damage = 0;
         seq.AppendInterval(0.1f);
