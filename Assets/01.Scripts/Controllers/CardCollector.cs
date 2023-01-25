@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CardCollector : MonoBehaviour
 {
@@ -25,6 +26,8 @@ public class CardCollector : MonoBehaviour
     private List<Card> _restCards = null;
 
     private Vector2 _cardOriginPos;
+    private int _uiIndex;
+
     private Card _selectCard;
     public Card SelectCard
     {
@@ -35,14 +38,13 @@ public class CardCollector : MonoBehaviour
             {
                 _selectCard = value;
                 _cardOriginPos = _selectCard.GetComponent<RectTransform>().anchoredPosition;
+                _magicCircle.IsBig = true;
             }
             else
             {
                 // 만약 선택 카드가 마법진 안에 있다면?
-                Vector2 mousePos = Input.mousePosition;
-                RectTransform circleRect = _magicCircle.GetComponent<RectTransform>();
-                if (mousePos.x >= circleRect.anchoredPosition.x - circleRect.sizeDelta.x / 2 && mousePos.x <= circleRect.anchoredPosition.x + circleRect.sizeDelta.x / 2
-                    && mousePos.y >= circleRect.anchoredPosition.y - circleRect.sizeDelta.y / 2 && mousePos.y <= circleRect.anchoredPosition.y + circleRect.sizeDelta.y / 2)
+                if (Vector2.Distance(SelectCard.GetComponent<RectTransform>().anchoredPosition, _magicCircle.GetComponent<RectTransform>().anchoredPosition)
+                <= _magicCircle.CardAreaDistance)
                 {
                     bool isAdd = _magicCircle.AddCard(SelectCard);
                     if (isAdd)
@@ -90,12 +92,21 @@ public class CardCollector : MonoBehaviour
         if (SelectCard != null)
         {
             SelectCard.GetComponent<RectTransform>().anchoredPosition = Input.mousePosition;
-        }
 
-        if (Input.GetKeyDown(KeyCode.Space)) // 작동?안함?
-        {
-            Debug.Log(1);
-            CardDraw(_deckCards.Count);
+            if (_magicCircle.IsBig == true)
+            {
+                if (Vector2.Distance(SelectCard.GetComponent<RectTransform>().anchoredPosition, _magicCircle.GetComponent<RectTransform>().anchoredPosition)
+                    <= _magicCircle.CardAreaDistance)
+                {
+                    SelectCard.GetComponent<Image>().sprite = SelectCard.Rune.RuneImage;
+                    SelectCard.GetComponent<RectTransform>().sizeDelta = new Vector2(128, 128);
+                }
+                else
+                {
+                    SelectCard.GetComponent<Image>().sprite = SelectCard.Rune.CardImage;
+                    SelectCard.GetComponent<RectTransform>().sizeDelta = new Vector2(300, 500);
+                }
+            }
         }
     }
 
@@ -134,6 +145,18 @@ public class CardCollector : MonoBehaviour
 
     public void CardSelect(Card card)
     {
+        if (card == null)
+        {
+            SelectCard.transform.SetSiblingIndex(_uiIndex);
+            _uiIndex = -1;
+            SelectCard.GetComponent<Image>().sprite = SelectCard.Rune.CardImage;
+            SelectCard.GetComponent<RectTransform>().sizeDelta = new Vector2(300, 500);
+        }
+        else
+        {
+            _uiIndex = card.transform.GetSiblingIndex();
+            card.transform.SetAsLastSibling();
+        }
         SelectCard = card;
     }
 

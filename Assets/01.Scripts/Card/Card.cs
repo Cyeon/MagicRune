@@ -43,7 +43,6 @@ public abstract class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         }
     }
 
-    private CardCollector _collector;
     private RectTransform _rect;
 
     protected virtual void Start()
