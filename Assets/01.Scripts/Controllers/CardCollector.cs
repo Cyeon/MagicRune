@@ -42,20 +42,20 @@ public class CardCollector : MonoBehaviour
             }
             else
             {
-                // 만약 선택 카드가 마법진 안에 있다면?
+                // 만약 ?�택 카드가 마법�??�에 ?�다�?
                 if (Vector2.Distance(SelectCard.GetComponent<RectTransform>().anchoredPosition, _magicCircle.GetComponent<RectTransform>().anchoredPosition)
                 <= _magicCircle.CardAreaDistance)
                 {
-                    bool isAdd = _magicCircle.AddCard(SelectCard);
-                    if (isAdd)
+                    Card isAdd = _magicCircle.AddCard(SelectCard);
+                    if (isAdd != null)
                     {
-                        _handCards.Remove(SelectCard);
+                        _handCards.Remove(isAdd);
                         //SelectCard.IsRest = true;
-                        _restCards.Add(SelectCard);
+                        _restCards.Add(isAdd);
                         SelectCard.gameObject.SetActive(false);
                     }
                 }
-                // YES : 마법진 안에 넣기, 리스트 안에 카드 지우기
+                // YES : 마법�??�에 ?�기, 리스???�에 카드 지?�기
                 _selectCard.GetComponent<RectTransform>().anchoredPosition = _cardOriginPos;
                 _selectCard = value;
                 CardSort();
@@ -135,7 +135,7 @@ public class CardCollector : MonoBehaviour
 
         for (int i = 0; i < _handCards.Count; i++)
         {
-            //이걸 해줘야 Animation을 위해 MagicCircle의 자식으로 넣었던 것도 다시 손 패의 자식으로 돌아와 정상적으로 Sort가 되는데 그러면 Damage부분에서 오류가 남 몰?루
+            //?�걸 ?�줘??Animation???�해 MagicCircle???�식?�로 ?�었??것도 ?�시 ???�의 ?�식?�로 ?�아?� ?�상?�으�?Sort가 ?�는??그러�?Damage부분에???�류가 ??�?�?
             //_handCards[i].transform.SetParent(this.transform); 
             RectTransform rect = _handCards[i].GetComponent<RectTransform>();
             float xDelta = 1440f / _handCards.Count;
