@@ -10,7 +10,10 @@ public class CardCollector : MonoBehaviour
     private MagicCircle _magicCircle;
 
     [SerializeField]
-    private BattleDeckUI _battleDeckUI = null;
+    private CardsViewUI _deckViewUI = null;
+
+    [SerializeField]
+    private CardsViewUI _restViewUI = null;
 
     [SerializeField]
     private TMP_Text _restAmountText = null;
@@ -69,6 +72,7 @@ public class CardCollector : MonoBehaviour
     }
 
     public IReadOnlyList<Card> DeckCards => _deckCards;
+    public IReadOnlyList<Card> RestCards => _restCards;
 
     private void Awake()
     {
@@ -190,7 +194,7 @@ public class CardCollector : MonoBehaviour
 
     private void UIUpdate()
     {
-        _restAmountText.text = _restCards.Count.ToString();
-        _battleDeckUI.UITextUpdate();
+        _deckViewUI.UITextUpdate();
+        _restViewUI.UITextUpdate();
     }
 }
