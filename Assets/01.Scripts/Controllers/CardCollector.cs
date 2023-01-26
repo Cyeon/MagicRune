@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class CardCollector : MonoBehaviour
 {
@@ -114,7 +115,8 @@ public class CardCollector : MonoBehaviour
                 }
                 else
                 {
-                    SelectCard.GetComponent<Image>().sprite = SelectCard.Rune.CardImage;
+                    // 만약 끼우는 곳이 메인이면 메인 카드, 보조면 보조 카드 이미지 넣기
+                    SelectCard.GetComponent<Image>().sprite = SelectCard.Rune.MainRune.CardImage;
                     SelectCard.GetComponent<RectTransform>().sizeDelta = new Vector2(300, 500);
                 }
             }
@@ -161,8 +163,8 @@ public class CardCollector : MonoBehaviour
         {
             SelectCard.transform.SetSiblingIndex(_uiIndex);
             _uiIndex = -1;
-            SelectCard.GetComponent<Image>().sprite = SelectCard.Rune.CardImage;
-            SelectCard.GetComponent<RectTransform>().sizeDelta = new Vector2(300, 500);
+            SelectCard.GetComponent<Image>().sprite = SelectCard.Rune.MainRune.CardImage;
+            SelectCard.GetComponent<RectTransform>().sizeDelta = new Vector2(300, 500); // 이런 보분도 수정해야함
         }
         else
         {
@@ -185,6 +187,24 @@ public class CardCollector : MonoBehaviour
             }
         }
         UIUpdate();
+    }
+
+    public void CardRotate()
+    {
+        Sequence seq = DOTween.Sequence();
+        foreach(var card in _handCards)
+        {
+            seq.Join(card.transform.DORotate(new Vector3(0, 360, 0), 0.3f, RotateMode.FastBeyond360));
+        }
+
+        foreach (var card in _handCards)
+        {
+            seq.InsertCallback(0.15f, () =>
+            {
+                card.transform.rotation = Quaternion.Euler(0, 0, 0);
+                card.IsFront = !card.IsFront;
+            });
+        }
     }
 
     private void OnDestroy()

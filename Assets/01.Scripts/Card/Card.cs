@@ -43,12 +43,57 @@ public abstract class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         }
     }
 
+    private bool _isFront = true;
+    public bool IsFront
+    {
+        get => _isFront;
+        set
+        {
+            //if (_isFront == value) return;
+
+            _isFront = value;
+            if(_isFront == true)
+            {
+                _skillImage.sprite = _rune.MainRune.CardImage;
+                _costText.text = _rune.MainRune.Cost.ToString();
+                _coolTimeText.text = _rune.MainRune.DelayTurn.ToString();
+                _mainSubText.text = "메인";
+                _skillText.text = _rune.MainRune.CardDescription;
+            }
+            else
+            {
+                _skillImage.sprite = _rune.AssistRune.CardImage;
+                _costText.text = _rune.AssistRune.Cost.ToString();
+                _coolTimeText.text = _rune.AssistRune.DelayTurn.ToString();
+                _mainSubText.text = "보조";
+                _skillText.text = _rune.AssistRune.CardDescription;
+            }
+        }
+    }
+    #region Card UI
+    private Transform _parentObj;
+    private Image _skillImage;
+    private Text _costText;
+    private Text _coolTimeText;
+    private Text _mainSubText;
+    private Text _skillText;
+    #endregion
+
     private RectTransform _rect;
 
     protected virtual void Start()
     {
         _collector = GetComponentInParent<CardCollector>();
         _rect = GetComponent<RectTransform>();
+
+        _parentObj = transform.Find("Card_Add element");
+        _skillImage = _parentObj.Find("Skill_Image").GetComponent<Image>();
+        _costText = _parentObj.Find("Cost_Text").GetComponent<Text>();
+        _coolTimeText = _parentObj.Find("Cooltime_Text").GetComponent<Text>();
+        _mainSubText = _parentObj.Find("MainSub_Text").GetComponent<Text>();
+        _skillText = _parentObj.Find("Skill_Detail").GetComponent<Text>();
+
+        IsFront = true;
     }
 
     public void SetRune(CardSO rune)
