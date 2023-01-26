@@ -45,7 +45,12 @@ public class CardsViewUI : MonoBehaviour
 
     public void UITextUpdate()
     {
-        _amountText.text = _cardCollector.DeckCards.Count.ToString();
+        if (_isRest)
+        {
+            _amountText.text = _cardCollector.RestCards.Count.ToString();
+        }
+        else
+            _amountText.text = _cardCollector.DeckCards.Count.ToString();
     }
 
     public void OpenUI()
@@ -54,7 +59,7 @@ public class CardsViewUI : MonoBehaviour
             SetChild((List<Card>)_cardCollector.RestCards);
         else
             SetChild((List<Card>)_cardCollector.DeckCards);
-        
+
         _scrollView.SetActive(true);
     }
 
