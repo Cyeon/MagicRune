@@ -71,12 +71,20 @@ public abstract class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         }
     }
     #region Card UI
-    private Transform _parentObj;
+    // Card Area
+    private Transform _cardAreaParent;
+    public Transform CardAreaParent => _cardAreaParent;
+    private Transform _cardParent;
     private Image _skillImage;
     private Text _costText;
     private Text _coolTimeText;
     private Text _mainSubText;
     private Text _skillText;
+
+    // Rune Area
+    private Transform _runeAreaParent;
+    public Transform RuneAreaParent => _runeAreaParent;
+    private Image _runeImage;
     #endregion
 
     private RectTransform _rect;
@@ -86,14 +94,20 @@ public abstract class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         _collector = GetComponentInParent<CardCollector>();
         _rect = GetComponent<RectTransform>();
 
-        _parentObj = transform.Find("Card_Add element");
-        _skillImage = _parentObj.Find("Skill_Image").GetComponent<Image>();
-        _costText = _parentObj.Find("Cost_Text").GetComponent<Text>();
-        _coolTimeText = _parentObj.Find("Cooltime_Text").GetComponent<Text>();
-        _mainSubText = _parentObj.Find("MainSub_Text").GetComponent<Text>();
-        _skillText = _parentObj.Find("Skill_Detail").GetComponent<Text>();
+        _cardAreaParent = transform.Find("Card_Area");
+        _cardParent = _cardAreaParent.Find("Card_Add element");
+        _skillImage = _cardParent.Find("Skill_Image").GetComponent<Image>();
+        _costText = _cardParent.Find("Cost_Text").GetComponent<Text>();
+        _coolTimeText = _cardParent.Find("Cooltime_Text").GetComponent<Text>();
+        _mainSubText = _cardParent.Find("MainSub_Text").GetComponent<Text>();
+        _skillText = _cardParent.Find("Skill_Detail").GetComponent<Text>();
 
+        _runeAreaParent = transform.Find("RuneArea");
+        _runeImage = _runeAreaParent.Find("Rune Image").GetComponent<Image>();
         IsFront = true;
+
+        _runeImage.sprite = _rune.RuneImage;
+        _runeAreaParent.gameObject.SetActive(false);
     }
 
     public void SetRune(CardSO rune)

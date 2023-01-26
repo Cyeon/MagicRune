@@ -6,7 +6,9 @@ using System.Security.Cryptography;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using UnityEngine.Windows;
 using static UnityEngine.UIElements.UxmlAttributeDescription;
+using Input = UnityEngine.Input;
 
 public enum RuneType
 {
@@ -149,7 +151,7 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                 seq.AppendCallback(() =>
                 {
                     GameObject g = Instantiate(_garbageRuneTemplate.gameObject, this.transform);
-                    card.GetComponent<RectTransform>().anchoredPosition = Input.mousePosition;
+                    card.GetComponent<RectTransform>().anchoredPosition = Input.GetTouch(0).position;
                     card.transform.SetParent(this.transform);
                     g.GetComponent<RectTransform>().anchoredPosition = card.GetComponent<RectTransform>().anchoredPosition;
                     g.GetComponent<RectTransform>().DOAnchorPos(GetComponent<RectTransform>().anchoredPosition, 0.3f).OnComplete(() =>
@@ -193,7 +195,7 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                 {
                     GameObject g = Instantiate(_garbageRuneTemplate.gameObject, this.transform);
                     Debug.Log(card);
-                    card.GetComponent<RectTransform>().anchoredPosition = Input.mousePosition;
+                    card.GetComponent<RectTransform>().anchoredPosition = Input.GetTouch(0).position;
                     card.transform.SetParent(this.transform);
                     g.GetComponent<RectTransform>().anchoredPosition = card.GetComponent<RectTransform>().anchoredPosition;
                     g.GetComponent<RectTransform>().DOAnchorPos(Vector2.zero, 0.3f).OnComplete(() =>
@@ -258,7 +260,7 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
             seq.AppendCallback(() =>
             {
                 GameObject g = Instantiate(_garbageRuneTemplate.gameObject, this.transform);
-                card.GetComponent<RectTransform>().anchoredPosition = Input.mousePosition;
+                card.GetComponent<RectTransform>().anchoredPosition = Input.GetTouch(0).position;
                 card.transform.SetParent(this.transform);
                 g.GetComponent<RectTransform>().anchoredPosition = card.GetComponent<RectTransform>().anchoredPosition;
                 g.GetComponent<RectTransform>().DOAnchorPos(_runeDict[RuneType.Assist][changeIndex].GetComponent<RectTransform>().anchoredPosition, 0.3f).OnComplete(() =>

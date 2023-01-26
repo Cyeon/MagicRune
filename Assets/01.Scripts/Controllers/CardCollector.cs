@@ -52,7 +52,7 @@ public class CardCollector : MonoBehaviour
             else
             {
                 // ÎßåÏïΩ ?†ÌÉù Ïπ¥ÎìúÍ∞Ä ÎßàÎ≤ïÏß??àÏóê ?àÎã§Î©?
-                if (Vector2.Distance(SelectCard.GetComponent<RectTransform>().anchoredPosition, _magicCircle.GetComponent<RectTransform>().anchoredPosition)
+                if (Vector2.Distance(Input.GetTouch(0).position, _magicCircle.GetComponent<RectTransform>().anchoredPosition)
                 <= _magicCircle.CardAreaDistance)
                 {
                     Card isAdd = _magicCircle.AddCard(SelectCard);
@@ -74,6 +74,8 @@ public class CardCollector : MonoBehaviour
 
     public IReadOnlyList<Card> DeckCards => _deckCards;
     public IReadOnlyList<Card> RestCards => _restCards;
+
+    private bool _isFront = true;
 
     private void Awake()
     {
@@ -97,27 +99,31 @@ public class CardCollector : MonoBehaviour
 
         CardDraw(_cardCnt);
         UIUpdate();
+
+        _isFront = true;
     }
 
     private void Update()
     {
         if (SelectCard != null)
         {
-            SelectCard.GetComponent<RectTransform>().anchoredPosition = Input.mousePosition;
+            if (Input.touchCount <= 0) return;
+            SelectCard.GetComponent<RectTransform>().anchoredPosition = new Vector2(Input.GetTouch(0).position.x, Input.GetTouch(0).position.y - this.GetComponent<RectTransform>().anchoredPosition.y);
 
             if (_magicCircle.IsBig == true)
             {
-                if (Vector2.Distance(SelectCard.GetComponent<RectTransform>().anchoredPosition, _magicCircle.GetComponent<RectTransform>().anchoredPosition)
+                if (Vector2.Distance(Input.GetTouch(0).position, _magicCircle.GetComponent<RectTransform>().anchoredPosition)
                     <= _magicCircle.CardAreaDistance)
                 {
-                    SelectCard.GetComponent<Image>().sprite = SelectCard.Rune.RuneImage;
-                    SelectCard.GetComponent<RectTransform>().sizeDelta = new Vector2(128, 128);
+                    SelectCard.RuneAreaParent.gameObject.SetActive(true);
+                    SelectCard.CardAreaParent.gameObject.SetActive(false);
+                    //SelectCard.GetComponent<RectTransform>().sizeDelta = new Vector2(128, 128);
                 }
                 else
                 {
-                    // ∏∏æ‡ ≥¢øÏ¥¬ ∞˜¿Ã ∏ﬁ¿Œ¿Ã∏È ∏ﬁ¿Œ ƒ´µÂ, ∫∏¡∂∏È ∫∏¡∂ ƒ´µÂ ¿ÃπÃ¡ˆ ≥÷±‚
-                    SelectCard.GetComponent<Image>().sprite = SelectCard.Rune.MainRune.CardImage;
-                    SelectCard.GetComponent<RectTransform>().sizeDelta = new Vector2(300, 500);
+                    SelectCard.RuneAreaParent.gameObject.SetActive(false);
+                    SelectCard.CardAreaParent.gameObject.SetActive(true);
+                    //SelectCard.GetComponent<RectTransform>().sizeDelta = new Vector2(300, 500);
                 }
             }
         }
@@ -163,8 +169,8 @@ public class CardCollector : MonoBehaviour
         {
             SelectCard.transform.SetSiblingIndex(_uiIndex);
             _uiIndex = -1;
-            SelectCard.GetComponent<Image>().sprite = SelectCard.Rune.MainRune.CardImage;
-            SelectCard.GetComponent<RectTransform>().sizeDelta = new Vector2(300, 500); // ¿Ã∑± ∫∏∫–µµ ºˆ¡§«ÿæﬂ«‘
+            SelectCard.RuneAreaParent.gameObject.SetActive(false);
+            SelectCard.CardAreaParent.gameObject.SetActive(true);
         }
         else
         {
@@ -205,6 +211,8 @@ public class CardCollector : MonoBehaviour
                 card.IsFront = !card.IsFront;
             });
         }
+
+        _isFront = _handCards[0].IsFront;
     }
 
     private void OnDestroy()
