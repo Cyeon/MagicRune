@@ -36,6 +36,8 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
     private GameObject _bgPanel;
     [SerializeField]
     private Text _nameText;
+    [SerializeField]
+    private Text _effectText;
 
     public Enemy enemy;
     private Vector2 touchBeganPos;
@@ -74,7 +76,7 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
 
                 // ī�� ������ �۾���
 
-                // �۰� �����
+                // �۰� �����?
                 transform.DOComplete();
                 this.transform.DOScale(new Vector3(0.3f, 0.3f, 1), 0.2f);
                 //_bgPanel.GetComponent<Image>().DOFade(0, 0.2f);
@@ -123,24 +125,24 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
         }
     }
 
-    public bool AddCard(Card card)
+    public Card AddCard(Card card)
     {
-        if (_isBig == false) return false;
+        if (_isBig == false) return null;
 
         // �̸� ������ ���� �� ��ü���� �հ����� ���� �� �����鿡 ������Ű��
         if (_runeDict.ContainsKey(RuneType.Main) == false || (_runeDict[RuneType.Main].Count == 0))
         {
             if (!DummyCost.Instance.CanUseMainRune(card.Rune.MainRune.Cost))
             {
-                Debug.Log("���� ���� ����ϱ� ���� ������ �����մϴ�.");
-                return false;
+                Debug.Log("���� ���� ����ϱ�?���� ������ �����մϴ�.");
+                return null;
             }
             if (_runeDict.ContainsKey(RuneType.Main))
             {
                 if (_runeDict[RuneType.Main].Count >= _mainRuneCnt)
                 {
                     Debug.Log("���� ���� ���� �ֽ��ϴ�.");
-                    return false;
+                    return null;
                 }
 
                 Sequence seq = DOTween.Sequence();
@@ -158,7 +160,7 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                         Card rune = go.GetComponent<Card>();
                         rune.SetRune(card.Rune);
                         rune.SetIsEquip(true);
-                        rune.SetCoolTime(card.Rune.MainRune.DelayTurn);
+                        card.SetCoolTime(card.Rune.MainRune.DelayTurn);
                         _runeDict[RuneType.Main].Add(rune);
 
                         for (int i = 0; i < _runeDict[RuneType.Main][0].Rune.AssistRuneCount; i++)
@@ -206,7 +208,8 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                     Card rune = go.GetComponent<Card>();
                     rune.SetRune(card.Rune);
                     rune.SetIsEquip(true);
-                    rune.SetCoolTime(card.Rune.MainRune.DelayTurn);
+                    //rune.SetCoolTime(card.Rune.MainRune.DelayTurn);
+                    card.SetCoolTime(card.Rune.MainRune.DelayTurn);
                     _runeDict.Add(RuneType.Main, new List<Card>() { rune });
 
                     for (int i = 0; i < _runeDict[RuneType.Main][0].Rune.AssistRuneCount; i++)
@@ -234,8 +237,8 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
         {
             if (!DummyCost.Instance.CanUseSubRune(card.Rune.AssistRune.Cost))
             {
-                Debug.Log("���� ���� ����ϱ� ���� ������ �����մϴ�.");
-                return false;
+                Debug.Log("���� ���� ����ϱ�?���� ������ �����մϴ�.");
+                return null;
             }
 
             int changeIndex = -1;
@@ -248,9 +251,9 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                 }
             }
 
-            if (changeIndex == -1) return false;
+            if (changeIndex == -1) return null;
 
-            // �ִϸ��̼� �ڷ� �̷��
+            // �ִϸ��̼� �ڷ� �̷��?
             Sequence seq = DOTween.Sequence();
             seq.AppendCallback(() =>
             {
@@ -263,6 +266,7 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                     Destroy(g);
                     _runeDict[RuneType.Assist][changeIndex].SetRune(card.Rune);
                     _runeDict[RuneType.Assist][changeIndex].SetCoolTime(card.Rune.AssistRune.DelayTurn);
+                    card.SetCoolTime(card.Rune.AssistRune.DelayTurn);
                     UpdateMagicName();
                     //Sequence seq2 = DOTween.Sequence();
                     //seq2.AppendInterval(0.2f);
@@ -273,7 +277,7 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
             SortCard();
         }
 
-        return true;
+        return card;
     }
 
     private void UpdateMagicName()
@@ -289,7 +293,7 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                     {
                         name += _runeDict[RuneType.Assist][i].Rune.AssistRune.Name + " ";
 
-                        if(i == 2)
+                        if (i == 2)
                         {
                             name += "\n";
                         }
@@ -302,9 +306,74 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                 else
                 {
                     name = name.Substring(0, name.Length - 1);
-                    name += $"의 {_runeDict[RuneType.Main][0].Rune.MainRune.Name}";
+                    name += $"�� {_runeDict[RuneType.Main][0].Rune.MainRune.Name}";
                 }
                 _nameText.text = name;
+
+                string effect = "";
+                int damage = 0;
+                int defence = 0;
+                string etcEffect = "";
+                for (int i = 0; i < _runeDict[RuneType.Assist].Count; i++)
+                {
+                    if (_runeDict[RuneType.Assist][i].Rune != null)
+                    {
+                        for (int j = 0; j < _runeDict[RuneType.Assist][i].Rune.AssistRune.EffectDescription.Count; j++)
+                        {
+                            switch (_runeDict[RuneType.Assist][j].Rune.AssistRune.EffectDescription[j].EffectType)
+                            {
+                                case EffectType.Attack:
+                                    damage += int.Parse(_runeDict[RuneType.Assist][j].Rune.AssistRune.EffectDescription[j].Effect);
+                                    break;
+                                case EffectType.Defence:
+                                    defence += int.Parse(_runeDict[RuneType.Assist][j].Rune.AssistRune.EffectDescription[j].Effect);
+                                    break;
+                                case EffectType.Etc:
+                                    if (etcEffect != "") etcEffect += "+";
+                                    etcEffect += _runeDict[RuneType.Assist][j].Rune.AssistRune.EffectDescription[j].Effect;
+                                    break;
+                            }
+                        }
+                    }
+                }
+
+                for (int i = 0; i < _runeDict[RuneType.Main][0].Rune.MainRune.EffectDescription.Count; i++)
+                {
+                    if (_runeDict[RuneType.Main][i].Rune != null)
+                    {
+                        switch (_runeDict[RuneType.Main][i].Rune.MainRune.EffectDescription[i].EffectType)
+                        {
+                            case EffectType.Attack:
+                                damage += int.Parse(_runeDict[RuneType.Main][i].Rune.MainRune.EffectDescription[i].Effect);
+                                break;
+                            case EffectType.Defence:
+                                defence += int.Parse(_runeDict[RuneType.Main][i].Rune.MainRune.EffectDescription[i].Effect);
+                                break;
+                            case EffectType.Etc:
+                                break;
+                        }
+                    }
+                }
+
+                if (damage > 0)
+                {
+                    effect += $"{damage}������";
+                }
+                if (defence > 0)
+                {
+                    if (effect != "") effect += "+";
+
+                    effect += $"{defence}������";
+                }
+                if (etcEffect != "")
+                {
+                    if (effect != "") effect += "+";
+
+                    effect += etcEffect;
+                }
+
+                
+                _effectText.text = effect;
             }
         }
     }
@@ -375,7 +444,7 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
 
     public void Damage()
     {
-        // �׳� ������ ������´ٴ� ����, �ٸ� �����ٰ� �ű� ����
+        // �׳� ������ ������´ٴ�?����, �ٸ� �����ٰ� �ű� ����
 
         // ������ ȸ�� ȿ��
         // ���̿� �߰��� �ٸ� ȿ���� �ְ���

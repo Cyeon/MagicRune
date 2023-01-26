@@ -32,7 +32,7 @@ public class GameManager : MonoSingleton<GameManager>
 
         enemy.OnTakeDamageFeedback.AddListener(() => TurnChange());
         enemy.OnTakeDamageFeedback.AddListener(() => UIManager.instance.UpdateEnemyHealthbar());
-        // StatusManager.Instance.AddStatus(enemy, "약쇄");
+        // StatusManager.Instance.AddStatus(enemy, "?�쇄");
 
         TurnChange();
     }
