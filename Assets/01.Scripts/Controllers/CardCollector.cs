@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,7 +10,11 @@ public class CardCollector : MonoBehaviour
     private MagicCircle _magicCircle;
 
     [SerializeField]
-    private Card _cardTemplate;
+    private BattleDeckUI _battleDeckUI = null;
+
+    [SerializeField]
+    private TMP_Text _restAmountText = null;
+
     [SerializeField]
     private int _cardCnt;
 
@@ -63,6 +68,8 @@ public class CardCollector : MonoBehaviour
         }
     }
 
+    public IReadOnlyList<Card> DeckCards => _deckCards;
+
     private void Awake()
     {
         //_cardList = new List<Card>();
@@ -84,7 +91,7 @@ public class CardCollector : MonoBehaviour
         }
 
         CardDraw(_cardCnt);
-
+        UIUpdate();
     }
 
     private void Update()
@@ -121,6 +128,7 @@ public class CardCollector : MonoBehaviour
             card.gameObject.SetActive(true);
         }
         CardSort();
+        UIUpdate();
     }
 
     private void CardSort()
@@ -172,10 +180,17 @@ public class CardCollector : MonoBehaviour
                 _restCards.Remove(card);
             }
         }
+        UIUpdate();
     }
 
     private void OnDestroy()
     {
         EventManager.StopListening(Define.ON_END_MONSTER_TURN, CoolTimeDecrease);
+    }
+
+    private void UIUpdate()
+    {
+        _restAmountText.text = _restCards.Count.ToString();
+        _battleDeckUI.UITextUpdate();
     }
 }
