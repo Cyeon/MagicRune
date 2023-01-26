@@ -39,6 +39,7 @@ public class CardsViewUI : MonoBehaviour
             GameObject gameObject = cards[i].gameObject;
             gameObject.GetComponent<Card>().enabled = true;
             gameObject.SetActive(false);
+            gameObject.transform.rotation = Quaternion.identity;
             gameObject.transform.SetParent(_cardCollector.transform);
         }
     }

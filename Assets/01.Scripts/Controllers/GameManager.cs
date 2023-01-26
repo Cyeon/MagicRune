@@ -6,9 +6,9 @@ public enum GameTurn
 {
     Player,
     Monster,
-    Unknown,
     PlayerWait,
-    MonsterWait
+    MonsterWait,
+    Unknown
 }
 
 public class GameManager : MonoSingleton<GameManager>
@@ -21,8 +21,8 @@ public class GameManager : MonoSingleton<GameManager>
 
     private void Awake()
     {
-        EventManager.StartListening(Define.ON_START_PLAYER_TURN, OnPlayerTurn);
-        EventManager.StartListening(Define.ON_START_MONSTER_TURN, OnMonsterTurn);
+        //EventManager.StartListening(Define.ON_START_PLAYER_TURN, OnPlayerTurn);
+        //EventManager.StartListening(Define.ON_START_MONSTER_TURN, OnMonsterTurn);
     }
 
     private void Start() {
@@ -120,8 +120,8 @@ public class GameManager : MonoSingleton<GameManager>
 
     private void OnDestroy()
     {
-        EventManager.StopListening(Define.ON_START_PLAYER_TURN, OnPlayerTurn);
-        EventManager.StopListening(Define.ON_START_MONSTER_TURN, OnMonsterTurn);
+        //EventManager.StopListening(Define.ON_START_PLAYER_TURN, OnPlayerTurn);
+        //EventManager.StopListening(Define.ON_START_MONSTER_TURN, OnMonsterTurn);
     }
 
 }
