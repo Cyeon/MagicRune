@@ -20,12 +20,6 @@ public class Pattern
 
     public void Turn()
     {
-        if(patternTurnFunc.GetPersistentEventCount() == 0)
-        {
-            GameManager.Instance.TurnChange();
-            return;
-        }
-
         patternTurnFunc.Invoke();
     }
 
