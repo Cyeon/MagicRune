@@ -29,6 +29,5 @@ public class Enemy : Unit
         InvokeStatus(StatusInvokeTime.Attack);
 
         GameManager.Instance.player.TakeDamage(currentDmg);
-        Debug.Log("Enemy Attack");
     }
 }

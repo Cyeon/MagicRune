@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -30,5 +31,17 @@ public class PatternFuncList : MonoBehaviour
     public void Attack()
     {
         GameManager.Instance.enemy.Attack();
+    }
+
+    public void DelayShake()
+    {
+        Camera.main.DOShakeRotation(1);
+        StartCoroutine(delayCoroutine());
+    }
+
+    private IEnumerator delayCoroutine()
+    {
+        yield return new WaitForSeconds(1f);
+        GameManager.Instance.TurnChange();
     }
 }
