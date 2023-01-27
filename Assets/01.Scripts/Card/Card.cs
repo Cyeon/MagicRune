@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using DG.Tweening;
 
-public abstract class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
+public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
     [SerializeField]
     private GameObject cardPrefab = null;
@@ -52,6 +52,8 @@ public abstract class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
             //if (_isFront == value) return;
 
             _isFront = value;
+
+            if (_rune == null) return;
             if(_isFront == true)
             {
                 _skillImage.sprite = _rune.MainRune.CardImage;
@@ -106,7 +108,10 @@ public abstract class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         _runeImage = _runeAreaParent.Find("Rune Image").GetComponent<Image>();
         IsFront = true;
 
-        _runeImage.sprite = _rune.RuneImage;
+        if(_rune != null)
+        {
+            _runeImage.sprite = _rune.RuneImage;
+        }
         _runeAreaParent.gameObject.SetActive(false);
     }
 
@@ -114,16 +119,16 @@ public abstract class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     {
         _rune = rune;
 
-        if(_rune == null)
-        {
-            this.GetComponent<Image>().color = Color.black;
-        }
-        else
-        {
-            this.GetComponent<Image>().color = Color.white;
-            this.GetComponent<Image>().sprite = rune.RuneImage;
+        //if(_rune == null)
+        //{
+        //    this.GetComponent<Image>().color = Color.black;
+        //}
+        //else
+        //{
+        //    this.GetComponent<Image>().color = Color.white;
+        //    this.GetComponent<Image>().sprite = rune.RuneImage;
 
-        }
+        //}
     }
 
     public void SetIsEquip(bool value)
@@ -154,7 +159,4 @@ public abstract class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
             transform.localScale = Vector3.one;
         }
     }
-
-    public abstract void UseMainEffect();
-    public abstract void UseAssistEffect();
 }

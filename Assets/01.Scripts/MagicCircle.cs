@@ -168,6 +168,7 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                         for (int i = 0; i < _runeDict[RuneType.Main][0].Rune.AssistRuneCount; i++)
                         {
                             GameObject ggo = Instantiate(_runeTemplate.gameObject, this.transform);
+                            //ggo.transform.GetChild(1).gaem
                             Card grune = ggo.GetComponent<Card>();
                             grune.SetRune(null);
                             grune.SetIsEquip(true);
@@ -197,7 +198,8 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                     Debug.Log(card);
                     card.GetComponent<RectTransform>().anchoredPosition = Input.GetTouch(0).position;
                     card.transform.SetParent(this.transform);
-                    g.GetComponent<RectTransform>().anchoredPosition = card.GetComponent<RectTransform>().anchoredPosition;
+                    //g.GetComponent<RectTransform>().anchoredPosition = card.GetComponent<RectTransform>().anchoredPosition;
+                    g.GetComponent<RectTransform>().anchoredPosition = Input.GetTouch(0).position;
                     g.GetComponent<RectTransform>().DOAnchorPos(Vector2.zero, 0.3f).OnComplete(() =>
                     {
                         Destroy(g);
@@ -476,7 +478,7 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                     Card card = _runeDict[RuneType.Assist][i];
                     if (card.Rune != null)
                     {
-                        card.UseAssistEffect();
+                        //card.UseAssistEffect();
                     }
                 }
 
@@ -495,7 +497,7 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                     Card card = _runeDict[RuneType.Main][i];
                     if (card.Rune != null)
                     {
-                        card.UseMainEffect();
+                        //card.UseMainEffect();
                     }
                 }
 

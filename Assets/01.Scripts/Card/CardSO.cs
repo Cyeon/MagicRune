@@ -19,7 +19,15 @@ public enum EffectType
 {
     Attack, // 공격하는거 예) 5데미지
     Defence, // 방어하는거 예) 5방어
+    Status,
     Etc, // 기타 효과 예) 1장 드로우, 화상효과 부여 등...
+}
+
+public enum StatusType
+{
+    None, // 아무것도 아닌 상태
+    Burn, // 화상
+    Freeze, // 빙결
 }
 
 [Serializable]
@@ -27,6 +35,8 @@ public class Pair
 {
     [Tooltip("효과 간단 속성?")]
     public EffectType EffectType;
+    [Tooltip("상태이상 속성, EffectType == Status면 사용")]
+    public StatusType StatusType;
     [ResizableTextArea, Tooltip("카드 효과 텍스트")]
     public string Effect;
 }
