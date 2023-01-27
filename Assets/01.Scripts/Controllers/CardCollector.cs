@@ -18,9 +18,6 @@ public class CardCollector : MonoBehaviour
     private CardsViewUI _restViewUI = null;
 
     [SerializeField]
-    private TMP_Text _restAmountText = null;
-
-    [SerializeField]
     private int _cardCnt;
 
     [SerializeField]
