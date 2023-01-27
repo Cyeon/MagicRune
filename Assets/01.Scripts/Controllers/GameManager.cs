@@ -6,9 +6,9 @@ public enum GameTurn
 {
     Player,
     Monster,
-    Unknown,
     PlayerWait,
-    MonsterWait
+    MonsterWait,
+    Unknown
 }
 
 public class GameManager : MonoSingleton<GameManager>
@@ -21,11 +21,12 @@ public class GameManager : MonoSingleton<GameManager>
 
     private void Awake()
     {
-        EventManager.StartListening(Define.ON_START_PLAYER_TURN, OnPlayerTurn);
-        EventManager.StartListening(Define.ON_START_MONSTER_TURN, OnMonsterTurn);
+        //EventManager.StartListening(Define.ON_START_PLAYER_TURN, OnPlayerTurn);
+        //EventManager.StartListening(Define.ON_START_MONSTER_TURN, OnMonsterTurn);
     }
 
-    private void Start() {
+    private void Start()
+    {
 
         enemy = EnemyManager.Instance.SpawnEnemy();
         player = FindObjectOfType<Player>();
@@ -54,6 +55,7 @@ public class GameManager : MonoSingleton<GameManager>
     private void OnPlayerTurn()
     {
         EventManager.TriggerEvent(Define.ON_END_MONSTER_TURN);
+        EventManager<bool>.TriggerEvent(Define.ON_START_PLAYER_TURN, true);
 
         gameTurn = GameTurn.Player;
         currentUnit = player;
@@ -61,6 +63,7 @@ public class GameManager : MonoSingleton<GameManager>
 
     public void OnMonsterTurn()
     {
+        EventManager<bool>.TriggerEvent(Define.ON_START_MONSTER_TURN, false);
         gameTurn = GameTurn.Monster;
         currentUnit = enemy;
         enemy.TurnStart();
@@ -73,7 +76,7 @@ public class GameManager : MonoSingleton<GameManager>
         if (gameTurn == GameTurn.Player || gameTurn == GameTurn.Monster)
             currentUnit?.InvokeStatus(StatusInvokeTime.End);
 
-        switch(gameTurn)
+        switch (gameTurn)
         {
             case GameTurn.Unknown:
                 enemy.pattern = PatternManager.Instance.GetPattern();
@@ -120,8 +123,8 @@ public class GameManager : MonoSingleton<GameManager>
 
     private void OnDestroy()
     {
-        EventManager.StopListening(Define.ON_START_PLAYER_TURN, OnPlayerTurn);
-        EventManager.StopListening(Define.ON_START_MONSTER_TURN, OnMonsterTurn);
+        //EventManager.StopListening(Define.ON_START_PLAYER_TURN, OnPlayerTurn);
+        //EventManager.StopListening(Define.ON_START_MONSTER_TURN, OnMonsterTurn);
     }
 
 }

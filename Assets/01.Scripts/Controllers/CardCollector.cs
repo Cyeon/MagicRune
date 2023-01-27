@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
+using System;
 
 public class CardCollector : MonoBehaviour
 {
@@ -78,6 +80,8 @@ public class CardCollector : MonoBehaviour
     {
         //_cardList = new List<Card>();
         EventManager.StartListening(Define.ON_END_MONSTER_TURN, CoolTimeDecrease);
+        EventManager<bool>.StartListening(Define.ON_START_PLAYER_TURN, CardOnOff);
+        EventManager<bool>.StartListening(Define.ON_START_MONSTER_TURN, CardOnOff);
     }
 
     // 2960 * 1440
@@ -125,7 +129,7 @@ public class CardCollector : MonoBehaviour
     {
         for (int i = 0; i < amount; i++)
         {
-            int idx = Random.Range(0, _deckCards.Count);
+            int idx = UnityEngine.Random.Range(0, _deckCards.Count);
             Card card = _deckCards[idx];
             _deckCards.Remove(card);
             _handCards.Add(card);
@@ -187,14 +191,24 @@ public class CardCollector : MonoBehaviour
         UIUpdate();
     }
 
-    private void OnDestroy()
-    {
-        EventManager.StopListening(Define.ON_END_MONSTER_TURN, CoolTimeDecrease);
-    }
-
     private void UIUpdate()
     {
         _deckViewUI.UITextUpdate();
         _restViewUI.UITextUpdate();
+    }
+
+    private void CardOnOff(bool flag)
+    {
+        foreach (Transform item in transform)
+        {
+            Debug.Log(item.name);
+            item.GetComponent<Image>().DOFade(Convert.ToInt32(flag), 0.75f);
+        }
+    }
+    private void OnDestroy()
+    {
+        EventManager.StopListening(Define.ON_END_MONSTER_TURN, CoolTimeDecrease);
+        EventManager<bool>.StopListening(Define.ON_START_PLAYER_TURN, CardOnOff);
+        EventManager<bool>.StopListening(Define.ON_START_MONSTER_TURN, CardOnOff);
     }
 }
