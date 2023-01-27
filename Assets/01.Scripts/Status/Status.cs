@@ -11,13 +11,20 @@ public enum StatusInvokeTime
     End
 }
 
+public enum StatusType
+{
+    Stack,
+    Turn
+}
+
 [System.Serializable]
 public class Status
 {
     public string statusName;
     public  StatusInvokeTime invokeTime;
-    public int durationTurn;
     public Sprite icon;
+    public StatusType type;
+    public int durationTurn;
     public UnityEvent statusFunc;
 
     public Status(Status status)
@@ -26,5 +33,7 @@ public class Status
         this.invokeTime = status.invokeTime;
         this.durationTurn = status.durationTurn;
         this.statusFunc = status.statusFunc;
+        this.icon = status.icon;
+        this.type = status.type;
     }
 }
