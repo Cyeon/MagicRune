@@ -22,16 +22,18 @@ public class Status
 {
     public string statusName;
     public  StatusInvokeTime invokeTime;
-    public Sprite icon;
     public StatusType type;
-    public int durationTurn;
+    public int typeValue;
     public UnityEvent statusFunc;
+    public Sprite icon;
+
+    public UnityEvent addFunc;
 
     public Status(Status status)
     {
         this.statusName = status.statusName;
         this.invokeTime = status.invokeTime;
-        this.durationTurn = status.durationTurn;
+        this.typeValue = status.typeValue;
         this.statusFunc = status.statusFunc;
         this.icon = status.icon;
         this.type = status.type;

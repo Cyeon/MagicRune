@@ -13,11 +13,13 @@ public enum GameTurn
 
 public class GameManager : MonoSingleton<GameManager>
 {
+    [SerializeField]
     private GameTurn gameTurn = GameTurn.Unknown;
     public GameTurn GameTurn => gameTurn;
     public Player player = null;
     public Enemy enemy = null;
     public Unit currentUnit = null;
+    public Unit attackUnit = null;
 
     private void Awake()
     {
@@ -33,9 +35,13 @@ public class GameManager : MonoSingleton<GameManager>
 
         UIManager.instance.PlayerHealthbarInit(player.HP);
 
-        enemy.OnTakeDamageFeedback.AddListener(() => TurnChange());
+        StatusManager.Instance.AddStatus(enemy, "ºù°á");
+        StatusManager.Instance.AddStatus(enemy, "ºù°á");
+        StatusManager.Instance.AddStatus(enemy, "ºù°á");
+        StatusManager.Instance.AddStatus(enemy, "ºù°á");
+
         enemy.OnTakeDamageFeedback.AddListener(() => UIManager.instance.UpdateEnemyHealthbar());
-        // StatusManager.Instance.AddStatus(enemy, "?½ì‡„");
+        enemy.OnTakeDamageFeedback.AddListener(() => StatusManager.Instance.AddStatus(enemy, "È­¿°"));
 
         TurnChange();
     }
@@ -59,6 +65,7 @@ public class GameManager : MonoSingleton<GameManager>
 
         gameTurn = GameTurn.Player;
         currentUnit = player;
+        attackUnit = enemy;
     }
 
     public void OnMonsterTurn()
@@ -66,6 +73,7 @@ public class GameManager : MonoSingleton<GameManager>
         EventManager<bool>.TriggerEvent(Define.ON_START_MONSTER_TURN, false);
         gameTurn = GameTurn.Monster;
         currentUnit = enemy;
+        attackUnit = player;
         enemy.TurnStart();
     }
 

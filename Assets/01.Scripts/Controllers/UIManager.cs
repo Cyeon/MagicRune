@@ -77,7 +77,7 @@ public class UIManager : MonoSingleton<UIManager>
 
         StatusPanel statusPanel = Instantiate(_statusPrefab).GetComponent<StatusPanel>();
         statusPanel.image.sprite = status.icon;
-        statusPanel.duration.text = status.durationTurn.ToString();
+        statusPanel.duration.text = status.typeValue.ToString();
         statusPanel.statusName = status.statusName;
         statusPanel.transform.SetParent(trm);
     }

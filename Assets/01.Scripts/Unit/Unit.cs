@@ -13,7 +13,7 @@ public class Unit : MonoBehaviour
     public float HP
     {
         get => _health;
-        protected set
+        set
         {
             _health = value;
             if (_health > _maxHealth)
@@ -52,7 +52,6 @@ public class Unit : MonoBehaviour
         unitStatusDic.Add(StatusInvokeTime.Attack, new List<Status>());
         unitStatusDic.Add(StatusInvokeTime.GetDamage, new List<Status>());
         unitStatusDic.Add(StatusInvokeTime.End, new List<Status>());
-        Debug.Log("Unit Status Dictionary Setting");
     }
     
     /// <summary>

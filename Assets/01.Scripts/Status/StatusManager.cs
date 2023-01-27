@@ -6,11 +6,21 @@ using System.Linq;
 public class StatusManager : MonoSingleton<StatusManager>
 {
     public List<Status> statusList = new List<Status>(); // 모든 상태이상 목록
+    private StatusFuncList _statusFuncList = null;
+
+    private void Awake()
+    {
+        _statusFuncList = GetComponent<StatusFuncList>();
+    }
 
     // 상태이상 효과 발동
     public void StatusFuncInvoke(List<Status> status)
     {
-        status.ForEach(x => x.statusFunc.Invoke());
+        foreach(var funStatus in status)
+        {
+            _statusFuncList.status = funStatus;
+            funStatus.statusFunc?.Invoke();
+        }
     }
 
     // 상태이상 목록에서 가져오기
@@ -19,8 +29,35 @@ public class StatusManager : MonoSingleton<StatusManager>
         return statusList.Where(e => e.statusName == name).FirstOrDefault();
     }
 
+    public bool IsHaveStatus(Unit unit, string name)
+    {
+        Status status = GetStatus(name);
+
+        List<Status> statusList = new List<Status>();
+        if (unit.unitStatusDic.TryGetValue(status.invokeTime, out statusList))
+        {
+            Status currentStauts = statusList.Where(e => e.statusName == status.statusName).FirstOrDefault();
+            return currentStauts != null;
+        }
+
+        return false;
+    }
+
+    public Status GetUnitHaveStauts(Unit unit, string name)
+    {
+        Status status = GetStatus(name);
+
+        List<Status> statusList = new List<Status>();
+        if (unit.unitStatusDic.TryGetValue(status.invokeTime, out statusList))
+        {
+            return statusList.Where(e => e.statusName == status.statusName).FirstOrDefault();
+        }
+
+        return null;
+    }
+
     // 상태이상 추가
-    public void AddStatus(Unit unit, string statusNmae)
+    public void AddStatus(Unit unit, string statusNmae, int value = 1)
     {
         Status status = GetStatus(statusNmae);
         if(status == null)
@@ -30,6 +67,7 @@ public class StatusManager : MonoSingleton<StatusManager>
         }
 
         Status newStatus = new Status(status);
+        newStatus.typeValue = value;
         
         List<Status> statusList = new List<Status>();
         if(unit.unitStatusDic.TryGetValue(status.invokeTime, out statusList))
@@ -37,13 +75,15 @@ public class StatusManager : MonoSingleton<StatusManager>
             Status currentStauts = statusList.Where(e => e.statusName == status.statusName).FirstOrDefault();
             if(currentStauts != null)
             {
-                currentStauts.durationTurn += status.durationTurn;
-                UIManager.Instance.ReloadStatusPanel(unit, currentStauts.statusName, currentStauts.durationTurn);
+                currentStauts.typeValue += status.typeValue > 0 ? status.typeValue : value;
+                UIManager.Instance.ReloadStatusPanel(unit, currentStauts.statusName, currentStauts.typeValue);
             }
             else
             {
                 unit.unitStatusDic[newStatus.invokeTime].Add(newStatus);
                 UIManager.Instance.AddStatus(unit, newStatus);
+
+                newStatus.addFunc?.Invoke();
             }
         }
     }
@@ -73,9 +113,10 @@ public class StatusManager : MonoSingleton<StatusManager>
             List<int> indexes = new List<int>();
             for(int i = 0; i < x.Value.Count; i++)
             {
-                x.Value[i].durationTurn--;
-                UIManager.Instance.ReloadStatusPanel(unit, x.Value[i].statusName, x.Value[i].durationTurn);
-                if (x.Value[i].durationTurn <= 0)
+                if (x.Value[i].type == StatusType.Turn) x.Value[i].typeValue--;
+
+                UIManager.Instance.ReloadStatusPanel(unit, x.Value[i].statusName, x.Value[i].typeValue);
+                if (x.Value[i].typeValue <= 0)
                 {
                     indexes.Add(i);
                 }
