@@ -202,7 +202,7 @@ public class CardCollector : MonoBehaviour
         foreach (Transform item in transform)
         {
             Debug.Log(item.name);
-            item.GetComponent<Image>().DOFade(Convert.ToInt32(flag), 2.5f);
+            item.GetComponent<Image>().DOFade(Convert.ToInt32(flag), 0.75f);
         }
     }
     private void OnDestroy()
