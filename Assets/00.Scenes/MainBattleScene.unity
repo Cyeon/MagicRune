@@ -2012,17 +2012,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   status:
-    statusName: 
+    statusName: 0
     invokeTime: 0
     type: 0
     typeValue: 0
     statusFunc:
       m_PersistentCalls:
         m_Calls: []
-    icon: {fileID: 0}
     addFunc:
       m_PersistentCalls:
         m_Calls: []
+    icon: {fileID: 0}
+    color: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &594343484
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2036,7 +2037,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   statusList:
-  - statusName: "\uC57D\uC1C4"
+  - statusName: 1
     invokeTime: 2
     type: 1
     typeValue: 0
@@ -2055,11 +2056,12 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-    icon: {fileID: 0}
     addFunc:
       m_PersistentCalls:
         m_Calls: []
-  - statusName: "\uBE59\uACB0"
+    icon: {fileID: 0}
+    color: {r: 0, g: 0, b: 0, a: 0}
+  - statusName: 3
     invokeTime: 1
     type: 1
     typeValue: 2
@@ -2078,11 +2080,12 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-    icon: {fileID: 0}
     addFunc:
       m_PersistentCalls:
         m_Calls: []
-  - statusName: "\uD654\uC5FC"
+    icon: {fileID: 21300000, guid: aa5dea9131707934aa9c32e0241f7998, type: 3}
+    color: {r: 0.2679245, g: 0.88512623, b: 1, a: 1}
+  - statusName: 2
     invokeTime: 3
     type: 0
     typeValue: 0
@@ -2101,7 +2104,6 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-    icon: {fileID: 0}
     addFunc:
       m_PersistentCalls:
         m_Calls:
@@ -2117,6 +2119,8 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+    icon: {fileID: 21300000, guid: 95242b9d17125e1479dc4d8a204a4fa3, type: 3}
+    color: {r: 1, g: 0.29622638, b: 0.3843256, a: 1}
 --- !u!1 &612417330
 GameObject:
   m_ObjectHideFlags: 0

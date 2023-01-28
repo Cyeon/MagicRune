@@ -35,13 +35,13 @@ public class GameManager : MonoSingleton<GameManager>
 
         UIManager.instance.PlayerHealthbarInit(player.HP);
 
-        StatusManager.Instance.AddStatus(enemy, "ºù°á");
-        StatusManager.Instance.AddStatus(enemy, "ºù°á");
-        StatusManager.Instance.AddStatus(enemy, "ºù°á");
-        StatusManager.Instance.AddStatus(enemy, "ºù°á");
+        StatusManager.Instance.AddStatus(enemy, StatusName.Ice);
+        StatusManager.Instance.AddStatus(enemy, StatusName.Ice);
+        StatusManager.Instance.AddStatus(enemy, StatusName.Ice);
+        StatusManager.Instance.AddStatus(enemy, StatusName.Ice);
 
         enemy.OnTakeDamageFeedback.AddListener(() => UIManager.instance.UpdateEnemyHealthbar());
-        enemy.OnTakeDamageFeedback.AddListener(() => StatusManager.Instance.AddStatus(enemy, "È­¿°"));
+        enemy.OnTakeDamageFeedback.AddListener(() => StatusManager.Instance.AddStatus(enemy, StatusName.Fire));
 
         TurnChange();
     }

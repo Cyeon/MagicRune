@@ -24,12 +24,12 @@ public class StatusManager : MonoSingleton<StatusManager>
     }
 
     // 상태이상 목록에서 가져오기
-    private Status GetStatus(string name)
+    private Status GetStatus(StatusName name)
     {
         return statusList.Where(e => e.statusName == name).FirstOrDefault();
     }
 
-    public bool IsHaveStatus(Unit unit, string name)
+    public bool IsHaveStatus(Unit unit, StatusName name)
     {
         Status status = GetStatus(name);
 
@@ -43,7 +43,7 @@ public class StatusManager : MonoSingleton<StatusManager>
         return false;
     }
 
-    public Status GetUnitHaveStauts(Unit unit, string name)
+    public Status GetUnitHaveStauts(Unit unit, StatusName name)
     {
         Status status = GetStatus(name);
 
@@ -57,7 +57,7 @@ public class StatusManager : MonoSingleton<StatusManager>
     }
 
     // 상태이상 추가
-    public void AddStatus(Unit unit, string statusNmae, int value = 1)
+    public void AddStatus(Unit unit, StatusName statusNmae, int value = 1)
     {
         Status status = GetStatus(statusNmae);
         if(status == null)

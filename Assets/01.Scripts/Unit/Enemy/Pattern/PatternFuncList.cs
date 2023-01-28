@@ -23,7 +23,7 @@ public class PatternFuncList : MonoBehaviour
         GameManager.Instance.enemy.Shield += shield;
     }
 
-    public void AddStatus(string statusName)
+    public void AddStatus(StatusName statusName)
     {
         StatusManager.Instance.AddStatus(GameManager.Instance.player, statusName);
     }

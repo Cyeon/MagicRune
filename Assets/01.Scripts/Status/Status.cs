@@ -17,17 +17,29 @@ public enum StatusType
     Turn
 }
 
+public enum StatusName
+{
+    Null,
+    Weak,
+    Fire,
+    Ice
+}
+
 [System.Serializable]
 public class Status
 {
-    public string statusName;
-    public  StatusInvokeTime invokeTime;
-    public StatusType type;
-    public int typeValue;
-    public UnityEvent statusFunc;
-    public Sprite icon;
+    public StatusName statusName = StatusName.Null;
+    public  StatusInvokeTime invokeTime = StatusInvokeTime.Start;
+    public StatusType type = StatusType.Stack;
+    public int typeValue = 0;
 
+    [Header("Function")]
+    public UnityEvent statusFunc;
     public UnityEvent addFunc;
+
+    [Header("Resource")]
+    public Sprite icon;
+    public Color color;
 
     public Status(Status status)
     {
@@ -35,7 +47,10 @@ public class Status
         this.invokeTime = status.invokeTime;
         this.typeValue = status.typeValue;
         this.statusFunc = status.statusFunc;
-        this.icon = status.icon;
         this.type = status.type;
+        this.addFunc = status.addFunc;
+
+        this.icon = status.icon;
+        this.color = status.color;
     }
 }

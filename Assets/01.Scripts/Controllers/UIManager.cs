@@ -77,12 +77,13 @@ public class UIManager : MonoSingleton<UIManager>
 
         StatusPanel statusPanel = Instantiate(_statusPrefab).GetComponent<StatusPanel>();
         statusPanel.image.sprite = status.icon;
+        statusPanel.image.color = status.color;
         statusPanel.duration.text = status.typeValue.ToString();
         statusPanel.statusName = status.statusName;
         statusPanel.transform.SetParent(trm);
     }
 
-    public void ReloadStatusPanel(Unit unit, string name, int duration)
+    public void ReloadStatusPanel(Unit unit, StatusName name, int duration)
     {
         Transform trm = unit == GameManager.Instance.player ? _statusPlayerPanel : _statusEnemyPanel;
 
