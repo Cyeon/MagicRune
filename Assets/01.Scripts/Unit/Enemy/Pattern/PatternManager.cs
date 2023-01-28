@@ -8,8 +8,7 @@ public class PatternManager : MonoSingleton<PatternManager>
 
     public Pattern GetPattern()
     {
-        //int index = Random.Range(0, patterns.Count);
-        int index = 0;
+        int index = Random.Range(0, patterns.Count);
         return patterns[index];
     }
 }
