@@ -82,6 +82,9 @@ public class Unit : MonoBehaviour
 
         OnTakeDamage?.Invoke(currentDmg);
         OnTakeDamageFeedback?.Invoke();
+
+        UIManager.Instance.UpdateEnemyHealthbar();
+        UIManager.Instance.UpdatePlayerHealthbar();
     }
 
     public void InvokeStatus(StatusInvokeTime time)

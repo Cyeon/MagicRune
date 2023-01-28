@@ -8,6 +8,8 @@ public class Enemy : Unit
     public float atkDamage;
     public Pattern pattern;
 
+    public bool isSkip = false;
+
     public void Init(EnemySO so)
     {
         enemyInfo = so;
@@ -19,6 +21,13 @@ public class Enemy : Unit
 
     public void TurnStart()
     {
+        if (isSkip)
+        {
+            isSkip = false;
+            GameManager.Instance.TurnChange();
+            return;
+        }
+
         pattern.Turn();
     }
 
