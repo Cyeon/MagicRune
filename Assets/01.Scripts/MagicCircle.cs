@@ -19,16 +19,14 @@ public enum RuneType
 
 public class MagicCircle : MonoBehaviour, IPointerClickHandler
 {
-    [System.Serializable]
-    public class SerializeDicEntity : SerializableDictionary<RuneType, List<Card>>
-    {
-
-    }
 
     [SerializeField]
     private Dictionary<RuneType, List<Card>> _runeDict;
 
     private const int _mainRuneCnt = 1;
+
+    [SerializeField]
+    private CardCollector _cardCollector;
 
     [SerializeField]
     private float _assistRuneDistance = 3f;
@@ -174,7 +172,7 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                 seq.AppendCallback(() =>
                 {
                     GameObject g = Instantiate(_garbageRuneTemplate.gameObject, this.transform);
-                    card.GetComponent<RectTransform>().anchoredPosition = Input.GetTouch(0).position;
+                    card.GetComponent<RectTransform>().anchoredPosition = new Vector2(Input.GetTouch(0).position.x, Input.GetTouch(0).position.y - _cardCollector.GetComponent<RectTransform>().anchoredPosition.y);
                     card.transform.SetParent(this.transform);
                     g.GetComponent<RectTransform>().anchoredPosition = card.GetComponent<RectTransform>().anchoredPosition;
                     g.GetComponent<RectTransform>().DOAnchorPos(GetComponent<RectTransform>().anchoredPosition, 0.3f).OnComplete(() =>
@@ -218,10 +216,10 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                 seq.AppendCallback(() =>
                 {
                     GameObject g = Instantiate(_garbageRuneTemplate.gameObject, this.transform);
+                    card.GetComponent<RectTransform>().anchoredPosition = new Vector2(Input.GetTouch(0).position.x, Input.GetTouch(0).position.y - _cardCollector.GetComponent<RectTransform>().anchoredPosition.y);
                     card.transform.SetParent(this.transform);
-                    card.GetComponent<RectTransform>().anchoredPosition = Input.GetTouch(0).position;
                     //g.GetComponent<RectTransform>().anchoredPosition = card.GetComponent<RectTransform>().anchoredPosition;
-                    g.GetComponent<RectTransform>().anchoredPosition = Input.GetTouch(0).position;
+                    g.GetComponent<RectTransform>().anchoredPosition = card.GetComponent<RectTransform>().anchoredPosition;
                     g.GetComponent<RectTransform>().DOAnchorPos(Vector2.zero, 0.3f).OnComplete(() =>
                     {
                         Destroy(g);
@@ -310,11 +308,12 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
             seq.AppendCallback(() =>
             {
                 GameObject g = Instantiate(_garbageRuneTemplate.gameObject, this.transform);
-                card.GetComponent<RectTransform>().anchoredPosition = Input.GetTouch(0).position;
+                card.GetComponent<RectTransform>().anchoredPosition = new Vector2(Input.GetTouch(0).position.x, Input.GetTouch(0).position.y - _cardCollector.GetComponent<RectTransform>().anchoredPosition.y);
                 card.transform.SetParent(this.transform);
                 g.GetComponent<RectTransform>().anchoredPosition = card.GetComponent<RectTransform>().anchoredPosition;
                 g.GetComponent<RectTransform>().DOAnchorPos(_runeDict[RuneType.Assist][changeIndex].GetComponent<RectTransform>().anchoredPosition, 0.3f).OnComplete(() =>
                 {
+                    card.GetComponent<RectTransform>().anchoredPosition = g.GetComponent<RectTransform>().anchoredPosition;
                     Destroy(g);
                     Destroy(_runeDict[RuneType.Assist][changeIndex].gameObject);
 
