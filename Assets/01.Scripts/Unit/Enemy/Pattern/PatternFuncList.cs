@@ -23,25 +23,25 @@ public class PatternFuncList : MonoBehaviour
         GameManager.Instance.enemy.Shield += shield;
     }
 
-    public void AddStatus(string statusName)
+    public void AddStatus(StatusName statusName)
     {
         StatusManager.Instance.AddStatus(GameManager.Instance.player, statusName);
     }
 
     public void Attack()
     {
+        Invoke("DelayAttack", 1f);
+    }
+
+    private void DelayAttack()
+    {
         GameManager.Instance.enemy.Attack();
     }
 
     public void DelayShake()
     {
-        Camera.main.DOShakeRotation(1);
-        StartCoroutine(delayCoroutine());
-    }
-
-    private IEnumerator delayCoroutine()
-    {
-        yield return new WaitForSeconds(1f);
-        GameManager.Instance.TurnChange();
+        Sequence seq = DOTween.Sequence();
+        seq.Append(Camera.main.DOShakeRotation(2));
+        seq.AppendCallback(() => GameManager.Instance.TurnChange());
     }
 }

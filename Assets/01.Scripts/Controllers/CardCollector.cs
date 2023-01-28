@@ -18,9 +18,6 @@ public class CardCollector : MonoBehaviour
     private CardsViewUI _restViewUI = null;
 
     [SerializeField]
-    private TMP_Text _restAmountText = null;
-
-    [SerializeField]
     private int _cardCnt;
 
     [SerializeField]
@@ -201,7 +198,7 @@ public class CardCollector : MonoBehaviour
     {
         foreach (Transform item in transform)
         {
-            Debug.Log(item.name);
+            //Debug.Log(item.name);
             item.GetComponent<Image>().DOFade(Convert.ToInt32(flag), 0.75f);
         }
     }

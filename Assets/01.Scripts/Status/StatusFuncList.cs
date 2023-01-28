@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class StatusFuncList : MonoBehaviour
 {
+    public Status status;
+
     public void AddGetDamage(float dmg)
     {
         if(GameManager.Instance.GameTurn == GameTurn.Player)
@@ -17,8 +19,26 @@ public class StatusFuncList : MonoBehaviour
         GameManager.Instance.currentUnit.currentDmg += dmg;
     }
 
-    public void TurnChange()
+    public void RemAtkDamagePercent(float percent)
     {
-        GameManager.Instance.TurnChange();
+        GameManager.Instance.currentUnit.currentDmg -= GameManager.Instance.currentUnit.currentDmg * (percent * 0.01f);
+    }
+
+    public void StackDmg()
+    {
+        GameManager.Instance.currentUnit.HP -= status.typeValue;
+        status.typeValue = 0;
+        UIManager.Instance.UpdateEnemyHealthbar();
+    }
+
+    public void AddFire()
+    {
+        Status status = StatusManager.Instance.GetUnitHaveStauts(GameManager.Instance.attackUnit, StatusName.Ice);
+        if (status != null)
+        {
+            GameManager.Instance.attackUnit.HP -= status.typeValue * 2;
+            StatusManager.Instance.RemStatus(GameManager.Instance.attackUnit, status);
+            UIManager.Instance.ReloadStatusPanel(GameManager.Instance.attackUnit, status.statusName, 0);
+        }
     }
 }
