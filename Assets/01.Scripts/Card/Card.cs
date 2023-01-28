@@ -111,29 +111,34 @@ public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         if(_rune != null)
         {
             _runeImage.sprite = _rune.RuneImage;
+            _runeAreaParent.gameObject.SetActive(false);
         }
-        _runeAreaParent.gameObject.SetActive(false);
     }
 
     public void SetRune(CardSO rune)
     {
         _rune = rune;
 
-        //if(_rune == null)
-        //{
-        //    this.GetComponent<Image>().color = Color.black;
-        //}
-        //else
-        //{
-        //    this.GetComponent<Image>().color = Color.white;
-        //    this.GetComponent<Image>().sprite = rune.RuneImage;
-
-        //}
+        if (_rune != null)
+        {
+            _runeImage.sprite = _rune.RuneImage;
+        }
     }
 
     public void SetIsEquip(bool value)
     {
         _isEquipMagicCircle = value;
+
+        if(_isEquipMagicCircle == true)
+        {
+            _runeAreaParent.gameObject.SetActive(true);
+            _cardAreaParent.gameObject.SetActive(false);
+        }
+        else
+        {
+            _runeAreaParent.gameObject.SetActive(false);
+            _cardAreaParent.gameObject.SetActive(true);
+        }
     }
 
     public void SetCoolTime(int coolTime)

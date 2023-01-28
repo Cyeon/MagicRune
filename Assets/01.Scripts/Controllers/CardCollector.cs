@@ -61,12 +61,14 @@ public class CardCollector : MonoBehaviour
                         _handCards.Remove(isAdd);
                         //SelectCard.IsRest = true;
                         _restCards.Add(isAdd);
-                        SelectCard.gameObject.SetActive(false);
+
+                        //SelectCard.gameObject.SetActive(false);
                     }
                 }
                 // YES : 마법�??�에 ?�기, 리스???�에 카드 지?�기
                 _selectCard.GetComponent<RectTransform>().anchoredPosition = _cardOriginPos;
                 _selectCard = value;
+                _magicCircle.SortCard();
                 CardSort();
             }
         }
@@ -222,7 +224,7 @@ public class CardCollector : MonoBehaviour
 
     private void UIUpdate()
     {
-        _deckViewUI.UITextUpdate();
-        _restViewUI.UITextUpdate();
+        _deckViewUI?.UITextUpdate();
+        _restViewUI?.UITextUpdate();
     }
 }
