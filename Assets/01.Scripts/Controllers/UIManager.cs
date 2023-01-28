@@ -13,6 +13,7 @@ public class UIManager : MonoSingleton<UIManager>
     [SerializeField] private TextMeshProUGUI _enemyHealthText;
     [SerializeField] private Image _enemyPatternIcon;
     [SerializeField] private TextMeshProUGUI _enemyShieldText;
+    public Transform enemyIcon;
 
     [Header("Player UI")]
     [SerializeField] private Slider _playerHealthSlider;
