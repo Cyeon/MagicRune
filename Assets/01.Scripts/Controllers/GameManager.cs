@@ -21,11 +21,6 @@ public class GameManager : MonoSingleton<GameManager>
     public Unit currentUnit = null;
     public Unit attackUnit = null;
 
-    private void Awake()
-    {
-        //EventManager.StartListening(Define.ON_START_PLAYER_TURN, OnPlayerTurn);
-        //EventManager.StartListening(Define.ON_START_MONSTER_TURN, OnMonsterTurn);
-    }
 
     private void Start()
     {
@@ -61,7 +56,6 @@ public class GameManager : MonoSingleton<GameManager>
     private void OnPlayerTurn()
     {
         EventManager.TriggerEvent(Define.ON_END_MONSTER_TURN);
-        EventManager<bool>.TriggerEvent(Define.ON_START_PLAYER_TURN, true);
 
         gameTurn = GameTurn.Player;
         currentUnit = player;
@@ -70,7 +64,7 @@ public class GameManager : MonoSingleton<GameManager>
 
     public void OnMonsterTurn()
     {
-        EventManager<bool>.TriggerEvent(Define.ON_START_MONSTER_TURN, false);
+        EventManager.TriggerEvent(Define.ON_START_MONSTER_TURN);
         gameTurn = GameTurn.Monster;
         currentUnit = enemy;
         attackUnit = player;
@@ -89,12 +83,15 @@ public class GameManager : MonoSingleton<GameManager>
             case GameTurn.Unknown:
                 enemy.pattern = PatternManager.Instance.GetPattern();
                 enemy.pattern?.Start();
+                EventManager<int>.TriggerEvent(Define.ON_START_PLAYER_TURN, 5);
+                EventManager<bool>.TriggerEvent(Define.ON_START_PLAYER_TURN, true); //¿©±â¶û
 
                 UIManager.Instance.Turn("Player Turn");
                 gameTurn = GameTurn.MonsterWait;
                 break;
 
             case GameTurn.Player:
+                EventManager<bool>.TriggerEvent(Define.ON_START_MONSTER_TURN, false);
                 UIManager.Instance.Turn("Enemy Turn");
                 gameTurn = GameTurn.PlayerWait;
                 break;
@@ -111,6 +108,8 @@ public class GameManager : MonoSingleton<GameManager>
 
                 enemy.pattern = PatternManager.Instance.GetPattern();
                 enemy.pattern?.Start();
+                EventManager<int>.TriggerEvent(Define.ON_START_PLAYER_TURN, 5);
+                EventManager<bool>.TriggerEvent(Define.ON_START_PLAYER_TURN, true); // ¿©±â
 
                 UIManager.Instance.Turn("Player Turn");
                 gameTurn = GameTurn.MonsterWait;
@@ -128,11 +127,5 @@ public class GameManager : MonoSingleton<GameManager>
     }
 
     #endregion
-
-    private void OnDestroy()
-    {
-        //EventManager.StopListening(Define.ON_START_PLAYER_TURN, OnPlayerTurn);
-        //EventManager.StopListening(Define.ON_START_MONSTER_TURN, OnMonsterTurn);
-    }
 
 }

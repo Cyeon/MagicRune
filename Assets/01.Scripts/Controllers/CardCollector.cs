@@ -60,6 +60,7 @@ public class CardCollector : MonoBehaviour
                         //SelectCard.IsRest = true;
                         _restCards.Add(isAdd);
                         SelectCard.gameObject.SetActive(false);
+                        UIUpdate();
                     }
                 }
                 // YES : 마법�??�에 ?�기, 리스???�에 카드 지?�기
@@ -75,15 +76,6 @@ public class CardCollector : MonoBehaviour
 
     private void Awake()
     {
-        //_cardList = new List<Card>();
-        EventManager.StartListening(Define.ON_END_MONSTER_TURN, CoolTimeDecrease);
-        EventManager<bool>.StartListening(Define.ON_START_PLAYER_TURN, CardOnOff);
-        EventManager<bool>.StartListening(Define.ON_START_MONSTER_TURN, CardOnOff);
-    }
-
-    // 2960 * 1440
-    private void Start()
-    {
         for (int i = 0; i < _deck.cards.Count; i++)
         {
             GameObject go = Instantiate(_deck.cards[i], this.transform);
@@ -95,8 +87,23 @@ public class CardCollector : MonoBehaviour
             go.transform.rotation = Quaternion.identity;
         }
 
-        CardDraw(_cardCnt);
-        UIUpdate();
+        //_cardList = new List<Card>();
+        EventManager.StartListening(Define.ON_END_MONSTER_TURN, CoolTimeDecrease);
+        EventManager<int>.StartListening(Define.ON_START_PLAYER_TURN, CardDraw);
+        EventManager<bool>.StartListening(Define.ON_START_PLAYER_TURN, CardOnOff);
+        EventManager<bool>.StartListening(Define.ON_START_MONSTER_TURN, CardOnOff);
+        EventManager.StartListening(Define.ON_START_MONSTER_TURN, HandToDeck);
+        
+
+    }
+
+    // 2960 * 1440
+    private void Start()
+    {
+
+
+        //CardDraw(_cardCnt);
+        //UIUpdate();
     }
 
     private void Update()
@@ -126,6 +133,7 @@ public class CardCollector : MonoBehaviour
     {
         for (int i = 0; i < amount; i++)
         {
+            if (_deckCards.Count == 0) { break; }
             int idx = UnityEngine.Random.Range(0, _deckCards.Count);
             Card card = _deckCards[idx];
             _deckCards.Remove(card);
@@ -199,13 +207,26 @@ public class CardCollector : MonoBehaviour
         foreach (Transform item in transform)
         {
             //Debug.Log(item.name);
-            item.GetComponent<Image>().DOFade(Convert.ToInt32(flag), 0.75f);
+            item.GetComponent<Image>().DOFade(Convert.ToInt32(flag), 1f);
         }
     }
+
+    private void HandToDeck()
+    {
+        for (int i = 0; i < _handCards.Count; i++)
+        {
+            _handCards[i].gameObject.SetActive(false);
+            _deckCards.Add(_handCards[i]);
+        }
+        _handCards.Clear();
+    }
+
     private void OnDestroy()
     {
         EventManager.StopListening(Define.ON_END_MONSTER_TURN, CoolTimeDecrease);
+        EventManager<int>.StopListening(Define.ON_START_PLAYER_TURN, CardDraw);
         EventManager<bool>.StopListening(Define.ON_START_PLAYER_TURN, CardOnOff);
         EventManager<bool>.StopListening(Define.ON_START_MONSTER_TURN, CardOnOff);
+        EventManager.StopListening(Define.ON_START_MONSTER_TURN, HandToDeck);
     }
 }
