@@ -8,8 +8,10 @@ namespace SerializableDictionary
     // 만드는 중 입니다~~!
 
     [Serializable]
-    public class SerializableDictionary<TKey, TValue> where TKey : class, new() where TValue : class, new()
+    public class SerializableDictionary<TKey, TValue> where TKey : class, new() where TValue : class, new() // 제약 조건에서 불발
     {
+        // 그냥 딕셔너리 변수 하나를 써야겠다.
+
         [SerializeField]
         private List<TKey> _keys;
         [SerializeField]
@@ -24,11 +26,6 @@ namespace SerializableDictionary
         {
             _keys.Clear();
             _valuse.Clear();
-
-            Dictionary<int, int> d = new Dictionary<int, int>();
-            //d.TryAdd()
-            //d.TryGetValue
-            //this[]
         }
 
         public bool ContainsKey(TKey key)
@@ -56,7 +53,11 @@ namespace SerializableDictionary
         public void Add(TKey key, TValue value)
         {
             // 만약 키가 이미 있으면 에러
-            if(ContainsKey(key))
+            if (ContainsKey(key))
+            {
+                Debug.LogError($"{key} Key already exists.");
+                return;
+            }
 
             _keys.Add(key);
             _valuse.Add(value);
@@ -99,9 +100,43 @@ namespace SerializableDictionary
             }
         }
 
-        //public bool TryAdd(TKey key)
-        //{
+        public bool TryAdd(TKey key, TValue value)
+        {
+            if (ContainsKey(key))
+            {
+                return false;
+            }
 
-        //}
+            _keys.Add(key);
+            _valuse.Add(value);
+            return true;
+        }
+
+        public bool TryGetValue(TKey key, out TValue value)
+        {
+            if (ContainsKey(key))
+            {
+                int index = GetKeyIndex(key);
+                value = _valuse[index];
+                return true;
+            }
+
+            value = default(TValue);
+            return false;
+        }
+
+        public TValue this[TKey key]
+        {
+            get
+            {
+                int index = GetKeyIndex(key);
+                return _valuse[index];
+            }
+            set
+            {
+                int index = GetKeyIndex(key);
+                _valuse[index] = value;
+            }
+        }
     }
 }

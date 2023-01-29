@@ -24,6 +24,7 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
     private Dictionary<RuneType, List<Card>> _runeDict;
     public Dictionary<RuneType, List<Card>> RuneDict => _runeDict;
 
+
     private const int _mainRuneCnt = 1;
 
     [SerializeField]
