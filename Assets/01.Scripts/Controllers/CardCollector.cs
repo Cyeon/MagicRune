@@ -60,10 +60,11 @@ public class CardCollector : MonoBehaviour
                 if (Input.touchCount == 0) return;
                 Card isAdd = null;
                 // 만약 ?�택 카드가 마법�??�에 ?�다�?
-                if (Vector2.Distance(Input.GetTouch(0).position, _magicCircle.GetComponent<RectTransform>().anchoredPosition)
+                if (Vector2.Distance(_selectCard.GetComponent<RectTransform>().anchoredPosition, _magicCircle.GetComponent<RectTransform>().anchoredPosition)
                 <= _magicCircle.CardAreaDistance)
                 {
-                    if((_magicCircle.RuneDict.ContainsKey(RuneType.Main) == true && _isFront == true) || (_magicCircle.RuneDict.ContainsKey(RuneType.Main) == false && _isFront == false))
+                    if((_magicCircle.RuneDict.ContainsKey(RuneType.Main) == true && _isFront == true)
+                        || (_magicCircle.RuneDict.ContainsKey(RuneType.Main) == false && _isFront == false))
                     {
                         isAdd = _magicCircle.AddCard(SelectCard);
                         if (isAdd != null)
@@ -102,7 +103,7 @@ public class CardCollector : MonoBehaviour
     public IReadOnlyList<Card> RestCards => _restCards;
 
     private bool _isFront = true;
-    private bool _isCardSelecting = false;
+    private bool _isCardRotate = false;
 
     private void Awake()
     {
@@ -220,32 +221,6 @@ public class CardCollector : MonoBehaviour
             card.transform.SetAsLastSibling();
         }
         SelectCard = card;
-        //StartCoroutine(CardSelectCoroutine(card));
-    }
-
-    private IEnumerator CardSelectCoroutine(Card card)
-    {
-        if (_isCardSelecting == true) yield break;
-
-        _isCardSelecting = true;
-        if (card == null)
-        {
-            SelectCard.transform.SetSiblingIndex(_uiIndex);
-            _uiIndex = -1;
-            SelectCard.RuneAreaParent.gameObject.SetActive(false);
-            SelectCard.CardAreaParent.gameObject.SetActive(true);
-        }
-        else
-        {
-            _uiIndex = card.transform.GetSiblingIndex();
-            card.transform.SetAsLastSibling();
-        }
-        yield return null;
-        SelectCard = card;
-        yield return null;
-
-        _isCardSelecting = false;
-
     }
 
     private void CoolTimeDecrease()
@@ -265,7 +240,10 @@ public class CardCollector : MonoBehaviour
 
     public void CardRotate()
     {
+        if (_isCardRotate == true) return;
+
         Sequence seq = DOTween.Sequence();
+        seq.AppendCallback(() => _isCardRotate = true);
         foreach(var card in _handCards)
         {
             seq.Join(card.transform.DORotate(new Vector3(0, 360, 0), 0.3f, RotateMode.FastBeyond360));
@@ -279,8 +257,12 @@ public class CardCollector : MonoBehaviour
                 card.IsFront = !card.IsFront;
             });
         }
+        seq.AppendCallback(() =>
+        {
+            _isCardRotate = false;
+            _isFront = _handCards[0].IsFront;
+        });
 
-        _isFront = _handCards[0].IsFront;
     }
 
     private void OnDestroy()
