@@ -91,7 +91,7 @@ public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
     private RectTransform _rect;
 
-    protected virtual void Start()
+    private void Start()
     {
         _collector = GetComponentInParent<CardCollector>();
         _rect = GetComponent<RectTransform>();

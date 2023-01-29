@@ -58,14 +58,17 @@ public class CardCollector : MonoBehaviour
                 if (Vector2.Distance(Input.GetTouch(0).position, _magicCircle.GetComponent<RectTransform>().anchoredPosition)
                 <= _magicCircle.CardAreaDistance)
                 {
-                    Card isAdd = _magicCircle.AddCard(SelectCard);
-                    if (isAdd != null)
+                    if((_magicCircle.RuneDict.ContainsKey(RuneType.Main) == true && _isFront == true) || (_magicCircle.RuneDict.ContainsKey(RuneType.Main) == false && _isFront == false))
                     {
-                        _handCards.Remove(isAdd);
-                        //SelectCard.IsRest = true;
-                        _restCards.Add(isAdd);
+                        Card isAdd = _magicCircle.AddCard(SelectCard);
+                        if (isAdd != null)
+                        {
+                            _handCards.Remove(isAdd);
+                            //SelectCard.IsRest = true;
+                            _restCards.Add(isAdd);
 
-                        //SelectCard.gameObject.SetActive(false);
+                            //SelectCard.gameObject.SetActive(false);
+                        }
                     }
                 }
                 // YES : 마법�??�에 ?�기, 리스???�에 카드 지?�기
