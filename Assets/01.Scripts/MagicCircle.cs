@@ -92,6 +92,7 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                 _bgPanel.GetComponent<CanvasGroup>().DOFade(0, 0.2f);
                 this.transform.DOLocalMoveY(-400, 0.2f).SetRelative();
                 _bgPanel.transform.GetChild(0).GetComponent<Image>().raycastTarget = false;
+                //_bgPanel.transform.GetChild(0).GetComponent<Image>().raycastTarget = true;
                 this.transform.rotation = Quaternion.Euler(0, 0, 0);
             }
         }
@@ -104,10 +105,10 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
 
     private void Update()
     {
-        if (IsBig == true)
-        {
+        //if (IsBig == true)
+        //{
             Swipe1();
-        }
+        //}
     }
 
     public void SortCard()
@@ -204,7 +205,7 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                                 _runeDict.Add(RuneType.Assist, new List<Card> { grune });
                             }
                         }
-
+                        _cardCollector.CardRotate();
                         SortCard();
                         AssistRuneAnimanation();
                     });
@@ -256,6 +257,7 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                         }
                     }
                     SortCard();
+                    _cardCollector.CardRotate();
                     AssistRuneAnimanation();
                 });
                 SortCard();
@@ -477,15 +479,22 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                     else if (touchDif.y < 0 && Mathf.Abs(touchDif.y) > Mathf.Abs(touchDif.x))
                     {
                         Debug.Log("down");
+                        // 아무틴 일단 해
+                        if(_cardCollector.SelectCard == null)
+                        {
+                            _cardCollector.CardRotate();
+                        }
                     }
                     else if (touchDif.x > 0 && Mathf.Abs(touchDif.y) < Mathf.Abs(touchDif.x))
                     {
                         Debug.Log("right");
-                        Debug.Log("Attack");
-                        if (touchBeganPos.y <= this.GetComponent<RectTransform>().anchoredPosition.y + this.GetComponent<RectTransform>().sizeDelta.y / 2
-                            && touchBeganPos.y >= this.GetComponent<RectTransform>().anchoredPosition.y - this.GetComponent<RectTransform>().sizeDelta.y / 2)
+                        if (IsBig == true)
                         {
-                            Damage();
+                            if (touchBeganPos.y <= this.GetComponent<RectTransform>().anchoredPosition.y + this.GetComponent<RectTransform>().sizeDelta.y / 2
+                                && touchBeganPos.y >= this.GetComponent<RectTransform>().anchoredPosition.y - this.GetComponent<RectTransform>().sizeDelta.y / 2)
+                            {
+                                Damage();
+                            }
                         }
                     }
                     else if (touchDif.x < 0 && Mathf.Abs(touchDif.y) < Mathf.Abs(touchDif.x))

@@ -26,6 +26,9 @@ namespace SerializableDictionary
             _valuse.Clear();
 
             Dictionary<int, int> d = new Dictionary<int, int>();
+            //d.TryAdd()
+            //d.TryGetValue
+            //this[]
         }
 
         public bool ContainsKey(TKey key)
@@ -95,5 +98,10 @@ namespace SerializableDictionary
                 return true;
             }
         }
+
+        //public bool TryAdd(TKey key)
+        //{
+
+        //}
     }
 }
