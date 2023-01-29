@@ -11,6 +11,9 @@ public class CardCollector : MonoBehaviour
     private MagicCircle _magicCircle;
 
     [SerializeField]
+    private Vector2 _offset;
+
+    [SerializeField]
     private CardsViewUI _deckViewUI = null;
 
     [SerializeField]

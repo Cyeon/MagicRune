@@ -111,7 +111,7 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
 
     public void SortCard()
     {
-        transform.DOComplete();
+        //transform.DOComplete();
 
         if (_runeDict.ContainsKey(RuneType.Assist))
         {
@@ -215,17 +215,17 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                 Sequence seq = DOTween.Sequence();
                 seq.AppendCallback(() =>
                 {
-                    GameObject g = Instantiate(_garbageRuneTemplate.gameObject, this.transform);
+                    //GameObject g = Instantiate(_garbageRuneTemplate.gameObject, this.transform);
                     card.GetComponent<RectTransform>().anchoredPosition = new Vector2(Input.GetTouch(0).position.x, Input.GetTouch(0).position.y - _cardCollector.GetComponent<RectTransform>().anchoredPosition.y);
                     card.transform.SetParent(this.transform);
                     //g.GetComponent<RectTransform>().anchoredPosition = card.GetComponent<RectTransform>().anchoredPosition;
-                    g.GetComponent<RectTransform>().anchoredPosition = card.GetComponent<RectTransform>().anchoredPosition;
-                    g.GetComponent<RectTransform>().DOAnchorPos(Vector2.zero, 0.3f).OnComplete(() =>
-                    {
-                        Destroy(g);
-                    });
+                    card.GetComponent<RectTransform>().anchoredPosition = card.GetComponent<RectTransform>().anchoredPosition;
+                    card.GetComponent<RectTransform>().DOAnchorPos(Vector2.zero, 0.3f);//.OnComplete(() =>
+                    //{
+                    //    Destroy(g);
+                    //});
                 });
-                seq.AppendInterval(0.3f);
+                //seq.AppendInterval(0.3f);
                 seq.AppendCallback(() =>
                 {
                     //GameObject go = Instantiate(_runeTemplate.gameObject, this.transform);
@@ -307,18 +307,18 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
             Sequence seq = DOTween.Sequence();
             seq.AppendCallback(() =>
             {
-                GameObject g = Instantiate(_garbageRuneTemplate.gameObject, this.transform);
+                //GameObject g = Instantiate(_garbageRuneTemplate.gameObject, this.transform);
                 card.GetComponent<RectTransform>().anchoredPosition = new Vector2(Input.GetTouch(0).position.x, Input.GetTouch(0).position.y - _cardCollector.GetComponent<RectTransform>().anchoredPosition.y);
                 card.transform.SetParent(this.transform);
-                g.GetComponent<RectTransform>().anchoredPosition = card.GetComponent<RectTransform>().anchoredPosition;
-                g.GetComponent<RectTransform>().DOAnchorPos(_runeDict[RuneType.Assist][changeIndex].GetComponent<RectTransform>().anchoredPosition, 0.3f).OnComplete(() =>
+                card.GetComponent<RectTransform>().anchoredPosition = card.GetComponent<RectTransform>().anchoredPosition;
+                card.SetCoolTime(card.Rune.AssistRune.DelayTurn);
+                card.SetIsEquip(true);
+                card.GetComponent<RectTransform>().DOAnchorPos(_runeDict[RuneType.Assist][changeIndex].GetComponent<RectTransform>().anchoredPosition, 0.3f).OnComplete(() =>
                 {
-                    card.GetComponent<RectTransform>().anchoredPosition = g.GetComponent<RectTransform>().anchoredPosition;
-                    Destroy(g);
+                    //card.GetComponent<RectTransform>().anchoredPosition = g.GetComponent<RectTransform>().anchoredPosition;
+                    //Destroy(g);
                     Destroy(_runeDict[RuneType.Assist][changeIndex].gameObject);
-
-                    card.SetCoolTime(card.Rune.AssistRune.DelayTurn);
-                    card.SetIsEquip(true);
+                    
                     _runeDict[RuneType.Assist][changeIndex] = card;
 
                     //_runeDict[RuneType.Assist][changeIndex].SetRune(card.Rune);
