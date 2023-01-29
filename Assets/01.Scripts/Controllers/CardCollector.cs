@@ -63,8 +63,8 @@ public class CardCollector : MonoBehaviour
                 if (Vector2.Distance(_selectCard.GetComponent<RectTransform>().anchoredPosition, _magicCircle.GetComponent<RectTransform>().anchoredPosition)
                 <= _magicCircle.CardAreaDistance)
                 {
-                    if((_magicCircle.RuneDict.ContainsKey(RuneType.Main) == true && _isFront == true)
-                        || (_magicCircle.RuneDict.ContainsKey(RuneType.Main) == false && _isFront == false))
+                    if((_magicCircle.RuneDict.ContainsKey(RuneType.Main) == false && _isFront == true)
+                        || (_magicCircle.RuneDict.ContainsKey(RuneType.Main) == true && _isFront == false))
                     {
                         isAdd = _magicCircle.AddCard(SelectCard);
                         if (isAdd != null)
@@ -75,7 +75,22 @@ public class CardCollector : MonoBehaviour
 
                             //SelectCard.gameObject.SetActive(false);
                         }
+                        else
+                        {
+                            Debug.Log("¸¶¹ýÁøÀÌ ¾È³Ö¾îÁü");
+                            
+                        }
                     }
+                    else
+                    {
+                        Debug.Log("¼Ó¼º ¾È ¸ÂÀ½");
+                        Debug.Log(_magicCircle.RuneDict.ContainsKey(RuneType.Main));
+                        Debug.Log(_isFront);
+                    }
+                }
+                else
+                {
+                    Debug.Log("¿ø ¹ÛÀÓ");
                 }
                 // YES : ë§ˆë²•ì§??ˆì— ?£ê¸°, ë¦¬ìŠ¤???ˆì— ì¹´ë“œ ì§€?°ê¸°
                 //_selectCard.GetComponent<RectTransform>().anchoredPosition = _cardOriginPos;

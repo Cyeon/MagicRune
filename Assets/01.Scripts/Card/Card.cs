@@ -168,6 +168,8 @@ public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
     public void OnPointerDown(PointerEventData eventData)
     {
+        if (_rune == null) return;
+
         if (_isEquipMagicCircle == false)
         {
             _collector.CardSelect(this);
@@ -178,6 +180,8 @@ public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
     public void OnPointerUp(PointerEventData eventData)
     {
+        if (_rune == null) return;
+
         if (_isEquipMagicCircle == false)
         {
             _collector.CardSelect(null);
