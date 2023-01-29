@@ -18,6 +18,9 @@ public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     private bool _isEquipMagicCircle = false;
     public CardSO Rune => _rune;
 
+    private int _sortingIndex;
+    public int SortingIndex => _sortingIndex;
+
     private CardCollector _collector;
     private bool _isRest = false;
     public bool IsRest => _isRest;
@@ -115,6 +118,11 @@ public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         }
     }
 
+    public void SetSortingIndex(int index)
+    {
+        _sortingIndex = index;
+    }
+
     public void SetRune(CardSO rune)
     {
         _rune = rune;
@@ -131,6 +139,23 @@ public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
         if(_isEquipMagicCircle == true)
         {
+            SetRune(true);
+        }
+        else
+        {
+            SetRune(false);
+        }
+    }
+
+    public void SetCoolTime(int coolTime)
+    {
+        _coolTime = coolTime;
+    }
+
+    public void SetRune(bool value)
+    {
+        if(value == true)
+        {
             _runeAreaParent.gameObject.SetActive(true);
             _cardAreaParent.gameObject.SetActive(false);
         }
@@ -139,11 +164,6 @@ public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
             _runeAreaParent.gameObject.SetActive(false);
             _cardAreaParent.gameObject.SetActive(true);
         }
-    }
-
-    public void SetCoolTime(int coolTime)
-    {
-        _coolTime = coolTime;
     }
 
     public void OnPointerDown(PointerEventData eventData)

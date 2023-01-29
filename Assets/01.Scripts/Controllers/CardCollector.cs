@@ -57,13 +57,15 @@ public class CardCollector : MonoBehaviour
             }
             else
             {
+                if (Input.touchCount == 0) return;
+                Card isAdd = null;
                 // ÎßåÏïΩ ?†ÌÉù Ïπ¥ÎìúÍ∞Ä ÎßàÎ≤ïÏß??àÏóê ?àÎã§Î©?
                 if (Vector2.Distance(Input.GetTouch(0).position, _magicCircle.GetComponent<RectTransform>().anchoredPosition)
                 <= _magicCircle.CardAreaDistance)
                 {
                     if((_magicCircle.RuneDict.ContainsKey(RuneType.Main) == true && _isFront == true) || (_magicCircle.RuneDict.ContainsKey(RuneType.Main) == false && _isFront == false))
                     {
-                        Card isAdd = _magicCircle.AddCard(SelectCard);
+                        isAdd = _magicCircle.AddCard(SelectCard);
                         if (isAdd != null)
                         {
                             _handCards.Remove(isAdd);
@@ -75,10 +77,23 @@ public class CardCollector : MonoBehaviour
                     }
                 }
                 // YES : ÎßàÎ≤ïÏß??àÏóê ?£Í∏∞, Î¶¨Ïä§???àÏóê Ïπ¥Îìú ÏßÄ?∞Í∏∞
-                _selectCard.GetComponent<RectTransform>().anchoredPosition = _cardOriginPos;
-                _selectCard = value;
-                _magicCircle.SortCard();
-                CardSort();
+                //_selectCard.GetComponent<RectTransform>().anchoredPosition = _cardOriginPos;
+
+                Sequence seq = DOTween.Sequence();
+                seq.AppendCallback(() =>
+                {
+                    if(isAdd == null)
+                    {
+                        _selectCard.SetRune(false);
+                    }
+                    _selectCard = value;
+                });
+                seq.Append(_selectCard.GetComponent<RectTransform>().DOAnchorPos(_cardOriginPos, 0.2f));
+                seq.InsertCallback(0.2f, () =>
+                {
+                    _magicCircle.SortCard();
+                    CardSort();
+                });
             }
         }
     }
@@ -87,6 +102,7 @@ public class CardCollector : MonoBehaviour
     public IReadOnlyList<Card> RestCards => _restCards;
 
     private bool _isFront = true;
+    private bool _isCardSelecting = false;
 
     private void Awake()
     {
@@ -100,7 +116,9 @@ public class CardCollector : MonoBehaviour
         for (int i = 0; i < _deck.cards.Count; i++)
         {
             GameObject go = Instantiate(_deck.cards[i], this.transform);
-            _deckCards.Add(go.GetComponent<Card>());
+            Card card = go.GetComponent<Card>();
+            card.SetSortingIndex(go.transform.GetSiblingIndex());
+            _deckCards.Add(card);
             go.SetActive(false);
             go.name = $"Card_{i + 1}";
             RectTransform rect = go.GetComponent<RectTransform>();
@@ -178,6 +196,38 @@ public class CardCollector : MonoBehaviour
 
     public void CardSelect(Card card)
     {
+        if (Input.touchCount > 1) return;
+
+        if (card == null)
+        {
+            // ø©±‚º≠ ø¿∑°∞…∑¡º≠ ƒ´µÂ∞° Null¿Ã µ«¥¬µ• «— «¡∑π¿”¿Ã π–∏≤
+            
+            //if(_uiIndex == -1)
+            //{
+            //    SelectCard.transform.SetSiblingIndex(SelectCard.SortingIndex);
+            //}
+            //else
+            //{
+            //    SelectCard.transform.SetSiblingIndex(_uiIndex);
+            //}
+            SelectCard.transform.SetSiblingIndex(SelectCard.SortingIndex);
+            SelectCard.SetRune(false);
+            _uiIndex = -1;
+        }
+        else
+        {
+            _uiIndex = card.transform.GetSiblingIndex();
+            card.transform.SetAsLastSibling();
+        }
+        SelectCard = card;
+        //StartCoroutine(CardSelectCoroutine(card));
+    }
+
+    private IEnumerator CardSelectCoroutine(Card card)
+    {
+        if (_isCardSelecting == true) yield break;
+
+        _isCardSelecting = true;
         if (card == null)
         {
             SelectCard.transform.SetSiblingIndex(_uiIndex);
@@ -190,7 +240,12 @@ public class CardCollector : MonoBehaviour
             _uiIndex = card.transform.GetSiblingIndex();
             card.transform.SetAsLastSibling();
         }
+        yield return null;
         SelectCard = card;
+        yield return null;
+
+        _isCardSelecting = false;
+
     }
 
     private void CoolTimeDecrease()
