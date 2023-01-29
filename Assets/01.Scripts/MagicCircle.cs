@@ -224,17 +224,17 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                     //{
                     //    Destroy(g);
                     //});
+                    card.SetIsEquip(true);
+                    card.SetCoolTime(card.Rune.MainRune.DelayTurn);
                 });
-                //seq.AppendInterval(0.3f);
+                seq.AppendInterval(0.3f);
                 seq.AppendCallback(() =>
                 {
                     //GameObject go = Instantiate(_runeTemplate.gameObject, this.transform);
                     //Card rune = go.GetComponent<Card>();
                     //rune.SetRune(card.Rune);
                     //rune.SetIsEquip(true);
-                    card.SetIsEquip(true);
                     //rune.SetCoolTime(card.Rune.MainRune.DelayTurn);
-                    card.SetCoolTime(card.Rune.MainRune.DelayTurn);
                     _runeDict.Add(RuneType.Main, new List<Card>() { card });
                     //rune.RuneAreaParent.gameObject.SetActive(true);
 
