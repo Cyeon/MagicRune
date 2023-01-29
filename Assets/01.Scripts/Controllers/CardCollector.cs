@@ -4,12 +4,15 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using NaughtyAttributes;
 
 public class CardCollector : MonoBehaviour
 {
     [SerializeField]
     private MagicCircle _magicCircle;
 
+    [SerializeField, MinValue(0f), MaxValue(1440f)]
+    private float _cardAreaDistance;
     [SerializeField]
     private Vector2 _offset;
 
@@ -167,7 +170,7 @@ public class CardCollector : MonoBehaviour
             //_handCards[i].transform.SetParent(this.transform); 
             RectTransform rect = _handCards[i].GetComponent<RectTransform>();
             float xDelta = 1440f / _handCards.Count;
-            rect.anchoredPosition = new Vector3(i * xDelta + rect.sizeDelta.x / 2, rect.sizeDelta.y / 2, 0);
+            rect.anchoredPosition = new Vector3(i * xDelta + rect.sizeDelta.x / 2 + 150 + _offset.x, rect.sizeDelta.y / 2 + _offset.y, 0);
         }
     }
 
