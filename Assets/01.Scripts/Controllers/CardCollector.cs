@@ -164,13 +164,15 @@ public class CardCollector : MonoBehaviour
             return -1;
         });
 
+        float xDelta = 1440f / _handCards.Count;
+        //float sideArea = (1440f - _cardAreaDistance) / 2; // ¸¸¾à Scroll Rect¸¦ ¾²¸é ¾È¾µ °Å °°À½
         for (int i = 0; i < _handCards.Count; i++)
         {
             //?´ê±¸ ?´ì¤˜??Animation???„í•´ MagicCircle???ì‹?¼ë¡œ ?£ì—ˆ??ê²ƒë„ ?¤ì‹œ ???¨ì˜ ?ì‹?¼ë¡œ ?Œì•„?€ ?•ìƒ?ìœ¼ë¡?Sortê°€ ?˜ëŠ”??ê·¸ëŸ¬ë©?Damageë¶€ë¶„ì—???¤ë¥˜ê°€ ??ëª?ë£?
             //_handCards[i].transform.SetParent(this.transform); 
             RectTransform rect = _handCards[i].GetComponent<RectTransform>();
-            float xDelta = 1440f / _handCards.Count;
-            rect.anchoredPosition = new Vector3(i * xDelta + rect.sizeDelta.x / 2 + 150 + _offset.x, rect.sizeDelta.y / 2 + _offset.y, 0);
+            
+            rect.anchoredPosition = new Vector3(i * xDelta + rect.sizeDelta.x / 2 + 150 + _offset.x/* + sideArea*/, rect.sizeDelta.y / 2 + _offset.y, 0);
         }
     }
 
