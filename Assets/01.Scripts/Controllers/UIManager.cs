@@ -13,6 +13,7 @@ public class UIManager : MonoSingleton<UIManager>
     [SerializeField] private TextMeshProUGUI _enemyHealthText;
     [SerializeField] private Image _enemyPatternIcon;
     [SerializeField] private TextMeshProUGUI _enemyShieldText;
+    public Transform enemyIcon;
 
     [Header("Player UI")]
     [SerializeField] private Slider _playerHealthSlider;
@@ -77,12 +78,13 @@ public class UIManager : MonoSingleton<UIManager>
 
         StatusPanel statusPanel = Instantiate(_statusPrefab).GetComponent<StatusPanel>();
         statusPanel.image.sprite = status.icon;
-        statusPanel.duration.text = status.durationTurn.ToString();
+        statusPanel.image.color = status.color;
+        statusPanel.duration.text = status.typeValue.ToString();
         statusPanel.statusName = status.statusName;
         statusPanel.transform.SetParent(trm);
     }
 
-    public void ReloadStatusPanel(Unit unit, string name, int duration)
+    public void ReloadStatusPanel(Unit unit, StatusName name, int duration)
     {
         Transform trm = unit == GameManager.Instance.player ? _statusPlayerPanel : _statusEnemyPanel;
 

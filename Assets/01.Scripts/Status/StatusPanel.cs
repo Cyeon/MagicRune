@@ -8,7 +8,7 @@ public class StatusPanel : MonoBehaviour
 {
     public Image image;
     public TextMeshProUGUI duration;
-    public string statusName;
+    public StatusName statusName;
 
     private void OnEnable()
     {

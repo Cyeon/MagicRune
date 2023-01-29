@@ -6,35 +6,42 @@ public enum GameTurn
 {
     Player,
     Monster,
-    Unknown,
     PlayerWait,
-    MonsterWait
+    MonsterWait,
+    Unknown
 }
 
 public class GameManager : MonoSingleton<GameManager>
 {
+    [SerializeField]
     private GameTurn gameTurn = GameTurn.Unknown;
     public GameTurn GameTurn => gameTurn;
     public Player player = null;
     public Enemy enemy = null;
     public Unit currentUnit = null;
+    public Unit attackUnit = null;
 
     private void Awake()
     {
-        EventManager.StartListening(Define.ON_START_PLAYER_TURN, OnPlayerTurn);
-        EventManager.StartListening(Define.ON_START_MONSTER_TURN, OnMonsterTurn);
+        //EventManager.StartListening(Define.ON_START_PLAYER_TURN, OnPlayerTurn);
+        //EventManager.StartListening(Define.ON_START_MONSTER_TURN, OnMonsterTurn);
     }
 
-    private void Start() {
+    private void Start()
+    {
 
         enemy = EnemyManager.Instance.SpawnEnemy();
         player = FindObjectOfType<Player>();
 
         UIManager.instance.PlayerHealthbarInit(player.HP);
 
-        enemy.OnTakeDamageFeedback.AddListener(() => TurnChange());
+        StatusManager.Instance.AddStatus(enemy, StatusName.Ice);
+        StatusManager.Instance.AddStatus(enemy, StatusName.Ice);
+        StatusManager.Instance.AddStatus(enemy, StatusName.Ice);
+        StatusManager.Instance.AddStatus(enemy, StatusName.Ice);
+
         enemy.OnTakeDamageFeedback.AddListener(() => UIManager.instance.UpdateEnemyHealthbar());
-        // StatusManager.Instance.AddStatus(enemy, "?½ì‡„");
+        enemy.OnTakeDamageFeedback.AddListener(() => StatusManager.Instance.AddStatus(enemy, StatusName.Fire));
 
         TurnChange();
     }
@@ -54,15 +61,19 @@ public class GameManager : MonoSingleton<GameManager>
     private void OnPlayerTurn()
     {
         EventManager.TriggerEvent(Define.ON_END_MONSTER_TURN);
+        EventManager<bool>.TriggerEvent(Define.ON_START_PLAYER_TURN, true);
 
         gameTurn = GameTurn.Player;
         currentUnit = player;
+        attackUnit = enemy;
     }
 
     public void OnMonsterTurn()
     {
+        EventManager<bool>.TriggerEvent(Define.ON_START_MONSTER_TURN, false);
         gameTurn = GameTurn.Monster;
         currentUnit = enemy;
+        attackUnit = player;
         enemy.TurnStart();
     }
 
@@ -73,7 +84,7 @@ public class GameManager : MonoSingleton<GameManager>
         if (gameTurn == GameTurn.Player || gameTurn == GameTurn.Monster)
             currentUnit?.InvokeStatus(StatusInvokeTime.End);
 
-        switch(gameTurn)
+        switch (gameTurn)
         {
             case GameTurn.Unknown:
                 enemy.pattern = PatternManager.Instance.GetPattern();
@@ -120,8 +131,8 @@ public class GameManager : MonoSingleton<GameManager>
 
     private void OnDestroy()
     {
-        EventManager.StopListening(Define.ON_START_PLAYER_TURN, OnPlayerTurn);
-        EventManager.StopListening(Define.ON_START_MONSTER_TURN, OnMonsterTurn);
+        //EventManager.StopListening(Define.ON_START_PLAYER_TURN, OnPlayerTurn);
+        //EventManager.StopListening(Define.ON_START_MONSTER_TURN, OnMonsterTurn);
     }
 
 }
