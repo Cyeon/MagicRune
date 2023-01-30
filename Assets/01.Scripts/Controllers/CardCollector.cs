@@ -278,7 +278,8 @@ public class CardCollector : MonoBehaviour
         foreach (Transform item in transform)
         {
             //Debug.Log(item.name);
-            item.GetComponent<Image>().DOFade(Convert.ToInt32(flag), 1f);
+            //item.GetComponent<Image>().DOFade(Convert.ToInt32(flag), 1f);
+            item.GetComponent<Image>().DOFade(flag ? 1 : 0, 1f);
         }
     }
 
@@ -299,5 +300,6 @@ public class CardCollector : MonoBehaviour
         EventManager<bool>.StopListening(Define.ON_START_PLAYER_TURN, CardOnOff);
         EventManager<bool>.StopListening(Define.ON_START_MONSTER_TURN, CardOnOff);
         EventManager.StopListening(Define.ON_START_MONSTER_TURN, HandToDeck);
+        transform.DOKill();
     }
 }

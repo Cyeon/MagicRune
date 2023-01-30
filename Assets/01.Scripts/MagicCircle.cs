@@ -626,6 +626,11 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
         //enemy.Damage(damage);
     }
 
+    public void OnDestroy()
+    {
+        transform.DOKill();
+    }
+
     public void OnPointerClick(PointerEventData eventData)
     {
         if (IsBig == false)

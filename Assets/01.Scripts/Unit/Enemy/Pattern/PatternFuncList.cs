@@ -66,4 +66,9 @@ public class PatternFuncList : MonoBehaviour
         seq.AppendInterval(0.2f);
         seq.AppendCallback(() => GameManager.Instance.TurnChange());
     }
+
+    public void OnDestroy()
+    {
+        transform.DOKill();
+    }
 }

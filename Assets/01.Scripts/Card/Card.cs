@@ -188,4 +188,9 @@ public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
             transform.localScale = Vector3.one;
         }
     }
+
+    public void OnDestroy()
+    {
+        transform.DOKill();
+    }
 }
