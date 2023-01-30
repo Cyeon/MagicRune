@@ -36,7 +36,9 @@ public class CardCollector : MonoBehaviour
     private List<Card> _handCards = null;
 
     [SerializeField]
-    private List<Card> _restCards = null;
+    public List<Card> _restCards = null;
+
+    private List<Card> _tempCards = new List<Card>();
 
     private Vector2 _cardOriginPos;
     private int _uiIndex;
@@ -61,31 +63,25 @@ public class CardCollector : MonoBehaviour
                 if (Vector2.Distance(_selectCard.GetComponent<RectTransform>().anchoredPosition, _magicCircle.GetComponent<RectTransform>().anchoredPosition)
                 <= _magicCircle.CardAreaDistance)
                 {
-                    if((_magicCircle.RuneDict.ContainsKey(RuneType.Main) == false && _isFront == true)
+                    if ((_magicCircle.RuneDict.ContainsKey(RuneType.Main) == false && _isFront == true)
                         || (_magicCircle.RuneDict.ContainsKey(RuneType.Main) == true && _isFront == false))
                     {
                         isAdd = _magicCircle.AddCard(SelectCard);
                         if (isAdd != null)
                         {
+                            Debug.Log(isAdd);
+                            _tempCards.Add(isAdd);
                             _handCards.Remove(isAdd);
-                            //SelectCard.IsRest = true;
-                            _restCards.Add(isAdd);
-
-                            //SelectCard.gameObject.SetActive(false);
+                            SelectCard.gameObject.SetActive(false);
                         }
                         else
                         {
                             Debug.Log("�������� �ȳ־���");
-                            
+
                         }
                     }
                     else
                     {
-                        _handCards.Remove(isAdd);
-                        _restCards.Add(isAdd);
-                        SelectCard.gameObject.SetActive(false);
-                        UIUpdate();
-
                         Debug.Log("�Ӽ� �� ����");
                         Debug.Log(_magicCircle.RuneDict.ContainsKey(RuneType.Main));
                         Debug.Log(_isFront);
@@ -101,7 +97,7 @@ public class CardCollector : MonoBehaviour
                 Sequence seq = DOTween.Sequence();
                 seq.AppendCallback(() =>
                 {
-                    if(isAdd == null)
+                    if (isAdd == null)
                     {
                         _selectCard.SetRune(false);
                     }
@@ -211,7 +207,7 @@ public class CardCollector : MonoBehaviour
             //?�걸 ?�줘??Animation???�해 MagicCircle???�식?�로 ?�었??것도 ?�시 ???�의 ?�식?�로 ?�아?�??�상?�으�?Sort가 ?�는??그러�?Damage부분에???�류가 ??�?�?
             //_handCards[i].transform.SetParent(this.transform); 
             RectTransform rect = _handCards[i].GetComponent<RectTransform>();
-            
+
             rect.anchoredPosition = new Vector3(i * xDelta + rect.sizeDelta.x / 2 + 150 + _offset.x/* + sideArea*/, rect.sizeDelta.y / 2 + _offset.y, 0);
         }
     }
@@ -223,7 +219,7 @@ public class CardCollector : MonoBehaviour
         if (card == null)
         {
             // ���⼭ �����ɷ��� ī�尡 Null�� �Ǵµ� �� �������� �и�
-            
+
             //if(_uiIndex == -1)
             //{
             //    SelectCard.transform.SetSiblingIndex(SelectCard.SortingIndex);
@@ -268,7 +264,7 @@ public class CardCollector : MonoBehaviour
 
         Sequence seq = DOTween.Sequence();
         seq.AppendCallback(() => _isCardRotate = true);
-        foreach(var card in _handCards)
+        foreach (var card in _handCards)
         {
             seq.Join(card.transform.DORotate(new Vector3(0, 360, 0), 0.3f, RotateMode.FastBeyond360));
         }
@@ -289,7 +285,7 @@ public class CardCollector : MonoBehaviour
 
     }
 
-    private void UIUpdate()
+    public void UIUpdate()
     {
         _deckViewUI?.UITextUpdate();
         _restViewUI?.UITextUpdate();
@@ -311,9 +307,13 @@ public class CardCollector : MonoBehaviour
             _handCards[i].gameObject.SetActive(false);
             _deckCards.Add(_handCards[i]);
         }
+        for (int i = 0; i < _tempCards.Count; i++)
+        {
+            if (_restCards.Contains(_tempCards[i])) continue;
+            _deckCards.Add(_tempCards[i]);
+        }
         _handCards.Clear();
     }
-
     private void OnDestroy()
     {
         EventManager.StopListening(Define.ON_END_MONSTER_TURN, CoolTimeDecrease);

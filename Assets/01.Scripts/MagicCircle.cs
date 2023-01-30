@@ -598,8 +598,15 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
         seq.AppendCallback(() =>
         {
             Debug.Log("Attack Complate");
+            foreach (var item in _runeDict)
+            {
+                foreach (Card card in item.Value)
+                {
+                    _cardCollector._restCards.Add(card);
+                }
+            }
             _runeDict.Clear();
-
+            _cardCollector.UIUpdate();
             IsBig = false;
         });
 
