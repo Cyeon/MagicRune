@@ -20,6 +20,14 @@ public class Unit : MonoBehaviour
             {
                 _health = _maxHealth;
             }
+            if (_health <= 0)
+            {
+                EventManager.TriggerEvent(Define.GAME_END);
+                if (isPlayer)
+                    EventManager.TriggerEvent(Define.GAME_LOSE);
+                else
+                    EventManager.TriggerEvent(Define.GAME_WIN);
+            }
         }
     }
 
