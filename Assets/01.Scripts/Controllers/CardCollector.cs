@@ -278,9 +278,14 @@ public class CardCollector : MonoBehaviour
     {
         foreach (Transform item in transform)
         {
+            CanvasGroup cvGroup = item.GetChild(0).GetComponent<CanvasGroup>();
+            item.GetComponent<Card>().SetRune(false);
+            cvGroup.alpha = !flag ? 1 : 0;
+            cvGroup.DOFade(flag ? 1 : 0, 1f);
+
             //Debug.Log(item.name);
             //item.GetComponent<Image>().DOFade(Convert.ToInt32(flag), 1f);
-            item.GetComponent<Image>().DOFade(flag ? 1 : 0, 1f);
+            //item.GetComponent<Image>().DOFade(flag ? 1 : 0, 1f);
         }
     }
 
