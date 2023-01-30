@@ -57,7 +57,7 @@ public class CardCollector : MonoBehaviour
             {
                 if (Input.touchCount == 0) return;
                 Card isAdd = null;
-                // 만약 ?�택 카드가 마법�??�에 ?�다�?
+                // 만약 ?�택 카드가 마법�??�에 ?�다�?
                 if (Vector2.Distance(_selectCard.GetComponent<RectTransform>().anchoredPosition, _magicCircle.GetComponent<RectTransform>().anchoredPosition)
                 <= _magicCircle.CardAreaDistance)
                 {
@@ -95,7 +95,7 @@ public class CardCollector : MonoBehaviour
                 {
                     Debug.Log("�� ����");
                 }
-                // YES : 마법�??�에 ?�기, 리스???�에 카드 지?�기
+                // YES : 마법�??�에 ?�기, 리스???�에 카드 지?�기
                 //_selectCard.GetComponent<RectTransform>().anchoredPosition = _cardOriginPos;
 
                 Sequence seq = DOTween.Sequence();
@@ -208,7 +208,7 @@ public class CardCollector : MonoBehaviour
         //float sideArea = (1440f - _cardAreaDistance) / 2; // ���� Scroll Rect�� ���� �Ⱦ� �� ����
         for (int i = 0; i < _handCards.Count; i++)
         {
-            //?�걸 ?�줘??Animation???�해 MagicCircle???�식?�로 ?�었??것도 ?�시 ???�의 ?�식?�로 ?�아?� ?�상?�으�?Sort가 ?�는??그러�?Damage부분에???�류가 ??�?�?
+            //?�걸 ?�줘??Animation???�해 MagicCircle???�식?�로 ?�었??것도 ?�시 ???�의 ?�식?�로 ?�아?�??�상?�으�?Sort가 ?�는??그러�?Damage부분에???�류가 ??�?�?
             //_handCards[i].transform.SetParent(this.transform); 
             RectTransform rect = _handCards[i].GetComponent<RectTransform>();
             
@@ -263,6 +263,8 @@ public class CardCollector : MonoBehaviour
     public void CardRotate()
     {
         if (_isCardRotate == true) return;
+
+        transform.DOComplete();
 
         Sequence seq = DOTween.Sequence();
         seq.AppendCallback(() => _isCardRotate = true);
