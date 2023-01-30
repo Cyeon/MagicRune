@@ -249,6 +249,7 @@ public class CardCollector : MonoBehaviour
         for (int i = _restCards.Count - 1; i >= 0; i--)
         {
             Card card = _restCards[i];
+            if (card == null) { continue; }
             card.CoolTime--;
             if (card.CoolTime <= 0)
             {
