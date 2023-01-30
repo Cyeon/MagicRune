@@ -117,7 +117,6 @@ public class CardCollector : MonoBehaviour
             go.transform.rotation = Quaternion.identity;
         }
 
-        //_cardList = new List<Card>();
         EventManager.StartListening(Define.ON_END_MONSTER_TURN, CoolTimeDecrease);
         EventManager<int>.StartListening(Define.ON_START_PLAYER_TURN, CardDraw);
         EventManager<bool>.StartListening(Define.ON_START_PLAYER_TURN, CardOnOff);
@@ -278,9 +277,10 @@ public class CardCollector : MonoBehaviour
     {
         foreach (Transform item in transform)
         {
-            //Debug.Log(item.name);
-            //item.GetComponent<Image>().DOFade(Convert.ToInt32(flag), 1f);
-            item.GetComponent<Image>().DOFade(flag ? 1 : 0, 1f);
+            CanvasGroup cvGroup = item.GetChild(0).GetComponent<CanvasGroup>();
+            item.GetComponent<Card>().SetRune(false);
+            cvGroup.alpha = !flag ? 1 : 0;
+            cvGroup.DOFade(flag ? 1 : 0, 1f);
         }
     }
 
