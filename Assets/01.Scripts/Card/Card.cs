@@ -57,7 +57,7 @@ public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
             _isFront = value;
 
             if (_rune == null) return;
-            if(_isFront == true)
+            if (_isFront == true)
             {
                 _skillImage.sprite = _rune.MainRune.CardImage;
                 _costText.text = _rune.MainRune.Cost.ToString();
@@ -96,26 +96,7 @@ public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
     private void Start()
     {
-        _collector = GetComponentInParent<CardCollector>();
-        _rect = GetComponent<RectTransform>();
-
-        _cardAreaParent = transform.Find("Card_Area");
-        _cardParent = _cardAreaParent.Find("Card_Add element");
-        _skillImage = _cardParent.Find("Skill_Image").GetComponent<Image>();
-        _costText = _cardParent.Find("Cost_Text").GetComponent<Text>();
-        _coolTimeText = _cardParent.Find("Cooltime_Text").GetComponent<Text>();
-        _mainSubText = _cardParent.Find("MainSub_Text").GetComponent<Text>();
-        _skillText = _cardParent.Find("Skill_Detail").GetComponent<Text>();
-
-        _runeAreaParent = transform.Find("RuneArea");
-        _runeImage = _runeAreaParent.Find("Rune Image").GetComponent<Image>();
-        IsFront = true;
-
-        if(_rune != null)
-        {
-            _runeImage.sprite = _rune.RuneImage;
-            _runeAreaParent.gameObject.SetActive(false);
-        }
+        Setting();
     }
 
     public void SetSortingIndex(int index)
@@ -137,7 +118,7 @@ public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     {
         _isEquipMagicCircle = value;
 
-        if(_isEquipMagicCircle == true)
+        if (_isEquipMagicCircle == true)
         {
             SetRune(true);
         }
@@ -154,7 +135,8 @@ public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
     public void SetRune(bool value)
     {
-        if(value == true)
+        if (_runeAreaParent == null || _cardAreaParent == null) { Setting(); }
+        if (value == true)
         {
             _runeAreaParent.gameObject.SetActive(true);
             _cardAreaParent.gameObject.SetActive(false);
@@ -186,6 +168,30 @@ public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         {
             _collector.CardSelect(null);
             transform.localScale = Vector3.one;
+        }
+    }
+
+    private void Setting()
+    {
+        _collector = GetComponentInParent<CardCollector>();
+        _rect = GetComponent<RectTransform>();
+
+        _cardAreaParent = transform.Find("Card_Area");
+        _cardParent = _cardAreaParent.Find("Card_Add element");
+        _skillImage = _cardParent.Find("Skill_Image").GetComponent<Image>();
+        _costText = _cardParent.Find("Cost_Text").GetComponent<Text>();
+        _coolTimeText = _cardParent.Find("Cooltime_Text").GetComponent<Text>();
+        _mainSubText = _cardParent.Find("MainSub_Text").GetComponent<Text>();
+        _skillText = _cardParent.Find("Skill_Detail").GetComponent<Text>();
+
+        _runeAreaParent = transform.Find("RuneArea");
+        _runeImage = _runeAreaParent.Find("Rune Image").GetComponent<Image>();
+        IsFront = true;
+
+        if (_rune != null)
+        {
+            _runeImage.sprite = _rune.RuneImage;
+            _runeAreaParent.gameObject.SetActive(false);
         }
     }
 }
