@@ -29,8 +29,13 @@ public class CardsViewUI : MonoBehaviour
         for (int i = 0; i < cards.Count; i++)
         {
             GameObject gameObject = cards[i].gameObject;
-            gameObject.GetComponent<Card>().enabled = false;
-            gameObject.GetComponent<Image>().color = active;
+            
+            if (gameObject == null) { continue; }
+            
+            Card card = gameObject.GetComponent<Card>();
+            card.SetRune(false);
+            card.enabled = false;
+
             gameObject.SetActive(true);
             gameObject.transform.SetParent(_content);
             gameObject.transform.localScale = Vector3.one;
@@ -42,8 +47,8 @@ public class CardsViewUI : MonoBehaviour
         for (int i = 0; i < cards.Count; i++)
         {
             GameObject gameObject = cards[i].gameObject;
+            if (gameObject == null) { continue; }
             gameObject.GetComponent<Card>().enabled = true;
-            gameObject.GetComponent<Image>().color = deActive;
             gameObject.SetActive(false);
             gameObject.transform.rotation = Quaternion.identity;
             gameObject.transform.SetParent(_cardCollector.transform);
