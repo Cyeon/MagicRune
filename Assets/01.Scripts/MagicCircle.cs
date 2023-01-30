@@ -228,7 +228,7 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                     card.SetIsEquip(true);
                     card.SetCoolTime(card.Rune.MainRune.DelayTurn);
                 });
-                seq.AppendInterval(0.3f);
+                //seq.AppendInterval(0.3f);
                 seq.AppendCallback(() =>
                 {
                     _runeDict.Add(RuneType.Main, new List<Card>() { card });
@@ -598,7 +598,27 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
         seq.AppendCallback(() =>
         {
             Debug.Log("Attack Complate");
+
+            foreach(var rList in _runeDict)
+            {
+                foreach(var r in rList.Value)
+                {
+                    if(r.Rune == null)
+                    {
+                        Destroy(r.gameObject);
+                        // 카드들은 destroy시키면 안된다.
+
+                        // 여기서 마법진에 있는 룬들을 rest로 옴기면 될 듯
+                    }
+                    else
+                    {
+                        r.gameObject.SetActive(false);
+                    }
+                }
+            }
+
             _runeDict.Clear();
+            _effectDict.Clear();
 
             IsBig = false;
         });
