@@ -8,4 +8,8 @@ public class Define
 
     public const int ON_END_PLAYER_TURN = 200;
     public const int ON_END_MONSTER_TURN = 201;
+
+    public const int GAME_WIN = 1000;
+    public const int GAME_LOSE = 1001;
+    public const int GAME_END = 1002;
 }

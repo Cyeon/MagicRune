@@ -5,32 +5,44 @@ using UnityEngine;
 
 public class PatternFuncList : MonoBehaviour
 {
-    private float addDmg;
+    private float _addDmg;
+    public float value;
 
-    public void AddAtkDmg(float dmg)
+    public void AddAtkDmg()
     {
-        GameManager.Instance.enemy.atkDamage += dmg;
-        addDmg = dmg;
+        GameManager.Instance.enemy.atkDamage += value;
+        _addDmg = value;
     }
 
     public void RemAtkDmg()
     {
-        GameManager.Instance.enemy.atkDamage -= addDmg;
+        GameManager.Instance.enemy.atkDamage -= _addDmg;
     }
 
-    public void AddShield(float shield)
+    public void AddShield()
     {
-        GameManager.Instance.enemy.Shield += shield;
+        GameManager.Instance.enemy.Shield += value;
     }
 
-    public void AddStatus(StatusName statusName)
+    public void AddStatus(string statusName)
     {
-        StatusManager.Instance.AddStatus(GameManager.Instance.player, statusName);
+        StatusName status;
+
+        if (System.Enum.TryParse(statusName, out status))
+            StatusManager.Instance.AddStatus(GameManager.Instance.player, status);
+        else
+            Debug.LogError(string.Format("{0} status is not found.", statusName));
     }
 
     public void Attack()
     {
-        Invoke("DelayAttack", 1f);
+        Sequence seq = DOTween.Sequence();
+        seq.Append(UIManager.Instance.enemyIcon.DOShakePosition(3, 50, 5)).SetEase(Ease.Linear);
+        seq.Append(UIManager.Instance.enemyIcon.DOLocalMoveY(-1700f, 0.3f)).SetEase(Ease.Linear);
+        seq.AppendCallback(() => DelayAttack());
+        seq.Append(UIManager.Instance.enemyIcon.DOLocalMoveY(0, 0.3f)).SetEase(Ease.Linear);
+        seq.AppendInterval(0.1f);
+        seq.AppendCallback(() => GameManager.Instance.TurnChange());
     }
 
     private void DelayAttack()
@@ -42,6 +54,16 @@ public class PatternFuncList : MonoBehaviour
     {
         Sequence seq = DOTween.Sequence();
         seq.Append(Camera.main.DOShakeRotation(2));
+        seq.AppendCallback(() => GameManager.Instance.TurnChange());
+    }
+
+    public void Beeeeem()
+    {
+        Sequence seq = DOTween.Sequence();
+        seq.Append(UIManager.Instance.enemyIcon.DOShakeScale(3, 50, 5)).SetEase(Ease.Linear);
+        seq.AppendCallback(() => GameManager.Instance.enemy.isSkip = true);
+        seq.AppendCallback(() => GameManager.Instance.player.TakeDamage(20));
+        seq.AppendInterval(0.2f);
         seq.AppendCallback(() => GameManager.Instance.TurnChange());
     }
 }

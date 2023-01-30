@@ -6,7 +6,11 @@ using System.Security.Cryptography;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using UnityEngine.Windows;
 using static UnityEngine.UIElements.UxmlAttributeDescription;
+using Input = UnityEngine.Input;
+using SerializableDictionary;
+using System;
 
 public enum RuneType
 {
@@ -16,9 +20,16 @@ public enum RuneType
 
 public class MagicCircle : MonoBehaviour, IPointerClickHandler
 {
+
     private Dictionary<RuneType, List<Card>> _runeDict;
+    public Dictionary<RuneType, List<Card>> RuneDict => _runeDict;
+
+    private Dictionary<string, string> _effectDict;
 
     private const int _mainRuneCnt = 1;
+
+    [SerializeField]
+    private CardCollector _cardCollector;
 
     [SerializeField]
     private float _assistRuneDistance = 3f;
@@ -83,6 +94,7 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                 _bgPanel.GetComponent<CanvasGroup>().DOFade(0, 0.2f);
                 this.transform.DOLocalMoveY(-400, 0.2f).SetRelative();
                 _bgPanel.transform.GetChild(0).GetComponent<Image>().raycastTarget = false;
+                //_bgPanel.transform.GetChild(0).GetComponent<Image>().raycastTarget = true;
                 this.transform.rotation = Quaternion.Euler(0, 0, 0);
             }
         }
@@ -91,18 +103,21 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
     public void Awake()
     {
         _runeDict = new Dictionary<RuneType, List<Card>>();
+        _effectDict = new Dictionary<string, string>();
     }
 
     private void Update()
     {
-        if (IsBig == true)
-        {
+        //if (IsBig == true)
+        //{
             Swipe1();
-        }
+        //}
     }
 
     public void SortCard()
     {
+        //transform.DOComplete();
+
         if (_runeDict.ContainsKey(RuneType.Assist))
         {
             float angle = -2 * Mathf.PI / _runeDict[RuneType.Assist].Count;
@@ -111,7 +126,6 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
             {
                 //_runeDict[RuneType.Assist][i].GetComponent<RectTransform>().transform.rotation = Quaternion.Euler(0, 0, -1 * angle * i + 90);
                 //_runeDict[RuneType.Assist][i].GetComponent<RectTransform>().anchoredPosition = new Vector3(_assistRuneDistance, 0, 0);
-                _runeDict[RuneType.Assist][i].GetComponent<RectTransform>().anchoredPosition = new Vector3(0, 0, 0);
                 float height = Mathf.Sin(angle * i + (90 * Mathf.Deg2Rad)) * _assistRuneDistance;
                 float width = Mathf.Cos(angle * i + (90 * Mathf.Deg2Rad)) * _assistRuneDistance;
                 _runeDict[RuneType.Assist][i].GetComponent<RectTransform>().anchoredPosition = new Vector3(width, height, 0);
@@ -120,8 +134,22 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
 
         if (_runeDict.ContainsKey(RuneType.Main))
         {
-            _runeDict[RuneType.Main][0].GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
-            _runeDict[RuneType.Main][0].GetComponentInParent<RectTransform>().transform.rotation = Quaternion.identity;
+            if(_runeDict[RuneType.Main].Count == 1)
+            {
+                _runeDict[RuneType.Main][0].GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
+                _runeDict[RuneType.Main][0].GetComponentInParent<RectTransform>().transform.rotation = Quaternion.identity;
+            }
+            else
+            {
+                float angle = -2 * Mathf.PI / _runeDict[RuneType.Main].Count;
+                float distance = 100;
+                for(int i = 0; i < _runeDict[RuneType.Main].Count; i++)
+                {
+                    float height = Mathf.Sin(angle * i + (90 * Mathf.Deg2Rad)) * distance;
+                    float width = Mathf.Cos(angle * i + (90 * Mathf.Deg2Rad)) * distance;
+                    _runeDict[RuneType.Main][i].GetComponent<RectTransform>().anchoredPosition = new Vector3(width, height, 0);
+                }
+            }
         }
     }
 
@@ -129,12 +157,12 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
     {
         if (_isBig == false) return null;
 
-        // ï¿½Ì¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½Ã¼ï¿½ï¿½ï¿½ï¿½ ï¿½Õ°ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½é¿¡ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Å°ï¿½ï¿½
         if (_runeDict.ContainsKey(RuneType.Main) == false || (_runeDict[RuneType.Main].Count == 0))
         {
             if (!DummyCost.Instance.CanUseMainRune(card.Rune.MainRune.Cost))
             {
                 Debug.Log("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ï±ï¿?ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Õ´Ï´ï¿½.");
+
                 return null;
             }
             if (_runeDict.ContainsKey(RuneType.Main))
@@ -149,7 +177,7 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                 seq.AppendCallback(() =>
                 {
                     GameObject g = Instantiate(_garbageRuneTemplate.gameObject, this.transform);
-                    card.GetComponent<RectTransform>().anchoredPosition = Input.mousePosition;
+                    card.GetComponent<RectTransform>().anchoredPosition = new Vector2(Input.GetTouch(0).position.x, Input.GetTouch(0).position.y - _cardCollector.GetComponent<RectTransform>().anchoredPosition.y);
                     card.transform.SetParent(this.transform);
                     g.GetComponent<RectTransform>().anchoredPosition = card.GetComponent<RectTransform>().anchoredPosition;
                     g.GetComponent<RectTransform>().DOAnchorPos(GetComponent<RectTransform>().anchoredPosition, 0.3f).OnComplete(() =>
@@ -161,14 +189,15 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                         rune.SetRune(card.Rune);
                         rune.SetIsEquip(true);
                         card.SetCoolTime(card.Rune.MainRune.DelayTurn);
-                        _runeDict[RuneType.Main].Add(rune);
+                        card.SetIsEquip(true);
+                        _runeDict[RuneType.Main].Add(card);
 
                         for (int i = 0; i < _runeDict[RuneType.Main][0].Rune.AssistRuneCount; i++)
                         {
                             GameObject ggo = Instantiate(_runeTemplate.gameObject, this.transform);
                             Card grune = ggo.GetComponent<Card>();
-                            grune.SetRune(null);
-                            grune.SetIsEquip(true);
+                            //grune.SetRune(null);
+                            //grune.SetIsEquip(true);
                             //grune.CardAnimation();
                             if (_runeDict.ContainsKey(RuneType.Assist))
                             {
@@ -179,46 +208,35 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                                 _runeDict.Add(RuneType.Assist, new List<Card> { grune });
                             }
                         }
-
+                        _cardCollector.CardRotate();
                         SortCard();
+                        AddEffect(card, true);
                         AssistRuneAnimanation();
                     });
                 });
+                SortCard();
             }
             else
             {
-                Debug.Log(card);
                 Sequence seq = DOTween.Sequence();
                 seq.AppendCallback(() =>
                 {
-                    GameObject g = Instantiate(_garbageRuneTemplate.gameObject, this.transform);
-                    Debug.Log(card);
-                    card.GetComponent<RectTransform>().anchoredPosition = Input.mousePosition;
+                    card.GetComponent<RectTransform>().anchoredPosition = new Vector2(Input.GetTouch(0).position.x, Input.GetTouch(0).position.y - _cardCollector.GetComponent<RectTransform>().anchoredPosition.y);
                     card.transform.SetParent(this.transform);
-                    g.GetComponent<RectTransform>().anchoredPosition = card.GetComponent<RectTransform>().anchoredPosition;
-                    g.GetComponent<RectTransform>().DOAnchorPos(Vector2.zero, 0.3f).OnComplete(() =>
-                    {
-                        Destroy(g);
-                    });
+                    card.GetComponent<RectTransform>().anchoredPosition = card.GetComponent<RectTransform>().anchoredPosition;
+                    card.GetComponent<RectTransform>().DOAnchorPos(Vector2.zero, 0.3f);
+                    card.SetIsEquip(true);
+                    card.SetCoolTime(card.Rune.MainRune.DelayTurn);
                 });
                 seq.AppendInterval(0.3f);
                 seq.AppendCallback(() =>
                 {
-                    GameObject go = Instantiate(_runeTemplate.gameObject, this.transform);
-                    Card rune = go.GetComponent<Card>();
-                    rune.SetRune(card.Rune);
-                    rune.SetIsEquip(true);
-                    //rune.SetCoolTime(card.Rune.MainRune.DelayTurn);
-                    card.SetCoolTime(card.Rune.MainRune.DelayTurn);
-                    _runeDict.Add(RuneType.Main, new List<Card>() { rune });
-
+                    _runeDict.Add(RuneType.Main, new List<Card>() { card });
                     for (int i = 0; i < _runeDict[RuneType.Main][0].Rune.AssistRuneCount; i++)
                     {
                         GameObject ggo = Instantiate(_runeTemplate.gameObject, this.transform);
                         Card grune = ggo.GetComponent<Card>();
                         grune.SetRune(null);
-                        grune.SetIsEquip(true);
-                        //grune.CardAnimation();
                         if (_runeDict.ContainsKey(RuneType.Assist))
                         {
                             _runeDict[RuneType.Assist].Add(grune);
@@ -229,8 +247,11 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                         }
                     }
                     SortCard();
+                    _cardCollector.CardRotate();
+                    AddEffect(card, true);
                     AssistRuneAnimanation();
                 });
+                SortCard();
             }
         }
         else
@@ -239,6 +260,28 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
             {
                 Debug.Log("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ï±ï¿?ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Õ´Ï´ï¿½.");
                 return null;
+            }
+
+            if (_runeDict.ContainsKey(RuneType.Assist) == false)
+            {
+                for (int i = 0; i < _runeDict[RuneType.Main][0].Rune.AssistRuneCount; i++)
+                {
+                    GameObject ggo = Instantiate(_runeTemplate.gameObject, this.transform);
+                    Card grune = ggo.GetComponent<Card>();
+                    grune.SetRune(null);
+                    grune.SetIsEquip(true);
+                    if (_runeDict.ContainsKey(RuneType.Assist))
+                    {
+                        _runeDict[RuneType.Assist].Add(grune);
+                    }
+                    else
+                    {
+                        _runeDict.Add(RuneType.Assist, new List<Card> { grune });
+                    }
+                }
+
+                SortCard();
+                AssistRuneAnimanation();
             }
 
             int changeIndex = -1;
@@ -257,27 +300,118 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
             Sequence seq = DOTween.Sequence();
             seq.AppendCallback(() =>
             {
-                GameObject g = Instantiate(_garbageRuneTemplate.gameObject, this.transform);
-                card.GetComponent<RectTransform>().anchoredPosition = Input.mousePosition;
+                card.GetComponent<RectTransform>().anchoredPosition = new Vector2(Input.GetTouch(0).position.x, Input.GetTouch(0).position.y - _cardCollector.GetComponent<RectTransform>().anchoredPosition.y);
                 card.transform.SetParent(this.transform);
-                g.GetComponent<RectTransform>().anchoredPosition = card.GetComponent<RectTransform>().anchoredPosition;
-                g.GetComponent<RectTransform>().DOAnchorPos(_runeDict[RuneType.Assist][changeIndex].GetComponent<RectTransform>().anchoredPosition, 0.3f).OnComplete(() =>
+                card.GetComponent<RectTransform>().anchoredPosition = card.GetComponent<RectTransform>().anchoredPosition;
+                card.SetCoolTime(card.Rune.AssistRune.DelayTurn);
+                card.SetIsEquip(true);
+                card.GetComponent<RectTransform>().DOAnchorPos(_runeDict[RuneType.Assist][changeIndex].GetComponent<RectTransform>().anchoredPosition, 0.3f).OnComplete(() =>
                 {
-                    Destroy(g);
-                    _runeDict[RuneType.Assist][changeIndex].SetRune(card.Rune);
-                    _runeDict[RuneType.Assist][changeIndex].SetCoolTime(card.Rune.AssistRune.DelayTurn);
-                    card.SetCoolTime(card.Rune.AssistRune.DelayTurn);
+                    Destroy(_runeDict[RuneType.Assist][changeIndex].gameObject);
+                    
+                    _runeDict[RuneType.Assist][changeIndex] = card;
+
+                    AddEffect(card, false);
                     UpdateMagicName();
-                    //Sequence seq2 = DOTween.Sequence();
-                    //seq2.AppendInterval(0.2f);
-                    //seq2.AppendCallback(() => { IsBig = false; });
                 });
             });
-            //card.transform.SetParent()
             SortCard();
         }
 
+        SortCard();
         return card;
+    }
+
+    private void AddEffect(Card card, bool main)
+    {
+        if (card == null) return;
+
+        if (main)
+        {
+            foreach(var e in card.Rune.MainRune.EffectDescription)
+            {
+                if(e.EffectType == EffectType.Status)
+                {
+                    string effect = Enum.GetName(typeof(StatusName), e.StatusType);
+                    if (_effectDict.ContainsKey(effect))
+                    {
+                        _effectDict[effect] += e.Effect;
+                    }
+                    else
+                    {
+                        _effectDict.Add(effect, e.Effect);
+                    }
+                }
+                else if(e.EffectType == EffectType.Etc)
+                {
+                    string effect = e.Effect;
+                    if (_effectDict.ContainsKey(effect))
+                    {
+                        //_effectDict[effect] += e.Effect;
+                    }
+                    else
+                    {
+                        _effectDict.Add(effect, effect);
+                    }
+                }
+                else
+                {
+                    string effect = Enum.GetName(typeof(EffectType), e.EffectType);
+                    if (_effectDict.ContainsKey(effect))
+                    {
+                        _effectDict[effect] += e.Effect;
+                    }
+                    else
+                    {
+                        _effectDict.Add(effect, e.Effect);
+                    }
+                }
+            }
+        }
+        else
+        {
+            foreach (var e in card.Rune.AssistRune.EffectDescription)
+            {
+                if (e.EffectType == EffectType.Status)
+                {
+                    string effect = Enum.GetName(typeof(StatusName), e.StatusType);
+                    if (_effectDict.ContainsKey(effect))
+                    {
+                        string count = (int.Parse(_effectDict[effect]) + int.Parse(e.Effect)).ToString();
+                        _effectDict[effect] = count;
+                    }
+                    else
+                    {
+                        _effectDict.Add(effect, e.Effect);
+                    }
+                }
+                else if (e.EffectType == EffectType.Etc)
+                {
+                    string effect = e.Effect;
+                    if (_effectDict.ContainsKey(effect))
+                    {
+                        //_effectDict[effect] += e.Effect;
+                    }
+                    else
+                    {
+                        _effectDict.Add(effect, effect);
+                    }
+                }
+                else
+                {
+                    string effect = Enum.GetName(typeof(EffectType), e.EffectType);
+                    if (_effectDict.ContainsKey(effect))
+                    {
+                        string count = (int.Parse(_effectDict[effect]) + int.Parse(e.Effect)).ToString();
+                        _effectDict[effect] = count;
+                    }
+                    else
+                    {
+                        _effectDict.Add(effect, e.Effect);
+                    }
+                }
+            }
+        }
     }
 
     private void UpdateMagicName()
@@ -286,6 +420,7 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
         {
             if (_runeDict[RuneType.Main].Count > 0 && _runeDict[RuneType.Main][0].Rune != null)
             {
+                #region Rune Name
                 string name = "";
                 for (int i = 0; i < _runeDict[RuneType.Assist].Count; i++)
                 {
@@ -309,70 +444,33 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                     name += $"ÀÇ {_runeDict[RuneType.Main][0].Rune.MainRune.Name}";
                 }
                 _nameText.text = name;
+                #endregion
 
                 string effect = "";
-                int damage = 0;
-                int defence = 0;
-                string etcEffect = "";
-                for (int i = 0; i < _runeDict[RuneType.Assist].Count; i++)
+                foreach(var e in _effectDict)
                 {
-                    if (_runeDict[RuneType.Assist][i].Rune != null)
+                    switch (e.Key)
                     {
-                        for (int j = 0; j < _runeDict[RuneType.Assist][i].Rune.AssistRune.EffectDescription.Count; j++)
-                        {
-                            switch (_runeDict[RuneType.Assist][j].Rune.AssistRune.EffectDescription[j].EffectType)
-                            {
-                                case EffectType.Attack:
-                                    damage += int.Parse(_runeDict[RuneType.Assist][j].Rune.AssistRune.EffectDescription[j].Effect);
-                                    break;
-                                case EffectType.Defence:
-                                    defence += int.Parse(_runeDict[RuneType.Assist][j].Rune.AssistRune.EffectDescription[j].Effect);
-                                    break;
-                                case EffectType.Etc:
-                                    if (etcEffect != "") etcEffect += "+";
-                                    etcEffect += _runeDict[RuneType.Assist][j].Rune.AssistRune.EffectDescription[j].Effect;
-                                    break;
-                            }
-                        }
+                        case "Attack":
+                            effect += e.Value + "µ¥¹ÌÁö ";
+                            break;
+                        case "Defence":
+                            effect += e.Value + "¹æ¾îµµ ";
+                            break;
+                        case "Weak":
+                            effect += "¾àÈ­ " + e.Value + "ºÎ¿© ";
+                            break;
+                        case "Fire":
+                            effect += "È­»ó " + e.Value + "ºÎ¿© ";
+                            break;
+                        case "Ice":
+                            effect += "ºù°á " + e.Value + "ºÎ¿© ";
+                            break;
+                        default:
+                            break;
                     }
                 }
-
-                for (int i = 0; i < _runeDict[RuneType.Main][0].Rune.MainRune.EffectDescription.Count; i++)
-                {
-                    if (_runeDict[RuneType.Main][i].Rune != null)
-                    {
-                        switch (_runeDict[RuneType.Main][i].Rune.MainRune.EffectDescription[i].EffectType)
-                        {
-                            case EffectType.Attack:
-                                damage += int.Parse(_runeDict[RuneType.Main][i].Rune.MainRune.EffectDescription[i].Effect);
-                                break;
-                            case EffectType.Defence:
-                                defence += int.Parse(_runeDict[RuneType.Main][i].Rune.MainRune.EffectDescription[i].Effect);
-                                break;
-                            case EffectType.Etc:
-                                break;
-                        }
-                    }
-                }
-
-                if (damage > 0)
-                {
-                    effect += $"{damage}µ¥¹ÌÁö";
-                }
-                if (defence > 0)
-                {
-                    if (effect != "") effect += "+";
-
-                    effect += $"{defence}µ¥¹ÌÁö";
-                }
-                if (etcEffect != "")
-                {
-                    if (effect != "") effect += "+";
-
-                    effect += etcEffect;
-                }
-
-                
+                effect = effect.Substring(0, effect.Length - 1);
                 _effectText.text = effect;
             }
         }
@@ -381,6 +479,7 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
     public void AssistRuneAnimanation()
     {
         Sequence seq = DOTween.Sequence();
+        seq.AppendCallback(() => SortCard());
         foreach (var r in _runeDict[RuneType.Assist])
         {
             seq.Join(r.GetComponent<RectTransform>().DOAnchorPos(Vector2.zero, 0.3f).From());
@@ -416,15 +515,22 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                     else if (touchDif.y < 0 && Mathf.Abs(touchDif.y) > Mathf.Abs(touchDif.x))
                     {
                         Debug.Log("down");
+                        // ¾Æ¹«Æ¾ ÀÏ´Ü ÇØ
+                        if(_cardCollector.SelectCard == null)
+                        {
+                            _cardCollector.CardRotate();
+                        }
                     }
                     else if (touchDif.x > 0 && Mathf.Abs(touchDif.y) < Mathf.Abs(touchDif.x))
                     {
                         Debug.Log("right");
-                        Debug.Log("Attack");
-                        if (touchBeganPos.y <= this.GetComponent<RectTransform>().anchoredPosition.y + this.GetComponent<RectTransform>().sizeDelta.y / 2
-                            && touchBeganPos.y >= this.GetComponent<RectTransform>().anchoredPosition.y - this.GetComponent<RectTransform>().sizeDelta.y / 2)
+                        if (IsBig == true)
                         {
-                            Damage();
+                            if (touchBeganPos.y <= this.GetComponent<RectTransform>().anchoredPosition.y + this.GetComponent<RectTransform>().sizeDelta.y / 2
+                                && touchBeganPos.y >= this.GetComponent<RectTransform>().anchoredPosition.y - this.GetComponent<RectTransform>().sizeDelta.y / 2)
+                            {
+                                Damage();
+                            }
                         }
                     }
                     else if (touchDif.x < 0 && Mathf.Abs(touchDif.y) < Mathf.Abs(touchDif.x))
@@ -465,49 +571,42 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
         seq.AppendInterval(0.1f);
         seq.AppendCallback(() =>
         {
-            if (_runeDict.ContainsKey(RuneType.Assist))
+            foreach (var e in _effectDict)
             {
-                for (int i = 0; i < _runeDict[RuneType.Assist].Count; i++)
+                switch (e.Key)
                 {
-                    //damage += _runeDict[RuneType.Assist][i]._runeSO.assistRuneValue;
-                    //damage += _runeDict[RuneType.Assist][i].Rune.AssistRune.EffectPair
-                    Card card = _runeDict[RuneType.Assist][i];
-                    if (card.Rune != null)
-                    {
-                        card.UseAssistEffect();
-                    }
-                }
-
-                for (int i = 0; i < _runeDict[RuneType.Assist].Count; i++)
-                {
-                    Destroy(_runeDict[RuneType.Assist][i].gameObject);
-                }
-                //damage += _runeDict[RuneType.Main][i]._runeSO.mainRuneValue;
-            }
-
-            if (_runeDict.ContainsKey(RuneType.Main))
-            {
-                for (int i = 0; i < _runeDict[RuneType.Main].Count; i++)
-                {
-                    //damage += _runeDict[RuneType.Main][i]._runeSO.mainRuneValue;
-                    Card card = _runeDict[RuneType.Main][i];
-                    if (card.Rune != null)
-                    {
-                        card.UseMainEffect();
-                    }
-                }
-
-                for (int i = 0; i < _runeDict[RuneType.Main].Count; i++)
-                {
-                    Destroy(_runeDict[RuneType.Main][i].gameObject);
+                    case "Attack":
+                        GameManager.Instance.player.Attack(int.Parse(e.Value));
+                        break;
+                    case "Defence":
+                        // ¾ÆÁ÷ ¾øÀ½
+                        break;
+                    case "Weak":
+                        StatusManager.Instance.AddStatus(GameManager.Instance.enemy, StatusName.Weak, int.Parse(e.Value));
+                        break;
+                    case "Fire":
+                        StatusManager.Instance.AddStatus(GameManager.Instance.enemy, StatusName.Fire, int.Parse(e.Value));
+                        break;
+                    case "Ice":
+                        StatusManager.Instance.AddStatus(GameManager.Instance.enemy, StatusName.Ice, int.Parse(e.Value));
+                        break;
+                    default:
+                        break;
                 }
             }
         });
         seq.AppendCallback(() =>
         {
             Debug.Log("Attack Complate");
+            foreach (var item in _runeDict)
+            {
+                foreach (Card card in item.Value)
+                {
+                    _cardCollector._restCards.Add(card);
+                }
+            }
             _runeDict.Clear();
-
+            _cardCollector.UIUpdate();
             IsBig = false;
         });
 
