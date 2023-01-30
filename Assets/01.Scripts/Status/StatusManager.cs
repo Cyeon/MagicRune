@@ -5,7 +5,7 @@ using System.Linq;
 
 public class StatusManager : MonoSingleton<StatusManager>
 {
-    public List<Status> statusList = new List<Status>(); // 모든 상태이상 목록
+    public List<Status> statusList = new List<Status>(); // 모든 ?�태?�상 목록
     private StatusFuncList _statusFuncList = null;
 
     private void Awake()
@@ -13,7 +13,7 @@ public class StatusManager : MonoSingleton<StatusManager>
         _statusFuncList = GetComponent<StatusFuncList>();
     }
 
-    // 상태이상 효과 발동
+    // ?�태?�상 ?�과 발동
     public void StatusFuncInvoke(List<Status> status)
     {
         foreach(var funStatus in status)
@@ -23,7 +23,7 @@ public class StatusManager : MonoSingleton<StatusManager>
         }
     }
 
-    // 상태이상 목록에서 가져오기
+    // ?�태?�상 목록?�서 가?�오�?
     private Status GetStatus(StatusName name)
     {
         return statusList.Where(e => e.statusName == name).FirstOrDefault();
@@ -56,10 +56,10 @@ public class StatusManager : MonoSingleton<StatusManager>
         return null;
     }
 
-    // 상태이상 추가
-    public void AddStatus(Unit unit, StatusName statusNmae, int value = 1)
+    // ?�태?�상 추�?
+    public void AddStatus(Unit unit, StatusName statusName, int value = 1)
     {
-        Status status = GetStatus(statusNmae);
+        Status status = GetStatus(statusName);
         if(status == null)
         {
             Debug.LogWarning(string.Format("{0} status not found."));
@@ -88,7 +88,7 @@ public class StatusManager : MonoSingleton<StatusManager>
         }
     }
 
-    // 상태이상 제거
+    // ?�태?�상 ?�거
     public void RemStatus(Unit unit, Status status)
     {
         List<Status> statusList = new List<Status>();

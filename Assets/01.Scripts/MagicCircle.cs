@@ -10,6 +10,7 @@ using UnityEngine.Windows;
 using static UnityEngine.UIElements.UxmlAttributeDescription;
 using Input = UnityEngine.Input;
 using SerializableDictionary;
+using System;
 
 public enum RuneType
 {
@@ -20,10 +21,10 @@ public enum RuneType
 public class MagicCircle : MonoBehaviour, IPointerClickHandler
 {
 
-    [SerializeField]
     private Dictionary<RuneType, List<Card>> _runeDict;
     public Dictionary<RuneType, List<Card>> RuneDict => _runeDict;
 
+    private Dictionary<string, string> _effectDict;
 
     private const int _mainRuneCnt = 1;
 
@@ -102,6 +103,7 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
     public void Awake()
     {
         _runeDict = new Dictionary<RuneType, List<Card>>();
+        _effectDict = new Dictionary<string, string>();
     }
 
     private void Update()
@@ -208,6 +210,7 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                         }
                         _cardCollector.CardRotate();
                         SortCard();
+                        AddEffect(card, true);
                         AssistRuneAnimanation();
                     });
                 });
@@ -218,36 +221,22 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                 Sequence seq = DOTween.Sequence();
                 seq.AppendCallback(() =>
                 {
-                    //GameObject g = Instantiate(_garbageRuneTemplate.gameObject, this.transform);
                     card.GetComponent<RectTransform>().anchoredPosition = new Vector2(Input.GetTouch(0).position.x, Input.GetTouch(0).position.y - _cardCollector.GetComponent<RectTransform>().anchoredPosition.y);
                     card.transform.SetParent(this.transform);
-                    //g.GetComponent<RectTransform>().anchoredPosition = card.GetComponent<RectTransform>().anchoredPosition;
                     card.GetComponent<RectTransform>().anchoredPosition = card.GetComponent<RectTransform>().anchoredPosition;
-                    card.GetComponent<RectTransform>().DOAnchorPos(Vector2.zero, 0.3f);//.OnComplete(() =>
-                    //{
-                    //    Destroy(g);
-                    //});
+                    card.GetComponent<RectTransform>().DOAnchorPos(Vector2.zero, 0.3f);
                     card.SetIsEquip(true);
                     card.SetCoolTime(card.Rune.MainRune.DelayTurn);
                 });
                 seq.AppendInterval(0.3f);
                 seq.AppendCallback(() =>
                 {
-                    //GameObject go = Instantiate(_runeTemplate.gameObject, this.transform);
-                    //Card rune = go.GetComponent<Card>();
-                    //rune.SetRune(card.Rune);
-                    //rune.SetIsEquip(true);
-                    //rune.SetCoolTime(card.Rune.MainRune.DelayTurn);
                     _runeDict.Add(RuneType.Main, new List<Card>() { card });
-                    //rune.RuneAreaParent.gameObject.SetActive(true);
-
                     for (int i = 0; i < _runeDict[RuneType.Main][0].Rune.AssistRuneCount; i++)
                     {
                         GameObject ggo = Instantiate(_runeTemplate.gameObject, this.transform);
                         Card grune = ggo.GetComponent<Card>();
                         grune.SetRune(null);
-                        //grune.SetIsEquip(true);
-                        //grune.CardAnimation();
                         if (_runeDict.ContainsKey(RuneType.Assist))
                         {
                             _runeDict[RuneType.Assist].Add(grune);
@@ -259,6 +248,7 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                     }
                     SortCard();
                     _cardCollector.CardRotate();
+                    AddEffect(card, true);
                     AssistRuneAnimanation();
                 });
                 SortCard();
@@ -280,7 +270,6 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                     Card grune = ggo.GetComponent<Card>();
                     grune.SetRune(null);
                     grune.SetIsEquip(true);
-                    //grune.CardAnimation();
                     if (_runeDict.ContainsKey(RuneType.Assist))
                     {
                         _runeDict[RuneType.Assist].Add(grune);
@@ -311,7 +300,6 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
             Sequence seq = DOTween.Sequence();
             seq.AppendCallback(() =>
             {
-                //GameObject g = Instantiate(_garbageRuneTemplate.gameObject, this.transform);
                 card.GetComponent<RectTransform>().anchoredPosition = new Vector2(Input.GetTouch(0).position.x, Input.GetTouch(0).position.y - _cardCollector.GetComponent<RectTransform>().anchoredPosition.y);
                 card.transform.SetParent(this.transform);
                 card.GetComponent<RectTransform>().anchoredPosition = card.GetComponent<RectTransform>().anchoredPosition;
@@ -319,28 +307,111 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                 card.SetIsEquip(true);
                 card.GetComponent<RectTransform>().DOAnchorPos(_runeDict[RuneType.Assist][changeIndex].GetComponent<RectTransform>().anchoredPosition, 0.3f).OnComplete(() =>
                 {
-                    //card.GetComponent<RectTransform>().anchoredPosition = g.GetComponent<RectTransform>().anchoredPosition;
-                    //Destroy(g);
                     Destroy(_runeDict[RuneType.Assist][changeIndex].gameObject);
                     
                     _runeDict[RuneType.Assist][changeIndex] = card;
 
-                    //_runeDict[RuneType.Assist][changeIndex].SetRune(card.Rune);
-                    //_runeDict[RuneType.Assist][changeIndex].SetCoolTime(card.Rune.AssistRune.DelayTurn);
-                    //card.SetCoolTime(card.Rune.AssistRune.DelayTurn);
-                    //card.SetIsEquip(true);
+                    AddEffect(card, false);
                     UpdateMagicName();
-                    //Sequence seq2 = DOTween.Sequence();
-                    //seq2.AppendInterval(0.2f);
-                    //seq2.AppendCallback(() => { IsBig = false; });
                 });
             });
-            //card.transform.SetParent()
             SortCard();
         }
 
         SortCard();
         return card;
+    }
+
+    private void AddEffect(Card card, bool main)
+    {
+        if (card == null) return;
+
+        if (main)
+        {
+            foreach(var e in card.Rune.MainRune.EffectDescription)
+            {
+                if(e.EffectType == EffectType.Status)
+                {
+                    string effect = Enum.GetName(typeof(StatusName), e.StatusType);
+                    if (_effectDict.ContainsKey(effect))
+                    {
+                        _effectDict[effect] += e.Effect;
+                    }
+                    else
+                    {
+                        _effectDict.Add(effect, e.Effect);
+                    }
+                }
+                else if(e.EffectType == EffectType.Etc)
+                {
+                    string effect = e.Effect;
+                    if (_effectDict.ContainsKey(effect))
+                    {
+                        //_effectDict[effect] += e.Effect;
+                    }
+                    else
+                    {
+                        _effectDict.Add(effect, effect);
+                    }
+                }
+                else
+                {
+                    string effect = Enum.GetName(typeof(EffectType), e.EffectType);
+                    if (_effectDict.ContainsKey(effect))
+                    {
+                        _effectDict[effect] += e.Effect;
+                    }
+                    else
+                    {
+                        _effectDict.Add(effect, e.Effect);
+                    }
+                }
+            }
+        }
+        else
+        {
+            foreach (var e in card.Rune.AssistRune.EffectDescription)
+            {
+                if (e.EffectType == EffectType.Status)
+                {
+                    string effect = Enum.GetName(typeof(StatusName), e.StatusType);
+                    if (_effectDict.ContainsKey(effect))
+                    {
+                        string count = (int.Parse(_effectDict[effect]) + int.Parse(e.Effect)).ToString();
+                        _effectDict[effect] = count;
+                    }
+                    else
+                    {
+                        _effectDict.Add(effect, e.Effect);
+                    }
+                }
+                else if (e.EffectType == EffectType.Etc)
+                {
+                    string effect = e.Effect;
+                    if (_effectDict.ContainsKey(effect))
+                    {
+                        //_effectDict[effect] += e.Effect;
+                    }
+                    else
+                    {
+                        _effectDict.Add(effect, effect);
+                    }
+                }
+                else
+                {
+                    string effect = Enum.GetName(typeof(EffectType), e.EffectType);
+                    if (_effectDict.ContainsKey(effect))
+                    {
+                        string count = (int.Parse(_effectDict[effect]) + int.Parse(e.Effect)).ToString();
+                        _effectDict[effect] = count;
+                    }
+                    else
+                    {
+                        _effectDict.Add(effect, e.Effect);
+                    }
+                }
+            }
+        }
     }
 
     private void UpdateMagicName()
@@ -349,6 +420,7 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
         {
             if (_runeDict[RuneType.Main].Count > 0 && _runeDict[RuneType.Main][0].Rune != null)
             {
+                #region Rune Name
                 string name = "";
                 for (int i = 0; i < _runeDict[RuneType.Assist].Count; i++)
                 {
@@ -372,70 +444,33 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                     name += $"의 {_runeDict[RuneType.Main][0].Rune.MainRune.Name}";
                 }
                 _nameText.text = name;
+                #endregion
 
                 string effect = "";
-                int damage = 0;
-                int defence = 0;
-                string etcEffect = "";
-                for (int i = 0; i < _runeDict[RuneType.Assist].Count; i++)
+                foreach(var e in _effectDict)
                 {
-                    if (_runeDict[RuneType.Assist][i].Rune != null)
+                    switch (e.Key)
                     {
-                        for (int j = 0; j < _runeDict[RuneType.Assist][i].Rune.AssistRune.EffectDescription.Count; j++)
-                        {
-                            switch (_runeDict[RuneType.Assist][j].Rune.AssistRune.EffectDescription[j].EffectType)
-                            {
-                                case EffectType.Attack:
-                                    damage += int.Parse(_runeDict[RuneType.Assist][j].Rune.AssistRune.EffectDescription[j].Effect);
-                                    break;
-                                case EffectType.Defence:
-                                    defence += int.Parse(_runeDict[RuneType.Assist][j].Rune.AssistRune.EffectDescription[j].Effect);
-                                    break;
-                                case EffectType.Etc:
-                                    if (etcEffect != "") etcEffect += "+";
-                                    etcEffect += _runeDict[RuneType.Assist][j].Rune.AssistRune.EffectDescription[j].Effect;
-                                    break;
-                            }
-                        }
+                        case "Attack":
+                            effect += e.Value + "데미지 ";
+                            break;
+                        case "Defence":
+                            effect += e.Value + "방어도 ";
+                            break;
+                        case "Weak":
+                            effect += "약화 " + e.Value + "부여 ";
+                            break;
+                        case "Fire":
+                            effect += "화상 " + e.Value + "부여 ";
+                            break;
+                        case "Ice":
+                            effect += "빙결 " + e.Value + "부여 ";
+                            break;
+                        default:
+                            break;
                     }
                 }
-
-                for (int i = 0; i < _runeDict[RuneType.Main][0].Rune.MainRune.EffectDescription.Count; i++)
-                {
-                    if (_runeDict[RuneType.Main][i].Rune != null)
-                    {
-                        switch (_runeDict[RuneType.Main][i].Rune.MainRune.EffectDescription[i].EffectType)
-                        {
-                            case EffectType.Attack:
-                                damage += int.Parse(_runeDict[RuneType.Main][i].Rune.MainRune.EffectDescription[i].Effect);
-                                break;
-                            case EffectType.Defence:
-                                defence += int.Parse(_runeDict[RuneType.Main][i].Rune.MainRune.EffectDescription[i].Effect);
-                                break;
-                            case EffectType.Etc:
-                                break;
-                        }
-                    }
-                }
-
-                if (damage > 0)
-                {
-                    effect += $"{damage}데미지";
-                }
-                if (defence > 0)
-                {
-                    if (effect != "") effect += "+";
-
-                    effect += $"{defence}데미지";
-                }
-                if (etcEffect != "")
-                {
-                    if (effect != "") effect += "+";
-
-                    effect += etcEffect;
-                }
-
-                
+                effect = effect.Substring(0, effect.Length - 1);
                 _effectText.text = effect;
             }
         }
@@ -536,41 +571,27 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
         seq.AppendInterval(0.1f);
         seq.AppendCallback(() =>
         {
-            if (_runeDict.ContainsKey(RuneType.Assist))
+            foreach (var e in _effectDict)
             {
-                for (int i = 0; i < _runeDict[RuneType.Assist].Count; i++)
+                switch (e.Key)
                 {
-                    //damage += _runeDict[RuneType.Assist][i]._runeSO.assistRuneValue;
-                    //damage += _runeDict[RuneType.Assist][i].Rune.AssistRune.EffectPair
-                    Card card = _runeDict[RuneType.Assist][i];
-                    if (card.Rune != null)
-                    {
-                        //card.UseAssistEffect();
-                    }
-                }
-
-                for (int i = 0; i < _runeDict[RuneType.Assist].Count; i++)
-                {
-                    Destroy(_runeDict[RuneType.Assist][i].gameObject);
-                }
-                //damage += _runeDict[RuneType.Main][i]._runeSO.mainRuneValue;
-            }
-
-            if (_runeDict.ContainsKey(RuneType.Main))
-            {
-                for (int i = 0; i < _runeDict[RuneType.Main].Count; i++)
-                {
-                    //damage += _runeDict[RuneType.Main][i]._runeSO.mainRuneValue;
-                    Card card = _runeDict[RuneType.Main][i];
-                    if (card.Rune != null)
-                    {
-                        //card.UseMainEffect();
-                    }
-                }
-
-                for (int i = 0; i < _runeDict[RuneType.Main].Count; i++)
-                {
-                    Destroy(_runeDict[RuneType.Main][i].gameObject);
+                    case "Attack":
+                        GameManager.Instance.player.Attack(int.Parse(e.Value));
+                        break;
+                    case "Defence":
+                        // 아직 없음
+                        break;
+                    case "Weak":
+                        StatusManager.Instance.AddStatus(GameManager.Instance.enemy, StatusName.Weak, int.Parse(e.Value));
+                        break;
+                    case "Fire":
+                        StatusManager.Instance.AddStatus(GameManager.Instance.enemy, StatusName.Fire, int.Parse(e.Value));
+                        break;
+                    case "Ice":
+                        StatusManager.Instance.AddStatus(GameManager.Instance.enemy, StatusName.Ice, int.Parse(e.Value));
+                        break;
+                    default:
+                        break;
                 }
             }
         });
