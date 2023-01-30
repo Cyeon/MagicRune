@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -8,13 +9,15 @@ public class Pattern
 {
     public string patternName;
     public Sprite icon;
+    public float value;
     public UnityEvent patternStartFunc;
     public UnityEvent patternTurnFunc;
     public UnityEvent patternEndFunc;
 
     public void Start()
     {
-        UIManager.Instance.ReloadPatternIcon(icon);
+        UIManager.Instance.ReloadPattern(icon, value.ToString());
+        PatternManager.Instance.funcList.value = value;
         patternStartFunc?.Invoke();
     }
 

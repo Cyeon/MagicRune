@@ -5,27 +5,33 @@ using UnityEngine;
 
 public class PatternFuncList : MonoBehaviour
 {
-    private float addDmg;
+    private float _addDmg;
+    public float value;
 
-    public void AddAtkDmg(float dmg)
+    public void AddAtkDmg()
     {
-        GameManager.Instance.enemy.atkDamage += dmg;
-        addDmg = dmg;
+        GameManager.Instance.enemy.atkDamage += value;
+        _addDmg = value;
     }
 
     public void RemAtkDmg()
     {
-        GameManager.Instance.enemy.atkDamage -= addDmg;
+        GameManager.Instance.enemy.atkDamage -= _addDmg;
     }
 
-    public void AddShield(float shield)
+    public void AddShield()
     {
-        GameManager.Instance.enemy.Shield += shield;
+        GameManager.Instance.enemy.Shield += value;
     }
 
-    public void AddStatus(StatusName statusName)
+    public void AddStatus(string statusName)
     {
-        StatusManager.Instance.AddStatus(GameManager.Instance.player, statusName);
+        StatusName status;
+
+        if (System.Enum.TryParse(statusName, out status))
+            StatusManager.Instance.AddStatus(GameManager.Instance.player, status);
+        else
+            Debug.LogError(string.Format("{0} status is not found.", statusName));
     }
 
     public void Attack()
