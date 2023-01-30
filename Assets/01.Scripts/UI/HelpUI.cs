@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public enum HelpChilds
+public enum HelpUIButtons
 {
     status,
     interaction,
@@ -28,9 +28,17 @@ public class HelpUI : MonoBehaviour
     public Transform statusContent = null;
     public Transform interactionContent = null;
 
+    private void Update()
+    {
+        if (mainPanel.activeSelf == true && Input.GetKeyDown(KeyCode.Escape))
+        {
+            ButtonClick((int)HelpUIButtons.back);
+        }
+    }
+
     public void ButtonClick(int idx)
     {
-        HelpChilds kind = (HelpChilds)idx;
+        HelpUIButtons kind = (HelpUIButtons)idx;
         for (int i = 0; i < childPanels.Count; i++)
         {
             childPanels[i].SetActive(false);
@@ -38,17 +46,18 @@ public class HelpUI : MonoBehaviour
 
         switch (kind)
         {
-            case HelpChilds.status:
-                childPanels[(int)HelpChilds.status].SetActive(true);
+            case HelpUIButtons.status:
+                childPanels[(int)HelpUIButtons.status].SetActive(true);
                 break;
-            case HelpChilds.interaction:
-                childPanels[(int)HelpChilds.interaction].SetActive(true);
+            case HelpUIButtons.interaction:
+                childPanels[(int)HelpUIButtons.interaction].SetActive(true);
                 break;
-            case HelpChilds.back:
+            case HelpUIButtons.back:
                 mainPanel.SetActive(false);
                 break;
-            case HelpChilds.on:
+            case HelpUIButtons.on:
                 mainPanel.SetActive(true);
+                childPanels[(int)HelpUIButtons.status].SetActive(true);
                 break;
             default:
                 break;
