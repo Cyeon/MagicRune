@@ -57,7 +57,7 @@ public class CardCollector : MonoBehaviour
             {
                 if (Input.touchCount == 0) return;
                 Card isAdd = null;
-                // ÎßåÏïΩ ?†ÌÉù Ïπ¥ÎìúÍ∞Ä ÎßàÎ≤ïÏß??àÏóê ?àÎã§Î©?
+                // ÎßåÏïΩ ?ÔøΩÌÉù Ïπ¥ÎìúÍ∞Ä ÎßàÎ≤ïÔøΩ??ÔøΩÏóê ?ÔøΩÎã§ÔøΩ?
                 if (Vector2.Distance(_selectCard.GetComponent<RectTransform>().anchoredPosition, _magicCircle.GetComponent<RectTransform>().anchoredPosition)
                 <= _magicCircle.CardAreaDistance)
                 {
@@ -75,22 +75,27 @@ public class CardCollector : MonoBehaviour
                         }
                         else
                         {
-                            Debug.Log("∏∂π˝¡¯¿Ã æ»≥÷æÓ¡¸");
+                            Debug.Log("ÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩ ÔøΩ»≥÷æÔøΩÔøΩÔøΩ");
                             
                         }
                     }
                     else
                     {
-                        Debug.Log("º”º∫ æ» ∏¬¿Ω");
+                        _handCards.Remove(isAdd);
+                        _restCards.Add(isAdd);
+                        SelectCard.gameObject.SetActive(false);
+                        UIUpdate();
+
+                        Debug.Log("ÔøΩ”ºÔøΩ ÔøΩÔøΩ ÔøΩÔøΩÔøΩÔøΩ");
                         Debug.Log(_magicCircle.RuneDict.ContainsKey(RuneType.Main));
                         Debug.Log(_isFront);
                     }
                 }
                 else
                 {
-                    Debug.Log("ø¯ π€¿”");
+                    Debug.Log("ÔøΩÔøΩ ÔøΩÔøΩÔøΩÔøΩ");
                 }
-                // YES : ÎßàÎ≤ïÏß??àÏóê ?£Í∏∞, Î¶¨Ïä§???àÏóê Ïπ¥Îìú ÏßÄ?∞Í∏∞
+                // YES : ÎßàÎ≤ïÔøΩ??ÔøΩÏóê ?ÔøΩÍ∏∞, Î¶¨Ïä§???ÔøΩÏóê Ïπ¥Îìú ÏßÄ?ÔøΩÍ∏∞
                 //_selectCard.GetComponent<RectTransform>().anchoredPosition = _cardOriginPos;
 
                 Sequence seq = DOTween.Sequence();
@@ -120,15 +125,6 @@ public class CardCollector : MonoBehaviour
 
     private void Awake()
     {
-        //_cardList = new List<Card>();
-        EventManager.StartListening(Define.ON_END_MONSTER_TURN, CoolTimeDecrease);
-        EventManager<bool>.StartListening(Define.ON_START_PLAYER_TURN, CardOnOff);
-        EventManager<bool>.StartListening(Define.ON_START_MONSTER_TURN, CardOnOff);
-    }
-
-    // 2960 * 1440
-    private void Start()
-    {
         for (int i = 0; i < _deck.cards.Count; i++)
         {
             GameObject go = Instantiate(_deck.cards[i], this.transform);
@@ -142,9 +138,18 @@ public class CardCollector : MonoBehaviour
             go.transform.rotation = Quaternion.identity;
         }
 
-        CardDraw(_cardCnt);
-        UIUpdate();
+        //_cardList = new List<Card>();
+        EventManager.StartListening(Define.ON_END_MONSTER_TURN, CoolTimeDecrease);
+        EventManager<int>.StartListening(Define.ON_START_PLAYER_TURN, CardDraw);
+        EventManager<bool>.StartListening(Define.ON_START_PLAYER_TURN, CardOnOff);
+        EventManager<bool>.StartListening(Define.ON_START_MONSTER_TURN, CardOnOff);
+        EventManager.StartListening(Define.ON_START_MONSTER_TURN, HandToDeck);
 
+    }
+
+    // 2960 * 1440
+    private void Start()
+    {
         _isFront = true;
     }
 
@@ -178,6 +183,7 @@ public class CardCollector : MonoBehaviour
     {
         for (int i = 0; i < amount; i++)
         {
+            if (_deckCards.Count <= 0) { break; }
             int idx = UnityEngine.Random.Range(0, _deckCards.Count);
             Card card = _deckCards[idx];
             _deckCards.Remove(card);
@@ -199,10 +205,10 @@ public class CardCollector : MonoBehaviour
         });
 
         float xDelta = 1440f / _handCards.Count;
-        //float sideArea = (1440f - _cardAreaDistance) / 2; // ∏∏æ‡ Scroll Rect∏¶ æ≤∏È æ»æµ ∞≈ ∞∞¿Ω
+        //float sideArea = (1440f - _cardAreaDistance) / 2; // ÔøΩÔøΩÔøΩÔøΩ Scroll RectÔøΩÔøΩ ÔøΩÔøΩÔøΩÔøΩ ÔøΩ»æÔøΩ ÔøΩÔøΩ ÔøΩÔøΩÔøΩÔøΩ
         for (int i = 0; i < _handCards.Count; i++)
         {
-            //?¥Í±∏ ?¥Ï§ò??Animation???ÑÌï¥ MagicCircle???êÏãù?ºÎ°ú ?£Ïóà??Í≤ÉÎèÑ ?§Ïãú ???®Ïùò ?êÏãù?ºÎ°ú ?åÏïÑ?Ä ?ïÏÉÅ?ÅÏúºÎ°?SortÍ∞Ä ?òÎäî??Í∑∏Îü¨Î©?DamageÎ∂ÄÎ∂ÑÏóê???§Î•òÍ∞Ä ??Î™?Î£?
+            //?ÔøΩÍ±∏ ?ÔøΩÏ§ò??Animation???ÔøΩÌï¥ MagicCircle???ÔøΩÏãù?ÔøΩÎ°ú ?ÔøΩÏóà??Í≤ÉÎèÑ ?ÔøΩÏãú ???ÔøΩÏùò ?ÔøΩÏãù?ÔøΩÎ°ú ?ÔøΩÏïÑ?ÔøΩ ?ÔøΩÏÉÅ?ÔøΩÏúºÔøΩ?SortÍ∞Ä ?ÔøΩÎäî??Í∑∏Îü¨ÔøΩ?DamageÎ∂ÄÎ∂ÑÏóê???ÔøΩÎ•òÍ∞Ä ??ÔøΩ?ÔøΩ?
             //_handCards[i].transform.SetParent(this.transform); 
             RectTransform rect = _handCards[i].GetComponent<RectTransform>();
             
@@ -216,7 +222,7 @@ public class CardCollector : MonoBehaviour
 
         if (card == null)
         {
-            // ø©±‚º≠ ø¿∑°∞…∑¡º≠ ƒ´µÂ∞° Null¿Ã µ«¥¬µ• «— «¡∑π¿”¿Ã π–∏≤
+            // ÔøΩÔøΩÔøΩ‚º≠ ÔøΩÔøΩÔøΩÔøΩÔøΩ…∑ÔøΩÔøΩÔøΩ ƒ´ÔøΩÂ∞° NullÔøΩÔøΩ ÔøΩ«¥¬µÔøΩ ÔøΩÔøΩ ÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩ ÔøΩ–∏ÔøΩ
             
             //if(_uiIndex == -1)
             //{
@@ -243,6 +249,7 @@ public class CardCollector : MonoBehaviour
         for (int i = _restCards.Count - 1; i >= 0; i--)
         {
             Card card = _restCards[i];
+            if (card == null) { continue; }
             card.CoolTime--;
             if (card.CoolTime <= 0)
             {
@@ -291,13 +298,26 @@ public class CardCollector : MonoBehaviour
         foreach (Transform item in transform)
         {
             //Debug.Log(item.name);
-            item.GetComponent<Image>().DOFade(Convert.ToInt32(flag), 0.75f);
+            item.GetComponent<Image>().DOFade(Convert.ToInt32(flag), 1f);
         }
     }
+
+    private void HandToDeck()
+    {
+        for (int i = 0; i < _handCards.Count; i++)
+        {
+            _handCards[i].gameObject.SetActive(false);
+            _deckCards.Add(_handCards[i]);
+        }
+        _handCards.Clear();
+    }
+
     private void OnDestroy()
     {
         EventManager.StopListening(Define.ON_END_MONSTER_TURN, CoolTimeDecrease);
+        EventManager<int>.StopListening(Define.ON_START_PLAYER_TURN, CardDraw);
         EventManager<bool>.StopListening(Define.ON_START_PLAYER_TURN, CardOnOff);
         EventManager<bool>.StopListening(Define.ON_START_MONSTER_TURN, CardOnOff);
+        EventManager.StopListening(Define.ON_START_MONSTER_TURN, HandToDeck);
     }
 }
