@@ -276,12 +276,11 @@ public class CardCollector : MonoBehaviour
 
     private void CardOnOff(bool flag)
     {
-        foreach (Transform item in transform)
-        {
-            //Debug.Log(item.name);
-            //item.GetComponent<Image>().DOFade(Convert.ToInt32(flag), 1f);
-            item.GetComponent<Image>().DOFade(flag ? 1 : 0, 1f);
-        }
+        //foreach (Transform item in transform)
+        //{
+        //    //Debug.Log(item.name);
+        //    item.GetComponent<Image>().DOFade(Convert.ToInt32(flag), 1f);
+        //}
     }
 
     private void HandToDeck()
