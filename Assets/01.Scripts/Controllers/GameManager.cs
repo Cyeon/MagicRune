@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -21,7 +22,10 @@ public class GameManager : MonoSingleton<GameManager>
     public Unit currentUnit = null;
     public Unit attackUnit = null;
 
-
+    private void Awake()
+    {
+        DOTween.Init(false, false, LogBehaviour.Default).SetCapacity(100, 20);
+    }
     private void Start()
     {
 
