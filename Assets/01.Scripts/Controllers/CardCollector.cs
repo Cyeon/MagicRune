@@ -133,7 +133,7 @@ public class CardCollector : MonoBehaviour
     {
         for (int i = 0; i < amount; i++)
         {
-            if (_deckCards.Count == 0) { break; }
+            if (_deckCards.Count <= 0) { break; }
             int idx = UnityEngine.Random.Range(0, _deckCards.Count);
             Card card = _deckCards[idx];
             _deckCards.Remove(card);
