@@ -76,7 +76,10 @@ public class GameManager : MonoSingleton<GameManager>
     public void TurnChange()
     {
         if (gameTurn == GameTurn.Player || gameTurn == GameTurn.Monster)
-            currentUnit?.InvokeStatus(StatusInvokeTime.End);
+        {
+            player?.InvokeStatus(StatusInvokeTime.End);
+            enemy?.InvokeStatus(StatusInvokeTime.End);
+        }
 
         switch (gameTurn)
         {
