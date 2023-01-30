@@ -4,12 +4,18 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using NaughtyAttributes;
 using System;
 
 public class CardCollector : MonoBehaviour
 {
     [SerializeField]
     private MagicCircle _magicCircle;
+
+    [SerializeField, MinValue(0f), MaxValue(1440f)]
+    private float _cardAreaDistance;
+    [SerializeField]
+    private Vector2 _offset;
 
     [SerializeField]
     private CardsViewUI _deckViewUI = null;
@@ -49,24 +55,64 @@ public class CardCollector : MonoBehaviour
             }
             else
             {
-                // 만약 ?�택 카드가 마법�??�에 ?�다�?
-                if (Vector2.Distance(SelectCard.GetComponent<RectTransform>().anchoredPosition, _magicCircle.GetComponent<RectTransform>().anchoredPosition)
+                if (Input.touchCount == 0) return;
+                Card isAdd = null;
+                // 만약 ?�택 카드가 마법�??�에 ?�다�?
+                if (Vector2.Distance(_selectCard.GetComponent<RectTransform>().anchoredPosition, _magicCircle.GetComponent<RectTransform>().anchoredPosition)
                 <= _magicCircle.CardAreaDistance)
                 {
-                    Card isAdd = _magicCircle.AddCard(SelectCard);
-                    if (isAdd != null)
+                    if((_magicCircle.RuneDict.ContainsKey(RuneType.Main) == false && _isFront == true)
+                        || (_magicCircle.RuneDict.ContainsKey(RuneType.Main) == true && _isFront == false))
+                    {
+                        isAdd = _magicCircle.AddCard(SelectCard);
+                        if (isAdd != null)
+                        {
+                            _handCards.Remove(isAdd);
+                            //SelectCard.IsRest = true;
+                            _restCards.Add(isAdd);
+
+                            //SelectCard.gameObject.SetActive(false);
+                        }
+                        else
+                        {
+                            Debug.Log("�������� �ȳ־���");
+                            
+                        }
+                    }
+                    else
                     {
                         _handCards.Remove(isAdd);
-                        //SelectCard.IsRest = true;
                         _restCards.Add(isAdd);
                         SelectCard.gameObject.SetActive(false);
                         UIUpdate();
+
+                        Debug.Log("�Ӽ� �� ����");
+                        Debug.Log(_magicCircle.RuneDict.ContainsKey(RuneType.Main));
+                        Debug.Log(_isFront);
                     }
                 }
-                // YES : 마법�??�에 ?�기, 리스???�에 카드 지?�기
-                _selectCard.GetComponent<RectTransform>().anchoredPosition = _cardOriginPos;
-                _selectCard = value;
-                CardSort();
+                else
+                {
+                    Debug.Log("�� ����");
+                }
+                // YES : 마법�??�에 ?�기, 리스???�에 카드 지?�기
+                //_selectCard.GetComponent<RectTransform>().anchoredPosition = _cardOriginPos;
+
+                Sequence seq = DOTween.Sequence();
+                seq.AppendCallback(() =>
+                {
+                    if(isAdd == null)
+                    {
+                        _selectCard.SetRune(false);
+                    }
+                    _selectCard = value;
+                });
+                seq.Append(_selectCard.GetComponent<RectTransform>().DOAnchorPos(_cardOriginPos, 0.2f));
+                seq.InsertCallback(0.2f, () =>
+                {
+                    _magicCircle.SortCard();
+                    CardSort();
+                });
             }
         }
     }
@@ -74,12 +120,17 @@ public class CardCollector : MonoBehaviour
     public IReadOnlyList<Card> DeckCards => _deckCards;
     public IReadOnlyList<Card> RestCards => _restCards;
 
+    private bool _isFront = true;
+    private bool _isCardRotate = false;
+
     private void Awake()
     {
         for (int i = 0; i < _deck.cards.Count; i++)
         {
             GameObject go = Instantiate(_deck.cards[i], this.transform);
-            _deckCards.Add(go.GetComponent<Card>());
+            Card card = go.GetComponent<Card>();
+            card.SetSortingIndex(go.transform.GetSiblingIndex());
+            _deckCards.Add(card);
             go.SetActive(false);
             go.name = $"Card_{i + 1}";
             RectTransform rect = go.GetComponent<RectTransform>();
@@ -93,37 +144,36 @@ public class CardCollector : MonoBehaviour
         EventManager<bool>.StartListening(Define.ON_START_PLAYER_TURN, CardOnOff);
         EventManager<bool>.StartListening(Define.ON_START_MONSTER_TURN, CardOnOff);
         EventManager.StartListening(Define.ON_START_MONSTER_TURN, HandToDeck);
-        
 
     }
 
     // 2960 * 1440
     private void Start()
     {
-
-
-        //CardDraw(_cardCnt);
-        //UIUpdate();
+        _isFront = true;
     }
 
     private void Update()
     {
         if (SelectCard != null)
         {
-            SelectCard.GetComponent<RectTransform>().anchoredPosition = Input.mousePosition;
+            if (Input.touchCount <= 0) return;
+            SelectCard.GetComponent<RectTransform>().anchoredPosition = new Vector2(Input.GetTouch(0).position.x, Input.GetTouch(0).position.y - this.GetComponent<RectTransform>().anchoredPosition.y);
 
             if (_magicCircle.IsBig == true)
             {
-                if (Vector2.Distance(SelectCard.GetComponent<RectTransform>().anchoredPosition, _magicCircle.GetComponent<RectTransform>().anchoredPosition)
+                if (Vector2.Distance(Input.GetTouch(0).position, _magicCircle.GetComponent<RectTransform>().anchoredPosition)
                     <= _magicCircle.CardAreaDistance)
                 {
-                    SelectCard.GetComponent<Image>().sprite = SelectCard.Rune.RuneImage;
-                    SelectCard.GetComponent<RectTransform>().sizeDelta = new Vector2(128, 128);
+                    SelectCard.RuneAreaParent.gameObject.SetActive(true);
+                    SelectCard.CardAreaParent.gameObject.SetActive(false);
+                    //SelectCard.GetComponent<RectTransform>().sizeDelta = new Vector2(128, 128);
                 }
                 else
                 {
-                    SelectCard.GetComponent<Image>().sprite = SelectCard.Rune.CardImage;
-                    SelectCard.GetComponent<RectTransform>().sizeDelta = new Vector2(300, 500);
+                    SelectCard.RuneAreaParent.gameObject.SetActive(false);
+                    SelectCard.CardAreaParent.gameObject.SetActive(true);
+                    //SelectCard.GetComponent<RectTransform>().sizeDelta = new Vector2(300, 500);
                 }
             }
         }
@@ -154,24 +204,37 @@ public class CardCollector : MonoBehaviour
             return -1;
         });
 
+        float xDelta = 1440f / _handCards.Count;
+        //float sideArea = (1440f - _cardAreaDistance) / 2; // ���� Scroll Rect�� ���� �Ⱦ� �� ����
         for (int i = 0; i < _handCards.Count; i++)
         {
-            //?�걸 ?�줘??Animation???�해 MagicCircle???�식?�로 ?�었??것도 ?�시 ???�의 ?�식?�로 ?�아?� ?�상?�으�?Sort가 ?�는??그러�?Damage부분에???�류가 ??�?�?
+            //?�걸 ?�줘??Animation???�해 MagicCircle???�식?�로 ?�었??것도 ?�시 ???�의 ?�식?�로 ?�아?� ?�상?�으�?Sort가 ?�는??그러�?Damage부분에???�류가 ??�?�?
             //_handCards[i].transform.SetParent(this.transform); 
             RectTransform rect = _handCards[i].GetComponent<RectTransform>();
-            float xDelta = 1440f / _handCards.Count;
-            rect.anchoredPosition = new Vector3(i * xDelta + rect.sizeDelta.x / 2, rect.sizeDelta.y / 2, 0);
+            
+            rect.anchoredPosition = new Vector3(i * xDelta + rect.sizeDelta.x / 2 + 150 + _offset.x/* + sideArea*/, rect.sizeDelta.y / 2 + _offset.y, 0);
         }
     }
 
     public void CardSelect(Card card)
     {
+        if (Input.touchCount > 1) return;
+
         if (card == null)
         {
-            SelectCard.transform.SetSiblingIndex(_uiIndex);
+            // ���⼭ �����ɷ��� ī�尡 Null�� �Ǵµ� �� �������� �и�
+            
+            //if(_uiIndex == -1)
+            //{
+            //    SelectCard.transform.SetSiblingIndex(SelectCard.SortingIndex);
+            //}
+            //else
+            //{
+            //    SelectCard.transform.SetSiblingIndex(_uiIndex);
+            //}
+            SelectCard.transform.SetSiblingIndex(SelectCard.SortingIndex);
+            SelectCard.SetRune(false);
             _uiIndex = -1;
-            SelectCard.GetComponent<Image>().sprite = SelectCard.Rune.CardImage;
-            SelectCard.GetComponent<RectTransform>().sizeDelta = new Vector2(300, 500);
         }
         else
         {
@@ -196,10 +259,37 @@ public class CardCollector : MonoBehaviour
         UIUpdate();
     }
 
+    public void CardRotate()
+    {
+        if (_isCardRotate == true) return;
+
+        Sequence seq = DOTween.Sequence();
+        seq.AppendCallback(() => _isCardRotate = true);
+        foreach(var card in _handCards)
+        {
+            seq.Join(card.transform.DORotate(new Vector3(0, 360, 0), 0.3f, RotateMode.FastBeyond360));
+        }
+
+        foreach (var card in _handCards)
+        {
+            seq.InsertCallback(0.15f, () =>
+            {
+                card.transform.rotation = Quaternion.Euler(0, 0, 0);
+                card.IsFront = !card.IsFront;
+            });
+        }
+        seq.AppendCallback(() =>
+        {
+            _isCardRotate = false;
+            _isFront = _handCards[0].IsFront;
+        });
+
+    }
+
     private void UIUpdate()
     {
-        _deckViewUI.UITextUpdate();
-        _restViewUI.UITextUpdate();
+        _deckViewUI?.UITextUpdate();
+        _restViewUI?.UITextUpdate();
     }
 
     private void CardOnOff(bool flag)
