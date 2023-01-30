@@ -133,4 +133,9 @@ public class UIManager : MonoSingleton<UIManager>
         seq.AppendCallback(() => _turnPanel.SetActive(false));
         seq.AppendCallback(() =>GameManager.Instance.TurnChange());
     }
+
+    public void OnDestroy()
+    {
+        transform.DOKill();
+    }
 }

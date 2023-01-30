@@ -51,6 +51,8 @@ public class CardCollector : MonoBehaviour
         {
             if (value != null)
             {
+                if (_isCardRotate == true) return;
+
                 _selectCard = value;
                 _cardOriginPos = _selectCard.GetComponent<RectTransform>().anchoredPosition;
                 _magicCircle.IsBig = true;
@@ -59,7 +61,6 @@ public class CardCollector : MonoBehaviour
             {
                 if (Input.touchCount == 0) return;
                 Card isAdd = null;
-                // 만약 ?�택 카드가 마법�??�에 ?�다�?
                 if (Vector2.Distance(_selectCard.GetComponent<RectTransform>().anchoredPosition, _magicCircle.GetComponent<RectTransform>().anchoredPosition)
                 <= _magicCircle.CardAreaDistance)
                 {
@@ -74,26 +75,8 @@ public class CardCollector : MonoBehaviour
                             _handCards.Remove(isAdd);
                             SelectCard.gameObject.SetActive(false);
                         }
-                        else
-                        {
-                            Debug.Log("�������� �ȳ־���");
-
-                        }
-                    }
-                    else
-                    {
-                        Debug.Log("�Ӽ� �� ����");
-                        Debug.Log(_magicCircle.RuneDict.ContainsKey(RuneType.Main));
-                        Debug.Log(_isFront);
                     }
                 }
-                else
-                {
-                    Debug.Log("�� ����");
-                }
-                // YES : 마법�??�에 ?�기, 리스???�에 카드 지?�기
-                //_selectCard.GetComponent<RectTransform>().anchoredPosition = _cardOriginPos;
-
                 Sequence seq = DOTween.Sequence();
                 seq.AppendCallback(() =>
                 {
@@ -296,7 +279,8 @@ public class CardCollector : MonoBehaviour
         foreach (Transform item in transform)
         {
             //Debug.Log(item.name);
-            item.GetComponent<Image>().DOFade(Convert.ToInt32(flag), 1f);
+            //item.GetComponent<Image>().DOFade(Convert.ToInt32(flag), 1f);
+            item.GetComponent<Image>().DOFade(flag ? 1 : 0, 1f);
         }
     }
 
@@ -321,5 +305,6 @@ public class CardCollector : MonoBehaviour
         EventManager<bool>.StopListening(Define.ON_START_PLAYER_TURN, CardOnOff);
         EventManager<bool>.StopListening(Define.ON_START_MONSTER_TURN, CardOnOff);
         EventManager.StopListening(Define.ON_START_MONSTER_TURN, HandToDeck);
+        transform.DOKill();
     }
 }
