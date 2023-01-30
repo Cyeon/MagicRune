@@ -12,6 +12,7 @@ public class UIManager : MonoSingleton<UIManager>
     [SerializeField] private Slider _enemyHealthSlider;
     [SerializeField] private TextMeshProUGUI _enemyHealthText;
     [SerializeField] private Image _enemyPatternIcon;
+    [SerializeField] private TextMeshProUGUI _enemyPatternValueText;
     [SerializeField] private TextMeshProUGUI _enemyShieldText;
     public Transform enemyIcon;
 
@@ -67,9 +68,10 @@ public class UIManager : MonoSingleton<UIManager>
         seq.AppendCallback(() => _playerHealthText.text = string.Format("{0} / {1}", _playerHealthSlider.value, _playerHealthSlider.maxValue));
     }
 
-    public void ReloadPatternIcon(Sprite sprite)
+    public void ReloadPattern(Sprite sprite, string value = "")
     {
         _enemyPatternIcon.sprite = sprite;
+        _enemyPatternValueText.text = value;
     }
 
     public void AddStatus(Unit unit, Status status)
