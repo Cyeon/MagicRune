@@ -194,4 +194,9 @@ public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
             _runeAreaParent.gameObject.SetActive(false);
         }
     }
+
+    public void OnDestroy()
+    {
+        transform.DOKill();
+    }
 }
