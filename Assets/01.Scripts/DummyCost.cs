@@ -17,8 +17,9 @@ public class DummyCost : MonoSingleton<DummyCost>
     private int _nowCost = 10;
     public int NowCost => _nowCost;
 
-    private void Start()
+    private void Awake()
     {
+        EventManager.StartListening(Define.ON_START_PLAYER_TURN, ManaFill);
         UpdateManaText();
     }
 
@@ -27,6 +28,12 @@ public class DummyCost : MonoSingleton<DummyCost>
     public void UpdateManaText()
     {
          _manaText.SetText($"{_nowCost}/{_maxCost}");
+    }
+
+    public void ManaFill()
+    {
+        _nowCost = _maxCost;
+        UpdateManaText();
     }
 
     public bool CanUseMainRune(int cost)
@@ -51,5 +58,10 @@ public class DummyCost : MonoSingleton<DummyCost>
         }
         else
             return false;
+    }
+
+    private void OnDestroy()
+    {
+        EventManager.StopListening(Define.ON_START_PLAYER_TURN, ManaFill);
     }
 }

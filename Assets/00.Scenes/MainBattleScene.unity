@@ -530,7 +530,7 @@ RectTransform:
   - {fileID: 2042273711}
   - {fileID: 1530367104}
   m_Father: {fileID: 424719286}
-  m_RootOrder: 8
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -803,7 +803,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &225366648
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1354,8 +1354,8 @@ RectTransform:
   - {fileID: 1615914772}
   - {fileID: 1502645722}
   - {fileID: 1100535926}
-  - {fileID: 55051142}
   - {fileID: 1692432761}
+  - {fileID: 55051142}
   - {fileID: 645838903}
   - {fileID: 535614680}
   m_Father: {fileID: 0}
@@ -5975,6 +5975,7 @@ MonoBehaviour:
   _deckCards: []
   _handCards: []
   _restCards: []
+  _cardTemplate: {fileID: 5304045933743492193, guid: cff68eecfec412a4c85400767edd951c, type: 3}
 --- !u!1 &1641264725
 GameObject:
   m_ObjectHideFlags: 0
@@ -6407,6 +6408,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 424719286}
     m_Modifications:
+    - target: {fileID: 1973880454901927211, guid: dd01c3d3c8873b04e84570e22262df0b, type: 3}
+      propertyPath: deckViewUI
+      value: 
+      objectReference: {fileID: 55051140}
+    - target: {fileID: 1973880454901927211, guid: dd01c3d3c8873b04e84570e22262df0b, type: 3}
+      propertyPath: restViewUI
+      value: 
+      objectReference: {fileID: 645838902}
     - target: {fileID: 1973880454901927220, guid: dd01c3d3c8873b04e84570e22262df0b, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -6417,7 +6426,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1973880454901927220, guid: dd01c3d3c8873b04e84570e22262df0b, type: 3}
       propertyPath: m_RootOrder
-      value: 9
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 1973880454901927220, guid: dd01c3d3c8873b04e84570e22262df0b, type: 3}
       propertyPath: m_AnchorMax.x
