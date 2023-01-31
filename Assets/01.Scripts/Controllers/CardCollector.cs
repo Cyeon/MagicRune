@@ -217,7 +217,7 @@ public class CardCollector : MonoBehaviour
         }
         else
         {
-            _uiIndex = card.transform.GetSiblingIndex();
+            _uiIndex = card.SortingIndex;
             card.transform.SetAsLastSibling();
         }
         SelectCard = card;
