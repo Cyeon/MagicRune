@@ -700,9 +700,6 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
             {
                 switch (e.Key)
                 {
-                    case "Attack":
-                        GameManager.Instance.player.Attack(int.Parse(e.Value));
-                        break;
                     case "Defence":
                         // 아직 없음
                         break;
@@ -716,6 +713,16 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                         StatusManager.Instance.AddStatus(GameManager.Instance.enemy, StatusName.Ice, int.Parse(e.Value));
                         break;
                     default:
+                        break;
+                }
+            }
+
+            foreach (var e in _effectDict)
+            {
+                switch (e.Key)
+                {
+                    case "Attack":
+                        GameManager.Instance.player.Attack(int.Parse(e.Value));
                         break;
                 }
             }

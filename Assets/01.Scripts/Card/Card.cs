@@ -166,7 +166,7 @@ public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         {
             _collector.CardSelect(this);
 
-            transform.localScale = new Vector3(1.5f, 1.5f, 1);
+            //transform.localScale = new Vector3(1.5f, 1.5f, 1);
         }
     }
 
@@ -177,7 +177,7 @@ public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         if (_isEquipMagicCircle == false)
         {
             _collector.CardSelect(null);
-            transform.localScale = Vector3.one;
+            //transform.localScale = Vector3.one;
         }
     }
 
