@@ -227,8 +227,9 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                     card.GetComponent<RectTransform>().DOAnchorPos(Vector2.zero, 0.3f);
                     card.SetIsEquip(true);
                     card.SetCoolTime(card.Rune.MainRune.DelayTurn);
+                    _cardCollector.CardRotate();
                 });
-                //seq.AppendInterval(0.3f);
+                seq.AppendInterval(0.3f);
                 seq.AppendCallback(() =>
                 {
                     _runeDict.Add(RuneType.Main, new List<Card>() { card });
@@ -247,7 +248,6 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                         }
                     }
                     SortCard();
-                    _cardCollector.CardRotate();
                     AddEffect(card, true);
                     AssistRuneAnimanation();
                 });

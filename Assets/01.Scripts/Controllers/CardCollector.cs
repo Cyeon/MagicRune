@@ -70,10 +70,10 @@ public class CardCollector : MonoBehaviour
                         isAdd = _magicCircle.AddCard(SelectCard);
                         if (isAdd != null)
                         {
-                            Debug.Log(isAdd);
+                            //Debug.Log(isAdd);
                             _tempCards.Add(isAdd);
                             _handCards.Remove(isAdd);
-                            SelectCard.gameObject.SetActive(false);
+                            //SelectCard.gameObject.SetActive(false);
                         }
                     }
                 }

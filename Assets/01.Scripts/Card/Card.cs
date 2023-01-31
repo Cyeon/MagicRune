@@ -57,22 +57,7 @@ public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
             _isFront = value;
 
             if (_rune == null) return;
-            if (_isFront == true)
-            {
-                _skillImage.sprite = _rune.MainRune.CardImage;
-                _costText.text = _rune.MainRune.Cost.ToString();
-                _coolTimeText.text = _rune.MainRune.DelayTurn.ToString();
-                _mainSubText.text = "메인";
-                _skillText.text = _rune.MainRune.CardDescription;
-            }
-            else
-            {
-                _skillImage.sprite = _rune.AssistRune.CardImage;
-                _costText.text = _rune.AssistRune.Cost.ToString();
-                _coolTimeText.text = _rune.AssistRune.DelayTurn.ToString();
-                _mainSubText.text = "보조";
-                _skillText.text = _rune.AssistRune.CardDescription;
-            }
+            UpdateUI(_isFront);
         }
     }
     #region Card UI
@@ -85,6 +70,7 @@ public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     private Text _coolTimeText;
     private Text _mainSubText;
     private Text _skillText;
+    private Text _nameText;
 
     // Rune Area
     private Transform _runeAreaParent;
@@ -110,8 +96,31 @@ public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
         if (_rune != null)
         {
-            _runeImage.sprite = _rune.RuneImage;
+            UpdateUI(_isFront);
         }
+    }
+
+    public void UpdateUI(bool isFront)
+    {
+        if (isFront == true)
+        {
+            _nameText.text = _rune.MainRune.Name;
+            _skillImage.sprite = _rune.MainRune.CardImage;
+            _costText.text = _rune.MainRune.Cost.ToString();
+            _coolTimeText.text = _rune.MainRune.DelayTurn.ToString();
+            _mainSubText.text = "메인";
+            _skillText.text = _rune.MainRune.CardDescription;
+        }
+        else
+        {
+            _nameText.text = _rune.AssistRune.Name;
+            _skillImage.sprite = _rune.AssistRune.CardImage;
+            _costText.text = _rune.AssistRune.Cost.ToString();
+            _coolTimeText.text = _rune.AssistRune.DelayTurn.ToString();
+            _mainSubText.text = "보조";
+            _skillText.text = _rune.AssistRune.CardDescription;
+        }
+        _runeImage.sprite = _rune.RuneImage;
     }
 
     public void SetIsEquip(bool value)
@@ -183,6 +192,7 @@ public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         _coolTimeText = _cardParent.Find("Cooltime_Text").GetComponent<Text>();
         _mainSubText = _cardParent.Find("MainSub_Text").GetComponent<Text>();
         _skillText = _cardParent.Find("Skill_Detail").GetComponent<Text>();
+        _nameText = _cardParent.Find("Skill_Name").GetComponent<Text>();
 
         _runeAreaParent = transform.Find("RuneArea");
         _runeImage = _runeAreaParent.Find("Rune Image").GetComponent<Image>();
