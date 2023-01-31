@@ -56,44 +56,49 @@ public class CardCollector : MonoBehaviour
                 if (_isCardRotate == true) return;
 
                 _selectCard = value;
+                _selectCard.transform.localScale = new Vector3(1.5f, 1.5f, 1f);
                 _cardOriginPos = _selectCard.GetComponent<RectTransform>().anchoredPosition;
                 _magicCircle.IsBig = true;
             }
             else
             {
-                if (Input.touchCount == 0) return;
-                Card isAdd = null;
-                if (Vector2.Distance(_selectCard.GetComponent<RectTransform>().anchoredPosition, _magicCircle.GetComponent<RectTransform>().anchoredPosition)
-                <= _magicCircle.CardAreaDistance)
+                if (_selectCard != null)
                 {
-                    if ((_magicCircle.RuneDict.ContainsKey(RuneType.Main) == false && _isFront == true)
-                        || (_magicCircle.RuneDict.ContainsKey(RuneType.Main) == true && _isFront == false))
+                    _selectCard.transform.localScale = Vector3.one;
+                    if (Input.touchCount == 0) return;
+                    Card isAdd = null;
+                    if (Vector2.Distance(_selectCard.GetComponent<RectTransform>().anchoredPosition, _magicCircle.GetComponent<RectTransform>().anchoredPosition)
+                    <= _magicCircle.CardAreaDistance)
                     {
-                        isAdd = _magicCircle.AddCard(SelectCard);
-                        if (isAdd != null)
+                        if ((_magicCircle.RuneDict.ContainsKey(RuneType.Main) == false && _isFront == true)
+                            || (_magicCircle.RuneDict.ContainsKey(RuneType.Main) == true && _isFront == false))
                         {
-                            //Debug.Log(isAdd);
-                            _tempCards.Add(isAdd);
-                            _handCards.Remove(isAdd);
-                            //SelectCard.gameObject.SetActive(false);
+                            isAdd = _magicCircle.AddCard(SelectCard);
+                            if (isAdd != null)
+                            {
+                                //Debug.Log(isAdd);
+                                _tempCards.Add(isAdd);
+                                _handCards.Remove(isAdd);
+                                //SelectCard.gameObject.SetActive(false);
+                            }
                         }
                     }
-                }
-                Sequence seq = DOTween.Sequence();
-                seq.AppendCallback(() =>
-                {
-                    if (isAdd == null)
+                    Sequence seq = DOTween.Sequence();
+                    seq.AppendCallback(() =>
                     {
-                        _selectCard.SetRune(false);
-                    }
-                    _selectCard = value;
-                });
-                seq.Append(_selectCard.GetComponent<RectTransform>().DOAnchorPos(_cardOriginPos, 0.2f));
-                seq.InsertCallback(0.2f, () =>
-                {
-                    _magicCircle.SortCard();
-                    CardSort();
-                });
+                        if (isAdd == null)
+                        {
+                            _selectCard.SetRune(false);
+                        }
+                        _selectCard = value;
+                    });
+                    seq.Append(_selectCard.GetComponent<RectTransform>().DOAnchorPos(_cardOriginPos, 0.2f));
+                    seq.InsertCallback(0.2f, () =>
+                    {
+                        _magicCircle.SortCard();
+                        CardSort();
+                    });
+                }
             }
         }
     }
@@ -204,6 +209,7 @@ public class CardCollector : MonoBehaviour
     public void CardSelect(Card card)
     {
         if (Input.touchCount > 1) return;
+        if (_isCardRotate == true) return;
 
         if (card == null)
         {
@@ -217,8 +223,11 @@ public class CardCollector : MonoBehaviour
             //{
             //    SelectCard.transform.SetSiblingIndex(_uiIndex);
             //}
-            SelectCard.transform.SetSiblingIndex(SelectCard.SortingIndex);
-            SelectCard.SetRune(false);
+            if (SelectCard != null)
+            {
+                SelectCard.transform.SetSiblingIndex(SelectCard.SortingIndex);
+                SelectCard.SetRune(false);
+            }
             _uiIndex = -1;
         }
         else
@@ -269,7 +278,14 @@ public class CardCollector : MonoBehaviour
         seq.AppendCallback(() =>
         {
             _isCardRotate = false;
-            _isFront = _handCards[0].IsFront;
+            if(_handCards.Count > 0)
+            {
+                _isFront = _handCards[0].IsFront;
+            }
+            else
+            {
+                _isFront = true;
+            }
         });
 
     }
