@@ -278,7 +278,14 @@ public class CardCollector : MonoBehaviour
         seq.AppendCallback(() =>
         {
             _isCardRotate = false;
-            _isFront = _handCards[0].IsFront;
+            if(_handCards.Count > 0)
+            {
+                _isFront = _handCards[0].IsFront;
+            }
+            else
+            {
+                _isFront = true;
+            }
         });
 
     }
