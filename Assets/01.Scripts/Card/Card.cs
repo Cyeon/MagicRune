@@ -102,6 +102,7 @@ public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
     public void UpdateUI(bool isFront)
     {
+        if (!_nameText || !_skillImage || !_costText || !_coolTimeText || !_mainSubText || !_skillText || !_runeImage) { Setting(); }
         if (isFront == true)
         {
             _nameText.text = _rune.MainRune.Name;

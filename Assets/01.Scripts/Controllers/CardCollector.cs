@@ -14,6 +14,7 @@ public class CardCollector : MonoBehaviour
 
     [SerializeField, MinValue(0f), MaxValue(1440f)]
     private float _cardAreaDistance;
+
     [SerializeField]
     private Vector2 _offset;
 
@@ -41,6 +42,7 @@ public class CardCollector : MonoBehaviour
     private List<Card> _tempCards = new List<Card>();
 
     private Vector2 _cardOriginPos;
+
     private int _uiIndex;
 
     private Card _selectCard;
@@ -102,12 +104,16 @@ public class CardCollector : MonoBehaviour
     private bool _isFront = true;
     private bool _isCardRotate = false;
 
+    [SerializeField]
+    private GameObject _cardTemplate = null;
+
     private void Awake()
     {
         for (int i = 0; i < _deck.cards.Count; i++)
         {
-            GameObject go = Instantiate(_deck.cards[i], this.transform);
+            GameObject go = Instantiate(_cardTemplate, this.transform);
             Card card = go.GetComponent<Card>();
+            card.SetRune(_deck.cards[i]);
             card.SetSortingIndex(go.transform.GetSiblingIndex());
             _deckCards.Add(card);
             go.SetActive(false);
