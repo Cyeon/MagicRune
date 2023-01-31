@@ -34,14 +34,6 @@ public class GameManager : MonoSingleton<GameManager>
 
         UIManager.instance.PlayerHealthbarInit(player.HP);
 
-        StatusManager.Instance.AddStatus(enemy, StatusName.Ice);
-        StatusManager.Instance.AddStatus(enemy, StatusName.Ice);
-        StatusManager.Instance.AddStatus(enemy, StatusName.Ice);
-        StatusManager.Instance.AddStatus(enemy, StatusName.Ice);
-
-        enemy.OnTakeDamageFeedback.AddListener(() => UIManager.instance.UpdateEnemyHealthbar());
-        enemy.OnTakeDamageFeedback.AddListener(() => StatusManager.Instance.AddStatus(enemy, StatusName.Fire));
-
         TurnChange();
     }
 
@@ -91,6 +83,7 @@ public class GameManager : MonoSingleton<GameManager>
                 enemy.pattern = PatternManager.Instance.GetPattern();
                 enemy.pattern?.Start();
                 EventManager<int>.TriggerEvent(Define.ON_START_PLAYER_TURN, 5);
+                EventManager.TriggerEvent(Define.ON_START_PLAYER_TURN);
                 EventManager<bool>.TriggerEvent(Define.ON_START_PLAYER_TURN, true); //¿©±â¶û
 
                 UIManager.Instance.Turn("Player Turn");
@@ -116,6 +109,7 @@ public class GameManager : MonoSingleton<GameManager>
                 enemy.pattern = PatternManager.Instance.GetPattern();
                 enemy.pattern?.Start();
                 EventManager<int>.TriggerEvent(Define.ON_START_PLAYER_TURN, 5);
+                EventManager.TriggerEvent(Define.ON_START_PLAYER_TURN);
                 EventManager<bool>.TriggerEvent(Define.ON_START_PLAYER_TURN, true); // ¿©±â
 
                 UIManager.Instance.Turn("Player Turn");
