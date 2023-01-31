@@ -100,6 +100,7 @@ public class CardCollector : MonoBehaviour
     public IReadOnlyList<Card> RestCards => _restCards;
 
     private bool _isFront = true;
+    public bool IsFront => _isFront;
     private bool _isCardRotate = false;
 
     private void Awake()
