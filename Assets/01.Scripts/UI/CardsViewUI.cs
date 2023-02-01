@@ -14,7 +14,7 @@ public class CardsViewUI : MonoBehaviour
     [SerializeField]
     private bool _isRest = false;
 
-    [SerializeField]
+    [SerializeField]            
     private Color _onColor = new Color(0f, 0f, 0f, 1f);
 
     [Header("GameObjects")]
