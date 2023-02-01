@@ -1,0 +1,58 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b089f4c99f402c419e87fb17ecd4ab5, type: 3}
+  m_Name: MagicBullet
+  m_EditorClassIdentifier: 
+  RuneImage: {fileID: 21300000, guid: 134fd2156c3b8d24d82fd96fa5e1a2a4, type: 3}
+  AssistRuneCount: 5
+  MainRune:
+    Name: "\uB9C8\uB825\uD0C4"
+    CardImage: {fileID: 21300000, guid: 8bf7480fb50b05841b3dce496dc905f0, type: 3}
+    Priority: 0
+    CardDescription: "\uB9C8\uB825\uD0C4\uC744 \uB0A0\uB824 5\uC758 \uB300\uBBF8\uC9C0\uB97C
+      \uC900\uB2E4"
+    EffectDescription:
+    - Condition:
+        ConditionType: 0
+        AttributeType: 0
+        StatusType: 0
+        HeathType: 0
+        Value: 0
+        IsEnemyOrMain: 1
+      EffectType: 0
+      StatusType: 2
+      IsEnemy: 1
+      Effect: 5
+    Attribute: 3
+    Cost: 3
+    DelayTurn: 1
+  AssistRune:
+    Name: "\uB9C8\uB825\uAD6C"
+    CardImage: {fileID: 21300000, guid: 8bf7480fb50b05841b3dce496dc905f0, type: 3}
+    Priority: 0
+    CardDescription: "\uB9C8\uB825\uAD6C\uB97C \uB0A0\uB824 3\uC758 \uB300\uBBF8\uC9C0\uB97C
+      \uC900\uB2E4"
+    EffectDescription:
+    - Condition:
+        ConditionType: 0
+        AttributeType: 0
+        StatusType: 0
+        HeathType: 0
+        Value: 0
+        IsEnemyOrMain: 1
+      EffectType: 0
+      StatusType: 0
+      IsEnemy: 1
+      Effect: 3
+    Attribute: 3
+    Cost: 1
+    DelayTurn: 1
