@@ -112,6 +112,12 @@ public class StatusManager : MonoSingleton<StatusManager>
         }
     }
 
+    public void RemStatus(Unit unit, StatusName statusName)
+    {
+        Status status = GetStatus(statusName);
+        RemStatus(unit, status);
+    }
+
     public void StatusTurnChange(Unit unit)
     {
         foreach(var x in unit.unitStatusDic)

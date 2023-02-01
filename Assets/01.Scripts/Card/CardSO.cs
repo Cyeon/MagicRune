@@ -58,7 +58,7 @@ public class Condition
     [MinValue(0f), ConditionalField(nameof(ConditionType), false, ConditionType.Heath, ConditionType.AssistRuneCount)]
     public float Value;
 
-    [ConditionalField(nameof(ConditionType), true, ConditionType.None)]
+    [ConditionalField(nameof(ConditionType), true, ConditionType.None), ]
     public bool IsEnemyOrMain = true;
 }
 

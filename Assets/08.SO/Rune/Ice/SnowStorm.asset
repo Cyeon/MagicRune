@@ -30,6 +30,7 @@ MonoBehaviour:
         IsEnemyOrMain: 1
       EffectType: 0
       StatusType: 0
+      IsEnemy: 1
       Effect: 10
     - Condition:
         ConditionType: 0
@@ -40,6 +41,7 @@ MonoBehaviour:
         IsEnemyOrMain: 1
       EffectType: 2
       StatusType: 3
+      IsEnemy: 1
       Effect: 2
     Attribute: 1
     Cost: 3
@@ -60,16 +62,18 @@ MonoBehaviour:
         IsEnemyOrMain: 1
       EffectType: 0
       StatusType: 0
+      IsEnemy: 1
       Effect: 5
     - Condition:
-        ConditionType: 0
-        AttributeType: 0
+        ConditionType: 2
+        AttributeType: 2
         StatusType: 0
         HeathType: 0
         Value: 0
-        IsEnemyOrMain: 1
-      EffectType: 3
+        IsEnemyOrMain: 0
+      EffectType: 2
       StatusType: 3
+      IsEnemy: 1
       Effect: 1
     Attribute: 1
     Cost: 1
