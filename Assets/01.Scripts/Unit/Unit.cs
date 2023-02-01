@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -53,7 +54,7 @@ public class Unit : MonoBehaviour
     [field:SerializeField] public UnityEvent<float> OnTakeDamage {get;set;}
 
     [field:SerializeField] public UnityEvent OnTakeDamageFeedback {get;set;}
-    [field:SerializeField] public Dictionary<StatusInvokeTime, List<Status>> unitStatusDic = new Dictionary<StatusInvokeTime, List<Status>>();
+    [field: SerializeField] public Dictionary<StatusInvokeTime, List<Status>> unitStatusDic = new Dictionary<StatusInvokeTime, List<Status>>();
 
     private void OnEnable() {
         unitStatusDic.Add(StatusInvokeTime.Start, new List<Status>());

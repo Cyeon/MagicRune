@@ -65,6 +65,8 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
     private Text _nameText;
     [SerializeField]
     private Text _effectText;
+    [SerializeField]
+    private MagicContent _effectContent;
 
     public Enemy enemy;
     private Vector2 touchBeganPos;
@@ -231,6 +233,7 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                         SortCard();
                         AddEffect(card, true);
                         AssistRuneAnimanation();
+                        _effectContent.AddCard(card.Rune);
                     });
                 });
                 SortCard();
@@ -269,6 +272,7 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                     SortCard();
                     AddEffect(card, true);
                     AssistRuneAnimanation();
+                    _effectContent.AddCard(card.Rune);
                 });
                 SortCard();
             }
@@ -332,6 +336,7 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
 
                     AddEffect(card, false);
                     UpdateMagicName();
+                    _effectContent.AddCard(card.Rune);
                 });
             });
             SortCard();
@@ -413,33 +418,6 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                 }
                 _nameText.text = name;
                 #endregion
-
-                string effect = "";
-                //foreach(var e in _effectDict)
-                //{
-                //    switch (e.Key)
-                //    {
-                //        case "Attack":
-                //            effect += e.Value + "데미지 ";
-                //            break;
-                //        case "Defence":
-                //            effect += e.Value + "방어도 ";
-                //            break;
-                //        case "Weak":
-                //            effect += "약화 " + e.Value + "부여 ";
-                //            break;
-                //        case "Fire":
-                //            effect += "화상 " + e.Value + "부여 ";
-                //            break;
-                //        case "Ice":
-                //            effect += "빙결 " + e.Value + "부여 ";
-                //            break;
-                //        default:
-                //            break;
-                //    }
-                //}
-                //effect = effect.Substring(0, effect.Length - 1);
-                _effectText.text = effect;
             }
         }
     }
@@ -463,9 +441,17 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
         {
             Touch touch = Input.GetTouch(0);
 
+            bool isSelectCard = false; // 이런 식이로 멤버 변수로 뺴기
             if (touch.phase == TouchPhase.Began)
             {
                 touchBeganPos = touch.position;
+            }
+            if(touch.phase == TouchPhase.Moved)
+            {
+                if(_cardCollector.SelectCard != null)
+                {
+                    isSelectCard = true;
+                }
             }
             if (touch.phase == TouchPhase.Ended)
             {
@@ -483,7 +469,7 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                     {
                         Debug.Log("down");
                         // 아무틴 일단 해
-                        if (_cardCollector.SelectCard == null)
+                        if (_cardCollector.SelectCard == null && isSelectCard == false)
                         {
                             _cardCollector.CardRotate();
                         }
@@ -543,6 +529,7 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
             {
                 if (_runeDict[RuneType.Assist][i].Rune == null)
                 {
+                    Destroy(_runeDict[RuneType.Assist][i].gameObject);
                     _runeDict[RuneType.Assist].RemoveAt(i);
                 }
             }
@@ -1022,6 +1009,7 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
             _effectDict.Clear();
             _nameText.text = "";
             _effectText.text = "";
+            _effectContent.Clear();
 
             IsBig = false;
 

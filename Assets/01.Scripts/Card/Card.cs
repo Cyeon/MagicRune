@@ -16,6 +16,7 @@ public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
     [SerializeField]
     private bool _isEquipMagicCircle = false;
+    public bool IsEquipMagicCircle { get => _isEquipMagicCircle; set => _isEquipMagicCircle = value; }
     public CardSO Rune => _rune;
 
     private int _sortingIndex;

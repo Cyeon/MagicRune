@@ -87,8 +87,6 @@ public class RuneProperty
     public string Name;
     [ShowAssetPreview(32, 32), Tooltip("이미지")]
     public Sprite CardImage;
-    [Tooltip("우선순위, 0에 가까울수록 순위가 눞음"), MinValue(0)]
-    public int Priority;
     [Tooltip("카드 설명"), ResizableTextArea]
     public string CardDescription;
     // 유형 Enum ? 필요한가?
