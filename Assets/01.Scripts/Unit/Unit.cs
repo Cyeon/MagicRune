@@ -44,7 +44,7 @@ public class Unit : MonoBehaviour
 
     
 
-    #region  상태이상 관련 변수
+    #region  ?�태?�상 관??변??
 
     public float currentDmg = 0;
 
@@ -63,7 +63,7 @@ public class Unit : MonoBehaviour
     }
     
     /// <summary>
-    /// 데미지 받는 함수
+    /// ?��?지 받는 ?�수
     /// </summary>
     /// <param name="damage"></param>
     public void TakeDamage(float damage)
@@ -72,15 +72,15 @@ public class Unit : MonoBehaviour
         
         InvokeStatus(StatusInvokeTime.GetDamage);
 
-        // 만약 쉴드가 있다면
+        // 만약 ?�드가 ?�다�?
         if(Shield > 0)
         {
-            // 받는 데미지가 쉴드보다 크다면
+            // 받는 ?��?지가 ?�드보다 ?�다�?
             if (Shield - currentDmg >= 0)
-                Shield -= currentDmg; // 쉴드 깎기
-            else // 아니면
+                Shield -= currentDmg; // ?�드 깎기
+            else // ?�니�?
             {
-                // 쉴드 없애고 남은 데미지만큼 체력 깎기
+                // ?�드 ?�애�??��? ?��?지만큼 체력 깎기
                 currentDmg -= Shield;
                 HP -= currentDmg;
             }
@@ -93,6 +93,19 @@ public class Unit : MonoBehaviour
 
         UIManager.Instance.UpdateEnemyHealthbar();
         UIManager.Instance.UpdatePlayerHealthbar();
+    }
+
+    public bool IsHealthAmount(float amount, HealthType type)
+    {
+        switch (type)
+        {
+            case HealthType.MoreThan:
+                return HP >= amount;
+            case HealthType.LessThan:
+                return HP <= amount;
+        }
+
+        return false;
     }
 
     public void InvokeStatus(StatusInvokeTime time)
