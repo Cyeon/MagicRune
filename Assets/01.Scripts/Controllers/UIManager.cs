@@ -8,6 +8,8 @@ using System.Runtime.CompilerServices;
 
 public class UIManager : MonoSingleton<UIManager>
 {
+    [SerializeField] private Transform _canvas;
+
     [Header("Enemy UI")]
     [SerializeField] private Slider _enemyHealthSlider;
     [SerializeField] private TextMeshProUGUI _enemyHealthText;
@@ -32,6 +34,9 @@ public class UIManager : MonoSingleton<UIManager>
     [SerializeField] private GameObject _turnPanel;
     private Image _turnBackground;
     private TextMeshProUGUI _turnText;
+
+    [Header("ETC")]
+    [SerializeField] private GameObject _damagePopup;
 
     private void Awake()
     {
@@ -84,6 +89,7 @@ public class UIManager : MonoSingleton<UIManager>
         statusPanel.duration.text = status.typeValue.ToString();
         statusPanel.statusName = status.statusName;
         statusPanel.transform.SetParent(trm);
+        statusPanel.transform.localScale = Vector3.one;
     }
 
     public void ReloadStatusPanel(Unit unit, StatusName name, int duration)
@@ -137,5 +143,11 @@ public class UIManager : MonoSingleton<UIManager>
     public void OnDestroy()
     {
         transform.DOKill();
+    }
+
+    public void DamageUIPopup(float amount, Vector3 pos)
+    {
+        DamagePopup popup = Instantiate(_damagePopup, _canvas).GetComponent<DamagePopup>();
+        popup.Setup(amount, pos);
     }
 }

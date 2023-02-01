@@ -93,6 +93,11 @@ public class Unit : MonoBehaviour
 
         UIManager.Instance.UpdateEnemyHealthbar();
         UIManager.Instance.UpdatePlayerHealthbar();
+
+        if(isPlayer == false)
+        {
+            UIManager.Instance.DamageUIPopup(currentDmg, UIManager.Instance.enemyIcon.transform.position);
+        }
     }
 
     public void InvokeStatus(StatusInvokeTime time)
