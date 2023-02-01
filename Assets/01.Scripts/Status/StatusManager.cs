@@ -31,16 +31,8 @@ public class StatusManager : MonoSingleton<StatusManager>
 
     public bool IsHaveStatus(Unit unit, StatusName name)
     {
-        Status status = GetStatus(name);
-
-        List<Status> statusList = new List<Status>();
-        if (unit.unitStatusDic.TryGetValue(status.invokeTime, out statusList))
-        {
-            Status currentStauts = statusList.Where(e => e.statusName == status.statusName).FirstOrDefault();
-            return currentStauts != null;
-        }
-
-        return false;
+        Status status = GetUnitHaveStauts(unit, name);
+        return status != null;
     }
 
     public Status GetUnitHaveStauts(Unit unit, StatusName name)
@@ -54,6 +46,20 @@ public class StatusManager : MonoSingleton<StatusManager>
         }
 
         return null;
+    }
+
+    public float GetUnitStatusValue(Unit unit, StatusName name)
+    {
+        Status status = GetUnitHaveStauts(unit, name);
+        if (status != null)
+        {
+            return status.typeValue;
+        }
+        else
+        {
+            Debug.LogError(string.Format("{0} is not have {1} status.", unit, name));
+            return 0;
+        }
     }
 
     // ?íƒœ?´ìƒ ì¶”ê?

@@ -9,10 +9,11 @@ using NaughtyAttributes;
 /// </summary>
 public enum AttributeType
 {
+    None, // 없음
+    NonAttribute, // 무속성
     Fire, // 불
     Ice, // 얼음
     Wind, // 바람
-    None, // 무속성
 }
 
 public enum EffectType
@@ -23,9 +24,43 @@ public enum EffectType
     Etc, // 기타 효과 예) 1장 드로우, 화상효과 부여 등...
 }
 
+public enum ConditionType
+{
+    None,
+    IfTherIs, // 먄악 있다면
+    Heath,
+    AssistRuneCount,
+}
+
+public enum HealthType
+{
+    None,
+    MoreThan, // 이상
+    LessThan, // 이하
+    Percentage, // 퍼센트
+}
+
+[Serializable]
+public class Condition
+{
+    public ConditionType ConditionType;
+    public AttributeType AttributeType;
+    public StatusName StatusType;
+
+    // true : 적이다, 메인 룬이다, false : 나다, 보조룬이다. 
+
+    public HealthType HeathType;
+    [MinValue(0f)]
+    public float Value;
+
+    public bool IsEnemyOrMain = true;
+}
+
 [Serializable]
 public class Pair
 {
+    [Tooltip("조건")]
+    public Condition Condition;
     [Tooltip("효과 간단 속성?")]
     public EffectType EffectType;
     [Tooltip("상태이상 속성, EffectType == Status면 사용")]
