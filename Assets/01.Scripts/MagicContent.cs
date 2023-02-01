@@ -40,18 +40,18 @@ public class MagicContent : MonoBehaviour
     {
         if (_cardList.Count == 0) return;
 
-        float sideWidth = (1440 - CARD_SIZE_X * _cardList.Count) / 2;
+        float sideWidth = (1440 - CARD_SIZE_X * .7f * _cardList.Count) / 2;
         for(int i = 0; i < transform.childCount; i++)
         {
-            transform.GetChild(i).GetComponent<RectTransform>().anchoredPosition3D = new Vector3(sideWidth + CARD_SIZE_X / 2 + CARD_SIZE_X * i + _offset.x, _offset.y, 0);
+            transform.GetChild(i).GetComponent<RectTransform>().anchoredPosition3D = new Vector3(sideWidth + CARD_SIZE_X / 2 + CARD_SIZE_X *.7f * i + _offset.x, _offset.y, 0);
 
             if (i % 2 == 0)
             {
-                transform.GetChild(i).rotation = Quaternion.Euler(0, 0, 15f);
+                transform.GetChild(i).rotation = Quaternion.Euler(0, 0, 7);
             }
             else
             {
-                transform.GetChild(i).rotation = Quaternion.Euler(0, 0, -15f);
+                transform.GetChild(i).rotation = Quaternion.Euler(0, 0, -7);
             }
         }
 

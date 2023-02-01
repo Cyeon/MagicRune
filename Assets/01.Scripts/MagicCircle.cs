@@ -92,7 +92,7 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                 transform.DOComplete();
                 this.transform.DOScale(Vector3.one, 0.2f);
                 //_bgPanel.GetComponent<Image>().DOFade(0.7f, 0.2f);
-                _bgPanel.GetComponent<CanvasGroup>().DOFade(0.7f, 0.2f);
+                _bgPanel.GetComponent<CanvasGroup>().DOFade(1f, 0.2f);
                 this.transform.DOLocalMoveY(400, 0.2f).SetRelative();
                 _bgPanel.transform.GetChild(0).GetComponent<Image>().raycastTarget = true;
             }
