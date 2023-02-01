@@ -167,6 +167,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6a84f75dc8ee8f418a6400dc20f5b90, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _canvas: {fileID: 0}
   _enemyHealthSlider: {fileID: 567907920}
   _enemyHealthText: {fileID: 1472787356}
   _enemyPatternIcon: {fileID: 970427238}
@@ -180,6 +181,7 @@ MonoBehaviour:
   _statusPlayerPanel: {fileID: 133344192}
   _statusEnemyPanel: {fileID: 705863452}
   _turnPanel: {fileID: 1100535925}
+  _damagePopup: {fileID: 0}
 --- !u!1 &37206930
 GameObject:
   m_ObjectHideFlags: 0
@@ -675,6 +677,11 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &300054882 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8365584557238254568, guid: 2c481390a36193b41a5fb42dd2dfdf26, type: 3}
+  m_PrefabInstance: {fileID: 1552138576}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &318581273
 GameObject:
   m_ObjectHideFlags: 0
@@ -1927,7 +1934,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5072398005971922528, guid: a9072e5ffd572514fb869f0f911a657f, type: 3}
       propertyPath: m_RootOrder
-      value: 15
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 5072398005971922528, guid: a9072e5ffd572514fb869f0f911a657f, type: 3}
       propertyPath: m_AnchorMax.x
@@ -3167,6 +3174,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 424719286}
     m_Modifications:
+    - target: {fileID: 2524630237923619128, guid: 72e1863d812baff46abc11905a946812, type: 3}
+      propertyPath: _cardCollector
+      value: 
+      objectReference: {fileID: 1615914773}
+    - target: {fileID: 2524630237923619128, guid: 72e1863d812baff46abc11905a946812, type: 3}
+      propertyPath: _otherCardsView
+      value: 
+      objectReference: {fileID: 300054882}
     - target: {fileID: 2524630237923619129, guid: 72e1863d812baff46abc11905a946812, type: 3}
       propertyPath: m_Name
       value: Deck
@@ -3181,7 +3196,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2524630237923619131, guid: 72e1863d812baff46abc11905a946812, type: 3}
       propertyPath: m_RootOrder
-      value: 13
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 2524630237923619131, guid: 72e1863d812baff46abc11905a946812, type: 3}
       propertyPath: m_AnchorMax.x
@@ -5168,6 +5183,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9dafadea4d0683e46ab4617e002cae19, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _effectDict:
+    keys: 
   _cardCollector: {fileID: 1615914773}
   _assistRuneDistance: 425
   _cardAreaDistance: 450
@@ -5185,6 +5202,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 424719286}
     m_Modifications:
+    - target: {fileID: 8365584557238254566, guid: 2c481390a36193b41a5fb42dd2dfdf26, type: 3}
+      propertyPath: _cardCollector
+      value: 
+      objectReference: {fileID: 1615914773}
+    - target: {fileID: 8365584557238254566, guid: 2c481390a36193b41a5fb42dd2dfdf26, type: 3}
+      propertyPath: _otherCardsView
+      value: 
+      objectReference: {fileID: 1776664635}
     - target: {fileID: 8365584557238254568, guid: 2c481390a36193b41a5fb42dd2dfdf26, type: 3}
       propertyPath: m_Name
       value: 'Rest '
@@ -5199,7 +5224,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8365584557238254569, guid: 2c481390a36193b41a5fb42dd2dfdf26, type: 3}
       propertyPath: m_RootOrder
-      value: 12
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 8365584557238254569, guid: 2c481390a36193b41a5fb42dd2dfdf26, type: 3}
       propertyPath: m_AnchorMax.x
@@ -5630,7 +5655,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1973880454901927220, guid: dd01c3d3c8873b04e84570e22262df0b, type: 3}
       propertyPath: m_RootOrder
-      value: 14
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 1973880454901927220, guid: dd01c3d3c8873b04e84570e22262df0b, type: 3}
       propertyPath: m_AnchorMax.x
@@ -5765,6 +5790,11 @@ RectTransform:
   m_AnchoredPosition: {x: -50, y: 11.024429}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &1776664635 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2524630237923619129, guid: 72e1863d812baff46abc11905a946812, type: 3}
+  m_PrefabInstance: {fileID: 956635142}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1777385743
 GameObject:
   m_ObjectHideFlags: 0
