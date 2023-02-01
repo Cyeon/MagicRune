@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using NaughtyAttributes;
+using MyBox;
+using MinValue = NaughtyAttributes.MinValueAttribute;
 
 /// <summary>
 /// 속성 Enum
@@ -21,13 +23,15 @@ public enum EffectType
     Attack, // 공격하는거 예) 5데미지
     Defence, // 방어하는거 예) 5방어
     Status,
+    Destroy,
     Etc, // 기타 효과 예) 1장 드로우, 화상효과 부여 등...
 }
 
 public enum ConditionType
 {
     None,
-    IfTherIs, // 먄악 있다면
+    IfThereIs, // 먄악 있다면
+    IfNotThereIs,
     Heath,
     AssistRuneCount,
 }
@@ -37,22 +41,24 @@ public enum HealthType
     None,
     MoreThan, // 이상
     LessThan, // 이하
-    Percentage, // 퍼센트
 }
 
 [Serializable]
 public class Condition
 {
     public ConditionType ConditionType;
+    [ConditionalField(nameof(ConditionType), false, ConditionType.IfThereIs, ConditionType.IfNotThereIs)]
     public AttributeType AttributeType;
+    [ConditionalField(nameof(ConditionType), false, ConditionType.IfThereIs, ConditionType.IfNotThereIs, ConditionType.Heath)]
     public StatusName StatusType;
 
     // true : 적이다, 메인 룬이다, false : 나다, 보조룬이다. 
-
+    [ConditionalField(nameof(ConditionType), false, ConditionType.Heath)]
     public HealthType HeathType;
-    [MinValue(0f)]
+    [MinValue(0f), ConditionalField(nameof(ConditionType), false, ConditionType.Heath, ConditionType.AssistRuneCount)]
     public float Value;
 
+    [ConditionalField(nameof(ConditionType), true, ConditionType.None)]
     public bool IsEnemyOrMain = true;
 }
 
@@ -63,8 +69,10 @@ public class Pair
     public Condition Condition;
     [Tooltip("효과 간단 속성?")]
     public EffectType EffectType;
-    [Tooltip("상태이상 속성, EffectType == Status면 사용")]
+    [Tooltip("상태이상 속성, EffectType == Status면 사용"), ConditionalField(nameof(EffectType), false, EffectType.Status, EffectType.Destroy)]
     public StatusName StatusType;
+    [Tooltip("true면 적, false면 나한태 씀"), ConditionalField(nameof(EffectType), false, EffectType.Status, EffectType.Destroy)]
+    public bool IsEnemy = true;
     [ResizableTextArea, Tooltip("카드 효과 텍스트")]
     public string Effect;
 }
@@ -79,6 +87,8 @@ public class RuneProperty
     public string Name;
     [ShowAssetPreview(32, 32), Tooltip("이미지")]
     public Sprite CardImage;
+    [Tooltip("우선순위, 0에 가까울수록 순위가 눞음"), MinValue(0)]
+    public int Priority;
     [Tooltip("카드 설명"), ResizableTextArea]
     public string CardDescription;
     // 유형 Enum ? 필요한가?

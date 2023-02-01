@@ -11,6 +11,7 @@ using static UnityEngine.UIElements.UxmlAttributeDescription;
 using Input = UnityEngine.Input;
 using SerializableDictionary;
 using System;
+using System.Linq;
 
 public enum RuneType
 {
@@ -18,13 +19,26 @@ public enum RuneType
     Main, // ï¿½ï¿½ï¿½ï¿½
 }
 
+[Serializable]
+public class EffectPair
+{
+    public Condition Condition;
+    public string Effect;
+    public float Value;
+}
+
+[Serializable]
+public class CustomDict : SerializableDictionary<EffectType, List<Pair>> { }
+
 public class MagicCircle : MonoBehaviour, IPointerClickHandler
 {
-
     private Dictionary<RuneType, List<Card>> _runeDict;
     public Dictionary<RuneType, List<Card>> RuneDict => _runeDict;
 
-    private Dictionary<string, string> _effectDict;
+    //private Dictionary<string, string> _effectDict;
+    //private Dictionary<EffectType, List<EffectPair>> _effectDict;
+    [SerializeField]
+    private CustomDict _effectDict;
 
     private const int _mainRuneCnt = 1;
 
@@ -103,7 +117,7 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
     public void Awake()
     {
         _runeDict = new Dictionary<RuneType, List<Card>>();
-        _effectDict = new Dictionary<string, string>();
+        _effectDict = new CustomDict();
 
         _nameText.text = "";
         _effectText.text = "";
@@ -113,7 +127,7 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
     {
         //if (IsBig == true)
         //{
-            Swipe1();
+        Swipe1();
         //}
     }
 
@@ -137,7 +151,7 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
 
         if (_runeDict.ContainsKey(RuneType.Main))
         {
-            if(_runeDict[RuneType.Main].Count == 1)
+            if (_runeDict[RuneType.Main].Count == 1)
             {
                 _runeDict[RuneType.Main][0].GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
                 _runeDict[RuneType.Main][0].GetComponentInParent<RectTransform>().transform.rotation = Quaternion.identity;
@@ -146,7 +160,7 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
             {
                 float angle = -2 * Mathf.PI / _runeDict[RuneType.Main].Count;
                 float distance = 100;
-                for(int i = 0; i < _runeDict[RuneType.Main].Count; i++)
+                for (int i = 0; i < _runeDict[RuneType.Main].Count; i++)
                 {
                     float height = Mathf.Sin(angle * i + (90 * Mathf.Deg2Rad)) * distance;
                     float width = Mathf.Cos(angle * i + (90 * Mathf.Deg2Rad)) * distance;
@@ -311,7 +325,7 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                 card.GetComponent<RectTransform>().DOAnchorPos(_runeDict[RuneType.Assist][changeIndex].GetComponent<RectTransform>().anchoredPosition, 0.3f).OnComplete(() =>
                 {
                     Destroy(_runeDict[RuneType.Assist][changeIndex].gameObject);
-                    
+
                     _runeDict[RuneType.Assist][changeIndex] = card;
 
                     AddEffect(card, false);
@@ -331,193 +345,32 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
 
         if (main)
         {
-            PairListFunction(card.Rune.MainRune.EffectDescription);
-        }
-        else
-        {
-            PairListFunction(card.Rune.AssistRune.EffectDescription);
-        }
-    }
-
-    private void PairListFunction(List<Pair> list)
-    {
-        foreach (var e in list)
-        {
-            if (e.Condition.ConditionType == ConditionType.None)
+            foreach (Pair e in card.Rune.MainRune.EffectDescription)
             {
-                AddEffectDict(e);
-            }
-            else
-            {
-                switch (e.Condition.ConditionType)
+                if (_effectDict.ContainsKey(e.EffectType))
                 {
-                    case ConditionType.IfTherIs:
-                        if(e.Condition.AttributeType != AttributeType.None)
-                        {
-                            if(e.Condition.IsEnemyOrMain == true)
-                            {
-                                if (_runeDict[RuneType.Main][0].Rune.MainRune.Attribute == e.Condition.AttributeType)
-                                {
-                                    AddEffectDict(e);
-                                }
-                            }
-                            else
-                            {
-                                bool isAttribute = false;
-                                foreach(var a in _runeDict[RuneType.Assist])
-                                {
-                                    if(a.Rune.AssistRune.Attribute == e.Condition.AttributeType)
-                                    {
-                                        isAttribute = true;
-                                        break;
-                                    }
-                                }
 
-                                if(isAttribute == true)
-                                {
-                                    AddEffectDict(e);
-                                }
-                            }
-                        }
-                        else if(e.Condition.StatusType != StatusName.Null)
-                        {
-                            if (e.Condition.IsEnemyOrMain == true)
-                            {
-                                if(StatusManager.Instance.IsHaveStatus(GameManager.Instance.enemy, e.Condition.StatusType))
-                                {
-                                    AddEffectDict(e);
-                                }
-                            }
-                            else
-                            {
-                                if (StatusManager.Instance.IsHaveStatus(GameManager.Instance.player, e.Condition.StatusType))
-                                {
-                                    AddEffectDict(e);
-                                }
-                            }
-                        }
-                        break;
-                    case ConditionType.Heath:
-                        if(e.Condition.StatusType != StatusName.Null)
-                        {
-                            if(e.Condition.IsEnemyOrMain == true)
-                            {
-                                switch (e.Condition.HeathType)
-                                {
-                                    case HealthType.MoreThan:
-                                        // Àû StatusType ÀÌ »óÅÂÀÌ»óÀÌ value ÀÌ»óÀÏ¶§
-                                        break;
-                                    case HealthType.LessThan:
-                                        // ÀÌÇÏ
-                                        break;
-                                    case HealthType.Percentage:
-                                        // ÆÛ¼¾Æ®
-                                        break;
-                                }
-                            }
-                            else
-                            {
-                                switch (e.Condition.HeathType)
-                                {
-                                    case HealthType.MoreThan:
-                                        // ³» StatusType ÀÌ »óÅÂÀÌ»óÀÌ value ÀÌ»óÀÏ¶§
-                                        break;
-                                    case HealthType.LessThan:
-                                        // ÀÌÇÏ
-                                        break;
-                                    case HealthType.Percentage:
-                                        // ÆÛ¼¾Æ®
-                                        break;
-                                }
-                            }
-                        }
-                        else
-                        {
-                            if (e.Condition.IsEnemyOrMain == true)
-                            {
-                                switch (e.Condition.HeathType)
-                                {
-                                    case HealthType.MoreThan:
-                                        // Àû hp ÀÌ »óÅÂÀÌ»óÀÌ value ÀÌ»óÀÏ¶§
-                                        break;
-                                    case HealthType.LessThan:
-                                        // ÀÌÇÏ
-                                        break;
-                                    case HealthType.Percentage:
-                                        // ÆÛ¼¾Æ®
-                                        break;
-                                }
-                            }
-                            else
-                            {
-                                switch (e.Condition.HeathType)
-                                {
-                                    case HealthType.MoreThan:
-                                        // ³» hp ÀÌ »óÅÂÀÌ»óÀÌ value ÀÌ»óÀÏ¶§
-                                        break;
-                                    case HealthType.LessThan:
-                                        // ÀÌÇÏ
-                                        break;
-                                    case HealthType.Percentage:
-                                        // ÆÛ¼¾Æ®
-                                        break;
-                                }
-                            }
-                        }
-                        break;
-                    case ConditionType.AssistRuneCount:
-                        int count = 0;
-                        foreach(var r in _runeDict[RuneType.Assist])
-                        {
-                            if (r.Rune != null)
-                                count++;
-                        }
-                        if(count >= e.Condition.Value)
-                        {
-                            AddEffectDict(e);
-                        }
-                        break;
+                    _effectDict[e.EffectType].Add(e);
+                }
+                else
+                {
+                    _effectDict.Add(e.EffectType, new List<Pair> { e });
                 }
             }
         }
-    }
-
-    private void AddEffectDict(Pair e)
-    {
-        if (e.EffectType == EffectType.Status)
-        {
-            string effect = Enum.GetName(typeof(StatusName), e.StatusType);
-            if (_effectDict.ContainsKey(effect))
-            {
-                _effectDict[effect] = (int.Parse(e.Effect) + int.Parse(_effectDict[effect])).ToString();
-            }
-            else
-            {
-                _effectDict.Add(effect, e.Effect);
-            }
-        }
-        else if (e.EffectType == EffectType.Etc)
-        {
-            string effect = e.Effect;
-            if (_effectDict.ContainsKey(effect))
-            {
-                //_effectDict[effect] += e.Effect;
-            }
-            else
-            {
-                _effectDict.Add(effect, effect);
-            }
-        }
         else
         {
-            string effect = Enum.GetName(typeof(EffectType), e.EffectType);
-            if (_effectDict.ContainsKey(effect))
+            foreach (Pair e in card.Rune.AssistRune.EffectDescription)
             {
-                _effectDict[effect] = (int.Parse(e.Effect) + int.Parse(_effectDict[effect])).ToString();
-            }
-            else
-            {
-                _effectDict.Add(effect, e.Effect);
+                if (_effectDict.ContainsKey(e.EffectType))
+                {
+
+                    _effectDict[e.EffectType].Add(e);
+                }
+                else
+                {
+                    _effectDict.Add(e.EffectType, new List<Pair> { e });
+                }
             }
         }
     }
@@ -555,30 +408,30 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                 #endregion
 
                 string effect = "";
-                foreach(var e in _effectDict)
-                {
-                    switch (e.Key)
-                    {
-                        case "Attack":
-                            effect += e.Value + "µ¥¹ÌÁö ";
-                            break;
-                        case "Defence":
-                            effect += e.Value + "¹æ¾îµµ ";
-                            break;
-                        case "Weak":
-                            effect += "¾àÈ­ " + e.Value + "ºÎ¿© ";
-                            break;
-                        case "Fire":
-                            effect += "È­»ó " + e.Value + "ºÎ¿© ";
-                            break;
-                        case "Ice":
-                            effect += "ºù°á " + e.Value + "ºÎ¿© ";
-                            break;
-                        default:
-                            break;
-                    }
-                }
-                effect = effect.Substring(0, effect.Length - 1);
+                //foreach(var e in _effectDict)
+                //{
+                //    switch (e.Key)
+                //    {
+                //        case "Attack":
+                //            effect += e.Value + "µ¥¹ÌÁö ";
+                //            break;
+                //        case "Defence":
+                //            effect += e.Value + "¹æ¾îµµ ";
+                //            break;
+                //        case "Weak":
+                //            effect += "¾àÈ­ " + e.Value + "ºÎ¿© ";
+                //            break;
+                //        case "Fire":
+                //            effect += "È­»ó " + e.Value + "ºÎ¿© ";
+                //            break;
+                //        case "Ice":
+                //            effect += "ºù°á " + e.Value + "ºÎ¿© ";
+                //            break;
+                //        default:
+                //            break;
+                //    }
+                //}
+                //effect = effect.Substring(0, effect.Length - 1);
                 _effectText.text = effect;
             }
         }
@@ -608,7 +461,7 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
             if (touch.phase == TouchPhase.Began)
             {
                 touchBeganPos = touch.position;
-                if(_cardCollector.SelectCard == null)
+                if (_cardCollector.SelectCard == null)
                 {
                     touchStart = false;
                 }
@@ -641,7 +494,7 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                     {
                         Debug.Log("down");
                         // ¾Æ¹«Æ¾ ÀÏ´Ü ÇØ
-                        if(touchStart == false && touchEnd == false && _cardCollector.SelectCard == null)
+                        if (touchStart == false && touchEnd == false && _cardCollector.SelectCard == null)
                         {
                             _cardCollector.CardRotate();
                         }
@@ -673,7 +526,7 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
     }
 
 
-    public void Damage()
+    public void Damage() // ´ëÃË ¼öÁ¤
     {
         // ï¿½×³ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â´Ù´ï¿?ï¿½ï¿½ï¿½ï¿½, ï¿½Ù¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ù°ï¿½ ï¿½Å±ï¿½ ï¿½ï¿½ï¿½ï¿½
 
@@ -696,33 +549,126 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
         seq.AppendInterval(0.1f);
         seq.AppendCallback(() =>
         {
-            foreach (var e in _effectDict)
-            {
-                switch (e.Key)
-                {
-                    case "Defence":
-                        // ¾ÆÁ÷ ¾øÀ½
-                        break;
-                    case "Weak":
-                        StatusManager.Instance.AddStatus(GameManager.Instance.enemy, StatusName.Weak, int.Parse(e.Value));
-                        break;
-                    case "Fire":
-                        StatusManager.Instance.AddStatus(GameManager.Instance.enemy, StatusName.Fire, int.Parse(e.Value));
-                        break;
-                    case "Ice":
-                        StatusManager.Instance.AddStatus(GameManager.Instance.enemy, StatusName.Ice, int.Parse(e.Value));
-                        break;
-                    default:
-                        break;
-                }
-            }
+            // ºÎ¿©, ¹æ¾î, °ø°Ý, »èÁ¦ ¼ø¼­
 
-            foreach (var e in _effectDict)
+            //foreach (var e in _effectDict)
+            //{
+            //    switch (e.Key)
+            //    {
+            //        case "Defence":
+            //            // ¾ÆÁ÷ ¾øÀ½
+            //            break;
+            //        case "Weak":
+            //            StatusManager.Instance.AddStatus(GameManager.Instance.enemy, StatusName.Weak, int.Parse(e.Value));
+            //            break;
+            //        case "Fire":
+            //            StatusManager.Instance.AddStatus(GameManager.Instance.enemy, StatusName.Fire, int.Parse(e.Value));
+            //            break;
+            //        case "Ice":
+            //            StatusManager.Instance.AddStatus(GameManager.Instance.enemy, StatusName.Ice, int.Parse(e.Value));
+            //            break;
+            //        default:
+            //            break;
+            //    }
+            //}
+
+            //foreach (var e in _effectDict)
+            //{
+            //    switch (e.Key)
+            //    {
+            //        case "Attack":
+            //            GameManager.Instance.player.Attack(int.Parse(e.Value));
+            //            break;
+            //    }
+            //}
+
+            foreach (var e in _effectDict[EffectType.Status])
             {
-                switch (e.Key)
+                Unit target = e.IsEnemy == true ? GameManager.Instance.enemy : GameManager.Instance.player;
+                switch (e.Condition.ConditionType)
                 {
-                    case "Attack":
-                        GameManager.Instance.player.Attack(int.Parse(e.Value));
+                    case ConditionType.None:
+                        StatusManager.Instance.AddStatus(target, e.StatusType, int.Parse(e.Effect));
+                        break;
+                    case ConditionType.IfThereIs:
+                        if(e.Condition.AttributeType != AttributeType.None)
+                        {
+                            bool b = false;
+                            if (_runeDict[RuneType.Main][0].Rune.MainRune.Attribute == e.Condition.AttributeType)
+                                b = true;
+                            for(int i = 0; i < _runeDict[RuneType.Assist].Count; i++)
+                            {
+                                if (_runeDict[RuneType.Assist][i].Rune.AssistRune.Attribute == e.Condition.AttributeType)
+                                    b = true;
+                            }
+
+                            if(b == true)
+                            {
+                                StatusManager.Instance.AddStatus(target, e.StatusType, int.Parse(e.Effect));
+                            }
+                        }
+                        else if(e.Condition.StatusType != StatusName.Null)
+                        {
+                            if (StatusManager.Instance.IsHaveStatus(target, e.Condition.StatusType) == true)
+                            {
+                                StatusManager.Instance.AddStatus(target, e.StatusType, int.Parse(e.Effect));
+                            }
+                        }
+                        break;
+                    case ConditionType.IfNotThereIs:
+                        if (e.Condition.AttributeType != AttributeType.None)
+                        {
+                            bool b = false;
+                            if (_runeDict[RuneType.Main][0].Rune.MainRune.Attribute == e.Condition.AttributeType)
+                                b = true;
+                            for (int i = 0; i < _runeDict[RuneType.Assist].Count; i++)
+                            {
+                                if (_runeDict[RuneType.Assist][i].Rune.AssistRune.Attribute == e.Condition.AttributeType)
+                                {
+                                    b = true;
+                                    break;
+                                }
+                            }
+
+                            if (b == false)
+                            {
+                                StatusManager.Instance.AddStatus(target, e.StatusType, int.Parse(e.Effect));
+                            }
+                        }
+                        else if (e.Condition.StatusType != StatusName.Null)
+                        {
+                            if (StatusManager.Instance.IsHaveStatus(target, e.Condition.StatusType) == false)
+                            {
+                                StatusManager.Instance.AddStatus(target, e.StatusType, int.Parse(e.Effect));
+                            }
+                        }
+                        break;
+                    case ConditionType.Heath:
+                        if(e.Condition.StatusType == StatusName.Null) // ÇÇ
+                        {
+                            if(target.IsHealthAmount(e.Condition.Value, e.Condition.HeathType))
+                            {
+                                StatusManager.Instance.AddStatus(target, e.StatusType, int.Parse(e.Effect));
+                            }
+                        }
+                        else // ½ºÅÈ
+                        {
+
+                        }
+                        break;
+                    case ConditionType.AssistRuneCount:
+                        int count = 0;
+                        for(int i = 0; i < _runeDict[RuneType.Assist].Count; i++)
+                        {
+                            if (_runeDict[RuneType.Assist][i].Rune != null)
+                            {
+                                count++;
+                            }
+                        }
+                        if(count >= e.Condition.Value)
+                        {
+                            StatusManager.Instance.AddStatus(target, e.StatusType, int.Parse(e.Effect));
+                        }
                         break;
                 }
             }
@@ -739,16 +685,13 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
             }
             _cardCollector.UIUpdate();
 
-            foreach(var rList in _runeDict)
+            foreach (var rList in _runeDict)
             {
-                foreach(var r in rList.Value)
+                foreach (var r in rList.Value)
                 {
-                    if(r.Rune == null)
+                    if (r.Rune == null)
                     {
                         Destroy(r.gameObject);
-                        // Ä«µåµéÀº destroy½ÃÅ°¸é ¾ÈµÈ´Ù.
-
-                        // ¿©±â¼­ ¸¶¹ýÁø¿¡ ÀÖ´Â ·éµéÀ» rest·Î ¿È±â¸é µÉ µí
                     }
                     else
                     {
@@ -764,7 +707,7 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
 
             IsBig = false;
 
-            if(_cardCollector.IsFront == false)
+            if (_cardCollector.IsFront == false)
             {
                 _cardCollector.CardRotate();
             }

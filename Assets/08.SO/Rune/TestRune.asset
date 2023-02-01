@@ -17,14 +17,27 @@ MonoBehaviour:
   MainRune:
     Name: 
     CardImage: {fileID: 0}
+    Priority: 0
     CardDescription: 
-    EffectDescription: []
+    EffectDescription:
+    - Condition:
+        ConditionType: 3
+        AttributeType: 0
+        StatusType: 0
+        HeathType: 1
+        Value: 0
+        IsEnemyOrMain: 0
+      EffectType: 2
+      StatusType: 2
+      IsEnemy: 1
+      Effect: 
     Attribute: 0
     Cost: 0
     DelayTurn: 0
   AssistRune:
     Name: 
     CardImage: {fileID: 0}
+    Priority: 0
     CardDescription: 
     EffectDescription: []
     Attribute: 0
