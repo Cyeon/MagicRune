@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class CardsViewUI : MonoBehaviour
@@ -21,17 +22,36 @@ public class CardsViewUI : MonoBehaviour
     [SerializeField]
     private bool _isRest = false;
 
-    private Color active = new Color(1f, 1f, 1f, 1f);
-    private Color deActive = new Color(1f, 1f, 1f, 0f);
+    [SerializeField]
+    private GameObject _shadowPanel = null;
+
+    [SerializeField]
+    private GameObject _otherCardsView = null;
+
+    [SerializeField]
+    private Color _onColor = new Color(0f, 0f, 0f, 1f);
+
+    private Color _offColor = new Color(0f, 0f, 0f, 0f);
+    private Image _shadowPanelImage = null;
+
+    private void Start()
+    {
+        EventManager.StartListening(Define.CLICK_VIEW_UI, ClickCard);
+        _shadowPanelImage = _shadowPanel.GetComponent<Image>();
+        _shadowPanelImage.color = _offColor;
+        _shadowPanelImage.raycastTarget = false;
+    }
 
     private void SetChild(List<Card> cards)
     {
         for (int i = 0; i < cards.Count; i++)
         {
             GameObject gameObject = cards[i].gameObject;
-            
+
             if (gameObject == null) { continue; }
-            
+
+            gameObject.GetComponent<ViewCard>().isActive = true;
+
             Card card = gameObject.GetComponent<Card>();
             card.SetRune(false);
             card.enabled = false;
@@ -48,6 +68,9 @@ public class CardsViewUI : MonoBehaviour
         {
             GameObject gameObject = cards[i].gameObject;
             if (gameObject == null) { continue; }
+
+            gameObject.GetComponent<ViewCard>().isActive = false;
+
             gameObject.GetComponent<Card>().enabled = true;
             gameObject.SetActive(false);
             gameObject.transform.rotation = Quaternion.identity;
@@ -73,6 +96,7 @@ public class CardsViewUI : MonoBehaviour
             SetChild((List<Card>)_cardCollector.DeckCards);
 
         _scrollView.SetActive(true);
+        _otherCardsView.SetActive(false);
     }
 
     public void CloseUI()
@@ -83,5 +107,30 @@ public class CardsViewUI : MonoBehaviour
             ReturnChild((List<Card>)_cardCollector.DeckCards);
 
         _scrollView.SetActive(false);
+        _otherCardsView.SetActive(true);
+    }
+
+    private void ClickCard()
+    {
+        if (_scrollView.activeSelf)
+        {
+            _shadowPanelImage.color = _onColor;
+            _shadowPanelImage.raycastTarget = true;
+        }
+    }
+
+    public void ClickPanel()
+    {
+        if (_scrollView.activeSelf)
+        {
+            _shadowPanelImage.color = _offColor;
+            _shadowPanelImage.raycastTarget = false;
+            _scrollView.transform.GetChild(0).Find("Card_Temp").GetComponent<ViewCard>().DestroySelf();
+        }
+    }
+
+    private void OnDestroy()
+    {
+        EventManager.StopListening(Define.CLICK_VIEW_UI, ClickCard);
     }
 }

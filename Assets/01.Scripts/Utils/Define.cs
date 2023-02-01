@@ -12,4 +12,6 @@ public class Define
     public const int GAME_WIN = 1000;
     public const int GAME_LOSE = 1001;
     public const int GAME_END = 1002;
+
+    public const int CLICK_VIEW_UI = 10000;
 }
