@@ -17,7 +17,6 @@ MonoBehaviour:
   MainRune:
     Name: "\uC544\uC774\uC2A4 \uBE0C\uB808\uC774\uD06C"
     CardImage: {fileID: 21300000, guid: f8603a6a6c7d73845880cea63932eb23, type: 3}
-    Priority: 3
     CardDescription: "\uC5BC\uC74C\uC744 \uBD80\uC218\uB294 \uACF5\uACA9\uC744 \uD558\uC5EC
       10\uC758 \uB300\uBBF8\uC9C0\uB97C \uC8FC\uACE0, \uB9CC\uC57D \uC801\uC774 \uBE59\uACB0
       \uC0C1\uD0DC\uB77C\uBA74 + 20\uB300\uBBF8\uC9C0 \uBC0F \uBE59\uACB0\uC744 \uC0AD\uC81C\uD55C\uB2E4"
@@ -61,7 +60,6 @@ MonoBehaviour:
   AssistRune:
     Name: "\uC544\uC774\uC2A4 \uD788\uD2B8"
     CardImage: {fileID: 21300000, guid: f8603a6a6c7d73845880cea63932eb23, type: 3}
-    Priority: 2
     CardDescription: "\uC5BC\uC74C\uC73C\uB85C \uACF5\uACA9\uD558\uC5EC 1\uC758 \uBE59\uACB0\uC744
       \uBD80\uC5EC \uD55C\uB2E4"
     EffectDescription:
@@ -76,17 +74,6 @@ MonoBehaviour:
       StatusType: 3
       IsEnemy: 1
       Effect: 1
-    - Condition:
-        ConditionType: 1
-        AttributeType: 0
-        StatusType: 3
-        HeathType: 0
-        Value: 0
-        IsEnemyOrMain: 1
-      EffectType: 0
-      StatusType: 0
-      IsEnemy: 1
-      Effect: 5
     Attribute: 3
     Cost: 1
     DelayTurn: 1
