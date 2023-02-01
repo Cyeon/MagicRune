@@ -16,7 +16,7 @@ public class Pattern
 
     public void Start()
     {
-        UIManager.Instance.ReloadPattern(icon, value.ToString());
+        UIManager.Instance.ReloadPattern(icon, value > 0 ? value.ToString() : "");
         PatternManager.Instance.funcList.value = value;
         patternStartFunc?.Invoke();
     }

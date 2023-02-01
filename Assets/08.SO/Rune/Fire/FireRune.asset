@@ -17,14 +17,31 @@ MonoBehaviour:
   MainRune:
     Name: "\uD654\uC5FC"
     CardImage: {fileID: 21300000, guid: 88e0418671b86c0459950244b643383e, type: 3}
+    Priority: 0
     CardDescription: "\uD30C\uC774\uC5B4\uBCFC\uC744 \uB358\uC838 7\uC758 \uB300\uBBF8\uC9C0\uB97C
       \uC8FC\uACE0, 3\uC758 \uD654\uC0C1\uC744 \uBD80\uC5EC\uD55C\uB2E4"
     EffectDescription:
-    - EffectType: 0
-      StatusType: 0
+    - Condition:
+        ConditionType: 0
+        AttributeType: 0
+        StatusType: 0
+        HeathType: 0
+        Value: 0
+        IsEnemyOrMain: 1
+      EffectType: 0
+      StatusType: 1
+      IsEnemy: 1
       Effect: 7
-    - EffectType: 2
+    - Condition:
+        ConditionType: 0
+        AttributeType: 0
+        StatusType: 0
+        HeathType: 0
+        Value: 0
+        IsEnemyOrMain: 1
+      EffectType: 2
       StatusType: 2
+      IsEnemy: 1
       Effect: 3
     Attribute: 0
     Cost: 4
@@ -32,11 +49,20 @@ MonoBehaviour:
   AssistRune:
     Name: "\uBD88\uAF43"
     CardImage: {fileID: 21300000, guid: 88e0418671b86c0459950244b643383e, type: 3}
+    Priority: 3
     CardDescription: "\uBD88\uAF43\uC744 \uD53C\uC6CC 3\uC758 \uB300\uBBF8\uC9C0\uB97C
       \uC900\uB2E4."
     EffectDescription:
-    - EffectType: 0
+    - Condition:
+        ConditionType: 0
+        AttributeType: 0
+        StatusType: 0
+        HeathType: 0
+        Value: 0
+        IsEnemyOrMain: 1
+      EffectType: 0
       StatusType: 0
+      IsEnemy: 1
       Effect: 3
     Attribute: 0
     Cost: 1

@@ -40,7 +40,7 @@ public class PatternFuncList : MonoBehaviour
         seq.Append(UIManager.Instance.enemyIcon.DOShakePosition(3, 50, 5)).SetEase(Ease.Linear);
         seq.Append(UIManager.Instance.enemyIcon.DOLocalMoveY(-1700f, 0.3f)).SetEase(Ease.Linear);
         seq.AppendCallback(() => DelayAttack());
-        seq.Append(UIManager.Instance.enemyIcon.DOLocalMoveY(0, 0.3f)).SetEase(Ease.Linear);
+        seq.Append(UIManager.Instance.enemyIcon.DOLocalMoveY(130, 0.3f)).SetEase(Ease.Linear);
         seq.AppendInterval(0.1f);
         seq.AppendCallback(() => GameManager.Instance.TurnChange());
     }

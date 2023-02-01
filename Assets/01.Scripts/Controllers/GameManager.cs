@@ -26,13 +26,15 @@ public class GameManager : MonoSingleton<GameManager>
     {
         DOTween.Init(false, false, LogBehaviour.Default).SetCapacity(100, 20);
     }
+
     private void Start()
     {
-
         enemy = EnemyManager.Instance.SpawnEnemy();
         player = FindObjectOfType<Player>();
 
         UIManager.instance.PlayerHealthbarInit(player.HP);
+
+        FeedbackManager.Instance.Init();
 
         TurnChange();
     }
