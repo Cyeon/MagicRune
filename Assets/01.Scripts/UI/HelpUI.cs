@@ -9,6 +9,7 @@ public enum HelpUIButtons
     interaction,
     gameScene,
     manual,
+    card,
     back,
     on
 }
@@ -41,6 +42,7 @@ public class HelpUI : MonoBehaviour
     public Button interactionButton = null;
     public Button gameSceneButton = null;
     public Button manualButton = null;
+    public Button cardButton = null;
 
     [Header("GameObjects")]
     public GameObject mainPanel = null;
@@ -68,6 +70,7 @@ public class HelpUI : MonoBehaviour
         interactionButton.onClick.AddListener(() => ButtonClick(HelpUIButtons.interaction));
         gameSceneButton.onClick.AddListener(() => ButtonClick(HelpUIButtons.gameScene));
         manualButton.onClick.AddListener(() => ButtonClick(HelpUIButtons.manual));
+        cardButton.onClick.AddListener(() => ButtonClick(HelpUIButtons.card));
 
         TemplateInstantiate();
     }
@@ -111,6 +114,9 @@ public class HelpUI : MonoBehaviour
                 break;
             case HelpUIButtons.manual:
                 childPanels[(int)HelpUIButtons.manual].SetActive(true);
+                break;
+            case HelpUIButtons.card:
+                childPanels[(int)HelpUIButtons.card].SetActive(true);
                 break;
             default:
                 break;
