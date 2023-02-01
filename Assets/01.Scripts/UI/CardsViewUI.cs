@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -11,32 +12,38 @@ public class CardsViewUI : MonoBehaviour
     private CardCollector _cardCollector = null;
 
     [SerializeField]
+    private bool _isRest = false;
+
+    [SerializeField]
+    private Color _onColor = new Color(0f, 0f, 0f, 1f);
+
+    [Header("GameObjects")]
+    [SerializeField]
     private GameObject _scrollView = null;
 
     [SerializeField]
     private Transform _content = null;
 
     [SerializeField]
-    private TMP_Text _amountText = null;
-
-    [SerializeField]
-    private bool _isRest = false;
-
-    [SerializeField]
     private GameObject _shadowPanel = null;
+
+    [SerializeField]
+    private TMP_Text _amountText = null;
 
     [SerializeField]
     private GameObject _otherCardsView = null;
 
     [SerializeField]
-    private Color _onColor = new Color(0f, 0f, 0f, 1f);
+    private Button _reverseButton = null;
 
     private Color _offColor = new Color(0f, 0f, 0f, 0f);
+
     private Image _shadowPanelImage = null;
 
     private void Start()
     {
         EventManager.StartListening(Define.CLICK_VIEW_UI, ClickCard);
+        _reverseButton.onClick.AddListener(() => CardReverse());
         _shadowPanelImage = _shadowPanel.GetComponent<Image>();
         _shadowPanelImage.color = _offColor;
         _shadowPanelImage.raycastTarget = false;
@@ -125,7 +132,18 @@ public class CardsViewUI : MonoBehaviour
         {
             _shadowPanelImage.color = _offColor;
             _shadowPanelImage.raycastTarget = false;
-            _scrollView.transform.GetChild(0).Find("Card_Temp").GetComponent<ViewCard>().DestroySelf();
+            _content.parent.Find("Card_Temp").GetComponent<ViewCard>().DestroySelf();
+        }
+    }
+
+    public void CardReverse()
+    {
+        foreach (Transform item in _content)
+        {
+            Card card = item.GetComponent<Card>();
+            card.enabled = true;
+            card.IsFront = !card.IsFront;
+            card.enabled = false;
         }
     }
 
