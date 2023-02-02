@@ -8,27 +8,25 @@ public class StatusFuncList : MonoBehaviour
 
     public void AddGetDamage(float dmg)
     {
-        if(GameManager.Instance.GameTurn == GameTurn.Player)
-            GameManager.Instance.enemy.currentDmg += dmg;
-        else if(GameManager.Instance.GameTurn == GameTurn.Monster)
-            GameManager.Instance.player.currentDmg += dmg;
+        status.unit.currentDmg += dmg;
     }
 
     public void AddAtkDamage(float dmg)
     {
-        GameManager.Instance.currentUnit.currentDmg += dmg;
+        status.unit.currentDmg += dmg;
     }
 
     public void RemAtkDamagePercent(float percent)
     {
-        GameManager.Instance.currentUnit.currentDmg -= GameManager.Instance.currentUnit.currentDmg * (percent * 0.01f);
+        status.unit.currentDmg -= status.unit.currentDmg * (percent * 0.01f);
     }
 
     public void StackDmg()
     {
         status.unit.TakeDamage(status.typeValue, true);
-        status.typeValue = 0;
         UIManager.Instance.UpdateEnemyHealthbar();
+        status.typeValue = 0;
+        UIManager.Instance.RemoveStatusPanel(status.unit, status.statusName);
     }
 
     public void AddFire()
@@ -37,8 +35,15 @@ public class StatusFuncList : MonoBehaviour
         if (status != null)
         {
             GameManager.Instance.attackUnit.TakeDamage(status.typeValue * 2);
-            StatusManager.Instance.RemStatus(GameManager.Instance.attackUnit, status);
-            UIManager.Instance.ReloadStatusPanel(GameManager.Instance.attackUnit, status.statusName, 0);
+            status.typeValue = 0;
+            UIManager.Instance.RemoveStatusPanel(status.unit, status.statusName);
         }
+    }
+
+    public void WoundGetDmg()
+    {
+        AddGetDamage(status.typeValue);
+        status.typeValue = 0;
+        UIManager.Instance.RemoveStatusPanel(status.unit, status.statusName);
     }
 }

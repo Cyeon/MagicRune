@@ -20,7 +20,6 @@ public class StatusManager : MonoSingleton<StatusManager>
         {
             _statusFuncList.status = funStatus;
             funStatus.statusFunc?.Invoke();
-            UIManager.Instance.ReloadStatusPanel(funStatus.unit, funStatus.statusName, funStatus.typeValue);
         }
     }
 
@@ -109,6 +108,7 @@ public class StatusManager : MonoSingleton<StatusManager>
             if (currentStauts != null)
             {
                 unit.unitStatusDic[status.invokeTime].Remove(status);
+                UIManager.Instance.RemoveStatusPanel(unit, status.statusName);
             }
             else
             {
@@ -121,6 +121,23 @@ public class StatusManager : MonoSingleton<StatusManager>
     {
         Status status = GetStatus(statusName);
         RemStatus(unit, status);
+    }
+
+    public void StatusUpdate(Unit unit)
+    {
+        foreach (var x in unit.unitStatusDic)
+        {
+            List<int> indexes = new List<int>();
+            for (int i = 0; i < x.Value.Count; i++)
+            {
+                if (x.Value[i].typeValue <= 0)
+                {
+                    indexes.Add(i);
+                }
+            }
+
+            indexes.ForEach(e => RemStatus(unit, x.Value[e]));
+        }
     }
 
     public void StatusTurnChange(Unit unit)

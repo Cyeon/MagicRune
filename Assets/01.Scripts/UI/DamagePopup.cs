@@ -31,4 +31,9 @@ public class DamagePopup : MonoBehaviour
             Destroy(gameObject);
         });
     }
+
+    private void OnDestroy()
+    {
+        transform.DOKill();
+    }
 }
