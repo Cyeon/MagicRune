@@ -23,7 +23,8 @@ public enum StatusName
     Null,
     Weak,
     Fire,
-    Ice
+    Ice,
+    Wound
 }
 
 [System.Serializable]

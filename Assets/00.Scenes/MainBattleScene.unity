@@ -2173,6 +2173,7 @@ MonoBehaviour:
     invokeTime: 0
     type: 0
     typeValue: 0
+    unit: {fileID: 0}
     statusFunc:
       m_PersistentCalls:
         m_Calls: []
@@ -2198,6 +2199,7 @@ MonoBehaviour:
     invokeTime: 2
     type: 1
     typeValue: 0
+    unit: {fileID: 0}
     statusFunc:
       m_PersistentCalls:
         m_Calls:
@@ -2222,6 +2224,7 @@ MonoBehaviour:
     invokeTime: 1
     type: 1
     typeValue: 2
+    unit: {fileID: 0}
     statusFunc:
       m_PersistentCalls:
         m_Calls:
@@ -2246,6 +2249,7 @@ MonoBehaviour:
     invokeTime: 3
     type: 0
     typeValue: 0
+    unit: {fileID: 0}
     statusFunc:
       m_PersistentCalls:
         m_Calls:
@@ -2278,6 +2282,31 @@ MonoBehaviour:
           m_CallState: 2
     icon: {fileID: 21300000, guid: 95242b9d17125e1479dc4d8a204a4fa3, type: 3}
     color: {r: 1, g: 0.29622638, b: 0.3843256, a: 1}
+  - statusName: 4
+    invokeTime: 2
+    type: 0
+    typeValue: 0
+    unit: {fileID: 0}
+    statusFunc:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 594343483}
+          m_TargetAssemblyTypeName: StatusFuncList, Assembly-CSharp
+          m_MethodName: WoundGetDmg
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    addFunc:
+      m_PersistentCalls:
+        m_Calls: []
+    icon: {fileID: 21300000, guid: 013cf7dbd99e3604cb8c1d7dcdec9981, type: 3}
+    color: {r: 1, g: 0, b: 0.12290478, a: 1}
 --- !u!1 &637362596
 GameObject:
   m_ObjectHideFlags: 0

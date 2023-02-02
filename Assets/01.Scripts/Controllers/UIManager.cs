@@ -102,29 +102,48 @@ public class UIManager : MonoSingleton<UIManager>
         GetStatusPanel(status, trm);
     }
 
-    public void ReloadStatusPanel(Unit unit, StatusName name, int duration)
+    public GameObject GetStatusPanelStatusObj(Unit unit, StatusName name)
     {
         Transform trm = unit == GameManager.Instance.player ? _statusPlayerPanel : _statusEnemyPanel;
 
         GameObject obj = null;
-        for(int i = 0; i < trm.childCount; i++)
+        for (int i = 0; i < trm.childCount; i++)
         {
-            if(trm.GetChild(i).GetComponent<StatusPanel>().statusName == name)
+            if (trm.GetChild(i).GetComponent<StatusPanel>().statusName == name)
             {
                 obj = trm.GetChild(i).gameObject;
             }
         }
+
+        return obj;
+    }
+
+    public void ReloadStatusPanel(Unit unit, StatusName name, int duration)
+    {
+        GameObject obj = GetStatusPanelStatusObj(unit, name);
 
         if (obj == null)
             return;
 
         if(duration <= 0)
         {
-            Destroy(obj);
+            RemoveStatusPanel(unit, name);
             return;
         }
 
         obj.GetComponent<StatusPanel>().duration.text = duration.ToString();
+    }
+
+    public void RemoveStatusPanel(Unit unit, StatusName name)
+    {
+        GameObject obj = GetStatusPanelStatusObj(unit, name);
+
+        if (obj == null)
+        {
+            return;
+        }
+
+        Destroy(obj);
     }
 
     #endregion

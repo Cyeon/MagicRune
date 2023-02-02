@@ -49,6 +49,10 @@ public class GameManager : MonoSingleton<GameManager>
         {
             OnPlayerTurn();
         }
+        if(Input.GetKeyDown(KeyCode.A))
+        {
+            StatusManager.Instance.AddStatus(GameManager.Instance.enemy, StatusName.Wound);
+        }
     }
 
     private void OnPlayerTurn()
@@ -77,6 +81,9 @@ public class GameManager : MonoSingleton<GameManager>
         {
             player?.InvokeStatus(StatusInvokeTime.End);
             enemy?.InvokeStatus(StatusInvokeTime.End);
+
+            StatusManager.Instance.StatusUpdate(player);
+            StatusManager.Instance.StatusUpdate(enemy);
         }
 
         switch (gameTurn)
