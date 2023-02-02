@@ -64,24 +64,21 @@ public class Unit : MonoBehaviour
     }
     
     /// <summary>
-    /// ?°ë?ì§€ ë°›ëŠ” ?¨ìˆ˜
+    /// µ¥¹ÌÁö ¹Ş´Â ÇÔ¼ö
     /// </summary>
     /// <param name="damage"></param>
-    public void TakeDamage(float damage)
+    public void TakeDamage(float damage, bool isFixed = false)
     {
         currentDmg = damage;
         
         InvokeStatus(StatusInvokeTime.GetDamage);
 
-        // ë§Œì•½ ?´ë“œê°€ ?ˆë‹¤ë©?
-        if(Shield > 0)
+        if(Shield > 0 && isFixed == false)
         {
-            // ë°›ëŠ” ?°ë?ì§€ê°€ ?´ë“œë³´ë‹¤ ?¬ë‹¤ë©?
             if (Shield - currentDmg >= 0)
-                Shield -= currentDmg; // ?´ë“œ ê¹ê¸°
-            else // ?„ë‹ˆë©?
+                Shield -= currentDmg;
+            else
             {
-                // ?´ë“œ ?†ì• ê³??¨ì? ?°ë?ì§€ë§Œí¼ ì²´ë ¥ ê¹ê¸°
                 currentDmg -= Shield;
                 HP -= currentDmg;
             }

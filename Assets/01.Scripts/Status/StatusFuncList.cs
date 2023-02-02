@@ -26,7 +26,7 @@ public class StatusFuncList : MonoBehaviour
 
     public void StackDmg()
     {
-        GameManager.Instance.currentUnit.HP -= status.typeValue;
+        status.unit.TakeDamage(status.typeValue, true);
         status.typeValue = 0;
         UIManager.Instance.UpdateEnemyHealthbar();
     }
@@ -36,7 +36,7 @@ public class StatusFuncList : MonoBehaviour
         Status status = StatusManager.Instance.GetUnitHaveStauts(GameManager.Instance.attackUnit, StatusName.Ice);
         if (status != null)
         {
-            GameManager.Instance.attackUnit.HP -= status.typeValue * 2;
+            GameManager.Instance.attackUnit.TakeDamage(status.typeValue * 2);
             StatusManager.Instance.RemStatus(GameManager.Instance.attackUnit, status);
             UIManager.Instance.ReloadStatusPanel(GameManager.Instance.attackUnit, status.statusName, 0);
         }

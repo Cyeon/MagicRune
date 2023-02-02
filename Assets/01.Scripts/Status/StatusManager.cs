@@ -20,6 +20,7 @@ public class StatusManager : MonoSingleton<StatusManager>
         {
             _statusFuncList.status = funStatus;
             funStatus.statusFunc?.Invoke();
+            UIManager.Instance.ReloadStatusPanel(funStatus.unit, funStatus.statusName, funStatus.typeValue);
         }
     }
 
@@ -89,6 +90,7 @@ public class StatusManager : MonoSingleton<StatusManager>
             }
             else
             {
+                newStatus.unit = unit;
                 unit.unitStatusDic[newStatus.invokeTime].Add(newStatus);
                 UIManager.Instance.AddStatus(unit, newStatus);
 
