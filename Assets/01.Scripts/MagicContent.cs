@@ -102,7 +102,7 @@ public class MagicContent : MonoBehaviour
     {
         if (_effectDict.ContainsKey(RuneType.Main) == true)
         {
-            _effectDict[RuneType.Main][0].transform.localPosition = new Vector3(_offset.x, _offset.y, -20);
+            _effectDict[RuneType.Main][0].transform.localPosition = new Vector3(_offset.x, _offset.y, -50);
         }
 
         if (_effectDict.ContainsKey(RuneType.Assist) == true)
