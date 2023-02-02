@@ -5,56 +5,95 @@ using UnityEngine;
 public class MagicContent : MonoBehaviour
 {
     [SerializeField]
-    private List<CardSO> _cardList;
-    public List<CardSO> CardList => _cardList;
-
+    private MagicCircle _magicCircle;
     [SerializeField]
-    private Vector2 _offset;
+    private float _startAxis = 90;
     [SerializeField]
-    private GameObject cardTemplate;
+    private float _distance = 300;
 
-    private const int CARD_SIZE_X = 300;
+    private bool _isAdd = false;
 
-    public void AddCard(CardSO card)
+    private Dictionary<RuneType, List<GameObject>> _effectDict = new Dictionary<RuneType, List<GameObject>>();
+
+    //private void Update()
+    //{
+    //    if (_magicCircle.RuneDict.ContainsKey(RuneType.Main) == true)
+    //    {
+
+    //    }
+    //}
+
+    public void AddEffect(GameObject effect, bool isMain)
     {
-        _cardList.Add(card);
+        if (effect == null) return;
 
-        GameObject go = Instantiate(cardTemplate, this.transform);
-        go.transform.position = Vector3.zero;
-        go.GetComponent<Card>().SetRune(card);
-        go.GetComponent<Card>().IsEquipMagicCircle = true;
+        GameObject g = Instantiate(effect, this.transform);
+        g.transform.position = Vector3.zero;
+
+        if (isMain == true)
+        {
+            if (_effectDict.ContainsKey(RuneType.Main) == true)
+            {
+                _effectDict[RuneType.Main].Add(g);
+            }
+            else
+            {
+                _effectDict.Add(RuneType.Main, new List<GameObject> { g });
+            }
+        }
+        else
+        {
+            if (_effectDict.ContainsKey(RuneType.Assist) == true)
+            {
+                _effectDict[RuneType.Assist].Add(g);
+            }
+            else
+            {
+                _effectDict.Add(RuneType.Assist, new List<GameObject> { g });
+            }
+        }
 
         Sort();
     }
 
     public void Clear()
     {
-        for(int i = 0; i < _cardList.Count; i++)
+        if (_effectDict.ContainsKey(RuneType.Main) == true)
         {
-            Destroy(transform.GetChild(i).gameObject);
+            foreach(var e in _effectDict[RuneType.Main])
+            {
+                Destroy(e.gameObject);
+            }
         }
-        _cardList.Clear();
+
+        if (_effectDict.ContainsKey(RuneType.Assist) == true)
+        {
+            foreach (var e in _effectDict[RuneType.Assist])
+            {
+                Destroy(e.gameObject);
+            }
+        }
+
+        _effectDict.Clear();
     }
 
-    public void Sort()
+    private void Sort()
     {
-        if (_cardList.Count == 0) return;
-
-        float sideWidth = (1440 - CARD_SIZE_X * .7f * _cardList.Count) / 2;
-        for(int i = 0; i < transform.childCount; i++)
+        if (_effectDict.ContainsKey(RuneType.Main) == true)
         {
-            transform.GetChild(i).GetComponent<RectTransform>().anchoredPosition3D = new Vector3(sideWidth + CARD_SIZE_X / 2 + CARD_SIZE_X *.7f * i + _offset.x, _offset.y, 0);
-
-            if (i % 2 == 0)
-            {
-                transform.GetChild(i).rotation = Quaternion.Euler(0, 0, 7);
-            }
-            else
-            {
-                transform.GetChild(i).rotation = Quaternion.Euler(0, 0, -7);
-            }
+            _effectDict[RuneType.Main][0].transform.position = Vector3.zero;
         }
 
+        if (_effectDict.ContainsKey(RuneType.Assist) == true)
+        {
+            float angle = -2 * Mathf.PI / _effectDict[RuneType.Assist].Count;
 
+            for (int i = 0; i < _effectDict[RuneType.Assist].Count; i++)
+            {
+                float height = Mathf.Sin(angle * i + (90 * Mathf.Deg2Rad)) * _distance;
+                float width = Mathf.Cos(angle * i + (90 * Mathf.Deg2Rad)) * _distance;
+                _effectDict[RuneType.Assist][i].transform.position = new Vector3(width, height, 0);
+            }
+        }
     }
 }

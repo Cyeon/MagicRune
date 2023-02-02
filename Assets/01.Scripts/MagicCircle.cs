@@ -234,7 +234,7 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                         SortCard();
                         AddEffect(card, true);
                         AssistRuneAnimanation();
-                        //_effectContent.AddCard(card.Rune);
+                        _effectContent.AddEffect(card.Rune.RuneEffect, true);
                     });
                 });
                 SortCard();
@@ -273,7 +273,7 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                     SortCard();
                     AddEffect(card, true);
                     AssistRuneAnimanation();
-                    //_effectContent.AddCard(card.Rune);
+                    _effectContent.AddEffect(card.Rune.RuneEffect, true);
                 });
                 SortCard();
             }
@@ -337,7 +337,7 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
 
                     AddEffect(card, false);
                     //UpdateMagicName();
-                    //_effectContent.AddCard(card.Rune);
+                    _effectContent.AddEffect(card.Rune.RuneEffect, false);
                 });
             });
             SortCard();
@@ -575,7 +575,6 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
             _effectDict.Clear();
             _nameText.text = "";
             _effectText.text = "";
-            _effectContent.Clear();
 
             IsBig = false;
 
