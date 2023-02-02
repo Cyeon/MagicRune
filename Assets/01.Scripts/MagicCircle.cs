@@ -625,10 +625,10 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                         switch (e.AttackType)
                         {
                             case AttackType.Single:
-                                action = null;
+                                action = () => GameManager.Instance.player.Shield += int.Parse(e.Effect);
                                 break;
                             case AttackType.Double:
-                                action = null;
+                                action = () => GameManager.Instance.player.Shield += int.Parse(e.Effect) * c;
                                 break;
                         }
                         break;

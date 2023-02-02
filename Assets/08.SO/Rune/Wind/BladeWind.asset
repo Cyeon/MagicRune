@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: BladeWind
   m_EditorClassIdentifier: 
   RuneImage: {fileID: 21300000, guid: d4ba36b93a113ac4cb2ffbc975d02314, type: 3}
+  RuneEffect: {fileID: 0}
   AssistRuneCount: 3
   MainRune:
     Name: "\uCE7C\uB0A0 \uBC14\uB78C"
@@ -27,10 +28,12 @@ MonoBehaviour:
         StatusType: 0
         HeathType: 0
         Value: 0
-        IsEnemyOrMain: 0
+        IsEnemy: 1
       EffectType: 0
       StatusType: 0
-      IsEnemy: 0
+      IsEnemy: 1
+      AttackType: 0
+      AttributeType: 0
       Effect: 10
     Attribute: 4
     Cost: 3

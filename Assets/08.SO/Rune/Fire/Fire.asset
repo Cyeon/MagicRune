@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Fire
   m_EditorClassIdentifier: 
   RuneImage: {fileID: 21300000, guid: 73817487f21b2a548ae6c56c4ef979eb, type: 3}
+  RuneEffect: {fileID: 0}
   AssistRuneCount: 5
   MainRune:
     Name: "\uD654\uC5FC"
@@ -26,11 +27,11 @@ MonoBehaviour:
         StatusType: 0
         HeathType: 0
         Value: 0
-        IsEnemyOrMain: 1
+        IsEnemy: 1
       EffectType: 0
       StatusType: 1
       IsEnemy: 1
-      AttackType: 1
+      AttackType: 0
       AttributeType: 3
       Effect: 7
     - Condition:
@@ -39,7 +40,7 @@ MonoBehaviour:
         StatusType: 0
         HeathType: 0
         Value: 0
-        IsEnemyOrMain: 1
+        IsEnemy: 1
       EffectType: 2
       StatusType: 2
       IsEnemy: 1
@@ -61,7 +62,7 @@ MonoBehaviour:
         StatusType: 0
         HeathType: 0
         Value: 0
-        IsEnemyOrMain: 1
+        IsEnemy: 1
       EffectType: 0
       StatusType: 0
       IsEnemy: 1

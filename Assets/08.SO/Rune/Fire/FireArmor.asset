@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: FireArmor
   m_EditorClassIdentifier: 
   RuneImage: {fileID: 21300000, guid: 73817487f21b2a548ae6c56c4ef979eb, type: 3}
+  RuneEffect: {fileID: 0}
   AssistRuneCount: 5
   MainRune:
     Name: "\uD654\uC5FC \uAC11\uC637"
@@ -27,10 +28,12 @@ MonoBehaviour:
         StatusType: 0
         HeathType: 0
         Value: 0
-        IsEnemyOrMain: 0
+        IsEnemy: 1
       EffectType: 2
       StatusType: 2
       IsEnemy: 0
+      AttackType: 0
+      AttributeType: 0
       Effect: 5
     - Condition:
         ConditionType: 0
@@ -38,10 +41,12 @@ MonoBehaviour:
         StatusType: 0
         HeathType: 0
         Value: 0
-        IsEnemyOrMain: 0
+        IsEnemy: 1
       EffectType: 1
       StatusType: 2
       IsEnemy: 0
+      AttackType: 0
+      AttributeType: 0
       Effect: 20
     Attribute: 2
     Cost: 5
@@ -59,10 +64,12 @@ MonoBehaviour:
         StatusType: 0
         HeathType: 0
         Value: 0
-        IsEnemyOrMain: 0
+        IsEnemy: 1
       EffectType: 2
       StatusType: 2
       IsEnemy: 0
+      AttackType: 0
+      AttributeType: 0
       Effect: 3
     - Condition:
         ConditionType: 0
@@ -70,10 +77,12 @@ MonoBehaviour:
         StatusType: 0
         HeathType: 0
         Value: 0
-        IsEnemyOrMain: 0
+        IsEnemy: 1
       EffectType: 0
       StatusType: 2
-      IsEnemy: 0
+      IsEnemy: 1
+      AttackType: 0
+      AttributeType: 0
       Effect: 10
     Attribute: 2
     Cost: 3

@@ -26,7 +26,7 @@ public class GameManager : MonoSingleton<GameManager>
 
     private void Awake()
     {
-        DOTween.Init(false, false, LogBehaviour.Default).SetCapacity(100, 20);
+        DOTween.Init(false, false, LogBehaviour.Default).SetCapacity(500, 50);
     }
 
     private void Start()

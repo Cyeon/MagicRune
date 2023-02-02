@@ -59,7 +59,7 @@ public class Condition
     public StatusName StatusType;
 
     // true : 적이다, 메인 룬이다, false : 나다, 보조룬이다. 
-    [ConditionalField(nameof(ConditionType), false, ConditionType.HeathComparison)]
+    [ConditionalField(nameof(ConditionType), false, ConditionType.HeathComparison, ConditionType.AttributeComparison, ConditionType.StatusComparison)]
     public ComparisonType HeathType;
     [MinValue(0f), ConditionalField(nameof(ConditionType), false, ConditionType.HeathComparison, ConditionType.AttributeComparison, ConditionType.StatusComparison, ConditionType.AssistRuneCount)]
     public float Value;
@@ -77,7 +77,7 @@ public class Pair
     public EffectType EffectType;
     [Tooltip("상태이상 속성, EffectType == Status면 사용"), ConditionalField(nameof(EffectType), false, EffectType.Status, EffectType.Destroy)]
     public StatusName StatusType;
-    [Tooltip("true면 적, false면 나한태 씀"), ConditionalField(nameof(EffectType), false, EffectType.Status, EffectType.Destroy)]
+    [Tooltip("true면 적, false면 나한태 씀"), ConditionalField(nameof(EffectType), false, EffectType.Attack, EffectType.Status, EffectType.Destroy)]
     public bool IsEnemy = true;
     [ConditionalField(nameof(EffectType), true, EffectType.Destroy, EffectType.Draw)]
     public AttackType AttackType;
@@ -108,6 +108,8 @@ public class RuneProperty
     public int Cost; // 코스트
     [Min(0), Tooltip("재사용 가능 턴")]
     public int DelayTurn; // 재사용 가능 턴
+
+    // 나중에 공격 범위도
 }
 
 [CreateAssetMenu(menuName = "SO/Rune")]
@@ -116,6 +118,8 @@ public class CardSO : ScriptableObject
     
     [ShowAssetPreview(32, 32), Tooltip("마법진에 들어갈 룬 이미지")]
     public Sprite RuneImage;
+    [ShowAssetPreview(32, 32), Tooltip("마법진 위에 띄울 이펙트")]
+    public GameObject RuneEffect;
     [Min(1), Tooltip("보조 룬 개수")]
     public int AssistRuneCount = 5;
 

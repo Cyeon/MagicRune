@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: FireWind
   m_EditorClassIdentifier: 
   RuneImage: {fileID: 21300000, guid: 73817487f21b2a548ae6c56c4ef979eb, type: 3}
+  RuneEffect: {fileID: 0}
   AssistRuneCount: 2
   MainRune:
     Name: "\uC5F4\uD48D"
@@ -28,7 +29,7 @@ MonoBehaviour:
         StatusType: 0
         HeathType: 0
         Value: 0
-        IsEnemyOrMain: 0
+        IsEnemy: 1
       EffectType: 2
       StatusType: 2
       IsEnemy: 1
@@ -36,12 +37,12 @@ MonoBehaviour:
       AttributeType: 0
       Effect: 10
     - Condition:
-        ConditionType: 0
-        AttributeType: 0
+        ConditionType: 2
+        AttributeType: 4
         StatusType: 0
         HeathType: 0
-        Value: 0
-        IsEnemyOrMain: 0
+        Value: 1
+        IsEnemy: 1
       EffectType: 2
       StatusType: 2
       IsEnemy: 1
@@ -63,7 +64,7 @@ MonoBehaviour:
         StatusType: 0
         HeathType: 0
         Value: 0
-        IsEnemyOrMain: 0
+        IsEnemy: 1
       EffectType: 2
       StatusType: 2
       IsEnemy: 1
