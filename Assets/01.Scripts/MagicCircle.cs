@@ -539,6 +539,7 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
             AttackFunction(EffectType.Status);
             AttackFunction(EffectType.Defence);
             AttackFunction(EffectType.Attack);
+            AttackFunction(EffectType.Draw);
             AttackFunction(EffectType.Destroy);
         });
         seq.AppendCallback(() =>
