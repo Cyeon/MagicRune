@@ -1,3 +1,4 @@
+using NaughtyAttributes;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -38,6 +39,7 @@ public class Status
     public UnityEvent addFunc;
 
     [Header("Resource")]
+    [ShowAssetPreview(32, 32), Tooltip("¿ÃπÃ¡ˆ")]
     public Sprite icon;
     public Color color;
 
