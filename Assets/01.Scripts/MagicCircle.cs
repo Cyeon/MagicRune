@@ -46,6 +46,7 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
 
     [SerializeField]
     private CardCollector _cardCollector;
+    public CardCollector CardCollector => _cardCollector;
 
     [SerializeField]
     private float _assistRuneDistance = 3f;
@@ -233,7 +234,7 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                         SortCard();
                         AddEffect(card, true);
                         AssistRuneAnimanation();
-                        _effectContent.AddCard(card.Rune);
+                        //_effectContent.AddCard(card.Rune);
                     });
                 });
                 SortCard();
@@ -272,7 +273,7 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                     SortCard();
                     AddEffect(card, true);
                     AssistRuneAnimanation();
-                    _effectContent.AddCard(card.Rune);
+                    //_effectContent.AddCard(card.Rune);
                 });
                 SortCard();
             }
@@ -335,8 +336,8 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                     _runeDict[RuneType.Assist][changeIndex] = card;
 
                     AddEffect(card, false);
-                    UpdateMagicName();
-                    _effectContent.AddCard(card.Rune);
+                    //UpdateMagicName();
+                    //_effectContent.AddCard(card.Rune);
                 });
             });
             SortCard();
@@ -430,7 +431,7 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
         {
             seq.Join(r.GetComponent<RectTransform>().DOAnchorPos(Vector2.zero, 0.3f).From());
         }
-        seq.AppendCallback(() => { UpdateMagicName(); });
+        //seq.AppendCallback(() => { UpdateMagicName(); });
         //seq.AppendInterval(0.2f);
         //seq.AppendCallback(() => { IsBig = false; });
     }
@@ -545,32 +546,32 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                         case ConditionType.None:
                             StatusManager.Instance.AddStatus(target, e.StatusType, int.Parse(e.Effect));
                             break;
-                        case ConditionType.IfThereIs:
-                            if (e.Condition.AttributeType != AttributeType.None)
-                            {
-                                bool b = false;
-                                if (_runeDict[RuneType.Main][0].Rune.MainRune.Attribute == e.Condition.AttributeType)
-                                    b = true;
-                                for (int i = 0; i < _runeDict[RuneType.Assist].Count; i++)
-                                {
-                                    if (_runeDict[RuneType.Assist][i].Rune.AssistRune.Attribute == e.Condition.AttributeType)
-                                        b = true;
-                                }
+                        //case ConditionType.IfThereIs:
+                        //    if (e.Condition.AttributeType != AttributeType.None)
+                        //    {
+                        //        int c = 0;
+                        //        if (_runeDict[RuneType.Main][0].Rune.MainRune.Attribute == e.Condition.AttributeType)
+                        //            c++;
+                        //        for (int i = 0; i < _runeDict[RuneType.Assist].Count; i++)
+                        //        {
+                        //            if (_runeDict[RuneType.Assist][i].Rune.AssistRune.Attribute == e.Condition.AttributeType)
+                        //                c++;
+                        //        }
 
-                                if (b == true)
-                                {
-                                    StatusManager.Instance.AddStatus(target, e.StatusType, int.Parse(e.Effect));
-                                }
-                            }
-                            else if (e.Condition.StatusType != StatusName.Null)
-                            {
-                                Unit u = e.Condition.IsEnemyOrMain == true ? GameManager.Instance.enemy : GameManager.Instance.player;
-                                if (StatusManager.Instance.IsHaveStatus(u, e.Condition.StatusType) == true)
-                                {
-                                    StatusManager.Instance.AddStatus(target, e.StatusType, int.Parse(e.Effect));
-                                }
-                            }
-                            break;
+                        //        if (c >= e.Condition.Value)
+                        //        {
+                        //            StatusManager.Instance.AddStatus(target, e.StatusType, int.Parse(e.Effect));
+                        //        }
+                        //    }
+                        //    else if (e.Condition.StatusType != StatusName.Null)
+                        //    {
+                        //        Unit u = e.Condition.IsEnemyOrMain == true ? GameManager.Instance.enemy : GameManager.Instance.player;
+                        //        if (StatusManager.Instance.IsHaveStatus(u, e.Condition.StatusType) == true)
+                        //        {
+                        //            StatusManager.Instance.AddStatus(target, e.StatusType, int.Parse(e.Effect));
+                        //        }
+                        //    }
+                        //    break;
                         case ConditionType.IfNotThereIs:
                             if (e.Condition.AttributeType != AttributeType.None)
                             {
@@ -601,14 +602,7 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                             }
                             break;
                         case ConditionType.Heath:
-                            if (e.Condition.StatusType == StatusName.Null) // 피
-                            {
-                                if (target.IsHealthAmount(e.Condition.Value, e.Condition.HeathType))
-                                {
-                                    StatusManager.Instance.AddStatus(target, e.StatusType, int.Parse(e.Effect));
-                                }
-                            }
-                            else // 스탯
+                            if (e.Condition.StatusType != StatusName.Null)
                             {
                                 switch (e.Condition.HeathType)
                                 {
@@ -624,6 +618,42 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                                             StatusManager.Instance.AddStatus(target, e.StatusType, int.Parse(e.Effect));
                                         }
                                         break;
+                                }
+                            }
+                            else if(e.Condition.AttributeType != AttributeType.None)
+                            {
+                                int c = 0;
+                                if (_runeDict[RuneType.Main][0].Rune.MainRune.Attribute == e.Condition.AttributeType)
+                                    c++;
+                                for (int i = 0; i < _runeDict[RuneType.Assist].Count; i++)
+                                {
+                                    if (_runeDict[RuneType.Assist][i].Rune.AssistRune.Attribute == e.Condition.AttributeType)
+                                    {
+                                        c++;
+                                    }
+                                }
+
+                                switch (e.Condition.HeathType)
+                                {
+                                    case HealthType.MoreThan:
+                                        if(c >= e.Condition.Value)
+                                        {
+                                            StatusManager.Instance.AddStatus(target, e.StatusType, int.Parse(e.Effect));
+                                        }
+                                        break;
+                                    case HealthType.LessThan:
+                                        if (c <= e.Condition.Value)
+                                        {
+                                            StatusManager.Instance.AddStatus(target, e.StatusType, int.Parse(e.Effect));
+                                        }
+                                        break;
+                                }
+                            }
+                            else
+                            {
+                                if (target.IsHealthAmount(e.Condition.Value, e.Condition.HeathType))
+                                {
+                                    StatusManager.Instance.AddStatus(target, e.StatusType, int.Parse(e.Effect));
                                 }
                             }
                             break;
@@ -655,32 +685,32 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                         case ConditionType.None:
                             // 방어 얻기
                             break;
-                        case ConditionType.IfThereIs:
-                            if (e.Condition.AttributeType != AttributeType.None)
-                            {
-                                bool b = false;
-                                if (_runeDict[RuneType.Main][0].Rune.MainRune.Attribute == e.Condition.AttributeType)
-                                    b = true;
-                                for (int i = 0; i < _runeDict[RuneType.Assist].Count; i++)
-                                {
-                                    if (_runeDict[RuneType.Assist][i].Rune.AssistRune.Attribute == e.Condition.AttributeType)
-                                        b = true;
-                                }
+                        //case ConditionType.IfThereIs:
+                        //    if (e.Condition.AttributeType != AttributeType.None)
+                        //    {
+                        //        bool b = false;
+                        //        if (_runeDict[RuneType.Main][0].Rune.MainRune.Attribute == e.Condition.AttributeType)
+                        //            b = true;
+                        //        for (int i = 0; i < _runeDict[RuneType.Assist].Count; i++)
+                        //        {
+                        //            if (_runeDict[RuneType.Assist][i].Rune.AssistRune.Attribute == e.Condition.AttributeType)
+                        //                b = true;
+                        //        }
 
-                                if (b == true)
-                                {
-                                    // 방어 얻기
-                                }
-                            }
-                            else if (e.Condition.StatusType != StatusName.Null)
-                            {
-                                Unit u = e.Condition.IsEnemyOrMain == true ? GameManager.Instance.enemy : GameManager.Instance.player;
-                                if (StatusManager.Instance.IsHaveStatus(u, e.Condition.StatusType) == true)
-                                {
-                                    // 방어 얻기
-                                }
-                            }
-                            break;
+                        //        if (b == true)
+                        //        {
+                        //            // 방어 얻기
+                        //        }
+                        //    }
+                        //    else if (e.Condition.StatusType != StatusName.Null)
+                        //    {
+                        //        Unit u = e.Condition.IsEnemyOrMain == true ? GameManager.Instance.enemy : GameManager.Instance.player;
+                        //        if (StatusManager.Instance.IsHaveStatus(u, e.Condition.StatusType) == true)
+                        //        {
+                        //            // 방어 얻기
+                        //        }
+                        //    }
+                        //    break;
                         case ConditionType.IfNotThereIs:
                             if (e.Condition.AttributeType != AttributeType.None)
                             {
@@ -765,32 +795,32 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                         case ConditionType.None:
                             GameManager.Instance.player.Attack(int.Parse(e.Effect));
                             break;
-                        case ConditionType.IfThereIs:
-                            if (e.Condition.AttributeType != AttributeType.None)
-                            {
-                                bool b = false;
-                                if (_runeDict[RuneType.Main][0].Rune.MainRune.Attribute == e.Condition.AttributeType)
-                                    b = true;
-                                for (int i = 0; i < _runeDict[RuneType.Assist].Count; i++)
-                                {
-                                    if (_runeDict[RuneType.Assist][i].Rune.AssistRune.Attribute == e.Condition.AttributeType)
-                                        b = true;
-                                }
+                        //case ConditionType.IfThereIs:
+                        //    if (e.Condition.AttributeType != AttributeType.None)
+                        //    {
+                        //        bool b = false;
+                        //        if (_runeDict[RuneType.Main][0].Rune.MainRune.Attribute == e.Condition.AttributeType)
+                        //            b = true;
+                        //        for (int i = 0; i < _runeDict[RuneType.Assist].Count; i++)
+                        //        {
+                        //            if (_runeDict[RuneType.Assist][i].Rune.AssistRune.Attribute == e.Condition.AttributeType)
+                        //                b = true;
+                        //        }
 
-                                if (b == true)
-                                {
-                                    GameManager.Instance.player.Attack(int.Parse(e.Effect));
-                                }
-                            }
-                            else if (e.Condition.StatusType != StatusName.Null)
-                            {
-                                Unit u = e.Condition.IsEnemyOrMain == true ? GameManager.Instance.enemy : GameManager.Instance.player;
-                                if (StatusManager.Instance.IsHaveStatus(u, e.Condition.StatusType) == true)
-                                {
-                                    GameManager.Instance.player.Attack(int.Parse(e.Effect));
-                                }
-                            }
-                            break;
+                        //        if (b == true)
+                        //        {
+                        //            GameManager.Instance.player.Attack(int.Parse(e.Effect));
+                        //        }
+                        //    }
+                        //    else if (e.Condition.StatusType != StatusName.Null)
+                        //    {
+                        //        Unit u = e.Condition.IsEnemyOrMain == true ? GameManager.Instance.enemy : GameManager.Instance.player;
+                        //        if (StatusManager.Instance.IsHaveStatus(u, e.Condition.StatusType) == true)
+                        //        {
+                        //            GameManager.Instance.player.Attack(int.Parse(e.Effect));
+                        //        }
+                        //    }
+                        //    break;
                         case ConditionType.IfNotThereIs:
                             if (e.Condition.AttributeType != AttributeType.None)
                             {
@@ -875,32 +905,32 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                         case ConditionType.None:
                             StatusManager.Instance.RemStatus(target, e.StatusType);
                             break;
-                        case ConditionType.IfThereIs:
-                            if (e.Condition.AttributeType != AttributeType.None)
-                            {
-                                bool b = false;
-                                if (_runeDict[RuneType.Main][0].Rune.MainRune.Attribute == e.Condition.AttributeType)
-                                    b = true;
-                                for (int i = 0; i < _runeDict[RuneType.Assist].Count; i++)
-                                {
-                                    if (_runeDict[RuneType.Assist][i].Rune.AssistRune.Attribute == e.Condition.AttributeType)
-                                        b = true;
-                                }
+                        //case ConditionType.IfThereIs:
+                        //    if (e.Condition.AttributeType != AttributeType.None)
+                        //    {
+                        //        bool b = false;
+                        //        if (_runeDict[RuneType.Main][0].Rune.MainRune.Attribute == e.Condition.AttributeType)
+                        //            b = true;
+                        //        for (int i = 0; i < _runeDict[RuneType.Assist].Count; i++)
+                        //        {
+                        //            if (_runeDict[RuneType.Assist][i].Rune.AssistRune.Attribute == e.Condition.AttributeType)
+                        //                b = true;
+                        //        }
 
-                                if (b == true)
-                                {
-                                    StatusManager.Instance.RemStatus(target, e.StatusType);
-                                }
-                            }
-                            else if (e.Condition.StatusType != StatusName.Null)
-                            {
-                                Unit u = e.Condition.IsEnemyOrMain == true ? GameManager.Instance.enemy : GameManager.Instance.player;
-                                if (StatusManager.Instance.IsHaveStatus(u, e.Condition.StatusType) == true)
-                                {
-                                    StatusManager.Instance.RemStatus(target, e.StatusType);
-                                }
-                            }
-                            break;
+                        //        if (b == true)
+                        //        {
+                        //            StatusManager.Instance.RemStatus(target, e.StatusType);
+                        //        }
+                        //    }
+                        //    else if (e.Condition.StatusType != StatusName.Null)
+                        //    {
+                        //        Unit u = e.Condition.IsEnemyOrMain == true ? GameManager.Instance.enemy : GameManager.Instance.player;
+                        //        if (StatusManager.Instance.IsHaveStatus(u, e.Condition.StatusType) == true)
+                        //        {
+                        //            StatusManager.Instance.RemStatus(target, e.StatusType);
+                        //        }
+                        //    }
+                        //    break;
                         case ConditionType.IfNotThereIs:
                             if (e.Condition.AttributeType != AttributeType.None)
                             {
@@ -1022,6 +1052,185 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
         });
 
         //enemy.Damage(damage);
+    }
+
+    public void AttackFunction(EffectType effectType)
+    {
+        Action action = null;
+        if (_effectDict.ContainsKey(effectType))
+        {
+            foreach (var e in _effectDict[effectType])
+            {
+                Unit target = e.IsEnemy == true ? GameManager.Instance.enemy : GameManager.Instance.player;
+                switch (effectType)
+                {
+                    case EffectType.Attack:
+                        switch (e.AttackType)
+                        {
+                            case AttackType.Single:
+                                action = () => GameManager.Instance.player.Attack(int.Parse(e.Effect));
+                                break;
+                            case AttackType.Double:
+                                int c = 0;
+                                for(int i = 0; i < _runeDict[RuneType.Assist].Count; i++)
+                                {
+                                    if (_runeDict[RuneType.Assist][i].Rune != null && _runeDict[RuneType.Assist][i].Rune.AssistRune.Attribute == e.AttributeType)
+                                    {
+                                        c++;
+                                    }
+                                }
+                                if (_runeDict[RuneType.Main][0].Rune != null && _runeDict[RuneType.Main][0].Rune.AssistRune.Attribute == e.AttributeType)
+                                    c++;
+                                action = () => GameManager.Instance.player.Attack(int.Parse(e.Effect) * c);
+                                break;
+                        }
+                        break;
+                    case EffectType.Defence:
+                        action = null;
+                        break;
+                    case EffectType.Status:
+                        action = () => StatusManager.Instance.AddStatus(target, e.StatusType, int.Parse(e.Effect));
+                        break;
+                    case EffectType.Destroy:
+                        action = () => StatusManager.Instance.RemStatus(target, e.StatusType);
+                        break;
+                    case EffectType.Etc:
+                        break;
+                }
+
+                switch (e.Condition.ConditionType)
+                {
+                    case ConditionType.None:
+                        action?.Invoke();
+                        break;
+                    //case ConditionType.IfThereIs:
+                    //    if (e.Condition.AttributeType != AttributeType.None)
+                    //    {
+                    //        int c = 0;
+                    //        if (_runeDict[RuneType.Main][0].Rune.MainRune.Attribute == e.Condition.AttributeType)
+                    //            c++;
+                    //        for (int i = 0; i < _runeDict[RuneType.Assist].Count; i++)
+                    //        {
+                    //            if (_runeDict[RuneType.Assist][i].Rune.AssistRune.Attribute == e.Condition.AttributeType)
+                    //                c++;
+                    //        }
+
+                    //        if (c >= e.Condition.Value)
+                    //        {
+                    //            StatusManager.Instance.AddStatus(target, e.StatusType, int.Parse(e.Effect));
+                    //        }
+                    //    }
+                    //    else if (e.Condition.StatusType != StatusName.Null)
+                    //    {
+                    //        Unit u = e.Condition.IsEnemyOrMain == true ? GameManager.Instance.enemy : GameManager.Instance.player;
+                    //        if (StatusManager.Instance.IsHaveStatus(u, e.Condition.StatusType) == true)
+                    //        {
+                    //            StatusManager.Instance.AddStatus(target, e.StatusType, int.Parse(e.Effect));
+                    //        }
+                    //    }
+                    //    break;
+                    case ConditionType.IfNotThereIs:
+                        if (e.Condition.AttributeType != AttributeType.None)
+                        {
+                            bool b = false;
+                            if (_runeDict[RuneType.Main][0].Rune.MainRune.Attribute == e.Condition.AttributeType)
+                                b = true;
+                            for (int i = 0; i < _runeDict[RuneType.Assist].Count; i++)
+                            {
+                                if (_runeDict[RuneType.Assist][i].Rune.AssistRune.Attribute == e.Condition.AttributeType)
+                                {
+                                    b = true;
+                                    break;
+                                }
+                            }
+
+                            if (b == false)
+                            {
+                                action?.Invoke();
+                            }
+                        }
+                        else if (e.Condition.StatusType != StatusName.Null)
+                        {
+                            Unit u = e.Condition.IsEnemyOrMain == true ? GameManager.Instance.enemy : GameManager.Instance.player;
+                            if (StatusManager.Instance.IsHaveStatus(u, e.Condition.StatusType) == false)
+                            {
+                                action?.Invoke();
+                            }
+                        }
+                        break;
+                    case ConditionType.Heath:
+                        if (e.Condition.StatusType != StatusName.Null)
+                        {
+                            switch (e.Condition.HeathType)
+                            {
+                                case HealthType.MoreThan:
+                                    if (StatusManager.Instance.GetUnitStatusValue(target, e.StatusType) >= e.Condition.Value)
+                                    {
+                                        action?.Invoke();
+                                    }
+                                    break;
+                                case HealthType.LessThan:
+                                    if (StatusManager.Instance.GetUnitStatusValue(target, e.StatusType) <= e.Condition.Value)
+                                    {
+                                        action?.Invoke();
+                                    }
+                                    break;
+                            }
+                        }
+                        else if (e.Condition.AttributeType != AttributeType.None)
+                        {
+                            int c = 0;
+                            if (_runeDict[RuneType.Main][0].Rune.MainRune.Attribute == e.Condition.AttributeType)
+                                c++;
+                            for (int i = 0; i < _runeDict[RuneType.Assist].Count; i++)
+                            {
+                                if (_runeDict[RuneType.Assist][i].Rune.AssistRune.Attribute == e.Condition.AttributeType)
+                                {
+                                    c++;
+                                }
+                            }
+
+                            switch (e.Condition.HeathType)
+                            {
+                                case HealthType.MoreThan:
+                                    if (c >= e.Condition.Value)
+                                    {
+                                        action?.Invoke();
+                                    }
+                                    break;
+                                case HealthType.LessThan:
+                                    if (c <= e.Condition.Value)
+                                    {
+                                        action?.Invoke();
+                                    }
+                                    break;
+                            }
+                        }
+                        else
+                        {
+                            if (target.IsHealthAmount(e.Condition.Value, e.Condition.HeathType))
+                            {
+                                action?.Invoke();
+                            }
+                        }
+                        break;
+                    case ConditionType.AssistRuneCount:
+                        int count = 0;
+                        for (int i = 0; i < _runeDict[RuneType.Assist].Count; i++)
+                        {
+                            if (_runeDict[RuneType.Assist][i].Rune != null)
+                            {
+                                count++;
+                            }
+                        }
+                        if (count >= e.Condition.Value)
+                        {
+                            action?.Invoke();
+                        }
+                        break;
+                }
+            }
+        }
     }
 
     public void OnDestroy()

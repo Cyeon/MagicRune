@@ -22,6 +22,8 @@ public class GameManager : MonoSingleton<GameManager>
     public Unit currentUnit = null;
     public Unit attackUnit = null;
 
+    public MagicCircle MagicCircle;
+
     private void Awake()
     {
         DOTween.Init(false, false, LogBehaviour.Default).SetCapacity(100, 20);
@@ -122,6 +124,24 @@ public class GameManager : MonoSingleton<GameManager>
                 OnPlayerTurn();
                 break;
         }
+
+        foreach (var rList in this.MagicCircle.RuneDict)
+        {
+            foreach (var r in rList.Value)
+            {
+                if (r.Rune == null)
+                {
+                    Destroy(r.gameObject);
+                }
+                else
+                {
+                    r.gameObject.SetActive(false);
+                    r.transform.SetParent(this.MagicCircle.CardCollector.transform);
+                    r.SetIsEquip(false);
+                }
+            }
+        }
+        this.MagicCircle.RuneDict.Clear();
 
         Debug.Log(string.Format("Turn Change: {0}", gameTurn));
 
