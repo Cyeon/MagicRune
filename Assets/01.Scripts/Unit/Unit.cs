@@ -33,7 +33,7 @@ public class Unit : MonoBehaviour
     }
 
     [SerializeField] private float _shield = 0f;
-    public float Shield 
+    public float Shield
     { 
         get => _shield; 
         set
