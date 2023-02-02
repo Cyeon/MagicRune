@@ -177,7 +177,7 @@ public class UIManager : MonoSingleton<UIManager>
         seq.Join(group.DOFade(0, 1f).SetEase(Ease.InQuart));
         seq.AppendCallback(() =>
         {
-            Destroy(gameObject);
+            Destroy(group.gameObject);
         });
     }
     #endregion
