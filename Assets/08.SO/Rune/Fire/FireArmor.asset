@@ -1,0 +1,80 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b089f4c99f402c419e87fb17ecd4ab5, type: 3}
+  m_Name: FireArmor
+  m_EditorClassIdentifier: 
+  RuneImage: {fileID: 21300000, guid: 73817487f21b2a548ae6c56c4ef979eb, type: 3}
+  AssistRuneCount: 5
+  MainRune:
+    Name: "\uD654\uC5FC \uAC11\uC637"
+    CardImage: {fileID: 21300000, guid: 5d12b271e7994bd41a4cd9bb9ef9f595, type: 3}
+    CardDescription: "\uD654\uC5FC \uAC11\uC637\uC744 \uC785\uC5B4 \uC790\uC2E0\uC5D0\uAC8C
+      5\uC758 \uD654\uC0C1\uC744 \uBD80\uC5EC\uD558\uACE0 20\uC758 \uBC29\uC5B4\uB97C
+      \uC5BB\uB294\uB2E4"
+    EffectDescription:
+    - Condition:
+        ConditionType: 0
+        AttributeType: 0
+        StatusType: 0
+        HeathType: 0
+        Value: 0
+        IsEnemyOrMain: 0
+      EffectType: 2
+      StatusType: 2
+      IsEnemy: 0
+      Effect: 5
+    - Condition:
+        ConditionType: 0
+        AttributeType: 0
+        StatusType: 0
+        HeathType: 0
+        Value: 0
+        IsEnemyOrMain: 0
+      EffectType: 1
+      StatusType: 2
+      IsEnemy: 0
+      Effect: 20
+    Attribute: 2
+    Cost: 5
+    DelayTurn: 3
+  AssistRune:
+    Name: "\uD654\uC5FC \uB3CC\uACA9"
+    CardImage: {fileID: 21300000, guid: 5d12b271e7994bd41a4cd9bb9ef9f595, type: 3}
+    CardDescription: "\uD654\uC5FC\uC744 \uAC00\uC9C0\uACE0 \uB3CC\uACA9\uD558\uC5EC
+      \uC790\uC2E0\uC5D0\uAC8C 3\uC758 \uD654\uC0C1\uC744 \uBD80\uC5EC\uD558\uACE0,
+      \uC801\uC5D0\uAC8C 10\uC758 \uB300\uBBF8\uC9C0\uB97C \uC900\uB2E4"
+    EffectDescription:
+    - Condition:
+        ConditionType: 0
+        AttributeType: 0
+        StatusType: 0
+        HeathType: 0
+        Value: 0
+        IsEnemyOrMain: 0
+      EffectType: 2
+      StatusType: 2
+      IsEnemy: 0
+      Effect: 3
+    - Condition:
+        ConditionType: 0
+        AttributeType: 0
+        StatusType: 0
+        HeathType: 0
+        Value: 0
+        IsEnemyOrMain: 0
+      EffectType: 0
+      StatusType: 2
+      IsEnemy: 0
+      Effect: 10
+    Attribute: 2
+    Cost: 3
+    DelayTurn: 1

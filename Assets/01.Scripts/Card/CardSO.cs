@@ -30,7 +30,7 @@ public enum EffectType
 public enum ConditionType
 {
     None,
-    IfThereIs, // 먄악 있다면
+    //IfThereIs, // 먄악 있다면
     IfNotThereIs,
     Heath,
     AssistRuneCount,
@@ -43,13 +43,19 @@ public enum HealthType
     LessThan, // 이하
 }
 
+public enum AttackType
+{
+    Single,
+    Double,
+}
+
 [Serializable]
 public class Condition
 {
     public ConditionType ConditionType;
-    [ConditionalField(nameof(ConditionType), false, ConditionType.IfThereIs, ConditionType.IfNotThereIs)]
+    [ConditionalField(nameof(ConditionType), false, ConditionType.IfNotThereIs, ConditionType.Heath)]
     public AttributeType AttributeType;
-    [ConditionalField(nameof(ConditionType), false, ConditionType.IfThereIs, ConditionType.IfNotThereIs, ConditionType.Heath)]
+    [ConditionalField(nameof(ConditionType), false, ConditionType.IfNotThereIs, ConditionType.Heath)]
     public StatusName StatusType;
 
     // true : 적이다, 메인 룬이다, false : 나다, 보조룬이다. 
@@ -73,6 +79,11 @@ public class Pair
     public StatusName StatusType;
     [Tooltip("true면 적, false면 나한태 씀"), ConditionalField(nameof(EffectType), false, EffectType.Status, EffectType.Destroy)]
     public bool IsEnemy = true;
+    [ConditionalField(nameof(EffectType), false, EffectType.Attack)]
+    public AttackType AttackType;
+    [ConditionalField(nameof(AttackType), false, AttackType.Double)]
+    public AttributeType AttributeType;
+
     [ResizableTextArea, Tooltip("카드 효과 텍스트")]
     public string Effect;
 }
