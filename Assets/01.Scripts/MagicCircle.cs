@@ -675,27 +675,27 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                         }
                         break;
                     case ConditionType.AttributeComparison:
-                        int c = 0;
+                        int cnt = 0;
                         if (_runeDict[RuneType.Main][0].Rune.MainRune.Attribute == e.Condition.AttributeType)
-                            c++;
+                            cnt++;
                         for (int i = 0; i < _runeDict[RuneType.Assist].Count; i++)
                         {
                             if (_runeDict[RuneType.Assist][i].Rune.AssistRune.Attribute == e.Condition.AttributeType)
                             {
-                                c++;
+                                cnt++;
                             }
                         }
 
                         switch (e.Condition.HeathType)
                         {
                             case ComparisonType.MoreThan:
-                                if (c >= e.Condition.Value)
+                                if (cnt >= e.Condition.Value)
                                 {
                                     action?.Invoke();
                                 }
                                 break;
                             case ComparisonType.LessThan:
-                                if (c <= e.Condition.Value)
+                                if (cnt <= e.Condition.Value)
                                 {
                                     action?.Invoke();
                                 }
