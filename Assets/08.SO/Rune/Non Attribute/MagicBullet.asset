@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: MagicBullet
   m_EditorClassIdentifier: 
   RuneImage: {fileID: 21300000, guid: 134fd2156c3b8d24d82fd96fa5e1a2a4, type: 3}
+  RuneEffect: {fileID: 2263835852787562583, guid: 4db3ad255c1a72e47855229ad1dd3585, type: 3}
   AssistRuneCount: 3
   MainRune:
     Name: "\uB9C8\uB825\uD0C4"
@@ -26,10 +27,12 @@ MonoBehaviour:
         StatusType: 0
         HeathType: 0
         Value: 0
-        IsEnemyOrMain: 1
+        IsEnemy: 1
       EffectType: 0
       StatusType: 2
       IsEnemy: 1
+      AttackType: 0
+      AttributeType: 0
       Effect: 5
     Attribute: 3
     Cost: 3
@@ -46,10 +49,12 @@ MonoBehaviour:
         StatusType: 0
         HeathType: 0
         Value: 0
-        IsEnemyOrMain: 1
+        IsEnemy: 1
       EffectType: 0
       StatusType: 0
       IsEnemy: 1
+      AttackType: 0
+      AttributeType: 0
       Effect: 3
     Attribute: 3
     Cost: 1
