@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: IceBreak
   m_EditorClassIdentifier: 
   RuneImage: {fileID: 21300000, guid: 0a0246a2a4c9dfd4a89f4d1786647b2c, type: 3}
+  RuneEffect: {fileID: 0}
   AssistRuneCount: 3
   MainRune:
     Name: "\uC544\uC774\uC2A4 \uBE0C\uB808\uC774\uD06C"
@@ -27,7 +28,7 @@ MonoBehaviour:
         StatusType: 0
         HeathType: 0
         Value: 0
-        IsEnemyOrMain: 1
+        IsEnemy: 1
       EffectType: 0
       StatusType: 0
       IsEnemy: 1
@@ -35,12 +36,12 @@ MonoBehaviour:
       AttributeType: 0
       Effect: 10
     - Condition:
-        ConditionType: 1
+        ConditionType: 3
         AttributeType: 0
         StatusType: 3
         HeathType: 0
-        Value: 0
-        IsEnemyOrMain: 1
+        Value: 1
+        IsEnemy: 1
       EffectType: 0
       StatusType: 0
       IsEnemy: 1
@@ -48,12 +49,12 @@ MonoBehaviour:
       AttributeType: 0
       Effect: 20
     - Condition:
-        ConditionType: 1
+        ConditionType: 3
         AttributeType: 0
         StatusType: 3
         HeathType: 0
-        Value: 0
-        IsEnemyOrMain: 1
+        Value: 1
+        IsEnemy: 1
       EffectType: 3
       StatusType: 3
       IsEnemy: 1
@@ -75,7 +76,7 @@ MonoBehaviour:
         StatusType: 0
         HeathType: 0
         Value: 0
-        IsEnemyOrMain: 1
+        IsEnemy: 1
       EffectType: 2
       StatusType: 3
       IsEnemy: 1
