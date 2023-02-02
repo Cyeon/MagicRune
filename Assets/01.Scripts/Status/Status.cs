@@ -34,6 +34,8 @@ public class Status
     public StatusType type = StatusType.Stack;
     public int typeValue = 0;
 
+    [HideInInspector] public Unit unit;
+
     [Header("Function")]
     public UnityEvent statusFunc;
     public UnityEvent addFunc;
@@ -48,6 +50,9 @@ public class Status
         this.statusName = status.statusName;
         this.invokeTime = status.invokeTime;
         this.typeValue = status.typeValue;
+
+        this.unit = status.unit;
+
         this.statusFunc = status.statusFunc;
         this.type = status.type;
         this.addFunc = status.addFunc;
