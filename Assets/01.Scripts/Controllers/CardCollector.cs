@@ -182,6 +182,7 @@ public class CardCollector : MonoBehaviour
             }
             _deckCards.Remove(card);
             card.gameObject.SetActive(true);
+            card.IsFront = true;
         }
         CardSort();
         UIUpdate();
