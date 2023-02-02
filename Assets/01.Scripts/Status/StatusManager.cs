@@ -20,6 +20,7 @@ public class StatusManager : MonoSingleton<StatusManager>
         {
             _statusFuncList.status = funStatus;
             funStatus.statusFunc?.Invoke();
+            UIManager.Instance.ReloadStatusPanel(funStatus.unit, funStatus.statusName, funStatus.typeValue);
         }
     }
 
@@ -78,6 +79,9 @@ public class StatusManager : MonoSingleton<StatusManager>
         List<Status> statusList = new List<Status>();
         if(unit.unitStatusDic.TryGetValue(status.invokeTime, out statusList))
         {
+            if(unit == GameManager.Instance.enemy)
+                UIManager.Instance.StatusPopup(newStatus, UIManager.Instance.enemyIcon.transform.position);
+            
             Status currentStauts = statusList.Where(e => e.statusName == status.statusName).FirstOrDefault();
             if(currentStauts != null)
             {
@@ -86,6 +90,7 @@ public class StatusManager : MonoSingleton<StatusManager>
             }
             else
             {
+                newStatus.unit = unit;
                 unit.unitStatusDic[newStatus.invokeTime].Add(newStatus);
                 UIManager.Instance.AddStatus(unit, newStatus);
 

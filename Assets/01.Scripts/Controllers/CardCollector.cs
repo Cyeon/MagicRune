@@ -176,8 +176,11 @@ public class CardCollector : MonoBehaviour
             if (_deckCards.Count <= 0) { break; }
             int idx = UnityEngine.Random.Range(0, _deckCards.Count);
             Card card = _deckCards[idx];
+            if (!_handCards.Contains(card))
+            {
+                _handCards.Add(card);
+            }
             _deckCards.Remove(card);
-            _handCards.Add(card);
             card.gameObject.SetActive(true);
         }
         CardSort();
@@ -278,7 +281,7 @@ public class CardCollector : MonoBehaviour
         seq.AppendCallback(() =>
         {
             _isCardRotate = false;
-            if(_handCards.Count > 0)
+            if (_handCards.Count > 0)
             {
                 _isFront = _handCards[0].IsFront;
             }
@@ -312,12 +315,14 @@ public class CardCollector : MonoBehaviour
         for (int i = 0; i < _handCards.Count; i++)
         {
             _handCards[i].gameObject.SetActive(false);
-            _deckCards.Add(_handCards[i]);
+            if (!_deckCards.Contains(_handCards[i]))
+                _deckCards.Add(_handCards[i]);
         }
         for (int i = 0; i < _tempCards.Count; i++)
         {
             if (_restCards.Contains(_tempCards[i])) continue;
-            _deckCards.Add(_tempCards[i]);
+            if (!_deckCards.Contains(_tempCards[i]))
+                _deckCards.Add(_tempCards[i]);
         }
         _handCards.Clear();
     }
