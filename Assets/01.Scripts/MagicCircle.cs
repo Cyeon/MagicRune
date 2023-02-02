@@ -1001,6 +1001,8 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                     else
                     {
                         r.gameObject.SetActive(false);
+                        r.transform.SetParent(_cardCollector.transform);
+                        r.SetIsEquip(false);
                     }
                 }
             }

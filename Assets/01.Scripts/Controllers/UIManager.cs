@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using DG.Tweening;
 using TMPro;
 using System.Runtime.CompilerServices;
+using Unity.VisualScripting.Antlr3.Runtime.Misc;
 
 public class UIManager : MonoSingleton<UIManager>
 {
@@ -25,8 +26,7 @@ public class UIManager : MonoSingleton<UIManager>
 
     [Header("상태이상 UI")]
     [SerializeField] private GameObject _statusPrefab;
-    private Image _prefabImage;
-    private TextMeshProUGUI _prefabText;
+    [SerializeField] private GameObject _statusPopup;
     [SerializeField] private Transform _statusPlayerPanel;
     [SerializeField] private Transform _statusEnemyPanel;
 
@@ -79,17 +79,27 @@ public class UIManager : MonoSingleton<UIManager>
         _enemyPatternValueText.text = value;
     }
 
-    public void AddStatus(Unit unit, Status status)
-    {
-        Transform trm = unit == GameManager.Instance.player ? _statusPlayerPanel : _statusEnemyPanel;
 
-        StatusPanel statusPanel = Instantiate(_statusPrefab).GetComponent<StatusPanel>();
+    #region Status
+
+    public StatusPanel GetStatusPanel(Status status, Transform parent, bool isPopup = false)
+    {
+        StatusPanel statusPanel = Instantiate(isPopup ? _statusPopup : _statusPrefab).GetComponent<StatusPanel>();
+        
         statusPanel.image.sprite = status.icon;
         statusPanel.image.color = status.color;
         statusPanel.duration.text = status.typeValue.ToString();
         statusPanel.statusName = status.statusName;
-        statusPanel.transform.SetParent(trm);
+        statusPanel.transform.SetParent(parent);
         statusPanel.transform.localScale = Vector3.one;
+
+        return statusPanel;
+    }
+
+    public void AddStatus(Unit unit, Status status)
+    {
+        Transform trm = unit == GameManager.Instance.player ? _statusPlayerPanel : _statusEnemyPanel;
+        GetStatusPanel(status, trm);
     }
 
     public void ReloadStatusPanel(Unit unit, StatusName name, int duration)
@@ -116,6 +126,8 @@ public class UIManager : MonoSingleton<UIManager>
 
         obj.GetComponent<StatusPanel>().duration.text = duration.ToString();
     }
+
+    #endregion
 
     public void UpdateShieldText(bool isPlayer, float shield)
     {
@@ -145,9 +157,28 @@ public class UIManager : MonoSingleton<UIManager>
         transform.DOKill();
     }
 
+    #region Popup
     public void DamageUIPopup(float amount, Vector3 pos)
     {
         DamagePopup popup = Instantiate(_damagePopup, _canvas).GetComponent<DamagePopup>();
         popup.Setup(amount, pos);
     }
+
+    public void StatusPopup(Status status, Vector3 pos)
+    {
+        StatusPanel panel = GetStatusPanel(status, _canvas, true);
+        panel.transform.position = pos;
+        panel.transform.localScale = Vector3.one * 2f;
+
+        CanvasGroup group = panel.GetComponent<CanvasGroup>();
+
+        Sequence seq = DOTween.Sequence();
+        seq.Append(panel.transform.DOJump(new Vector3(pos.x + Random.Range(-2f, 2f), pos.y, pos.x), 0.8f, 1, 1f));
+        seq.Join(group.DOFade(0, 1f).SetEase(Ease.InQuart));
+        seq.AppendCallback(() =>
+        {
+            Destroy(group.gameObject);
+        });
+    }
+    #endregion
 }
