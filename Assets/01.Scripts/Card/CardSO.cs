@@ -24,6 +24,7 @@ public enum EffectType
     Defence, // 방어하는거 예) 5방어
     Status,
     Destroy,
+    Draw,
     Etc, // 기타 효과 예) 1장 드로우, 화상효과 부여 등...
 }
 
@@ -78,7 +79,7 @@ public class Pair
     public StatusName StatusType;
     [Tooltip("true면 적, false면 나한태 씀"), ConditionalField(nameof(EffectType), false, EffectType.Status, EffectType.Destroy)]
     public bool IsEnemy = true;
-    [ConditionalField(nameof(EffectType), true, EffectType.Destroy)]
+    [ConditionalField(nameof(EffectType), true, EffectType.Destroy, EffectType.Draw)]
     public AttackType AttackType;
     [ConditionalField(nameof(AttackType), false, AttackType.Double)]
     public AttributeType AttributeType;

@@ -169,7 +169,7 @@ public class CardCollector : MonoBehaviour
         }
     }
 
-    private void CardDraw(int amount)
+    public void CardDraw(int amount)
     {
         for (int i = 0; i < amount; i++)
         {

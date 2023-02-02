@@ -645,6 +645,9 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                     case EffectType.Destroy:
                         action = () => StatusManager.Instance.RemStatus(target, e.StatusType);
                         break;
+                    case EffectType.Draw:
+                        _cardCollector.CardDraw(int.Parse(e.Effect));
+                        break;
                     case EffectType.Etc:
                         break;
                 }
