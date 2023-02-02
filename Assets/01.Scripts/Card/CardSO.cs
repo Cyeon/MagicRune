@@ -30,15 +30,14 @@ public enum EffectType
 public enum ConditionType
 {
     None,
-    //IfThereIs, // 먄악 있다면
-    IfNotThereIs,
-    Heath,
+    HeathComparison,
+    AttributeComparison,
+    StatusComparison,
     AssistRuneCount,
 }
 
-public enum HealthType
+public enum ComparisonType
 {
-    None,
     MoreThan, // 이상
     LessThan, // 이하
 }
@@ -53,19 +52,19 @@ public enum AttackType
 public class Condition
 {
     public ConditionType ConditionType;
-    [ConditionalField(nameof(ConditionType), false, ConditionType.IfNotThereIs, ConditionType.Heath)]
+    [ConditionalField(nameof(ConditionType), false, ConditionType.AttributeComparison)]
     public AttributeType AttributeType;
-    [ConditionalField(nameof(ConditionType), false, ConditionType.IfNotThereIs, ConditionType.Heath)]
+    [ConditionalField(nameof(ConditionType), false, ConditionType.StatusComparison)]
     public StatusName StatusType;
 
     // true : 적이다, 메인 룬이다, false : 나다, 보조룬이다. 
-    [ConditionalField(nameof(ConditionType), false, ConditionType.Heath)]
-    public HealthType HeathType;
-    [MinValue(0f), ConditionalField(nameof(ConditionType), false, ConditionType.Heath, ConditionType.AssistRuneCount)]
+    [ConditionalField(nameof(ConditionType), false, ConditionType.HeathComparison)]
+    public ComparisonType HeathType;
+    [MinValue(0f), ConditionalField(nameof(ConditionType), false, ConditionType.HeathComparison, ConditionType.AttributeComparison, ConditionType.StatusComparison, ConditionType.AssistRuneCount)]
     public float Value;
 
-    [ConditionalField(nameof(ConditionType), true, ConditionType.None), ]
-    public bool IsEnemyOrMain = true;
+    [ConditionalField(nameof(ConditionType), false, ConditionType.HeathComparison, ConditionType.StatusComparison)]
+    public bool IsEnemy = true;
 }
 
 [Serializable]
@@ -79,7 +78,7 @@ public class Pair
     public StatusName StatusType;
     [Tooltip("true면 적, false면 나한태 씀"), ConditionalField(nameof(EffectType), false, EffectType.Status, EffectType.Destroy)]
     public bool IsEnemy = true;
-    [ConditionalField(nameof(EffectType), false, EffectType.Attack)]
+    [ConditionalField(nameof(EffectType), true, EffectType.Destroy)]
     public AttackType AttackType;
     [ConditionalField(nameof(AttackType), false, AttackType.Double)]
     public AttributeType AttributeType;

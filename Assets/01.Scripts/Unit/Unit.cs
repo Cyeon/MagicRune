@@ -98,13 +98,13 @@ public class Unit : MonoBehaviour
         }
     }
 
-    public bool IsHealthAmount(float amount, HealthType type)
+    public bool IsHealthAmount(float amount, ComparisonType type)
     {
         switch (type)
         {
-            case HealthType.MoreThan:
+            case ComparisonType.MoreThan:
                 return HP >= amount;
-            case HealthType.LessThan:
+            case ComparisonType.LessThan:
                 return HP <= amount;
         }
 
