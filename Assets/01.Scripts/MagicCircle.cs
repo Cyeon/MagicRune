@@ -235,6 +235,7 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                         AddEffect(card, true);
                         AssistRuneAnimanation();
                         _effectContent.AddEffect(card.Rune.RuneEffect, true);
+                        StartCoroutine(PlayEffect(card.Rune.RuneAudio));
                     });
                 });
                 SortCard();
@@ -274,6 +275,9 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                     AddEffect(card, true);
                     AssistRuneAnimanation();
                     _effectContent.AddEffect(card.Rune.RuneEffect, true);
+                    StartCoroutine(PlayEffect(card.Rune.RuneAudio));
+                    Debug.Log("B");
+
                 });
                 SortCard();
             }
@@ -338,6 +342,8 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                     AddEffect(card, false);
                     //UpdateMagicName();
                     _effectContent.AddEffect(card.Rune.RuneEffect, false);
+                    StartCoroutine(PlayEffect(card.Rune.RuneAudio));
+
                 });
             });
             SortCard();
@@ -520,6 +526,7 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
 
         Sequence seq = DOTween.Sequence();
         seq.Append(this.transform.DORotate(new Vector3(0, 0, -360 * 5), 0.7f, RotateMode.LocalAxisAdd).SetEase(Ease.OutCubic));
+        seq.InsertCallback(0f, () => _effectContent.AttackAnimation());
 
         //int damage = 0;
         seq.AppendInterval(0.1f);
@@ -575,6 +582,7 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
             _effectDict.Clear();
             _nameText.text = "";
             _effectText.text = "";
+            _effectContent.Clear();
 
             IsBig = false;
 
@@ -658,7 +666,7 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                         action?.Invoke();
                         break;
                     case ConditionType.HeathComparison:
-                        if (target.IsHealthAmount(e.Condition.Value, e.Condition.HeathType))
+                        if (target.IsHealthAmount(e.Condition.Value, e.Condition.ComparisonType))
                         {
                             action?.Invoke();
                         }
@@ -689,7 +697,7 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                             }
                         }
 
-                        switch (e.Condition.HeathType)
+                        switch (e.Condition.ComparisonType)
                         {
                             case ComparisonType.MoreThan:
                                 if (cnt >= e.Condition.Value)
@@ -706,16 +714,16 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                         }
                         break;
                     case ConditionType.StatusComparison:
-                        switch (e.Condition.HeathType)
+                        switch (e.Condition.ComparisonType)
                         {
                             case ComparisonType.MoreThan:
-                                if (StatusManager.Instance.GetUnitStatusValue(target, e.StatusType) >= e.Condition.Value)
+                                if (StatusManager.Instance.GetUnitStatusValue(target, e.Condition.StatusType) >= e.Condition.Value)
                                 {
                                     action?.Invoke();
                                 }
                                 break;
                             case ComparisonType.LessThan:
-                                if (StatusManager.Instance.GetUnitStatusValue(target, e.StatusType) <= e.Condition.Value)
+                                if (StatusManager.Instance.GetUnitStatusValue(target, e.Condition.StatusType) <= e.Condition.Value)
                                 {
                                     action?.Invoke();
                                 }
@@ -739,6 +747,14 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
             IsBig = true;
         }
     }
+
+    private IEnumerator PlayEffect(AudioClip clip)
+    {
+        SoundManager.Instance.PlaySound(clip, SoundType.Effect);
+        yield return new WaitForSeconds(1.5f);
+        SoundManager.Instance.StopSound(SoundType.Effect);
+    }
+
 
 #if UNITY_EDITOR
     private void OnDrawGizmosSelected()

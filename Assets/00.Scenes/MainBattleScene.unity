@@ -4730,7 +4730,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1018659705}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: TurnChange
+        m_MethodName: PlayerTurnEnd
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -7220,6 +7220,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   cost: 10
+  attackSound: {fileID: 8300000, guid: e80bdb09e3ee7274a855277bfed0a493, type: 3}
 --- !u!4 &2124722368
 Transform:
   m_ObjectHideFlags: 0
