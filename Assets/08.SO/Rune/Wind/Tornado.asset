@@ -19,46 +19,57 @@ MonoBehaviour:
   MainRune:
     Name: "\uD1A0\uB124\uC774\uB3C4"
     CardImage: {fileID: 21300000, guid: 397aa73136f10644292b6d5a2a916606, type: 3}
-    CardDescription: "\uD1A0\uB124\uC774\uB3C4\uAC00 \uB098\uD0C0\uB098 \uD50C\uB808\uC774\uC5B4\uC758
-      \uCCB4\uB825\uC774 50\uC774\uD558\uC77C \uB54C \uC801\uC5D0\uAC8C \uC0C1\uCC98
-      20\uC744 \uBD80\uC5EC\uD55C\uB2E4"
+    CardDescription: "\uD1A0\uB124\uC774\uB3C4\uAC00 \uB098\uD0C0\uB098 \uC801\uC5D0\uAC8C
+      5\uB300\uBBF8\uC9C0\uB97C \uC8FC\uACE0, \uB8EC\uC744 \uB450\uAC1C \uBF51\uB294\uB2E4"
     EffectDescription:
     - Condition:
-        ConditionType: 1
+        ConditionType: 0
         AttributeType: 0
         StatusType: 0
-        ComparisonType: 1
-        Value: 50
+        ComparisonType: 0
+        Value: 0
         IsEnemy: 0
-      EffectType: 2
-      StatusType: 4
+      EffectType: 0
+      StatusType: 0
       IsEnemy: 1
       AttackType: 0
       AttributeType: 0
-      Effect: 20
+      Effect: 5
+    - Condition:
+        ConditionType: 0
+        AttributeType: 0
+        StatusType: 0
+        ComparisonType: 0
+        Value: 0
+        IsEnemy: 0
+      EffectType: 4
+      StatusType: 0
+      IsEnemy: 1
+      AttackType: 0
+      AttributeType: 0
+      Effect: 2
     Attribute: 4
     Cost: 3
     DelayTurn: 3
   AssistRune:
     Name: "\uD68C\uC624\uB9AC\uBC14\uB78C"
     CardImage: {fileID: 21300000, guid: 397aa73136f10644292b6d5a2a916606, type: 3}
-    CardDescription: "\uD68C\uC624\uB9AC\uBC14\uB78C\uC774 \uBD88\uC5B4 \uD50C\uB808\uC774\uC5B4\uC758
-      \uCCB4\uB825\uC774 50 \uC774\uC0C1\uC77C \uB54C \uC801\uC5D0\uAC8C \uC0C1\uCC98
-      10\uC744 \uBD80\uC5EC\uD55C\uB2E4"
+    CardDescription: "\uD68C\uC624\uB9AC\uBC14\uB78C\uC774 \uBD88\uC5B4 \uB8EC\uC744
+      \uD55C \uAC1C \uBF51\uB294\uB2E4"
     EffectDescription:
     - Condition:
-        ConditionType: 1
+        ConditionType: 0
         AttributeType: 0
         StatusType: 0
         ComparisonType: 0
-        Value: 50
+        Value: 0
         IsEnemy: 0
-      EffectType: 2
-      StatusType: 4
-      IsEnemy: 1
+      EffectType: 4
+      StatusType: 0
+      IsEnemy: 0
       AttackType: 0
       AttributeType: 0
-      Effect: 10
+      Effect: 1
     Attribute: 4
     Cost: 2
     DelayTurn: 2
