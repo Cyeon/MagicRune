@@ -14,7 +14,7 @@ public class CardsViewUI : MonoBehaviour
     [SerializeField]
     private bool _isRest = false;
 
-    [SerializeField]            
+    [SerializeField]
     private Color _onColor = new Color(0f, 0f, 0f, 1f);
 
     [Header("GameObjects")]
@@ -84,6 +84,10 @@ public class CardsViewUI : MonoBehaviour
             gameObject.SetActive(false);
             gameObject.transform.rotation = Quaternion.identity;
             gameObject.transform.SetParent(_cardCollector.transform);
+            RectTransform rect = gameObject.GetComponent<RectTransform>();
+            rect.sizeDelta = Vector2.zero;
+            rect.anchorMin = Vector2.one / 2;
+            rect.anchorMax = Vector2.one / 2;
         }
     }
 
