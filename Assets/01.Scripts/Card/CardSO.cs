@@ -60,7 +60,7 @@ public class Condition
 
     // true : 적이다, 메인 룬이다, false : 나다, 보조룬이다. 
     [ConditionalField(nameof(ConditionType), false, ConditionType.HeathComparison, ConditionType.AttributeComparison, ConditionType.StatusComparison)]
-    public ComparisonType HeathType;
+    public ComparisonType ComparisonType;
     [MinValue(0f), ConditionalField(nameof(ConditionType), false, ConditionType.HeathComparison, ConditionType.AttributeComparison, ConditionType.StatusComparison, ConditionType.AssistRuneCount)]
     public float Value;
 
