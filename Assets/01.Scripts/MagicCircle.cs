@@ -351,7 +351,6 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
             seq.AppendCallback(() =>
             {
                 SortCard();
-                _runeDict[RuneType.Assist][changeIndex] = card;
 
                 //UpdateMagicName();
                 StartCoroutine(PlayEffect(card.Rune.RuneAudio));
