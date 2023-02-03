@@ -235,6 +235,7 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                         AddEffect(card, true);
                         AssistRuneAnimanation();
                         _effectContent.AddEffect(card.Rune.RuneEffect, true);
+                        StartCoroutine(PlayEffect(card.Rune.RuneAudio));
                     });
                 });
                 SortCard();
@@ -274,6 +275,9 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                     AddEffect(card, true);
                     AssistRuneAnimanation();
                     _effectContent.AddEffect(card.Rune.RuneEffect, true);
+                    StartCoroutine(PlayEffect(card.Rune.RuneAudio));
+                    Debug.Log("B");
+
                 });
                 SortCard();
             }
@@ -338,6 +342,8 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                     AddEffect(card, false);
                     //UpdateMagicName();
                     _effectContent.AddEffect(card.Rune.RuneEffect, false);
+                    StartCoroutine(PlayEffect(card.Rune.RuneAudio));
+
                 });
             });
             SortCard();
@@ -741,6 +747,14 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
             IsBig = true;
         }
     }
+
+    private IEnumerator PlayEffect(AudioClip clip)
+    {
+        SoundManager.Instance.PlaySound(clip, SoundType.Effect);
+        yield return new WaitForSeconds(1.5f);
+        SoundManager.Instance.StopSound(SoundType.Effect);
+    }
+
 
 #if UNITY_EDITOR
     private void OnDrawGizmosSelected()
