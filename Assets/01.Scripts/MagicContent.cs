@@ -103,6 +103,17 @@ public class MagicContent : MonoBehaviour
         _effectDict.Clear();
     }
 
+    public void SetActive(bool value)
+    {
+        foreach(var e in _effectDict)
+        {
+            foreach(var e2 in e.Value)
+            {
+                e2.SetActive(value);
+            }
+        }
+    }
+
     private void Sort()
     {
         if (_effectDict.ContainsKey(RuneType.Main) == true)

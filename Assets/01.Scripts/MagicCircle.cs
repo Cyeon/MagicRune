@@ -96,6 +96,7 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                 _bgPanel.GetComponent<CanvasGroup>().DOFade(1f, 0.2f);
                 this.transform.DOLocalMoveY(400, 0.2f).SetRelative();
                 _bgPanel.transform.GetChild(0).GetComponent<Image>().raycastTarget = true;
+                _effectContent.SetActive(true);
             }
             else
             {
@@ -113,6 +114,7 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                 _bgPanel.GetComponent<CanvasGroup>().DOFade(0, 0.2f);
                 this.transform.DOLocalMoveY(-400, 0.2f).SetRelative();
                 _bgPanel.transform.GetChild(0).GetComponent<Image>().raycastTarget = false;
+                _effectContent.SetActive(false);
                 //_bgPanel.transform.GetChild(0).GetComponent<Image>().raycastTarget = true;
                 this.transform.rotation = Quaternion.Euler(0, 0, 0);
             }
