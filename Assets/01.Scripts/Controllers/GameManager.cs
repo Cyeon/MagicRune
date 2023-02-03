@@ -156,6 +156,14 @@ public class GameManager : MonoSingleton<GameManager>
             currentUnit?.InvokeStatus(StatusInvokeTime.Start);
     }
 
+    public void PlayerTurnEnd()
+    {
+        if(gameTurn == GameTurn.Player)
+        {
+            TurnChange();
+        }
+    }
+
     #endregion
 
 }
