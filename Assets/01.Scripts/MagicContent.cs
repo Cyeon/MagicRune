@@ -153,6 +153,11 @@ public class MagicContent : MonoBehaviour
             //{
             //    _effectDict[RuneType.Main]l;`````````````````````````
             //});
+            seq.AppendCallback(() =>
+            {
+                _distance = _baseDistance;
+                _rotateSpeed = _baseRotateSpeed;
+            });
         }
 
         

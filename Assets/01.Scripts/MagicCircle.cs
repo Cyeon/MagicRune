@@ -429,7 +429,8 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
         seq.AppendCallback(() => SortCard());
         foreach (var r in _runeDict[RuneType.Assist])
         {
-            seq.Join(r.GetComponent<RectTransform>().DOAnchorPos(Vector2.zero, 0.3f).From());
+            if(r != null)
+                seq.Join(r.GetComponent<RectTransform>().DOAnchorPos(Vector2.zero, 0.3f).From());
         }
         //seq.AppendCallback(() => { UpdateMagicName(); });
         //seq.AppendInterval(0.2f);
