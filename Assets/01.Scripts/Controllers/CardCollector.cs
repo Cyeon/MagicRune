@@ -205,7 +205,7 @@ public class CardCollector : MonoBehaviour
         UIUpdate();
     }
 
-    private void CardSort()
+    public void CardSort()
     {
         _handCards.Sort(delegate (Card a, Card b)
         {
