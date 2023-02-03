@@ -6,7 +6,9 @@ using UnityEngine;
 public class PatternFuncList : MonoBehaviour
 {
     private float _addDmg;
-    public float value;
+    [HideInInspector] public float value;
+
+    [SerializeField] private ParticleSystem _shieldEffect;
 
     public void AddAtkDmg()
     {
@@ -48,6 +50,18 @@ public class PatternFuncList : MonoBehaviour
     private void DelayAttack()
     {
         GameManager.Instance.enemy.Attack();
+    }
+
+    public void ShieldUse()
+    {
+        _shieldEffect.gameObject.SetActive(true);
+        _shieldEffect.Play();
+        Invoke("TurnChange", 2f);
+    }
+
+    public void TurnChange()
+    {
+        GameManager.Instance.TurnChange();
     }
 
     public void DelayShake()
