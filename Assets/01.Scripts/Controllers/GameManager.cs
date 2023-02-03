@@ -152,6 +152,7 @@ public class GameManager : MonoSingleton<GameManager>
             }
         }
         this.MagicCircle.RuneDict.Clear();
+        this.MagicCircle.EffectContent.Clear();
 
         Debug.Log(string.Format("Turn Change: {0}", gameTurn));
 
