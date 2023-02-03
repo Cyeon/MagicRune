@@ -72,6 +72,7 @@ public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     private Text _mainSubText;
     private Text _skillText;
     private Text _nameText;
+    private Text _assistRuneCount;
 
     // Rune Area
     private Transform _runeAreaParent;
@@ -112,6 +113,7 @@ public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
             _coolTimeText.text = _rune.MainRune.DelayTurn.ToString();
             _mainSubText.text = "메인";
             _skillText.text = _rune.MainRune.CardDescription;
+            _assistRuneCount.text = _rune.AssistRuneCount.ToString();
         }
         else
         {
@@ -121,6 +123,7 @@ public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
             _coolTimeText.text = _rune.AssistRune.DelayTurn.ToString();
             _mainSubText.text = "보조";
             _skillText.text = _rune.AssistRune.CardDescription;
+            _assistRuneCount.text = "0";
         }
         _runeImage.sprite = _rune.RuneImage;
     }
@@ -195,6 +198,7 @@ public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         _mainSubText = _cardParent.Find("MainSub_Text").GetComponent<Text>();
         _skillText = _cardParent.Find("Skill_Detail").GetComponent<Text>();
         _nameText = _cardParent.Find("Skill_Name").GetComponent<Text>();
+        _assistRuneCount = _cardParent.Find("Rune_Count").GetComponent<Text>();
 
         _runeAreaParent = transform.Find("RuneArea");
         _runeImage = _runeAreaParent.Find("Rune Image").GetComponent<Image>();
