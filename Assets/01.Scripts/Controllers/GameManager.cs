@@ -115,10 +115,13 @@ public class GameManager : MonoSingleton<GameManager>
                 StatusManager.Instance.StatusTurnChange(player);
                 StatusManager.Instance.StatusTurnChange(enemy);
 
-                enemy.pattern?.End();
+                if(!enemy.isSkip)
+                {
+                    enemy.pattern?.End();
+                    enemy.pattern = PatternManager.Instance.GetPattern();
+                    enemy.pattern?.Start();
+                }
 
-                enemy.pattern = PatternManager.Instance.GetPattern();
-                enemy.pattern?.Start();
                 EventManager<int>.TriggerEvent(Define.ON_START_PLAYER_TURN, 5);
                 EventManager.TriggerEvent(Define.ON_START_PLAYER_TURN);
                 EventManager<bool>.TriggerEvent(Define.ON_START_PLAYER_TURN, true); // ¿©±â
