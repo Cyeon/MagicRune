@@ -124,7 +124,7 @@ public class CardCollector : MonoBehaviour
     public IReadOnlyList<Card> RestCards => _restCards;
 
     private bool _isFront = true;
-    public bool IsFront => _isFront;
+    public bool IsFront { get => _isFront ; set => _isFront = value; }
     private bool _isCardRotate = false;
 
     [SerializeField]

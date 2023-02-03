@@ -68,6 +68,7 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
     private Text _effectText;
     [SerializeField]
     private MagicContent _effectContent;
+    public MagicContent EffectContent => _effectContent;
 
     public Enemy enemy;
     private Vector2 touchBeganPos;
@@ -589,6 +590,10 @@ public void Damage() // ¥Î√À ºˆ¡§
         {
             foreach (Card card in item.Value)
             {
+                if(card.IsFront == false)
+                {
+                    card.IsFront = true;
+                }
                 _cardCollector._restCards.Add(card);
             }
         }
@@ -623,6 +628,7 @@ public void Damage() // ¥Î√À ºˆ¡§
         {
             _cardCollector.CardRotate();
         }
+        _cardCollector.IsFront = true;
     });
 
     //enemy.Damage(damage);
