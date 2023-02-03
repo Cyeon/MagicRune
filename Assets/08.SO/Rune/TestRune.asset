@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: TestRune
   m_EditorClassIdentifier: 
   RuneImage: {fileID: 0}
+  RuneEffect: {fileID: 0}
   AssistRuneCount: 5
   MainRune:
     Name: 
@@ -20,10 +21,10 @@ MonoBehaviour:
     CardDescription: 
     EffectDescription:
     - Condition:
-        ConditionType: 0
+        ConditionType: 2
         AttributeType: 1
         StatusType: 0
-        HeathType: 0
+        ComparisonType: 0
         Value: 11
         IsEnemy: 1
       EffectType: 4

@@ -57,7 +57,7 @@ public class StatusManager : MonoSingleton<StatusManager>
         }
         else
         {
-            Debug.LogError(string.Format("{0} is not have {1} status.", unit, name));
+            //Debug.LogError(string.Format("{0} is not have {1} status.", unit, name));
             return 0;
         }
     }
