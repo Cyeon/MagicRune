@@ -120,6 +120,8 @@ public class CardSO : ScriptableObject
     public Sprite RuneImage;
     [ShowAssetPreview(32, 32), Tooltip("마법진 위에 띄울 이펙트")]
     public GameObject RuneEffect;
+    [Tooltip("마법진에 들어갈 때 나올 소리")]
+    public AudioClip RuneAudio = null;
     [Min(1), Tooltip("보조 룬 개수")]
     public int AssistRuneCount = 5;
 

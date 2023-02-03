@@ -973,7 +973,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.7607843}
+  m_Color: {r: 0, g: 0, b: 0, a: 0.9019608}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -4730,7 +4730,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1018659705}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: TurnChange
+        m_MethodName: PlayerTurnEnd
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -7220,6 +7220,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   cost: 10
+  attackSound: {fileID: 8300000, guid: e80bdb09e3ee7274a855277bfed0a493, type: 3}
 --- !u!4 &2124722368
 Transform:
   m_ObjectHideFlags: 0

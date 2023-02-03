@@ -59,6 +59,8 @@ public class CardsViewUI : MonoBehaviour
 
             gameObject.GetComponent<ViewCard>().isActive = true;
 
+            gameObject.transform.Find("Card_Area").GetComponent<CanvasGroup>().alpha = 1f;
+
             Card card = gameObject.GetComponent<Card>();
             card.SetRune(false);
             card.enabled = false;

@@ -5,6 +5,7 @@ using UnityEngine;
 public class Player : Unit
 {
     public int cost = 10; // 마나
+    public AudioClip attackSound = null;
 
     private void Awake()
     {
@@ -18,5 +19,7 @@ public class Player : Unit
         InvokeStatus(StatusInvokeTime.Attack);
 
         GameManager.Instance.enemy.TakeDamage(currentDmg);
+        SoundManager.Instance.PlaySound(attackSound, SoundType.Effect);
+
     }
 }

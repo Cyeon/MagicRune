@@ -37,10 +37,10 @@ public class PatternFuncList : MonoBehaviour
     public void Attack()
     {
         Sequence seq = DOTween.Sequence();
-        seq.Append(UIManager.Instance.enemyIcon.DOShakePosition(3, 50, 5)).SetEase(Ease.Linear);
-        seq.Append(UIManager.Instance.enemyIcon.DOLocalMoveY(-1700f, 0.3f)).SetEase(Ease.Linear);
+        seq.Append(UIManager.Instance.enemyIcon.DOShakePosition(1, 50, 5)).SetEase(Ease.Linear);
+        seq.Append(UIManager.Instance.enemyIcon.DOLocalMoveY(-1700f, 0.2f)).SetEase(Ease.Linear);
         seq.AppendCallback(() => DelayAttack());
-        seq.Append(UIManager.Instance.enemyIcon.DOLocalMoveY(130, 0.3f)).SetEase(Ease.Linear);
+        seq.Append(UIManager.Instance.enemyIcon.DOLocalMoveY(130, 0.2f)).SetEase(Ease.Linear);
         seq.AppendInterval(0.1f);
         seq.AppendCallback(() => GameManager.Instance.TurnChange());
     }
@@ -60,7 +60,7 @@ public class PatternFuncList : MonoBehaviour
     public void Beeeeem()
     {
         Sequence seq = DOTween.Sequence();
-        seq.Append(UIManager.Instance.enemyIcon.DOShakeScale(3, 20, 5)).SetEase(Ease.Linear);
+        seq.Append(UIManager.Instance.enemyIcon.DOShakeRotation(2, 90, 5)).SetEase(Ease.Linear);
         seq.AppendCallback(() => GameManager.Instance.enemy.isSkip = true);
         seq.AppendCallback(() => GameManager.Instance.player.TakeDamage(20));
         seq.AppendInterval(0.2f);

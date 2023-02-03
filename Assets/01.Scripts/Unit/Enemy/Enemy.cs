@@ -10,6 +10,8 @@ public class Enemy : Unit
 
     public bool isSkip = false;
 
+    public AudioClip attackSound = null;
+
     public void Init(EnemySO so)
     {
         enemyInfo = so;
@@ -38,5 +40,6 @@ public class Enemy : Unit
         InvokeStatus(StatusInvokeTime.Attack);
 
         GameManager.Instance.player.TakeDamage(currentDmg);
+        SoundManager.Instance.PlaySound(attackSound, SoundType.Effect);
     }
 }
