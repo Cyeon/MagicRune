@@ -576,7 +576,7 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
             _effectDict.Clear();
             _nameText.text = "";
             _effectText.text = "";
-            //_effectContent.Clear();
+            _effectContent.Clear();
 
             IsBig = false;
 
