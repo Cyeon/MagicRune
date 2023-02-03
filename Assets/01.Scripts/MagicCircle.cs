@@ -526,7 +526,7 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
 
         Sequence seq = DOTween.Sequence();
         seq.Append(this.transform.DORotate(new Vector3(0, 0, -360 * 5), 0.7f, RotateMode.LocalAxisAdd).SetEase(Ease.OutCubic));
-        //seq.InsertCallback(0.7f, () => _effectContent.AttackAnimation());
+        seq.InsertCallback(0f, () => _effectContent.AttackAnimation());
 
         //int damage = 0;
         seq.AppendInterval(0.1f);
@@ -582,7 +582,7 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
             _effectDict.Clear();
             _nameText.text = "";
             _effectText.text = "";
-            //_effectContent.Clear();
+            _effectContent.Clear();
 
             IsBig = false;
 

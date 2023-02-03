@@ -145,10 +145,14 @@ public class MagicContent : MonoBehaviour
         else
         {
             seq.Append(DOTween.To(() => _distance, x => _distance = x, _baseDistance * 1.3f, 0.2f));
-            seq.AppendInterval(0.2f);
-            seq.Append(DOTween.To(() => _rotateSpeed, x => _rotateSpeed = x, _baseRotateSpeed, 1f));
-            seq.Join(DOTween.To(() => _distance, x => _distance = x, 0, 1f));
-            seq.AppendCallback(() => Draw());
+            seq.Join(DOTween.To(() => _rotateSpeed, x => _rotateSpeed = x, _baseRotateSpeed * 1.01f, 0.7f));
+            //seq.AppendInterval(0.2f);
+            seq.Append(DOTween.To(() => _distance, x => _distance = x, 0, 0.2f));
+            seq.AppendCallback(() => Clear());
+            //seq.AppendCallback(() =>
+            //{
+            //    _effectDict[RuneType.Main]l;`````````````````````````
+            //});
         }
 
         
@@ -156,20 +160,30 @@ public class MagicContent : MonoBehaviour
 
     private void Draw()
     {
-        Vector3 deltaPos = _effectDict[RuneType.Main][0].transform.position - GameManager.Instance.enemy.transform.position;
-        Vector3 targetPos = _effectDict[RuneType.Main][0].transform.position + deltaPos;
-        Vector3 startControl = (targetPos - _effectDict[RuneType.Main][0].transform.position) / 4;
+        //int count = 2;
+        //Vector3 pA = _effectDict[RuneType.Main][0].transform.position;
+        //Vector3 pC = GameManager.Instance.enemy.transform.position;
+        //Vector3 pB = pA - pC;
+        //pB /= 2;
+        //pB.x += Random.value >= 0.5f ? -5f : 5f;
 
-        float angle = Random.value <= 0.5f ? -45f : 45f;
+        //_bezierPoints = new Vector3[count + 1];
+        //float unit = 1.0f / count;
 
-        Vector3 cp1 = Quaternion.Euler(0, 0, angle) * startControl;
-        Vector3 cp2 = Quaternion.Euler(0, 0, angle) * (startControl * 3);
+        //int i = 0; float t = 0f;
+        //for (; i < count + 1; i++, t += unit)
+        //{
+        //    float u = (1 - t);
+        //    float t2 = t * t;
+        //    float u2 = u * u;
 
-        _bezierPoints = DOCurve.CubicBezier.GetSegmentPointCloud(
-            transform.position, transform.position + cp1,
-            targetPos, transform.position + cp2, _bezierResolution);
-        _frameSpeed = _attackSpeed / _bezierResolution;
-        StartCoroutine(DrawCoroutine());
+        //    _bezierPoints[i] =
+        //        pA * u2 +
+        //        pB * (t * u * 2) +
+        //        pC * t2
+        //    ;
+        //}
+        //StartCoroutine(DrawCoroutine());
     }
 
     private IEnumerator DrawCoroutine()
@@ -179,7 +193,7 @@ public class MagicContent : MonoBehaviour
         for (int i = 0; i < _bezierPoints.Length; i++)
         {
             yield return new WaitForSeconds(_frameSpeed);
-            transform.position = _bezierPoints[i];
+            _effectDict[RuneType.Main][0].transform.position = _bezierPoints[i];
         }
     }
 }
