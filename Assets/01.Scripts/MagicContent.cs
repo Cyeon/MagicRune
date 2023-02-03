@@ -17,19 +17,9 @@ public class MagicContent : MonoBehaviour
     private float _baseRotateSpeed;
     private float _baseDistance;
 
-    private bool _isAdd = false;
     private float _axis = 90;
 
     private Dictionary<RuneType, List<GameObject>> _effectDict = new Dictionary<RuneType, List<GameObject>>();
-
-    [SerializeField]
-    private int _bezierResolution = 30;
-    private Vector3[] _bezierPoints;
-    private float _frameSpeed = 0;
-    [SerializeField]
-    private float _attackSpeed;
-    [SerializeField]
-    private float _attackDelay;
 
     private void Start()
     {
@@ -113,6 +103,17 @@ public class MagicContent : MonoBehaviour
         _effectDict.Clear();
     }
 
+    public void SetActive(bool value)
+    {
+        foreach(var e in _effectDict)
+        {
+            foreach(var e2 in e.Value)
+            {
+                e2.SetActive(value);
+            }
+        }
+    }
+
     private void Sort()
     {
         if (_effectDict.ContainsKey(RuneType.Main) == true)
@@ -140,7 +141,13 @@ public class MagicContent : MonoBehaviour
         Sequence seq = DOTween.Sequence();
         if(_effectDict.ContainsKey(RuneType.Assist) == false)
         {
-            
+            seq.AppendInterval(0.8f);
+            seq.AppendCallback(() =>
+            {
+                Clear();
+                _distance = _baseDistance;
+                _rotateSpeed = _baseRotateSpeed;
+            });
         }
         else
         {
@@ -153,47 +160,11 @@ public class MagicContent : MonoBehaviour
             //{
             //    _effectDict[RuneType.Main]l;`````````````````````````
             //});
-        }
-
-        
-    }
-
-    private void Draw()
-    {
-        //int count = 2;
-        //Vector3 pA = _effectDict[RuneType.Main][0].transform.position;
-        //Vector3 pC = GameManager.Instance.enemy.transform.position;
-        //Vector3 pB = pA - pC;
-        //pB /= 2;
-        //pB.x += Random.value >= 0.5f ? -5f : 5f;
-
-        //_bezierPoints = new Vector3[count + 1];
-        //float unit = 1.0f / count;
-
-        //int i = 0; float t = 0f;
-        //for (; i < count + 1; i++, t += unit)
-        //{
-        //    float u = (1 - t);
-        //    float t2 = t * t;
-        //    float u2 = u * u;
-
-        //    _bezierPoints[i] =
-        //        pA * u2 +
-        //        pB * (t * u * 2) +
-        //        pC * t2
-        //    ;
-        //}
-        //StartCoroutine(DrawCoroutine());
-    }
-
-    private IEnumerator DrawCoroutine()
-    {
-        yield return new WaitForSeconds(_attackDelay);
-
-        for (int i = 0; i < _bezierPoints.Length; i++)
-        {
-            yield return new WaitForSeconds(_frameSpeed);
-            _effectDict[RuneType.Main][0].transform.position = _bezierPoints[i];
+            seq.AppendCallback(() =>
+            {
+                _distance = _baseDistance;
+                _rotateSpeed = _baseRotateSpeed;
+            });
         }
     }
 }

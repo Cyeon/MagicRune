@@ -92,12 +92,29 @@ public class CardCollector : MonoBehaviour
                         }
                         _selectCard = value;
                     });
-                    seq.Append(_selectCard.GetComponent<RectTransform>().DOAnchorPos(_cardOriginPos, 0.2f));
-                    seq.InsertCallback(0.2f, () =>
+                    if(_selectCard != null)
                     {
-                        _magicCircle.SortCard();
-                        CardSort();
-                    });
+                        if(_cardOriginPos == null)
+                        {
+                            _cardOriginPos = Vector2.zero;
+                        }
+
+                        seq.Append(_selectCard.GetComponent<RectTransform>().DOAnchorPos(_cardOriginPos, 0.2f));
+                        seq.InsertCallback(0.2f, () =>
+                        {
+                            _magicCircle.SortCard();
+                            CardSort();
+                        });
+                    }
+                    else
+                    {
+                        seq.AppendCallback(() =>
+                        {
+                            _magicCircle.SortCard();
+                            CardSort();
+                        });
+                    }
+                    
                 }
             }
         }
