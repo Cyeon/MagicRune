@@ -542,6 +542,8 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                 else
                 {
                     Debug.Log("touch");
+                    Vector3 pos = Camera.main.ScreenToWorldPoint(touch.position);
+                    UIManager.Instance.InfoMessagePopup("No have mana", pos);
                 }
             }
         }

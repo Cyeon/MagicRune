@@ -20,9 +20,9 @@ public class InfoMessage : MonoBehaviour
         _textMesh.SetText(message);
 
         Sequence seq = DOTween.Sequence();
-        seq.Append(_textMesh.DOFade(1, 0.4f));
-        seq.Append(transform.DOMoveY(transform.position.y + 2f, 1f).SetEase(Ease.InQuart));
-        seq.Join(_textMesh.DOFade(0, 1f).SetEase(Ease.InQuart));
+        seq.Append(_textMesh.DOFade(1, 0.2f));
+        seq.Append(transform.DOMoveY(transform.position.y + 0.5f, 0.3f).SetEase(Ease.InQuart));
+        seq.Join(_textMesh.DOFade(0, 0.3f).SetEase(Ease.InQuart));
         seq.AppendCallback(() =>
         {
             Destroy(gameObject);

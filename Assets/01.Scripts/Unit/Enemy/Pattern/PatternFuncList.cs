@@ -39,7 +39,8 @@ public class PatternFuncList : MonoBehaviour
     public void Attack()
     {
         Sequence seq = DOTween.Sequence();
-        seq.Append(UIManager.Instance.enemyIcon.DOShakePosition(1, 50, 5)).SetEase(Ease.Linear);
+        seq.AppendCallback(() => StartCoroutine(UIManager.Instance.PatternIconAnimationCoroutine()));
+        seq.Append(UIManager.Instance.enemyIcon.DOShakePosition(0.6f, 50, 5)).SetEase(Ease.Linear);
         seq.Append(UIManager.Instance.enemyIcon.DOLocalMoveY(-1700f, 0.2f)).SetEase(Ease.Linear);
         seq.AppendCallback(() => DelayAttack());
         seq.Append(UIManager.Instance.enemyIcon.DOLocalMoveY(130, 0.2f)).SetEase(Ease.Linear);
