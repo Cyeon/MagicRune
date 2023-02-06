@@ -37,6 +37,7 @@ public class UIManager : MonoSingleton<UIManager>
 
     [Header("ETC")]
     [SerializeField] private GameObject _damagePopup;
+    [SerializeField] private GameObject _infoMessage;
 
     private void Awake()
     {
@@ -198,6 +199,14 @@ public class UIManager : MonoSingleton<UIManager>
         {
             Destroy(group.gameObject);
         });
+    }
+
+    public void InfoMessagePopup(string message, Vector3 pos)
+    {
+        InfoMessage popup = Instantiate(_infoMessage, _canvas).GetComponent<InfoMessage>();
+        pos.z = 0;
+        pos.y += 1;
+        popup.Setup(message, pos);
     }
     #endregion
 }
