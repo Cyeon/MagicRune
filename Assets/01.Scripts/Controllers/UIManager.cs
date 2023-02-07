@@ -37,6 +37,7 @@ public class UIManager : MonoSingleton<UIManager>
 
     [Header("ETC")]
     [SerializeField] private GameObject _damagePopup;
+    [SerializeField] private GameObject _infoMessage;
 
     private void Awake()
     {
@@ -44,6 +45,20 @@ public class UIManager : MonoSingleton<UIManager>
         _turnText = _turnPanel?.GetComponentInChildren<TextMeshProUGUI>();
     }
 
+    public void OnDestroy()
+    {
+        transform.DOKill();
+    }
+
+    public void UpdateShieldText(bool isPlayer, float shield)
+    {
+        if (isPlayer)
+            _playerShieldText.text = shield.ToString();
+        else
+            _enemyShieldText.text = shield.ToString();
+    }
+
+    #region Health Bar
     public void EnemyHealthbarInit(float health)
     {
         _enemyHealthSlider.maxValue = health;
@@ -72,19 +87,14 @@ public class UIManager : MonoSingleton<UIManager>
         seq.Append(_playerHealthSlider.DOValue(GameManager.Instance.player.HP, 0.2f));
         seq.AppendCallback(() => _playerHealthText.text = string.Format("{0} / {1}", _playerHealthSlider.value, _playerHealthSlider.maxValue));
     }
-
-    public void ReloadPattern(Sprite sprite, string value = "")
-    {
-        _enemyPatternIcon.sprite = sprite;
-        _enemyPatternValueText.text = value;
-    }
-
+    #endregion
 
     #region Status
 
     public StatusPanel GetStatusPanel(Status status, Transform parent, bool isPopup = false)
     {
-        StatusPanel statusPanel = Instantiate(isPopup ? _statusPopup : _statusPrefab).GetComponent<StatusPanel>();
+        //StatusPanel statusPanel = Instantiate(isPopup ? _statusPopup : _statusPrefab).GetComponent<StatusPanel>();
+        StatusPanel statusPanel = Instantiate(_statusPrefab).GetComponent<StatusPanel>();
         
         statusPanel.image.sprite = status.icon;
         statusPanel.image.color = status.color;
@@ -148,34 +158,6 @@ public class UIManager : MonoSingleton<UIManager>
 
     #endregion
 
-    public void UpdateShieldText(bool isPlayer, float shield)
-    {
-        if (isPlayer)
-            _playerShieldText.text = shield.ToString();
-        else
-            _enemyShieldText.text = shield.ToString();
-    }
-
-    public void Turn(string text)
-    {
-        _turnPanel.SetActive(true);
-        _turnText.text = text;
-
-        Sequence seq = DOTween.Sequence();
-        seq.Append(_turnBackground.DOFade(0.5f, 0.5f));
-        seq.Join(_turnText.DOFade(1f, 0.5f));
-        seq.AppendInterval(0.5f);
-        seq.Append(_turnBackground.DOFade(0, 0.5f));
-        seq.Join(_turnText.DOFade(0, 0.5f));
-        seq.AppendCallback(() => _turnPanel.SetActive(false));
-        seq.AppendCallback(() =>GameManager.Instance.TurnChange());
-    }
-
-    public void OnDestroy()
-    {
-        transform.DOKill();
-    }
-
     #region Popup
     public void DamageUIPopup(float amount, Vector3 pos)
     {
@@ -183,7 +165,7 @@ public class UIManager : MonoSingleton<UIManager>
         popup.Setup(amount, pos);
     }
 
-    public void StatusPopup(Status status, Vector3 pos)
+    /*public void StatusPopup(Status status, Vector3 pos)
     {
         StatusPanel panel = GetStatusPanel(status, _canvas, true);
         panel.transform.position = pos;
@@ -198,6 +180,70 @@ public class UIManager : MonoSingleton<UIManager>
         {
             Destroy(group.gameObject);
         });
+    }*/
+
+    public void StatusPopup(Status status)
+    {
+        GameObject obj = Instantiate(_statusPopup, enemyIcon);
+        Image img = obj.GetComponent<Image>();
+        img.sprite = status.icon;
+        obj.transform.localScale = Vector3.one * 8f;
+
+        Sequence seq = DOTween.Sequence();
+        seq.Append(obj.transform.DOScale(9f, 0.7f).SetEase(Ease.InQuart));
+        seq.Join(img.DOFade(0, 0.7f).SetEase(Ease.InQuart));
+        seq.AppendCallback(() =>
+        {
+            Destroy(obj);
+        });
+    }
+
+    public void InfoMessagePopup(string message, Vector3 pos)
+    {
+        InfoMessage popup = Instantiate(_infoMessage, _canvas).GetComponent<InfoMessage>();
+        pos.z = 0;
+        pos.y += 1;
+        popup.Setup(message, pos);
     }
     #endregion
+
+    public void Turn(string text)
+    {
+        _turnPanel.SetActive(true);
+        _turnText.text = text;
+
+        Sequence seq = DOTween.Sequence();
+        seq.Append(_turnBackground.DOFade(0.5f, 0.5f));
+        seq.Join(_turnText.DOFade(1f, 0.5f));
+        seq.AppendInterval(0.5f);
+        seq.Append(_turnBackground.DOFade(0, 0.5f));
+        seq.Join(_turnText.DOFade(0, 0.5f));
+        seq.AppendCallback(() => _turnPanel.SetActive(false));
+        seq.AppendCallback(() => GameManager.Instance.TurnChange());
+    }
+
+    public void ReloadPattern(Sprite sprite, string value = "")
+    {
+        _enemyPatternIcon.sprite = sprite;
+        _enemyPatternValueText.text = value;
+    }
+
+    public IEnumerator PatternIconAnimationCoroutine()
+    {
+        for(int i = 0; i < 6; i++)
+        {
+            GameObject obj = Instantiate(_enemyPatternIcon.gameObject, _enemyPatternIcon.transform.parent);
+            obj.transform.position = _enemyPatternIcon.transform.position;
+            PatternIconAnimation(obj);
+            yield return new WaitForSeconds(0.2f);
+        }
+    }
+
+    private void PatternIconAnimation(GameObject obj)
+    {
+        Sequence seq = DOTween.Sequence();
+        seq.Append(obj.transform.DOScale(2f, 0.5f));
+        seq.Join(obj.GetComponent<Image>().DOFade(0, 0.5f));
+        seq.AppendCallback(() => Destroy(obj));
+    }
 }

@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 using TMPro;
-using UnityEditor.EditorTools;
 
 public class DamagePopup : MonoBehaviour
 {

@@ -191,8 +191,9 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
         {
             if (!DummyCost.Instance.CanUseMainRune(card.Rune.MainRune.Cost))
             {
-                Debug.Log("���� ���� ����ϱ�?���� ������ �����մϴ�.");
-
+                Touch touch = Input.GetTouch(0);
+                Vector3 pos = Camera.main.ScreenToWorldPoint(touch.position);
+                UIManager.Instance.InfoMessagePopup("No have mana", pos);
                 return null;
             }
             if (_runeDict.ContainsKey(RuneType.Main))
@@ -295,7 +296,9 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
         {
             if (!DummyCost.Instance.CanUseSubRune(card.Rune.AssistRune.Cost))
             {
-                Debug.Log("���� ���� ����ϱ�?���� ������ �����մϴ�.");
+                Touch touch = Input.GetTouch(0);
+                Vector3 pos = Camera.main.ScreenToWorldPoint(touch.position);
+                UIManager.Instance.InfoMessagePopup("No have mana", pos);
                 return null;
             }
 
