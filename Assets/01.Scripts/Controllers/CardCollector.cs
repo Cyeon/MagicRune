@@ -225,6 +225,14 @@ public class CardCollector : MonoBehaviour
             RectTransform rect = _handCards[i].GetComponent<RectTransform>();
             rect.anchoredPosition = new Vector3(i * xDelta + rect.sizeDelta.x / 2 + 150 + _offset.x/* + sideArea*/,/* rect.sizeDelta.y / 2 + _offset.y*/600f, 0);
             _handCards[i].IsFront = _isFront;
+            if (DummyCost.Instance.CanUseMainRune(_handCards[i].IsFront ? _handCards[i].Rune.MainRune.Cost : _handCards[i].Rune.AssistRune.Cost))
+            {
+                _handCards[i].SetOutlineColor(Color.blue);
+            }
+            else
+            {
+                _handCards[i].SetOutlineColor(new Color(1f, 1f, 1f, 0f));
+            }
         }
     }
 

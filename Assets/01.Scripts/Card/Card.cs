@@ -66,6 +66,7 @@ public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     private Transform _cardAreaParent;
     public Transform CardAreaParent => _cardAreaParent;
     private Transform _cardParent;
+    private Image _cardBase;
     private Image _skillImage;
     private Text _costText;
     private Text _coolTimeText;
@@ -162,6 +163,11 @@ public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         }
     }
 
+    public void SetOutlineColor(Color color)
+    {
+        _cardBase.material?.SetColor("_Color", color);
+    }
+
     public void OnPointerDown(PointerEventData eventData)
     {
         if (_rune == null) return;
@@ -192,6 +198,7 @@ public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
         _cardAreaParent = transform.Find("Card_Area");
         _cardParent = _cardAreaParent.Find("Card_Add element");
+        _cardBase = _cardAreaParent.Find("Card_Basic/Card_Base").GetComponent<Image>();
         _skillImage = _cardParent.Find("Skill_Image").GetComponent<Image>();
         _costText = _cardParent.Find("Cost_Text").GetComponent<Text>();
         _coolTimeText = _cardParent.Find("Cooltime_Text").GetComponent<Text>();
