@@ -56,7 +56,7 @@ public class CardCollector : MonoBehaviour
                 if (_isCardRotate == true) return;
 
                 _selectCard = value;
-                _selectCard.transform.localScale = new Vector3(1.5f, 1.5f, 1f);
+                _selectCard.transform.localScale = new Vector3(2f, 2f, 1f);
                 _cardOriginPos = _selectCard.GetComponent<RectTransform>().anchoredPosition;
                 _magicCircle.IsBig = true;
             }
