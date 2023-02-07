@@ -368,6 +368,8 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
             });
         }
         //SortCard();
+
+        _cardCollector.UpdateCardOutline();
         return card;
     }
 

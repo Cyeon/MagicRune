@@ -82,8 +82,10 @@ public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     #endregion
 
     private RectTransform _rect;
-
-    private void Start()
+    [SerializeField]
+    private Material _outlineMaterial;
+    private Material _defaultMaterial;
+    private void Awake()
     {
         Setting();
     }
@@ -168,6 +170,18 @@ public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         _cardBase.material?.SetColor("_Color", color);
     }
 
+    public void SetOutline(bool value)
+    {
+        if (value)
+        {
+            _cardBase.material = _outlineMaterial;
+        }
+        else
+        {
+            _cardBase.material = _defaultMaterial;
+        }
+    }
+
     public void OnPointerDown(PointerEventData eventData)
     {
         if (_rune == null) return;
@@ -210,6 +224,7 @@ public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         _runeAreaParent = transform.Find("RuneArea");
         _runeImage = _runeAreaParent.Find("Rune Image").GetComponent<Image>();
         IsFront = true;
+        _defaultMaterial = _cardBase.material;
 
         if (_rune != null)
         {

@@ -6,6 +6,9 @@ using UnityEngine.UI;
 using DG.Tweening;
 using NaughtyAttributes;
 using System;
+using MyBox;
+using MinValue = NaughtyAttributes.MinValueAttribute;
+using MaxValue = NaughtyAttributes.MaxValueAttribute;
 
 public class CardCollector : MonoBehaviour
 {
@@ -92,9 +95,9 @@ public class CardCollector : MonoBehaviour
                         }
                         _selectCard = value;
                     });
-                    if(_selectCard != null)
+                    if (_selectCard != null)
                     {
-                        if(_cardOriginPos == null)
+                        if (_cardOriginPos == null)
                         {
                             _cardOriginPos = Vector2.zero;
                         }
@@ -114,7 +117,7 @@ public class CardCollector : MonoBehaviour
                             CardSort();
                         });
                     }
-                    
+
                 }
             }
         }
@@ -124,7 +127,7 @@ public class CardCollector : MonoBehaviour
     public IReadOnlyList<Card> RestCards => _restCards;
 
     private bool _isFront = true;
-    public bool IsFront { get => _isFront ; set => _isFront = value; }
+    public bool IsFront { get => _isFront; set => _isFront = value; }
     private bool _isCardRotate = false;
 
     [SerializeField]
@@ -225,13 +228,22 @@ public class CardCollector : MonoBehaviour
             RectTransform rect = _handCards[i].GetComponent<RectTransform>();
             rect.anchoredPosition = new Vector3(i * xDelta + rect.sizeDelta.x / 2 + 150 + _offset.x/* + sideArea*/,/* rect.sizeDelta.y / 2 + _offset.y*/600f, 0);
             _handCards[i].IsFront = _isFront;
-            if (DummyCost.Instance.CanUseMainRune(_handCards[i].IsFront ? _handCards[i].Rune.MainRune.Cost : _handCards[i].Rune.AssistRune.Cost))
+        }
+    }
+
+    public void UpdateCardOutline()
+    {
+        for (int i = 0; i < _handCards.Count; i++)
+        {
+            if (DummyCost.Instance.CanMainRune(_handCards[i].IsFront ? _handCards[i].Rune.MainRune.Cost : _handCards[i].Rune.AssistRune.Cost))
             {
-                _handCards[i].SetOutlineColor(Color.blue);
+                //_handCards[i].SetOutlineColor(Color.blue);
+                _handCards[i].SetOutline(true);
             }
             else
             {
-                _handCards[i].SetOutlineColor(new Color(1f, 1f, 1f, 0f));
+                //_handCards[i].SetOutlineColor(Color.clear);
+                _handCards[i].SetOutline(false);
             }
         }
     }
@@ -316,8 +328,8 @@ public class CardCollector : MonoBehaviour
             {
                 _isFront = true;
             }
+            UpdateCardOutline();
         });
-
     }
 
     public void UIUpdate()
