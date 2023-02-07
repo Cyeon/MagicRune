@@ -27,6 +27,7 @@ public class UIManager : MonoSingleton<UIManager>
     [Header("상태이상 UI")]
     [SerializeField] private GameObject _statusPrefab;
     [SerializeField] private GameObject _statusPopup;
+    [SerializeField] private GameObject _statusTextPopup;
     [SerializeField] private Transform _statusPlayerPanel;
     [SerializeField] private Transform _statusEnemyPanel;
 
@@ -195,6 +196,21 @@ public class UIManager : MonoSingleton<UIManager>
         seq.AppendCallback(() =>
         {
             Destroy(obj);
+        });
+
+        GameObject textPopup = Instantiate(_statusTextPopup, enemyIcon);
+        TextMeshProUGUI text = textPopup.GetComponent<TextMeshProUGUI>();
+        text.text = status.debugName;
+        textPopup.transform.localPosition = new Vector3(0, 300, 0);
+
+        Sequence seq1 = DOTween.Sequence();
+        seq1.Append(textPopup.transform.DOLocalMoveY(400f, 0.5f));
+        seq1.Join(text.DOColor(Color.red, 0.5f));
+        seq1.AppendInterval(0.3f);
+        seq1.Join(text.DOFade(0, 0.5f).SetEase(Ease.InQuart));
+        seq1.AppendCallback(() =>
+        {
+            Destroy(textPopup);
         });
     }
 

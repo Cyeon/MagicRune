@@ -31,6 +31,7 @@ public enum StatusName
 public class Status
 {
     public StatusName statusName = StatusName.Null;
+    public string debugName = "";
     public  StatusInvokeTime invokeTime = StatusInvokeTime.Start;
     public StatusType type = StatusType.Stack;
     public int typeValue = 0;
@@ -49,6 +50,7 @@ public class Status
     public Status(Status status)
     {
         this.statusName = status.statusName;
+        this.debugName = status.debugName;
         this.invokeTime = status.invokeTime;
         this.typeValue = status.typeValue;
 

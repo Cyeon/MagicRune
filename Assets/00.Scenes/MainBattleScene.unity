@@ -179,6 +179,7 @@ MonoBehaviour:
   _playerShieldText: {fileID: 1964991578}
   _statusPrefab: {fileID: 7390222988243923077, guid: 297b846f4403b5d458e8e91ca8b70a96, type: 3}
   _statusPopup: {fileID: 110993962940785906, guid: 1a2f414b7cde7644f9be7cecef5a8332, type: 3}
+  _statusTextPopup: {fileID: 6450481006195150324, guid: 30bb065e1f9ce314084ad17a2c81c291, type: 3}
   _statusPlayerPanel: {fileID: 133344192}
   _statusEnemyPanel: {fileID: 705863452}
   _turnPanel: {fileID: 1100535925}
@@ -2206,6 +2207,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   status:
     statusName: 0
+    debugName: 
     invokeTime: 0
     type: 0
     typeValue: 0
@@ -2232,6 +2234,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   statusList:
   - statusName: 1
+    debugName: "\uC57D\uC1C4"
     invokeTime: 2
     type: 1
     typeValue: 0
@@ -2257,6 +2260,7 @@ MonoBehaviour:
     icon: {fileID: 21300000, guid: 16a86a7f581fc4dfb953e0df8ad3ecac, type: 3}
     color: {r: 0.3490566, g: 0.3490566, b: 0.3490566, a: 1}
   - statusName: 3
+    debugName: "\uBE59\uACB0"
     invokeTime: 1
     type: 1
     typeValue: 2
@@ -2282,6 +2286,7 @@ MonoBehaviour:
     icon: {fileID: 21300000, guid: 52e5fb28f6903cd4f9e807e9d1c856ef, type: 3}
     color: {r: 0.2679245, g: 0.88512623, b: 1, a: 1}
   - statusName: 2
+    debugName: "\uD654\uC5FC"
     invokeTime: 3
     type: 0
     typeValue: 0
@@ -2319,6 +2324,7 @@ MonoBehaviour:
     icon: {fileID: 21300000, guid: 0fa625d64d24a0348a1f4b67ca8bb5d3, type: 3}
     color: {r: 1, g: 0.29622638, b: 0.3843256, a: 1}
   - statusName: 4
+    debugName: "\uC0C1\uCC98"
     invokeTime: 2
     type: 0
     typeValue: 0

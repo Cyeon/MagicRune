@@ -20,8 +20,6 @@ public class DamagePopup : MonoBehaviour
         transform.position = pos;
         _textMesh.SetText(damageAmount.ToString());
 
-        _textMesh.color = Color.red;
-
         Sequence seq = DOTween.Sequence();
         seq.Append(transform.DOJump(new Vector3(pos.x + Random.Range(-1f, 1f), pos.y, pos.x), 0.8f, 1, 1f));
         seq.Join(_textMesh.DOFade(0, 1f).SetEase(Ease.InQuart));
