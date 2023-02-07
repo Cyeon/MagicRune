@@ -183,6 +183,7 @@ MonoBehaviour:
   _statusEnemyPanel: {fileID: 705863452}
   _turnPanel: {fileID: 1100535925}
   _damagePopup: {fileID: 5936919601908214315, guid: 3de2c828ec5d1784fb5f0afd994f4ae6, type: 3}
+  _infoMessage: {fileID: 6188063278671750921, guid: 9ae759340fa35564db012299312d316d, type: 3}
 --- !u!1 &37206930
 GameObject:
   m_ObjectHideFlags: 0
@@ -3634,6 +3635,7 @@ GameObject:
   - component: {fileID: 1097296143}
   - component: {fileID: 1097296144}
   - component: {fileID: 1097296145}
+  - component: {fileID: 1097296147}
   m_Layer: 0
   m_Name: EnemyAttackFeedback
   m_TagString: Untagged
@@ -3671,6 +3673,7 @@ MonoBehaviour:
   Feedbacks:
   - {fileID: 1097296144}
   - {fileID: 1097296145}
+  - {fileID: 1097296147}
   InitializationMode: 2
   SafeMode: 3
   Direction: 0
@@ -4030,6 +4033,51 @@ MonoBehaviour:
     m_NumColorKeys: 2
     m_NumAlphaKeys: 2
   InstantColor: {r: 0, g: 0, b: 0, a: 0}
+--- !u!114 &1097296147
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1097296141}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8fe7e41857f44348b52714b3238715c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Active: 1
+  Label: Camera Shake
+  Chance: 100
+  Timing:
+    TimescaleMode: 0
+    ExcludeFromHoldingPauses: 0
+    ContributeToTotalDuration: 1
+    InitialDelay: 0
+    CooldownDuration: 0
+    InterruptsOnStop: 1
+    NumberOfRepeats: 0
+    RepeatForever: 0
+    DelayBetweenRepeats: 1
+    MMFeedbacksDirectionCondition: 0
+    PlayDirection: 0
+    ConstantIntensity: 0
+    UseIntensityInterval: 0
+    IntensityIntervalMin: 0
+    IntensityIntervalMax: 0
+    Sequence: {fileID: 0}
+    TrackID: 0
+    Quantized: 0
+    TargetBPM: 120
+  DebugActive: 0
+  RepeatUntilStopped: 1
+  Channel: 1
+  CameraShakeProperties:
+    Duration: 0.4
+    Amplitude: 0.2
+    Frequency: 10
+    AmplitudeX: 0
+    AmplitudeY: 0
+    AmplitudeZ: 0
 --- !u!1 &1100535925
 GameObject:
   m_ObjectHideFlags: 0
