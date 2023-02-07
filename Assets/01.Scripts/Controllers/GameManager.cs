@@ -108,6 +108,7 @@ public class GameManager : MonoSingleton<GameManager>
                 break;
 
             case GameTurn.PlayerWait:
+                enemy.StopIdle();
                 OnMonsterTurn();
                 break;
 
@@ -131,6 +132,7 @@ public class GameManager : MonoSingleton<GameManager>
                 break;
 
             case GameTurn.MonsterWait:
+                enemy.Idle();
                 OnPlayerTurn();
                 break;
         }
