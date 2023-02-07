@@ -56,7 +56,7 @@ public class CardCollector : MonoBehaviour
                 if (_isCardRotate == true) return;
 
                 _selectCard = value;
-                _selectCard.transform.localScale = new Vector3(1.5f, 1.5f, 1f);
+                _selectCard.transform.localScale = new Vector3(2f, 2f, 1f);
                 _cardOriginPos = _selectCard.GetComponent<RectTransform>().anchoredPosition;
                 _magicCircle.IsBig = true;
             }
@@ -165,7 +165,8 @@ public class CardCollector : MonoBehaviour
         if (SelectCard != null)
         {
             if (Input.touchCount <= 0) return;
-            SelectCard.GetComponent<RectTransform>().anchoredPosition = new Vector2(Input.GetTouch(0).position.x, Input.GetTouch(0).position.y - this.GetComponent<RectTransform>().anchoredPosition.y);
+            //SelectCard.GetComponent<RectTransform>().anchoredPosition = new Vector2(Input.GetTouch(0).position.x, Input.GetTouch(0).position.y - this.GetComponent<RectTransform>().anchoredPosition.y);
+            SelectCard.GetComponent<RectTransform>().anchoredPosition = Input.GetTouch(0).position;
 
             if (_magicCircle.IsBig == true)
             {
@@ -224,6 +225,14 @@ public class CardCollector : MonoBehaviour
             RectTransform rect = _handCards[i].GetComponent<RectTransform>();
             rect.anchoredPosition = new Vector3(i * xDelta + rect.sizeDelta.x / 2 + 150 + _offset.x/* + sideArea*/,/* rect.sizeDelta.y / 2 + _offset.y*/600f, 0);
             _handCards[i].IsFront = _isFront;
+            if (DummyCost.Instance.CanUseMainRune(_handCards[i].IsFront ? _handCards[i].Rune.MainRune.Cost : _handCards[i].Rune.AssistRune.Cost))
+            {
+                _handCards[i].SetOutlineColor(Color.blue);
+            }
+            else
+            {
+                _handCards[i].SetOutlineColor(new Color(1f, 1f, 1f, 0f));
+            }
         }
     }
 
