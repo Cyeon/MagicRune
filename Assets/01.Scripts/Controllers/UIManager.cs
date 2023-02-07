@@ -93,7 +93,8 @@ public class UIManager : MonoSingleton<UIManager>
 
     public StatusPanel GetStatusPanel(Status status, Transform parent, bool isPopup = false)
     {
-        StatusPanel statusPanel = Instantiate(isPopup ? _statusPopup : _statusPrefab).GetComponent<StatusPanel>();
+        //StatusPanel statusPanel = Instantiate(isPopup ? _statusPopup : _statusPrefab).GetComponent<StatusPanel>();
+        StatusPanel statusPanel = Instantiate(_statusPrefab).GetComponent<StatusPanel>();
         
         statusPanel.image.sprite = status.icon;
         statusPanel.image.color = status.color;
@@ -164,7 +165,7 @@ public class UIManager : MonoSingleton<UIManager>
         popup.Setup(amount, pos);
     }
 
-    public void StatusPopup(Status status, Vector3 pos)
+    /*public void StatusPopup(Status status, Vector3 pos)
     {
         StatusPanel panel = GetStatusPanel(status, _canvas, true);
         panel.transform.position = pos;
@@ -178,6 +179,22 @@ public class UIManager : MonoSingleton<UIManager>
         seq.AppendCallback(() =>
         {
             Destroy(group.gameObject);
+        });
+    }*/
+
+    public void StatusPopup(Status status)
+    {
+        GameObject obj = Instantiate(_statusPopup, enemyIcon);
+        Image img = obj.GetComponent<Image>();
+        img.sprite = status.icon;
+        obj.transform.localScale = Vector3.one * 8f;
+
+        Sequence seq = DOTween.Sequence();
+        seq.Append(obj.transform.DOScale(9f, 0.7f).SetEase(Ease.InQuart));
+        seq.Join(img.DOFade(0, 0.7f).SetEase(Ease.InQuart));
+        seq.AppendCallback(() =>
+        {
+            Destroy(obj);
         });
     }
 

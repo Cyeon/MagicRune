@@ -78,9 +78,10 @@ public class StatusManager : MonoSingleton<StatusManager>
         List<Status> statusList = new List<Status>();
         if(unit.unitStatusDic.TryGetValue(status.invokeTime, out statusList))
         {
-            if(unit == GameManager.Instance.enemy)
-                UIManager.Instance.StatusPopup(newStatus, UIManager.Instance.enemyIcon.transform.position);
-            
+            if (unit == GameManager.Instance.enemy)
+                //UIManager.Instance.StatusPopup(newStatus, UIManager.Instance.enemyIcon.transform.position);
+                UIManager.Instance.StatusPopup(newStatus);
+
             Status currentStauts = statusList.Where(e => e.statusName == status.statusName).FirstOrDefault();
             if(currentStauts != null)
             {
