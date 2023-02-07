@@ -13,7 +13,7 @@ public class DummyCost : MonoSingleton<DummyCost>
 
     private int _maxCost = 10;
     public int MaxCost => _maxCost;
-    
+    [SerializeField]
     private int _nowCost = 10;
     public int NowCost => _nowCost;
 
@@ -46,6 +46,11 @@ public class DummyCost : MonoSingleton<DummyCost>
         }
         else
             return false;
+    }
+
+    public bool CanMainRune(int cost)
+    {
+        return _nowCost >= cost;
     }
 
     public bool CanUseSubRune(int cost)
