@@ -165,7 +165,8 @@ public class CardCollector : MonoBehaviour
         if (SelectCard != null)
         {
             if (Input.touchCount <= 0) return;
-            SelectCard.GetComponent<RectTransform>().anchoredPosition = new Vector2(Input.GetTouch(0).position.x, Input.GetTouch(0).position.y - this.GetComponent<RectTransform>().anchoredPosition.y);
+            //SelectCard.GetComponent<RectTransform>().anchoredPosition = new Vector2(Input.GetTouch(0).position.x, Input.GetTouch(0).position.y - this.GetComponent<RectTransform>().anchoredPosition.y);
+            SelectCard.GetComponent<RectTransform>().anchoredPosition = Input.GetTouch(0).position;
 
             if (_magicCircle.IsBig == true)
             {
