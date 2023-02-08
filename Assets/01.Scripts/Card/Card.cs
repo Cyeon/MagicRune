@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using DG.Tweening;
 
-public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPointerClickHandler
+public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IBeginDragHandler, IEndDragHandler, IDragHandler, IPointerClickHandler
 {
     [SerializeField]
     private GameObject cardPrefab = null;
@@ -87,7 +87,6 @@ public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPoin
     private Material _outlineMaterial;
     private Material _defaultMaterial;
 
-    private float _clickTimer;
     private bool _isClick;
 
     private void Awake()
@@ -193,29 +192,31 @@ public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPoin
 
         if (value)
         {
-            _descriptionImage.DOFade(1f, 0.1f);
+            //_descriptionImage.DOFade(1f, 0.1f);
+            _descriptionImage.color = new Color(1f, 1f, 1f, 1f);
         }
         else
         {
-            _descriptionImage.DOFade(0f, 0.1f);
+            //_descriptionImage.DOFade(0f, 0.1f);
+            _descriptionImage.color = new Color(1f, 1f, 1f, 0f);
         }
     }
 
-    private void Update()
-    {
-        if (_isClick == true)
-        {
-            _clickTimer += Time.deltaTime;
+    //private void Update()
+    //{
+    //    if (_isClick == true)
+    //    {
+    //        _clickTimer += Time.deltaTime;
 
-            if (_clickTimer >= 0.5f)
-            {
-                _isClick = false;
+    //        if (_clickTimer >= 0.5f)
+    //        {
+    //            _isClick = false;
 
-                _collector.CardSelect(this);
-                _collector.AllCardDescription(false);
-            }
-        }
-    }
+    //            _collector.CardSelect(this);
+    //            _collector.AllCardDescription(false);
+    //        }
+    //    }
+    //}
 
     public void OnPointerDown(PointerEventData eventData)
     {
@@ -252,42 +253,57 @@ public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPoin
             //    _collector.CardSelect(null);
             //}
             _isClick = false;
-            _collector.CardSelect(null);
 
-            if (_clickTimer < 0.5f)
-            {
-                if(_descriptionImage.color.a == 0)
-                {
-                    _collector.AllCardDescription(false);
-                    SetDescription(true);
-                }
-                else
-                {
-                    _collector.AllCardDescription(false);
-                }
-                
-            }
-            else
-            {
-                _collector.AllCardDescription(false);
-            }
-            _clickTimer = 0f;
+            //if (eventData.clickTime > 0.2f)
+            //{
+            //    _collector.AllCardDescription(false);
+            //}
+            //else
+            //{
+            //    if (_descriptionImage.color.a == 0)
+            //    {
+            //        _collector.AllCardDescription(false);
+            //        SetDescription(true);
+            //    }
+            //    else
+            //    {
+            //        _collector.AllCardDescription(false);
+            //    }
+            //}
             //transform.localScale = Vector3.one;
         }
     }
 
+    public void OnBeginDrag(PointerEventData eventData)
+    {
+        _collector.CardSelect(this);
+        _collector.SelectCard.transform.localScale = new Vector3(2f, 2f, 1f);
+        _collector.AllCardDescription(false);
+    }
+
+    public void OnEndDrag(PointerEventData eventData)
+    {
+        _collector.CardSelect(null);
+        _collector.SelectCard.transform.localScale = Vector3.one;
+        _collector.AllCardDescription(false);
+    }
+
+    public void OnDrag(PointerEventData eventData)
+    {
+        
+    }
+
     public void OnPointerClick(PointerEventData eventData)
     {
-
-        //if (_descriptionImage.color.a == 0)
-        //{
-        //    _collector.AllCardDescription(false);
-        //    SetDescription(true);
-        //}
-        //else
-        //{
-        //    _collector.AllCardDescription(false);
-        //}
+        if (_descriptionImage.color.a == 0)
+        {
+            _collector.AllCardDescription(false);
+            SetDescription(true);
+        }
+        else
+        {
+            _collector.AllCardDescription(false);
+        }
     }
 
     private void Setting()

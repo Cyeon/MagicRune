@@ -472,7 +472,6 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                     else if (touchDif.y < 0 && Mathf.Abs(touchDif.y) > Mathf.Abs(touchDif.x))
                     {
                         Debug.Log("down");
-                        // 아무틴 일단 해
                         if (_cardCollector.SelectCard == null && isSelectCard == false)
                         {
                             _cardCollector.CardRotate();
