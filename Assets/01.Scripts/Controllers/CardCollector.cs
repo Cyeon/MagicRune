@@ -235,15 +235,38 @@ public class CardCollector : MonoBehaviour
     {
         for (int i = 0; i < _handCards.Count; i++)
         {
-            if (DummyCost.Instance.CanMainRune(_handCards[i].IsFront ? _handCards[i].Rune.MainRune.Cost : _handCards[i].Rune.AssistRune.Cost))
+            if(_magicCircle.RuneDict.ContainsKey(RuneType.Main) == false)
             {
-                //_handCards[i].SetOutlineColor(Color.blue);
-                _handCards[i].SetOutline(true);
+                if (_handCards[i].IsFront == false)
+                {
+                    _handCards[i].SetOutline(false);
+                }
+                else
+                {
+                    if (DummyCost.Instance.CanMainRune(_handCards[i].IsFront ? _handCards[i].Rune.MainRune.Cost : _handCards[i].Rune.AssistRune.Cost))
+                    {
+                        //_handCards[i].SetOutlineColor(Color.blue);
+                        _handCards[i].SetOutline(true);
+                    }
+                    else
+                    {
+                        //_handCards[i].SetOutlineColor(Color.clear);
+                        _handCards[i].SetOutline(false);
+                    }
+                }
             }
             else
             {
-                //_handCards[i].SetOutlineColor(Color.clear);
-                _handCards[i].SetOutline(false);
+                if (DummyCost.Instance.CanMainRune(_handCards[i].IsFront ? _handCards[i].Rune.MainRune.Cost : _handCards[i].Rune.AssistRune.Cost))
+                {
+                    //_handCards[i].SetOutlineColor(Color.blue);
+                    _handCards[i].SetOutline(true);
+                }
+                else
+                {
+                    //_handCards[i].SetOutlineColor(Color.clear);
+                    _handCards[i].SetOutline(false);
+                }
             }
         }
     }

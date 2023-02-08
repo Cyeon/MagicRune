@@ -487,16 +487,18 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
         //seq.AppendCallback(() => { IsBig = false; });
     }
 
+    bool isSelectCard = false;
     public void Swipe1()
     {
         if (Input.touchCount > 0)
         {
             Touch touch = Input.GetTouch(0);
 
-            bool isSelectCard = false; // 이런 식이로 멤버 변수로 뺴기
+             // 이런 식이로 멤버 변수로 뺴기
             if (touch.phase == TouchPhase.Began)
             {
                 touchBeganPos = touch.position;
+                isSelectCard = false;
             }
             if (touch.phase == TouchPhase.Moved)
             {
