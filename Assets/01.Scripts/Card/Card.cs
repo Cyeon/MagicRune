@@ -74,6 +74,7 @@ public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPoin
     private Text _skillText;
     private Text _nameText;
     private Text _assistRuneCount;
+    private Image _descriptionImage;
 
     // Rune Area
     private Transform _runeAreaParent;
@@ -186,18 +187,32 @@ public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPoin
         }
     }
 
+    public void SetDescription(bool value)
+    {
+        transform.DOKill();
+
+        if (value)
+        {
+            _descriptionImage.DOFade(1f, 0.1f);
+        }
+        else
+        {
+            _descriptionImage.DOFade(0f, 0.1f);
+        }
+    }
+
     private void Update()
     {
-        if(_isClick == true)
+        if (_isClick == true)
         {
             _clickTimer += Time.deltaTime;
 
-            if(_clickTimer >= 0.5f)
+            if (_clickTimer >= 0.5f)
             {
                 _isClick = false;
 
                 _collector.CardSelect(this);
-                _clickTimer = 0f;
+                _collector.AllCardDescription(false);
             }
         }
     }
@@ -238,6 +253,24 @@ public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPoin
             //}
             _isClick = false;
             _collector.CardSelect(null);
+
+            if (_clickTimer < 0.5f)
+            {
+                if(_descriptionImage.color.a == 0)
+                {
+                    _collector.AllCardDescription(false);
+                    SetDescription(true);
+                }
+                else
+                {
+                    _collector.AllCardDescription(false);
+                }
+                
+            }
+            else
+            {
+                _collector.AllCardDescription(false);
+            }
             _clickTimer = 0f;
             //transform.localScale = Vector3.one;
         }
@@ -245,7 +278,16 @@ public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPoin
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        Debug.Log("¼´¿© ¶ç¿ì±â");
+
+        //if (_descriptionImage.color.a == 0)
+        //{
+        //    _collector.AllCardDescription(false);
+        //    SetDescription(true);
+        //}
+        //else
+        //{
+        //    _collector.AllCardDescription(false);
+        //}
     }
 
     private void Setting()
@@ -263,6 +305,7 @@ public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPoin
         _skillText = _cardParent.Find("Skill_Detail").GetComponent<Text>();
         _nameText = _cardParent.Find("Skill_Name").GetComponent<Text>();
         _assistRuneCount = _cardParent.Find("Rune_Count").GetComponent<Text>();
+        _descriptionImage = _cardParent.Find("Description").GetComponent<Image>();
 
         _runeAreaParent = transform.Find("RuneArea");
         _runeImage = _runeAreaParent.Find("Rune Image").GetComponent<Image>();

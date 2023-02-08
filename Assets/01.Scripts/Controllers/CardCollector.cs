@@ -355,6 +355,14 @@ public class CardCollector : MonoBehaviour
         });
     }
 
+    public void AllCardDescription(bool value)
+    {
+        foreach(var card in _handCards)
+        {
+            card.SetDescription(value);
+        }
+    }
+
     public void UIUpdate()
     {
         _deckViewUI?.UITextUpdate();
