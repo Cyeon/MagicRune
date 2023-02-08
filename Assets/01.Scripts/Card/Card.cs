@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using DG.Tweening;
 
-public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
+public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPointerClickHandler
 {
     [SerializeField]
     private GameObject cardPrefab = null;
@@ -85,6 +85,10 @@ public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     [SerializeField]
     private Material _outlineMaterial;
     private Material _defaultMaterial;
+
+    private float _clickTimer;
+    private bool _isClick;
+
     private void Awake()
     {
         Setting();
@@ -182,13 +186,37 @@ public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         }
     }
 
+    private void Update()
+    {
+        if(_isClick == true)
+        {
+            _clickTimer += Time.deltaTime;
+
+            if(_clickTimer >= 0.5f)
+            {
+                _isClick = false;
+
+                _collector.CardSelect(this);
+                _clickTimer = 0f;
+            }
+        }
+    }
+
     public void OnPointerDown(PointerEventData eventData)
     {
         if (_rune == null) return;
 
         if (_isEquipMagicCircle == false)
         {
-            _collector.CardSelect(this);
+            //_clickTimer += Time.deltaTime;
+
+            //if(_clickTimer >= 0.5f)
+            //{
+            //    _collector.CardSelect(this);
+            //    _clickTimer = 0f;
+            //}
+
+            _isClick = true;
 
             //transform.localScale = new Vector3(1.5f, 1.5f, 1);
         }
@@ -200,9 +228,24 @@ public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
         if (_isEquipMagicCircle == false)
         {
+            //if(_clickTimer < 0.5f)
+            //{
+            //    Debug.Log("¼´¿© ¶ç¿ì±â");
+            //}
+            //else
+            //{
+            //    _collector.CardSelect(null);
+            //}
+            _isClick = false;
             _collector.CardSelect(null);
+            _clickTimer = 0f;
             //transform.localScale = Vector3.one;
         }
+    }
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        Debug.Log("¼´¿© ¶ç¿ì±â");
     }
 
     private void Setting()
@@ -237,4 +280,5 @@ public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     {
         transform.DOKill();
     }
+
 }
