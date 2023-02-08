@@ -184,18 +184,19 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
 
         if (_runeDict.ContainsKey(RuneType.Main) == false || (_runeDict[RuneType.Main].Count == 0))
         {
+            Touch touch = Input.GetTouch(0);
+            Vector3 pos = Camera.main.ScreenToWorldPoint(touch.position);
+
             if (!DummyCost.Instance.CanUseMainRune(card.Rune.MainRune.Cost))
             {
-                Touch touch = Input.GetTouch(0);
-                Vector3 pos = Camera.main.ScreenToWorldPoint(touch.position);
-                UIManager.Instance.InfoMessagePopup("No have mana", pos);
+                UIManager.Instance.InfoMessagePopup("¸¶³ª°¡ ºÎÁ·ÇÕ´Ï´Ù.", pos);
                 return null;
             }
             if (_runeDict.ContainsKey(RuneType.Main))
             {
                 if (_runeDict[RuneType.Main].Count >= _mainRuneCnt)
                 {
-                    Debug.Log("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ö½ï¿½ï¿½Ï´ï¿½.");
+                    UIManager.Instance.InfoMessagePopup("¸ÞÀÎ ·éÀ» ¸ÕÀú ³Ö¾îÁÖ¼¼¿ä.", pos);
                     return null;
                 }
 
@@ -263,7 +264,7 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
             {
                 Touch touch = Input.GetTouch(0);
                 Vector3 pos = Camera.main.ScreenToWorldPoint(touch.position);
-                UIManager.Instance.InfoMessagePopup("No have mana", pos);
+                UIManager.Instance.InfoMessagePopup("¸¶³ª°¡ ºÎÁ·ÇÕ´Ï´Ù.", pos);
                 return null;
             }
 

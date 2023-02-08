@@ -9,6 +9,7 @@ using System;
 using MyBox;
 using MinValue = NaughtyAttributes.MinValueAttribute;
 using MaxValue = NaughtyAttributes.MaxValueAttribute;
+using static UnityEditor.PlayerSettings;
 
 public class CardCollector : MonoBehaviour
 {
@@ -84,6 +85,10 @@ public class CardCollector : MonoBehaviour
                                 _handCards.Remove(isAdd);
                                 //SelectCard.gameObject.SetActive(false);
                             }
+                        }
+                        else
+                        {
+                            UIManager.Instance.InfoMessagePopup("메인 룬을 먼저 넣어주세요.", GetTouchPos());
                         }
                     }
                     Sequence seq = DOTween.Sequence();
@@ -404,5 +409,11 @@ public class CardCollector : MonoBehaviour
         EventManager<bool>.StopListening(Define.ON_START_MONSTER_TURN, CardOnOff);
         EventManager.StopListening(Define.ON_START_MONSTER_TURN, HandToDeck);
         transform.DOKill();
+    }
+
+    private Vector3 GetTouchPos()
+    {
+        Touch touch = Input.GetTouch(0);
+        return Camera.main.ScreenToWorldPoint(touch.position);
     }
 }

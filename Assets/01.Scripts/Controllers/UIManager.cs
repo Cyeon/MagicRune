@@ -4,8 +4,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 using TMPro;
-using System.Runtime.CompilerServices;
-using Unity.VisualScripting.Antlr3.Runtime.Misc;
 
 public class UIManager : MonoSingleton<UIManager>
 {
