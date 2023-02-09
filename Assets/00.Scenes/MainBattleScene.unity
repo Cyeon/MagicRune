@@ -990,6 +990,7 @@ GameObject:
   - component: {fileID: 225366648}
   - component: {fileID: 225366650}
   - component: {fileID: 225366649}
+  - component: {fileID: 225366651}
   m_Layer: 5
   m_Name: BackGroundForest
   m_TagString: Untagged
@@ -1055,6 +1056,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 225366647}
   m_CullTransparentMesh: 1
+--- !u!114 &225366651
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 225366647}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16605761ce6b93348966a3acda6e50d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _magicCircle: {fileID: 1502645725}
 --- !u!1 &245510029
 GameObject:
   m_ObjectHideFlags: 0
@@ -1786,7 +1800,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 0, g: 0, b: 0, a: 0.9019608}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -6440,7 +6454,7 @@ GameObject:
   - component: {fileID: 1381855530}
   - component: {fileID: 1381855529}
   m_Layer: 5
-  m_Name: NextTurn
+  m_Name: NextTurnBtn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
