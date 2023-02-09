@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using DG.Tweening;
 
-public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
+public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IBeginDragHandler, IEndDragHandler, IDragHandler, IPointerClickHandler
 {
     [SerializeField]
     private GameObject cardPrefab = null;
@@ -74,6 +74,7 @@ public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     private Text _skillText;
     private Text _nameText;
     private Text _assistRuneCount;
+    private Image _descriptionImage;
 
     // Rune Area
     private Transform _runeAreaParent;
@@ -85,6 +86,9 @@ public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     [SerializeField]
     private Material _outlineMaterial;
     private Material _defaultMaterial;
+
+    private bool _isClick;
+
     private void Awake()
     {
         Setting();
@@ -182,13 +186,53 @@ public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         }
     }
 
+    public void SetDescription(bool value)
+    {
+        transform.DOKill();
+
+        if (value)
+        {
+            //_descriptionImage.DOFade(1f, 0.1f);
+            _descriptionImage.color = new Color(1f, 1f, 1f, 1f);
+        }
+        else
+        {
+            //_descriptionImage.DOFade(0f, 0.1f);
+            _descriptionImage.color = new Color(1f, 1f, 1f, 0f);
+        }
+    }
+
+    //private void Update()
+    //{
+    //    if (_isClick == true)
+    //    {
+    //        _clickTimer += Time.deltaTime;
+
+    //        if (_clickTimer >= 0.5f)
+    //        {
+    //            _isClick = false;
+
+    //            _collector.CardSelect(this);
+    //            _collector.AllCardDescription(false);
+    //        }
+    //    }
+    //}
+
     public void OnPointerDown(PointerEventData eventData)
     {
         if (_rune == null) return;
 
         if (_isEquipMagicCircle == false)
         {
-            _collector.CardSelect(this);
+            //_clickTimer += Time.deltaTime;
+
+            //if(_clickTimer >= 0.5f)
+            //{
+            //    _collector.CardSelect(this);
+            //    _clickTimer = 0f;
+            //}
+
+            _isClick = true;
 
             //transform.localScale = new Vector3(1.5f, 1.5f, 1);
         }
@@ -200,8 +244,65 @@ public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
         if (_isEquipMagicCircle == false)
         {
-            _collector.CardSelect(null);
+            //if(_clickTimer < 0.5f)
+            //{
+            //    Debug.Log("¼´¿© ¶ç¿ì±â");
+            //}
+            //else
+            //{
+            //    _collector.CardSelect(null);
+            //}
+            _isClick = false;
+
+            //if (eventData.clickTime > 0.2f)
+            //{
+            //    _collector.AllCardDescription(false);
+            //}
+            //else
+            //{
+            //    if (_descriptionImage.color.a == 0)
+            //    {
+            //        _collector.AllCardDescription(false);
+            //        SetDescription(true);
+            //    }
+            //    else
+            //    {
+            //        _collector.AllCardDescription(false);
+            //    }
+            //}
             //transform.localScale = Vector3.one;
+        }
+    }
+
+    public void OnBeginDrag(PointerEventData eventData)
+    {
+        _collector.CardSelect(this);
+        _collector.SelectCard.transform.localScale = new Vector3(2f, 2f, 1f);
+        _collector.AllCardDescription(false);
+    }
+
+    public void OnEndDrag(PointerEventData eventData)
+    {
+        _collector.CardSelect(null);
+        _collector.SelectCard.transform.localScale = Vector3.one;
+        _collector.AllCardDescription(false);
+    }
+
+    public void OnDrag(PointerEventData eventData)
+    {
+        
+    }
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        if (_descriptionImage.color.a == 0)
+        {
+            _collector.AllCardDescription(false);
+            SetDescription(true);
+        }
+        else
+        {
+            _collector.AllCardDescription(false);
         }
     }
 
@@ -220,6 +321,7 @@ public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         _skillText = _cardParent.Find("Skill_Detail").GetComponent<Text>();
         _nameText = _cardParent.Find("Skill_Name").GetComponent<Text>();
         _assistRuneCount = _cardParent.Find("Rune_Count").GetComponent<Text>();
+        _descriptionImage = _cardParent.Find("Description").GetComponent<Image>();
 
         _runeAreaParent = transform.Find("RuneArea");
         _runeImage = _runeAreaParent.Find("Rune Image").GetComponent<Image>();
@@ -237,4 +339,5 @@ public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     {
         transform.DOKill();
     }
+
 }

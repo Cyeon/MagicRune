@@ -60,7 +60,7 @@ public class CardCollector : MonoBehaviour
                 if (_isCardRotate == true) return;
 
                 _selectCard = value;
-                _selectCard.transform.localScale = new Vector3(2f, 2f, 1f);
+                //_selectCard.transform.localScale = new Vector3(2f, 2f, 1f);
                 _cardOriginPos = _selectCard.GetComponent<RectTransform>().anchoredPosition;
                 _magicCircle.IsBig = true;
             }
@@ -68,7 +68,7 @@ public class CardCollector : MonoBehaviour
             {
                 if (_selectCard != null)
                 {
-                    _selectCard.transform.localScale = Vector3.one;
+                    //_selectCard.transform.localScale = Vector3.one;
                     if (Input.touchCount == 0) return;
                     Card isAdd = null;
                     if (Vector2.Distance(_selectCard.GetComponent<RectTransform>().anchoredPosition, _magicCircle.GetComponent<RectTransform>().anchoredPosition)
@@ -175,7 +175,7 @@ public class CardCollector : MonoBehaviour
             if (Input.touchCount <= 0) return;
             //SelectCard.GetComponent<RectTransform>().anchoredPosition = new Vector2(Input.GetTouch(0).position.x, Input.GetTouch(0).position.y - this.GetComponent<RectTransform>().anchoredPosition.y);
             SelectCard.GetComponent<RectTransform>().anchoredPosition = Input.GetTouch(0).position;
-
+            
             if (_magicCircle.IsBig == true)
             {
                 if (Vector2.Distance(Input.GetTouch(0).position, _magicCircle.GetComponent<RectTransform>().anchoredPosition)
@@ -240,15 +240,38 @@ public class CardCollector : MonoBehaviour
     {
         for (int i = 0; i < _handCards.Count; i++)
         {
-            if (DummyCost.Instance.CanMainRune(_handCards[i].IsFront ? _handCards[i].Rune.MainRune.Cost : _handCards[i].Rune.AssistRune.Cost))
+            if(_magicCircle.RuneDict.ContainsKey(RuneType.Main) == false)
             {
-                //_handCards[i].SetOutlineColor(Color.blue);
-                _handCards[i].SetOutline(true);
+                if (_handCards[i].IsFront == false)
+                {
+                    _handCards[i].SetOutline(false);
+                }
+                else
+                {
+                    if (DummyCost.Instance.CanMainRune(_handCards[i].IsFront ? _handCards[i].Rune.MainRune.Cost : _handCards[i].Rune.AssistRune.Cost))
+                    {
+                        //_handCards[i].SetOutlineColor(Color.blue);
+                        _handCards[i].SetOutline(true);
+                    }
+                    else
+                    {
+                        //_handCards[i].SetOutlineColor(Color.clear);
+                        _handCards[i].SetOutline(false);
+                    }
+                }
             }
             else
             {
-                //_handCards[i].SetOutlineColor(Color.clear);
-                _handCards[i].SetOutline(false);
+                if (DummyCost.Instance.CanMainRune(_handCards[i].IsFront ? _handCards[i].Rune.MainRune.Cost : _handCards[i].Rune.AssistRune.Cost))
+                {
+                    //_handCards[i].SetOutlineColor(Color.blue);
+                    _handCards[i].SetOutline(true);
+                }
+                else
+                {
+                    //_handCards[i].SetOutlineColor(Color.clear);
+                    _handCards[i].SetOutline(false);
+                }
             }
         }
     }
@@ -335,6 +358,14 @@ public class CardCollector : MonoBehaviour
             }
             UpdateCardOutline();
         });
+    }
+
+    public void AllCardDescription(bool value)
+    {
+        foreach(var card in _handCards)
+        {
+            card.SetDescription(value);
+        }
     }
 
     public void UIUpdate()

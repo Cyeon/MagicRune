@@ -96,7 +96,7 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                 //_bgPanel.GetComponent<Image>().DOFade(0.7f, 0.2f);
                 _bgPanel.GetComponent<CanvasGroup>().DOFade(1f, 0.2f);
                 this.transform.DOLocalMoveY(400, 0.2f).SetRelative();
-                _bgPanel.transform.GetChild(0).GetComponent<Image>().raycastTarget = true;
+                //_bgPanel.transform.GetChild(0).GetComponent<Image>().raycastTarget = true;
                 _effectContent.SetActive(true);
             }
             else
@@ -114,7 +114,7 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                 //_bgPanel.GetComponent<Image>().DOFade(0, 0.2f);
                 _bgPanel.GetComponent<CanvasGroup>().DOFade(0, 0.2f);
                 this.transform.DOLocalMoveY(-400, 0.2f).SetRelative();
-                _bgPanel.transform.GetChild(0).GetComponent<Image>().raycastTarget = false;
+                //_bgPanel.transform.GetChild(0).GetComponent<Image>().raycastTarget = false;
                 _effectContent.SetActive(false);
                 //_bgPanel.transform.GetChild(0).GetComponent<Image>().raycastTarget = true;
                 this.transform.rotation = Quaternion.Euler(0, 0, 0);
@@ -133,10 +133,7 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
 
     private void Update()
     {
-        //if (IsBig == true)
-        //{
         Swipe1();
-        //}
     }
 
     public void SortCard()
@@ -149,8 +146,6 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
 
             for (int i = 0; i < _runeDict[RuneType.Assist].Count; i++)
             {
-                //_runeDict[RuneType.Assist][i].GetComponent<RectTransform>().transform.rotation = Quaternion.Euler(0, 0, -1 * angle * i + 90);
-                //_runeDict[RuneType.Assist][i].GetComponent<RectTransform>().anchoredPosition = new Vector3(_assistRuneDistance, 0, 0);
                 float height = Mathf.Sin(angle * i + (90 * Mathf.Deg2Rad)) * _assistRuneDistance;
                 float width = Mathf.Cos(angle * i + (90 * Mathf.Deg2Rad)) * _assistRuneDistance;
                 if (_runeDict[RuneType.Assist][i] != null)
@@ -220,21 +215,6 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                 seq.AppendCallback(() =>
                 {
                     _runeDict[RuneType.Main].Add(card);
-                    //for (int i = 0; i < _runeDict[RuneType.Main][0].Rune.AssistRuneCount; i++)
-                    //{
-                    //    GameObject ggo = Instantiate(_runeTemplate.gameObject, this.transform);
-                    //    Card grune = ggo.GetComponent<Card>();
-                    //    grune.SetRune(null);
-                    //    grune.SetIsEquip(true);
-                    //    if (_runeDict.ContainsKey(RuneType.Assist))
-                    //    {
-                    //        _runeDict[RuneType.Assist].Add(grune);
-                    //    }
-                    //    else
-                    //    {
-                    //        _runeDict.Add(RuneType.Assist, new List<Card> { grune });
-                    //    }
-                    //}
 
                     _cardCollector.IsFront = false;
                     _cardCollector.CardSort();
@@ -263,21 +243,6 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                 seq.AppendCallback(() =>
                 {
                     _runeDict.Add(RuneType.Main, new List<Card>() { card });
-                    //for (int i = 0; i < _runeDict[RuneType.Main][0].Rune.AssistRuneCount; i++)
-                    //{
-                    //    GameObject ggo = Instantiate(_runeTemplate.gameObject, this.transform);
-                    //    Card grune = ggo.GetComponent<Card>();
-                    //    grune.SetRune(null);
-                    //    grune.SetIsEquip(true);
-                    //    if (_runeDict.ContainsKey(RuneType.Assist))
-                    //    {
-                    //        _runeDict[RuneType.Assist].Add(grune);
-                    //    }
-                    //    else
-                    //    {
-                    //        _runeDict.Add(RuneType.Assist, new List<Card> { grune });
-                    //    }
-                    //}
 
                     SortCard();
                     AddEffect(card, true);
@@ -305,21 +270,6 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
 
             if (_runeDict.ContainsKey(RuneType.Assist) == false)
             {
-                //for (int i = 0; i < _runeDict[RuneType.Main][0].Rune.AssistRuneCount; i++)
-                //{
-                //    GameObject ggo = Instantiate(_runeTemplate.gameObject, this.transform);
-                //    Card grune = ggo.GetComponent<Card>();
-                //    grune.SetRune(null);
-                //    grune.SetIsEquip(true);
-                //    if (_runeDict.ContainsKey(RuneType.Assist))
-                //    {
-                //        _runeDict[RuneType.Assist].Add(grune);
-                //    }
-                //    else
-                //    {
-                //        _runeDict.Add(RuneType.Assist, new List<Card> { grune });
-                //    }
-                //}
 
                 SortCard();
                 AssistRuneAnimanation();
@@ -488,16 +438,18 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
         //seq.AppendCallback(() => { IsBig = false; });
     }
 
+    bool isSelectCard = false;
     public void Swipe1()
     {
         if (Input.touchCount > 0)
         {
             Touch touch = Input.GetTouch(0);
 
-            bool isSelectCard = false; // 이런 식이로 멤버 변수로 뺴기
+             // 이런 식이로 멤버 변수로 뺴기
             if (touch.phase == TouchPhase.Began)
             {
                 touchBeganPos = touch.position;
+                isSelectCard = false;
             }
             if (touch.phase == TouchPhase.Moved)
             {
@@ -521,7 +473,6 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                     else if (touchDif.y < 0 && Mathf.Abs(touchDif.y) > Mathf.Abs(touchDif.x))
                     {
                         Debug.Log("down");
-                        // 아무틴 일단 해
                         if (_cardCollector.SelectCard == null && isSelectCard == false)
                         {
                             _cardCollector.CardRotate();

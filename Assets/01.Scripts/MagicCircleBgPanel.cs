@@ -14,6 +14,7 @@ public class MagicCircleBgPanel : MonoBehaviour, IPointerClickHandler
         if (_magicCircle != null)
         {
             _magicCircle.IsBig = false;
+            _magicCircle.CardCollector.AllCardDescription(false);
         }
     }
 }
