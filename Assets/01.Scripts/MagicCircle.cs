@@ -122,6 +122,10 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
         }
     }
 
+    float _rotateAxis = 0f;
+    [SerializeField]
+    private float _rotateSpeed = 10f;
+
     public void Awake()
     {
         _runeDict = new Dictionary<RuneType, List<Card>>();
@@ -129,11 +133,15 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
 
         _nameText.text = "";
         _effectText.text = "";
-    }
 
+    }
+    
     private void Update()
     {
         Swipe1();
+
+        _rotateAxis = (_rotateAxis + _rotateSpeed) % 360f;
+        transform.rotation = Quaternion.Euler(0f, 0f, _rotateAxis);
     }
 
     public void SortCard()
