@@ -9,7 +9,7 @@ using System;
 using MyBox;
 using MinValue = NaughtyAttributes.MinValueAttribute;
 using MaxValue = NaughtyAttributes.MaxValueAttribute;
-using static UnityEditor.PlayerSettings;
+//using static UnityEditor.PlayerSettings;
 
 public class CardCollector : MonoBehaviour
 {
