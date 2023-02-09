@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using TMPro;
 using DG.Tweening;
 
 public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IBeginDragHandler, IEndDragHandler, IDragHandler, IPointerClickHandler
@@ -68,11 +69,11 @@ public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IBegi
     private Transform _cardParent;
     private Image _cardBase;
     private Image _skillImage;
-    private Text _costText;
+    private TMP_Text _costText;
     private Text _coolTimeText;
     private Text _mainSubText;
     private Text _skillText;
-    private Text _nameText;
+    private TMP_Text _nameText;
     private Text _assistRuneCount;
     private Image _descriptionImage;
 
@@ -111,26 +112,26 @@ public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IBegi
 
     public void UpdateUI(bool isFront)
     {
-        if (!_nameText || !_skillImage || !_costText || !_coolTimeText || !_mainSubText || !_skillText || !_runeImage) { Setting(); }
+        if (!_nameText || !_skillImage || !_costText || !_runeImage || !_descriptionImage) { Setting(); } // || !_coolTimeText || !_mainSubText || !_skillText || !_runeImage) { Setting(); }
         if (isFront == true)
         {
             _nameText.text = _rune.MainRune.Name;
             _skillImage.sprite = _rune.MainRune.CardImage;
             _costText.text = _rune.MainRune.Cost.ToString();
-            _coolTimeText.text = _rune.MainRune.DelayTurn.ToString();
-            _mainSubText.text = "메인";
-            _skillText.text = _rune.MainRune.CardDescription;
-            _assistRuneCount.text = _rune.AssistRuneCount.ToString();
+            //_coolTimeText.text = _rune.MainRune.DelayTurn.ToString();
+            //_mainSubText.text = "메인";
+            //_skillText.text = _rune.MainRune.CardDescription;
+            //_assistRuneCount.text = _rune.AssistRuneCount.ToString();
         }
         else
         {
             _nameText.text = _rune.AssistRune.Name;
             _skillImage.sprite = _rune.AssistRune.CardImage;
             _costText.text = _rune.AssistRune.Cost.ToString();
-            _coolTimeText.text = _rune.AssistRune.DelayTurn.ToString();
-            _mainSubText.text = "보조";
-            _skillText.text = _rune.AssistRune.CardDescription;
-            _assistRuneCount.text = "0";
+            //_coolTimeText.text = _rune.AssistRune.DelayTurn.ToString();
+            //_mainSubText.text = "보조";
+            //_skillText.text = _rune.AssistRune.CardDescription;
+            //_assistRuneCount.text = "0";
         }
         _runeImage.sprite = _rune.RuneImage;
     }
@@ -311,20 +312,34 @@ public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IBegi
         _collector = GetComponentInParent<CardCollector>();
         _rect = GetComponent<RectTransform>();
 
-        _cardAreaParent = transform.Find("Card_Area");
-        _cardParent = _cardAreaParent.Find("Card_Add element");
-        _cardBase = _cardAreaParent.Find("Card_Basic/Card_Base").GetComponent<Image>();
-        _skillImage = _cardParent.Find("Skill_Image").GetComponent<Image>();
-        _costText = _cardParent.Find("Cost_Text").GetComponent<Text>();
-        _coolTimeText = _cardParent.Find("Cooltime_Text").GetComponent<Text>();
-        _mainSubText = _cardParent.Find("MainSub_Text").GetComponent<Text>();
-        _skillText = _cardParent.Find("Skill_Detail").GetComponent<Text>();
-        _nameText = _cardParent.Find("Skill_Name").GetComponent<Text>();
-        _assistRuneCount = _cardParent.Find("Rune_Count").GetComponent<Text>();
-        _descriptionImage = _cardParent.Find("Description").GetComponent<Image>();
+        #region 예전 카드에서 세팅 필요했던 부분
+        //_cardAreaParent = transform.Find("Card_Area");
+        //_cardParent = _cardAreaParent.Find("Card_Add element");
+        //_cardBase = _cardAreaParent.Find("Card_Basic/Card_Base").GetComponent<Image>();
+        //_skillImage = _cardParent.Find("Skill_Image").GetComponent<Image>();
+        //_costText = _cardParent.Find("Cost_Text").GetComponent<Text>();
+        //_coolTimeText = _cardParent.Find("Cooltime_Text").GetComponent<Text>();
+        //_mainSubText = _cardParent.Find("MainSub_Text").GetComponent<Text>();
+        //_skillText = _cardParent.Find("Skill_Detail").GetComponent<Text>();
+        //_nameText = _cardParent.Find("Skill_Name").GetComponent<Text>();
+        //_assistRuneCount = _cardParent.Find("Rune_Count").GetComponent<Text>();
+        //_descriptionImage = _cardParent.Find("Description").GetComponent<Image>();
 
-        _runeAreaParent = transform.Find("RuneArea");
-        _runeImage = _runeAreaParent.Find("Rune Image").GetComponent<Image>();
+        //_runeAreaParent = transform.Find("RuneArea");
+        //_runeImage = _runeAreaParent.Find("Rune Image").GetComponent<Image>();
+        #endregion
+
+        _cardAreaParent = transform.Find("Card_Area");
+        _cardBase = _cardAreaParent.Find("Base_Image").Find("Card_Image").GetComponent<Image>();
+        
+        _nameText = _cardAreaParent.Find("Name_Text").GetComponent<TMP_Text>();
+        _skillImage = _cardAreaParent.Find("Skill_Image").GetComponent<Image>();
+        _costText = _cardAreaParent.Find("Cost_Text").GetComponent<TMP_Text>();
+        _descriptionImage = _cardAreaParent.Find("Description_Image").GetComponent<Image>();
+
+        _runeAreaParent = transform.Find("Rune_Area");
+        _runeImage = _runeAreaParent.Find("Rune_Image").GetComponent<Image>();
+
         IsFront = true;
         _defaultMaterial = _cardBase.material;
 
