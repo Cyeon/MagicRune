@@ -1,18 +1,13 @@
 using DG.Tweening;
-using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
-using System.Security.Cryptography;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using UnityEngine.Windows;
-using static UnityEngine.UIElements.UxmlAttributeDescription;
 using Input = UnityEngine.Input;
 using SerializableDictionary;
 using System;
 using System.Linq;
-using Unity.VisualScripting;
 using Sequence = DG.Tweening.Sequence;
 
 public enum RuneType
@@ -77,6 +72,12 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
     [SerializeField]
     private float swipeSensitivity;
 
+    [Header("Sounds")]
+    [SerializeField]
+    private AudioClip clickSound = null;
+    [SerializeField]
+    private AudioClip attackSound = null;
+
     private bool _isBig = false;
 
     public bool IsBig
@@ -118,13 +119,10 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                 _effectContent.SetActive(false);
                 //_bgPanel.transform.GetChild(0).GetComponent<Image>().raycastTarget = true;
                 this.transform.rotation = Quaternion.Euler(0, 0, 0);
+                SoundManager.Instance.PlaySound(clickSound, SoundType.Effect);
             }
         }
     }
-
-    //private float _rotateAxis = 0f;
-    //[SerializeField]
-    //private float _rotateSpeed = 10f;
 
     public void Awake()
     {
@@ -532,6 +530,7 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
         Sequence seq = DOTween.Sequence();
         seq.Append(this.transform.DORotate(new Vector3(0, 0, -360 * 5), 0.7f, RotateMode.LocalAxisAdd).SetEase(Ease.OutCubic));
         seq.InsertCallback(0f, () => _effectContent.AttackAnimation());
+        SoundManager.Instance.PlaySound(attackSound, SoundType.Effect);
 
         //int damage = 0;
         seq.AppendInterval(0.1f);

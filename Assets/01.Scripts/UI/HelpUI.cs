@@ -62,9 +62,12 @@ public class HelpUI : MonoBehaviour
     public List<BasicHelpUI> gameSceneList = new List<BasicHelpUI>();
     public List<InteractionHelpUI> interactionList = new List<InteractionHelpUI>();
 
+    public AudioClip buttonClip = null;
+
     private void Awake()
     {
         backButton.onClick.AddListener(() => ButtonClick(HelpUIButtons.back));
+        backButton.onClick.AddListener(() => SoundManager.Instance.PlaySound(buttonClip,SoundType.Effect));
         onButton.onClick.AddListener(() => ButtonClick(HelpUIButtons.on));
         statusButton.onClick.AddListener(() => ButtonClick(HelpUIButtons.status));
         interactionButton.onClick.AddListener(() => ButtonClick(HelpUIButtons.interaction));
