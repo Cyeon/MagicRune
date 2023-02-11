@@ -10,17 +10,23 @@ public class UIManager : MonoSingleton<UIManager>
     [SerializeField] private Transform _canvas;
 
     [Header("Enemy UI")]
-    [SerializeField] private Slider _enemyHealthSlider;
-    [SerializeField] private TextMeshProUGUI _enemyHealthText;
     [SerializeField] private Image _enemyPatternIcon;
     [SerializeField] private TextMeshProUGUI _enemyPatternValueText;
     [SerializeField] private TextMeshProUGUI _enemyShieldText;
+    [SerializeField] private Transform _enemySlideBar;
+    private Slider _enemyHealthSlider;
+    private Slider _enemyShieldSlider;
+    private Slider _enemyHealthFeedbackSlider;
+    private TextMeshProUGUI _enemyHealthText;
     public Transform enemyIcon;
 
     [Header("Player UI")]
-    [SerializeField] private Slider _playerHealthSlider;
-    [SerializeField] private TextMeshProUGUI _playerHealthText;
+    [SerializeField] private Transform _playerSlideBar;
     [SerializeField] private TextMeshProUGUI _playerShieldText;
+    private Slider _playerHealthSlider;
+    private Slider _playerShieldSlider;
+    private Slider _playerHealthFeedbackSlider;
+    private TextMeshProUGUI _playerHealthText;
 
     [Header("상태이상 UI")]
     [SerializeField] private GameObject _statusPrefab;
@@ -38,10 +44,25 @@ public class UIManager : MonoSingleton<UIManager>
     [SerializeField] private GameObject _damagePopup;
     [SerializeField] private GameObject _infoMessage;
 
+    private Slider hSlider = null;
+    private Slider sSlider = null;
+    private Slider hfSlider = null;
+    private TextMeshProUGUI hText = null;
+
     private void Awake()
     {
         _turnBackground = _turnPanel?.GetComponent<Image>();
         _turnText = _turnPanel?.GetComponentInChildren<TextMeshProUGUI>();
+
+        _enemyHealthSlider = _enemySlideBar.Find("HealthBar").GetComponent<Slider>();
+        _enemyHealthFeedbackSlider = _enemySlideBar.Find("HealthFeedbackBar").GetComponent<Slider>();
+        _enemyShieldSlider = _enemySlideBar.Find("ShieldBar").GetComponent<Slider>();
+        _enemyHealthText = _enemyHealthSlider.transform.Find("HealthText").GetComponent<TextMeshProUGUI>();
+
+        _playerHealthSlider = _playerSlideBar.Find("HealthBar").GetComponent<Slider>();
+        _playerHealthFeedbackSlider = _playerSlideBar.Find("HealthFeedbackBar").GetComponent<Slider>();
+        _playerShieldSlider = _playerSlideBar.Find("ShieldBar").GetComponent<Slider>();
+        _playerHealthText = _playerHealthSlider.transform.Find("HealthText").GetComponent<TextMeshProUGUI>();
     }
 
     public void OnDestroy()
@@ -55,29 +76,79 @@ public class UIManager : MonoSingleton<UIManager>
             _playerShieldText.text = shield.ToString();
         else
             _enemyShieldText.text = shield.ToString();
+
+        UpdateHealthbar(isPlayer);
     }
 
     #region Health Bar
-    public void EnemyHealthbarInit(float health)
+
+    public void SliderInit(bool isPlayer)
     {
-        _enemyHealthSlider.maxValue = health;
-        _enemyHealthSlider.value = health;
-        _enemyHealthText.text = string.Format("{0} / {1}", health, health);
+        if (isPlayer)
+        {
+            hSlider = _playerHealthSlider;
+            sSlider = _playerShieldSlider;
+            hText = _playerHealthText;
+            hfSlider = _playerHealthFeedbackSlider;
+        }
+        else
+        {
+            hSlider = _enemyHealthSlider;
+            sSlider = _enemyShieldSlider;
+            hText = _enemyHealthText;
+            hfSlider = _enemyHealthFeedbackSlider;
+        }
     }
 
-    public void UpdateEnemyHealthbar()
+    public void HealthbarInit(bool isPlayer, float health)
+    {
+        SliderInit(isPlayer);
+
+        hSlider.maxValue = health;
+        hSlider.value = health;
+        hText.text = string.Format("{0} / {1}", health, health);
+
+        sSlider.maxValue = health;
+        sSlider.value = 0;
+
+        hfSlider.maxValue = health;
+        hfSlider.value = 0;
+    }
+
+    public void UpdateHealthbar(bool isPlayer)
+    {
+        SliderInit(isPlayer);
+        Unit unit = isPlayer ? GameManager.Instance.player : GameManager.Instance.enemy;
+
+        if (unit.Shield > 0)
+        {
+            if (unit.HP + unit.Shield > unit.MaxHealth)
+                hSlider.maxValue = sSlider.maxValue = hfSlider.maxValue = unit.HP + unit.Shield;
+            else
+                hSlider.maxValue = sSlider.maxValue = hfSlider.maxValue = unit.MaxHealth;
+
+            hSlider.value = unit.HP;
+            sSlider.value = unit.HP + unit.Shield;
+            hText.text = string.Format("{0} / {1}", hSlider.value, unit.MaxHealth);
+
+            sSlider.transform.DOScaleY(1.2f, 0.1f);
+            hfSlider.value = hfSlider.maxValue;
+        }
+        else
+        {
+            hSlider.maxValue = sSlider.maxValue = hfSlider.maxValue = unit.MaxHealth;
+            sSlider.value = 0;
+            hSlider.value = unit.HP;
+            hfSlider.DOValue(unit.HP, 0.2f);
+            hText.text = string.Format("{0} / {1}", hSlider.value, unit.MaxHealth);
+        }
+    }
+
+    /*public void UpdateEnemyHealthbar()
     {
         Sequence seq = DOTween.Sequence();
         seq.Append(_enemyHealthSlider.DOValue(GameManager.Instance.enemy.HP, 0.2f));
         seq.AppendCallback(() => _enemyHealthText.text = string.Format("{0} / {1}", _enemyHealthSlider.value, _enemyHealthSlider.maxValue));
-    }
-
-
-    public void PlayerHealthbarInit(float health)
-    {
-        _playerHealthSlider.maxValue = health;
-        _playerHealthSlider.value = health;
-        _playerHealthText.text = string.Format("{0} / {1}", health, health);
     }
 
     public void UpdatePlayerHealthbar()
@@ -85,7 +156,7 @@ public class UIManager : MonoSingleton<UIManager>
         Sequence seq = DOTween.Sequence();
         seq.Append(_playerHealthSlider.DOValue(GameManager.Instance.player.HP, 0.2f));
         seq.AppendCallback(() => _playerHealthText.text = string.Format("{0} / {1}", _playerHealthSlider.value, _playerHealthSlider.maxValue));
-    }
+    }*/
     #endregion
 
     #region Status
@@ -94,7 +165,7 @@ public class UIManager : MonoSingleton<UIManager>
     {
         //StatusPanel statusPanel = Instantiate(isPopup ? _statusPopup : _statusPrefab).GetComponent<StatusPanel>();
         StatusPanel statusPanel = Instantiate(_statusPrefab).GetComponent<StatusPanel>();
-        
+
         statusPanel.image.sprite = status.icon;
         statusPanel.image.color = status.color;
         statusPanel.duration.text = status.typeValue.ToString();
@@ -134,7 +205,7 @@ public class UIManager : MonoSingleton<UIManager>
         if (obj == null)
             return;
 
-        if(duration <= 0)
+        if (duration <= 0)
         {
             RemoveStatusPanel(unit, name);
             return;
@@ -244,7 +315,7 @@ public class UIManager : MonoSingleton<UIManager>
 
     public IEnumerator PatternIconAnimationCoroutine()
     {
-        for(int i = 0; i < 6; i++)
+        for (int i = 0; i < 6; i++)
         {
             GameObject obj = Instantiate(_enemyPatternIcon.gameObject, _enemyPatternIcon.transform.parent);
             obj.transform.position = _enemyPatternIcon.transform.position;

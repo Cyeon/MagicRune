@@ -21,7 +21,7 @@ public class Enemy : Unit
         _maxHealth = enemyInfo.health;
         HP = enemyInfo.health;
 
-        UIManager.Instance.EnemyHealthbarInit(_maxHealth);
+        UIManager.Instance.HealthbarInit(false, _maxHealth);
     }
 
     public void TurnStart()
