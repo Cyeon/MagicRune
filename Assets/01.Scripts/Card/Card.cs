@@ -5,6 +5,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using TMPro;
 using DG.Tweening;
+using MyBox;
 
 public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IBeginDragHandler, IEndDragHandler, IDragHandler, IPointerClickHandler
 {
@@ -14,6 +15,8 @@ public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IBegi
 
     [SerializeField]
     private CardSO _rune;
+    [SerializeField]
+    private RuneDesc _descPrefab;
 
     [SerializeField]
     private bool _isEquipMagicCircle = false;
@@ -24,6 +27,7 @@ public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IBegi
     public int SortingIndex => _sortingIndex;
 
     private CardCollector _collector;
+    private MagicCircle _magicCircle;
     private bool _isRest = false;
     public bool IsRest => _isRest;
 
@@ -273,6 +277,28 @@ public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IBegi
             //}
             //transform.localScale = Vector3.one;
         }
+        else
+        {
+            RuneDesc go = Instantiate(_descPrefab, this.transform.parent).GetComponent<RuneDesc>();
+            Card mainCard = _collector.MagicCircle.RuneDict[RuneType.Main].Find(x => x == this);
+            if(mainCard != null)
+            {
+                go.UpdateUI(_rune.MainRune);
+            }
+            else
+            {
+                Card assistCard = _collector.MagicCircle.RuneDict[RuneType.Assist].Find(x => x == this);
+                if(assistCard != null)
+                {
+                    go.UpdateUI(_rune.AssistRune);
+                }
+                else
+                {
+                    Destroy(go.gameObject);
+                }
+            }
+            
+        }
     }
 
     public void OnBeginDrag(PointerEventData eventData)
@@ -311,6 +337,7 @@ public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IBegi
     {
         _collector = GetComponentInParent<CardCollector>();
         _rect = GetComponent<RectTransform>();
+        _magicCircle = _collector.MagicCircle;
 
         #region 예전 카드에서 세팅 필요했던 부분
         //_cardAreaParent = transform.Find("Card_Area");
@@ -330,7 +357,7 @@ public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IBegi
         #endregion
 
         _cardAreaParent = transform.Find("Card_Area");
-        _cardBase = _cardAreaParent.Find("Base_Image").Find("Card_Image").GetComponent<Image>();
+        _cardBase = _cardAreaParent.Find("Base_Image/Card_Image").GetComponent<Image>();
         
         _nameText = _cardAreaParent.Find("Name_Text").GetComponent<TMP_Text>();
         _skillImage = _cardAreaParent.Find("Skill_Image").GetComponent<Image>();

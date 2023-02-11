@@ -15,6 +15,7 @@ public class CardCollector : MonoBehaviour
 {
     [SerializeField]
     private MagicCircle _magicCircle;
+    public MagicCircle MagicCircle => _magicCircle;
 
     [SerializeField, MinValue(0f), MaxValue(1440f)]
     private float _cardAreaDistance;
