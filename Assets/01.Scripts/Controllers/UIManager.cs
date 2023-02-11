@@ -131,7 +131,9 @@ public class UIManager : MonoSingleton<UIManager>
             sSlider.value = unit.HP + unit.Shield;
             hText.text = string.Format("{0} / {1}", hSlider.value, unit.MaxHealth);
 
-            sSlider.transform.DOScaleY(1.2f, 0.1f);
+            Sequence seq = DOTween.Sequence();
+            seq.Append(sSlider.transform.DOScaleY(4.2f, 0.1f));
+            seq.Append(sSlider.transform.DOScaleY(4f, 0.1f));
             hfSlider.value = hfSlider.maxValue;
         }
         else
