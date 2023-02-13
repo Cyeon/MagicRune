@@ -123,26 +123,29 @@ public class UIManager : MonoSingleton<UIManager>
         if (unit.Shield > 0)
         {
             if (unit.HP + unit.Shield > unit.MaxHealth)
-                hSlider.maxValue = sSlider.maxValue = hfSlider.maxValue = unit.HP + unit.Shield;
+                hfSlider.value = hSlider.maxValue = sSlider.maxValue = hfSlider.maxValue = unit.HP + unit.Shield;
             else
                 hSlider.maxValue = sSlider.maxValue = hfSlider.maxValue = unit.MaxHealth;
 
+            hfSlider.value = hSlider.value;
             hSlider.value = unit.HP;
             sSlider.value = unit.HP + unit.Shield;
             hText.text = string.Format("{0} / {1}", hSlider.value, unit.MaxHealth);
 
             Sequence seq = DOTween.Sequence();
-            seq.Append(sSlider.transform.DOScaleY(4.2f, 0.1f));
-            seq.Append(sSlider.transform.DOScaleY(4f, 0.1f));
-            hfSlider.value = hfSlider.maxValue;
+            seq.AppendInterval(0.5f);
+            seq.Append(hfSlider.DOValue(unit.HP, 0.2f));
         }
         else
         {
             hSlider.maxValue = sSlider.maxValue = hfSlider.maxValue = unit.MaxHealth;
             sSlider.value = 0;
             hSlider.value = unit.HP;
-            hfSlider.DOValue(unit.HP, 0.2f);
             hText.text = string.Format("{0} / {1}", hSlider.value, unit.MaxHealth);
+
+            Sequence seq = DOTween.Sequence();
+            seq.AppendInterval(0.5f);
+            seq.Append(hfSlider.DOValue(unit.HP, 0.2f));
         }
     }
 
