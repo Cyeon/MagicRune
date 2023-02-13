@@ -10,6 +10,7 @@ public class Unit : MonoBehaviour
     protected bool isPlayer = false;
 
     [SerializeField] protected float _maxHealth;
+    public float MaxHealth => _maxHealth;
     [SerializeField] private float _health = 10f;
     public float HP
     {
@@ -89,8 +90,8 @@ public class Unit : MonoBehaviour
         OnTakeDamage?.Invoke(currentDmg);
         OnTakeDamageFeedback?.Invoke();
 
-        UIManager.Instance.UpdateEnemyHealthbar();
-        UIManager.Instance.UpdatePlayerHealthbar();
+        UIManager.Instance.UpdateHealthbar(false);
+        UIManager.Instance.UpdateHealthbar(true);
 
         if(isPlayer == false)
         {
