@@ -81,6 +81,7 @@ public class Unit : MonoBehaviour
             else
             {
                 currentDmg -= Shield;
+                Shield = 0;
                 HP -= currentDmg;
             }
         }
