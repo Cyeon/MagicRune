@@ -11,6 +11,14 @@ public class RuneDesc : MonoBehaviour
     private Text _manaText;
     private Text _coolTImeText;
 
+    private void Awake()
+    {
+        _runeNameText = transform.Find("RuneName").GetComponent<Text>();
+        _runeDescText = transform.Find("RuneDesc").GetComponent<Text>();
+        _manaText = transform.Find("Mana/Value").GetComponent<Text>();
+        _coolTImeText = transform.Find("CoolTime/Value").GetComponent<Text>();
+    }
+
     public void UpdateUI(RuneProperty rune)
     {
         if (rune == null) return;

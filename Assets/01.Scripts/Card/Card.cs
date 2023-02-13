@@ -279,6 +279,8 @@ public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IBegi
         }
         else
         {
+            if (_rune == null) return;
+
             RuneDesc go = Instantiate(_descPrefab, this.transform.parent).GetComponent<RuneDesc>();
             Card mainCard = _collector.MagicCircle.RuneDict[RuneType.Main].Find(x => x == this);
             if(mainCard != null)
@@ -335,9 +337,9 @@ public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IBegi
 
     private void Setting()
     {
-        _collector = GetComponentInParent<CardCollector>();
+        _collector = GameManager.Instance.MagicCircle.CardCollector;
         _rect = GetComponent<RectTransform>();
-        _magicCircle = _collector.MagicCircle;
+        _magicCircle = GameManager.Instance.MagicCircle;
 
         #region 예전 카드에서 세팅 필요했던 부분
         //_cardAreaParent = transform.Find("Card_Area");
