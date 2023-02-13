@@ -131,10 +131,6 @@ public class UIManager : MonoSingleton<UIManager>
             hSlider.value = unit.HP;
             sSlider.value = unit.HP + unit.Shield;
             hText.text = string.Format("{0} / {1}", hSlider.value, unit.MaxHealth);
-
-            Sequence seq = DOTween.Sequence();
-            seq.AppendInterval(0.5f);
-            seq.Append(hfSlider.DOValue(unit.HP, 0.2f));
         }
         else
         {
@@ -142,11 +138,15 @@ public class UIManager : MonoSingleton<UIManager>
             sSlider.value = 0;
             hSlider.value = unit.HP;
             hText.text = string.Format("{0} / {1}", hSlider.value, unit.MaxHealth);
-
-            Sequence seq = DOTween.Sequence();
-            seq.AppendInterval(0.5f);
-            seq.Append(hfSlider.DOValue(unit.HP, 0.2f));
         }
+
+        Sequence seq = DOTween.Sequence();
+        seq.AppendInterval(0.5f);
+        seq.Append(hfSlider.DOValue(unit.HP, 0.2f));
+
+        Sequence vibrateSeq = DOTween.Sequence();
+        vibrateSeq.Append(hSlider.transform.DOShakeScale(0.2f));
+        vibrateSeq.Append(hSlider.transform.DOScale(4f, 0));
     }
 
     /*public void UpdateEnemyHealthbar()
