@@ -176,7 +176,7 @@ public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IBegi
 
     public void SetOutlineColor(Color color)
     {
-        _cardBase.material?.SetColor("_Color", color);
+        _cardBase.material?.SetColor("_SolidOutline", color);
     }
 
     public void SetOutline(bool value)
@@ -377,6 +377,9 @@ public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IBegi
             _runeImage.sprite = _rune.RuneImage;
             _runeAreaParent.gameObject.SetActive(false);
         }
+
+        SetOutlineColor(Color.cyan);
+        SetOutline(false);
     }
 
     public void OnDestroy()
