@@ -117,7 +117,7 @@ public class DummyCost : MonoSingleton<DummyCost>
             return false;
     }
 
-    public bool CanMainRune(int cost)
+    public bool CanRune(int cost)
     {
         return _nowCost >= cost;
     }
