@@ -212,7 +212,7 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                     card.GetComponent<RectTransform>().anchoredPosition = Input.GetTouch(0).position;
                     card.transform.SetParent(this.transform);
                     card.GetComponent<RectTransform>().anchoredPosition = card.GetComponent<RectTransform>().anchoredPosition;
-                    card.GetComponent<RectTransform>().DOAnchorPos(Vector2.zero, 0.3f);
+                    card.GetComponent<RectTransform>().DOAnchorPos(Vector2.zero, 0.3f).OnComplete(() => card.SetOutlineActive(true));
                     card.SetIsEquip(true);
                     card.SetCoolTime(card.Rune.MainRune.DelayTurn);
                     _cardCollector.CardRotate();
@@ -240,7 +240,7 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                     //card.GetComponent<RectTransform>().anchoredPosition = Input.GetTouch(0).position;
                     card.transform.SetParent(this.transform);
                     //card.GetComponent<RectTransform>().anchoredPosition = card.GetComponent<RectTransform>().anchoredPosition;
-                    card.GetComponent<RectTransform>().DOAnchorPos(Vector2.zero, 0.3f);
+                    card.GetComponent<RectTransform>().DOAnchorPos(Vector2.zero, 0.3f).OnComplete(() => card.SetOutlineActive(true));
                     card.SetIsEquip(true);
                     card.SetCoolTime(card.Rune.MainRune.DelayTurn);
                     _cardCollector.CardRotate();
@@ -266,7 +266,7 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
         }
         else
         {
-            if (!DummyCost.Instance.CanUseSubRune(card.Rune.AssistRune.Cost))
+            if (!DummyCost.Instance.CanRune(card.Rune.AssistRune.Cost))
             {
                 Touch touch = Input.GetTouch(0);
                 Vector3 pos = Camera.main.ScreenToWorldPoint(touch.position);
@@ -306,6 +306,7 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                 {
                     card.GetComponent<RectTransform>().DOAnchorPos(_runeDict[RuneType.Assist][changeIndex].GetComponent<RectTransform>().anchoredPosition, 0.3f).OnComplete(() =>
                     {
+                        card.SetOutlineActive(true);
                         Destroy(_runeDict[RuneType.Assist][changeIndex].gameObject);
                         _runeDict[RuneType.Assist][changeIndex] = card;
 
@@ -527,6 +528,7 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
             return;
         }
 
+        _cardCollector.AllCardDescription(false);
         Sequence seq = DOTween.Sequence();
         seq.Append(this.transform.DORotate(new Vector3(0, 0, -360 * 5), 0.7f, RotateMode.LocalAxisAdd).SetEase(Ease.OutCubic));
         seq.InsertCallback(0f, () => _effectContent.AttackAnimation());

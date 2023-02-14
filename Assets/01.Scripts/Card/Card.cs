@@ -132,7 +132,7 @@ public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IBegi
             //_mainSubText.text = "메인";
             //_skillText.text = _rune.MainRune.CardDescription;
             //_assistRuneCount.text = _rune.AssistRuneCount.ToString();
-            
+
         }
         else
         {
@@ -154,12 +154,12 @@ public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IBegi
         if (_isEquipMagicCircle == true)
         {
             SetRune(true);
-            _runeOutlineImage.gameObject.SetActive(true);
+            //SetOutlineActive(true);
         }
         else
         {
             SetRune(false);
-            _runeOutlineImage.gameObject.SetActive(false);
+            //SetOutlineActive(false);
         }
     }
 
@@ -218,6 +218,11 @@ public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IBegi
             isDescOn = false;
             _descArea.alpha = 0;
         }
+    }
+
+    public void SetOutlineActive(bool value)
+    {
+        _runeOutlineImage.gameObject.SetActive(value);
     }
 
     //private void Update()
@@ -292,47 +297,55 @@ public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IBegi
         }
         else
         {
-            if (_rune == null) return;
+            // 나중에 수정
 
-            RuneDesc go = Instantiate(_descPrefab, this.transform.parent).GetComponent<RuneDesc>();
-            Card mainCard = _collector.MagicCircle.RuneDict[RuneType.Main].Find(x => x == this);
-            if(mainCard != null)
-            {
-                go.UpdateUI(_rune.MainRune);
-            }
-            else
-            {
-                Card assistCard = _collector.MagicCircle.RuneDict[RuneType.Assist].Find(x => x == this);
-                if(assistCard != null)
-                {
-                    go.UpdateUI(_rune.AssistRune);
-                }
-                else
-                {
-                    Destroy(go.gameObject);
-                }
-            }
-            
+            //if (_rune == null) return;
+
+            //RuneDesc go = Instantiate(_descPrefab, this.transform.parent).GetComponent<RuneDesc>();
+            //Card mainCard = _collector.MagicCircle.RuneDict[RuneType.Main].Find(x => x == this);
+            //if (mainCard != null)
+            //{
+            //    go.UpdateUI(_rune.MainRune);
+            //}
+            //else
+            //{
+            //    Card assistCard = _collector.MagicCircle.RuneDict[RuneType.Assist].Find(x => x == this);
+            //    if (assistCard != null)
+            //    {
+            //        go.UpdateUI(_rune.AssistRune);
+            //    }
+            //    else
+            //    {
+            //        Destroy(go.gameObject);
+            //    }
+            //}
+
         }
     }
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        _collector.CardSelect(this);
-        _collector.SelectCard.transform.localScale = new Vector3(2f, 2f, 1f);
-        _collector.AllCardDescription(false);
+        if (_isEquipMagicCircle == false)
+        {
+            _collector.CardSelect(this);
+            _collector.SelectCard.transform.localScale = new Vector3(2f, 2f, 1f);
+            _collector.AllCardDescription(false);
+        }
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        _collector.CardSelect(null);
-        _collector.SelectCard.transform.localScale = Vector3.one;
-        _collector.AllCardDescription(false);
+        if (_collector.SelectCard != null)
+        {
+            _collector.SelectCard.transform.localScale = Vector3.one;
+            _collector.CardSelect(null);
+            _collector.AllCardDescription(false);
+        }
     }
 
     public void OnDrag(PointerEventData eventData)
     {
-        
+
     }
 
     public void OnPointerClick(PointerEventData eventData)
@@ -373,7 +386,7 @@ public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IBegi
 
         _cardAreaParent = transform.Find("Card_Area");
         _cardBase = _cardAreaParent.Find("Base_Image/Card_Image").GetComponent<Image>();
-        
+
         _nameText = _cardAreaParent.Find("Name_Text").GetComponent<TMP_Text>();
         _skillImage = _cardAreaParent.Find("Skill_Image").GetComponent<Image>();
         _costText = _cardAreaParent.Find("Cost_Text").GetComponent<TMP_Text>();
@@ -396,7 +409,7 @@ public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IBegi
             _runeImage.sprite = _rune.RuneImage;
             _runeAreaParent.gameObject.SetActive(false);
         }
-        _runeOutlineImage.gameObject.SetActive(false);
+        SetOutlineActive(false);
 
         SetOutlineColor(Color.cyan);
         SetOutline(false);
