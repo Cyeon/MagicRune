@@ -90,6 +90,7 @@ public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IBegi
     private Transform _runeAreaParent;
     public Transform RuneAreaParent => _runeAreaParent;
     private Image _runeImage;
+    private Image _runeOutlineImage;
     #endregion
 
     private RectTransform _rect;
@@ -153,10 +154,12 @@ public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IBegi
         if (_isEquipMagicCircle == true)
         {
             SetRune(true);
+            _runeOutlineImage.gameObject.SetActive(true);
         }
         else
         {
             SetRune(false);
+            _runeOutlineImage.gameObject.SetActive(false);
         }
     }
 
@@ -383,6 +386,7 @@ public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IBegi
 
         _runeAreaParent = transform.Find("Rune_Area");
         _runeImage = _runeAreaParent.Find("Rune_Image").GetComponent<Image>();
+        _runeOutlineImage = _runeAreaParent.Find("Rune_Line_Image").GetComponent<Image>();
 
         IsFront = true;
         _defaultMaterial = _cardBase.material;
@@ -392,6 +396,7 @@ public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IBegi
             _runeImage.sprite = _rune.RuneImage;
             _runeAreaParent.gameObject.SetActive(false);
         }
+        _runeOutlineImage.gameObject.SetActive(false);
 
         SetOutlineColor(Color.cyan);
         SetOutline(false);
