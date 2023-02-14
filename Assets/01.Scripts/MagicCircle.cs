@@ -212,7 +212,7 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                     card.GetComponent<RectTransform>().anchoredPosition = Input.GetTouch(0).position;
                     card.transform.SetParent(this.transform);
                     card.GetComponent<RectTransform>().anchoredPosition = card.GetComponent<RectTransform>().anchoredPosition;
-                    card.GetComponent<RectTransform>().DOAnchorPos(Vector2.zero, 0.3f);
+                    card.GetComponent<RectTransform>().DOAnchorPos(Vector2.zero, 0.3f).OnComplete(() => card.SetOutlineActive(true));
                     card.SetIsEquip(true);
                     card.SetCoolTime(card.Rune.MainRune.DelayTurn);
                     _cardCollector.CardRotate();
@@ -240,7 +240,7 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                     //card.GetComponent<RectTransform>().anchoredPosition = Input.GetTouch(0).position;
                     card.transform.SetParent(this.transform);
                     //card.GetComponent<RectTransform>().anchoredPosition = card.GetComponent<RectTransform>().anchoredPosition;
-                    card.GetComponent<RectTransform>().DOAnchorPos(Vector2.zero, 0.3f);
+                    card.GetComponent<RectTransform>().DOAnchorPos(Vector2.zero, 0.3f).OnComplete(() => card.SetOutlineActive(true));
                     card.SetIsEquip(true);
                     card.SetCoolTime(card.Rune.MainRune.DelayTurn);
                     _cardCollector.CardRotate();
@@ -306,6 +306,7 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                 {
                     card.GetComponent<RectTransform>().DOAnchorPos(_runeDict[RuneType.Assist][changeIndex].GetComponent<RectTransform>().anchoredPosition, 0.3f).OnComplete(() =>
                     {
+                        card.SetOutlineActive(true);
                         Destroy(_runeDict[RuneType.Assist][changeIndex].gameObject);
                         _runeDict[RuneType.Assist][changeIndex] = card;
 

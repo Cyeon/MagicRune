@@ -154,12 +154,12 @@ public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IBegi
         if (_isEquipMagicCircle == true)
         {
             SetRune(true);
-            _runeOutlineImage.gameObject.SetActive(true);
+            //SetOutlineActive(true);
         }
         else
         {
             SetRune(false);
-            _runeOutlineImage.gameObject.SetActive(false);
+            //SetOutlineActive(false);
         }
     }
 
@@ -218,6 +218,11 @@ public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IBegi
             isDescOn = false;
             _descArea.alpha = 0;
         }
+    }
+
+    public void SetOutlineActive(bool value)
+    {
+        _runeOutlineImage.gameObject.SetActive(value);
     }
 
     //private void Update()
@@ -396,7 +401,7 @@ public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IBegi
             _runeImage.sprite = _rune.RuneImage;
             _runeAreaParent.gameObject.SetActive(false);
         }
-        _runeOutlineImage.gameObject.SetActive(false);
+        SetOutlineActive(false);
 
         SetOutlineColor(Color.cyan);
         SetOutline(false);
