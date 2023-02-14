@@ -266,7 +266,7 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
         }
         else
         {
-            if (!DummyCost.Instance.CanUseSubRune(card.Rune.AssistRune.Cost))
+            if (!DummyCost.Instance.CanRune(card.Rune.AssistRune.Cost))
             {
                 Touch touch = Input.GetTouch(0);
                 Vector3 pos = Camera.main.ScreenToWorldPoint(touch.position);
@@ -528,6 +528,7 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
             return;
         }
 
+        _cardCollector.AllCardDescription(false);
         Sequence seq = DOTween.Sequence();
         seq.Append(this.transform.DORotate(new Vector3(0, 0, -360 * 5), 0.7f, RotateMode.LocalAxisAdd).SetEase(Ease.OutCubic));
         seq.InsertCallback(0f, () => _effectContent.AttackAnimation());
