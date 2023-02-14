@@ -24,7 +24,7 @@ public class StatusFuncList : MonoBehaviour
     public void StackDmg()
     {
         status.unit.TakeDamage(status.typeValue, true);
-        UIManager.Instance.UpdateEnemyHealthbar();
+        UIManager.Instance.UpdateHealthbar(false);
         status.typeValue = 0;
         UIManager.Instance.RemoveStatusPanel(status.unit, status.statusName);
     }

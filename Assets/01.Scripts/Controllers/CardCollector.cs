@@ -15,6 +15,7 @@ public class CardCollector : MonoBehaviour
 {
     [SerializeField]
     private MagicCircle _magicCircle;
+    public MagicCircle MagicCircle => _magicCircle;
 
     [SerializeField, MinValue(0f), MaxValue(1440f)]
     private float _cardAreaDistance;
@@ -231,7 +232,7 @@ public class CardCollector : MonoBehaviour
             //?�걸 ?�줘??Animation???�해 MagicCircle???�식?�로 ?�었??것도 ?�시 ???�의 ?�식?�로 ?�아?�??�상?�으�?Sort가 ?�는??그러�?Damage부분에???�류가 ??�?�?
             //_handCards[i].transform.SetParent(this.transform); 
             RectTransform rect = _handCards[i].GetComponent<RectTransform>();
-            rect.anchoredPosition = new Vector3(i * xDelta + rect.sizeDelta.x / 2 + 150 + _offset.x/* + sideArea*/,/* rect.sizeDelta.y / 2 + _offset.y*/600f, 0);
+            rect.anchoredPosition = new Vector3(i * xDelta + rect.sizeDelta.x / 2 + 150 + _offset.x, rect.sizeDelta.y / 2 + _offset.y, 0);
             _handCards[i].IsFront = _isFront;
         }
     }
@@ -250,7 +251,7 @@ public class CardCollector : MonoBehaviour
                 {
                     if (DummyCost.Instance.CanMainRune(_handCards[i].IsFront ? _handCards[i].Rune.MainRune.Cost : _handCards[i].Rune.AssistRune.Cost))
                     {
-                        //_handCards[i].SetOutlineColor(Color.blue);
+                        _handCards[i].SetOutlineColor(Color.cyan);
                         _handCards[i].SetOutline(true);
                     }
                     else
@@ -264,7 +265,7 @@ public class CardCollector : MonoBehaviour
             {
                 if (DummyCost.Instance.CanMainRune(_handCards[i].IsFront ? _handCards[i].Rune.MainRune.Cost : _handCards[i].Rune.AssistRune.Cost))
                 {
-                    //_handCards[i].SetOutlineColor(Color.blue);
+                    _handCards[i].SetOutlineColor(Color.cyan);
                     _handCards[i].SetOutline(true);
                 }
                 else

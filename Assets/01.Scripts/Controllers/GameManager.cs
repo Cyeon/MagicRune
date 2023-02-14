@@ -34,7 +34,7 @@ public class GameManager : MonoSingleton<GameManager>
         enemy = EnemyManager.Instance.SpawnEnemy();
         player = FindObjectOfType<Player>();
 
-        UIManager.instance.PlayerHealthbarInit(player.HP);
+        UIManager.instance.HealthbarInit(true, player.HP);
 
         FeedbackManager.Instance.Init();
 

@@ -5,6 +5,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using TMPro;
 using DG.Tweening;
+using MyBox;
 
 public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IBeginDragHandler, IEndDragHandler, IDragHandler, IPointerClickHandler
 {
@@ -14,6 +15,8 @@ public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IBegi
 
     [SerializeField]
     private CardSO _rune;
+    [SerializeField]
+    private RuneDesc _descPrefab;
 
     [SerializeField]
     private bool _isEquipMagicCircle = false;
@@ -24,6 +27,7 @@ public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IBegi
     public int SortingIndex => _sortingIndex;
 
     private CardCollector _collector;
+    private MagicCircle _magicCircle;
     private bool _isRest = false;
     public bool IsRest => _isRest;
 
@@ -77,6 +81,11 @@ public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IBegi
     private Text _assistRuneCount;
     private Image _descriptionImage;
 
+    // Description Area
+    private bool isDescOn = false;
+    private Transform _descParent;
+    private CanvasGroup _descArea;
+
     // Rune Area
     private Transform _runeAreaParent;
     public Transform RuneAreaParent => _runeAreaParent;
@@ -112,7 +121,7 @@ public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IBegi
 
     public void UpdateUI(bool isFront)
     {
-        if (!_nameText || !_skillImage || !_costText || !_runeImage || !_descriptionImage) { Setting(); } // || !_coolTimeText || !_mainSubText || !_skillText || !_runeImage) { Setting(); }
+        if (!_nameText || !_skillImage || !_costText || !_runeImage || !_descriptionImage || !_descArea) { Setting(); } // || !_coolTimeText || !_mainSubText || !_skillText || !_runeImage) { Setting(); }
         if (isFront == true)
         {
             _nameText.text = _rune.MainRune.Name;
@@ -122,6 +131,7 @@ public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IBegi
             //_mainSubText.text = "메인";
             //_skillText.text = _rune.MainRune.CardDescription;
             //_assistRuneCount.text = _rune.AssistRuneCount.ToString();
+            
         }
         else
         {
@@ -172,7 +182,7 @@ public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IBegi
 
     public void SetOutlineColor(Color color)
     {
-        _cardBase.material?.SetColor("_Color", color);
+        _cardBase.material?.SetColor("_SolidOutline", color);
     }
 
     public void SetOutline(bool value)
@@ -194,12 +204,16 @@ public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IBegi
         if (value)
         {
             //_descriptionImage.DOFade(1f, 0.1f);
-            _descriptionImage.color = new Color(1f, 1f, 1f, 1f);
+            //_descriptionImage.color = new Color(1f, 1f, 1f, 0.75f);\
+            isDescOn = true;
+            _descArea.alpha = 1;
         }
         else
         {
             //_descriptionImage.DOFade(0f, 0.1f);
-            _descriptionImage.color = new Color(1f, 1f, 1f, 0f);
+            //_descriptionImage.color = new Color(1f, 1f, 1f, 0f);
+            isDescOn = false;
+            _descArea.alpha = 0;
         }
     }
 
@@ -273,6 +287,30 @@ public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IBegi
             //}
             //transform.localScale = Vector3.one;
         }
+        else
+        {
+            if (_rune == null) return;
+
+            RuneDesc go = Instantiate(_descPrefab, this.transform.parent).GetComponent<RuneDesc>();
+            Card mainCard = _collector.MagicCircle.RuneDict[RuneType.Main].Find(x => x == this);
+            if(mainCard != null)
+            {
+                go.UpdateUI(_rune.MainRune);
+            }
+            else
+            {
+                Card assistCard = _collector.MagicCircle.RuneDict[RuneType.Assist].Find(x => x == this);
+                if(assistCard != null)
+                {
+                    go.UpdateUI(_rune.AssistRune);
+                }
+                else
+                {
+                    Destroy(go.gameObject);
+                }
+            }
+            
+        }
     }
 
     public void OnBeginDrag(PointerEventData eventData)
@@ -296,7 +334,7 @@ public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IBegi
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (_descriptionImage.color.a == 0)
+        if (isDescOn == false)
         {
             _collector.AllCardDescription(false);
             SetDescription(true);
@@ -309,8 +347,9 @@ public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IBegi
 
     private void Setting()
     {
-        _collector = GetComponentInParent<CardCollector>();
+        _collector = GameManager.Instance.MagicCircle.CardCollector;
         _rect = GetComponent<RectTransform>();
+        _magicCircle = GameManager.Instance.MagicCircle;
 
         #region 예전 카드에서 세팅 필요했던 부분
         //_cardAreaParent = transform.Find("Card_Area");
@@ -330,12 +369,17 @@ public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IBegi
         #endregion
 
         _cardAreaParent = transform.Find("Card_Area");
-        _cardBase = _cardAreaParent.Find("Base_Image").Find("Card_Image").GetComponent<Image>();
+        _cardBase = _cardAreaParent.Find("Base_Image/Card_Image").GetComponent<Image>();
         
         _nameText = _cardAreaParent.Find("Name_Text").GetComponent<TMP_Text>();
         _skillImage = _cardAreaParent.Find("Skill_Image").GetComponent<Image>();
         _costText = _cardAreaParent.Find("Cost_Text").GetComponent<TMP_Text>();
+
         _descriptionImage = _cardAreaParent.Find("Description_Image").GetComponent<Image>();
+
+        _descParent = _cardAreaParent.Find("Desc_Area").transform;
+        _descArea = _descParent.GetComponent<CanvasGroup>();
+
 
         _runeAreaParent = transform.Find("Rune_Area");
         _runeImage = _runeAreaParent.Find("Rune_Image").GetComponent<Image>();
@@ -348,6 +392,9 @@ public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IBegi
             _runeImage.sprite = _rune.RuneImage;
             _runeAreaParent.gameObject.SetActive(false);
         }
+
+        SetOutlineColor(Color.cyan);
+        SetOutline(false);
     }
 
     public void OnDestroy()

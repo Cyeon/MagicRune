@@ -209,7 +209,7 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                 Sequence seq = DOTween.Sequence();
                 seq.AppendCallback(() =>
                 {
-                    card.GetComponent<RectTransform>().anchoredPosition = new Vector2(Input.GetTouch(0).position.x, Input.GetTouch(0).position.y - _cardCollector.GetComponent<RectTransform>().anchoredPosition.y);
+                    card.GetComponent<RectTransform>().anchoredPosition = Input.GetTouch(0).position;
                     card.transform.SetParent(this.transform);
                     card.GetComponent<RectTransform>().anchoredPosition = card.GetComponent<RectTransform>().anchoredPosition;
                     card.GetComponent<RectTransform>().DOAnchorPos(Vector2.zero, 0.3f);
@@ -237,9 +237,9 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                 Sequence seq = DOTween.Sequence();
                 seq.AppendCallback(() =>
                 {
-                    card.GetComponent<RectTransform>().anchoredPosition = new Vector2(Input.GetTouch(0).position.x, Input.GetTouch(0).position.y - _cardCollector.GetComponent<RectTransform>().anchoredPosition.y);
+                    //card.GetComponent<RectTransform>().anchoredPosition = Input.GetTouch(0).position;
                     card.transform.SetParent(this.transform);
-                    card.GetComponent<RectTransform>().anchoredPosition = card.GetComponent<RectTransform>().anchoredPosition;
+                    //card.GetComponent<RectTransform>().anchoredPosition = card.GetComponent<RectTransform>().anchoredPosition;
                     card.GetComponent<RectTransform>().DOAnchorPos(Vector2.zero, 0.3f);
                     card.SetIsEquip(true);
                     card.SetCoolTime(card.Rune.MainRune.DelayTurn);
@@ -297,9 +297,9 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
             Sequence seq = DOTween.Sequence();
             seq.AppendCallback(() =>
             {
-                card.GetComponent<RectTransform>().anchoredPosition = new Vector2(Input.GetTouch(0).position.x, Input.GetTouch(0).position.y - _cardCollector.GetComponent<RectTransform>().anchoredPosition.y);
+                //card.GetComponent<RectTransform>().anchoredPosition = Input.GetTouch(0).position;
                 card.transform.SetParent(this.transform);
-                card.GetComponent<RectTransform>().anchoredPosition = card.GetComponent<RectTransform>().anchoredPosition;
+                //card.GetComponent<RectTransform>().anchoredPosition = card.GetComponent<RectTransform>().anchoredPosition;
                 card.SetCoolTime(card.Rune.AssistRune.DelayTurn);
                 card.SetIsEquip(true);
                 if (_runeDict[RuneType.Assist][changeIndex] != null)
