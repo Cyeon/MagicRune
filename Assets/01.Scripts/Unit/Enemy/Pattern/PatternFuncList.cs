@@ -10,6 +10,11 @@ public class PatternFuncList : MonoBehaviour
 
     [SerializeField] private ParticleSystem _shieldEffect;
 
+    [Header("Sound")]
+    public AudioClip attackSound = null;
+    public AudioClip shieldSound = null;
+    public AudioClip beamSound = null;
+
     public void AddAtkDmg()
     {
         GameManager.Instance.enemy.atkDamage += value;
@@ -76,6 +81,7 @@ public class PatternFuncList : MonoBehaviour
     {
         Sequence seq = DOTween.Sequence();
         seq.Append(UIManager.Instance.enemyIcon.DOShakeRotation(2, 90, 5)).SetEase(Ease.Linear);
+        SoundManager.Instance.PlaySound(beamSound, SoundType.Effect);
         seq.AppendCallback(() => GameManager.Instance.enemy.isSkip = true);
         seq.AppendCallback(() => GameManager.Instance.player.TakeDamage(20));
         seq.AppendInterval(0.2f);

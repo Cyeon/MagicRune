@@ -23,6 +23,7 @@ public class GameManager : MonoSingleton<GameManager>
     public Unit attackUnit = null;
 
     public MagicCircle MagicCircle;
+    public AudioClip turnChangeSound = null;
 
     private void Awake()
     {
@@ -43,14 +44,6 @@ public class GameManager : MonoSingleton<GameManager>
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.M))
-        {
-            OnMonsterTurn();
-        }
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            OnPlayerTurn();
-        }
         if(Input.GetKeyDown(KeyCode.A))
         {
             StatusManager.Instance.AddStatus(GameManager.Instance.enemy, StatusName.Wound);
@@ -95,7 +88,9 @@ public class GameManager : MonoSingleton<GameManager>
                 enemy.pattern?.Start();
                 EventManager<int>.TriggerEvent(Define.ON_START_PLAYER_TURN, 5);
                 EventManager.TriggerEvent(Define.ON_START_PLAYER_TURN);
-                EventManager<bool>.TriggerEvent(Define.ON_START_PLAYER_TURN, true); //¿©±â¶û
+                EventManager<bool>.TriggerEvent(Define.ON_START_PLAYER_TURN, true);
+
+                //SoundManager.instance.PlaySound(turnChangeSound, SoundType.Effect);
 
                 UIManager.Instance.Turn("Player Turn");
                 gameTurn = GameTurn.MonsterWait;
@@ -103,6 +98,9 @@ public class GameManager : MonoSingleton<GameManager>
 
             case GameTurn.Player:
                 EventManager<bool>.TriggerEvent(Define.ON_START_MONSTER_TURN, false);
+
+                SoundManager.instance.PlaySound(turnChangeSound, SoundType.Effect);
+
                 UIManager.Instance.Turn("Enemy Turn");
                 gameTurn = GameTurn.PlayerWait;
                 break;
@@ -125,7 +123,9 @@ public class GameManager : MonoSingleton<GameManager>
 
                 EventManager<int>.TriggerEvent(Define.ON_START_PLAYER_TURN, 5);
                 EventManager.TriggerEvent(Define.ON_START_PLAYER_TURN);
-                EventManager<bool>.TriggerEvent(Define.ON_START_PLAYER_TURN, true); // ¿©±â
+                EventManager<bool>.TriggerEvent(Define.ON_START_PLAYER_TURN, true);
+
+                SoundManager.instance.PlaySound(turnChangeSound, SoundType.Effect);
 
                 UIManager.Instance.Turn("Player Turn");
                 gameTurn = GameTurn.MonsterWait;

@@ -44,8 +44,6 @@ public class Unit : MonoBehaviour
         }
     }
 
-    
-
     #region  ?�태?�상 관??변??
 
     public float currentDmg = 0;

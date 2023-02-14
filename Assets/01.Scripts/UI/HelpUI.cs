@@ -68,13 +68,25 @@ public class HelpUI : MonoBehaviour
     {
         backButton.onClick.AddListener(() => ButtonClick(HelpUIButtons.back));
         backButton.onClick.AddListener(() => SoundManager.Instance.PlaySound(buttonClip,SoundType.Effect));
+        
         onButton.onClick.AddListener(() => ButtonClick(HelpUIButtons.on));
+        onButton.onClick.AddListener(() => SoundManager.Instance.PlaySound(buttonClip,SoundType.Effect));
+        
         statusButton.onClick.AddListener(() => ButtonClick(HelpUIButtons.status));
+        statusButton.onClick.AddListener(() => SoundManager.Instance.PlaySound(buttonClip,SoundType.Effect));
+        
         interactionButton.onClick.AddListener(() => ButtonClick(HelpUIButtons.interaction));
-        gameSceneButton.onClick.AddListener(() => ButtonClick(HelpUIButtons.gameScene));
-        manualButton.onClick.AddListener(() => ButtonClick(HelpUIButtons.manual));
-        cardButton.onClick.AddListener(() => ButtonClick(HelpUIButtons.card));
+        interactionButton.onClick.AddListener(() => SoundManager.Instance.PlaySound(buttonClip, SoundType.Effect));
 
+        gameSceneButton.onClick.AddListener(() => ButtonClick(HelpUIButtons.gameScene));
+        gameSceneButton.onClick.AddListener(() => SoundManager.Instance.PlaySound(buttonClip, SoundType.Effect));
+
+        manualButton.onClick.AddListener(() => ButtonClick(HelpUIButtons.manual));
+        manualButton.onClick.AddListener(() => SoundManager.Instance.PlaySound(buttonClip, SoundType.Effect)); 
+
+        cardButton.onClick.AddListener(() => ButtonClick(HelpUIButtons.card));
+        cardButton.onClick.AddListener(() => SoundManager.Instance.PlaySound(buttonClip, SoundType.Effect));
+        
         TemplateInstantiate();
     }
 

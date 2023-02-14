@@ -2228,6 +2228,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   value: 0
   _shieldEffect: {fileID: 340950765}
+  attackSound: {fileID: 8300000, guid: 14b13d596957d594ea53e14e0773678d, type: 3}
+  shieldSound: {fileID: 8300000, guid: 89f0806331661a146bc96f800ea1198f, type: 3}
+  beamSound: {fileID: 8300000, guid: 241d17961c598b948b1185232dfa61ac, type: 3}
 --- !u!114 &417906624
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5012,6 +5015,7 @@ MonoBehaviour:
   currentUnit: {fileID: 0}
   attackUnit: {fileID: 0}
   MagicCircle: {fileID: 1502645725}
+  turnChangeSound: {fileID: 8300000, guid: a851004179da45a449b2eb238ac440c7, type: 3}
 --- !u!1 &1038780379
 GameObject:
   m_ObjectHideFlags: 0
@@ -7602,6 +7606,8 @@ MonoBehaviour:
   _effectContent: {fileID: 1513192382}
   enemy: {fileID: 0}
   swipeSensitivity: 300
+  clickSound: {fileID: 8300000, guid: 21e429b9ee96a7c4f99688224641242c, type: 3}
+  attackSound: {fileID: 8300000, guid: b031654282504c849b30b8f0561348d6, type: 3}
 --- !u!1001 &1513192380
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8524,6 +8530,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1973880454901927211, guid: dd01c3d3c8873b04e84570e22262df0b, type: 3}
+      propertyPath: buttonClip
+      value: 
+      objectReference: {fileID: 8300000, guid: f6f42f9e8e96923429c23fe3f19e54e7, type: 3}
     - target: {fileID: 1973880454901927211, guid: dd01c3d3c8873b04e84570e22262df0b, type: 3}
       propertyPath: deckViewUI
       value: 
