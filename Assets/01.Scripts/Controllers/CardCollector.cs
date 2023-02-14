@@ -241,6 +241,7 @@ public class CardCollector : MonoBehaviour
             //_handCards[i].transform.SetParent(this.transform); 
             RectTransform rect = _handCards[i].GetComponent<RectTransform>();
             rect.anchoredPosition = new Vector3(i * xDelta + rect.sizeDelta.x / 2 + 150 + _offset.x, rect.sizeDelta.y / 2 + _offset.y, 0);
+            rect.rotation = Quaternion.Euler(Vector3.zero);
             _handCards[i].IsFront = _isFront;
         }
     }
@@ -249,40 +250,6 @@ public class CardCollector : MonoBehaviour
     {
         for (int i = 0; i < _handCards.Count; i++)
         {
-            //if(_magicCircle.RuneDict.ContainsKey(RuneType.Main) == false)
-            //{
-            //    if (_handCards[i].IsFront == false)
-            //    {
-            //        _handCards[i].SetOutline(false);
-            //    }
-            //    else
-            //    {
-            //        if (DummyCost.Instance.CanMainRune(_handCards[i].IsFront ? _handCards[i].Rune.MainRune.Cost : _handCards[i].Rune.AssistRune.Cost))
-            //        {
-            //            _handCards[i].SetOutlineColor(Color.cyan);
-            //            _handCards[i].SetOutline(true);
-            //        }
-            //        else
-            //        {
-            //            //_handCards[i].SetOutlineColor(Color.clear);
-            //            _handCards[i].SetOutline(false);
-            //        }
-            //    }
-            //}
-            //else
-            //{
-            //    if (DummyCost.Instance.CanMainRune(_handCards[i].IsFront ? _handCards[i].Rune.MainRune.Cost : _handCards[i].Rune.AssistRune.Cost))
-            //    {
-            //        _handCards[i].SetOutlineColor(Color.cyan);
-            //        _handCards[i].SetOutline(true);
-            //    }
-            //    else
-            //    {
-            //        //_handCards[i].SetOutlineColor(Color.clear);
-            //        _handCards[i].SetOutline(false);
-            //    }
-            //}
-
             if(IsFront == true)
             {
                 if (MagicCircle.RuneDict.ContainsKey(RuneType.Main) == true)
