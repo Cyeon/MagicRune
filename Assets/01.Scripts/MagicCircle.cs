@@ -193,7 +193,7 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
             Touch touch = Input.GetTouch(0);
             Vector3 pos = Camera.main.ScreenToWorldPoint(touch.position);
 
-            if (!DummyCost.Instance.CanUseMainRune(card.Rune.MainRune.Cost))
+            if (!DummyCost.Instance.CanRune(card.Rune.MainRune.Cost))
             {
                 UIManager.Instance.InfoMessagePopup("¸¶³ª°¡ ºÎÁ·ÇÕ´Ï´Ù.", pos);
                 return null;
@@ -215,6 +215,7 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                     card.GetComponent<RectTransform>().DOAnchorPos(Vector2.zero, 0.3f).OnComplete(() => card.SetOutlineActive(true));
                     card.SetIsEquip(true);
                     card.SetCoolTime(card.Rune.MainRune.DelayTurn);
+                    DummyCost.Instance.CanUseMainRune(card.Rune.MainRune.Cost);
                     _cardCollector.CardRotate();
                 });
                 seq.AppendInterval(0.3f);
@@ -243,6 +244,7 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                     card.GetComponent<RectTransform>().DOAnchorPos(Vector2.zero, 0.3f).OnComplete(() => card.SetOutlineActive(true));
                     card.SetIsEquip(true);
                     card.SetCoolTime(card.Rune.MainRune.DelayTurn);
+                    DummyCost.Instance.CanUseMainRune(card.Rune.MainRune.Cost);
                     _cardCollector.CardRotate();
                 });
                 seq.AppendInterval(0.3f);
@@ -266,13 +268,7 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
         }
         else
         {
-            if (!DummyCost.Instance.CanRune(card.Rune.AssistRune.Cost))
-            {
-                Touch touch = Input.GetTouch(0);
-                Vector3 pos = Camera.main.ScreenToWorldPoint(touch.position);
-                UIManager.Instance.InfoMessagePopup("¸¶³ª°¡ ºÎÁ·ÇÕ´Ï´Ù.", pos);
-                return null;
-            }
+            
 
             if (_runeDict.ContainsKey(RuneType.Assist) == false)
             {
@@ -291,7 +287,21 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                 }
             }
 
-            if (changeIndex == -1) return null;
+            if (changeIndex == -1)
+            {
+                Touch touch = Input.GetTouch(0);
+                Vector3 pos = Camera.main.ScreenToWorldPoint(touch.position);
+                UIManager.Instance.InfoMessagePopup("º¸Á¶ ·éÀ» ³ÖÀ» °ø°£ÀÌ ¾ø½À´Ï´Ù.", pos);
+                return null;
+            }
+
+            if (!DummyCost.Instance.CanRune(card.Rune.AssistRune.Cost))
+            {
+                Touch touch = Input.GetTouch(0);
+                Vector3 pos = Camera.main.ScreenToWorldPoint(touch.position);
+                UIManager.Instance.InfoMessagePopup("¸¶³ª°¡ ºÎÁ·ÇÕ´Ï´Ù.", pos);
+                return null;
+            }
 
             // ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ ï¿½Ú·ï¿½ ï¿½Ì·ï¿½ï¿?
             Sequence seq = DOTween.Sequence();
@@ -302,6 +312,7 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                 //card.GetComponent<RectTransform>().anchoredPosition = card.GetComponent<RectTransform>().anchoredPosition;
                 card.SetCoolTime(card.Rune.AssistRune.DelayTurn);
                 card.SetIsEquip(true);
+                DummyCost.Instance.CanUseSubRune(card.Rune.AssistRune.Cost);
                 if (_runeDict[RuneType.Assist][changeIndex] != null)
                 {
                     card.GetComponent<RectTransform>().DOAnchorPos(_runeDict[RuneType.Assist][changeIndex].GetComponent<RectTransform>().anchoredPosition, 0.3f).OnComplete(() =>

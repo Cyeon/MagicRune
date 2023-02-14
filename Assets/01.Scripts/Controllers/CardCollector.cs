@@ -85,6 +85,7 @@ public class CardCollector : MonoBehaviour
                                 //Debug.Log(isAdd);
                                 _tempCards.Add(isAdd);
                                 _handCards.Remove(isAdd);
+                                UpdateCardOutline();
                                 //SelectCard.gameObject.SetActive(false);
                             }
                         }
@@ -244,6 +245,8 @@ public class CardCollector : MonoBehaviour
             rect.rotation = Quaternion.Euler(Vector3.zero);
             _handCards[i].IsFront = _isFront;
         }
+
+        AllCardDescription(false);
     }
 
     public void UpdateCardOutline()
@@ -272,21 +275,37 @@ public class CardCollector : MonoBehaviour
             }
             else
             {
-                if (MagicCircle.RuneDict.ContainsKey(RuneType.Assist))
+                if (MagicCircle.RuneDict.ContainsKey(RuneType.Main) == true)
                 {
-                    bool full = true;
-                    foreach (var list in MagicCircle.RuneDict[RuneType.Assist])
+                    if (MagicCircle.RuneDict.ContainsKey(RuneType.Assist))
                     {
-                        if (list.Rune == null)
+                        bool full = true;
+                        foreach (var list in MagicCircle.RuneDict[RuneType.Assist])
                         {
-                            full = false;
-                            break;
+                            if (list.Rune == null)
+                            {
+                                full = false;
+                                break;
+                            }
                         }
-                    }
 
-                    if (full == true)
-                    {
-                        _handCards[i].SetOutline(false);
+                        if (full == true)
+                        {
+                            _handCards[i].SetOutline(false);
+                        }
+                        else
+                        {
+                            if (DummyCost.Instance.CanRune(_handCards[i].Rune.AssistRune.Cost))
+                            {
+                                _handCards[i].SetOutlineColor(Color.cyan);
+                                _handCards[i].SetOutline(true);
+                            }
+                            else
+                            {
+                                //_handCards[i].SetOutlineColor(Color.clear);
+                                _handCards[i].SetOutline(false);
+                            }
+                        }
                     }
                     else
                     {
@@ -304,18 +323,8 @@ public class CardCollector : MonoBehaviour
                 }
                 else
                 {
-                    if (DummyCost.Instance.CanRune(_handCards[i].Rune.AssistRune.Cost))
-                    {
-                        _handCards[i].SetOutlineColor(Color.cyan);
-                        _handCards[i].SetOutline(true);
-                    }
-                    else
-                    {
-                        //_handCards[i].SetOutlineColor(Color.clear);
-                        _handCards[i].SetOutline(false);
-                    }
+                    _handCards[i].SetOutline(false);
                 }
-                
             }
         }
     }
