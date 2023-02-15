@@ -414,6 +414,8 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
 
     public void AssistRuneAnimanation()
     {
+        if (_runeDict.ContainsKey(RuneType.Main) == false) return;
+
         SortCard();
         Sequence seq = DOTween.Sequence();
         //seq.AppendCallback(() => SortCard());
@@ -462,7 +464,6 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
         {
             Touch touch = Input.GetTouch(0);
 
-             // 이런 식이로 멤버 변수로 뺴기
             if (touch.phase == TouchPhase.Began)
             {
                 touchBeganPos = touch.position;

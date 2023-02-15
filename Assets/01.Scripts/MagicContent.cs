@@ -151,14 +151,15 @@ public class MagicContent : MonoBehaviour
         }
         else
         {
-            seq.Append(DOTween.To(() => _distance, x => _distance = x, _baseDistance * 1.3f, 0.2f));
-            seq.Join(DOTween.To(() => _rotateSpeed, x => _rotateSpeed = x, _baseRotateSpeed * 1.01f, 0.7f));
+            seq.Append(DOTween.To(() => _distance, x => _distance = x, _baseDistance * 1.3f, 0.2f).SetEase(Ease.Linear));
+            seq.Join(DOTween.To(() => _rotateSpeed, x => _rotateSpeed = x, _baseRotateSpeed * 1.01f, 0.7f).SetEase(Ease.Linear));
+            //seq.Join(transform.DOMoveY(-500, 0.7f).SetRelative().SetEase(Ease.Linear));
             //seq.AppendInterval(0.2f);
             seq.Append(DOTween.To(() => _distance, x => _distance = x, 0, 0.2f));
             seq.AppendCallback(() => Clear());
             //seq.AppendCallback(() =>
             //{
-            //    _effectDict[RuneType.Main]l;`````````````````````````
+            //    _effectDict[RuneType.Main]l;
             //});
             seq.AppendCallback(() =>
             {
