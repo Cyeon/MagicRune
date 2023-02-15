@@ -2095,11 +2095,11 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: -3733637951436397177, guid: 6d893dbc1f1252b4d8377811dad66628, type: 2}
-  m_audioClip: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: a5e26b86c64f9924795d7d5539826505, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -2546,7 +2546,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 24300002, guid: 6d893dbc1f1252b4d8377811dad66628, type: 2}
   m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -5016,6 +5016,7 @@ MonoBehaviour:
   attackUnit: {fileID: 0}
   MagicCircle: {fileID: 1502645725}
   turnChangeSound: {fileID: 8300000, guid: a851004179da45a449b2eb238ac440c7, type: 3}
+  backgroundSound: {fileID: 0}
 --- !u!1 &1038780379
 GameObject:
   m_ObjectHideFlags: 0
@@ -8835,7 +8836,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 615373334881319002, guid: 6d893dbc1f1252b4d8377811dad66628, type: 2}
   m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
