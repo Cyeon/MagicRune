@@ -320,20 +320,19 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                         card.SetOutlineActive(true);
                         Destroy(_runeDict[RuneType.Assist][changeIndex].gameObject);
                         _runeDict[RuneType.Assist][changeIndex] = card;
-
                         AddEffect(card, false);
                         //UpdateMagicName();
                         _effectContent.AddEffect(card.Rune.RuneEffect, false);
+                        _cardCollector.CardSort();
                     });
                 }
             });
             seq.AppendCallback(() =>
             {
                 SortCard();
-
                 //UpdateMagicName();
                 StartCoroutine(PlayEffect(card.Rune.RuneAudio));
-
+                _cardCollector.CardSort();
             });
         }
         //SortCard();

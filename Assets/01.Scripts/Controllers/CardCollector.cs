@@ -246,6 +246,7 @@ public class CardCollector : MonoBehaviour
             _handCards[i].IsFront = _isFront;
         }
 
+        UpdateCardOutline();
         AllCardDescription(false);
     }
 
