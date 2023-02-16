@@ -40,6 +40,13 @@ public class UIManager : MonoSingleton<UIManager>
     private Image _turnBackground;
     private TextMeshProUGUI _turnText;
 
+    [SerializeField] private GameObject _cardDescPanel;
+    private TextMeshProUGUI _cardDescName;
+    private Image _cardDescSkillIcon;
+    private TextMeshProUGUI _cardDescInfo;
+    private TextMeshProUGUI _cardDescMana;
+    private TextMeshProUGUI _cardDescCool;
+
     [Header("ETC")]
     [SerializeField] private GameObject _damagePopup;
     [SerializeField] private GameObject _infoMessage;
@@ -63,6 +70,12 @@ public class UIManager : MonoSingleton<UIManager>
         _playerHealthFeedbackSlider = _playerSlideBar.Find("HealthFeedbackBar").GetComponent<Slider>();
         _playerShieldSlider = _playerSlideBar.Find("ShieldBar").GetComponent<Slider>();
         _playerHealthText = _playerHealthSlider.transform.Find("HealthText").GetComponent<TextMeshProUGUI>();
+
+        _cardDescName = _cardDescPanel.transform.Find("Desc_Name_Text").GetComponent<TextMeshProUGUI>();
+        _cardDescSkillIcon = _cardDescPanel.transform.Find("Desc_Skill_Image").GetComponent<Image>();
+        _cardDescInfo = _cardDescPanel.transform.Find("Desc_Description").GetComponent<TextMeshProUGUI>();
+        _cardDescMana = _cardDescPanel.transform.Find("Desc_Mana").Find("Mana_Text").GetComponent<TextMeshProUGUI>();
+        _cardDescCool = _cardDescPanel.transform.Find("Desc_CoolTime").Find("CoolTime_Text").GetComponent<TextMeshProUGUI>();
     }
 
     public void OnDestroy()
@@ -78,6 +91,21 @@ public class UIManager : MonoSingleton<UIManager>
             _enemyShieldText.text = shield.ToString();
 
         UpdateHealthbar(isPlayer);
+    }
+
+    public void Turn(string text)
+    {
+        _turnPanel.SetActive(true);
+        _turnText.text = text;
+
+        Sequence seq = DOTween.Sequence();
+        seq.Append(_turnBackground.DOFade(0.5f, 0.5f));
+        seq.Join(_turnText.DOFade(1f, 0.5f));
+        seq.AppendInterval(0.5f);
+        seq.Append(_turnBackground.DOFade(0, 0.5f));
+        seq.Join(_turnText.DOFade(0, 0.5f));
+        seq.AppendCallback(() => _turnPanel.SetActive(false));
+        seq.AppendCallback(() => GameManager.Instance.TurnChange());
     }
 
     #region Health Bar
@@ -297,21 +325,7 @@ public class UIManager : MonoSingleton<UIManager>
     }
     #endregion
 
-    public void Turn(string text)
-    {
-        _turnPanel.SetActive(true);
-        _turnText.text = text;
-
-        Sequence seq = DOTween.Sequence();
-        seq.Append(_turnBackground.DOFade(0.5f, 0.5f));
-        seq.Join(_turnText.DOFade(1f, 0.5f));
-        seq.AppendInterval(0.5f);
-        seq.Append(_turnBackground.DOFade(0, 0.5f));
-        seq.Join(_turnText.DOFade(0, 0.5f));
-        seq.AppendCallback(() => _turnPanel.SetActive(false));
-        seq.AppendCallback(() => GameManager.Instance.TurnChange());
-    }
-
+    #region Pattern
     public void ReloadPattern(Sprite sprite, string value = "")
     {
         _enemyPatternIcon.sprite = sprite;
@@ -336,4 +350,29 @@ public class UIManager : MonoSingleton<UIManager>
         seq.Join(obj.GetComponent<Image>().DOFade(0, 0.5f));
         seq.AppendCallback(() => Destroy(obj));
     }
+    #endregion
+
+    #region Card Description
+
+    public void CardDescPopup(Card card, Vector3 pos, bool isDown = true)
+    {
+        if(isDown == false)
+        {
+            _cardDescPanel.SetActive(false);
+            return;
+        }
+
+        _cardDescPanel.SetActive(true);
+        //_cardDescPanel.transform.position = pos + new Vector3(0, 700, 0);
+
+        RuneProperty rune = card.IsFront ? card.Rune.MainRune : card.Rune.AssistRune;
+        
+        _cardDescName.text = rune.Name;
+        _cardDescSkillIcon.sprite = rune.CardImage;
+        _cardDescInfo.text = rune.CardDescription;
+        _cardDescMana.text = rune.Cost.ToString();
+        _cardDescCool.text = rune.DelayTurn.ToString();
+    }
+
+    #endregion
 }

@@ -81,10 +81,7 @@ public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IBegi
     private Text _assistRuneCount;
     private Image _descriptionImage;
 
-    // Description Area
-    private bool isDescOn = false;
-    private Transform _descParent;
-    private CanvasGroup _descArea;
+    public bool isDescOn = false;
 
     // Rune Area
     private Transform _runeAreaParent;
@@ -122,7 +119,7 @@ public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IBegi
 
     public void UpdateUI(bool isFront)
     {
-        if (!_nameText || !_skillImage || !_costText || !_runeImage || !_descriptionImage || !_descArea) { Setting(); } // || !_coolTimeText || !_mainSubText || !_skillText || !_runeImage) { Setting(); }
+        if (!_nameText || !_skillImage || !_costText || !_runeImage || !_descriptionImage) { Setting(); } // || !_coolTimeText || !_mainSubText || !_skillText || !_runeImage) { Setting(); }
         if (isFront == true)
         {
             _nameText.text = _rune.MainRune.Name;
@@ -206,17 +203,13 @@ public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IBegi
 
         if (value)
         {
-            //_descriptionImage.DOFade(1f, 0.1f);
-            //_descriptionImage.color = new Color(1f, 1f, 1f, 0.75f);\
-            isDescOn = true;
-            _descArea.alpha = 1;
+            isDescOn = true; 
+            UIManager.Instance.CardDescPopup(this, transform.position);
         }
         else
         {
-            //_descriptionImage.DOFade(0f, 0.1f);
-            //_descriptionImage.color = new Color(1f, 1f, 1f, 0f);
             isDescOn = false;
-            _descArea.alpha = 0;
+            UIManager.Instance.CardDescPopup(this, transform.position, false);
         }
     }
 
@@ -379,10 +372,6 @@ public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IBegi
         _costText = _cardAreaParent.Find("Cost_Text").GetComponent<TMP_Text>();
 
         _descriptionImage = _cardAreaParent.Find("Description_Image").GetComponent<Image>();
-
-        _descParent = _cardAreaParent.Find("Desc_Area").transform;
-        _descArea = _descParent.GetComponent<CanvasGroup>();
-
 
         _runeAreaParent = transform.Find("Rune_Area");
         _runeImage = _runeAreaParent.Find("Rune_Image").GetComponent<Image>();
