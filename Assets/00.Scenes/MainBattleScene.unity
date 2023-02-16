@@ -393,6 +393,42 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 37206930}
   m_CullTransparentMesh: 1
+--- !u!1 &83301191
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 83301192}
+  m_Layer: 5
+  m_Name: PlayerPos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &83301192
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 83301191}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 424719286}
+  m_RootOrder: 14
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: -1383}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &85047742
 GameObject:
   m_ObjectHideFlags: 0
@@ -2495,6 +2531,7 @@ RectTransform:
   - {fileID: 956635143}
   - {fileID: 535614680}
   - {fileID: 1100535926}
+  - {fileID: 83301192}
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -7700,13 +7737,29 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8299025801448075173, guid: 4f084ed2fa6faa74b849d5eb17c36da2, type: 3}
+      propertyPath: _endPos
+      value: 
+      objectReference: {fileID: 1886954359}
+    - target: {fileID: 8299025801448075173, guid: 4f084ed2fa6faa74b849d5eb17c36da2, type: 3}
       propertyPath: _distance
       value: 300
       objectReference: {fileID: 0}
     - target: {fileID: 8299025801448075173, guid: 4f084ed2fa6faa74b849d5eb17c36da2, type: 3}
+      propertyPath: _enemyPos
+      value: 
+      objectReference: {fileID: 1886954359}
+    - target: {fileID: 8299025801448075173, guid: 4f084ed2fa6faa74b849d5eb17c36da2, type: 3}
       propertyPath: _offset.y
       value: 900
       objectReference: {fileID: 0}
+    - target: {fileID: 8299025801448075173, guid: 4f084ed2fa6faa74b849d5eb17c36da2, type: 3}
+      propertyPath: _startPos
+      value: 
+      objectReference: {fileID: 1513192381}
+    - target: {fileID: 8299025801448075173, guid: 4f084ed2fa6faa74b849d5eb17c36da2, type: 3}
+      propertyPath: _playerPos
+      value: 
+      objectReference: {fileID: 83301192}
     - target: {fileID: 8299025801448075173, guid: 4f084ed2fa6faa74b849d5eb17c36da2, type: 3}
       propertyPath: _magicCircle
       value: 
@@ -7715,6 +7768,14 @@ PrefabInstance:
       propertyPath: _rotateSpeed
       value: 200
       objectReference: {fileID: 0}
+    - target: {fileID: 8299025801448075173, guid: 4f084ed2fa6faa74b849d5eb17c36da2, type: 3}
+      propertyPath: _attackEffect
+      value: 
+      objectReference: {fileID: 1426304098941858083, guid: 9dd93f28a2b7477439d08440675ea353, type: 3}
+    - target: {fileID: 8299025801448075173, guid: 4f084ed2fa6faa74b849d5eb17c36da2, type: 3}
+      propertyPath: _attackEffectParent
+      value: 
+      objectReference: {fileID: 424719286}
     - target: {fileID: 8299025801448075175, guid: 4f084ed2fa6faa74b849d5eb17c36da2, type: 3}
       propertyPath: m_Name
       value: MagicContent
