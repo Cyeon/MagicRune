@@ -49,6 +49,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ddb349eb3f25794b92ceece3ffbcd30, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _cardList: []
-  _offset: {x: 0, y: 2400}
-  cardTemplate: {fileID: 5304045933743492193, guid: cff68eecfec412a4c85400767edd951c, type: 3}
+  _magicCircle: {fileID: 0}
+  _startAxis: 90
+  _distance: 300
+  _offset: {x: 0, y: 900}
+  _rotateSpeed: 200
+  _attackEffect: {fileID: 1426304098941858083, guid: 9dd93f28a2b7477439d08440675ea353, type: 3}
+  _attackEffectParent: {fileID: 8299025801448075172}
+  _startPos: {fileID: 8299025801448075172}
+  _enemyPos: {fileID: 0}
+  _playerPos: {fileID: 0}
+  _bezierRate: 0.5
