@@ -348,5 +348,6 @@ public class MagicContent : MonoBehaviour
 
         _magicCircle.RuneDict.Clear();
         _magicCircle.EffectDict.Clear();
+        _magicCircle.CardCollector.UpdateCardOutline();
     }
 }
