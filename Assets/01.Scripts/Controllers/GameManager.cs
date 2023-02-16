@@ -114,12 +114,12 @@ public class GameManager : MonoSingleton<GameManager>
                 StatusManager.Instance.StatusTurnChange(player);
                 StatusManager.Instance.StatusTurnChange(enemy);
 
-                if(!enemy.isSkip)
-                {
-                    enemy.pattern?.End();
+                enemy.pattern?.End();
+                if (enemy.isSkip)
+                    enemy.pattern = PatternManager.Instance.GetCodiPattern("¹«·Â");
+                else
                     enemy.pattern = PatternManager.Instance.GetPattern();
-                    enemy.pattern?.Start();
-                }
+                enemy.pattern?.Start();
 
                 EventManager<int>.TriggerEvent(Define.ON_START_PLAYER_TURN, 5);
                 EventManager.TriggerEvent(Define.ON_START_PLAYER_TURN);

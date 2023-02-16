@@ -69,8 +69,8 @@ public class Unit : MonoBehaviour
     public void TakeDamage(float damage, bool isFixed = false)
     {
         currentDmg = damage;
-        
         InvokeStatus(StatusInvokeTime.GetDamage);
+        currentDmg = Mathf.Floor(currentDmg);
 
         if(Shield > 0 && isFixed == false)
         {
