@@ -240,6 +240,7 @@ public class MagicContent : MonoBehaviour
                 yield return new WaitForSeconds(0.1f);
             }
         }
+        yield return new WaitForSeconds(0.1f);
 
         if (_magicCircle.EffectDict.ContainsKey(EffectType.Defence))
         {
@@ -253,6 +254,7 @@ public class MagicContent : MonoBehaviour
                 yield return new WaitForSeconds(0.1f);
             }
         }
+        yield return new WaitForSeconds(0.1f);
 
         if (_magicCircle.EffectDict.ContainsKey(EffectType.Attack))
         {
@@ -266,6 +268,7 @@ public class MagicContent : MonoBehaviour
                 yield return new WaitForSeconds(0.1f);
             }
         }
+        yield return new WaitForSeconds(0.1f);
 
         if (_magicCircle.EffectDict.ContainsKey(EffectType.Draw))
         {
@@ -279,6 +282,7 @@ public class MagicContent : MonoBehaviour
                 yield return new WaitForSeconds(0.1f);
             }
         }
+        yield return new WaitForSeconds(0.1f);
 
         if (_magicCircle.EffectDict.ContainsKey(EffectType.Destroy))
         {
