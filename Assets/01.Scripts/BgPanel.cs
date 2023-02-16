@@ -3,16 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class BgPanel : MonoBehaviour, IPointerClickHandler
+public class BgPanel : MonoBehaviour
 {
     [SerializeField]
     private MagicCircle _magicCircle;
 
-    public void OnPointerClick(PointerEventData eventData)
+    public void Update()
     {
         if (_magicCircle != null)
         {
-            _magicCircle.CardCollector.AllCardDescription(false);
+            Touch t = Input.GetTouch(0);
+            if(t.phase == TouchPhase.Began)
+            {
+                _magicCircle.CardCollector.AllCardDescription(false);
+            }
         }
     }
 }
