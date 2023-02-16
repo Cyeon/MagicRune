@@ -330,6 +330,14 @@ public class CardCollector : MonoBehaviour
         }
     }
 
+    public void handCardOutline(bool value)
+    {
+        foreach(var c in _handCards)
+        {
+            c.SetOutline(value);
+        }
+    }
+
     public void CardSelect(Card card)
     {
         if (Input.touchCount > 1) return;

@@ -153,10 +153,7 @@ public class GameManager : MonoSingleton<GameManager>
                 }
             }
         }
-        this.MagicCircle.RuneDict.Clear();
-        this.MagicCircle.EffectDict.Clear();
-        this.MagicCircle.EffectContent.Clear();
-        this.MagicCircle.CardCollector.UpdateCardOutline();
+        
 
         Debug.Log(string.Format("Turn Change: {0}", gameTurn));
 
@@ -170,6 +167,11 @@ public class GameManager : MonoSingleton<GameManager>
         {
             TurnChange();
         }
+        this.MagicCircle.RuneDict.Clear();
+        this.MagicCircle.EffectDict.Clear();
+        this.MagicCircle.EffectContent.Clear();
+        this.MagicCircle.CardCollector.UpdateCardOutline();
+        this.MagicCircle.CardCollector.handCardOutline(false);
     }
 
     #endregion
