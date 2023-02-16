@@ -585,6 +585,7 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                 _cardCollector.CardRotate();
             }
             _cardCollector.IsFront = true;
+            _cardCollector.UpdateCardOutline();
         });
 
         //enemy.Damage(damage);
