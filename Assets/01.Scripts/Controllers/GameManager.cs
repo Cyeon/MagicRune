@@ -154,6 +154,7 @@ public class GameManager : MonoSingleton<GameManager>
             }
         }
         this.MagicCircle.RuneDict.Clear();
+        this.MagicCircle.EffectDict.Clear();
         this.MagicCircle.EffectContent.Clear();
         this.MagicCircle.CardCollector.UpdateCardOutline();
 

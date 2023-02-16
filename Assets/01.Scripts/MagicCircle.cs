@@ -36,6 +36,7 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
     //private Dictionary<EffectType, List<EffectPair>> _effectDict;
     [SerializeField]
     private CustomDict _effectDict;
+    public CustomDict EffectDict => _effectDict;
 
     private const int _mainRuneCnt = 1;
 
@@ -228,7 +229,7 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                     SortCard();
                     AddEffect(card, true);
                     AssistRuneAnimanation();
-                    _effectContent.AddEffect(card.Rune.RuneEffect, true);
+                    _effectContent.AddEffect(card.Rune, true);
                     //_cardCollector.CardRotate();
                 });
                 //SortCard();
@@ -255,7 +256,7 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                     SortCard();
                     AddEffect(card, true);
                     AssistRuneAnimanation();
-                    _effectContent.AddEffect(card.Rune.RuneEffect, true);
+                    _effectContent.AddEffect(card.Rune, true);
                     //_cardCollector.CardRotate();
                     _cardCollector.IsFront = false;
                     _cardCollector.CardSort();
@@ -322,7 +323,7 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                         _runeDict[RuneType.Assist][changeIndex] = card;
                         AddEffect(card, false);
                         //UpdateMagicName();
-                        _effectContent.AddEffect(card.Rune.RuneEffect, false);
+                        _effectContent.AddEffect(card.Rune, false);
                         _cardCollector.CardSort();
                     });
                 }
@@ -414,6 +415,8 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
 
     public void AssistRuneAnimanation()
     {
+        if (_runeDict.ContainsKey(RuneType.Main) == false) return;
+
         SortCard();
         Sequence seq = DOTween.Sequence();
         //seq.AppendCallback(() => SortCard());
@@ -462,7 +465,6 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
         {
             Touch touch = Input.GetTouch(0);
 
-             // 이런 식이로 멤버 변수로 뺴기
             if (touch.phase == TouchPhase.Began)
             {
                 touchBeganPos = touch.position;
@@ -558,48 +560,20 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                 }
             }
 
+            //AttackFunction(EffectType.Status);
+            //AttackFunction(EffectType.Defence);
+            //AttackFunction(EffectType.Attack);
+            //AttackFunction(EffectType.Draw);
+            //AttackFunction(EffectType.Destroy);
 
-            AttackFunction(EffectType.Status);
-            AttackFunction(EffectType.Defence);
-            AttackFunction(EffectType.Attack);
-            AttackFunction(EffectType.Draw);
-            AttackFunction(EffectType.Destroy);
         });
         seq.AppendCallback(() =>
         {
             Debug.Log("Attack Complate");
-            foreach (var item in _runeDict)
-            {
-                foreach (Card card in item.Value)
-                {
-                    if (card.IsFront == false)
-                    {
-                        card.IsFront = true;
-                    }
-                    _cardCollector._restCards.Add(card);
-                }
-            }
-            _cardCollector.UIUpdate();
+            
 
-            foreach (var rList in _runeDict)
-            {
-                foreach (var r in rList.Value)
-                {
-                    if (r.Rune == null)
-                    {
-                        Destroy(r.gameObject);
-                    }
-                    else
-                    {
-                        r.gameObject.SetActive(false);
-                        r.transform.SetParent(_cardCollector.transform);
-                        r.SetIsEquip(false);
-                    }
-                }
-            }
-
-            _runeDict.Clear();
-            _effectDict.Clear();
+            
+            
             _nameText.text = "";
             _effectText.text = "";
             _effectContent.Clear();
@@ -618,142 +592,147 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
 
     public void AttackFunction(EffectType effectType)
     {
-        Action action = null;
         if (_effectDict.ContainsKey(effectType))
         {
             foreach (var e in _effectDict[effectType])
             {
                 Unit target = e.IsEnemy == true ? GameManager.Instance.enemy : GameManager.Instance.player;
-
-                int c = 0;
-                for (int i = 0; i < _runeDict[RuneType.Assist].Count; i++)
-                {
-                    if (_runeDict[RuneType.Assist][i].Rune != null && _runeDict[RuneType.Assist][i].Rune.AssistRune.Attribute == e.AttributeType)
-                    {
-                        c++;
-                    }
-                }
-                if (_runeDict[RuneType.Main][0].Rune != null && _runeDict[RuneType.Main][0].Rune.AssistRune.Attribute == e.AttributeType)
-                    c++;
-
-                switch (effectType)
-                {
-                    case EffectType.Attack:
-                        switch (e.AttackType)
-                        {
-                            case AttackType.Single:
-                                action = () => GameManager.Instance.player.Attack(int.Parse(e.Effect));
-                                break;
-                            case AttackType.Double:
-                                action = () => GameManager.Instance.player.Attack(int.Parse(e.Effect) * c);
-                                break;
-                        }
-                        break;
-                    case EffectType.Defence:
-                        switch (e.AttackType)
-                        {
-                            case AttackType.Single:
-                                action = () => GameManager.Instance.player.Shield += int.Parse(e.Effect);
-                                break;
-                            case AttackType.Double:
-                                action = () => GameManager.Instance.player.Shield += int.Parse(e.Effect) * c;
-                                break;
-                        }
-                        break;
-                    case EffectType.Status:
-                        switch (e.AttackType)
-                        {
-                            case AttackType.Single:
-                                action = () => StatusManager.Instance.AddStatus(target, e.StatusType, int.Parse(e.Effect));
-                                break;
-                            case AttackType.Double:
-                                action = () => StatusManager.Instance.AddStatus(target, e.StatusType, int.Parse(e.Effect) * c);
-                                break;
-                        }
-                        break;
-                    case EffectType.Destroy:
-                        action = () => StatusManager.Instance.RemStatus(target, e.StatusType);
-                        break;
-                    case EffectType.Draw:
-                        _cardCollector.CardDraw(int.Parse(e.Effect));
-                        break;
-                    case EffectType.Etc:
-                        break;
-                }
-
-                switch (e.Condition.ConditionType)
-                {
-                    case ConditionType.None:
-                        action?.Invoke();
-                        break;
-                    case ConditionType.HeathComparison:
-                        if (target.IsHealthAmount(e.Condition.Value, e.Condition.ComparisonType))
-                        {
-                            action?.Invoke();
-                        }
-                        break;
-                    case ConditionType.AssistRuneCount:
-                        int count = 0;
-                        for (int i = 0; i < _runeDict[RuneType.Assist].Count; i++)
-                        {
-                            if (_runeDict[RuneType.Assist][i].Rune != null)
-                            {
-                                count++;
-                            }
-                        }
-                        if (count >= e.Condition.Value)
-                        {
-                            action?.Invoke();
-                        }
-                        break;
-                    case ConditionType.AttributeComparison:
-                        int cnt = 0;
-                        if (_runeDict[RuneType.Main][0].Rune.MainRune.Attribute == e.Condition.AttributeType)
-                            cnt++;
-                        for (int i = 0; i < _runeDict[RuneType.Assist].Count; i++)
-                        {
-                            if (_runeDict[RuneType.Assist][i].Rune.AssistRune.Attribute == e.Condition.AttributeType)
-                            {
-                                cnt++;
-                            }
-                        }
-
-                        switch (e.Condition.ComparisonType)
-                        {
-                            case ComparisonType.MoreThan:
-                                if (cnt >= e.Condition.Value)
-                                {
-                                    action?.Invoke();
-                                }
-                                break;
-                            case ComparisonType.LessThan:
-                                if (cnt <= e.Condition.Value)
-                                {
-                                    action?.Invoke();
-                                }
-                                break;
-                        }
-                        break;
-                    case ConditionType.StatusComparison:
-                        switch (e.Condition.ComparisonType)
-                        {
-                            case ComparisonType.MoreThan:
-                                if (StatusManager.Instance.GetUnitStatusValue(target, e.Condition.StatusType) >= e.Condition.Value)
-                                {
-                                    action?.Invoke();
-                                }
-                                break;
-                            case ComparisonType.LessThan:
-                                if (StatusManager.Instance.GetUnitStatusValue(target, e.Condition.StatusType) <= e.Condition.Value)
-                                {
-                                    action?.Invoke();
-                                }
-                                break;
-                        }
-                        break;
-                }
+                AttackEffectFunction(effectType, target, e)?.Invoke();
             }
         }
+    }
+
+    public Action AttackEffectFunction(EffectType effectType, Unit target, Pair e)
+    {
+        Action action = null;
+        int c = 0;
+        for (int i = 0; i < _runeDict[RuneType.Assist].Count; i++)
+        {
+            if (_runeDict[RuneType.Assist][i].Rune != null && _runeDict[RuneType.Assist][i].Rune.AssistRune.Attribute == e.AttributeType)
+            {
+                c++;
+            }
+        }
+        if (_runeDict[RuneType.Main][0].Rune != null && _runeDict[RuneType.Main][0].Rune.AssistRune.Attribute == e.AttributeType)
+            c++;
+
+        switch (effectType)
+        {
+            case EffectType.Attack:
+                switch (e.AttackType)
+                {
+                    case AttackType.Single:
+                        action = () => GameManager.Instance.player.Attack(int.Parse(e.Effect));
+                        break;
+                    case AttackType.Double:
+                        action = () => GameManager.Instance.player.Attack(int.Parse(e.Effect) * c);
+                        break;
+                }
+                break;
+            case EffectType.Defence:
+                switch (e.AttackType)
+                {
+                    case AttackType.Single:
+                        action = () => GameManager.Instance.player.Shield += int.Parse(e.Effect);
+                        break;
+                    case AttackType.Double:
+                        action = () => GameManager.Instance.player.Shield += int.Parse(e.Effect) * c;
+                        break;
+                }
+                break;
+            case EffectType.Status:
+                switch (e.AttackType)
+                {
+                    case AttackType.Single:
+                        action = () => StatusManager.Instance.AddStatus(target, e.StatusType, int.Parse(e.Effect));
+                        break;
+                    case AttackType.Double:
+                        action = () => StatusManager.Instance.AddStatus(target, e.StatusType, int.Parse(e.Effect) * c);
+                        break;
+                }
+                break;
+            case EffectType.Destroy:
+                action = () => StatusManager.Instance.RemStatus(target, e.StatusType);
+                break;
+            case EffectType.Draw:
+                _cardCollector.CardDraw(int.Parse(e.Effect));
+                break;
+            case EffectType.Etc:
+                break;
+        }
+
+        switch (e.Condition.ConditionType)
+        {
+            case ConditionType.None:
+                return action;
+            case ConditionType.HeathComparison:
+                if (target.IsHealthAmount(e.Condition.Value, e.Condition.ComparisonType))
+                {
+                    return action;
+                }
+                break;
+            case ConditionType.AssistRuneCount:
+                int count = 0;
+                for (int i = 0; i < _runeDict[RuneType.Assist].Count; i++)
+                {
+                    if (_runeDict[RuneType.Assist][i].Rune != null)
+                    {
+                        count++;
+                    }
+                }
+                if (count >= e.Condition.Value)
+                {
+                    return action;
+                }
+                break;
+            case ConditionType.AttributeComparison:
+                int cnt = 0;
+                if (_runeDict[RuneType.Main][0].Rune.MainRune.Attribute == e.Condition.AttributeType)
+                    cnt++;
+                for (int i = 0; i < _runeDict[RuneType.Assist].Count; i++)
+                {
+                    if (_runeDict[RuneType.Assist][i].Rune.AssistRune.Attribute == e.Condition.AttributeType)
+                    {
+                        cnt++;
+                    }
+                }
+
+                switch (e.Condition.ComparisonType)
+                {
+                    case ComparisonType.MoreThan:
+                        if (cnt >= e.Condition.Value)
+                        {
+                            return action;
+                        }
+                        break;
+                    case ComparisonType.LessThan:
+                        if (cnt <= e.Condition.Value)
+                        {
+                            return action;
+                        }
+                        break;
+                }
+                break;
+            case ConditionType.StatusComparison:
+                switch (e.Condition.ComparisonType)
+                {
+                    case ComparisonType.MoreThan:
+                        if (StatusManager.Instance.GetUnitStatusValue(target, e.Condition.StatusType) >= e.Condition.Value)
+                        {
+                            return action;
+                        }
+                        break;
+                    case ComparisonType.LessThan:
+                        if (StatusManager.Instance.GetUnitStatusValue(target, e.Condition.StatusType) <= e.Condition.Value)
+                        {
+                            return action;
+                        }
+                        break;
+                }
+                break;
+        }
+
+        return null;
     }
 
     public void OnDestroy()
