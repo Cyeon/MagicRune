@@ -15,6 +15,11 @@ public class PatternFuncList : MonoBehaviour
     public AudioClip shieldSound = null;
     public AudioClip beamSound = null;
 
+    public void OnDestroy()
+    {
+        transform.DOKill();
+    }
+
     public void AddAtkDmg()
     {
         GameManager.Instance.enemy.atkDamage += value;
@@ -35,8 +40,10 @@ public class PatternFuncList : MonoBehaviour
     {
         StatusName status;
 
+        float v = value > 0 ? value : 1;
+
         if (System.Enum.TryParse(statusName, out status))
-            StatusManager.Instance.AddStatus(GameManager.Instance.player, status);
+            StatusManager.Instance.AddStatus(GameManager.Instance.player, status, (int)v);
         else
             Debug.LogError(string.Format("{0} status is not found.", statusName));
     }
@@ -77,19 +84,20 @@ public class PatternFuncList : MonoBehaviour
         seq.AppendCallback(() => GameManager.Instance.TurnChange());
     }
 
-    public void Beeeeem(float dmg)
+    public void Beeeeem()
     {
         Sequence seq = DOTween.Sequence();
         seq.Append(UIManager.Instance.enemyIcon.DOShakeRotation(2, 90, 5)).SetEase(Ease.Linear);
         SoundManager.Instance.PlaySound(beamSound, SoundType.Effect);
         seq.AppendCallback(() => GameManager.Instance.enemy.isSkip = true);
-        seq.AppendCallback(() => GameManager.Instance.player.TakeDamage(dmg));
+        seq.AppendCallback(() => GameManager.Instance.player.TakeDamage(value));
         seq.AppendInterval(0.2f);
         seq.AppendCallback(() => GameManager.Instance.TurnChange());
     }
 
-    public void OnDestroy()
+    public void TurnSkip()
     {
-        transform.DOKill();
+        GameManager.Instance.enemy.isSkip = false;
+        GameManager.Instance.TurnChange();
     }
 }

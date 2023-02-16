@@ -1,3 +1,4 @@
+using NaughtyAttributes;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -8,7 +9,7 @@ using UnityEngine.Events;
 public class Pattern
 {
     public string patternName;
-    public Sprite icon;
+    [ShowAssetPreview(32, 32), Tooltip("æ∆¿Ãƒ‹")] public Sprite icon;
     public float value;
     public UnityEvent patternStartFunc;
     public UnityEvent patternTurnFunc;

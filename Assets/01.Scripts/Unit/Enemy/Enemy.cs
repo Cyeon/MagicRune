@@ -26,13 +26,6 @@ public class Enemy : Unit
 
     public void TurnStart()
     {
-        if (isSkip)
-        {
-            isSkip = false;
-            GameManager.Instance.TurnChange();
-            return;
-        }
-
         pattern.Turn();
     }
 
