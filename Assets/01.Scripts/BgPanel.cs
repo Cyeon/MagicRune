@@ -12,10 +12,13 @@ public class BgPanel : MonoBehaviour
     {
         if (_magicCircle != null)
         {
-            Touch t = Input.GetTouch(0);
-            if(t.phase == TouchPhase.Began)
+            if (Input.touchCount > 0)
             {
-                _magicCircle.CardCollector.AllCardDescription(false);
+                Touch t = Input.GetTouch(0);
+                if (t.phase == TouchPhase.Began)
+                {
+                    _magicCircle.CardCollector.AllCardDescription(false);
+                }
             }
         }
     }
