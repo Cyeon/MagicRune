@@ -6,6 +6,17 @@ using Random = UnityEngine.Random;
 
 public class BezierMissile : MonoBehaviour
 {
+    #region Trail Color
+    [SerializeField]
+    private Color _attackColor;
+    [SerializeField]
+    private Color _defenceColor;
+    [SerializeField]
+    private Color _statusColor;
+    [SerializeField]
+    private Color _utillColor;
+    #endregion
+
     private Vector2[] m_points = new Vector2[4];
 
     private float m_timerMax = 0;
@@ -16,9 +27,12 @@ public class BezierMissile : MonoBehaviour
 
     private Action _endAction;
 
+    private TrailRenderer _trail;
+
     private void Awake()
     {
         _rect = GetComponent<RectTransform>();
+        _trail = GetComponent<TrailRenderer>();
     }
 
     public void Init(RectTransform _startTr, RectTransform _endTr, float _speed, float _newPointDistanceFromStartTr, float _newPointDistanceFromEndTr, Action action = null)
@@ -49,6 +63,35 @@ public class BezierMissile : MonoBehaviour
         _rect.anchoredPosition = _startTr.anchoredPosition;
 
         _endAction = action;
+    }
+
+    public void SetTrailColor(EffectType type)
+    {
+        switch (type)
+        {
+            case EffectType.Attack:
+                _trail.startColor = _attackColor;
+                _trail.endColor = _attackColor;
+                break;
+            case EffectType.Defence:
+                _trail.startColor = _defenceColor;
+                _trail.endColor = _defenceColor;
+                break;
+            case EffectType.Status:
+                _trail.startColor = _statusColor;
+                _trail.endColor = _statusColor;
+                break;
+            case EffectType.Destroy:
+                _trail.startColor = _attackColor;
+                _trail.endColor = _attackColor;
+                break;
+            case EffectType.Draw:
+                _trail.startColor = _utillColor;
+                _trail.endColor = _utillColor;
+                break;
+            case EffectType.Etc:
+                break;
+        }
     }
 
     void Update()

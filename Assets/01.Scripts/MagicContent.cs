@@ -235,6 +235,7 @@ public class MagicContent : MonoBehaviour
                 Unit target = d.IsEnemy == true ? GameManager.Instance.enemy : GameManager.Instance.player;
 
                 BezierMissile go = Instantiate(_attackEffect, _attackEffectParent);
+                go.SetTrailColor(EffectType.Status);
                 go.Init(startPos, _enemyPos, 3, 1300, 300, _magicCircle.AttackEffectFunction(EffectType.Status, target, d));
 
                 yield return new WaitForSeconds(0.1f);
@@ -249,6 +250,7 @@ public class MagicContent : MonoBehaviour
                 Unit target = d.IsEnemy == true ? GameManager.Instance.enemy : GameManager.Instance.player;
 
                 BezierMissile go = Instantiate(_attackEffect, _attackEffectParent);
+                go.SetTrailColor(EffectType.Defence);
                 go.Init(startPos, _playerPos, 3, 1300, 300, _magicCircle.AttackEffectFunction(EffectType.Defence, target, d));
 
                 yield return new WaitForSeconds(0.1f);
@@ -263,6 +265,7 @@ public class MagicContent : MonoBehaviour
                 Unit target = d.IsEnemy == true ? GameManager.Instance.enemy : GameManager.Instance.player;
 
                 BezierMissile go = Instantiate(_attackEffect, _attackEffectParent);
+                go.SetTrailColor(EffectType.Attack);
                 go.Init(startPos, _enemyPos, 3, 1300, 300, _magicCircle.AttackEffectFunction(EffectType.Attack, target, d));
 
                 yield return new WaitForSeconds(0.1f);
@@ -277,6 +280,7 @@ public class MagicContent : MonoBehaviour
                 Unit target = d.IsEnemy == true ? GameManager.Instance.enemy : GameManager.Instance.player;
 
                 BezierMissile go = Instantiate(_attackEffect, _attackEffectParent);
+                go.SetTrailColor(EffectType.Draw);
                 go.Init(startPos, _playerPos, 3, 1300, 300, _magicCircle.AttackEffectFunction(EffectType.Draw, target, d));
 
                 yield return new WaitForSeconds(0.1f);
@@ -314,6 +318,7 @@ public class MagicContent : MonoBehaviour
                 //{
                 //    go.Init(startPos, _enemyPos, 3, 1300, 300, () => _magicCircle.AttackEffectFunction(EffectType.Destroy, target, _magicCircle.EffectDict[EffectType.Destroy][i]));
                 //}
+                go.SetTrailColor(EffectType.Destroy);
                 go.Init(startPos, _enemyPos, 3, 1300, 300, _magicCircle.AttackEffectFunction(EffectType.Destroy, target, _magicCircle.EffectDict[EffectType.Destroy][i]));
                 yield return new WaitForSeconds(0.1f);
             }
