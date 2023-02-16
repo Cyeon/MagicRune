@@ -243,6 +243,7 @@ public class CardCollector : MonoBehaviour
             RectTransform rect = _handCards[i].GetComponent<RectTransform>();
             rect.anchoredPosition = new Vector3(i * xDelta + rect.sizeDelta.x / 2 + 150 + _offset.x, rect.sizeDelta.y / 2 + _offset.y, 0);
             rect.rotation = Quaternion.Euler(Vector3.zero);
+            rect.localScale = Vector3.one;
             _handCards[i].IsFront = _isFront;
         }
 
