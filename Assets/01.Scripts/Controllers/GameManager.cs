@@ -99,7 +99,7 @@ public class GameManager : MonoSingleton<GameManager>
             case GameTurn.Player:
                 EventManager<bool>.TriggerEvent(Define.ON_START_MONSTER_TURN, false);
 
-                SoundManager.instance.PlaySound(turnChangeSound, SoundType.Effect);
+                SoundManager.Instance.PlaySound(turnChangeSound, SoundType.Effect);
 
                 UIManager.Instance.Turn("Enemy Turn");
                 gameTurn = GameTurn.PlayerWait;
@@ -154,6 +154,7 @@ public class GameManager : MonoSingleton<GameManager>
             }
         }
         this.MagicCircle.RuneDict.Clear();
+        this.MagicCircle.EffectDict.Clear();
         this.MagicCircle.EffectContent.Clear();
         this.MagicCircle.CardCollector.UpdateCardOutline();
 

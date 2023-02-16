@@ -22,7 +22,8 @@ MonoBehaviour:
     CardDescription: "\uC790\uC2E0\uC5D0\uAC8C 5\uC758 \uD654\uC0C1\uC744 \uBD80\uC5EC\uD558\uACE0
       20\uC758 \uBC29\uC5B4\uB97C \uC5BB\uB294\uB2E4"
     EffectDescription:
-    - Condition:
+    - IsAttackEffect: 1
+      Condition:
         ConditionType: 0
         AttributeType: 0
         StatusType: 0
@@ -35,7 +36,8 @@ MonoBehaviour:
       AttackType: 0
       AttributeType: 0
       Effect: 5
-    - Condition:
+    - IsAttackEffect: 0
+      Condition:
         ConditionType: 0
         AttributeType: 0
         StatusType: 0
@@ -57,7 +59,8 @@ MonoBehaviour:
     CardDescription: "\uC790\uC2E0\uC5D0\uAC8C 3\uC758 \uD654\uC0C1\uC744 \uBD80\uC5EC\uD558\uACE0,
       \uC801\uC5D0\uAC8C 10\uC758 \uB300\uBBF8\uC9C0\uB97C \uC900\uB2E4"
     EffectDescription:
-    - Condition:
+    - IsAttackEffect: 1
+      Condition:
         ConditionType: 0
         AttributeType: 0
         StatusType: 0
@@ -70,7 +73,8 @@ MonoBehaviour:
       AttackType: 0
       AttributeType: 0
       Effect: 3
-    - Condition:
+    - IsAttackEffect: 1
+      Condition:
         ConditionType: 0
         AttributeType: 0
         StatusType: 0

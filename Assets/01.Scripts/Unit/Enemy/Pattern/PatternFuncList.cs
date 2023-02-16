@@ -77,13 +77,13 @@ public class PatternFuncList : MonoBehaviour
         seq.AppendCallback(() => GameManager.Instance.TurnChange());
     }
 
-    public void Beeeeem()
+    public void Beeeeem(float dmg)
     {
         Sequence seq = DOTween.Sequence();
         seq.Append(UIManager.Instance.enemyIcon.DOShakeRotation(2, 90, 5)).SetEase(Ease.Linear);
         SoundManager.Instance.PlaySound(beamSound, SoundType.Effect);
         seq.AppendCallback(() => GameManager.Instance.enemy.isSkip = true);
-        seq.AppendCallback(() => GameManager.Instance.player.TakeDamage(20));
+        seq.AppendCallback(() => GameManager.Instance.player.TakeDamage(dmg));
         seq.AppendInterval(0.2f);
         seq.AppendCallback(() => GameManager.Instance.TurnChange());
     }

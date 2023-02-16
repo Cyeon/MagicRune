@@ -23,7 +23,8 @@ MonoBehaviour:
       \uB8EC\uC5D0 \uBC14\uB78C \uC18D\uC131\uC774 \uC788\uB2E4\uBA74 10\uC758 \uD654\uC0C1\uC744
       \uCD94\uAC00\uB85C \uC900\uB2E4"
     EffectDescription:
-    - Condition:
+    - IsAttackEffect: 1
+      Condition:
         ConditionType: 0
         AttributeType: 0
         StatusType: 0
@@ -36,7 +37,8 @@ MonoBehaviour:
       AttackType: 0
       AttributeType: 0
       Effect: 10
-    - Condition:
+    - IsAttackEffect: 1
+      Condition:
         ConditionType: 2
         AttributeType: 4
         StatusType: 0
@@ -57,7 +59,8 @@ MonoBehaviour:
     CardImage: {fileID: 21300000, guid: 499e6ddf5e461764b8072d810effb52c, type: 3}
     CardDescription: "5\uC758 \uD654\uC0C1\uC744 \uBD80\uC5EC\uD55C\uB2E4"
     EffectDescription:
-    - Condition:
+    - IsAttackEffect: 1
+      Condition:
         ConditionType: 0
         AttributeType: 0
         StatusType: 0
