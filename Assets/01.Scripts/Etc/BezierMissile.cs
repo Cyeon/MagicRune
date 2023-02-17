@@ -94,6 +94,11 @@ public class BezierMissile : MonoBehaviour
         }
     }
 
+    public void SetEffect(GameObject go)
+    {
+        Instantiate(go, this.transform);
+    }
+
     void Update()
     {
         if (m_timerCurrent > m_timerMax)

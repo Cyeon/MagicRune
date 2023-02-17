@@ -25,12 +25,27 @@ public class EffectPair
 }
 
 [Serializable]
-public class CustomDict : SerializableDictionary<EffectType, List<Pair>> { }
+public class EffectObjectPair
+{
+    public Pair pair;
+    public GameObject effect;
+
+    public EffectObjectPair(Pair pair, GameObject effect)
+    {
+        this.pair = pair;
+        this.effect = effect;
+    }
+}
+
+[Serializable]
+public class CustomDict : SerializableDictionary<EffectType, List<EffectObjectPair>> { }
 
 public class MagicCircle : MonoBehaviour, IPointerClickHandler
 {
     private Dictionary<RuneType, List<Card>> _runeDict;
     public Dictionary<RuneType, List<Card>> RuneDict => _runeDict;
+    private Dictionary<RuneType, List<Card>> _runeTempDict;
+    public Dictionary<RuneType, List<Card>> RuneTempDict => _runeTempDict;
 
     //private Dictionary<string, string> _effectDict;
     //private Dictionary<EffectType, List<EffectPair>> _effectDict;
@@ -354,11 +369,11 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                 if (_effectDict.ContainsKey(e.EffectType))
                 {
 
-                    _effectDict[e.EffectType].Add(e);
+                    _effectDict[e.EffectType].Add(new EffectObjectPair(e, card.Rune.RuneEffect));
                 }
                 else
                 {
-                    _effectDict.Add(e.EffectType, new List<Pair> { e });
+                    _effectDict.Add(e.EffectType, new List<EffectObjectPair> { new EffectObjectPair(e, card.Rune.RuneEffect) });
                 }
             }
         }
@@ -369,11 +384,11 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                 if (_effectDict.ContainsKey(e.EffectType))
                 {
 
-                    _effectDict[e.EffectType].Add(e);
+                    _effectDict[e.EffectType].Add(new EffectObjectPair(e, card.Rune.RuneEffect));
                 }
                 else
                 {
-                    _effectDict.Add(e.EffectType, new List<Pair> { e });
+                    _effectDict.Add(e.EffectType, new List<EffectObjectPair> { new EffectObjectPair(e, card.Rune.RuneEffect) });
                 }
             }
         }
@@ -557,9 +572,11 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                 if (_runeDict[RuneType.Assist][i].Rune == null)
                 {
                     Destroy(_runeDict[RuneType.Assist][i].gameObject);
+                    _runeTempDict = _runeDict;
                     _runeDict[RuneType.Assist].RemoveAt(i);
                 }
             }
+            _runeTempDict = new Dictionary<RuneType, List<Card>>(_runeDict);
 
             //AttackFunction(EffectType.Status);
             //AttackFunction(EffectType.Defence);
@@ -571,14 +588,6 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
         seq.AppendCallback(() =>
         {
             Debug.Log("Attack Complate");
-            
-
-            
-            
-            _nameText.text = "";
-            _effectText.text = "";
-            _effectContent.Clear();
-
             IsBig = false;
 
             if (_cardCollector.IsFront == false)
@@ -586,6 +595,43 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                 _cardCollector.CardRotate();
             }
             _cardCollector.IsFront = true;
+            _cardCollector.UpdateCardOutline();
+
+            foreach (var item in _runeDict)
+            {
+                foreach (Card card in item.Value)
+                {
+                    if (card.IsFront == false)
+                    {
+                        card.IsFront = true;
+                    }
+                    _cardCollector._restCards.Add(card);
+                }
+            }
+            _cardCollector.UIUpdate();
+
+            foreach (var rList in _runeDict)
+            {
+                foreach (var r in rList.Value)
+                {
+                    if (r.Rune == null)
+                    {
+                        Destroy(r.gameObject);
+                    }
+                    else
+                    {
+                        r.gameObject.SetActive(false);
+                        r.transform.SetParent(_cardCollector.transform);
+                        r.SetIsEquip(false);
+                    }
+                }
+            }
+
+            _nameText.text = "";
+            _effectText.text = "";
+            _effectContent.Clear();
+            _runeDict.Clear();
+            
             _cardCollector.UpdateCardOutline();
         });
 
@@ -598,8 +644,8 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
         {
             foreach (var e in _effectDict[effectType])
             {
-                Unit target = e.IsEnemy == true ? GameManager.Instance.enemy : GameManager.Instance.player;
-                AttackEffectFunction(effectType, target, e)?.Invoke();
+                Unit target = e.pair.IsEnemy == true ? GameManager.Instance.enemy : GameManager.Instance.player;
+                AttackEffectFunction(effectType, target, e.pair)?.Invoke();
             }
         }
     }
@@ -608,14 +654,14 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
     {
         Action action = null;
         int c = 0;
-        for (int i = 0; i < _runeDict[RuneType.Assist].Count; i++)
+        for (int i = 0; i < _runeTempDict[RuneType.Assist].Count; i++)
         {
-            if (_runeDict[RuneType.Assist][i].Rune != null && _runeDict[RuneType.Assist][i].Rune.AssistRune.Attribute == e.AttributeType)
+            if (_runeTempDict[RuneType.Assist][i].Rune != null && _runeTempDict[RuneType.Assist][i].Rune.AssistRune.Attribute == e.AttributeType)
             {
                 c++;
             }
         }
-        if (_runeDict[RuneType.Main][0].Rune != null && _runeDict[RuneType.Main][0].Rune.AssistRune.Attribute == e.AttributeType)
+        if (_runeTempDict[RuneType.Main][0].Rune != null && _runeTempDict[RuneType.Main][0].Rune.AssistRune.Attribute == e.AttributeType)
             c++;
 
         switch (effectType)
@@ -675,9 +721,9 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                 break;
             case ConditionType.AssistRuneCount:
                 int count = 0;
-                for (int i = 0; i < _runeDict[RuneType.Assist].Count; i++)
+                for (int i = 0; i < _runeTempDict[RuneType.Assist].Count; i++)
                 {
-                    if (_runeDict[RuneType.Assist][i].Rune != null)
+                    if (_runeTempDict[RuneType.Assist][i].Rune != null)
                     {
                         count++;
                     }
@@ -689,11 +735,11 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                 break;
             case ConditionType.AttributeComparison:
                 int cnt = 0;
-                if (_runeDict[RuneType.Main][0].Rune.MainRune.Attribute == e.Condition.AttributeType)
+                if (_runeTempDict[RuneType.Main][0].Rune.MainRune.Attribute == e.Condition.AttributeType)
                     cnt++;
-                for (int i = 0; i < _runeDict[RuneType.Assist].Count; i++)
+                for (int i = 0; i < _runeTempDict[RuneType.Assist].Count; i++)
                 {
-                    if (_runeDict[RuneType.Assist][i].Rune.AssistRune.Attribute == e.Condition.AttributeType)
+                    if (_runeTempDict[RuneType.Assist][i].Rune.AssistRune.Attribute == e.Condition.AttributeType)
                     {
                         cnt++;
                     }

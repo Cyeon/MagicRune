@@ -61,7 +61,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -144,22 +144,31 @@ TrailRenderer:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
-        time: 0
-        value: 0.5
-        inSlope: -0.49500453
-        outSlope: -0.49500453
+        time: 0.20506287
+        value: 0
+        inSlope: 0.5346553
+        outSlope: 0.5346553
         tangentMode: 0
         weightedMode: 0
         inWeight: 0.33333334
-        outWeight: 1
+        outWeight: 0.9840842
+      - serializedVersion: 3
+        time: 0.3593719
+        value: 0.5
+        inSlope: -0.7713201
+        outSlope: -0.7713201
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.99358284
       - serializedVersion: 3
         time: 1
         value: 0
-        inSlope: -0.51732856
-        outSlope: -0.51732856
+        inSlope: -0.74234813
+        outSlope: -0.74234813
         tangentMode: 0
         weightedMode: 0
-        inWeight: 0.99908257
+        inWeight: 1
         outWeight: 0
       m_PreInfinity: 2
       m_PostInfinity: 2

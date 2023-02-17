@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3535391437520474295}
   m_Layer: 5
   m_Name: Base_Image
-  m_TagString: Untagged
+  m_TagString: Card
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -50,7 +50,7 @@ GameObject:
   - component: {fileID: 1398631896217122819}
   m_Layer: 5
   m_Name: Rune_Area
-  m_TagString: Untagged
+  m_TagString: Card
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -102,7 +102,7 @@ GameObject:
   - component: {fileID: 6689628878686805019}
   m_Layer: 5
   m_Name: Cost_Image
-  m_TagString: Untagged
+  m_TagString: Card
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -178,7 +178,7 @@ GameObject:
   - component: {fileID: 4994785974200009600}
   m_Layer: 5
   m_Name: Skill_Image
-  m_TagString: Untagged
+  m_TagString: Card
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -254,7 +254,7 @@ GameObject:
   - component: {fileID: 1417400464572269931}
   m_Layer: 5
   m_Name: Description_Image
-  m_TagString: Untagged
+  m_TagString: Card
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -330,7 +330,7 @@ GameObject:
   - component: {fileID: 5526271828437668952}
   m_Layer: 5
   m_Name: Rune_Image
-  m_TagString: Untagged
+  m_TagString: Card
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -406,7 +406,7 @@ GameObject:
   - component: {fileID: 8946980363811234583}
   m_Layer: 5
   m_Name: Rune_Line_Image
-  m_TagString: Untagged
+  m_TagString: Card
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -482,7 +482,7 @@ GameObject:
   - component: {fileID: 8254813017064701053}
   m_Layer: 5
   m_Name: CardRune
-  m_TagString: Untagged
+  m_TagString: Card
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -507,7 +507,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &8254813017064701052
 MonoBehaviour:
@@ -525,6 +525,7 @@ MonoBehaviour:
   _rune: {fileID: 0}
   _descPrefab: {fileID: 6195434280119653959, guid: acdde4aec5178fc4ebda7beeedd34d6c, type: 3}
   _isEquipMagicCircle: 0
+  isDescOn: 0
   _outlineMaterial: {fileID: 2100000, guid: c0c2dee94225a124eb35d43b3181349e, type: 2}
 --- !u!114 &8254813017064701053
 MonoBehaviour:
@@ -552,7 +553,7 @@ GameObject:
   - component: {fileID: 8254813017282734096}
   m_Layer: 5
   m_Name: Cost_Text
-  m_TagString: Untagged
+  m_TagString: Card
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -687,7 +688,7 @@ GameObject:
   - component: {fileID: 8254813018420756512}
   m_Layer: 5
   m_Name: Name_Text
-  m_TagString: Untagged
+  m_TagString: Card
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -822,7 +823,7 @@ GameObject:
   - component: {fileID: 8254813018482252880}
   m_Layer: 5
   m_Name: Card_Image
-  m_TagString: Untagged
+  m_TagString: Card
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -897,7 +898,7 @@ GameObject:
   - component: {fileID: 5026639392566287589}
   m_Layer: 5
   m_Name: Card_Area
-  m_TagString: Untagged
+  m_TagString: Card
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

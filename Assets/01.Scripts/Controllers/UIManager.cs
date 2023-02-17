@@ -56,6 +56,9 @@ public class UIManager : MonoSingleton<UIManager>
     private Slider hfSlider = null;
     private TextMeshProUGUI hText = null;
 
+    private GraphicRaycaster _gr;
+    public GraphicRaycaster GR => _gr;
+
     private void Awake()
     {
         _turnBackground = _turnPanel?.GetComponent<Image>();
@@ -76,6 +79,8 @@ public class UIManager : MonoSingleton<UIManager>
         _cardDescInfo = _cardDescPanel.transform.Find("Desc_Description").GetComponent<TextMeshProUGUI>();
         _cardDescMana = _cardDescPanel.transform.Find("Desc_Mana").Find("Mana_Text").GetComponent<TextMeshProUGUI>();
         _cardDescCool = _cardDescPanel.transform.Find("Desc_CoolTime").Find("CoolTime_Text").GetComponent<TextMeshProUGUI>();
+
+        _gr = _canvas.GetComponent<GraphicRaycaster>();
     }
 
     public void OnDestroy()
@@ -356,6 +361,8 @@ public class UIManager : MonoSingleton<UIManager>
 
     public void CardDescPopup(Card card, Vector3 pos, bool isDown = true)
     {
+        if (card == null) return;
+
         if(isDown == false)
         {
             _cardDescPanel.SetActive(false);

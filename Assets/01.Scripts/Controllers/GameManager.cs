@@ -172,6 +172,7 @@ public class GameManager : MonoSingleton<GameManager>
         this.MagicCircle.EffectContent.Clear();
         this.MagicCircle.CardCollector.UpdateCardOutline();
         this.MagicCircle.CardCollector.handCardOutline(false);
+        this.MagicCircle.CardCollector.IsFront = true;
     }
 
     #endregion

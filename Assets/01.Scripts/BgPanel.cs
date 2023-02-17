@@ -17,7 +17,22 @@ public class BgPanel : MonoBehaviour
                 Touch t = Input.GetTouch(0);
                 if (t.phase == TouchPhase.Began)
                 {
-                    _magicCircle.CardCollector.AllCardDescription(false);
+                    var ped = new PointerEventData(null);
+                    ped.position = t.position;
+                    List<RaycastResult> results = new List<RaycastResult>();
+                    UIManager.Instance.GR.Raycast(ped, results);
+                    
+                    if(results.Count > 0)
+                    {
+                        if (results[0].gameObject.CompareTag("Card"))
+                        {
+
+                        }
+                        else
+                        {
+                            _magicCircle.CardCollector.AllCardDescription(false);
+                        }
+                    }
                 }
             }
         }
