@@ -249,6 +249,7 @@ public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IBegi
             //}
 
             _isClick = true;
+            
 
             //transform.localScale = new Vector3(1.5f, 1.5f, 1);
         }
@@ -321,7 +322,10 @@ public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IBegi
         if (_isEquipMagicCircle == false)
         {
             _collector.CardSelect(this);
-            _collector.SelectCard.transform.localScale = new Vector3(2f, 2f, 1f);
+            if(_collector.SelectCard != null)
+            {
+                _collector.SelectCard.transform.localScale = new Vector3(2f, 2f, 1f);
+            }
             _collector.AllCardDescription(false);
         }
     }

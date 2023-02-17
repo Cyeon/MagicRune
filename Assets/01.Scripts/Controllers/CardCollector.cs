@@ -432,6 +432,17 @@ public class CardCollector : MonoBehaviour
         }
     }
 
+    public bool IsCardDescription()
+    {
+        foreach(var card in _handCards)
+        {
+            if (card.isDescOn == true)
+                return true;
+        }
+
+        return false;
+    }
+
     public void UIUpdate()
     {
         _deckViewUI?.UITextUpdate();

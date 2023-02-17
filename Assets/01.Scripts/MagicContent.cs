@@ -4,6 +4,7 @@ using UnityEngine;
 using DG.Tweening;
 using System.Runtime.InteropServices;
 using UnityEngine.UIElements;
+using System;
 
 public class MagicContent : MonoBehaviour
 {
@@ -23,6 +24,7 @@ public class MagicContent : MonoBehaviour
 
     private float _axis = 90;
 
+    
     private Dictionary<RuneType, List<GameObject>> _effectDict = new Dictionary<RuneType, List<GameObject>>();
     private Dictionary<bool, int> _attackEffectDict = new Dictionary<bool, int>();
 
@@ -103,34 +105,34 @@ public class MagicContent : MonoBehaviour
 
         Sort();
 
-        if (isMain)
-        {
-            foreach (var c in card.MainRune.EffectDescription)
-            {
-                if (_attackEffectDict.ContainsKey(c.IsEnemy))
-                {
-                    _attackEffectDict[c.IsEnemy] += 1;
-                }
-                else
-                {
-                    _attackEffectDict.Add(c.IsEnemy, 1);
-                }
-            }
-        }
-        else
-        {
-            foreach (var c in card.AssistRune.EffectDescription)
-            {
-                if (_attackEffectDict.ContainsKey(c.IsEnemy))
-                {
-                    _attackEffectDict[c.IsEnemy] += 1;
-                }
-                else
-                {
-                    _attackEffectDict.Add(c.IsEnemy, 1);
-                }
-            }
-        }
+        //if (isMain)
+        //{
+        //    foreach (var c in card.MainRune.EffectDescription)
+        //    {
+        //        if (_attackEffectDict.ContainsKey(c.IsEnemy))
+        //        {
+        //            _attackEffectDict[c.IsEnemy] += 1;
+        //        }
+        //        else
+        //        {
+        //            _attackEffectDict.Add(c.IsEnemy, 1);
+        //        }
+        //    }
+        //}
+        //else
+        //{
+        //    foreach (var c in card.AssistRune.EffectDescription)
+        //    {
+        //        if (_attackEffectDict.ContainsKey(c.IsEnemy))
+        //        {
+        //            _attackEffectDict[c.IsEnemy] += 1;
+        //        }
+        //        else
+        //        {
+        //            _attackEffectDict.Add(c.IsEnemy, 1);
+        //        }
+        //    }
+        //}
     }
 
     public void Clear()
@@ -232,11 +234,12 @@ public class MagicContent : MonoBehaviour
         {
             foreach (var d in _magicCircle.EffectDict[EffectType.Status])
             {
-                Unit target = d.IsEnemy == true ? GameManager.Instance.enemy : GameManager.Instance.player;
+                Unit target = d.pair.IsEnemy == true ? GameManager.Instance.enemy : GameManager.Instance.player;
 
                 BezierMissile go = Instantiate(_attackEffect, _attackEffectParent);
                 go.SetTrailColor(EffectType.Status);
-                go.Init(startPos, _enemyPos, 3, 1300, 300, _magicCircle.AttackEffectFunction(EffectType.Status, target, d));
+                go.SetEffect(d.effect);
+                go.Init(startPos, _enemyPos, 2.5f, 1300, 300, _magicCircle.AttackEffectFunction(EffectType.Status, target, d.pair));
 
                 yield return new WaitForSeconds(0.1f);
             }
@@ -247,11 +250,12 @@ public class MagicContent : MonoBehaviour
         {
             foreach (var d in _magicCircle.EffectDict[EffectType.Defence])
             {
-                Unit target = d.IsEnemy == true ? GameManager.Instance.enemy : GameManager.Instance.player;
+                Unit target = d.pair.IsEnemy == true ? GameManager.Instance.enemy : GameManager.Instance.player;
 
                 BezierMissile go = Instantiate(_attackEffect, _attackEffectParent);
                 go.SetTrailColor(EffectType.Defence);
-                go.Init(startPos, _playerPos, 3, 1300, 300, _magicCircle.AttackEffectFunction(EffectType.Defence, target, d));
+                go.SetEffect(d.effect);
+                go.Init(startPos, _playerPos, 2.5f, 1300, 300, _magicCircle.AttackEffectFunction(EffectType.Defence, target, d.pair));
 
                 yield return new WaitForSeconds(0.1f);
             }
@@ -262,11 +266,12 @@ public class MagicContent : MonoBehaviour
         {
             foreach (var d in _magicCircle.EffectDict[EffectType.Attack])
             {
-                Unit target = d.IsEnemy == true ? GameManager.Instance.enemy : GameManager.Instance.player;
+                Unit target = d.pair.IsEnemy == true ? GameManager.Instance.enemy : GameManager.Instance.player;
 
                 BezierMissile go = Instantiate(_attackEffect, _attackEffectParent);
                 go.SetTrailColor(EffectType.Attack);
-                go.Init(startPos, _enemyPos, 3, 1300, 300, _magicCircle.AttackEffectFunction(EffectType.Attack, target, d));
+                go.SetEffect(d.effect);
+                go.Init(startPos, _enemyPos, 2.5f, 1300, 300, _magicCircle.AttackEffectFunction(EffectType.Attack, target, d.pair));
 
                 yield return new WaitForSeconds(0.1f);
             }
@@ -277,11 +282,12 @@ public class MagicContent : MonoBehaviour
         {
             foreach (var d in _magicCircle.EffectDict[EffectType.Draw])
             {
-                Unit target = d.IsEnemy == true ? GameManager.Instance.enemy : GameManager.Instance.player;
+                Unit target = d.pair.IsEnemy == true ? GameManager.Instance.enemy : GameManager.Instance.player;
 
                 BezierMissile go = Instantiate(_attackEffect, _attackEffectParent);
                 go.SetTrailColor(EffectType.Draw);
-                go.Init(startPos, _playerPos, 3, 1300, 300, _magicCircle.AttackEffectFunction(EffectType.Draw, target, d));
+                go.SetEffect(d.effect);
+                go.Init(startPos, _playerPos, 2.5f, 1300, 300, _magicCircle.AttackEffectFunction(EffectType.Draw, target, d.pair));
 
                 yield return new WaitForSeconds(0.1f);
             }
@@ -290,73 +296,55 @@ public class MagicContent : MonoBehaviour
 
         if (_magicCircle.EffectDict.ContainsKey(EffectType.Destroy))
         {
-            //foreach (var d in _magicCircle.EffectDict[EffectType.Destroy])
-            //{
-            //    Unit target = d.IsEnemy == true ? GameManager.Instance.enemy : GameManager.Instance.player;
-
-            //    BezierMissile go = Instantiate(_attackEffect, _attackEffectParent);
-            //    go.Init(startPos, _enemyPos, 3, 1300, 300, () => _magicCircle.AttackEffectFunction(EffectType.Destroy, target, d));
-
-            //    yield return new WaitForSeconds(0.1f);
-            //}
-
-            for (int i = 0; i < _magicCircle.EffectDict[EffectType.Destroy].Count; i++)
+            foreach (var d in _magicCircle.EffectDict[EffectType.Destroy])
             {
-                Unit target = _magicCircle.EffectDict[EffectType.Destroy][i].IsEnemy == true ? GameManager.Instance.enemy : GameManager.Instance.player;
+                Unit target = d.pair.IsEnemy == true ? GameManager.Instance.enemy : GameManager.Instance.player;
 
                 BezierMissile go = Instantiate(_attackEffect, _attackEffectParent);
-                //if(i == _magicCircle.EffectDict[EffectType.Destroy].Count - 1)
-                //{
-                //    go.Init(startPos, _enemyPos, 3, 1300, 300, () =>
-                //    {
-                //        _magicCircle.AttackEffectFunction(EffectType.Destroy, target, _magicCircle.EffectDict[EffectType.Destroy][i]);
-                //        _magicCircle.RuneDict.Clear();
-                //        _magicCircle.EffectDict.Clear();
-                //    });
-                //}
-                //else
-                //{
-                //    go.Init(startPos, _enemyPos, 3, 1300, 300, () => _magicCircle.AttackEffectFunction(EffectType.Destroy, target, _magicCircle.EffectDict[EffectType.Destroy][i]));
-                //}
                 go.SetTrailColor(EffectType.Destroy);
-                go.Init(startPos, _enemyPos, 3, 1300, 300, _magicCircle.AttackEffectFunction(EffectType.Destroy, target, _magicCircle.EffectDict[EffectType.Destroy][i]));
+                go.SetEffect(d.effect);
+                go.Init(startPos, _enemyPos, 2.5f, 1300, 300, _magicCircle.AttackEffectFunction(EffectType.Destroy, target, d.pair));
+
                 yield return new WaitForSeconds(0.1f);
             }
         }
 
-        yield return new WaitForSeconds(2f);
-        foreach (var item in _magicCircle.RuneDict)
-        {
-            foreach (Card card in item.Value)
-            {
-                if (card.IsFront == false)
-                {
-                    card.IsFront = true;
-                }
-                _magicCircle.CardCollector._restCards.Add(card);
-            }
-        }
-        _magicCircle.CardCollector.UIUpdate();
+        yield return new WaitForSeconds(.2f);
+        _effectDict.Clear();
+        _magicCircle.RuneTempDict.Clear();
+        
+        //foreach (var item in _magicCircle.RuneDict)
+        //{
+        //    foreach (Card card in item.Value)
+        //    {
+        //        if (card.IsFront == false)
+        //        {
+        //            card.IsFront = true;
+        //        }
+        //        _magicCircle.CardCollector._restCards.Add(card);
+        //    }
+        //}
+        //_magicCircle.CardCollector.UIUpdate();
 
-        foreach (var rList in _magicCircle.RuneDict)
-        {
-            foreach (var r in rList.Value)
-            {
-                if (r.Rune == null)
-                {
-                    Destroy(r.gameObject);
-                }
-                else
-                {
-                    r.gameObject.SetActive(false);
-                    r.transform.SetParent(_magicCircle.CardCollector.transform);
-                    r.SetIsEquip(false);
-                }
-            }
-        }
+        //foreach (var rList in _magicCircle.RuneDict)
+        //{
+        //    foreach (var r in rList.Value)
+        //    {
+        //        if (r.Rune == null)
+        //        {
+        //            Destroy(r.gameObject);
+        //        }
+        //        else
+        //        {
+        //            r.gameObject.SetActive(false);
+        //            r.transform.SetParent(_magicCircle.CardCollector.transform);
+        //            r.SetIsEquip(false);
+        //        }
+        //    }
+        //}
 
-        _magicCircle.RuneDict.Clear();
-        _magicCircle.EffectDict.Clear();
-        _magicCircle.CardCollector.UpdateCardOutline();
+        //_magicCircle.RuneDict.Clear();
+        //_magicCircle.EffectDict.Clear();
+        //_magicCircle.CardCollector.UpdateCardOutline();
     }
 }
