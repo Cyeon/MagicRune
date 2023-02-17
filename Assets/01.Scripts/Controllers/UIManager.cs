@@ -221,7 +221,7 @@ public class UIManager : MonoSingleton<UIManager>
         statusPanel.duration.text = status.typeValue.ToString();
         statusPanel.statusName = status.statusName;
         statusPanel.transform.SetParent(parent);
-        statusPanel.transform.localScale = new Vector3(2, 2, 2);
+        statusPanel.transform.localScale = new Vector3(1.7f, 1.7f, 1.7f);
 
         return statusPanel;
     }
