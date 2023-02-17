@@ -355,6 +355,7 @@ public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IBegi
         else
         {
             _collector.AllCardDescription(false);
+            SetDescription(false);
         }
     }
 
