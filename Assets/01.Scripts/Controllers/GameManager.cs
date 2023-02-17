@@ -127,6 +127,12 @@ public class GameManager : MonoSingleton<GameManager>
 
                 SoundManager.instance.PlaySound(turnChangeSound, SoundType.Effect);
 
+                if (player.Shield > 0)
+                {
+                    player.Shield = 0;
+                    UIManager.Instance.UpdateHealthbar(true);
+                }
+
                 UIManager.Instance.Turn("Player Turn");
                 gameTurn = GameTurn.MonsterWait;
                 break;

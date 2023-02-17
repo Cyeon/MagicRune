@@ -86,9 +86,21 @@ public class UIManager : MonoSingleton<UIManager>
     public void UpdateShieldText(bool isPlayer, float shield)
     {
         if (isPlayer)
+        {
             _playerShieldText.text = shield.ToString();
+
+            Sequence seq = DOTween.Sequence();
+            seq.Append(_playerShieldText.transform.parent.DOScale(1.4f, 0.1f));
+            seq.Append(_playerShieldText.transform.parent.DOScale(1f, 0.1f));
+        }
         else
+        {
             _enemyShieldText.text = shield.ToString();
+
+            Sequence seq = DOTween.Sequence();
+            seq.Append(_enemyShieldText.transform.parent.DOScale(1.2f, 0.1f));
+            seq.Append(_enemyShieldText.transform.parent.DOScale(1f, 0.1f));
+        }
 
         UpdateHealthbar(isPlayer);
     }
@@ -173,8 +185,8 @@ public class UIManager : MonoSingleton<UIManager>
         seq.Append(hfSlider.DOValue(unit.HP, 0.2f));
 
         Sequence vibrateSeq = DOTween.Sequence();
-        vibrateSeq.Append(hSlider.transform.DOShakeScale(0.2f));
-        vibrateSeq.Append(hSlider.transform.DOScale(4f, 0));
+        vibrateSeq.Append(hSlider.transform.parent.DOShakeScale(0.1f));
+        vibrateSeq.Append(hSlider.transform.parent.DOScale(1f, 0));
     }
 
     /*public void UpdateEnemyHealthbar()

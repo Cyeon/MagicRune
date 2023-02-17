@@ -52,5 +52,6 @@ public class Enemy : Unit
     {
         idleSequence.Kill();
         UIManager.Instance.enemyIcon.DORewind();
+        UIManager.Instance.enemyIcon.localScale = Vector3.one;
     }
 }
