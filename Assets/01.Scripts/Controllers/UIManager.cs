@@ -173,8 +173,8 @@ public class UIManager : MonoSingleton<UIManager>
         seq.Append(hfSlider.DOValue(unit.HP, 0.2f));
 
         Sequence vibrateSeq = DOTween.Sequence();
-        vibrateSeq.Append(hSlider.transform.DOShakeScale(0.2f));
-        vibrateSeq.Append(hSlider.transform.DOScale(4f, 0));
+        vibrateSeq.Append(hSlider.transform.parent.DOShakeScale(0.1f));
+        vibrateSeq.Append(hSlider.transform.parent.DOScale(1f, 0));
     }
 
     /*public void UpdateEnemyHealthbar()
