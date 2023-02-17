@@ -2110,6 +2110,9 @@ MonoBehaviour:
     value: 10
     patternStartFunc:
       m_PersistentCalls:
+        m_Calls: []
+    patternTurnFunc:
+      m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 417906623}
           m_TargetAssemblyTypeName: PatternFuncList, Assembly-CSharp
@@ -2118,14 +2121,11 @@ MonoBehaviour:
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 10
-            m_FloatArgument: 10
+            m_IntArgument: 0
+            m_FloatArgument: 0
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-    patternTurnFunc:
-      m_PersistentCalls:
-        m_Calls:
         - m_Target: {fileID: 417906623}
           m_TargetAssemblyTypeName: PatternFuncList, Assembly-CSharp
           m_MethodName: ShieldUse
