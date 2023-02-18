@@ -40,10 +40,14 @@ public class EffectObjectPair
 [Serializable]
 public class CustomDict : SerializableDictionary<EffectType, List<EffectObjectPair>> { }
 
+[Serializable]
+public class CustomRuneDict : SerializableDictionary<RuneType, List<Card>> { }
+
 public class MagicCircle : MonoBehaviour, IPointerClickHandler
 {
-    private Dictionary<RuneType, List<Card>> _runeDict;
-    public Dictionary<RuneType, List<Card>> RuneDict => _runeDict;
+    [SerializeField]
+    private CustomRuneDict _runeDict;
+    public CustomRuneDict RuneDict => _runeDict;
     private Dictionary<RuneType, List<Card>> _runeTempDict;
     public Dictionary<RuneType, List<Card>> RuneTempDict => _runeTempDict;
 
@@ -52,6 +56,9 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
     [SerializeField]
     private CustomDict _effectDict;
     public CustomDict EffectDict => _effectDict;
+
+    private Dictionary<EffectType, List<EffectObjectPair>> _tempEffectDict;
+    public Dictionary<EffectType, List<EffectObjectPair>> TempEffectDict => _tempEffectDict;
 
     private const int _mainRuneCnt = 1;
 
@@ -142,7 +149,7 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
 
     public void Awake()
     {
-        _runeDict = new Dictionary<RuneType, List<Card>>();
+        _runeDict = new CustomRuneDict();
         _effectDict = new CustomDict();
 
         _nameText.text = "";
@@ -577,6 +584,7 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                 }
             }
             _runeTempDict = new Dictionary<RuneType, List<Card>>(_runeDict);
+            _tempEffectDict = new Dictionary<EffectType, List<EffectObjectPair>>(_effectDict);
 
             //AttackFunction(EffectType.Status);
             //AttackFunction(EffectType.Defence);
@@ -631,6 +639,7 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
             _effectText.text = "";
             _effectContent.Clear();
             _runeDict.Clear();
+            _effectDict.Clear();
             
             _cardCollector.UpdateCardOutline();
         });

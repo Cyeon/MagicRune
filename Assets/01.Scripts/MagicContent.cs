@@ -310,8 +310,8 @@ public class MagicContent : MonoBehaviour
         }
 
         yield return new WaitForSeconds(.2f);
-        _effectDict.Clear();
         _magicCircle.RuneTempDict.Clear();
+        _magicCircle.TempEffectDict.Clear();
         
         //foreach (var item in _magicCircle.RuneDict)
         //{
