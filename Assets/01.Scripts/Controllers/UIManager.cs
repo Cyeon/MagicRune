@@ -47,6 +47,10 @@ public class UIManager : MonoSingleton<UIManager>
     private TextMeshProUGUI _cardDescMana;
     private TextMeshProUGUI _cardDescCool;
 
+    [SerializeField] private GameObject _statusDescPanel;
+    private TextMeshPro _statusDescName;
+    private TextMeshPro _statusDescInfo;
+ 
     [Header("ETC")]
     [SerializeField] private GameObject _damagePopup;
     [SerializeField] private GameObject _infoMessage;
@@ -79,6 +83,9 @@ public class UIManager : MonoSingleton<UIManager>
         _cardDescInfo = _cardDescPanel.transform.Find("Desc_Description").GetComponent<TextMeshProUGUI>();
         _cardDescMana = _cardDescPanel.transform.Find("Desc_Mana").Find("Mana_Text").GetComponent<TextMeshProUGUI>();
         _cardDescCool = _cardDescPanel.transform.Find("Desc_CoolTime").Find("CoolTime_Text").GetComponent<TextMeshProUGUI>();
+
+        _statusDescName = _statusDescPanel.transform.Find("Name").GetComponent<TextMeshPro>();
+        _statusDescInfo = _statusDescPanel.transform.Find("Infomation").GetComponent<TextMeshPro>();
 
         _gr = _canvas.GetComponent<GraphicRaycaster>();
     }
@@ -215,6 +222,7 @@ public class UIManager : MonoSingleton<UIManager>
     {
         //StatusPanel statusPanel = Instantiate(isPopup ? _statusPopup : _statusPrefab).GetComponent<StatusPanel>();
         StatusPanel statusPanel = Instantiate(_statusPrefab).GetComponent<StatusPanel>();
+        statusPanel.status = status;
 
         statusPanel.image.sprite = status.icon;
         statusPanel.image.color = status.color;
@@ -369,7 +377,7 @@ public class UIManager : MonoSingleton<UIManager>
     }
     #endregion
 
-    #region Card Description
+    #region Description
 
     public void CardDescPopup(Card card, Vector3 pos, bool isDown = true)
     {
@@ -391,6 +399,22 @@ public class UIManager : MonoSingleton<UIManager>
         _cardDescInfo.text = rune.CardDescription;
         _cardDescMana.text = rune.Cost.ToString();
         _cardDescCool.text = rune.DelayTurn.ToString();
+    }
+
+    public void StatusDescPopup(Status status, Vector3 pos, bool isDown = true)
+    {
+        if (isDown == false)
+        {
+            _statusDescPanel.SetActive(false);
+            return;
+        }
+
+        _statusDescPanel.SetActive(true);
+        _statusDescPanel.transform.position = pos + new Vector3(0, 2, 0);
+        _statusDescPanel.transform.DOMoveZ(-1, 0);
+
+        _statusDescName.text = status.debugName;
+        _statusDescInfo.text = status.information;
     }
 
     #endregion

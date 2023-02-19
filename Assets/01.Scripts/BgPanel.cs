@@ -31,6 +31,7 @@ public class BgPanel : MonoBehaviour
                         else
                         {
                             _magicCircle.CardCollector.AllCardDescription(false);
+                            UIManager.Instance.StatusDescPopup(null, Vector3.one, false);
                         }
                     }
                 }

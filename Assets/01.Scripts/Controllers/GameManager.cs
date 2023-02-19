@@ -46,7 +46,7 @@ public class GameManager : MonoSingleton<GameManager>
     {
         if(Input.GetKeyDown(KeyCode.A))
         {
-            StatusManager.Instance.AddStatus(GameManager.Instance.enemy, StatusName.Wound);
+            StatusManager.Instance.AddStatus(enemy, StatusName.Wound);
         }
     }
 

@@ -338,6 +338,7 @@ MonoBehaviour:
   _statusEnemyPanel: {fileID: 705863452}
   _turnPanel: {fileID: 1100535925}
   _cardDescPanel: {fileID: 1318579749}
+  _statusDescPanel: {fileID: 1429253406}
   _damagePopup: {fileID: 5936919601908214315, guid: 3de2c828ec5d1784fb5f0afd994f4ae6, type: 3}
   _infoMessage: {fileID: 6188063278671750921, guid: 9ae759340fa35564db012299312d316d, type: 3}
 --- !u!1 &33765186
@@ -3142,10 +3143,10 @@ MonoBehaviour:
   status:
     statusName: 0
     debugName: 
+    information: 
     invokeTime: 0
     type: 0
     typeValue: 0
-    unit: {fileID: 0}
     statusFunc:
       m_PersistentCalls:
         m_Calls: []
@@ -3154,6 +3155,7 @@ MonoBehaviour:
         m_Calls: []
     icon: {fileID: 0}
     color: {r: 0, g: 0, b: 0, a: 0}
+    unit: {fileID: 0}
 --- !u!114 &594343484
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3169,10 +3171,10 @@ MonoBehaviour:
   statusList:
   - statusName: 1
     debugName: "\uC57D\uC1C4"
+    information: 
     invokeTime: 2
     type: 1
     typeValue: 0
-    unit: {fileID: 0}
     statusFunc:
       m_PersistentCalls:
         m_Calls:
@@ -3193,12 +3195,13 @@ MonoBehaviour:
         m_Calls: []
     icon: {fileID: 21300000, guid: 16a86a7f581fc4dfb953e0df8ad3ecac, type: 3}
     color: {r: 0.3490566, g: 0.3490566, b: 0.3490566, a: 1}
+    unit: {fileID: 0}
   - statusName: 3
     debugName: "\uBE59\uACB0"
+    information: "\uBE59\uACB0\uC124\uBA85"
     invokeTime: 1
     type: 1
     typeValue: 2
-    unit: {fileID: 0}
     statusFunc:
       m_PersistentCalls:
         m_Calls:
@@ -3219,12 +3222,13 @@ MonoBehaviour:
         m_Calls: []
     icon: {fileID: 21300000, guid: 52e5fb28f6903cd4f9e807e9d1c856ef, type: 3}
     color: {r: 0.2679245, g: 0.88512623, b: 1, a: 1}
+    unit: {fileID: 0}
   - statusName: 2
     debugName: "\uD654\uC5FC"
+    information: "\uD654\uC5FC\uC124\uBA85"
     invokeTime: 3
     type: 0
     typeValue: 0
-    unit: {fileID: 0}
     statusFunc:
       m_PersistentCalls:
         m_Calls:
@@ -3257,12 +3261,13 @@ MonoBehaviour:
           m_CallState: 2
     icon: {fileID: 21300000, guid: 0fa625d64d24a0348a1f4b67ca8bb5d3, type: 3}
     color: {r: 1, g: 0.29622638, b: 0.3843256, a: 1}
+    unit: {fileID: 0}
   - statusName: 4
     debugName: "\uC0C1\uCC98"
+    information: 
     invokeTime: 2
     type: 0
     typeValue: 0
-    unit: {fileID: 0}
     statusFunc:
       m_PersistentCalls:
         m_Calls:
@@ -3283,6 +3288,7 @@ MonoBehaviour:
         m_Calls: []
     icon: {fileID: 21300000, guid: 96f80772093699c40a49f6a87154882f, type: 3}
     color: {r: 1, g: 0, b: 0.12290478, a: 1}
+    unit: {fileID: 0}
 --- !u!1 &637362596
 GameObject:
   m_ObjectHideFlags: 0
@@ -8450,6 +8456,76 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1426270546}
   m_CullTransparentMesh: 1
+--- !u!1001 &1429253405
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2643353346664848612, guid: 2596a148c83f9c048b00c25715983ed1, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: e962e75f361268e4c977d69a4d30ca3d, type: 3}
+    - target: {fileID: 2643353346664848613, guid: 2596a148c83f9c048b00c25715983ed1, type: 3}
+      propertyPath: m_RootOrder
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 2643353346664848613, guid: 2596a148c83f9c048b00c25715983ed1, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2643353346664848613, guid: 2596a148c83f9c048b00c25715983ed1, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2643353346664848613, guid: 2596a148c83f9c048b00c25715983ed1, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2643353346664848613, guid: 2596a148c83f9c048b00c25715983ed1, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2643353346664848613, guid: 2596a148c83f9c048b00c25715983ed1, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2643353346664848613, guid: 2596a148c83f9c048b00c25715983ed1, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2643353346664848613, guid: 2596a148c83f9c048b00c25715983ed1, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2643353346664848613, guid: 2596a148c83f9c048b00c25715983ed1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2643353346664848613, guid: 2596a148c83f9c048b00c25715983ed1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2643353346664848613, guid: 2596a148c83f9c048b00c25715983ed1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2643353346664848619, guid: 2596a148c83f9c048b00c25715983ed1, type: 3}
+      propertyPath: m_Name
+      value: StatusDescription
+      objectReference: {fileID: 0}
+    - target: {fileID: 2643353346664848619, guid: 2596a148c83f9c048b00c25715983ed1, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 2596a148c83f9c048b00c25715983ed1, type: 3}
+--- !u!1 &1429253406 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2643353346664848619, guid: 2596a148c83f9c048b00c25715983ed1, type: 3}
+  m_PrefabInstance: {fileID: 1429253405}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1472787354
 GameObject:
   m_ObjectHideFlags: 0
