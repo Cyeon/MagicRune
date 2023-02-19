@@ -253,6 +253,7 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                     AssistRuneAnimanation();
                     _effectContent.AddEffect(card.Rune, true);
                     //_cardCollector.CardRotate();
+                    Debug.Log("¸ÞÀÎ ·é ÀÖ¾úÀ¸");
                 });
                 //SortCard();
             }
@@ -262,29 +263,29 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                 seq.AppendCallback(() =>
                 {
                     //card.GetComponent<RectTransform>().anchoredPosition = Input.GetTouch(0).position;
-                    card.transform.SetParent(this.transform);
+                    card.transform.SetParent(this.transform); // ¹ßµ¿ ¾ÈµÊ
                     //card.GetComponent<RectTransform>().anchoredPosition = card.GetComponent<RectTransform>().anchoredPosition;
-                    card.GetComponent<RectTransform>().DOAnchorPos(Vector2.zero, 0.3f).OnComplete(() => card.SetOutlineActive(true));
-                    card.SetIsEquip(true);
-                    card.SetCoolTime(card.Rune.MainRune.DelayTurn);
+                    card.GetComponent<RectTransform>().DOAnchorPos(Vector2.zero, 0.3f).OnComplete(() => card.SetOutlineActive(true)); // Áß¿¡ ¿¡·¯³²
+                    card.SetIsEquip(true); // ¹ßµ¿ ¾ÈµÊ
+                    card.SetCoolTime(card.Rune.MainRune.DelayTurn); // ¹ßµ¿ µÊ
                     DummyCost.Instance.CanUseMainRune(card.Rune.MainRune.Cost);
-                    _cardCollector.CardRotate();
+                    _cardCollector.CardRotate(); // ¹ßµ¿ µÊ
                 });
                 seq.AppendInterval(0.3f);
                 seq.AppendCallback(() =>
                 {
-                    _runeDict.Add(RuneType.Main, new List<Card>() { card });
+                    _runeDict.Add(RuneType.Main, new List<Card>() { card }); // ¹ßµ¿ µÊ
 
                     SortCard();
-                    AddEffect(card, true);
-                    AssistRuneAnimanation();
-                    _effectContent.AddEffect(card.Rune, true);
+                    AddEffect(card, true); // ¹ßµ¿ µÇ³ª?
+                    AssistRuneAnimanation(); // ÇÏ´Ù°¡ »ç¶óÁü
+                    _effectContent.AddEffect(card.Rune, true); // µÊ
                     //_cardCollector.CardRotate();
-                    _cardCollector.IsFront = false;
+                    _cardCollector.IsFront = false; // ¾Æ·¡´Â µÊ
                     _cardCollector.CardSort();
                     StartCoroutine(PlayEffect(card.Rune.RuneAudio));
                     Debug.Log("B");
-
+                    Debug.Log("¸ÞÀÎ ·é ¾ø¾úÀ¸");
                 });
                 //SortCard();
             }
