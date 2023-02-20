@@ -81,8 +81,6 @@ public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IBegi
     private Text _assistRuneCount;
     private Image _descriptionImage;
 
-    public bool isDescOn = false;
-
     // Rune Area
     private Transform _runeAreaParent;
     public Transform RuneAreaParent => _runeAreaParent;
@@ -194,22 +192,6 @@ public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IBegi
         else
         {
             _cardBase.material = _defaultMaterial;
-        }
-    }
-
-    public void SetDescription(bool value)
-    {
-        transform.DOKill();
-
-        if (value)
-        {
-            isDescOn = true; 
-            UIManager.Instance.CardDescPopup(this, transform.position);
-        }
-        else
-        {
-            isDescOn = false;
-            UIManager.Instance.CardDescPopup(this, transform.position, false);
         }
     }
 
@@ -326,7 +308,9 @@ public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IBegi
             {
                 _collector.SelectCard.transform.localScale = new Vector3(2f, 2f, 1f);
             }
-            _collector.AllCardDescription(false);
+
+            transform.DOKill();
+            UIManager.Instance.CardDescDown();
         }
     }
 
@@ -336,7 +320,9 @@ public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IBegi
         {
             _collector.SelectCard.transform.localScale = Vector3.one;
             _collector.CardSelect(null);
-            _collector.AllCardDescription(false);
+
+            transform.DOKill();
+            UIManager.Instance.CardDescDown();
         }
     }
 
@@ -347,16 +333,8 @@ public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IBegi
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (isDescOn == false)
-        {
-            _collector.AllCardDescription(false);
-            SetDescription(true);
-        }
-        else
-        {
-            _collector.AllCardDescription(false);
-            SetDescription(false);
-        }
+        transform.DOKill();
+        UIManager.Instance.CardDescPopup(this);
     }
 
     private void Setting()

@@ -248,7 +248,7 @@ public class CardCollector : MonoBehaviour
         }
 
         UpdateCardOutline();
-        AllCardDescription(false);
+        UIManager.Instance.CardDescDown();
     }
 
     public void UpdateCardOutline()
@@ -422,25 +422,6 @@ public class CardCollector : MonoBehaviour
             UpdateCardOutline();
             CardSort();
         });
-    }
-
-    public void AllCardDescription(bool value)
-    {
-        foreach(var card in _handCards)
-        {
-            card.SetDescription(value);
-        }
-    }
-
-    public bool IsCardDescription()
-    {
-        foreach(var card in _handCards)
-        {
-            if (card.isDescOn == true)
-                return true;
-        }
-
-        return false;
     }
 
     public void UIUpdate()
