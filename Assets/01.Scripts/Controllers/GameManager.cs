@@ -159,9 +159,7 @@ public class GameManager : MonoSingleton<GameManager>
                 }
             }
         }
-        
-
-        Debug.Log(string.Format("Turn Change: {0}", gameTurn));
+        //Debug.Log(string.Format("Turn Change: {0}", gameTurn));
 
         if (gameTurn == GameTurn.PlayerWait || gameTurn == GameTurn.MonsterWait)
             currentUnit?.InvokeStatus(StatusInvokeTime.Start);

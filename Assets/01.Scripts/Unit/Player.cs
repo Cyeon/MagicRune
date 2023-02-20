@@ -9,7 +9,7 @@ public class Player : Unit
 
     private void Awake()
     {
-        isPlayer = true;
+        _isPlayer = true;
     }
 
     public void Attack(float dmg)

@@ -503,11 +503,11 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                 {
                     if (touchDif.y > 0 && Mathf.Abs(touchDif.y) > Mathf.Abs(touchDif.x))
                     {
-                        Debug.Log("up");
+                        //Debug.Log("up");
                     }
                     else if (touchDif.y < 0 && Mathf.Abs(touchDif.y) > Mathf.Abs(touchDif.x))
                     {
-                        Debug.Log("down");
+                        //Debug.Log("down");
                         if (_cardCollector.SelectCard == null && isSelectCard == false)
                         {
                             _cardCollector.CardRotate();
@@ -515,7 +515,7 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                     }
                     else if (touchDif.x > 0 && Mathf.Abs(touchDif.y) < Mathf.Abs(touchDif.x))
                     {
-                        Debug.Log("right");
+                        //Debug.Log("right");
                         if (IsBig == true)
                         {
                             if (touchBeganPos.y <= this.GetComponent<RectTransform>().anchoredPosition.y + this.GetComponent<RectTransform>().sizeDelta.y / 2
@@ -527,13 +527,13 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                     }
                     else if (touchDif.x < 0 && Mathf.Abs(touchDif.y) < Mathf.Abs(touchDif.x))
                     {
-                        Debug.Log("Left");
+                        //Debug.Log("Left");
                     }
                 }
                 //��ġ.
                 else
                 {
-                    Debug.Log("touch");
+                    //Debug.Log("touch");
                 }
             }
         }

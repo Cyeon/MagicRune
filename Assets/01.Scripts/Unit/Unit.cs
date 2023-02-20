@@ -7,7 +7,8 @@ using UnityEngine.Rendering;
 
 public class Unit : MonoBehaviour
 {
-    protected bool isPlayer = false;
+    protected bool _isPlayer = false;
+    public bool IsPlayer => _isPlayer;
 
     [SerializeField] protected float _maxHealth;
     public float MaxHealth => _maxHealth;
@@ -25,7 +26,7 @@ public class Unit : MonoBehaviour
             if (_health <= 0)
             {
                 EventManager.TriggerEvent(Define.GAME_END);
-                if (isPlayer)
+                if (_isPlayer)
                     EventManager.TriggerEvent(Define.GAME_LOSE);
                 else
                     EventManager.TriggerEvent(Define.GAME_WIN);
@@ -40,7 +41,7 @@ public class Unit : MonoBehaviour
         set
         {
             _shield = value;
-            UIManager.Instance.UpdateShieldText(isPlayer, _shield);
+            UIManager.Instance.UpdateShieldText(_isPlayer, _shield);
         }
     }
 
@@ -92,7 +93,7 @@ public class Unit : MonoBehaviour
         UIManager.Instance.UpdateHealthbar(false);
         UIManager.Instance.UpdateHealthbar(true);
 
-        if(isPlayer == false)
+        if(_isPlayer == false)
         {
             UIManager.Instance.DamageUIPopup(currentDmg, UIManager.Instance.enemyIcon.transform.position);
         }
@@ -113,13 +114,13 @@ public class Unit : MonoBehaviour
 
     public void InvokeStatus(StatusInvokeTime time)
     {
-        List<Status> status = new List<Status>();
+        List<Status> status;
 
         if(unitStatusDic.TryGetValue(time, out status))
         {
             if(status.Count > 0)
             {
-                StatusManager.Instance.StatusFuncInvoke(status);
+                StatusManager.Instance.StatusFuncInvoke(status, this);
             }
         }
     }

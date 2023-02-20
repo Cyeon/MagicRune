@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 
 public class StatusManager : MonoSingleton<StatusManager>
 {
@@ -14,13 +15,20 @@ public class StatusManager : MonoSingleton<StatusManager>
     }
 
     // ?íƒœ?´ìƒ ?¨ê³¼ ë°œë™
-    public void StatusFuncInvoke(List<Status> status)
+    public void StatusFuncInvoke(List<Status> status, Unit unit)
     {
         foreach(var funStatus in status)
         {
             _statusFuncList.status = funStatus;
-            funStatus.statusFunc?.Invoke();
+            _statusFuncList.unit = unit;
+            if (funStatus.typeValue > 0)
+            {
+                funStatus.statusFunc?.Invoke();
+                Debug.Log(string.Format("{0}, {1}", funStatus.debugName, funStatus.typeValue));
+            }
         }
+
+        StatusUpdate(unit);
     }
 
     // ?íƒœ?´ìƒ ëª©ë¡?ì„œ ê°€?¸ì˜¤ê¸?
@@ -159,5 +167,10 @@ public class StatusManager : MonoSingleton<StatusManager>
 
             indexes.ForEach(e => RemStatus(unit, x.Value[e]));
         }
+    }
+
+    public void RemoveValue(Unit unit, Status status, int value)
+    {
+        unit.unitStatusDic[status.invokeTime].Where(e => e.statusName == status.statusName).FirstOrDefault().typeValue -= value;
     }
 }
