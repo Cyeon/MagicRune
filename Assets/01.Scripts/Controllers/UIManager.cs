@@ -379,16 +379,8 @@ public class UIManager : MonoSingleton<UIManager>
 
     #region Description
 
-    public void CardDescPopup(Card card, Vector3 pos, bool isDown = true)
+    public void CardDescPopup(Card card)
     {
-        if (card == null) return;
-
-        if(isDown == false)
-        {
-            _cardDescPanel.SetActive(false);
-            return;
-        }
-
         _cardDescPanel.SetActive(true);
         //_cardDescPanel.transform.position = pos + new Vector3(0, 700, 0);
 
@@ -399,6 +391,11 @@ public class UIManager : MonoSingleton<UIManager>
         _cardDescInfo.text = rune.CardDescription;
         _cardDescMana.text = rune.Cost.ToString();
         _cardDescCool.text = rune.DelayTurn.ToString();
+    }
+
+    public void CardDescDown()
+    {
+        _cardDescPanel.SetActive(false);
     }
 
     public void StatusDescPopup(Status status, Vector3 pos, bool isDown = true)

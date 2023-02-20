@@ -31,7 +31,7 @@ public enum StatusName
 [System.Serializable]
 public class Status
 {
-    [Header("Infomation")]
+    [Header("Information")]
     public StatusName statusName = StatusName.Null;
     public string debugName = "";
     public string information = "";
@@ -56,6 +56,8 @@ public class Status
     {
         this.statusName = status.statusName;
         this.debugName = status.debugName;
+        this.information = status.information;
+
         this.invokeTime = status.invokeTime;
         this.typeValue = status.typeValue;
 

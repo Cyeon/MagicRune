@@ -354,7 +354,7 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
         //SortCard();
 
         _cardCollector.UpdateCardOutline();
-        _cardCollector.AllCardDescription(false);
+        UIManager.Instance.CardDescDown();
         return card;
     }
 
@@ -556,7 +556,7 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
             return;
         }
 
-        _cardCollector.AllCardDescription(false);
+        UIManager.Instance.CardDescDown();
         Sequence seq = DOTween.Sequence();
         seq.Append(this.transform.DORotate(new Vector3(0, 0, -360 * 5), 0.7f, RotateMode.LocalAxisAdd).SetEase(Ease.OutCubic));
         seq.InsertCallback(0f, () => _effectContent.AttackAnimation());
