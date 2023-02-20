@@ -265,7 +265,7 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                     //card.GetComponent<RectTransform>().anchoredPosition = Input.GetTouch(0).position;
                     card.transform.SetParent(this.transform); // 발동 안됨
                     //card.GetComponent<RectTransform>().anchoredPosition = card.GetComponent<RectTransform>().anchoredPosition;
-                    card.GetComponent<RectTransform>().DOAnchorPos(Vector2.zero, 0.3f).OnComplete(() => card.SetOutlineActive(true)); // 중에 에러남
+                    card.GetComponent<RectTransform>().DOAnchorPos(Vector2.zero, 0.3f).OnComplete(() => card.SetOutlineActive(true)); // 중에 에러남 뒤에거는 됨
                     card.SetIsEquip(true); // 발동 안됨
                     card.SetCoolTime(card.Rune.MainRune.DelayTurn); // 발동 됨
                     DummyCost.Instance.CanUseMainRune(card.Rune.MainRune.Cost);

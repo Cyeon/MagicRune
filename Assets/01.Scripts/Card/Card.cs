@@ -396,7 +396,10 @@ public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IBegi
         _runeOutlineImage = _runeAreaParent.Find("Rune_Line_Image").GetComponent<Image>();
 
         IsFront = true;
-        _defaultMaterial = _cardBase.material;
+        if(_defaultMaterial == null)
+        {
+            _defaultMaterial = _cardBase.material;
+        }
 
         if (_rune != null)
         {
