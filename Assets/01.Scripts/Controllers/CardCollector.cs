@@ -183,12 +183,13 @@ public class CardCollector : MonoBehaviour
         if (SelectCard != null)
         {
             if (Input.touchCount <= 0) return;
+            Touch t = Input.GetTouch(0);
             //SelectCard.GetComponent<RectTransform>().anchoredPosition = new Vector2(Input.GetTouch(0).position.x, Input.GetTouch(0).position.y - this.GetComponent<RectTransform>().anchoredPosition.y);
-            SelectCard.GetComponent<RectTransform>().anchoredPosition = Input.GetTouch(0).position;
+            SelectCard.GetComponent<RectTransform>().anchoredPosition = t.position;
             
             if (_magicCircle.IsBig == true)
             {
-                if (Vector2.Distance(Input.GetTouch(0).position, _magicCircle.GetComponent<RectTransform>().anchoredPosition)
+                if (Vector2.Distance(t.position, _magicCircle.GetComponent<RectTransform>().anchoredPosition)
                     <= _magicCircle.CardAreaDistance)
                 {
                     SelectCard.RuneAreaParent.gameObject.SetActive(true);

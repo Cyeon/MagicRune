@@ -40,10 +40,14 @@ public class EffectObjectPair
 [Serializable]
 public class CustomDict : SerializableDictionary<EffectType, List<EffectObjectPair>> { }
 
+[Serializable]
+public class CustomRuneDict : SerializableDictionary<RuneType, List<Card>> { }
+
 public class MagicCircle : MonoBehaviour, IPointerClickHandler
 {
-    private Dictionary<RuneType, List<Card>> _runeDict;
-    public Dictionary<RuneType, List<Card>> RuneDict => _runeDict;
+    [SerializeField]
+    private CustomRuneDict _runeDict;
+    public CustomRuneDict RuneDict => _runeDict;
     private Dictionary<RuneType, List<Card>> _runeTempDict;
     public Dictionary<RuneType, List<Card>> RuneTempDict => _runeTempDict;
 
@@ -52,6 +56,9 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
     [SerializeField]
     private CustomDict _effectDict;
     public CustomDict EffectDict => _effectDict;
+
+    private Dictionary<EffectType, List<EffectObjectPair>> _tempEffectDict;
+    public Dictionary<EffectType, List<EffectObjectPair>> TempEffectDict => _tempEffectDict;
 
     private const int _mainRuneCnt = 1;
 
@@ -142,7 +149,7 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
 
     public void Awake()
     {
-        _runeDict = new Dictionary<RuneType, List<Card>>();
+        _runeDict = new CustomRuneDict();
         _effectDict = new CustomDict();
 
         _nameText.text = "";
@@ -246,6 +253,7 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                     AssistRuneAnimanation();
                     _effectContent.AddEffect(card.Rune, true);
                     //_cardCollector.CardRotate();
+                    Debug.Log("¸ÞÀÎ ·é ÀÖ¾úÀ¸");
                 });
                 //SortCard();
             }
@@ -255,29 +263,29 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                 seq.AppendCallback(() =>
                 {
                     //card.GetComponent<RectTransform>().anchoredPosition = Input.GetTouch(0).position;
-                    card.transform.SetParent(this.transform);
+                    card.transform.SetParent(this.transform); // ¹ßµ¿ ¾ÈµÊ
                     //card.GetComponent<RectTransform>().anchoredPosition = card.GetComponent<RectTransform>().anchoredPosition;
-                    card.GetComponent<RectTransform>().DOAnchorPos(Vector2.zero, 0.3f).OnComplete(() => card.SetOutlineActive(true));
-                    card.SetIsEquip(true);
-                    card.SetCoolTime(card.Rune.MainRune.DelayTurn);
+                    card.GetComponent<RectTransform>().DOAnchorPos(Vector2.zero, 0.3f).OnComplete(() => card.SetOutlineActive(true)); // Áß¿¡ ¿¡·¯³² µÚ¿¡°Å´Â µÊ
+                    card.SetIsEquip(true); // ¹ßµ¿ ¾ÈµÊ
+                    card.SetCoolTime(card.Rune.MainRune.DelayTurn); // ¹ßµ¿ µÊ
                     DummyCost.Instance.CanUseMainRune(card.Rune.MainRune.Cost);
-                    _cardCollector.CardRotate();
+                    _cardCollector.CardRotate(); // ¹ßµ¿ µÊ
                 });
                 seq.AppendInterval(0.3f);
                 seq.AppendCallback(() =>
                 {
-                    _runeDict.Add(RuneType.Main, new List<Card>() { card });
+                    _runeDict.Add(RuneType.Main, new List<Card>() { card }); // ¹ßµ¿ µÊ
 
                     SortCard();
-                    AddEffect(card, true);
-                    AssistRuneAnimanation();
-                    _effectContent.AddEffect(card.Rune, true);
+                    AddEffect(card, true); // ¹ßµ¿ µÇ³ª?
+                    AssistRuneAnimanation(); // ÇÏ´Ù°¡ »ç¶óÁü
+                    _effectContent.AddEffect(card.Rune, true); // µÊ
                     //_cardCollector.CardRotate();
-                    _cardCollector.IsFront = false;
+                    _cardCollector.IsFront = false; // ¾Æ·¡´Â µÊ
                     _cardCollector.CardSort();
                     StartCoroutine(PlayEffect(card.Rune.RuneAudio));
                     Debug.Log("B");
-
+                    Debug.Log("¸ÞÀÎ ·é ¾ø¾úÀ¸");
                 });
                 //SortCard();
             }
@@ -577,6 +585,7 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                 }
             }
             _runeTempDict = new Dictionary<RuneType, List<Card>>(_runeDict);
+            _tempEffectDict = new Dictionary<EffectType, List<EffectObjectPair>>(_effectDict);
 
             //AttackFunction(EffectType.Status);
             //AttackFunction(EffectType.Defence);
@@ -631,6 +640,7 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
             _effectText.text = "";
             _effectContent.Clear();
             _runeDict.Clear();
+            _effectDict.Clear();
             
             _cardCollector.UpdateCardOutline();
         });
