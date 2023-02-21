@@ -126,6 +126,7 @@ public class GameManager : MonoSingleton<GameManager>
                 EventManager<int>.TriggerEvent(Define.ON_START_PLAYER_TURN, 5);
                 EventManager.TriggerEvent(Define.ON_START_PLAYER_TURN);
                 EventManager<bool>.TriggerEvent(Define.ON_START_PLAYER_TURN, true);
+                this.MagicCircle.CardCollector.UpdateCardOutline();
 
                 SoundManager.instance.PlaySound(turnChangeSound, SoundType.Effect);
 
