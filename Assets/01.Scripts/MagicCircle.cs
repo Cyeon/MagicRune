@@ -567,7 +567,7 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
         UIManager.Instance.CardDescDown();
         Sequence seq = DOTween.Sequence();
         seq.Append(this.transform.DORotate(new Vector3(0, 0, -360 * 5), 0.7f, RotateMode.LocalAxisAdd).SetEase(Ease.OutCubic));
-        seq.InsertCallback(0f, () => _effectContent.AttackAnimation());
+        //seq.InsertCallback(0f, () => _effectContent.AttackAnimation());
         SoundManager.Instance.PlaySound(attackSound, SoundType.Effect);
 
         //int damage = 0;
@@ -586,6 +586,7 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
             }
             _runeTempDict = new Dictionary<RuneType, List<Card>>(_runeDict);
             _tempEffectDict = new Dictionary<EffectType, List<EffectObjectPair>>(_effectDict);
+            _effectContent.AttackAnimation();
 
             //AttackFunction(EffectType.Status);
             //AttackFunction(EffectType.Defence);

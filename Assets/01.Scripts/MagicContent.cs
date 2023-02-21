@@ -308,6 +308,7 @@ public class MagicContent : MonoBehaviour
                 yield return new WaitForSeconds(0.1f);
             }
         }
+        _magicCircle.CardCollector.UpdateCardOutline();
 
         yield return new WaitForSeconds(.2f);
         _magicCircle.RuneTempDict.Clear();

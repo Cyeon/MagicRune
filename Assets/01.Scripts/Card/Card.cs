@@ -387,7 +387,7 @@ public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IBegi
         SetOutlineActive(false);
 
         SetOutlineColor(Color.cyan);
-        //SetOutline(false);
+        SetOutline(true);
     }
 
     public void OnDestroy()
