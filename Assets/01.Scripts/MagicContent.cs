@@ -197,9 +197,9 @@ public class MagicContent : MonoBehaviour
             seq.AppendInterval(0.8f);
             seq.AppendCallback(() =>
             {
-                Clear();
                 _distance = _baseDistance;
                 _rotateSpeed = _baseRotateSpeed;
+                Clear();
                 StartCoroutine(CreateAttackEffect(_startPos, _enemyPos, _playerPos));
             });
         }
@@ -230,9 +230,10 @@ public class MagicContent : MonoBehaviour
 
     private IEnumerator CreateAttackEffect(RectTransform startPos, RectTransform enemyPos, RectTransform playerPos)
     {
-        if (_magicCircle.EffectDict.ContainsKey(EffectType.Status))
+        if (_magicCircle.TempEffectDict.ContainsKey(EffectType.Status))
         {
-            foreach (var d in _magicCircle.EffectDict[EffectType.Status])
+            Debug.Log("상태이살 미시알 발사");
+            foreach (var d in _magicCircle.TempEffectDict[EffectType.Status])
             {
                 Unit target = d.pair.IsEnemy == true ? GameManager.Instance.enemy : GameManager.Instance.player;
 
@@ -246,9 +247,10 @@ public class MagicContent : MonoBehaviour
         }
         yield return new WaitForSeconds(0.1f);
 
-        if (_magicCircle.EffectDict.ContainsKey(EffectType.Defence))
+        if (_magicCircle.TempEffectDict.ContainsKey(EffectType.Defence))
         {
-            foreach (var d in _magicCircle.EffectDict[EffectType.Defence])
+            Debug.Log("방어 미시알 발사");
+            foreach (var d in _magicCircle.TempEffectDict[EffectType.Defence])
             {
                 Unit target = d.pair.IsEnemy == true ? GameManager.Instance.enemy : GameManager.Instance.player;
 
@@ -262,9 +264,10 @@ public class MagicContent : MonoBehaviour
         }
         yield return new WaitForSeconds(0.1f);
 
-        if (_magicCircle.EffectDict.ContainsKey(EffectType.Attack))
+        if (_magicCircle.TempEffectDict.ContainsKey(EffectType.Attack))
         {
-            foreach (var d in _magicCircle.EffectDict[EffectType.Attack])
+            Debug.Log("공격 미시알 발사");
+            foreach (var d in _magicCircle.TempEffectDict[EffectType.Attack])
             {
                 Unit target = d.pair.IsEnemy == true ? GameManager.Instance.enemy : GameManager.Instance.player;
 
@@ -278,9 +281,10 @@ public class MagicContent : MonoBehaviour
         }
         yield return new WaitForSeconds(0.1f);
 
-        if (_magicCircle.EffectDict.ContainsKey(EffectType.Draw))
+        if (_magicCircle.TempEffectDict.ContainsKey(EffectType.Draw))
         {
-            foreach (var d in _magicCircle.EffectDict[EffectType.Draw])
+            Debug.Log("드로우 미시알 발사");
+            foreach (var d in _magicCircle.TempEffectDict[EffectType.Draw])
             {
                 Unit target = d.pair.IsEnemy == true ? GameManager.Instance.enemy : GameManager.Instance.player;
 
@@ -294,9 +298,10 @@ public class MagicContent : MonoBehaviour
         }
         yield return new WaitForSeconds(0.1f);
 
-        if (_magicCircle.EffectDict.ContainsKey(EffectType.Destroy))
+        if (_magicCircle.TempEffectDict.ContainsKey(EffectType.Destroy))
         {
-            foreach (var d in _magicCircle.EffectDict[EffectType.Destroy])
+            Debug.Log("파괴 미시알 발사");
+            foreach (var d in _magicCircle.TempEffectDict[EffectType.Destroy])
             {
                 Unit target = d.pair.IsEnemy == true ? GameManager.Instance.enemy : GameManager.Instance.player;
 
