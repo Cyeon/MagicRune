@@ -29,30 +29,30 @@ public class Card : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHand
     private CardCollector _collector;
     private MagicCircle _magicCircle;
     private bool _isRest = false;
-    public bool IsRest => _isRest;
+    public bool IsRest {  get => _isRest; set => _isRest = value; }
 
-    [System.Obsolete]
-    private int _coolTime;
-    [System.Obsolete]
-    public int CoolTime
-    {
-        get
-        {
-            return _coolTime;
-        }
-        set
-        {
-            _coolTime = value;
-            if (_coolTime <= 0)
-            {
-                _isRest = false;
-            }
-            else
-            {
-                _isRest = true;
-            }
-        }
-    }
+    //[System.Obsolete]
+    //private int _coolTime;
+    //[System.Obsolete]
+    //public int CoolTime
+    //{
+    //    get
+    //    {
+    //        return _coolTime;
+    //    }
+    //    set
+    //    {
+    //        _coolTime = value;
+    //        if (_coolTime <= 0)
+    //        {
+    //            _isRest = false;
+    //        }
+    //        else
+    //        {
+    //            _isRest = true;
+    //        }
+    //    }
+    //}
 
     private bool _isFront = true;
     public bool IsFront
@@ -160,11 +160,11 @@ public class Card : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHand
         }
     }
 
-    [System.Obsolete]
-    public void SetCoolTime(int coolTime)
-    {
-        _coolTime = coolTime;
-    }
+    //[System.Obsolete]
+    //public void SetCoolTime(int coolTime)
+    //{
+    //    _coolTime = coolTime;
+    //}
 
     public void SetRune(bool value)
     {

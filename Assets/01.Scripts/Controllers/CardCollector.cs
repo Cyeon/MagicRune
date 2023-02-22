@@ -221,6 +221,11 @@ public class CardCollector : MonoBehaviour
             {
                 _deckCards = _restCards.ToList();
                 _restCards.Clear();
+
+                foreach(var c in _deckCards)
+                {
+                    c.IsRest = false;
+                }
             }
             int idx = UnityEngine.Random.Range(0, _deckCards.Count);
             Card card = _deckCards[idx];

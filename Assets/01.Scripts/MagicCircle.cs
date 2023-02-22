@@ -619,6 +619,7 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                     {
                         card.IsFront = true;
                     }
+                    card.IsRest = true;
                     _cardCollector._restCards.Add(card);
                 }
             }
