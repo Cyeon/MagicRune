@@ -448,7 +448,7 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
         {
             if (_runeDict.ContainsKey(RuneType.Assist) == false)
             {
-                for (int i = 0; i < _runeDict[RuneType.Main][0].Rune.AssistRuneCount; i++)
+                for (int i = 0; i < _runeDict[RuneType.Main][0].Rune.MainRune.Cost; i++)
                 {
                     GameObject ggo = Instantiate(_runeTemplate.gameObject, this.transform);
                     Card grune = ggo.GetComponent<Card>();
