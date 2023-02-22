@@ -49,6 +49,8 @@ public class CardCollector : MonoBehaviour
     private Vector2 _cardOriginPos;
 
     private int _uiIndex;
+    private int _fingerID = -1;
+    public int FingetID { get => _fingerID; set => _fingerID = value; }
 
     private Card _selectCard;
     public Card SelectCard
@@ -183,10 +185,14 @@ public class CardCollector : MonoBehaviour
         if (SelectCard != null)
         {
             if (Input.touchCount <= 0) return;
-            Touch t = Input.GetTouch(0);
+            if (_fingerID == -1) return;
+            Touch t = Input.GetTouch(_fingerID);
             //SelectCard.GetComponent<RectTransform>().anchoredPosition = new Vector2(Input.GetTouch(0).position.x, Input.GetTouch(0).position.y - this.GetComponent<RectTransform>().anchoredPosition.y);
+            //float widthPercent = t.position.x * 100 / 1440f;
+            //float heightPercent = t.position.y * 100 / 2960f;
+            //SelectCard.GetComponent<RectTransform>().anchoredPosition = new Vector2(t.position.x - widthPercent * 300, t.position.y - widthPercent * 500);
             SelectCard.GetComponent<RectTransform>().anchoredPosition = t.position;
-            
+
             if (_magicCircle.IsBig == true)
             {
                 if (Vector2.Distance(t.position, _magicCircle.GetComponent<RectTransform>().anchoredPosition)

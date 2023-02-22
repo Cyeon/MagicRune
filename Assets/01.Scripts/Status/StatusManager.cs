@@ -70,6 +70,18 @@ public class StatusManager : MonoSingleton<StatusManager>
         }
     }
 
+    public List<StatusName> GetUnitStateList(Unit unit)
+    {
+        List<StatusName> statusList = null;
+        for(int i = 0; i < (int)StatusName.COUNT; i++)
+        {
+            if (IsHaveStatus(unit, (StatusName)i)) {
+                statusList.Add((StatusName)i);
+            }
+        }
+        return statusList;
+    }
+
     // ?íƒœ?´ìƒ ì¶”ê?
     public void AddStatus(Unit unit, StatusName statusName, int value = 1)
     {

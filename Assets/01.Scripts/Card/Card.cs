@@ -308,7 +308,7 @@ public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IBegi
             {
                 _collector.SelectCard.transform.localScale = new Vector3(2f, 2f, 1f);
             }
-
+            _collector.FingetID = eventData.pointerId;
             transform.DOKill();
             UIManager.Instance.CardDescDown();
         }
@@ -320,7 +320,7 @@ public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IBegi
         {
             _collector.SelectCard.transform.localScale = Vector3.one;
             _collector.CardSelect(null);
-
+            _collector.FingetID = -1;
             transform.DOKill();
             UIManager.Instance.CardDescDown();
         }
@@ -387,7 +387,7 @@ public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IBegi
         SetOutlineActive(false);
 
         SetOutlineColor(Color.cyan);
-        SetOutline(false);
+        SetOutline(true);
     }
 
     public void OnDestroy()

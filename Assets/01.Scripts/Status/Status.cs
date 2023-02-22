@@ -25,7 +25,8 @@ public enum StatusName
     Weak,
     Fire,
     Ice,
-    Wound
+    Wound,
+    COUNT
 }
 
 [System.Serializable]
