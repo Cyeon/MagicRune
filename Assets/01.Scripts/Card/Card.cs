@@ -7,7 +7,7 @@ using TMPro;
 using DG.Tweening;
 using MyBox;
 
-public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IBeginDragHandler, IEndDragHandler, IDragHandler, IPointerClickHandler
+public class Card : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandler, IPointerClickHandler
 {
     [SerializeField]
     private GameObject cardPrefab = null;
@@ -31,7 +31,9 @@ public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IBegi
     private bool _isRest = false;
     public bool IsRest => _isRest;
 
+    [System.Obsolete]
     private int _coolTime;
+    [System.Obsolete]
     public int CoolTime
     {
         get
@@ -93,7 +95,7 @@ public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IBegi
     private Material _outlineMaterial;
     private Material _defaultMaterial;
 
-    private bool _isClick;
+    //private bool _isClick;
 
     private void Awake()
     {
@@ -158,6 +160,7 @@ public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IBegi
         }
     }
 
+    [System.Obsolete]
     public void SetCoolTime(int coolTime)
     {
         _coolTime = coolTime;
@@ -215,89 +218,6 @@ public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IBegi
     //        }
     //    }
     //}
-
-    public void OnPointerDown(PointerEventData eventData)
-    {
-        if (_rune == null) return;
-
-        if (_isEquipMagicCircle == false)
-        {
-            //_clickTimer += Time.deltaTime;
-
-            //if(_clickTimer >= 0.5f)
-            //{
-            //    _collector.CardSelect(this);
-            //    _clickTimer = 0f;
-            //}
-
-            _isClick = true;
-            
-
-            //transform.localScale = new Vector3(1.5f, 1.5f, 1);
-        }
-    }
-
-    public void OnPointerUp(PointerEventData eventData)
-    {
-        if (_rune == null) return;
-
-        if (_isEquipMagicCircle == false)
-        {
-            //if(_clickTimer < 0.5f)
-            //{
-            //    Debug.Log("¼´¿© ¶ç¿ì±â");
-            //}
-            //else
-            //{
-            //    _collector.CardSelect(null);
-            //}
-            _isClick = false;
-
-            //if (eventData.clickTime > 0.2f)
-            //{
-            //    _collector.AllCardDescription(false);
-            //}
-            //else
-            //{
-            //    if (_descriptionImage.color.a == 0)
-            //    {
-            //        _collector.AllCardDescription(false);
-            //        SetDescription(true);
-            //    }
-            //    else
-            //    {
-            //        _collector.AllCardDescription(false);
-            //    }
-            //}
-            //transform.localScale = Vector3.one;
-        }
-        else
-        {
-            // ³ªÁß¿¡ ¼öÁ¤
-
-            //if (_rune == null) return;
-
-            //RuneDesc go = Instantiate(_descPrefab, this.transform.parent).GetComponent<RuneDesc>();
-            //Card mainCard = _collector.MagicCircle.RuneDict[RuneType.Main].Find(x => x == this);
-            //if (mainCard != null)
-            //{
-            //    go.UpdateUI(_rune.MainRune);
-            //}
-            //else
-            //{
-            //    Card assistCard = _collector.MagicCircle.RuneDict[RuneType.Assist].Find(x => x == this);
-            //    if (assistCard != null)
-            //    {
-            //        go.UpdateUI(_rune.AssistRune);
-            //    }
-            //    else
-            //    {
-            //        Destroy(go.gameObject);
-            //    }
-            //}
-
-        }
-    }
 
     public void OnBeginDrag(PointerEventData eventData)
     {

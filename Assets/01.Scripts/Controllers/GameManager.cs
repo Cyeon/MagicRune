@@ -54,7 +54,7 @@ public class GameManager : MonoSingleton<GameManager>
 
     private void OnPlayerTurn()
     {
-        EventManager.TriggerEvent(Define.ON_END_MONSTER_TURN);
+        //EventManager.TriggerEvent(Define.ON_END_MONSTER_TURN);
 
         gameTurn = GameTurn.Player;
         currentUnit = player;

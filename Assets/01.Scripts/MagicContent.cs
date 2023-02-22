@@ -39,9 +39,6 @@ public class MagicContent : MonoBehaviour
     private RectTransform _enemyPos;
     [SerializeField]
     private RectTransform _playerPos;
-
-    [SerializeField, Range(0f, 1f)]
-    private float _bezierRate = 0.5f;
     #endregion
 
     private void Start()
