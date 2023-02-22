@@ -448,7 +448,7 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
         {
             if (_runeDict.ContainsKey(RuneType.Assist) == false)
             {
-                for (int i = 0; i < _runeDict[RuneType.Main][0].Rune.AssistRuneCount; i++)
+                for (int i = 0; i < _runeDict[RuneType.Main][0].Rune.MainRune.Cost; i++)
                 {
                     GameObject ggo = Instantiate(_runeTemplate.gameObject, this.transform);
                     Card grune = ggo.GetComponent<Card>();
@@ -567,14 +567,8 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
         UIManager.Instance.CardDescDown();
         Sequence seq = DOTween.Sequence();
         seq.Append(this.transform.DORotate(new Vector3(0, 0, -360 * 5), 0.7f, RotateMode.LocalAxisAdd).SetEase(Ease.OutCubic));
-        seq.InsertCallback(0f, () => _effectContent.AttackAnimation());
-        SoundManager.Instance.PlaySound(attackSound, SoundType.Effect);
-
-        //int damage = 0;
-        seq.AppendInterval(0.1f);
-        seq.AppendCallback(() =>
+        seq.InsertCallback(0f, () =>
         {
-            // 부여, 방어, 공격, 삭제 순서
             for (int i = _runeDict[RuneType.Assist].Count - 1; i >= 0; i--)
             {
                 if (_runeDict[RuneType.Assist][i].Rune == null)
@@ -586,6 +580,17 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
             }
             _runeTempDict = new Dictionary<RuneType, List<Card>>(_runeDict);
             _tempEffectDict = new Dictionary<EffectType, List<EffectObjectPair>>(_effectDict);
+            _effectContent.AttackAnimation();
+        });
+        SoundManager.Instance.PlaySound(attackSound, SoundType.Effect);
+
+        //int damage = 0;
+        //seq.AppendInterval(0.1f);
+        seq.AppendCallback(() =>
+        {
+            // 부여, 방어, 공격, 삭제 순서
+            
+            //_effectContent.AttackAnimation();
 
             //AttackFunction(EffectType.Status);
             //AttackFunction(EffectType.Defence);

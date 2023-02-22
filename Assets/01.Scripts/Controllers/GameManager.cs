@@ -28,6 +28,8 @@ public class GameManager : MonoSingleton<GameManager>
     private void Awake()
     {
         DOTween.Init(false, false, LogBehaviour.Default).SetCapacity(500, 50);
+
+        Application.targetFrameRate = 30;
     }
 
     private void Start()
@@ -124,6 +126,7 @@ public class GameManager : MonoSingleton<GameManager>
                 EventManager<int>.TriggerEvent(Define.ON_START_PLAYER_TURN, 5);
                 EventManager.TriggerEvent(Define.ON_START_PLAYER_TURN);
                 EventManager<bool>.TriggerEvent(Define.ON_START_PLAYER_TURN, true);
+                this.MagicCircle.CardCollector.UpdateCardOutline();
 
                 SoundManager.instance.PlaySound(turnChangeSound, SoundType.Effect);
 
@@ -174,7 +177,7 @@ public class GameManager : MonoSingleton<GameManager>
         this.MagicCircle.RuneDict.Clear();
         this.MagicCircle.EffectDict.Clear();
         this.MagicCircle.EffectContent.Clear();
-        this.MagicCircle.CardCollector.UpdateCardOutline();
+        //this.MagicCircle.CardCollector.UpdateCardOutline();
         this.MagicCircle.CardCollector.handCardOutline(false);
         this.MagicCircle.CardCollector.IsFront = true;
     }
