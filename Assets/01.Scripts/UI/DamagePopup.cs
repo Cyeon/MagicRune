@@ -15,10 +15,15 @@ public class DamagePopup : MonoBehaviour
 
     }
 
-    public void Setup(float damageAmount, Vector3 pos)
+    public void Setup(float damageAmount, Vector3 pos, Status status = null)
     {
         transform.position = pos;
         _textMesh.SetText(damageAmount.ToString());
+        if(status != null)
+        {
+            _textMesh.color = status.textColor;
+            _textMesh.SetText(string.Format("{0} {1}", status.debugName, damageAmount));
+        }
 
         Sequence seq = DOTween.Sequence();
         seq.Append(transform.DOJump(new Vector3(pos.x + Random.Range(-1f, 1f), pos.y, pos.x), 0.8f, 1, 1f));
