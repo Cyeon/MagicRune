@@ -287,10 +287,10 @@ public class UIManager : MonoSingleton<UIManager>
     #endregion
 
     #region Popup
-    public void DamageUIPopup(float amount, Vector3 pos)
+    public void DamageUIPopup(float amount, Vector3 pos, Status status = null)
     {
         DamagePopup popup = Instantiate(_damagePopup, _canvas).GetComponent<DamagePopup>();
-        popup.Setup(amount, pos);
+        popup.Setup(amount, pos, status);
     }
 
     /*public void StatusPopup(Status status, Vector3 pos)
