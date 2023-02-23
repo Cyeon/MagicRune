@@ -50,5 +50,5 @@ public class CameraResolution : MonoBehaviour
         //}
     }
 
-    public void OnPreCull() => GL.Clear(true, true, Color.clear);
+    public void OnPreCull() => GL.Clear(true, true, Color.black);
 }
