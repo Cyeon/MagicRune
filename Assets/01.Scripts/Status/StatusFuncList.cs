@@ -24,7 +24,7 @@ public class StatusFuncList : MonoBehaviour
 
     public void StackDmg()
     {
-        unit.TakeDamage(status.typeValue, true);
+        unit.TakeDamage(status.typeValue, true, status);
         UIManager.Instance.UpdateHealthbar(unit.IsPlayer);
         StatusManager.Instance.RemoveValue(unit, status, status.typeValue);
         UIManager.Instance.ReloadStatusPanel(unit, status.statusName, status.typeValue);

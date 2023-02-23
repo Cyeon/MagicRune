@@ -67,7 +67,7 @@ public class Unit : MonoBehaviour
     /// 데미지 받는 함수
     /// </summary>
     /// <param name="damage"></param>
-    public void TakeDamage(float damage, bool isFixed = false)
+    public void TakeDamage(float damage, bool isFixed = false, Status status = null)
     {
         currentDmg = damage;
         InvokeStatus(StatusInvokeTime.GetDamage);
@@ -95,7 +95,7 @@ public class Unit : MonoBehaviour
 
         if(_isPlayer == false)
         {
-            UIManager.Instance.DamageUIPopup(currentDmg, UIManager.Instance.enemyIcon.transform.position);
+            UIManager.Instance.DamageUIPopup(currentDmg, UIManager.Instance.enemyIcon.transform.position, status);
         }
     }
 
