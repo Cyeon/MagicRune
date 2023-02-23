@@ -192,7 +192,7 @@ public class CardCollector : MonoBehaviour
             //float widthPercent = t.position.x * 100 / 1440f;
             //float heightPercent = t.position.y * 100 / 2960f;
             //SelectCard.GetComponent<RectTransform>().anchoredPosition = new Vector2(t.position.x - widthPercent * 300, t.position.y - widthPercent * 500);
-            SelectCard.GetComponent<RectTransform>().anchoredPosition = t.position;
+            SelectCard.GetComponent<RectTransform>().anchoredPosition = t.position + t.position / 2f;
 
             if (_magicCircle.IsBig == true)
             {
