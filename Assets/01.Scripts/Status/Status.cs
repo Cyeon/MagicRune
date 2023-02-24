@@ -36,6 +36,7 @@ public class Status
     public StatusName statusName = StatusName.Null;
     public string debugName = "";
     public string information = "";
+    public Color textColor = Color.white;
 
     [Header("Type")]
     public  StatusInvokeTime invokeTime = StatusInvokeTime.Start;
@@ -49,7 +50,7 @@ public class Status
     [Header("Resource")]
     [ShowAssetPreview(32, 32), Tooltip("¿ÃπÃ¡ˆ")]
     public Sprite icon;
-    public Color color;
+    public Color color = Color.white;
 
     [HideInInspector] public Unit unit;
 
@@ -58,6 +59,7 @@ public class Status
         this.statusName = status.statusName;
         this.debugName = status.debugName;
         this.information = status.information;
+        this.textColor = status.textColor;
 
         this.invokeTime = status.invokeTime;
         this.typeValue = status.typeValue;

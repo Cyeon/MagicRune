@@ -265,7 +265,6 @@ public class CardCollector : MonoBehaviour
         }
 
         UpdateCardOutline();
-        UIManager.Instance.CardDescDown();
     }
 
     public void UpdateCardOutline()
