@@ -124,7 +124,7 @@ public class CardSO : ScriptableObject
     [Min(1), Tooltip("보조 룬 개수")]
     public int AssistRuneCount = 5;
 
-    public List<keywordEnum> keywordList;
+    public List<keywordEnum> keywordList = new List<keywordEnum>();
 
     [Tooltip("메인 룬의 속성")]
     public RuneProperty MainRune;

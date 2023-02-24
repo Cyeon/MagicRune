@@ -86,6 +86,9 @@ public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IBegi
     public Transform RuneAreaParent => _runeAreaParent;
     private Image _runeImage;
     private Image _runeOutlineImage;
+
+    // Keyword
+    private Transform _keywardParent;
     #endregion
 
     private RectTransform _rect;
@@ -108,6 +111,14 @@ public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IBegi
     public void SetRune(CardSO rune)
     {
         _rune = rune;
+
+        foreach (var keyword in Rune.keywordList)
+        {
+            GameObject panel = UIManager.Instance.word.KeywordInit(keyword);
+            panel.transform.SetParent(_keywardParent);
+            panel.transform.localScale = Vector3.one;
+        }
+        _keywardParent.gameObject.SetActive(false);
 
         if (_rune != null)
         {
@@ -310,7 +321,7 @@ public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IBegi
             }
             _collector.FingetID = eventData.pointerId;
             transform.DOKill();
-            UIManager.Instance.CardDescDown();
+            _keywardParent.gameObject.SetActive(true);
         }
     }
 
@@ -322,7 +333,7 @@ public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IBegi
             _collector.CardSelect(null);
             _collector.FingetID = -1;
             transform.DOKill();
-            UIManager.Instance.CardDescDown();
+            _keywardParent.gameObject.SetActive(false);
         }
     }
 
@@ -334,7 +345,6 @@ public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IBegi
     public void OnPointerClick(PointerEventData eventData)
     {
         transform.DOKill();
-        UIManager.Instance.CardDescPopup(this);
     }
 
     private void Setting()
@@ -372,6 +382,10 @@ public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IBegi
         _runeAreaParent = transform.Find("Rune_Area");
         _runeImage = _runeAreaParent.Find("Rune_Image").GetComponent<Image>();
         _runeOutlineImage = _runeAreaParent.Find("Rune_Line_Image").GetComponent<Image>();
+
+        _keywardParent = transform.Find("Keyword");
+        
+        
 
         IsFront = true;
         if(_defaultMaterial == null)
