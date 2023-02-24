@@ -30,7 +30,6 @@ public class BgPanel : MonoBehaviour
                         }
                         else
                         {
-                            UIManager.Instance.CardDescDown();
                             UIManager.Instance.StatusDescPopup(null, Vector3.one, false);
                         }
                     }

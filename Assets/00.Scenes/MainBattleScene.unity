@@ -289,6 +289,7 @@ GameObject:
   m_Component:
   - component: {fileID: 32757503}
   - component: {fileID: 32757504}
+  - component: {fileID: 32757505}
   m_Layer: 0
   m_Name: UIManager
   m_TagString: Untagged
@@ -324,6 +325,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _canvas: {fileID: 424719286}
+  word: {fileID: 32757505}
   _enemyPatternIcon: {fileID: 970427238}
   _enemyPatternValueText: {fileID: 1256963603}
   _enemyShieldText: {fileID: 793505168}
@@ -339,8 +341,30 @@ MonoBehaviour:
   _turnPanel: {fileID: 1100535925}
   _cardDescPanel: {fileID: 1318579749}
   _statusDescPanel: {fileID: 1429253406}
+  cardAssistPanel: {fileID: 2448040518769343994, guid: c10195b8e58a1494a88d5bd9e59a7f13, type: 3}
   _damagePopup: {fileID: 5936919601908214315, guid: 3de2c828ec5d1784fb5f0afd994f4ae6, type: 3}
   _infoMessage: {fileID: 6188063278671750921, guid: 9ae759340fa35564db012299312d316d, type: 3}
+--- !u!114 &32757505
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 32757502}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee482aa6a47c2294cbc2417f152530d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  keywordPanel: {fileID: 2430659938167498467, guid: e46c1903921a9034aaf99b4872c68bf8, type: 3}
+  keywordList:
+  - keyword: 0
+    keywordName: "\uC18C\uBA78"
+    information: "\uC18C\uBA78\uD569\uB2C8\uB2E4."
+  - keyword: 1
+    keywordName: "\uD654\uC5FC"
+    information: "\uD134\uC774 \uB05D\uB098\uBA74\n1\uC2A4\uD0DD\uB2F9 \uB370\uBBF8\uC9C0\uAC00
+      \uB4E4\uC5B4\uAC11\uB2C8\uB2E4."
 --- !u!1 &33765186
 GameObject:
   m_ObjectHideFlags: 0
@@ -7330,10 +7354,6 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7894501251795029304, guid: 0b2473ba1cc452340a96d3513d8a9299, type: 3}
-      propertyPath: m_Alpha
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 8821936185594058275, guid: 0b2473ba1cc452340a96d3513d8a9299, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -7400,7 +7420,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8821936185594058275, guid: 0b2473ba1cc452340a96d3513d8a9299, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: -225
       objectReference: {fileID: 0}
     - target: {fileID: 8821936185594058275, guid: 0b2473ba1cc452340a96d3513d8a9299, type: 3}
       propertyPath: m_AnchoredPosition.y
