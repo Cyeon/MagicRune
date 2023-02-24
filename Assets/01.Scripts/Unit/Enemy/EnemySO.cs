@@ -11,4 +11,5 @@ public class EnemySO : ScriptableObject
 
     public GameObject prefab;
 
+    public List<PatternEnum> patternList = new List<PatternEnum>();
 }
