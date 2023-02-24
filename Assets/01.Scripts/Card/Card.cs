@@ -112,13 +112,22 @@ public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IBegi
     {
         _rune = rune;
 
-        foreach (var keyword in Rune.keywordList)
+        if(_rune != null)
         {
-            GameObject panel = UIManager.Instance.word.KeywordInit(keyword);
-            panel.transform.SetParent(_keywardParent);
-            panel.transform.localScale = Vector3.one;
+            GameObject assert = Instantiate(UIManager.Instance.cardAssistPanel);
+            assert.transform.Find("Name").GetComponent<TextMeshProUGUI>().text = rune.AssistRune.Name;
+            assert.transform.Find("Information").GetComponent<TextMeshProUGUI>().text = rune.AssistRune.CardDescription;
+            assert.transform.SetParent(_keywardParent);
+            assert.transform.localScale = Vector3.one;
+
+            foreach (var keyword in Rune.keywordList)
+            {
+                GameObject panel = UIManager.Instance.word.KeywordInit(keyword);
+                panel.transform.SetParent(_keywardParent);
+                panel.transform.localScale = Vector3.one;
+            }
+            _keywardParent.gameObject.SetActive(false);
         }
-        _keywardParent.gameObject.SetActive(false);
 
         if (_rune != null)
         {

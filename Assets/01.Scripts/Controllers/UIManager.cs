@@ -41,9 +41,19 @@ public class UIManager : MonoSingleton<UIManager>
     private Image _turnBackground;
     private TextMeshProUGUI _turnText;
 
+    [SerializeField] private GameObject _cardDescPanel;
+    private TextMeshProUGUI _cardDescName;
+    private Image _cardDescSkillIcon;
+    private TextMeshProUGUI _cardDescInfo;
+    private TextMeshProUGUI _cardDescMana;
+    private TextMeshProUGUI _cardDescCool;
+    private Transform _cardDescKeyword;
+
     [SerializeField] private GameObject _statusDescPanel;
     private TextMeshPro _statusDescName;
     private TextMeshPro _statusDescInfo;
+
+    public GameObject cardAssistPanel;
  
     [Header("ETC")]
     [SerializeField] private GameObject _damagePopup;
@@ -71,6 +81,13 @@ public class UIManager : MonoSingleton<UIManager>
         _playerHealthFeedbackSlider = _playerSlideBar.Find("HealthFeedbackBar").GetComponent<Slider>();
         _playerShieldSlider = _playerSlideBar.Find("ShieldBar").GetComponent<Slider>();
         _playerHealthText = _playerHealthSlider.transform.Find("HealthText").GetComponent<TextMeshProUGUI>();
+
+        _cardDescName = _cardDescPanel.transform.Find("Desc_Name_Text").GetComponent<TextMeshProUGUI>();
+        _cardDescSkillIcon = _cardDescPanel.transform.Find("Desc_Skill_Image").GetComponent<Image>();
+        _cardDescInfo = _cardDescPanel.transform.Find("Desc_Description").GetComponent<TextMeshProUGUI>();
+        _cardDescMana = _cardDescPanel.transform.Find("Desc_Mana").Find("Mana_Text").GetComponent<TextMeshProUGUI>();
+        _cardDescCool = _cardDescPanel.transform.Find("Desc_CoolTime").Find("CoolTime_Text").GetComponent<TextMeshProUGUI>();
+        _cardDescKeyword = _cardDescPanel.transform.Find("Keyword");
 
         _statusDescName = _statusDescPanel.transform.Find("Name").GetComponent<TextMeshPro>();
         _statusDescInfo = _statusDescPanel.transform.Find("Infomation").GetComponent<TextMeshPro>();
@@ -366,6 +383,37 @@ public class UIManager : MonoSingleton<UIManager>
     #endregion
 
     #region Description
+
+    public void CardDescPopup(Card card)
+    {
+        _cardDescPanel.SetActive(true);
+        //_cardDescPanel.transform.position = pos + new Vector3(0, 700, 0);
+
+        RuneProperty rune = card.IsFront ? card.Rune.MainRune : card.Rune.AssistRune;
+        
+        _cardDescName.text = rune.Name;
+        _cardDescSkillIcon.sprite = rune.CardImage;
+        _cardDescInfo.text = rune.CardDescription;
+        _cardDescMana.text = rune.Cost.ToString();
+        _cardDescCool.text = rune.DelayTurn.ToString();
+
+        for(int i = 0; i < _cardDescKeyword.childCount; i++)
+        {
+            Destroy(_cardDescKeyword.GetChild(i).gameObject);
+        }
+
+        foreach(var keyword in card.Rune.keywordList)
+        {
+            GameObject panel = word.KeywordInit(keyword);
+            panel.transform.SetParent(_cardDescKeyword);
+            panel.transform.localScale = Vector3.one;
+        }
+    }
+
+    public void CardDescDown()
+    {
+        _cardDescPanel.SetActive(false);
+    }
 
     public void StatusDescPopup(Status status, Vector3 pos, bool isDown = true)
     {
