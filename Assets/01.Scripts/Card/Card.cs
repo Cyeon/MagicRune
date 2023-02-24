@@ -75,11 +75,12 @@ public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IBegi
     private Image _skillImage;
     private TMP_Text _costText;
     private Text _coolTimeText;
-    private Text _mainSubText;
+    private TMP_Text _mainSubText;
     private Text _skillText;
     private TMP_Text _nameText;
     private Text _assistRuneCount;
     private Image _descriptionImage;
+    private TMP_Text _descText;
 
     // Rune Area
     private Transform _runeAreaParent;
@@ -137,12 +138,14 @@ public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IBegi
 
     public void UpdateUI(bool isFront)
     {
-        if (!_nameText || !_skillImage || !_costText || !_runeImage || !_descriptionImage) { Setting(); } // || !_coolTimeText || !_mainSubText || !_skillText || !_runeImage) { Setting(); }
+        if (!_nameText || !_skillImage || !_costText || !_runeImage || !_descText || !_mainSubText) { Setting(); } // || !_coolTimeText || !_mainSubText || !_skillText || !_runeImage) { Setting(); }
         if (isFront == true)
         {
             _nameText.text = _rune.MainRune.Name;
             _skillImage.sprite = _rune.MainRune.CardImage;
             _costText.text = _rune.MainRune.Cost.ToString();
+            _mainSubText.text = "∏ﬁ¿Œ ∑È";
+            _descText.text = _rune.MainRune.CardDescription;
             //_coolTimeText.text = _rune.MainRune.DelayTurn.ToString();
             //_mainSubText.text = "∏ﬁ¿Œ";
             //_skillText.text = _rune.MainRune.CardDescription;
@@ -154,6 +157,8 @@ public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IBegi
             _nameText.text = _rune.AssistRune.Name;
             _skillImage.sprite = _rune.AssistRune.CardImage;
             _costText.text = _rune.AssistRune.Cost.ToString();
+            _mainSubText.text = "º≠∫Í ∑È";
+            _descText.text = _rune.AssistRune.CardDescription;
             //_coolTimeText.text = _rune.AssistRune.DelayTurn.ToString();
             //_mainSubText.text = "∫∏¡∂";
             //_skillText.text = _rune.AssistRune.CardDescription;
@@ -385,8 +390,10 @@ public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IBegi
         _nameText = _cardAreaParent.Find("Name_Text").GetComponent<TMP_Text>();
         _skillImage = _cardAreaParent.Find("Skill_Image").GetComponent<Image>();
         _costText = _cardAreaParent.Find("Cost_Text").GetComponent<TMP_Text>();
+        _mainSubText = _cardAreaParent.Find("MainSub_Text").GetComponent<TMP_Text>();
 
-        _descriptionImage = _cardAreaParent.Find("Description_Image").GetComponent<Image>();
+        _descText = _cardAreaParent.Find("Desc_Text").GetComponent<TMP_Text>();
+        //_descriptionImage = _cardAreaParent.Find("Description_Image").GetComponent<Image>();
 
         _runeAreaParent = transform.Find("Rune_Area");
         _runeImage = _runeAreaParent.Find("Rune_Image").GetComponent<Image>();
