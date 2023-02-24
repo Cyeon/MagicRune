@@ -8,6 +8,7 @@ using TMPro;
 public class UIManager : MonoSingleton<UIManager>
 {
     [SerializeField] private Transform _canvas;
+    [SerializeField] private Keyword word;
 
     [Header("Enemy UI")]
     [SerializeField] private Image _enemyPatternIcon;
@@ -46,6 +47,7 @@ public class UIManager : MonoSingleton<UIManager>
     private TextMeshProUGUI _cardDescInfo;
     private TextMeshProUGUI _cardDescMana;
     private TextMeshProUGUI _cardDescCool;
+    private Transform _cardDescKeyword;
 
     [SerializeField] private GameObject _statusDescPanel;
     private TextMeshPro _statusDescName;
@@ -83,6 +85,7 @@ public class UIManager : MonoSingleton<UIManager>
         _cardDescInfo = _cardDescPanel.transform.Find("Desc_Description").GetComponent<TextMeshProUGUI>();
         _cardDescMana = _cardDescPanel.transform.Find("Desc_Mana").Find("Mana_Text").GetComponent<TextMeshProUGUI>();
         _cardDescCool = _cardDescPanel.transform.Find("Desc_CoolTime").Find("CoolTime_Text").GetComponent<TextMeshProUGUI>();
+        _cardDescKeyword = _cardDescPanel.transform.Find("Keyword");
 
         _statusDescName = _statusDescPanel.transform.Find("Name").GetComponent<TextMeshPro>();
         _statusDescInfo = _statusDescPanel.transform.Find("Infomation").GetComponent<TextMeshPro>();
@@ -391,6 +394,18 @@ public class UIManager : MonoSingleton<UIManager>
         _cardDescInfo.text = rune.CardDescription;
         _cardDescMana.text = rune.Cost.ToString();
         _cardDescCool.text = rune.DelayTurn.ToString();
+
+        for(int i = 0; i < _cardDescKeyword.childCount; i++)
+        {
+            Destroy(_cardDescKeyword.GetChild(i).gameObject);
+        }
+
+        foreach(var keyword in card.Rune.keywordList)
+        {
+            GameObject panel = word.KeywordInit(keyword);
+            panel.transform.SetParent(_cardDescKeyword);
+            panel.transform.localScale = Vector3.one;
+        }
     }
 
     public void CardDescDown()
