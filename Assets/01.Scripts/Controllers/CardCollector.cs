@@ -263,8 +263,8 @@ public class CardCollector : MonoBehaviour
             rect.localScale = Vector3.one;
             _handCards[i].IsFront = _isFront;
         }
-
-        UpdateCardOutline();
+        handCardOutline(false);
+        //UpdateCardOutline();
     }
 
     public void UpdateCardOutline()
