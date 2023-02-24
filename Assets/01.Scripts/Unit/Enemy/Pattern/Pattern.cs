@@ -9,6 +9,7 @@ using UnityEngine.Events;
 public class Pattern
 {
     public string patternName;
+    public PatternEnum patternEnum;
     [ShowAssetPreview(32, 32), Tooltip("¾ÆÀÌÄÜ")] public Sprite icon;
     public float value;
     public UnityEvent patternStartFunc;
