@@ -156,7 +156,7 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
         _effectText.text = "";
 
     }
-    
+
     private void Update()
     {
         Swipe1();
@@ -221,79 +221,48 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                 UIManager.Instance.InfoMessagePopup("마나가 부족합니다.", pos);
                 return null;
             }
-            if (_runeDict.ContainsKey(RuneType.Main))
-            {
-                if (_runeDict[RuneType.Main].Count >= _mainRuneCnt)
-                {
-                    UIManager.Instance.InfoMessagePopup("메인 룬을 먼저 넣어주세요.", pos);
-                    return null;
-                }
+            //if (_runeDict[RuneType.Main].Count >= _mainRuneCnt)
+            //{
+            //    UIManager.Instance.InfoMessagePopup("메인 룬을 먼저 넣어주세요.", pos);
+            //    return null;
+            //}
 
-                Sequence seq = DOTween.Sequence();
-                seq.AppendCallback(() =>
-                {
-                    card.GetComponent<RectTransform>().anchoredPosition = Input.GetTouch(0).position;
-                    card.transform.SetParent(this.transform);
-                    card.GetComponent<RectTransform>().anchoredPosition = card.GetComponent<RectTransform>().anchoredPosition;
-                    card.GetComponent<RectTransform>().DOAnchorPos(Vector2.zero, 0.3f).OnComplete(() => card.SetOutlineActive(true));
-                    card.SetIsEquip(true);
-                    //card.SetCoolTime(card.Rune.MainRune.DelayTurn);
-                    DummyCost.Instance.CanUseMainRune(card.Rune.MainRune.Cost);
-                    _cardCollector.CardRotate();
-                });
-                seq.AppendInterval(0.3f);
-                seq.AppendCallback(() =>
+            Sequence seq = DOTween.Sequence();
+            seq.AppendCallback(() =>
+            {
+                //card.GetComponent<RectTransform>().anchoredPosition = Input.GetTouch(0).position;
+                card.transform.SetParent(this.transform); // 발동 안됨
+                                                          //card.GetComponent<RectTransform>().anchoredPosition = card.GetComponent<RectTransform>().anchoredPosition;
+                if (_runeDict.ContainsKey(RuneType.Main))
                 {
                     _runeDict[RuneType.Main].Add(card);
-
-                    _cardCollector.IsFront = false;
-                    _cardCollector.CardSort();
-                    SortCard();
-                    AddEffect(card, true);
-                    AssistRuneAnimanation();
-                    _effectContent.AddEffect(card.Rune, true);
-                    //_cardCollector.CardRotate();
-                    Debug.Log("메인 룬 있었으");
-                });
-                //SortCard();
-            }
-            else
-            {
-                Sequence seq = DOTween.Sequence();
-                seq.AppendCallback(() =>
-                {
-                    //card.GetComponent<RectTransform>().anchoredPosition = Input.GetTouch(0).position;
-                    card.transform.SetParent(this.transform); // 발동 안됨
-                    //card.GetComponent<RectTransform>().anchoredPosition = card.GetComponent<RectTransform>().anchoredPosition;
-                    card.GetComponent<RectTransform>().DOAnchorPos(Vector2.zero, 0.3f).OnComplete(() => card.SetOutlineActive(true)); // 중에 에러남 뒤에거는 됨
-                    card.SetIsEquip(true); // 발동 안됨
-                    //card.SetCoolTime(card.Rune.MainRune.DelayTurn); // 발동 됨
-                    DummyCost.Instance.CanUseMainRune(card.Rune.MainRune.Cost);
-                    _cardCollector.CardRotate(); // 발동 됨
-                });
-                seq.AppendInterval(0.3f);
-                seq.AppendCallback(() =>
+                }
+                else
                 {
                     _runeDict.Add(RuneType.Main, new List<Card>() { card }); // 발동 됨
-
+                }
+                card.SetIsEquip(true); // 발동 안됨
+                card.GetComponent<RectTransform>().DOAnchorPos(GetComponent<RectTransform>().anchoredPosition, 0.3f).OnComplete(() =>
+                {
+                    card.SetOutlineActive(true);
                     SortCard();
                     AddEffect(card, true); // 발동 되나?
                     AssistRuneAnimanation(); // 하다가 사라짐
                     _effectContent.AddEffect(card.Rune, true); // 됨
-                    //_cardCollector.CardRotate();
+                                                               //_cardCollector.CardRotate();
                     _cardCollector.IsFront = false; // 아래는 됨
                     _cardCollector.CardSort();
                     StartCoroutine(PlayEffect(card.Rune.RuneAudio));
                     Debug.Log("B");
-                    Debug.Log("메인 룬 없었으");
-                });
-                //SortCard();
-            }
+                }); // 중에 에러남 뒤에거는 됨
+                                       //card.SetCoolTime(card.Rune.MainRune.DelayTurn); // 발동 됨
+                DummyCost.Instance.CanUseMainRune(card.Rune.MainRune.Cost);
+                _cardCollector.CardRotate(); // 발동 됨
+            });
+            //SortCard();
         }
         else
         {
-            
-
             if (_runeDict.ContainsKey(RuneType.Assist) == false)
             {
 
@@ -587,7 +556,7 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
         seq.AppendCallback(() =>
         {
             // 부여, 방어, 공격, 삭제 순서
-            
+
             //_effectContent.AttackAnimation();
 
             //AttackFunction(EffectType.Status);
@@ -645,7 +614,7 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
             _effectContent.Clear();
             _runeDict.Clear();
             _effectDict.Clear();
-            
+
             _cardCollector.UpdateCardOutline();
         });
 
