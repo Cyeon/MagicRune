@@ -144,6 +144,7 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                 _effectContent.SetActive(false);
                 //_bgPanel.transform.GetChild(0).GetComponent<Image>().raycastTarget = true;
                 this.transform.rotation = Quaternion.Euler(0, 0, 0);
+                _cardCollector.HandCardSetRune(false);
             }
         }
     }

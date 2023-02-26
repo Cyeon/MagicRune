@@ -336,7 +336,7 @@ public class CardCollector : MonoBehaviour
             rect.localScale = Vector3.one;
             _handCards[i].IsFront = _isFront;
         }
-        handCardOutline(false);
+        HandCardOutline(false);
         //UpdateCardOutline();
     }
 
@@ -420,11 +420,19 @@ public class CardCollector : MonoBehaviour
         }
     }
 
-    public void handCardOutline(bool value)
+    public void HandCardOutline(bool value)
     {
         foreach (var c in _handCards)
         {
             c.SetOutline(value);
+        }
+    }
+
+    public void HandCardSetRune(bool value)
+    {
+        foreach (var c in _handCards)
+        {
+            c.SetRune(value);
         }
     }
 
