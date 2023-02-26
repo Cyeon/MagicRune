@@ -101,6 +101,7 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
     [SerializeField]
     private AudioClip attackSound = null;
 
+    private bool _isAddCard = false;
     private bool _isBig = false;
 
     public bool IsBig
@@ -211,6 +212,8 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
 
         if (_isBig == false) return null;
 
+        if (_isAddCard == true) return null;
+
         if (_runeDict.ContainsKey(RuneType.Main) == false || (_runeDict[RuneType.Main].Count == 0))
         {
             Touch touch = Input.GetTouch(0);
@@ -230,9 +233,11 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
             Sequence seq = DOTween.Sequence();
             seq.AppendCallback(() =>
             {
+                _isAddCard = true;
                 //card.GetComponent<RectTransform>().anchoredPosition = Input.GetTouch(0).position;
                 card.transform.SetParent(this.transform); // ¹ßµ¿ ¾ÈµÊ
-                                                          //card.GetComponent<RectTransform>().anchoredPosition = card.GetComponent<RectTransform>().anchoredPosition;
+                DummyCost.Instance.CanUseMainRune(card.Rune.MainRune.Cost);
+                //card.GetComponent<RectTransform>().anchoredPosition = card.GetComponent<RectTransform>().anchoredPosition;
                 if (_runeDict.ContainsKey(RuneType.Main))
                 {
                     _runeDict[RuneType.Main].Add(card);
@@ -253,13 +258,12 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                     _cardCollector.IsFront = false; // ¾Æ·¡´Â µÊ
                     _cardCollector.CardSort();
                     StartCoroutine(PlayEffect(card.Rune.RuneAudio));
+                    _isAddCard = false;
                     Debug.Log("B");
                 }); // Áß¿¡ ¿¡·¯³² µÚ¿¡°Å´Â µÊ
                                        //card.SetCoolTime(card.Rune.MainRune.DelayTurn); // ¹ßµ¿ µÊ
-                DummyCost.Instance.CanUseMainRune(card.Rune.MainRune.Cost);
                 _cardCollector.CardRotate(); // ¹ßµ¿ µÊ
             });
-            //SortCard();
         }
         else
         {
@@ -300,6 +304,7 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
             Sequence seq = DOTween.Sequence();
             seq.AppendCallback(() =>
             {
+                _isAddCard = true;
                 //card.GetComponent<RectTransform>().anchoredPosition = Input.GetTouch(0).position;
                 card.transform.SetParent(this.transform);
                 //card.GetComponent<RectTransform>().anchoredPosition = card.GetComponent<RectTransform>().anchoredPosition;
@@ -317,6 +322,7 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                         //UpdateMagicName();
                         _effectContent.AddEffect(card.Rune, false);
                         _cardCollector.CardSort();
+                        _isAddCard = false;
                     });
                 }
             });

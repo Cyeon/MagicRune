@@ -254,7 +254,7 @@ public class Card : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHand
             {
                 _collector.SelectCard.transform.localScale = new Vector3(2f, 2f, 1f);
             }
-            _collector.FingetID = eventData.pointerId;
+            _collector.FingerID = eventData.pointerId;
             transform.DOKill();
             _keywardParent.gameObject.SetActive(true);
         }
@@ -265,8 +265,8 @@ public class Card : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHand
         if (_collector.SelectCard != null)
         {
             _collector.SelectCard.transform.localScale = Vector3.one;
+            _collector.FingerID = -1;
             _collector.CardSelect(null);
-            _collector.FingetID = -1;
             transform.DOKill();
             _keywardParent.gameObject.SetActive(false);
         }

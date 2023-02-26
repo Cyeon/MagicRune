@@ -51,7 +51,7 @@ public class CardCollector : MonoBehaviour
 
     private int _uiIndex;
     private int _fingerID = -1;
-    public int FingetID
+    public int FingerID
     {
         get => _fingerID;
         set
@@ -61,76 +61,6 @@ public class CardCollector : MonoBehaviour
             {
                 if (_selectCard != null)
                 {
-                    if (Vector2.Distance(_selectCard.GetComponent<RectTransform>().anchoredPosition, _magicCircle.GetComponent<RectTransform>().anchoredPosition)
-                        <= _magicCircle.CardAreaDistance)
-                    {
-                        bool main = _magicCircle.RuneDict.ContainsKey(RuneType.Main) == false && _isFront == true;
-                        bool assist = _magicCircle.RuneDict.ContainsKey(RuneType.Main) == true && _isFront == false;
-                        if (main || assist)
-                        {
-                            Card isAdd = _magicCircle.AddCard(SelectCard);
-                            if (isAdd != null)
-                            {
-                                //Debug.Log(isAdd);
-                                _tempCards.Add(isAdd);
-                                _handCards.Remove(isAdd);
-                                UpdateCardOutline();
-                                //SelectCard.gameObject.SetActive(false);
-                            }
-                        }
-                        else
-                        {
-                            if (_magicCircle.RuneDict.ContainsKey(RuneType.Main) == false && _isFront == false)
-                            {
-                                UIManager.Instance.InfoMessagePopup("메인 룬을 넣어주세요.", GetTouchPos());
-                            }
-                            else if (_magicCircle.RuneDict.ContainsKey(RuneType.Assist) == true && _isFront == true)
-                            {
-                                UIManager.Instance.InfoMessagePopup("보조 룬을 넣어주세요.", GetTouchPos());
-                            }
-                        }
-                    }
-                    else
-                    {
-                        Sequence seq = DOTween.Sequence();
-                        seq.AppendCallback(() => _selectCard.SetRune(false));
-                        seq.Append(_selectCard.GetComponent<RectTransform>().DOAnchorPos(_cardOriginPos, 0.2f)).OnComplete(() =>
-                        {
-                            CardSelect(null);
-                            if (_cardOriginPos == null)
-                            {
-                                _cardOriginPos = Vector2.zero;
-                            }
-                            _magicCircle.SortCard();
-                            CardSort();
-                        });
-                    }
-                }
-            }
-        }
-    }
-
-    private Card _selectCard;
-    public Card SelectCard
-    {
-        get => _selectCard;
-        private set
-        {
-            if (value != null)
-            {
-                if (_isCardRotate == true) return;
-
-                _selectCard = value;
-                //_selectCard.transform.localScale = new Vector3(2f, 2f, 1f);
-                _cardOriginPos = _selectCard.GetComponent<RectTransform>().anchoredPosition;
-                _magicCircle.IsBig = true;
-            }
-            else
-            {
-                if (_selectCard != null)
-                {
-                    //_selectCard.transform.localScale = Vector3.one;
-                    if (Input.touchCount == 0) return;
                     Card isAdd = null;
                     if (Vector2.Distance(_selectCard.GetComponent<RectTransform>().anchoredPosition, _magicCircle.GetComponent<RectTransform>().anchoredPosition)
                     <= _magicCircle.CardAreaDistance)
@@ -164,11 +94,10 @@ public class CardCollector : MonoBehaviour
                     Sequence seq = DOTween.Sequence();
                     seq.AppendCallback(() =>
                     {
-                        if (isAdd == null)
+                        if (isAdd == null && _selectCard != null)
                         {
                             _selectCard.SetRune(false);
                         }
-                        _selectCard = value;
                     });
                     if (_selectCard != null)
                     {
@@ -192,6 +121,93 @@ public class CardCollector : MonoBehaviour
                             CardSort();
                         });
                     }
+                }
+            }
+        }
+    }
+
+    private Card _selectCard;
+    public Card SelectCard
+    {
+        get => _selectCard;
+        private set
+        {
+            if (value != null)
+            {
+                if (_isCardRotate == true) return;
+
+                _selectCard = value;
+                //_selectCard.transform.localScale = new Vector3(2f, 2f, 1f);
+                _cardOriginPos = _selectCard.GetComponent<RectTransform>().anchoredPosition;
+                _magicCircle.IsBig = true;
+            }
+            else
+            {
+                if (_selectCard != null)
+                {
+                    //_selectCard.transform.localScale = Vector3.one;
+                    if (Input.touchCount == 0) return;
+                    //Card isAdd = null;
+                    //if (Vector2.Distance(_selectCard.GetComponent<RectTransform>().anchoredPosition, _magicCircle.GetComponent<RectTransform>().anchoredPosition)
+                    //<= _magicCircle.CardAreaDistance)
+                    //{
+                    //    bool main = _magicCircle.RuneDict.ContainsKey(RuneType.Main) == false && _isFront == true;
+                    //    bool assist = _magicCircle.RuneDict.ContainsKey(RuneType.Main) == true && _isFront == false;
+                    //    if (main || assist)
+                    //    {
+                    //        isAdd = _magicCircle.AddCard(SelectCard);
+                    //        if (isAdd != null)
+                    //        {
+                    //            //Debug.Log(isAdd);
+                    //            _tempCards.Add(isAdd);
+                    //            _handCards.Remove(isAdd);
+                    //            UpdateCardOutline();
+                    //            //SelectCard.gameObject.SetActive(false);
+                    //        }
+                    //    }
+                    //    else
+                    //    {
+                    //        if (_magicCircle.RuneDict.ContainsKey(RuneType.Main) == false && _isFront == false)
+                    //        {
+                    //            UIManager.Instance.InfoMessagePopup("메인 룬을 넣어주세요.", GetTouchPos());
+                    //        }
+                    //        else if (_magicCircle.RuneDict.ContainsKey(RuneType.Assist) == true && _isFront == true)
+                    //        {
+                    //            UIManager.Instance.InfoMessagePopup("보조 룬을 넣어주세요.", GetTouchPos());
+                    //        }
+                    //    }
+                    //}
+                    //Sequence seq = DOTween.Sequence();
+                    //seq.AppendCallback(() =>
+                    //{
+                    //    if (isAdd == null)
+                    //    {
+                    //        _selectCard.SetRune(false);
+                    //    }
+                    //    _selectCard = value;
+                    //});
+                    //if (_selectCard != null)
+                    //{
+                    //    if (_cardOriginPos == null)
+                    //    {
+                    //        _cardOriginPos = Vector2.zero;
+                    //    }
+
+                    //    seq.Append(_selectCard.GetComponent<RectTransform>().DOAnchorPos(_cardOriginPos, 0.2f));
+                    //    seq.InsertCallback(0.2f, () =>
+                    //    {
+                    //        _magicCircle.SortCard();
+                    //        CardSort();
+                    //    });
+                    //}
+                    //else
+                    //{
+                    //    seq.AppendCallback(() =>
+                    //    {
+                    //        _magicCircle.SortCard();
+                    //        CardSort();
+                    //    });
+                    //}
 
                 }
             }
@@ -244,7 +260,7 @@ public class CardCollector : MonoBehaviour
         {
             if (Input.touchCount <= 0) return;
             if (_fingerID == -1) return;
-            Touch t = Input.GetTouch(FingetID);
+            Touch t = Input.GetTouch(FingerID);
             //SelectCard.GetComponent<RectTransform>().anchoredPosition = new Vector2(Input.GetTouch(0).position.x, Input.GetTouch(0).position.y - this.GetComponent<RectTransform>().anchoredPosition.y);
             //float widthPercent = t.position.x * 100 / 1440f;
             //float heightPercent = t.position.y * 100 / 2960f;
