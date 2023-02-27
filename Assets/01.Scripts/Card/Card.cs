@@ -277,7 +277,15 @@ public class Card : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHand
     public void OnPointerUp(PointerEventData eventData)
     {
         _isClick = false;
-        _fingerId = -1;
+        if (_collector.SelectCard != null && _isEquipMagicCircle == false)
+        {
+            _collector.SelectCard.transform.localScale = Vector3.one;
+            _collector.FingerID = -1;
+            _collector.CardSelect(null);
+            _fingerId = -1;
+            transform.DOKill();
+            _keywardParent.gameObject.SetActive(false);
+        }
     }
 
     private void Update()
