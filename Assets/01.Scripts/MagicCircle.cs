@@ -181,6 +181,14 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                 float width = Mathf.Cos(angle * i + (90 * Mathf.Deg2Rad)) * _assistRuneDistance;
                 if (_runeDict[RuneType.Assist][i] != null)
                 {
+                    //if(_runeDict[RuneType.Assist][i].Rune == null)
+                    //{
+                    //    _runeDict[RuneType.Assist][i].GetComponent<RectTransform>().anchoredPosition = new Vector3(width, height, 0);
+                    //}
+                    //else
+                    //{
+                    //    _runeDict[RuneType.Assist][i].GetComponent<RectTransform>().anchoredPosition = (Vector3)GetComponent<RectTransform>().anchoredPosition + new Vector3(width, height, 0);
+                    //}
                     _runeDict[RuneType.Assist][i].GetComponent<RectTransform>().anchoredPosition = new Vector3(width, height, 0);
                 }
             }
@@ -201,7 +209,8 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                 {
                     float height = Mathf.Sin(angle * i + (90 * Mathf.Deg2Rad)) * distance;
                     float width = Mathf.Cos(angle * i + (90 * Mathf.Deg2Rad)) * distance;
-                    _runeDict[RuneType.Main][i].GetComponent<RectTransform>().anchoredPosition = new Vector3(width, height, 0);
+                    //_runeDict[RuneType.Main][i].GetComponent<RectTransform>().anchoredPosition = GetComponent<RectTransform>().anchoredPosition3D + new Vector3(width, height, 0);
+                    _runeDict[RuneType.Main][i].GetComponent<RectTransform>().anchoredPosition = new Vector3(width, height, 0) - (Vector3)GetComponent<RectTransform>().anchoredPosition;
                 }
             }
         }
@@ -236,7 +245,8 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
             {
                 _isAddCard = true;
                 //card.GetComponent<RectTransform>().anchoredPosition = Input.GetTouch(0).position;
-                card.transform.SetParent(this.transform); // 발동 안됨
+                //card.transform.SetParent(this.transform); // 애때매 발생하는 버그 같은데..?
+
                 DummyCost.Instance.CanUseMainRune(card.Rune.MainRune.Cost);
                 //card.GetComponent<RectTransform>().anchoredPosition = card.GetComponent<RectTransform>().anchoredPosition;
                 if (_runeDict.ContainsKey(RuneType.Main))
@@ -250,12 +260,13 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                 card.SetIsEquip(true); // 발동 안됨
                 card.GetComponent<RectTransform>().DOAnchorPos(GetComponent<RectTransform>().anchoredPosition, 0.3f).OnComplete(() =>
                 {
-                    card.SetOutlineActive(true);
-                    SortCard();
+                    card.SetRuneOutlineActive(true);
                     AddEffect(card, true); // 발동 되나?
+                    card.transform.SetParent(this.transform);
+                    SortCard();
                     AssistRuneAnimanation(); // 하다가 사라짐
                     _effectContent.AddEffect(card.Rune, true); // 됨
-                                                               //_cardCollector.CardRotate();
+                    //_cardCollector.CardRotate();
                     _cardCollector.IsFront = false; // 아래는 됨
                     _cardCollector.CardSort();
                     StartCoroutine(PlayEffect(card.Rune.RuneAudio));
@@ -307,7 +318,7 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
             {
                 _isAddCard = true;
                 //card.GetComponent<RectTransform>().anchoredPosition = Input.GetTouch(0).position;
-                card.transform.SetParent(this.transform);
+                //card.transform.SetParent(this.transform); // 임시로 주석
                 //card.GetComponent<RectTransform>().anchoredPosition = card.GetComponent<RectTransform>().anchoredPosition;
                 //card.SetCoolTime(card.Rune.AssistRune.DelayTurn);
                 card.SetIsEquip(true);
@@ -316,7 +327,7 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                 {
                     card.GetComponent<RectTransform>().DOAnchorPos(_runeDict[RuneType.Assist][changeIndex].GetComponent<RectTransform>().anchoredPosition, 0.3f).OnComplete(() =>
                     {
-                        card.SetOutlineActive(true);
+                        card.SetRuneOutlineActive(true);
                         Destroy(_runeDict[RuneType.Assist][changeIndex].gameObject); // Argument error 진짜 가끔 여태까지 1번 봄
                         _runeDict[RuneType.Assist][changeIndex] = card;
                         AddEffect(card, false);
@@ -324,19 +335,21 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                         _effectContent.AddEffect(card.Rune, false);
                         _cardCollector.CardSort();
                         _isAddCard = false;
+                        SortCard();
                     });
                 }
             });
             seq.AppendCallback(() =>
             {
+                card.transform.SetParent(this.transform);
                 SortCard();
                 //UpdateMagicName();
                 StartCoroutine(PlayEffect(card.Rune.RuneAudio));
                 _cardCollector.CardSort();
             });
         }
-        //SortCard();
 
+        SortCard();
         _cardCollector.UpdateCardOutline();
         return card;
     }
@@ -501,16 +514,16 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                         //Debug.Log("right");
                         if (IsBig == true)
                         {
-                            //if (touchBeganPos.y <= this.GetComponent<RectTransform>().anchoredPosition.y + this.GetComponent<RectTransform>().sizeDelta.y / 2
-                            //    && touchBeganPos.y >= this.GetComponent<RectTransform>().anchoredPosition.y - this.GetComponent<RectTransform>().sizeDelta.y / 2)
-                            //{
-                            //    Damage();
-                            //}
-
-                            if(Vector2.Distance(this.GetComponent<RectTransform>().anchoredPosition, touchBeganPos) <= _cardAreaDistance)
+                            if ((touchBeganPos.y <= this.GetComponent<RectTransform>().anchoredPosition.y + this.GetComponent<RectTransform>().sizeDelta.y / 2)
+                                && (touchBeganPos.y >= this.GetComponent<RectTransform>().anchoredPosition.y - this.GetComponent<RectTransform>().sizeDelta.y / 2))
                             {
                                 Damage();
                             }
+
+                            //if(Vector2.Distance(this.GetComponent<RectTransform>().anchoredPosition, touchBeganPos) <= _cardAreaDistance)
+                            //{
+                            //    Damage();
+                            //}
                         }
                     }
                     else if (touchDif.x < 0 && Mathf.Abs(touchDif.y) < Mathf.Abs(touchDif.x))

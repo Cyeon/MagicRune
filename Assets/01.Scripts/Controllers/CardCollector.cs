@@ -145,8 +145,9 @@ public class CardCollector : MonoBehaviour
             {
                 if (_selectCard != null)
                 {
+                    _selectCard = value;
                     //_selectCard.transform.localScale = Vector3.one;
-                    if (Input.touchCount == 0) return;
+                    //if (Input.touchCount == 0) return;
                     //Card isAdd = null;
                     //if (Vector2.Distance(_selectCard.GetComponent<RectTransform>().anchoredPosition, _magicCircle.GetComponent<RectTransform>().anchoredPosition)
                     //<= _magicCircle.CardAreaDistance)
@@ -337,7 +338,7 @@ public class CardCollector : MonoBehaviour
             _handCards[i].IsFront = _isFront;
         }
         HandCardOutline(false);
-        //UpdateCardOutline();
+        UpdateCardOutline();
     }
 
     public void UpdateCardOutline()
@@ -354,7 +355,7 @@ public class CardCollector : MonoBehaviour
                 {
                     if (DummyCost.Instance.CanRune(_handCards[i].Rune.MainRune.Cost))
                     {
-                        _handCards[i].SetOutlineColor(Color.cyan);
+                        //_handCards[i].SetOutlineColor(Color.cyan);
                         _handCards[i].SetOutline(true);
                     }
                     else
@@ -388,7 +389,7 @@ public class CardCollector : MonoBehaviour
                         {
                             if (DummyCost.Instance.CanRune(_handCards[i].Rune.AssistRune.Cost))
                             {
-                                _handCards[i].SetOutlineColor(Color.cyan);
+                                //_handCards[i].SetOutlineColor(Color.cyan);
                                 _handCards[i].SetOutline(true);
                             }
                             else
@@ -402,7 +403,7 @@ public class CardCollector : MonoBehaviour
                     {
                         if (DummyCost.Instance.CanRune(_handCards[i].Rune.AssistRune.Cost))
                         {
-                            _handCards[i].SetOutlineColor(Color.cyan);
+                            //_handCards[i].SetOutlineColor(Color.cyan);
                             _handCards[i].SetOutline(true);
                         }
                         else
