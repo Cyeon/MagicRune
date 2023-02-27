@@ -168,6 +168,7 @@ public class Card : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHand
             //_skillText.text = _rune.AssistRune.CardDescription;
             //_assistRuneCount.text = "0";
         }
+        _cardBase.sprite = _rune.CardBackground;
         _runeImage.sprite = _rune.RuneImage;
     }
 

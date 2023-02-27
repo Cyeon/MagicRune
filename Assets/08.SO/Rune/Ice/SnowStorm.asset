@@ -13,17 +13,18 @@ MonoBehaviour:
   m_Name: SnowStorm
   m_EditorClassIdentifier: 
   RuneImage: {fileID: 21300000, guid: 0a0246a2a4c9dfd4a89f4d1786647b2c, type: 3}
+  CardBackground: {fileID: 21300000, guid: b237c544df1afb74d991da59a84cac99, type: 3}
   RuneEffect: {fileID: 6180192860807105000, guid: 8aff89af8ff01e145a18643faab49f35, type: 3}
   RuneAudio: {fileID: 8300000, guid: e5a88c5c866a65444919e77d2582ceca, type: 3}
   AssistRuneCount: 3
+  keywordList: 
   MainRune:
     Name: "\uB208\uBCF4\uB77C"
     CardImage: {fileID: 21300000, guid: 36a5f5515c7b69e4782bb5ce4a382342, type: 3}
     CardDescription: "10\uC758 \uB300\uBBF8\uC9C0\uB97C \uC8FC\uACE0, 2\uC758 \uBE59\uACB0\uC744
       \uBD80\uC5EC\uD55C\uB2E4"
     EffectDescription:
-    - IsAttackEffect: 1
-      Condition:
+    - Condition:
         ConditionType: 0
         AttributeType: 0
         StatusType: 0
@@ -36,8 +37,7 @@ MonoBehaviour:
       AttackType: 0
       AttributeType: 0
       Effect: 10
-    - IsAttackEffect: 1
-      Condition:
+    - Condition:
         ConditionType: 0
         AttributeType: 0
         StatusType: 0
@@ -60,8 +60,7 @@ MonoBehaviour:
       \uD654\uC5FC \uC18D\uC131 \uB8EC\uC774 \uC5C6\uC744 \uACBD\uC6B0 1\uC758 \uBE59\uACB0\uC744
       \uBD80\uC5EC\uD55C\uB2E4"
     EffectDescription:
-    - IsAttackEffect: 1
-      Condition:
+    - Condition:
         ConditionType: 0
         AttributeType: 0
         StatusType: 0
@@ -74,8 +73,7 @@ MonoBehaviour:
       AttackType: 0
       AttributeType: 0
       Effect: 5
-    - IsAttackEffect: 1
-      Condition:
+    - Condition:
         ConditionType: 2
         AttributeType: 2
         StatusType: 0

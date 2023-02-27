@@ -117,6 +117,8 @@ public class CardSO : ScriptableObject
     
     [ShowAssetPreview(32, 32), Tooltip("마법진에 들어갈 룬 이미지")]
     public Sprite RuneImage;
+    [ShowAssetPreview(32, 32), Tooltip("카드의 배경")]
+    public Sprite CardBackground;
     [ShowAssetPreview(32, 32), Tooltip("마법진 위에 띄울 이펙트")]
     public GameObject RuneEffect;
     [Tooltip("마법진에 들어갈 때 나올 소리")]
