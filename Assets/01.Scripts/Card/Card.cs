@@ -254,8 +254,8 @@ public class Card : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHand
         {
             _collector.SelectCard.transform.localScale = Vector3.one;
             _collector.FingerID = -1;
-            _fingerId = -1;
             _collector.CardSelect(null);
+            _fingerId = -1;
             transform.DOKill();
             _keywardParent.gameObject.SetActive(false);
         }

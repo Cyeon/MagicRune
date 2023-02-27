@@ -145,8 +145,9 @@ public class CardCollector : MonoBehaviour
             {
                 if (_selectCard != null)
                 {
+                    _selectCard = value;
                     //_selectCard.transform.localScale = Vector3.one;
-                    if (Input.touchCount == 0) return;
+                    //if (Input.touchCount == 0) return;
                     //Card isAdd = null;
                     //if (Vector2.Distance(_selectCard.GetComponent<RectTransform>().anchoredPosition, _magicCircle.GetComponent<RectTransform>().anchoredPosition)
                     //<= _magicCircle.CardAreaDistance)
