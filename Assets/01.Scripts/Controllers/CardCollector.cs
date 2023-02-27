@@ -126,7 +126,7 @@ public class CardCollector : MonoBehaviour
         }
     }
 
-    private Card _selectCard;
+    public Card _selectCard;
     public Card SelectCard
     {
         get => _selectCard;
