@@ -107,8 +107,7 @@ public class RuneProperty
     [Min(0), Tooltip("코스트")]
     public int Cost; // 코스트
     [Min(0), Tooltip("재사용 가능 턴")]
-    public int DelayTurn; // 재사용 가능 턴
-
+    public int DelayTurn; // 재사용 가능 ]897
     // 나중에 공격 범위도
 }
 
@@ -124,6 +123,8 @@ public class CardSO : ScriptableObject
     public AudioClip RuneAudio = null;
     [Min(1), Tooltip("보조 룬 개수")]
     public int AssistRuneCount = 5;
+
+    public List<keywordEnum> keywordList = new List<keywordEnum>();
 
     [Tooltip("메인 룬의 속성")]
     public RuneProperty MainRune;

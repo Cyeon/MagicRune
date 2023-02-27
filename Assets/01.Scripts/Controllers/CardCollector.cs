@@ -9,6 +9,7 @@ using System;
 using MyBox;
 using MinValue = NaughtyAttributes.MinValueAttribute;
 using MaxValue = NaughtyAttributes.MaxValueAttribute;
+using System.Linq;
 //using static UnityEditor.PlayerSettings;
 
 public class CardCollector : MonoBehaviour
@@ -166,7 +167,7 @@ public class CardCollector : MonoBehaviour
             go.transform.rotation = Quaternion.identity;
         }
 
-        EventManager.StartListening(Define.ON_END_MONSTER_TURN, CoolTimeDecrease);
+        //EventManager.StartListening(Define.ON_END_MONSTER_TURN, CoolTimeDecrease);
         EventManager<int>.StartListening(Define.ON_START_PLAYER_TURN, CardDraw);
         EventManager<bool>.StartListening(Define.ON_START_PLAYER_TURN, CardOnOff);
         EventManager<bool>.StartListening(Define.ON_START_MONSTER_TURN, CardOnOff);
@@ -191,7 +192,7 @@ public class CardCollector : MonoBehaviour
             //float widthPercent = t.position.x * 100 / 1440f;
             //float heightPercent = t.position.y * 100 / 2960f;
             //SelectCard.GetComponent<RectTransform>().anchoredPosition = new Vector2(t.position.x - widthPercent * 300, t.position.y - widthPercent * 500);
-            SelectCard.GetComponent<RectTransform>().anchoredPosition = t.position;
+            SelectCard.GetComponent<RectTransform>().anchoredPosition = t.position + t.position / 2f;
 
             if (_magicCircle.IsBig == true)
             {
@@ -216,7 +217,16 @@ public class CardCollector : MonoBehaviour
     {
         for (int i = 0; i < amount; i++)
         {
-            if (_deckCards.Count <= 0) { break; }
+            if (_deckCards.Count <= 0)
+            {
+                _deckCards = _restCards.ToList();
+                _restCards.Clear();
+
+                foreach(var c in _deckCards)
+                {
+                    c.IsRest = false;
+                }
+            }
             int idx = UnityEngine.Random.Range(0, _deckCards.Count);
             Card card = _deckCards[idx];
             if (!_handCards.Contains(card))
@@ -253,9 +263,8 @@ public class CardCollector : MonoBehaviour
             rect.localScale = Vector3.one;
             _handCards[i].IsFront = _isFront;
         }
-
-        UpdateCardOutline();
-        UIManager.Instance.CardDescDown();
+        handCardOutline(false);
+        //UpdateCardOutline();
     }
 
     public void UpdateCardOutline()
@@ -378,21 +387,21 @@ public class CardCollector : MonoBehaviour
         SelectCard = card;
     }
 
-    private void CoolTimeDecrease()
-    {
-        for (int i = _restCards.Count - 1; i >= 0; i--)
-        {
-            Card card = _restCards[i];
-            if (card == null) { continue; }
-            card.CoolTime--;
-            if (card.CoolTime <= 0)
-            {
-                _deckCards.Add(card);
-                _restCards.Remove(card);
-            }
-        }
-        UIUpdate();
-    }
+    //private void CoolTimeDecrease()
+    //{
+    //    for (int i = _restCards.Count - 1; i >= 0; i--)
+    //    {
+    //        Card card = _restCards[i];
+    //        if (card == null) { continue; }
+    //        card.CoolTime--;
+    //        if (card.CoolTime <= 0)
+    //        {
+    //            _deckCards.Add(card);
+    //            _restCards.Remove(card);
+    //        }
+    //    }
+    //    UIUpdate();
+    //}
 
     public void CardRotate()
     {
@@ -466,7 +475,7 @@ public class CardCollector : MonoBehaviour
     }
     private void OnDestroy()
     {
-        EventManager.StopListening(Define.ON_END_MONSTER_TURN, CoolTimeDecrease);
+        //EventManager.StopListening(Define.ON_END_MONSTER_TURN, CoolTimeDecrease);
         EventManager<int>.StopListening(Define.ON_START_PLAYER_TURN, CardDraw);
         EventManager<bool>.StopListening(Define.ON_START_PLAYER_TURN, CardOnOff);
         EventManager<bool>.StopListening(Define.ON_START_MONSTER_TURN, CardOnOff);

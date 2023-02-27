@@ -35,6 +35,8 @@ public class GameManager : MonoSingleton<GameManager>
     private void Start()
     {
         enemy = EnemyManager.Instance.SpawnEnemy();
+        PatternManager.Instance.PatternInit(enemy.enemyInfo.patternList);
+
         player = FindObjectOfType<Player>();
 
         UIManager.instance.HealthbarInit(true, player.HP);
@@ -54,7 +56,7 @@ public class GameManager : MonoSingleton<GameManager>
 
     private void OnPlayerTurn()
     {
-        EventManager.TriggerEvent(Define.ON_END_MONSTER_TURN);
+        //EventManager.TriggerEvent(Define.ON_END_MONSTER_TURN);
 
         gameTurn = GameTurn.Player;
         currentUnit = player;

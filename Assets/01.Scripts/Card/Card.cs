@@ -7,7 +7,7 @@ using TMPro;
 using DG.Tweening;
 using MyBox;
 
-public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IBeginDragHandler, IEndDragHandler, IDragHandler, IPointerClickHandler
+public class Card : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandler, IPointerClickHandler
 {
     [SerializeField]
     private GameObject cardPrefab = null;
@@ -29,28 +29,30 @@ public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IBegi
     private CardCollector _collector;
     private MagicCircle _magicCircle;
     private bool _isRest = false;
-    public bool IsRest => _isRest;
+    public bool IsRest {  get => _isRest; set => _isRest = value; }
 
-    private int _coolTime;
-    public int CoolTime
-    {
-        get
-        {
-            return _coolTime;
-        }
-        set
-        {
-            _coolTime = value;
-            if (_coolTime <= 0)
-            {
-                _isRest = false;
-            }
-            else
-            {
-                _isRest = true;
-            }
-        }
-    }
+    //[System.Obsolete]
+    //private int _coolTime;
+    //[System.Obsolete]
+    //public int CoolTime
+    //{
+    //    get
+    //    {
+    //        return _coolTime;
+    //    }
+    //    set
+    //    {
+    //        _coolTime = value;
+    //        if (_coolTime <= 0)
+    //        {
+    //            _isRest = false;
+    //        }
+    //        else
+    //        {
+    //            _isRest = true;
+    //        }
+    //    }
+    //}
 
     private bool _isFront = true;
     public bool IsFront
@@ -75,17 +77,21 @@ public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IBegi
     private Image _skillImage;
     private TMP_Text _costText;
     private Text _coolTimeText;
-    private Text _mainSubText;
+    private TMP_Text _mainSubText;
     private Text _skillText;
     private TMP_Text _nameText;
     private Text _assistRuneCount;
     private Image _descriptionImage;
+    private TMP_Text _descText;
 
     // Rune Area
     private Transform _runeAreaParent;
     public Transform RuneAreaParent => _runeAreaParent;
     private Image _runeImage;
     private Image _runeOutlineImage;
+
+    // Keyword
+    private Transform _keywardParent;
     #endregion
 
     private RectTransform _rect;
@@ -93,7 +99,7 @@ public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IBegi
     private Material _outlineMaterial;
     private Material _defaultMaterial;
 
-    private bool _isClick;
+    //private bool _isClick;
 
     private void Awake()
     {
@@ -109,6 +115,24 @@ public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IBegi
     {
         _rune = rune;
 
+        if(_rune != null)
+        {
+            GameObject assert = Instantiate(UIManager.Instance.cardAssistPanel);
+            assert.transform.Find("Name").GetComponent<TextMeshProUGUI>().text = string.Format("[보조] {0}", rune.AssistRune.Name);
+            assert.transform.Find("Mana").GetComponent<TMP_Text>().text = rune.AssistRune.Cost.ToString();
+            assert.transform.Find("Information").GetComponent<TextMeshProUGUI>().text = rune.AssistRune.CardDescription;
+            assert.transform.SetParent(_keywardParent);
+            assert.transform.localScale = Vector3.one;
+
+            foreach (var keyword in Rune.keywordList)
+            {
+                GameObject panel = UIManager.Instance.word.KeywordInit(keyword);
+                panel.transform.SetParent(_keywardParent);
+                panel.transform.localScale = Vector3.one;
+            }
+            _keywardParent.gameObject.SetActive(false);
+        }
+
         if (_rune != null)
         {
             UpdateUI(_isFront);
@@ -117,12 +141,14 @@ public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IBegi
 
     public void UpdateUI(bool isFront)
     {
-        if (!_nameText || !_skillImage || !_costText || !_runeImage || !_descriptionImage) { Setting(); } // || !_coolTimeText || !_mainSubText || !_skillText || !_runeImage) { Setting(); }
+        if (!_nameText || !_skillImage || !_costText || !_runeImage || !_descText || !_mainSubText) { Setting(); } // || !_coolTimeText || !_mainSubText || !_skillText || !_runeImage) { Setting(); }
         if (isFront == true)
         {
             _nameText.text = _rune.MainRune.Name;
             _skillImage.sprite = _rune.MainRune.CardImage;
             _costText.text = _rune.MainRune.Cost.ToString();
+            _mainSubText.text = "메인 룬";
+            _descText.text = _rune.MainRune.CardDescription;
             //_coolTimeText.text = _rune.MainRune.DelayTurn.ToString();
             //_mainSubText.text = "메인";
             //_skillText.text = _rune.MainRune.CardDescription;
@@ -134,6 +160,8 @@ public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IBegi
             _nameText.text = _rune.AssistRune.Name;
             _skillImage.sprite = _rune.AssistRune.CardImage;
             _costText.text = _rune.AssistRune.Cost.ToString();
+            _mainSubText.text = "서브 룬";
+            _descText.text = _rune.AssistRune.CardDescription;
             //_coolTimeText.text = _rune.AssistRune.DelayTurn.ToString();
             //_mainSubText.text = "보조";
             //_skillText.text = _rune.AssistRune.CardDescription;
@@ -158,10 +186,11 @@ public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IBegi
         }
     }
 
-    public void SetCoolTime(int coolTime)
-    {
-        _coolTime = coolTime;
-    }
+    //[System.Obsolete]
+    //public void SetCoolTime(int coolTime)
+    //{
+    //    _coolTime = coolTime;
+    //}
 
     public void SetRune(bool value)
     {
@@ -216,89 +245,6 @@ public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IBegi
     //    }
     //}
 
-    public void OnPointerDown(PointerEventData eventData)
-    {
-        if (_rune == null) return;
-
-        if (_isEquipMagicCircle == false)
-        {
-            //_clickTimer += Time.deltaTime;
-
-            //if(_clickTimer >= 0.5f)
-            //{
-            //    _collector.CardSelect(this);
-            //    _clickTimer = 0f;
-            //}
-
-            _isClick = true;
-            
-
-            //transform.localScale = new Vector3(1.5f, 1.5f, 1);
-        }
-    }
-
-    public void OnPointerUp(PointerEventData eventData)
-    {
-        if (_rune == null) return;
-
-        if (_isEquipMagicCircle == false)
-        {
-            //if(_clickTimer < 0.5f)
-            //{
-            //    Debug.Log("섦여 띄우기");
-            //}
-            //else
-            //{
-            //    _collector.CardSelect(null);
-            //}
-            _isClick = false;
-
-            //if (eventData.clickTime > 0.2f)
-            //{
-            //    _collector.AllCardDescription(false);
-            //}
-            //else
-            //{
-            //    if (_descriptionImage.color.a == 0)
-            //    {
-            //        _collector.AllCardDescription(false);
-            //        SetDescription(true);
-            //    }
-            //    else
-            //    {
-            //        _collector.AllCardDescription(false);
-            //    }
-            //}
-            //transform.localScale = Vector3.one;
-        }
-        else
-        {
-            // 나중에 수정
-
-            //if (_rune == null) return;
-
-            //RuneDesc go = Instantiate(_descPrefab, this.transform.parent).GetComponent<RuneDesc>();
-            //Card mainCard = _collector.MagicCircle.RuneDict[RuneType.Main].Find(x => x == this);
-            //if (mainCard != null)
-            //{
-            //    go.UpdateUI(_rune.MainRune);
-            //}
-            //else
-            //{
-            //    Card assistCard = _collector.MagicCircle.RuneDict[RuneType.Assist].Find(x => x == this);
-            //    if (assistCard != null)
-            //    {
-            //        go.UpdateUI(_rune.AssistRune);
-            //    }
-            //    else
-            //    {
-            //        Destroy(go.gameObject);
-            //    }
-            //}
-
-        }
-    }
-
     public void OnBeginDrag(PointerEventData eventData)
     {
         if (_isEquipMagicCircle == false)
@@ -310,7 +256,7 @@ public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IBegi
             }
             _collector.FingetID = eventData.pointerId;
             transform.DOKill();
-            UIManager.Instance.CardDescDown();
+            _keywardParent.gameObject.SetActive(true);
         }
     }
 
@@ -322,7 +268,7 @@ public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IBegi
             _collector.CardSelect(null);
             _collector.FingetID = -1;
             transform.DOKill();
-            UIManager.Instance.CardDescDown();
+            _keywardParent.gameObject.SetActive(false);
         }
     }
 
@@ -334,7 +280,6 @@ public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IBegi
     public void OnPointerClick(PointerEventData eventData)
     {
         transform.DOKill();
-        UIManager.Instance.CardDescPopup(this);
     }
 
     private void Setting()
@@ -366,12 +311,18 @@ public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IBegi
         _nameText = _cardAreaParent.Find("Name_Text").GetComponent<TMP_Text>();
         _skillImage = _cardAreaParent.Find("Skill_Image").GetComponent<Image>();
         _costText = _cardAreaParent.Find("Cost_Text").GetComponent<TMP_Text>();
+        _mainSubText = _cardAreaParent.Find("MainSub_Text").GetComponent<TMP_Text>();
 
-        _descriptionImage = _cardAreaParent.Find("Description_Image").GetComponent<Image>();
+        _descText = _cardAreaParent.Find("Desc_Text").GetComponent<TMP_Text>();
+        //_descriptionImage = _cardAreaParent.Find("Description_Image").GetComponent<Image>();
 
         _runeAreaParent = transform.Find("Rune_Area");
         _runeImage = _runeAreaParent.Find("Rune_Image").GetComponent<Image>();
         _runeOutlineImage = _runeAreaParent.Find("Rune_Line_Image").GetComponent<Image>();
+
+        _keywardParent = transform.Find("Keyword");
+        
+        
 
         IsFront = true;
         if(_defaultMaterial == null)
