@@ -7,7 +7,7 @@ using TMPro;
 using DG.Tweening;
 using MyBox;
 
-public class Card : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandler, IPointerClickHandler
+public class Card : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandler, IPointerClickHandler, IPointerDownHandler, IPointerUpHandler
 {
     [SerializeField]
     private GameObject cardPrefab = null;
@@ -30,6 +30,9 @@ public class Card : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHand
     private MagicCircle _magicCircle;
     private bool _isRest = false;
     public bool IsRest {  get => _isRest; set => _isRest = value; }
+    private bool _isClick;
+    private float _clickTimer = 0f;
+    private int _fingerId;
 
     //[System.Obsolete]
     //private int _coolTime;
@@ -229,22 +232,6 @@ public class Card : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHand
         _runeOutlineImage.gameObject.SetActive(value);
     }
 
-    //private void Update()
-    //{
-    //    if (_isClick == true)
-    //    {
-    //        _clickTimer += Time.deltaTime;
-
-    //        if (_clickTimer >= 0.5f)
-    //        {
-    //            _isClick = false;
-
-    //            _collector.CardSelect(this);
-    //            _collector.AllCardDescription(false);
-    //        }
-    //    }
-    //}
-
     public void OnBeginDrag(PointerEventData eventData)
     {
         if (_isEquipMagicCircle == false)
@@ -255,6 +242,7 @@ public class Card : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHand
                 _collector.SelectCard.transform.localScale = new Vector3(2f, 2f, 1f);
             }
             _collector.FingerID = eventData.pointerId;
+            _fingerId = eventData.pointerId;
             transform.DOKill();
             _keywardParent.gameObject.SetActive(true);
         }
@@ -266,6 +254,7 @@ public class Card : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHand
         {
             _collector.SelectCard.transform.localScale = Vector3.one;
             _collector.FingerID = -1;
+            _fingerId = -1;
             _collector.CardSelect(null);
             transform.DOKill();
             _keywardParent.gameObject.SetActive(false);
@@ -280,6 +269,41 @@ public class Card : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHand
     public void OnPointerClick(PointerEventData eventData)
     {
         //transform.DOKill();
+    }
+
+    public void OnPointerDown(PointerEventData eventData)
+    {
+        _isClick = true;
+        _fingerId = eventData.pointerId;
+    }
+
+    public void OnPointerUp(PointerEventData eventData)
+    {
+        _isClick = false;
+        _fingerId = -1;
+    }
+
+    private void Update()
+    {
+        if(_isClick == true)
+        {
+            _clickTimer += Time.deltaTime;
+            if(_clickTimer >= 0.5f)
+            {
+                if (_isEquipMagicCircle == false)
+                {
+                    _collector.CardSelect(this);
+                    if (_collector.SelectCard != null)
+                    {
+                        _collector.SelectCard.transform.localScale = new Vector3(2f, 2f, 1f);
+                    }
+                    _collector.FingerID = _fingerId;
+                    transform.DOKill();
+                    _keywardParent.gameObject.SetActive(true);
+                    _isClick = false;
+                }
+            }
+        }
     }
 
     private void Setting()
@@ -345,5 +369,4 @@ public class Card : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHand
     {
         transform.DOKill();
     }
-
 }
