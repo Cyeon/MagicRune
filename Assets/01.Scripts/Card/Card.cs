@@ -262,7 +262,7 @@ public class Card : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHand
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        if (_collector.SelectCard != null)
+        if (_collector.SelectCard != null && _isEquipMagicCircle == false)
         {
             _collector.SelectCard.transform.localScale = Vector3.one;
             _collector.FingerID = -1;
@@ -279,7 +279,7 @@ public class Card : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHand
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        transform.DOKill();
+        //transform.DOKill();
     }
 
     private void Setting()

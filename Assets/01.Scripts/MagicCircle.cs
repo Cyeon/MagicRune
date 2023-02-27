@@ -501,8 +501,13 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                         //Debug.Log("right");
                         if (IsBig == true)
                         {
-                            if (touchBeganPos.y <= this.GetComponent<RectTransform>().anchoredPosition.y + this.GetComponent<RectTransform>().sizeDelta.y / 2
-                                && touchBeganPos.y >= this.GetComponent<RectTransform>().anchoredPosition.y - this.GetComponent<RectTransform>().sizeDelta.y / 2)
+                            //if (touchBeganPos.y <= this.GetComponent<RectTransform>().anchoredPosition.y + this.GetComponent<RectTransform>().sizeDelta.y / 2
+                            //    && touchBeganPos.y >= this.GetComponent<RectTransform>().anchoredPosition.y - this.GetComponent<RectTransform>().sizeDelta.y / 2)
+                            //{
+                            //    Damage();
+                            //}
+
+                            if(Vector2.Distance(this.GetComponent<RectTransform>().anchoredPosition, touchBeganPos) <= _cardAreaDistance)
                             {
                                 Damage();
                             }
@@ -540,7 +545,7 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
         }
 
         Sequence seq = DOTween.Sequence();
-        seq.Append(this.transform.DORotate(new Vector3(0, 0, -360 * 5), 0.7f, RotateMode.LocalAxisAdd).SetEase(Ease.OutCubic));
+        seq.Append(this.transform.DORotate(new Vector3(0, 0, -360 * 5), 0.7f, RotateMode.FastBeyond360).SetEase(Ease.OutCubic));
         seq.InsertCallback(0f, () =>
         {
             for (int i = _runeDict[RuneType.Assist].Count - 1; i >= 0; i--)
