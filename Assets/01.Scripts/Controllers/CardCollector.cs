@@ -338,7 +338,7 @@ public class CardCollector : MonoBehaviour
             _handCards[i].IsFront = _isFront;
         }
         HandCardOutline(false);
-        //UpdateCardOutline();
+        UpdateCardOutline();
     }
 
     public void UpdateCardOutline()
@@ -355,7 +355,7 @@ public class CardCollector : MonoBehaviour
                 {
                     if (DummyCost.Instance.CanRune(_handCards[i].Rune.MainRune.Cost))
                     {
-                        _handCards[i].SetOutlineColor(Color.cyan);
+                        //_handCards[i].SetOutlineColor(Color.cyan);
                         _handCards[i].SetOutline(true);
                     }
                     else
@@ -389,7 +389,7 @@ public class CardCollector : MonoBehaviour
                         {
                             if (DummyCost.Instance.CanRune(_handCards[i].Rune.AssistRune.Cost))
                             {
-                                _handCards[i].SetOutlineColor(Color.cyan);
+                                //_handCards[i].SetOutlineColor(Color.cyan);
                                 _handCards[i].SetOutline(true);
                             }
                             else
@@ -403,7 +403,7 @@ public class CardCollector : MonoBehaviour
                     {
                         if (DummyCost.Instance.CanRune(_handCards[i].Rune.AssistRune.Cost))
                         {
-                            _handCards[i].SetOutlineColor(Color.cyan);
+                            //_handCards[i].SetOutlineColor(Color.cyan);
                             _handCards[i].SetOutline(true);
                         }
                         else

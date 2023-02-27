@@ -260,7 +260,7 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                 card.SetIsEquip(true); // 발동 안됨
                 card.GetComponent<RectTransform>().DOAnchorPos(GetComponent<RectTransform>().anchoredPosition, 0.3f).OnComplete(() =>
                 {
-                    card.SetOutlineActive(true);
+                    card.SetRuneOutlineActive(true);
                     AddEffect(card, true); // 발동 되나?
                     card.transform.SetParent(this.transform);
                     SortCard();
@@ -327,7 +327,7 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                 {
                     card.GetComponent<RectTransform>().DOAnchorPos(_runeDict[RuneType.Assist][changeIndex].GetComponent<RectTransform>().anchoredPosition, 0.3f).OnComplete(() =>
                     {
-                        card.SetOutlineActive(true);
+                        card.SetRuneOutlineActive(true);
                         Destroy(_runeDict[RuneType.Assist][changeIndex].gameObject); // Argument error 진짜 가끔 여태까지 1번 봄
                         _runeDict[RuneType.Assist][changeIndex] = card;
                         AddEffect(card, false);

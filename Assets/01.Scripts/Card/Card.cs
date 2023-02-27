@@ -86,6 +86,7 @@ public class Card : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHand
     private Text _assistRuneCount;
     private Image _descriptionImage;
     private TMP_Text _descText;
+    private UIOutline _outlineEffect;
 
     // Rune Area
     private Transform _runeAreaParent;
@@ -212,22 +213,16 @@ public class Card : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHand
 
     public void SetOutlineColor(Color color)
     {
-        _cardBase.material?.SetColor("_SolidOutline", color);
+        //_cardBase.material?.SetColor("_SolidOutline", color);
+        //_outlineEffect.color
     }
 
     public void SetOutline(bool value)
     {
-        if (value)
-        {
-            _cardBase.material = _outlineMaterial;
-        }
-        else
-        {
-            _cardBase.material = _defaultMaterial;
-        }
+        _outlineEffect.gameObject.SetActive(value);
     }
 
-    public void SetOutlineActive(bool value)
+    public void SetRuneOutlineActive(bool value)
     {
         _runeOutlineImage.gameObject.SetActive(value);
     }
@@ -331,6 +326,7 @@ public class Card : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHand
 
         _cardAreaParent = transform.Find("Card_Area");
         _cardBase = _cardAreaParent.Find("Base_Image/Card_Image").GetComponent<Image>();
+        _outlineEffect = _cardAreaParent.Find("Base_Image/Outline").GetComponent<UIOutline>();
 
         _nameText = _cardAreaParent.Find("Name_Text").GetComponent<TMP_Text>();
         _skillImage = _cardAreaParent.Find("Skill_Image").GetComponent<Image>();
@@ -359,7 +355,7 @@ public class Card : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHand
             _runeImage.sprite = _rune.RuneImage;
             _runeAreaParent.gameObject.SetActive(false);
         }
-        SetOutlineActive(false);
+        SetRuneOutlineActive(false);
 
         SetOutlineColor(Color.cyan);
         SetOutline(true);
