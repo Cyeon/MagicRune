@@ -118,6 +118,7 @@ public class Card : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHand
         if(_rune != null)
         {
             GameObject assert = Instantiate(UIManager.Instance.cardAssistPanel);
+
             assert.transform.Find("Name").GetComponent<TextMeshProUGUI>().text = string.Format("[º¸Á¶] {0}", rune.AssistRune.Name);
             assert.transform.Find("Mana").GetComponent<TMP_Text>().text = rune.AssistRune.Cost.ToString();
             assert.transform.Find("Information").GetComponent<TextMeshProUGUI>().text = rune.AssistRune.CardDescription;
