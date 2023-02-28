@@ -276,6 +276,7 @@ public class Card : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHand
             if(_collector.SelectCard != null)
             {
                 _collector.SelectCard.transform.localScale = new Vector3(2f, 2f, 1f);
+                _collector.SelectCard.transform.rotation = Quaternion.identity;
             }
             _collector.FingerID = eventData.pointerId;
             _fingerId = eventData.pointerId;
@@ -290,6 +291,7 @@ public class Card : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHand
         if (_collector.SelectCard != null && _isEquipMagicCircle == false)
         {
             _collector.SelectCard.transform.localScale = Vector3.one;
+            _collector.SelectCard.transform.rotation = _originPRS.Rot;
             _collector.FingerID = -1;
             _collector.CardSelect(null);
             _fingerId = -1;
@@ -321,6 +323,7 @@ public class Card : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHand
         if (_collector.SelectCard != null && _isEquipMagicCircle == false)
         {
             _collector.SelectCard.transform.localScale = Vector3.one;
+            _collector.SelectCard.transform.rotation = _originPRS.Rot;
             _collector.FingerID = -1;
             _collector.CardSelect(null);
             _fingerId = -1;
@@ -343,6 +346,7 @@ public class Card : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHand
                     if (_collector.SelectCard != null)
                     {
                         _collector.SelectCard.transform.localScale = new Vector3(2f, 2f, 1f);
+                        _collector.SelectCard.transform.rotation = Quaternion.identity;
                     }
                     _collector.FingerID = _fingerId;
                     transform.DOKill();

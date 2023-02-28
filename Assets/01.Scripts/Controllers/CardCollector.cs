@@ -390,7 +390,15 @@ public class CardCollector : MonoBehaviour
 
         for(int i = 0; i < cardCount; i++)
         {
-            Vector3 targetPos = Vector3.Slerp(leftRect.anchoredPosition3D, rightRect.anchoredPosition3D, cardLerp[i]);
+            Vector3 targetPos;
+            if (cardCount >= 4)
+            {
+                targetPos = Vector3.Slerp(leftRect.anchoredPosition3D, rightRect.anchoredPosition3D, cardLerp[i]);
+            }
+            else
+            {
+                targetPos = Vector3.Lerp(leftRect.anchoredPosition3D, rightRect.anchoredPosition3D, cardLerp[i]);
+            }
             Quaternion targetRot = Quaternion.identity;
             if(cardCount >= 4)
             {
