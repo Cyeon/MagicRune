@@ -98,14 +98,12 @@ public class Card : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHand
     private Transform _keywardParent;
     #endregion
 
+    private AssistRune _assistRune;
     private RectTransform _rect;
-    [SerializeField]
-    private Material _outlineMaterial;
-    private Material _defaultMaterial;
 
     //private bool _isClick;
 
-    private void Awake()
+    private void Start()
     {
         Setting();
     }
@@ -119,24 +117,25 @@ public class Card : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHand
     {
         _rune = rune;
 
-        if(_rune != null)
-        {
-            GameObject assert = Instantiate(UIManager.Instance.cardAssistPanel);
+        //if(_rune != null)
+        //{
+        //    GameObject assert = Instantiate(UIManager.Instance.cardAssistPanel);
 
-            assert.transform.Find("Name").GetComponent<TextMeshProUGUI>().text = string.Format("[보조] {0}", rune.AssistRune.Name);
-            assert.transform.Find("Mana").GetComponent<TMP_Text>().text = rune.AssistRune.Cost.ToString();
-            assert.transform.Find("Information").GetComponent<TextMeshProUGUI>().text = rune.AssistRune.CardDescription;
-            assert.transform.SetParent(_keywardParent);
-            assert.transform.localScale = Vector3.one;
+        //    assert.transform.Find("Name").GetComponent<TextMeshProUGUI>().text = string.Format("[보조] {0}", rune.AssistRune.Name);
+        //    assert.transform.Find("Mana").GetComponent<TMP_Text>().text = rune.AssistRune.Cost.ToString();
+        //    assert.transform.Find("Information").GetComponent<TextMeshProUGUI>().text = rune.AssistRune.CardDescription;
+        //    assert.transform.SetParent(_keywardParent);
+        //    assert.transform.localScale = Vector3.one;
 
-            foreach (var keyword in Rune.keywordList)
-            {
-                GameObject panel = UIManager.Instance.word.KeywordInit(keyword);
-                panel.transform.SetParent(_keywardParent);
-                panel.transform.localScale = Vector3.one;
-            }
-            _keywardParent.gameObject.SetActive(false);
-        }
+        //    foreach (var keyword in Rune.keywordList)
+        //    {
+        //        GameObject panel = UIManager.Instance.word.KeywordInit(keyword);
+        //        panel.transform.SetParent(_keywardParent);
+        //        panel.transform.localScale = Vector3.one;
+        //    }
+        //    if (_keywardParent == null) Setting();
+        //    _keywardParent.gameObject.SetActive(false);
+        //}
 
         if (_rune != null)
         {
@@ -242,6 +241,7 @@ public class Card : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHand
             _fingerId = eventData.pointerId;
             transform.DOKill();
             _keywardParent.gameObject.SetActive(true);
+            _assistRune.gameObject.SetActive(true);
         }
     }
 
@@ -255,6 +255,7 @@ public class Card : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHand
             _fingerId = -1;
             transform.DOKill();
             _keywardParent.gameObject.SetActive(false);
+            _assistRune.gameObject.SetActive(false);
         }
     }
 
@@ -285,6 +286,7 @@ public class Card : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHand
             _fingerId = -1;
             transform.DOKill();
             _keywardParent.gameObject.SetActive(false);
+            _assistRune.gameObject.SetActive(false);
         }
     }
 
@@ -305,6 +307,7 @@ public class Card : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHand
                     _collector.FingerID = _fingerId;
                     transform.DOKill();
                     _keywardParent.gameObject.SetActive(true);
+                    _assistRune.gameObject.SetActive(true);
                     _isClick = false;
                 }
             }
@@ -351,14 +354,12 @@ public class Card : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHand
         _runeOutlineImage = _runeAreaParent.Find("Rune_Line_Image").GetComponent<Image>();
 
         _keywardParent = transform.Find("Keyword");
-        
-        
+
+        _assistRune = transform.Find("Assist").GetComponent<AssistRune>();
+        _assistRune.UpdateUI(_rune.AssistRune);
+        _assistRune.gameObject.SetActive(false);
 
         IsFront = true;
-        if(_defaultMaterial == null)
-        {
-            _defaultMaterial = _cardBase.material;
-        }
 
         if (_rune != null)
         {

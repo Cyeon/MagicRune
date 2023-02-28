@@ -532,7 +532,7 @@ public class CardCollector : MonoBehaviour
     {
         foreach (Transform item in transform)
         {
-            CanvasGroup cvGroup = item.GetChild(0).GetComponent<CanvasGroup>();
+            CanvasGroup cvGroup = item.Find("Card_Area").GetComponent<CanvasGroup>();
             item.GetComponent<Card>().SetRune(false);
             cvGroup.alpha = !flag ? 1 : 0;
             cvGroup.DOFade(flag ? 1 : 0, 1f);
