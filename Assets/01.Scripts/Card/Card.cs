@@ -99,6 +99,7 @@ public class Card : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHand
     #endregion
 
     private AssistRune _assistRune;
+    public AssistRune AssistRune => _assistRune;
     private RectTransform _rect;
 
     //private bool _isClick;
@@ -204,6 +205,7 @@ public class Card : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHand
         {
             _runeAreaParent.gameObject.SetActive(true);
             _cardAreaParent.gameObject.SetActive(false);
+            _assistRune.gameObject.SetActive(false);
         }
         else
         {
@@ -356,7 +358,8 @@ public class Card : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHand
         _keywardParent = transform.Find("Keyword");
 
         _assistRune = transform.Find("Assist").GetComponent<AssistRune>();
-        _assistRune.UpdateUI(_rune.AssistRune);
+        if(_rune != null)
+            _assistRune.UpdateUI(_rune.AssistRune);
         _assistRune.gameObject.SetActive(false);
 
         IsFront = true;
