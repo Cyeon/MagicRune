@@ -7,6 +7,21 @@ using TMPro;
 using DG.Tweening;
 using MyBox;
 
+[System.Serializable]
+public class PRS
+{
+    public Vector3 Pos;
+    public Quaternion Rot;
+    public Vector3 Scale;
+
+    public PRS(Vector3 pos, Quaternion rot, Vector3 scale)
+    {
+        Pos = pos;
+        Rot = rot;
+        Scale = scale;
+    }
+}
+
 public class Card : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandler, IPointerClickHandler, IPointerDownHandler, IPointerUpHandler
 {
     [SerializeField]
@@ -22,6 +37,13 @@ public class Card : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHand
     private bool _isEquipMagicCircle = false;
     public bool IsEquipMagicCircle { get => _isEquipMagicCircle; set => _isEquipMagicCircle = value; }
     public CardSO Rune => _rune;
+
+    private PRS _originPRS;
+    public PRS OriginPRS
+    {
+        get => _originPRS;
+        set => _originPRS = value;
+    }
 
     private int _sortingIndex;
     public int SortingIndex => _sortingIndex;
@@ -141,6 +163,22 @@ public class Card : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHand
         if (_rune != null)
         {
             UpdateUI(_isFront);
+        }
+    }
+
+    public void MoveTransform(PRS prs, bool useDotween = false, float dotweenTime = 0f)
+    {
+        if (useDotween)
+        {
+            _rect.DOAnchorPos(prs.Pos, dotweenTime);
+            _rect.DORotateQuaternion(prs.Rot, dotweenTime);
+            _rect.DOScale(prs.Scale, dotweenTime);
+        }
+        else
+        {
+            _rect.anchoredPosition = prs.Pos;
+            _rect.rotation = prs.Rot;
+            _rect.localScale = prs.Scale;
         }
     }
 
