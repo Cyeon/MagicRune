@@ -170,7 +170,7 @@ public class MagicContent : MonoBehaviour
         {
             //_effectDict[RuneType.Main][0].transform.localPosition = new Vector3(_offset.x, _offset.y, -50);
             _effectDict[RuneType.Main][0].transform.localPosition
-                = Camera.main.ScreenToWorldPoint(new Vector3(_magicCircle.RuneDict[RuneType.Main][0].transform.localPosition.x, _magicCircle.RuneDict[RuneType.Main][0].transform.localPosition.y, -50));
+                = new Vector3(_magicCircle.RuneDict[RuneType.Main][0].transform.position.x, _magicCircle.RuneDict[RuneType.Main][0].transform.position.y, -50);
         }
 
         if (_effectDict.ContainsKey(RuneType.Assist) == true)

@@ -203,7 +203,7 @@ public class Card : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHand
             _nameText.text = _rune.AssistRune.Name;
             _skillImage.sprite = _rune.AssistRune.CardImage;
             _costText.text = _rune.AssistRune.Cost.ToString();
-            _mainSubText.text = "¼­ºê ·é";
+            _mainSubText.text = "º¸Á¶ ·é";
             _descText.text = _rune.AssistRune.CardDescription;
             //_coolTimeText.text = _rune.AssistRune.DelayTurn.ToString();
             //_mainSubText.text = "º¸Á¶";
