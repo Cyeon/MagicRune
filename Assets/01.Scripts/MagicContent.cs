@@ -26,7 +26,7 @@ public class MagicContent : MonoBehaviour
 
     
     private Dictionary<RuneType, List<GameObject>> _effectDict = new Dictionary<RuneType, List<GameObject>>();
-    private Dictionary<bool, int> _attackEffectDict = new Dictionary<bool, int>();
+    private Dictionary<RuneType, List<GameObject>> _effectDictTemp = new Dictionary<RuneType, List<GameObject>>();
 
     #region Bezier Parameta
     [SerializeField]
@@ -49,22 +49,22 @@ public class MagicContent : MonoBehaviour
 
     }
 
-    private void Update()
-    {
-        //if (_effectDict.ContainsKey(RuneType.Assist) == true)
-        //{
-        //    _axis = (_axis + Time.deltaTime) % 360f;
+    //private void Update()
+    //{
+    //    if (_effectDict.ContainsKey(RuneType.Assist) == true)
+    //    {
+    //        _axis = (_axis + Time.deltaTime) % 360f;
 
-        //    float angle = 2 * Mathf.PI / _effectDict[RuneType.Assist].Count;
+    //        float angle = 2 * Mathf.PI / _effectDict[RuneType.Assist].Count;
 
-        //    for (int i = 0; i < _effectDict[RuneType.Assist].Count; i++)
-        //    {
-        //        float height = Mathf.Sin(angle * i + (_axis * _rotateSpeed * Mathf.Deg2Rad)) * _distance;
-        //        float width = Mathf.Cos(angle * i + (_axis * _rotateSpeed * Mathf.Deg2Rad)) * _distance;
-        //        _effectDict[RuneType.Assist][i].transform.localPosition = new Vector3(width + _offset.x, height + _offset.y, -20);
-        //    }
-        //}
-    }
+    //        for (int i = 0; i < _effectDict[RuneType.Assist].Count; i++)
+    //        {
+    //            float height = Mathf.Sin(angle * i + (_axis * _rotateSpeed * Mathf.Deg2Rad)) * _distance;
+    //            float width = Mathf.Cos(angle * i + (_axis * _rotateSpeed * Mathf.Deg2Rad)) * _distance;
+    //            _effectDict[RuneType.Assist][i].transform.localPosition = new Vector3(width + _offset.x, height + _offset.y, -20);
+    //        }
+    //    }
+    //}
 
     public void AddEffect(CardSO card, bool isMain)
     {
@@ -170,7 +170,7 @@ public class MagicContent : MonoBehaviour
         {
             //_effectDict[RuneType.Main][0].transform.localPosition = new Vector3(_offset.x, _offset.y, -50);
             _effectDict[RuneType.Main][0].GetComponent<RectTransform>().anchoredPosition3D
-                = new Vector3(_magicCircle.RuneDict[RuneType.Main][0].GetComponent<RectTransform>().anchoredPosition.x, _magicCircle.RuneDict[RuneType.Main][0].GetComponent<RectTransform>().anchoredPosition.y + 280, -50);
+                = new Vector3(_magicCircle.RuneDict[RuneType.Main][0].GetComponent<RectTransform>().anchoredPosition.x, _magicCircle.RuneDict[RuneType.Main][0].GetComponent<RectTransform>().anchoredPosition.y, -50);
         }
 
         if (_effectDict.ContainsKey(RuneType.Assist) == true)
@@ -187,7 +187,7 @@ public class MagicContent : MonoBehaviour
             for (int i = 0; i < _effectDict[RuneType.Assist].Count; i++)
             {
                 _effectDict[RuneType.Assist][i].GetComponent<RectTransform>().anchoredPosition3D
-                    = new Vector3(_magicCircle.RuneDict[RuneType.Assist][i].GetComponent<RectTransform>().anchoredPosition.x, _magicCircle.RuneDict[RuneType.Assist][i].GetComponent<RectTransform>().anchoredPosition.y + 280, -20);
+                    = new Vector3(_magicCircle.RuneDict[RuneType.Assist][i].GetComponent<RectTransform>().anchoredPosition.x, _magicCircle.RuneDict[RuneType.Assist][i].GetComponent<RectTransform>().anchoredPosition.y, -20);
             }
         }
     }
@@ -196,6 +196,7 @@ public class MagicContent : MonoBehaviour
     {
         if (_effectDict.ContainsKey(RuneType.Main) == false) return;
 
+        _effectDictTemp = new Dictionary<RuneType, List<GameObject>>(_effectDict);
         Sequence seq = DOTween.Sequence();
         if(_effectDict.ContainsKey(RuneType.Assist) == false)
         {
@@ -210,26 +211,54 @@ public class MagicContent : MonoBehaviour
         }
         else
         {
-            seq.Append(DOTween.To(() => _distance, x => _distance = x, _baseDistance * 1.3f, 0.2f));
-            seq.Join(DOTween.To(() => _rotateSpeed, x => _rotateSpeed = x, _baseRotateSpeed * 1.01f, 0.7f));
-            seq.Join(transform.DOLocalMoveY(-800, 0.7f).SetRelative());
-            //seq.AppendInterval(0.2f);
-            seq.Append(DOTween.To(() => _distance, x => _distance = x, 0, 0.2f));
+            //seq.Append(DOTween.To(() => _distance, x => _distance = x, _baseDistance * 1.3f, 0.2f));
+            //seq.Join(DOTween.To(() => _rotateSpeed, x => _rotateSpeed = x, _baseRotateSpeed * 1.01f, 0.7f));
+            //seq.Join(transform.DOLocalMoveY(-800, 0.7f).SetRelative());
+            ////seq.AppendInterval(0.2f);
+            //seq.Append(DOTween.To(() => _distance, x => _distance = x, 0, 0.2f));
 
-            seq.AppendCallback(() => Clear());
-            seq.Append(transform.DOLocalMoveY(500, 0f).SetRelative());
-            seq.AppendCallback(() => StartCoroutine(CreateAttackEffect(_startPos, _enemyPos, _playerPos)));
-
+            //seq.AppendCallback(() => Clear());
+            //seq.Append(transform.DOLocalMoveY(500, 0f).SetRelative());
+            //seq.AppendCallback(() => StartCoroutine(CreateAttackEffect(_startPos, _enemyPos, _playerPos)));
             //seq.AppendCallback(() =>
             //{
-            //    _effectDict[RuneType.Main]l;
+            //    _distance = _baseDistance;
+            //    _rotateSpeed = _baseRotateSpeed;
+            //    transform.DOLocalMoveY(300, 0f).SetRelative();
             //});
+
+            _effectDict.Clear();
+
             seq.AppendCallback(() =>
             {
-                _distance = _baseDistance;
-                _rotateSpeed = _baseRotateSpeed;
-                transform.DOLocalMoveY(300, 0f).SetRelative();
+                for (int i = 0; i < _effectDictTemp[RuneType.Assist].Count; i++)
+                {
+                    _effectDictTemp[RuneType.Assist][i].GetComponent<RectTransform>().DOAnchorPos(_effectDictTemp[RuneType.Main][0].GetComponent<RectTransform>().anchoredPosition, 0.7f);
+                }
+                
             });
+            seq.InsertCallback(0f, () => this.GetComponent<RectTransform>().DORotate(new Vector3(0, 0, 360 * 1.5f), 0.7f, RotateMode.WorldAxisAdd).SetEase(Ease.OutCubic));
+            seq.AppendCallback(() => this.GetComponent<RectTransform>().rotation = Quaternion.Euler(Vector3.zero));
+            seq.AppendInterval(0.5f);
+            seq.AppendCallback(() =>
+            {
+                if (_effectDictTemp.ContainsKey(RuneType.Main) == true)
+                {
+                    foreach (var e in _effectDictTemp[RuneType.Main])
+                    {
+                        e.gameObject.SetActive(false);
+                    }
+                }
+
+                if (_effectDictTemp.ContainsKey(RuneType.Assist) == true)
+                {
+                    foreach (var e in _effectDictTemp[RuneType.Assist])
+                    {
+                        e.gameObject.SetActive(false);
+                    }
+                }
+            });
+            seq.AppendCallback(() => StartCoroutine(CreateAttackEffect(_startPos, _enemyPos, _playerPos)));
         }
     }
 
@@ -323,6 +352,22 @@ public class MagicContent : MonoBehaviour
         yield return new WaitForSeconds(.2f);
         _magicCircle.RuneTempDict.Clear();
         _magicCircle.TempEffectDict.Clear();
+        if (_effectDictTemp.ContainsKey(RuneType.Main) == true)
+        {
+            foreach (var e in _effectDictTemp[RuneType.Main])
+            {
+                Destroy(e.gameObject);
+            }
+        }
+
+        if (_effectDictTemp.ContainsKey(RuneType.Assist) == true)
+        {
+            foreach (var e in _effectDictTemp[RuneType.Assist])
+            {
+                Destroy(e.gameObject);
+            }
+        }
+        _effectDictTemp.Clear();
         
         //foreach (var item in _magicCircle.RuneDict)
         //{

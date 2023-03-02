@@ -572,6 +572,38 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
             }
             _runeTempDict = new Dictionary<RuneType, List<Card>>(_runeDict);
             _tempEffectDict = new Dictionary<EffectType, List<EffectObjectPair>>(_effectDict);
+            foreach (var item in _runeDict)
+            {
+                foreach (Card card in item.Value)
+                {
+                    if (card.IsFront == false)
+                    {
+                        card.IsFront = true;
+                    }
+                    card.IsRest = true;
+                    _cardCollector._restCards.Add(card);
+                }
+            }
+            _cardCollector.UIUpdate();
+
+            foreach (var rList in _runeDict)
+            {
+                foreach (var r in rList.Value)
+                {
+                    if (r.Rune == null)
+                    {
+                        Destroy(r.gameObject);
+                    }
+                    else
+                    {
+                        r.gameObject.SetActive(false);
+                        r.transform.SetParent(_cardCollector.transform);
+                        r.SetIsEquip(false);
+                    }
+                }
+            }
+            _runeDict.Clear();
+
             _effectContent.AttackAnimation();
         });
         SoundManager.Instance.PlaySound(attackSound, SoundType.Effect);
@@ -603,41 +635,12 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
             _cardCollector.IsFront = true;
             _cardCollector.UpdateCardOutline();
 
-            foreach (var item in _runeDict)
-            {
-                foreach (Card card in item.Value)
-                {
-                    if (card.IsFront == false)
-                    {
-                        card.IsFront = true;
-                    }
-                    card.IsRest = true;
-                    _cardCollector._restCards.Add(card);
-                }
-            }
-            _cardCollector.UIUpdate();
-
-            foreach (var rList in _runeDict)
-            {
-                foreach (var r in rList.Value)
-                {
-                    if (r.Rune == null)
-                    {
-                        Destroy(r.gameObject);
-                    }
-                    else
-                    {
-                        r.gameObject.SetActive(false);
-                        r.transform.SetParent(_cardCollector.transform);
-                        r.SetIsEquip(false);
-                    }
-                }
-            }
+            
 
             _nameText.text = "";
             _effectText.text = "";
             _effectContent.Clear();
-            _runeDict.Clear();
+
             _effectDict.Clear();
 
             _cardCollector.UpdateCardOutline();

@@ -327,6 +327,11 @@ public class CardCollector : MonoBehaviour
             card.gameObject.SetActive(true);
             card.IsFront = true;
         }
+        for (int i = 0; i < _handCards.Count; i++)
+        {
+            Card targetCard = _handCards[i];
+            targetCard.MoveTransform(new PRS(Vector3.zero, Quaternion.identity, Vector3.one), false, 0.7f);
+        }
         CardSort();
         UIUpdate();
     }

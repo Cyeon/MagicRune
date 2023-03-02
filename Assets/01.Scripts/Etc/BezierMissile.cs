@@ -43,10 +43,10 @@ public class BezierMissile : MonoBehaviour
         m_timerMax = Random.Range(0.8f, 1.0f);
 
         // 시작 지점.
-        m_points[0] = _startTr.anchoredPosition;
+        m_points[0] = Camera.main.ScreenToWorldPoint(_startTr.anchoredPosition);
 
         // 시작 지점을 기준으로 랜덤 포인트 지정.
-        m_points[1] = _startTr.anchoredPosition3D +
+        m_points[1] = Camera.main.ScreenToWorldPoint(_startTr.anchoredPosition3D) +
             (_newPointDistanceFromStartTr * Random.Range(-1.0f, 1.0f) * _startTr.right) + // X (좌, 우 전체)
             (_newPointDistanceFromStartTr * Random.Range(-0.15f, 1.0f) * _startTr.up);  // Y (아래쪽 조금, 위쪽 전체)
             //(_newPointDistanceFromStartTr * Random.Range(-1.0f, -0.8f) * _startTr.forward); // Z (뒤 쪽만)
@@ -148,13 +148,13 @@ public class BezierMissile : MonoBehaviour
         */
 
         // 이해한대로 편하게 쓰면.
-        float ab = Mathf.Lerp(start, startOffset, t);
-        float bc = Mathf.Lerp(startOffset, endOffset, t);
-        float cd = Mathf.Lerp(endOffset, end, t);
+        float startLerp = Mathf.Lerp(start, startOffset, t);
+        float offsetLerp = Mathf.Lerp(startOffset, endOffset, t);
+        float endLerp = Mathf.Lerp(endOffset, end, t);
 
-        float abbc = Mathf.Lerp(ab, bc, t);
-        float bccd = Mathf.Lerp(bc, cd, t);
+        float startOffsetLerp = Mathf.Lerp(startLerp, offsetLerp, t);
+        float endOffsetLerp = Mathf.Lerp(offsetLerp, endLerp, t);
 
-        return Mathf.Lerp(abbc, bccd, t);
+        return Mathf.Lerp(startOffsetLerp, endOffsetLerp, t);
     }
 }
