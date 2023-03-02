@@ -118,6 +118,7 @@ public class Card : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHand
 
     // Keyword
     private Transform _keywardParent;
+    public Transform KeyWardParent => _keywardParent;
     #endregion
 
     private AssistRune _assistRune;
@@ -155,7 +156,7 @@ public class Card : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHand
             {
                 GameObject panel = UIManager.Instance.word.KeywordInit(keyword);
                 panel.transform.SetParent(_keywardParent);
-                panel.transform.localScale = new Vector3(0.5f, 1f, 1f);
+                panel.transform.localScale = new Vector3(0.4f, 0.8f, 1f);
             }
             _keywardParent.gameObject.SetActive(false);
         }
@@ -244,11 +245,13 @@ public class Card : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHand
             _runeAreaParent.gameObject.SetActive(true);
             _cardAreaParent.gameObject.SetActive(false);
             _assistRune.gameObject.SetActive(false);
+            _keywardParent.gameObject.SetActive(false);
         }
         else
         {
             _runeAreaParent.gameObject.SetActive(false);
             _cardAreaParent.gameObject.SetActive(true);
+            _keywardParent.gameObject.SetActive(true);
         }
     }
 
@@ -303,7 +306,7 @@ public class Card : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHand
 
     public void OnDrag(PointerEventData eventData)
     {
-        float x = 320;
+        float x = 300;
         if(transform.position.x >= 0)
         {
             if(_keywardParent.transform.position.x != -x)

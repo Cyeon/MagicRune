@@ -283,6 +283,7 @@ public class CardCollector : MonoBehaviour
                     SelectCard.RuneAreaParent.gameObject.SetActive(true);
                     SelectCard.CardAreaParent.gameObject.SetActive(false);
                     SelectCard.AssistRune.gameObject.SetActive(false);
+                    SelectCard.KeyWardParent.gameObject.SetActive(false);
                     //SelectCard.GetComponent<RectTransform>().sizeDelta = new Vector2(128, 128);
                 }
                 else
@@ -290,6 +291,7 @@ public class CardCollector : MonoBehaviour
                     SelectCard.RuneAreaParent.gameObject.SetActive(false);
                     SelectCard.CardAreaParent.gameObject.SetActive(true);
                     SelectCard.AssistRune.gameObject.SetActive(true);
+                    SelectCard.KeyWardParent.gameObject.SetActive(true);
                     //SelectCard.GetComponent<RectTransform>().sizeDelta = new Vector2(300, 500);
                 }
             }
