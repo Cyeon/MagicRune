@@ -289,7 +289,14 @@ public class CardCollector : MonoBehaviour
                 {
                     SelectCard.RuneAreaParent.gameObject.SetActive(false);
                     SelectCard.CardAreaParent.gameObject.SetActive(true);
-                    SelectCard.AssistRune.gameObject.SetActive(true);
+                    if(_isFront == true)
+                    {
+                        SelectCard.AssistRune.gameObject.SetActive(true);
+                    }
+                    else
+                    {
+                        SelectCard.AssistRune.gameObject.SetActive(false);
+                    }
                     //SelectCard.GetComponent<RectTransform>().sizeDelta = new Vector2(300, 500);
                 }
             }
@@ -573,8 +580,17 @@ public class CardCollector : MonoBehaviour
         {
             seq.InsertCallback(0.15f, () =>
             {
-                card.transform.rotation = Quaternion.Euler(0, 0, 0);
+                //card.transform.rotation = Quaternion.Euler(0, 0, 0);
                 card.IsFront = !card.IsFront;
+
+                //if(card.IsFront == false)
+                //{
+                //    card.AssistRune.gameObject.SetActive(false);
+                //}
+                //else
+                //{
+                //    card.AssistRune.gameObject.SetActive(true);
+                //}
             });
         }
         seq.AppendCallback(() =>

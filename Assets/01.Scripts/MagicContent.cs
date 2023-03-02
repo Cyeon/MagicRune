@@ -187,7 +187,7 @@ public class MagicContent : MonoBehaviour
             for (int i = 0; i < _effectDict[RuneType.Assist].Count; i++)
             {
                 _effectDict[RuneType.Assist][i].transform.localPosition
-                    = Camera.main.ScreenToWorldPoint(new Vector3(_magicCircle.RuneDict[RuneType.Assist][i].transform.localPosition.x, _magicCircle.RuneDict[RuneType.Main][0].transform.localPosition.y, -20));
+                    = Camera.main.WorldToScreenPoint(new Vector3(_magicCircle.RuneDict[RuneType.Assist][i].transform.localPosition.x, _magicCircle.RuneDict[RuneType.Main][0].transform.localPosition.y, -20));
             }
         }
     }

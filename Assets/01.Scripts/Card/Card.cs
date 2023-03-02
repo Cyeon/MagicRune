@@ -282,7 +282,14 @@ public class Card : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHand
             _fingerId = eventData.pointerId;
             transform.DOKill();
             _keywardParent.gameObject.SetActive(true);
-            _assistRune.gameObject.SetActive(true);
+            if(_isFront == true)
+            {
+                _assistRune.gameObject.SetActive(true);
+            }
+            else
+            {
+                _assistRune.gameObject.SetActive(false);
+            }
         }
     }
 
@@ -351,7 +358,14 @@ public class Card : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHand
                     _collector.FingerID = _fingerId;
                     transform.DOKill();
                     _keywardParent.gameObject.SetActive(true);
-                    _assistRune.gameObject.SetActive(true);
+                    if (_isFront == true)
+                    {
+                        _assistRune.gameObject.SetActive(true);
+                    }
+                    else
+                    {
+                        _assistRune.gameObject.SetActive(false);
+                    }
                     _isClick = false;
                 }
             }
