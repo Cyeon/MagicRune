@@ -51,19 +51,19 @@ public class MagicContent : MonoBehaviour
 
     private void Update()
     {
-        if (_effectDict.ContainsKey(RuneType.Assist) == true)
-        {
-            _axis = (_axis + Time.deltaTime) % 360f;
+        //if (_effectDict.ContainsKey(RuneType.Assist) == true)
+        //{
+        //    _axis = (_axis + Time.deltaTime) % 360f;
 
-            float angle = 2 * Mathf.PI / _effectDict[RuneType.Assist].Count;
+        //    float angle = 2 * Mathf.PI / _effectDict[RuneType.Assist].Count;
 
-            for (int i = 0; i < _effectDict[RuneType.Assist].Count; i++)
-            {
-                float height = Mathf.Sin(angle * i + (_axis * _rotateSpeed * Mathf.Deg2Rad)) * _distance;
-                float width = Mathf.Cos(angle * i + (_axis * _rotateSpeed * Mathf.Deg2Rad)) * _distance;
-                _effectDict[RuneType.Assist][i].transform.localPosition = new Vector3(width + _offset.x, height + _offset.y, -20);
-            }
-        }
+        //    for (int i = 0; i < _effectDict[RuneType.Assist].Count; i++)
+        //    {
+        //        float height = Mathf.Sin(angle * i + (_axis * _rotateSpeed * Mathf.Deg2Rad)) * _distance;
+        //        float width = Mathf.Cos(angle * i + (_axis * _rotateSpeed * Mathf.Deg2Rad)) * _distance;
+        //        _effectDict[RuneType.Assist][i].transform.localPosition = new Vector3(width + _offset.x, height + _offset.y, -20);
+        //    }
+        //}
     }
 
     public void AddEffect(CardSO card, bool isMain)
@@ -168,18 +168,26 @@ public class MagicContent : MonoBehaviour
     {
         if (_effectDict.ContainsKey(RuneType.Main) == true)
         {
-            _effectDict[RuneType.Main][0].transform.localPosition = new Vector3(_offset.x, _offset.y, -50);
+            //_effectDict[RuneType.Main][0].transform.localPosition = new Vector3(_offset.x, _offset.y, -50);
+            _effectDict[RuneType.Main][0].transform.localPosition
+                = Camera.main.ScreenToWorldPoint(new Vector3(_magicCircle.RuneDict[RuneType.Main][0].transform.localPosition.x, _magicCircle.RuneDict[RuneType.Main][0].transform.localPosition.y, -50));
         }
 
         if (_effectDict.ContainsKey(RuneType.Assist) == true)
         {
-            float angle = 2 * Mathf.PI / _effectDict[RuneType.Assist].Count;
+            //float angle = 2 * Mathf.PI / _effectDict[RuneType.Assist].Count;
+
+            //for (int i = 0; i < _effectDict[RuneType.Assist].Count; i++)
+            //{
+            //    float height = Mathf.Sin(angle * i + (90 * Mathf.Deg2Rad)) * _distance;
+            //    float width = Mathf.Cos(angle * i + (90 * Mathf.Deg2Rad)) * _distance;
+            //    _effectDict[RuneType.Assist][i].transform.localPosition = new Vector3(width + _offset.x, height + _offset.y, -20);
+            //}
 
             for (int i = 0; i < _effectDict[RuneType.Assist].Count; i++)
             {
-                float height = Mathf.Sin(angle * i + (90 * Mathf.Deg2Rad)) * _distance;
-                float width = Mathf.Cos(angle * i + (90 * Mathf.Deg2Rad)) * _distance;
-                _effectDict[RuneType.Assist][i].transform.localPosition = new Vector3(width + _offset.x, height + _offset.y, -20);
+                _effectDict[RuneType.Assist][i].transform.localPosition
+                    = Camera.main.ScreenToWorldPoint(new Vector3(_magicCircle.RuneDict[RuneType.Assist][i].transform.localPosition.x, _magicCircle.RuneDict[RuneType.Main][0].transform.localPosition.y, -20));
             }
         }
     }

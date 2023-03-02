@@ -274,7 +274,7 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                     Debug.Log("B");
                 }); // Áß¿¡ ¿¡·¯³² µÚ¿¡°Å´Â µÊ
                                        //card.SetCoolTime(card.Rune.MainRune.DelayTurn); // ¹ßµ¿ µÊ
-                _cardCollector.CardRotate(); // ¹ßµ¿ µÊ
+                //_cardCollector.CardRotate(); // ¹ßµ¿ µÊ
             });
         }
         else
@@ -504,10 +504,10 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                     else if (touchDif.y < 0 && Mathf.Abs(touchDif.y) > Mathf.Abs(touchDif.x))
                     {
                         //Debug.Log("down");
-                        if (_cardCollector.SelectCard == null && isSelectCard == false)
-                        {
-                            _cardCollector.CardRotate();
-                        }
+                        //if (_cardCollector.SelectCard == null && isSelectCard == false)
+                        //{
+                        //    _cardCollector.CardRotate();
+                        //}
                     }
                     else if (touchDif.x > 0 && Mathf.Abs(touchDif.y) < Mathf.Abs(touchDif.x))
                     {
@@ -598,7 +598,7 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
 
             if (_cardCollector.IsFront == false)
             {
-                _cardCollector.CardRotate();
+                //_cardCollector.CardRotate();
             }
             _cardCollector.IsFront = true;
             _cardCollector.UpdateCardOutline();
