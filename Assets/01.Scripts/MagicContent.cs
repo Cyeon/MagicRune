@@ -238,7 +238,7 @@ public class MagicContent : MonoBehaviour
                 
             });
             seq.InsertCallback(0f, () => this.GetComponent<RectTransform>().DORotate(new Vector3(0, 0, 360 * 1.5f), 0.7f, RotateMode.WorldAxisAdd).SetEase(Ease.OutCubic));
-            seq.AppendCallback(() => this.GetComponent<RectTransform>().rotation = Quaternion.Euler(Vector3.zero));
+            //seq.AppendCallback(() => );
             seq.AppendInterval(0.5f);
             seq.AppendCallback(() =>
             {
@@ -258,6 +258,7 @@ public class MagicContent : MonoBehaviour
                     }
                 }
             });
+            // 이거 적과 내 위치를 각각 280씩 빼줘야하나?
             seq.AppendCallback(() => StartCoroutine(CreateAttackEffect(_startPos, _enemyPos, _playerPos)));
         }
     }
@@ -348,6 +349,7 @@ public class MagicContent : MonoBehaviour
             }
         }
         _magicCircle.CardCollector.UpdateCardOutline();
+        this.GetComponent<RectTransform>().rotation = Quaternion.Euler(Vector3.zero);
 
         yield return new WaitForSeconds(.2f);
         _magicCircle.RuneTempDict.Clear();
