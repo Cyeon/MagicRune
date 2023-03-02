@@ -120,7 +120,7 @@ public class GameManager : MonoSingleton<GameManager>
 
                 enemy.pattern?.End();
                 if (enemy.isSkip)
-                    enemy.pattern = PatternManager.Instance.GetCodiPattern("¹«·Â");
+                    enemy.pattern = PatternManager.Instance.GetCodiPattern("TurnSkip");
                 else
                     enemy.pattern = PatternManager.Instance.GetPattern();
                 enemy.pattern?.Start();
