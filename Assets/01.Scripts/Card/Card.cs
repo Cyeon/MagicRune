@@ -140,25 +140,25 @@ public class Card : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHand
     {
         _rune = rune;
 
-        //if(_rune != null)
-        //{
-        //    GameObject assert = Instantiate(UIManager.Instance.cardAssistPanel);
+        if(_rune != null)
+        {
+            //    GameObject assert = Instantiate(UIManager.Instance.cardAssistPanel);
 
-        //    assert.transform.Find("Name").GetComponent<TextMeshProUGUI>().text = string.Format("[보조] {0}", rune.AssistRune.Name);
-        //    assert.transform.Find("Mana").GetComponent<TMP_Text>().text = rune.AssistRune.Cost.ToString();
-        //    assert.transform.Find("Information").GetComponent<TextMeshProUGUI>().text = rune.AssistRune.CardDescription;
-        //    assert.transform.SetParent(_keywardParent);
-        //    assert.transform.localScale = Vector3.one;
+            //    assert.transform.Find("Name").GetComponent<TextMeshProUGUI>().text = string.Format("[보조] {0}", rune.AssistRune.Name);
+            //    assert.transform.Find("Mana").GetComponent<TMP_Text>().text = rune.AssistRune.Cost.ToString();
+            //    assert.transform.Find("Information").GetComponent<TextMeshProUGUI>().text = rune.AssistRune.CardDescription;
+            //    assert.transform.SetParent(_keywardParent);
+            //    assert.transform.localScale = Vector3.one;
 
-        //    foreach (var keyword in Rune.keywordList)
-        //    {
-        //        GameObject panel = UIManager.Instance.word.KeywordInit(keyword);
-        //        panel.transform.SetParent(_keywardParent);
-        //        panel.transform.localScale = Vector3.one;
-        //    }
-        //    if (_keywardParent == null) Setting();
-        //    _keywardParent.gameObject.SetActive(false);
-        //}
+            if (_keywardParent == null) Setting();
+            foreach (var keyword in Rune.keywordList)
+            {
+                GameObject panel = UIManager.Instance.word.KeywordInit(keyword);
+                panel.transform.SetParent(_keywardParent);
+                panel.transform.localScale = new Vector3(0.5f, 1f, 1f);
+            }
+            _keywardParent.gameObject.SetActive(false);
+        }
 
         if (_rune != null)
         {
@@ -303,7 +303,17 @@ public class Card : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHand
 
     public void OnDrag(PointerEventData eventData)
     {
-
+        float x = 320;
+        if(transform.position.x >= 0)
+        {
+            if(_keywardParent.transform.position.x != -x)
+                _keywardParent.transform.DOLocalMoveX(-x, 0);
+        }
+        else
+        {
+            if (_keywardParent.transform.position.x != x)
+                _keywardParent.transform.DOLocalMoveX(x, 0);
+        }
     }
 
     public void OnPointerClick(PointerEventData eventData)

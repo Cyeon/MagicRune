@@ -593,7 +593,6 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
         });
         seq.AppendCallback(() =>
         {
-            Debug.Log("Attack Complate");
             IsBig = false;
 
             if (_cardCollector.IsFront == false)
