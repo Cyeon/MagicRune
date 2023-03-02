@@ -8,28 +8,23 @@ using UnityEngine.Events;
 [System.Serializable]
 public class Pattern
 {
-    public string patternName;
-    public PatternEnum patternEnum;
-    [ShowAssetPreview(32, 32), Tooltip("¾ÆÀÌÄÜ")] public Sprite icon;
     public float value;
-    public UnityEvent patternStartFunc;
-    public UnityEvent patternTurnFunc;
-    public UnityEvent patternEndFunc;
+    public PatternSO info;
 
     public void Start()
     {
-        UIManager.Instance.ReloadPattern(icon, value > 0 ? value.ToString() : "");
+        UIManager.Instance.ReloadPattern(info.icon, value > 0 ? value.ToString() : "");
         PatternManager.Instance.funcList.value = value;
-        patternStartFunc?.Invoke();
+        PatternManager.Instance.FuncInovke(info.startFunc);
     }
 
     public void Turn()
     {
-        patternTurnFunc.Invoke();
+        PatternManager.Instance.FuncInovke(info.turnFunc);
     }
 
     public void End()
     {
-        patternEndFunc?.Invoke();
+        PatternManager.Instance.FuncInovke(info.endFunc);
     }
 }

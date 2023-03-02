@@ -24,7 +24,6 @@ public class StatusManager : MonoSingleton<StatusManager>
             if (funStatus.typeValue > 0)
             {
                 funStatus.statusFunc?.Invoke();
-                Debug.Log(string.Format("{0}, {1}", funStatus.debugName, funStatus.typeValue));
             }
         }
 
