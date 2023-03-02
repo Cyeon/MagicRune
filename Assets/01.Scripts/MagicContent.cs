@@ -169,8 +169,8 @@ public class MagicContent : MonoBehaviour
         if (_effectDict.ContainsKey(RuneType.Main) == true)
         {
             //_effectDict[RuneType.Main][0].transform.localPosition = new Vector3(_offset.x, _offset.y, -50);
-            _effectDict[RuneType.Main][0].transform.localPosition
-                = new Vector3(_magicCircle.RuneDict[RuneType.Main][0].transform.position.x, _magicCircle.RuneDict[RuneType.Main][0].transform.position.y, -50);
+            _effectDict[RuneType.Main][0].GetComponent<RectTransform>().anchoredPosition3D
+                = new Vector3(_magicCircle.RuneDict[RuneType.Main][0].GetComponent<RectTransform>().anchoredPosition.x, _magicCircle.RuneDict[RuneType.Main][0].GetComponent<RectTransform>().anchoredPosition.y + 280, -50);
         }
 
         if (_effectDict.ContainsKey(RuneType.Assist) == true)
@@ -186,8 +186,8 @@ public class MagicContent : MonoBehaviour
 
             for (int i = 0; i < _effectDict[RuneType.Assist].Count; i++)
             {
-                _effectDict[RuneType.Assist][i].transform.localPosition
-                    = Camera.main.WorldToScreenPoint(new Vector3(_magicCircle.RuneDict[RuneType.Assist][i].transform.localPosition.x, _magicCircle.RuneDict[RuneType.Main][0].transform.localPosition.y, -20));
+                _effectDict[RuneType.Assist][i].GetComponent<RectTransform>().anchoredPosition3D
+                    = new Vector3(_magicCircle.RuneDict[RuneType.Assist][i].GetComponent<RectTransform>().anchoredPosition.x, _magicCircle.RuneDict[RuneType.Assist][i].GetComponent<RectTransform>().anchoredPosition.y + 280, -20);
             }
         }
     }
