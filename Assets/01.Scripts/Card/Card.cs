@@ -7,7 +7,22 @@ using TMPro;
 using DG.Tweening;
 using MyBox;
 
-public class Card : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandler, IPointerClickHandler
+[System.Serializable]
+public class PRS
+{
+    public Vector3 Pos;
+    public Quaternion Rot;
+    public Vector3 Scale;
+
+    public PRS(Vector3 pos, Quaternion rot, Vector3 scale)
+    {
+        Pos = pos;
+        Rot = rot;
+        Scale = scale;
+    }
+}
+
+public class Card : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandler, IPointerClickHandler, IPointerDownHandler, IPointerUpHandler
 {
     [SerializeField]
     private GameObject cardPrefab = null;
@@ -23,6 +38,13 @@ public class Card : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHand
     public bool IsEquipMagicCircle { get => _isEquipMagicCircle; set => _isEquipMagicCircle = value; }
     public CardSO Rune => _rune;
 
+    private PRS _originPRS;
+    public PRS OriginPRS
+    {
+        get => _originPRS;
+        set => _originPRS = value;
+    }
+
     private int _sortingIndex;
     public int SortingIndex => _sortingIndex;
 
@@ -30,6 +52,9 @@ public class Card : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHand
     private MagicCircle _magicCircle;
     private bool _isRest = false;
     public bool IsRest {  get => _isRest; set => _isRest = value; }
+    private bool _isClick;
+    private float _clickTimer = 0f;
+    private int _fingerId;
 
     //[System.Obsolete]
     //private int _coolTime;
@@ -83,6 +108,7 @@ public class Card : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHand
     private Text _assistRuneCount;
     private Image _descriptionImage;
     private TMP_Text _descText;
+    private UIOutline _outlineEffect;
 
     // Rune Area
     private Transform _runeAreaParent;
@@ -94,14 +120,13 @@ public class Card : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHand
     private Transform _keywardParent;
     #endregion
 
+    private AssistRune _assistRune;
+    public AssistRune AssistRune => _assistRune;
     private RectTransform _rect;
-    [SerializeField]
-    private Material _outlineMaterial;
-    private Material _defaultMaterial;
 
     //private bool _isClick;
 
-    private void Awake()
+    private void Start()
     {
         Setting();
     }
@@ -115,27 +140,45 @@ public class Card : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHand
     {
         _rune = rune;
 
-        if(_rune != null)
-        {
-            GameObject assert = Instantiate(UIManager.Instance.cardAssistPanel);
-            assert.transform.Find("Name").GetComponent<TextMeshProUGUI>().text = string.Format("[보조] {0}", rune.AssistRune.Name);
-            assert.transform.Find("Mana").GetComponent<TMP_Text>().text = rune.AssistRune.Cost.ToString();
-            assert.transform.Find("Information").GetComponent<TextMeshProUGUI>().text = rune.AssistRune.CardDescription;
-            assert.transform.SetParent(_keywardParent);
-            assert.transform.localScale = Vector3.one;
+        //if(_rune != null)
+        //{
+        //    GameObject assert = Instantiate(UIManager.Instance.cardAssistPanel);
 
-            foreach (var keyword in Rune.keywordList)
-            {
-                GameObject panel = UIManager.Instance.word.KeywordInit(keyword);
-                panel.transform.SetParent(_keywardParent);
-                panel.transform.localScale = Vector3.one;
-            }
-            _keywardParent.gameObject.SetActive(false);
-        }
+        //    assert.transform.Find("Name").GetComponent<TextMeshProUGUI>().text = string.Format("[보조] {0}", rune.AssistRune.Name);
+        //    assert.transform.Find("Mana").GetComponent<TMP_Text>().text = rune.AssistRune.Cost.ToString();
+        //    assert.transform.Find("Information").GetComponent<TextMeshProUGUI>().text = rune.AssistRune.CardDescription;
+        //    assert.transform.SetParent(_keywardParent);
+        //    assert.transform.localScale = Vector3.one;
+
+        //    foreach (var keyword in Rune.keywordList)
+        //    {
+        //        GameObject panel = UIManager.Instance.word.KeywordInit(keyword);
+        //        panel.transform.SetParent(_keywardParent);
+        //        panel.transform.localScale = Vector3.one;
+        //    }
+        //    if (_keywardParent == null) Setting();
+        //    _keywardParent.gameObject.SetActive(false);
+        //}
 
         if (_rune != null)
         {
             UpdateUI(_isFront);
+        }
+    }
+
+    public void MoveTransform(PRS prs, bool useDotween = false, float dotweenTime = 0f)
+    {
+        if (useDotween)
+        {
+            _rect.DOAnchorPos(prs.Pos, dotweenTime);
+            _rect.DORotateQuaternion(prs.Rot, dotweenTime);
+            _rect.DOScale(prs.Scale, dotweenTime);
+        }
+        else
+        {
+            _rect.anchoredPosition = prs.Pos;
+            _rect.rotation = prs.Rot;
+            _rect.localScale = prs.Scale;
         }
     }
 
@@ -167,6 +210,7 @@ public class Card : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHand
             //_skillText.text = _rune.AssistRune.CardDescription;
             //_assistRuneCount.text = "0";
         }
+        _cardBase.sprite = _rune.CardBackground;
         _runeImage.sprite = _rune.RuneImage;
     }
 
@@ -199,6 +243,7 @@ public class Card : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHand
         {
             _runeAreaParent.gameObject.SetActive(true);
             _cardAreaParent.gameObject.SetActive(false);
+            _assistRune.gameObject.SetActive(false);
         }
         else
         {
@@ -209,41 +254,19 @@ public class Card : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHand
 
     public void SetOutlineColor(Color color)
     {
-        _cardBase.material?.SetColor("_SolidOutline", color);
+        //_cardBase.material?.SetColor("_SolidOutline", color);
+        //_outlineEffect.color
     }
 
     public void SetOutline(bool value)
     {
-        if (value)
-        {
-            _cardBase.material = _outlineMaterial;
-        }
-        else
-        {
-            _cardBase.material = _defaultMaterial;
-        }
+        _outlineEffect.gameObject.SetActive(value);
     }
 
-    public void SetOutlineActive(bool value)
+    public void SetRuneOutlineActive(bool value)
     {
         _runeOutlineImage.gameObject.SetActive(value);
     }
-
-    //private void Update()
-    //{
-    //    if (_isClick == true)
-    //    {
-    //        _clickTimer += Time.deltaTime;
-
-    //        if (_clickTimer >= 0.5f)
-    //        {
-    //            _isClick = false;
-
-    //            _collector.CardSelect(this);
-    //            _collector.AllCardDescription(false);
-    //        }
-    //    }
-    //}
 
     public void OnBeginDrag(PointerEventData eventData)
     {
@@ -253,22 +276,28 @@ public class Card : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHand
             if(_collector.SelectCard != null)
             {
                 _collector.SelectCard.transform.localScale = new Vector3(2f, 2f, 1f);
+                _collector.SelectCard.transform.rotation = Quaternion.identity;
             }
-            _collector.FingetID = eventData.pointerId;
+            _collector.FingerID = eventData.pointerId;
+            _fingerId = eventData.pointerId;
             transform.DOKill();
             _keywardParent.gameObject.SetActive(true);
+            _assistRune.gameObject.SetActive(true);
         }
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        if (_collector.SelectCard != null)
+        if (_collector.SelectCard != null && _isEquipMagicCircle == false)
         {
             _collector.SelectCard.transform.localScale = Vector3.one;
+            _collector.SelectCard.transform.rotation = _originPRS.Rot;
+            _collector.FingerID = -1;
             _collector.CardSelect(null);
-            _collector.FingetID = -1;
+            _fingerId = -1;
             transform.DOKill();
             _keywardParent.gameObject.SetActive(false);
+            _assistRune.gameObject.SetActive(false);
         }
     }
 
@@ -279,7 +308,54 @@ public class Card : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHand
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        transform.DOKill();
+        //transform.DOKill();
+    }
+
+    public void OnPointerDown(PointerEventData eventData)
+    {
+        _isClick = true;
+        _fingerId = eventData.pointerId;
+    }
+
+    public void OnPointerUp(PointerEventData eventData)
+    {
+        _isClick = false;
+        if (_collector.SelectCard != null && _isEquipMagicCircle == false)
+        {
+            _collector.SelectCard.transform.localScale = Vector3.one;
+            _collector.SelectCard.transform.rotation = _originPRS.Rot;
+            _collector.FingerID = -1;
+            _collector.CardSelect(null);
+            _fingerId = -1;
+            transform.DOKill();
+            _keywardParent.gameObject.SetActive(false);
+            _assistRune.gameObject.SetActive(false);
+        }
+    }
+
+    private void Update()
+    {
+        if(_isClick == true)
+        {
+            _clickTimer += Time.deltaTime;
+            if(_clickTimer >= 0.5f)
+            {
+                if (_isEquipMagicCircle == false)
+                {
+                    _collector.CardSelect(this);
+                    if (_collector.SelectCard != null)
+                    {
+                        _collector.SelectCard.transform.localScale = new Vector3(2f, 2f, 1f);
+                        _collector.SelectCard.transform.rotation = Quaternion.identity;
+                    }
+                    _collector.FingerID = _fingerId;
+                    transform.DOKill();
+                    _keywardParent.gameObject.SetActive(true);
+                    _assistRune.gameObject.SetActive(true);
+                    _isClick = false;
+                }
+            }
+        }
     }
 
     private void Setting()
@@ -307,6 +383,7 @@ public class Card : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHand
 
         _cardAreaParent = transform.Find("Card_Area");
         _cardBase = _cardAreaParent.Find("Base_Image/Card_Image").GetComponent<Image>();
+        _outlineEffect = _cardAreaParent.Find("Base_Image/Outline").GetComponent<UIOutline>();
 
         _nameText = _cardAreaParent.Find("Name_Text").GetComponent<TMP_Text>();
         _skillImage = _cardAreaParent.Find("Skill_Image").GetComponent<Image>();
@@ -321,21 +398,20 @@ public class Card : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHand
         _runeOutlineImage = _runeAreaParent.Find("Rune_Line_Image").GetComponent<Image>();
 
         _keywardParent = transform.Find("Keyword");
-        
-        
+
+        _assistRune = transform.Find("Assist").GetComponent<AssistRune>();
+        if(_rune != null)
+            _assistRune.UpdateUI(_rune.AssistRune);
+        _assistRune.gameObject.SetActive(false);
 
         IsFront = true;
-        if(_defaultMaterial == null)
-        {
-            _defaultMaterial = _cardBase.material;
-        }
 
         if (_rune != null)
         {
             _runeImage.sprite = _rune.RuneImage;
             _runeAreaParent.gameObject.SetActive(false);
         }
-        SetOutlineActive(false);
+        SetRuneOutlineActive(false);
 
         SetOutlineColor(Color.cyan);
         SetOutline(true);
@@ -345,5 +421,4 @@ public class Card : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHand
     {
         transform.DOKill();
     }
-
 }
