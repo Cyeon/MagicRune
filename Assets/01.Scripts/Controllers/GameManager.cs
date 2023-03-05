@@ -15,8 +15,8 @@ public enum GameTurn
 public class GameManager : MonoSingleton<GameManager>
 {
     [SerializeField]
-    private GameTurn gameTurn = GameTurn.Unknown;
-    public GameTurn GameTurn => gameTurn;
+    private GameTurn _gameTurn = GameTurn.Unknown;
+    public GameTurn GameTurn => _gameTurn;
     public Player player = null;
     public Enemy enemy = null;
     public Unit currentUnit = null;
@@ -34,6 +34,11 @@ public class GameManager : MonoSingleton<GameManager>
 
     private void Start()
     {
+        GameStart();
+    }
+
+    public void GameStart()
+    {
         enemy = EnemyManager.Instance.SpawnEnemy();
         PatternManager.Instance.PatternInit(enemy.enemyInfo.patternList);
 
@@ -46,19 +51,11 @@ public class GameManager : MonoSingleton<GameManager>
         TurnChange();
     }
 
-    private void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.A))
-        {
-            StatusManager.Instance.AddStatus(enemy, StatusName.Wound);
-        }
-    }
-
     private void OnPlayerTurn()
     {
         //EventManager.TriggerEvent(Define.ON_END_MONSTER_TURN);
 
-        gameTurn = GameTurn.Player;
+        _gameTurn = GameTurn.Player;
         currentUnit = player;
         attackUnit = enemy;
     }
@@ -66,7 +63,7 @@ public class GameManager : MonoSingleton<GameManager>
     public void OnMonsterTurn()
     {
         EventManager.TriggerEvent(Define.ON_START_MONSTER_TURN);
-        gameTurn = GameTurn.Monster;
+        _gameTurn = GameTurn.Monster;
         currentUnit = enemy;
         attackUnit = player;
         enemy.TurnStart();
@@ -76,7 +73,7 @@ public class GameManager : MonoSingleton<GameManager>
 
     public void TurnChange()
     {
-        if (gameTurn == GameTurn.Player || gameTurn == GameTurn.Monster)
+        if (_gameTurn == GameTurn.Player || _gameTurn == GameTurn.Monster)
         {
             player?.InvokeStatus(StatusInvokeTime.End);
             enemy?.InvokeStatus(StatusInvokeTime.End);
@@ -85,7 +82,7 @@ public class GameManager : MonoSingleton<GameManager>
             StatusManager.Instance.StatusUpdate(enemy);
         }
 
-        switch (gameTurn)
+        switch (_gameTurn)
         {
             case GameTurn.Unknown:
                 enemy.pattern = PatternManager.Instance.GetPattern();
@@ -97,7 +94,7 @@ public class GameManager : MonoSingleton<GameManager>
                 //SoundManager.instance.PlaySound(turnChangeSound, SoundType.Effect);
 
                 UIManager.Instance.Turn("Player Turn");
-                gameTurn = GameTurn.MonsterWait;
+                _gameTurn = GameTurn.MonsterWait;
                 break;
 
             case GameTurn.Player:
@@ -106,7 +103,7 @@ public class GameManager : MonoSingleton<GameManager>
                 SoundManager.Instance.PlaySound(turnChangeSound, SoundType.Effect);
 
                 UIManager.Instance.Turn("Enemy Turn");
-                gameTurn = GameTurn.PlayerWait;
+                _gameTurn = GameTurn.PlayerWait;
                 break;
 
             case GameTurn.PlayerWait:
@@ -139,7 +136,7 @@ public class GameManager : MonoSingleton<GameManager>
                 }
 
                 UIManager.Instance.Turn("Player Turn");
-                gameTurn = GameTurn.MonsterWait;
+                _gameTurn = GameTurn.MonsterWait;
                 break;
 
             case GameTurn.MonsterWait:
@@ -166,13 +163,13 @@ public class GameManager : MonoSingleton<GameManager>
         }
         //Debug.Log(string.Format("Turn Change: {0}", gameTurn));
 
-        if (gameTurn == GameTurn.PlayerWait || gameTurn == GameTurn.MonsterWait)
+        if (_gameTurn == GameTurn.PlayerWait || _gameTurn == GameTurn.MonsterWait)
             currentUnit?.InvokeStatus(StatusInvokeTime.Start);
     }
 
     public void PlayerTurnEnd()
     {
-        if(gameTurn == GameTurn.Player)
+        if(_gameTurn == GameTurn.Player)
         {
             TurnChange();
         }
