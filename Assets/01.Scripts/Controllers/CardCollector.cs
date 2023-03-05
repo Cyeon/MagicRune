@@ -221,6 +221,8 @@ public class CardCollector : MonoBehaviour
     private bool _isFront = true;
     public bool IsFront { get => _isFront; set => _isFront = value; }
     private bool _isCardRotate = false;
+    private bool _isCanAct = false;
+    public bool IsCanAct => _isCanAct;
 
     [SerializeField]
     private GameObject _cardTemplate = null;
@@ -501,6 +503,17 @@ public class CardCollector : MonoBehaviour
                     _handCards[i].SetOutline(false);
                 }
             }
+        }
+
+        // 턴 종류 버튼 아웃라인 활성화 조건
+        // 1. 마나가 없을 때
+        // 2. 쓸 수 있는 카드가 없을 때
+        // 3. 마법진에 룬이 없을 때
+
+        bool isHaveMana = DummyCost.Instance.CanRune(1);
+        if (isHaveMana == false)
+        {
+            // 턴 종류 버튼 아웃라인 활성화
         }
     }
 
