@@ -3,17 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class TestCard : MonoBehaviour
+public class TestCard : MonoBehaviour, IPointerClickHandler
 {
-    // Start is called before the first frame update
-    void Start()
+    public Dial Dial;
+    private DialElement _dialElement;
+
+    private void Start()
     {
-        
+        _dialElement = GetComponentInParent<DialElement>();
     }
 
-    // Update is called once per frame
-    void Update()
+    public void OnPointerClick(PointerEventData eventData)
     {
-        
+        if (_dialElement.IsHaveCard(this) == false)
+            _dialElement.AddSelectCard(this);
     }
 }
