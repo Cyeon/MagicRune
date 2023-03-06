@@ -15,4 +15,5 @@ public class EnemySO : ScriptableObject
 
     [HideInInspector]
     public List<Pattern> patternList;
+    public bool IsEnter = false;
 }

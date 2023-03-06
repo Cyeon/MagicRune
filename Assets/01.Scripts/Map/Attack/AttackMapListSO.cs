@@ -2,17 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AttackMapListSO : MonoBehaviour
+[System.Serializable]
+public class AttackMapInfo
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public int minFloor = 1;
+    public int maxFloor = 1;
+    public List<EnemySO> enemyList = new List<EnemySO>();
+}
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+[CreateAssetMenu(menuName = "Map/Attack/Attack Map List")]
+public class AttackMapListSO : ScriptableObject
+{
+    public List<AttackMapInfo> map;
 }
