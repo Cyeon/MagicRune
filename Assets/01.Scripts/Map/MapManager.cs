@@ -7,16 +7,31 @@ public class MapManager : MonoSingleton<MapManager>
 {
     [SerializeField]
     private AttackMapListSO _attackMap;
+    public static EnemySO selectEnemy;
 
     private int _floor = 1;
     public int Floor => _floor;
 
+    [SerializeField]
+    private List<MapPanel> _mapPanelList = new List<MapPanel>();
+
+    private void Awake()
+    {
+
+    }
+
     private void Start()
     {
-        DontDestroyOnLoad(this);
         _attackMap.Reset();
-        Debug.Log(GetAttackEnemy().enemyName);
-        Debug.Log(GetAttackEnemy().enemyName);
+        MapInit();
+    }
+
+    private void MapInit()
+    {
+        foreach(MapPanel panel in _mapPanelList)
+        {
+            panel.Init(GetAttackEnemy());
+        }
     }
 
     private EnemySO GetAttackEnemy()
@@ -32,7 +47,7 @@ public class MapManager : MonoSingleton<MapManager>
                 }
             }
         }
-
+            
         int idx = Random.Range(0, enemyList.Count);
         enemyList[idx].IsEnter = true;
         return enemyList[idx];

@@ -39,9 +39,9 @@ public class GameManager : MonoSingleton<GameManager>
 
     public void GameStart()
     {
-        enemy = EnemyManager.Instance.SpawnEnemy();
+        enemy = EnemyManager.Instance.SpawnEnemy(MapManager.selectEnemy);
         PatternManager.Instance.PatternInit(enemy.enemyInfo.patternList);
-
+         
         player = FindObjectOfType<Player>();
 
         UIManager.instance.HealthbarInit(true, player.HP);

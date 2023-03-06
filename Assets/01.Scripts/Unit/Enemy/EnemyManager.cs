@@ -13,6 +13,7 @@ public class EnemyManager : MonoSingleton<EnemyManager>
 
         currentEnemy = enemy;
         Enemy e = Instantiate(enemy.prefab).GetComponent<Enemy>();
+        UIManager.Instance.enemyImage.sprite = enemy.icon;
         e.transform.position = Vector3.zero;
         e.Init(enemy);
         return e;

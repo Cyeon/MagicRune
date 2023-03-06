@@ -737,6 +737,7 @@ GameObject:
   - component: {fileID: 552303123}
   - component: {fileID: 552303122}
   - component: {fileID: 552303124}
+  - component: {fileID: 552303125}
   m_Layer: 5
   m_Name: Map1
   m_TagString: Untagged
@@ -848,9 +849,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 69810914}
-        m_TargetAssemblyTypeName: SceneChangeManager, Assembly-CSharp
-        m_MethodName: LoadScene
+      - m_Target: {fileID: 552303125}
+        m_TargetAssemblyTypeName: MapPanel, Assembly-CSharp
+        m_MethodName: Choose
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -860,6 +861,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &552303125
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 552303120}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5da833638ba846b4bb0576f29c404911, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &762361691
 GameObject:
   m_ObjectHideFlags: 0
@@ -2558,6 +2571,7 @@ GameObject:
   - component: {fileID: 1639271880}
   - component: {fileID: 1639271879}
   - component: {fileID: 1639271878}
+  - component: {fileID: 1639271881}
   m_Layer: 5
   m_Name: Map2
   m_TagString: Untagged
@@ -2631,9 +2645,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 69810914}
-        m_TargetAssemblyTypeName: SceneChangeManager, Assembly-CSharp
-        m_MethodName: LoadScene
+      - m_Target: {fileID: 1639271881}
+        m_TargetAssemblyTypeName: MapPanel, Assembly-CSharp
+        m_MethodName: Choose
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2681,6 +2695,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1639271876}
   m_CullTransparentMesh: 1
+--- !u!114 &1639271881
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1639271876}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5da833638ba846b4bb0576f29c404911, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1643001311
 GameObject:
   m_ObjectHideFlags: 0
@@ -2993,6 +3019,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _attackMap: {fileID: 11400000, guid: eb92d7dde3ace614293007a654bb031c, type: 2}
+  selectEnemy: {fileID: 0}
+  _mapPanelList:
+  - {fileID: 552303125}
+  - {fileID: 1639271881}
+  - {fileID: 1941823066}
 --- !u!1 &1873690054
 GameObject:
   m_ObjectHideFlags: 0
@@ -3216,6 +3247,7 @@ GameObject:
   - component: {fileID: 1941823065}
   - component: {fileID: 1941823064}
   - component: {fileID: 1941823063}
+  - component: {fileID: 1941823066}
   m_Layer: 5
   m_Name: Map3
   m_TagString: Untagged
@@ -3289,9 +3321,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 69810914}
-        m_TargetAssemblyTypeName: SceneChangeManager, Assembly-CSharp
-        m_MethodName: LoadScene
+      - m_Target: {fileID: 1941823066}
+        m_TargetAssemblyTypeName: MapPanel, Assembly-CSharp
+        m_MethodName: Choose
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3339,6 +3371,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1941823061}
   m_CullTransparentMesh: 1
+--- !u!114 &1941823066
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1941823061}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5da833638ba846b4bb0576f29c404911, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1995296603
 GameObject:
   m_ObjectHideFlags: 0
