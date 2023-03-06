@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class DialElement : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
+    private Dial _dial;
     private Image _image;
 
     [SerializeField]
@@ -23,11 +24,17 @@ public class DialElement : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
     private int _fingerID = -1;
 
+    private bool _isSelect = false;
+    public bool IsSelect { get => _isSelect; set => _isSelect = value; }
+    private bool _isAllSelect = false;
+
     private List<TestCard> _selectCardList;
 
     public void OnPointerDown(PointerEventData eventData)
     {
         _fingerID = eventData.pointerId;
+
+        _dial.EditSelectArea(this);
     }
 
     public void OnPointerUp(PointerEventData eventData)
@@ -37,9 +44,10 @@ public class DialElement : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
     private void Start()
     {
+        _dial = GetComponentInParent<Dial>();
         _selectCardList = new List<TestCard>();
         _image = GetComponent<Image>();
-        _image.alphaHitTestMinimumThreshold = 0.1f;
+        _image.alphaHitTestMinimumThreshold = 0.0f;
     }
 
     private void Update()
@@ -59,7 +67,7 @@ public class DialElement : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
             }
             if (touch.phase == TouchPhase.Moved)
             {
-                if (_fingerID != -1)
+                if (_fingerID != -1 && _dial.GetSelectAreaForElement() == this)
                 {
                     if (Input.touchCount > 0)
                     {
@@ -129,8 +137,19 @@ public class DialElement : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         {
             if(_selectCardList.Count < _selectCount)
             {
+                card.SetActiveOutline(true);
                 _selectCardList.Add(card);
+
+                if(_selectCardList.Count == _selectCount)
+                {
+                    _isAllSelect = true;
+                }
             }
         }
+    }
+
+    public bool IsAllSelect()
+    {
+        return _isAllSelect;
     }
 }
