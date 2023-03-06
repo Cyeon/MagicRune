@@ -127,9 +127,10 @@ public class DialElement : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     {
         if(card != null)
         {
-            // 개수 조건처리
-
-            _selectCardList.Add(card);
+            if(_selectCardList.Count < _selectCount)
+            {
+                _selectCardList.Add(card);
+            }
         }
     }
 }
