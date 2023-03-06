@@ -12,8 +12,8 @@ public class EnemySO : ScriptableObject
     public Sprite icon;
 
     public GameObject prefab;
+    public bool IsEnter = false;
 
     [HideInInspector]
     public List<Pattern> patternList;
-    public bool IsEnter = false;
 }
