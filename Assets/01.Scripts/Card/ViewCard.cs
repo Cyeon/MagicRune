@@ -14,11 +14,13 @@ public class ViewCard : MonoBehaviour, IPointerDownHandler
         if (isActive)
         {
             EventManager.TriggerEvent(Define.CLICK_VIEW_UI);
-            GameObject gameObject = Instantiate(this.gameObject, transform.parent.parent);
+            GameObject gameObject = Instantiate(this.gameObject, transform.parent.parent.parent.parent);
             gameObject.name = "Card_Temp";
             gameObject.transform.localScale = newScale;
+            //gameObject.GetComponent<Card>().OutlineEffect.gameObject.SetActive(false);
             gameObject.GetComponent<ViewCard>().enabled = false;
             gameObject.GetComponent<RectTransform>().anchoredPosition = newPosition;
+            gameObject.transform.Find("Keyword").GetComponent<RectTransform>().anchoredPosition = new Vector2(5f, -310f);
         }
     }
     public void DestroySelf()

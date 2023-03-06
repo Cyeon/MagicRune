@@ -138,7 +138,7 @@ public class CardsViewUI : MonoBehaviour
         {
             _shadowPanelImage.color = _offColor;
             _shadowPanelImage.raycastTarget = false;
-            _content.parent.Find("Card_Temp").GetComponent<ViewCard>().DestroySelf();
+            transform.Find("Card_Temp").GetComponent<ViewCard>().DestroySelf();
         }
     }
 
