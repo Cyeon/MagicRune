@@ -317,6 +317,7 @@ public class CardCollector : MonoBehaviour
             if (!_handCards.Contains(card))
             {
                 _handCards.Add(card);
+                //card.transform.Find("Keyword").gameObject.SetActive(false);
             }
             _deckCards.Remove(card);
             card.gameObject.SetActive(true);

@@ -109,7 +109,7 @@ public class Card : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHand
     private Image _descriptionImage;
     private TMP_Text _descText;
     private UIOutline _outlineEffect;
-
+    public UIOutline OutlineEffect => _outlineEffect;
     // Rune Area
     private Transform _runeAreaParent;
     public Transform RuneAreaParent => _runeAreaParent;

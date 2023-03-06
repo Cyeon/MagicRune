@@ -58,14 +58,16 @@ public class CardsViewUI : MonoBehaviour
             if (gameObject == null) { continue; }
 
             gameObject.GetComponent<ViewCard>().isActive = true;
-
             gameObject.transform.Find("Card_Area").GetComponent<CanvasGroup>().alpha = 1f;
-
+            
             Card card = gameObject.GetComponent<Card>();
             card.SetRune(false);
+            card.SetOutline(false);
             card.enabled = false;
 
             gameObject.SetActive(true);
+            gameObject.transform.Find("Keyword").gameObject.SetActive(false);
+            gameObject.transform.rotation = Quaternion.Euler(Vector3.zero);
             gameObject.transform.SetParent(_content);
             gameObject.transform.localScale = Vector3.one;
         }
@@ -84,6 +86,7 @@ public class CardsViewUI : MonoBehaviour
             gameObject.SetActive(false);
             gameObject.transform.rotation = Quaternion.identity;
             gameObject.transform.SetParent(_cardCollector.transform);
+
             RectTransform rect = gameObject.GetComponent<RectTransform>();
             rect.sizeDelta = Vector2.zero;
             rect.anchorMin = Vector2.one / 2;
