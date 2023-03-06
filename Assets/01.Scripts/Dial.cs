@@ -17,7 +17,10 @@ public class Dial : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
     [SerializeField]
     private float _distance;
-    private List<Card> _cardList;
+    private List<TestCard> _cardList;
+    private List<TestCard> _selectCardList;
+    [SerializeField]
+    private int _selectCount = 5;
     [SerializeField]
     private GameObject tempCard;
 
@@ -36,16 +39,19 @@ public class Dial : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
     private void Start()
     {
-        //_cardList = new List<Card>();
+        _cardList = new List<TestCard>();
+        _selectCardList = new List<TestCard>(_selectCount);
 
-        //for(int i = 0; i < 5; i++)
-        //{
-        //    GameObject g = Instantiate(tempCard, _dialImage.transform);
-        //    AddCard(g.GetComponent<Card>());
-        //}
+        _dialImage.alphaHitTestMinimumThreshold = 0.0f;
+
+        for (int i = 0; i < 5; i++)
+        {
+            GameObject g = Instantiate(tempCard, _dialImage.transform);
+            AddCard(g.GetComponent<TestCard>());
+        }
     }
 
-    public void AddCard(Card card)
+    public void AddCard(TestCard card)
     {
         if (card != null)
         {
