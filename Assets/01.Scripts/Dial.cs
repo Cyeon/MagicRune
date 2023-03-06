@@ -87,15 +87,15 @@ public class Dial : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
                 if (t.deltaPosition.x < 0)
                 {
-                    Quaternion rot = _dialImage.transform.rotation;
-                    rot.z = (rot.z + _rotDamp) % 180;
-                    _dialImage.transform.rotation = rot;
+                    Vector3 rot = _dialImage.transform.eulerAngles;
+                    rot.z += _rotDamp;
+                    _dialImage.transform.rotation = Quaternion.Euler(rot);
                 }
                 else if (t.deltaPosition.x > 0)
                 {
-                    Quaternion rot = _dialImage.transform.rotation;
-                    rot.z = (rot.z - _rotDamp) % 180;
-                    _dialImage.transform.rotation = rot;
+                    Vector3 rot = _dialImage.transform.eulerAngles;
+                    rot.z -= _rotDamp;
+                    _dialImage.transform.rotation = Quaternion.Euler(rot);
                 }
             }
         }
