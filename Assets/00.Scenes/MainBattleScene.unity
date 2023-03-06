@@ -207,7 +207,7 @@ MonoBehaviour:
     information: "\uC18C\uBA78\uD569\uB2C8\uB2E4."
   - keyword: 1
     keywordName: "\uD654\uC5FC"
-    information: "\uD134\uC774 \uB05D\uB098\uBA74\n1\uC2A4\uD0DD\uB2F9 \uB370\uBBF8\uC9C0\uAC00
+    information: "\uD134\uC774 \uB05D\uB098\uBA74 1\uC2A4\uD0DD\uB2F9\n\uB370\uBBF8\uC9C0\uAC00
       \uB4E4\uC5B4\uAC11\uB2C8\uB2E4."
 --- !u!1 &33765186
 GameObject:
@@ -245,8 +245,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -1298.3}
-  m_SizeDelta: {x: 300, y: -2396.6}
+  m_AnchoredPosition: {x: 0, y: -937.65015}
+  m_SizeDelta: {x: 300, y: -1875.3003}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &33765188
 MonoBehaviour:
@@ -787,8 +787,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -20, y: -244}
-  m_SizeDelta: {x: 700, y: 65}
+  m_AnchoredPosition: {x: -20, y: 366.75}
+  m_SizeDelta: {x: 700, y: 86.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &133344193
 MonoBehaviour:
@@ -2062,182 +2062,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f32f12b2f4259bc45a6d9941ad627084, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  patterns:
-  - patternName: "\uACF5\uACA9"
-    patternEnum: 0
-    icon: {fileID: 21300000, guid: f8f165314f3065e46b32ad7a27340b2b, type: 3}
-    value: 10
-    patternStartFunc:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 417906623}
-          m_TargetAssemblyTypeName: PatternFuncList, Assembly-CSharp
-          m_MethodName: AddAtkDmg
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 10
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-    patternTurnFunc:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 417906623}
-          m_TargetAssemblyTypeName: PatternFuncList, Assembly-CSharp
-          m_MethodName: Attack
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-    patternEndFunc:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 417906623}
-          m_TargetAssemblyTypeName: PatternFuncList, Assembly-CSharp
-          m_MethodName: RemAtkDmg
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 10
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-  - patternName: "\uBE59\uACB0"
-    patternEnum: 0
-    icon: {fileID: 21300000, guid: 52e5fb28f6903cd4f9e807e9d1c856ef, type: 3}
-    value: 3
-    patternStartFunc:
-      m_PersistentCalls:
-        m_Calls: []
-    patternTurnFunc:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 417906623}
-          m_TargetAssemblyTypeName: PatternFuncList, Assembly-CSharp
-          m_MethodName: AddStatus
-          m_Mode: 5
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: Ice
-            m_BoolArgument: 0
-          m_CallState: 2
-        - m_Target: {fileID: 417906623}
-          m_TargetAssemblyTypeName: PatternFuncList, Assembly-CSharp
-          m_MethodName: DelayShake
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-    patternEndFunc:
-      m_PersistentCalls:
-        m_Calls: []
-  - patternName: "\uBC29\uC5B4"
-    patternEnum: 0
-    icon: {fileID: 21300000, guid: a28c2afe1020a2c48ad8e49fda3af0dc, type: 3}
-    value: 10
-    patternStartFunc:
-      m_PersistentCalls:
-        m_Calls: []
-    patternTurnFunc:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 417906623}
-          m_TargetAssemblyTypeName: PatternFuncList, Assembly-CSharp
-          m_MethodName: AddShield
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-        - m_Target: {fileID: 417906623}
-          m_TargetAssemblyTypeName: PatternFuncList, Assembly-CSharp
-          m_MethodName: ShieldUse
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-    patternEndFunc:
-      m_PersistentCalls:
-        m_Calls: []
-  - patternName: "\uAD11\uC120"
-    patternEnum: 0
-    icon: {fileID: 21300000, guid: cde174102cb11db4087530b49287d5ac, type: 3}
-    value: 20
-    patternStartFunc:
-      m_PersistentCalls:
-        m_Calls: []
-    patternTurnFunc:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 417906623}
-          m_TargetAssemblyTypeName: PatternFuncList, Assembly-CSharp
-          m_MethodName: Beeeeem
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 20
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-    patternEndFunc:
-      m_PersistentCalls:
-        m_Calls: []
+  patterns: []
   codiPatterns:
-  - patternName: "\uBB34\uB825"
-    patternEnum: 0
-    icon: {fileID: -2741756353435428437, guid: 72f7a32ac9c7676409eb438757bc6b4a, type: 3}
-    value: 0
-    patternStartFunc:
-      m_PersistentCalls:
-        m_Calls: []
-    patternTurnFunc:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 417906623}
-          m_TargetAssemblyTypeName: PatternFuncList, Assembly-CSharp
-          m_MethodName: TurnSkip
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-    patternEndFunc:
-      m_PersistentCalls:
-        m_Calls: []
-  enemyHavePatterns: []
+  - value: 0
+    info: {fileID: 11400000, guid: e66e30a51653944498f8f9a0c3c0f393, type: 2}
   funcList: {fileID: 417906623}
 --- !u!1 &422613104
 GameObject:
@@ -2272,7 +2100,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -15}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 1171, y: 800}
+  m_AnchoredPosition: {x: 1171, y: 370}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &424719282
@@ -2999,7 +2827,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 264, y: -658}
+  m_AnchoredPosition: {x: 177, y: 200}
   m_SizeDelta: {x: 200, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &528680701
@@ -3177,7 +3005,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 279.30005}
+  m_AnchoredPosition: {x: 0, y: 544}
   m_SizeDelta: {x: -300, y: 25}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &563771739
@@ -4062,170 +3890,6 @@ Transform:
   m_Father: {fileID: 1429253408}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!43 &677859338
-Mesh:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: Combined Mesh (NextTurnBtn)
-  serializedVersion: 10
-  m_SubMeshes:
-  - serializedVersion: 2
-    firstByte: 0
-    indexCount: 0
-    topology: 0
-    baseVertex: 0
-    firstVertex: 0
-    vertexCount: 0
-    localAABB:
-      m_Center: {x: 0, y: 0, z: 0}
-      m_Extent: {x: 0, y: 0, z: 0}
-  m_Shapes:
-    vertices: []
-    shapes: []
-    channels: []
-    fullWeights: []
-  m_BindPose: []
-  m_BoneNameHashes: 
-  m_RootBoneNameHash: 0
-  m_BonesAABB: []
-  m_VariableBoneCountWeights:
-    m_Data: 
-  m_MeshCompression: 0
-  m_IsReadable: 1
-  m_KeepVertices: 1
-  m_KeepIndices: 1
-  m_IndexFormat: 0
-  m_IndexBuffer: 
-  m_VertexData:
-    serializedVersion: 3
-    m_VertexCount: 0
-    m_Channels:
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    m_DataSize: 0
-    _typelessdata: 
-  m_CompressedMesh:
-    m_Vertices:
-      m_NumItems: 0
-      m_Range: 0
-      m_Start: 0
-      m_Data: 
-      m_BitSize: 0
-    m_UV:
-      m_NumItems: 0
-      m_Range: 0
-      m_Start: 0
-      m_Data: 
-      m_BitSize: 0
-    m_Normals:
-      m_NumItems: 0
-      m_Range: 0
-      m_Start: 0
-      m_Data: 
-      m_BitSize: 0
-    m_Tangents:
-      m_NumItems: 0
-      m_Range: 0
-      m_Start: 0
-      m_Data: 
-      m_BitSize: 0
-    m_Weights:
-      m_NumItems: 0
-      m_Data: 
-      m_BitSize: 0
-    m_NormalSigns:
-      m_NumItems: 0
-      m_Data: 
-      m_BitSize: 0
-    m_TangentSigns:
-      m_NumItems: 0
-      m_Data: 
-      m_BitSize: 0
-    m_FloatColors:
-      m_NumItems: 0
-      m_Range: 0
-      m_Start: 0
-      m_Data: 
-      m_BitSize: 0
-    m_BoneIndices:
-      m_NumItems: 0
-      m_Data: 
-      m_BitSize: 0
-    m_Triangles:
-      m_NumItems: 0
-      m_Data: 
-      m_BitSize: 0
-    m_UVInfo: 0
-  m_LocalAABB:
-    m_Center: {x: 0, y: 0, z: 0}
-    m_Extent: {x: 0, y: 0, z: 0}
-  m_MeshUsageFlags: 0
-  m_BakedConvexCollisionMesh: 
-  m_BakedTriangleCollisionMesh: 
-  m_MeshMetrics[0]: 0
-  m_MeshMetrics[1]: 0
-  m_MeshOptimizationFlags: 1
-  m_StreamData:
-    serializedVersion: 2
-    offset: 0
-    size: 0
-    path: 
 --- !u!1 &692084585
 GameObject:
   m_ObjectHideFlags: 0
@@ -4731,8 +4395,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.25}
   m_AnchorMax: {x: 1, y: 0.75}
-  m_AnchoredPosition: {x: -23.999998, y: 0}
-  m_SizeDelta: {x: 100, y: -20}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: -20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &794258572
 MonoBehaviour:
@@ -5020,8 +4684,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 18
-  m_fontSizeBase: 18
+  m_fontSize: 17
+  m_fontSizeBase: 17
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -5103,7 +4767,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 15}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 241, y: 800}
+  m_AnchoredPosition: {x: 241, y: 370}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &935585581
@@ -5207,7 +4871,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2524630237549374738, guid: 72e1863d812baff46abc11905a946812, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -40
+      value: -245.00006
       objectReference: {fileID: 0}
     - target: {fileID: 2524630237883285336, guid: 72e1863d812baff46abc11905a946812, type: 3}
       propertyPath: m_SizeDelta.y
@@ -5642,89 +5306,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!1 &1060670788
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1060670791}
-  - component: {fileID: 1060670790}
-  - component: {fileID: 1060670789}
-  m_Layer: 0
-  m_Name: Combined Mesh of NextTurnBtn
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!23 &1060670789
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1060670788}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
-  m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 0}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_AdditionalVertexStreams: {fileID: 0}
---- !u!33 &1060670790
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1060670788}
-  m_Mesh: {fileID: 677859338}
---- !u!4 &1060670791
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1060670788}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.5810812, y: -9.094595, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 8
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1079056844
 GameObject:
   m_ObjectHideFlags: 0
@@ -7077,7 +6658,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -24, y: 0}
-  m_SizeDelta: {x: 200, y: 60}
+  m_SizeDelta: {x: 180, y: 51}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1215621363
 MonoBehaviour:
@@ -8073,7 +7654,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 529.9999, y: -648.9998}
+  m_AnchoredPosition: {x: 490, y: 210}
   m_SizeDelta: {x: 350, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1381855529
@@ -8304,7 +7885,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -1155}
+  m_AnchoredPosition: {x: 0, y: -660}
   m_SizeDelta: {x: 2000, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1396228857
@@ -8386,7 +7967,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -230, y: -654}
+  m_AnchoredPosition: {x: -250, y: 205}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1400740521
@@ -9216,7 +8797,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8299025801448075172, guid: 4f084ed2fa6faa74b849d5eb17c36da2, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 280
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8299025801448075172, guid: 4f084ed2fa6faa74b849d5eb17c36da2, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -9234,10 +8815,6 @@ PrefabInstance:
       propertyPath: _enemyPos
       value: 
       objectReference: {fileID: 1886954359}
-    - target: {fileID: 8299025801448075173, guid: 4f084ed2fa6faa74b849d5eb17c36da2, type: 3}
-      propertyPath: _startPos
-      value: 
-      objectReference: {fileID: 1502645722}
     - target: {fileID: 8299025801448075173, guid: 4f084ed2fa6faa74b849d5eb17c36da2, type: 3}
       propertyPath: _playerPos
       value: 
@@ -9389,7 +8966,7 @@ PrefabInstance:
       objectReference: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
     - target: {fileID: 8365584558822541736, guid: 2c481390a36193b41a5fb42dd2dfdf26, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -40
+      value: -245
       objectReference: {fileID: 0}
     - target: {fileID: 8365584559230048138, guid: 2c481390a36193b41a5fb42dd2dfdf26, type: 3}
       propertyPath: m_SizeDelta.y
@@ -9637,7 +9214,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -23.999998, y: 0}
-  m_SizeDelta: {x: 210, y: 40}
+  m_SizeDelta: {x: 189, y: 34}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1610059377
 MonoBehaviour:
@@ -10094,7 +9671,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -24, y: 0}
-  m_SizeDelta: {x: 200, y: 60}
+  m_SizeDelta: {x: 180, y: 51}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1679600722
 MonoBehaviour:
@@ -10906,7 +10483,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 720, y: 224}
+  m_AnchoredPosition: {x: 720, y: 10}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1793587932
@@ -10991,7 +10568,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -24, y: 0}
-  m_SizeDelta: {x: 200, y: 60}
+  m_SizeDelta: {x: 180, y: 51}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1809645186
 MonoBehaviour:

@@ -20,6 +20,11 @@ public class PatternFuncList : MonoBehaviour
         transform.DOKill();
     }
 
+    public void FuncInvoke(string funcName)
+    {
+        Invoke(funcName, 0f);
+    }
+
     public void AddAtkDmg()
     {
         GameManager.Instance.enemy.atkDamage += value;

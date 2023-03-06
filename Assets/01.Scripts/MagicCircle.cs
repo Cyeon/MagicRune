@@ -51,8 +51,6 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
     private Dictionary<RuneType, List<Card>> _runeTempDict;
     public Dictionary<RuneType, List<Card>> RuneTempDict => _runeTempDict;
 
-    //private Dictionary<string, string> _effectDict;
-    //private Dictionary<EffectType, List<EffectPair>> _effectDict;
     [SerializeField]
     private CustomDict _effectDict;
     public CustomDict EffectDict => _effectDict;
@@ -625,7 +623,6 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
         });
         seq.AppendCallback(() =>
         {
-            Debug.Log("Attack Complate");
             IsBig = false;
 
             if (_cardCollector.IsFront == false)

@@ -109,7 +109,7 @@ public class Card : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHand
     private Image _descriptionImage;
     private TMP_Text _descText;
     private UIOutline _outlineEffect;
-
+    public UIOutline OutlineEffect => _outlineEffect;
     // Rune Area
     private Transform _runeAreaParent;
     public Transform RuneAreaParent => _runeAreaParent;
@@ -118,6 +118,7 @@ public class Card : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHand
 
     // Keyword
     private Transform _keywardParent;
+    public Transform KeyWardParent => _keywardParent;
     #endregion
 
     private AssistRune _assistRune;
@@ -140,25 +141,25 @@ public class Card : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHand
     {
         _rune = rune;
 
-        //if(_rune != null)
-        //{
-        //    GameObject assert = Instantiate(UIManager.Instance.cardAssistPanel);
+        if(_rune != null)
+        {
+            //    GameObject assert = Instantiate(UIManager.Instance.cardAssistPanel);
 
-        //    assert.transform.Find("Name").GetComponent<TextMeshProUGUI>().text = string.Format("[보조] {0}", rune.AssistRune.Name);
-        //    assert.transform.Find("Mana").GetComponent<TMP_Text>().text = rune.AssistRune.Cost.ToString();
-        //    assert.transform.Find("Information").GetComponent<TextMeshProUGUI>().text = rune.AssistRune.CardDescription;
-        //    assert.transform.SetParent(_keywardParent);
-        //    assert.transform.localScale = Vector3.one;
+            //    assert.transform.Find("Name").GetComponent<TextMeshProUGUI>().text = string.Format("[보조] {0}", rune.AssistRune.Name);
+            //    assert.transform.Find("Mana").GetComponent<TMP_Text>().text = rune.AssistRune.Cost.ToString();
+            //    assert.transform.Find("Information").GetComponent<TextMeshProUGUI>().text = rune.AssistRune.CardDescription;
+            //    assert.transform.SetParent(_keywardParent);
+            //    assert.transform.localScale = Vector3.one;
 
-        //    foreach (var keyword in Rune.keywordList)
-        //    {
-        //        GameObject panel = UIManager.Instance.word.KeywordInit(keyword);
-        //        panel.transform.SetParent(_keywardParent);
-        //        panel.transform.localScale = Vector3.one;
-        //    }
-        //    if (_keywardParent == null) Setting();
-        //    _keywardParent.gameObject.SetActive(false);
-        //}
+            if (_keywardParent == null) Setting();
+            foreach (var keyword in Rune.keywordList)
+            {
+                GameObject panel = UIManager.Instance.word.KeywordInit(keyword);
+                panel.transform.SetParent(_keywardParent);
+                panel.transform.localScale = new Vector3(0.4f, 0.8f, 1f);
+            }
+            _keywardParent.gameObject.SetActive(false);
+        }
 
         if (_rune != null)
         {
@@ -244,11 +245,13 @@ public class Card : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHand
             _runeAreaParent.gameObject.SetActive(true);
             _cardAreaParent.gameObject.SetActive(false);
             _assistRune.gameObject.SetActive(false);
+            _keywardParent.gameObject.SetActive(false);
         }
         else
         {
             _runeAreaParent.gameObject.SetActive(false);
             _cardAreaParent.gameObject.SetActive(true);
+            _keywardParent.gameObject.SetActive(true);
         }
     }
 
@@ -310,7 +313,17 @@ public class Card : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHand
 
     public void OnDrag(PointerEventData eventData)
     {
-
+        float x = 300;
+        if(transform.position.x >= 0)
+        {
+            if(_keywardParent.transform.position.x != -x)
+                _keywardParent.transform.DOLocalMoveX(-x, 0);
+        }
+        else
+        {
+            if (_keywardParent.transform.position.x != x)
+                _keywardParent.transform.DOLocalMoveX(x, 0);
+        }
     }
 
     public void OnPointerClick(PointerEventData eventData)

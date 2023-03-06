@@ -83,11 +83,11 @@ public class CardCollector : MonoBehaviour
                         {
                             if (_magicCircle.RuneDict.ContainsKey(RuneType.Main) == false && _isFront == false)
                             {
-                                UIManager.Instance.InfoMessagePopup("¸ÞÀÎ ·éÀ» ³Ö¾îÁÖ¼¼¿ä.", GetTouchPos());
+                                UIManager.Instance.InfoMessagePopup("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ö¾ï¿½ï¿½Ö¼ï¿½ï¿½ï¿½.", GetTouchPos());
                             }
                             else if (_magicCircle.RuneDict.ContainsKey(RuneType.Assist) == true && _isFront == true)
                             {
-                                UIManager.Instance.InfoMessagePopup("º¸Á¶ ·éÀ» ³Ö¾îÁÖ¼¼¿ä.", GetTouchPos());
+                                UIManager.Instance.InfoMessagePopup("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ö¾ï¿½ï¿½Ö¼ï¿½ï¿½ï¿½.", GetTouchPos());
                             }
                         }
                     }
@@ -170,11 +170,11 @@ public class CardCollector : MonoBehaviour
                     //    {
                     //        if (_magicCircle.RuneDict.ContainsKey(RuneType.Main) == false && _isFront == false)
                     //        {
-                    //            UIManager.Instance.InfoMessagePopup("¸ÞÀÎ ·éÀ» ³Ö¾îÁÖ¼¼¿ä.", GetTouchPos());
+                    //            UIManager.Instance.InfoMessagePopup("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ö¾ï¿½ï¿½Ö¼ï¿½ï¿½ï¿½.", GetTouchPos());
                     //        }
                     //        else if (_magicCircle.RuneDict.ContainsKey(RuneType.Assist) == true && _isFront == true)
                     //        {
-                    //            UIManager.Instance.InfoMessagePopup("º¸Á¶ ·éÀ» ³Ö¾îÁÖ¼¼¿ä.", GetTouchPos());
+                    //            UIManager.Instance.InfoMessagePopup("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ö¾ï¿½ï¿½Ö¼ï¿½ï¿½ï¿½.", GetTouchPos());
                     //        }
                     //    }
                     //}
@@ -285,6 +285,7 @@ public class CardCollector : MonoBehaviour
                     SelectCard.RuneAreaParent.gameObject.SetActive(true);
                     SelectCard.CardAreaParent.gameObject.SetActive(false);
                     SelectCard.AssistRune.gameObject.SetActive(false);
+                    SelectCard.KeyWardParent.gameObject.SetActive(false);
                     //SelectCard.GetComponent<RectTransform>().sizeDelta = new Vector2(128, 128);
                 }
                 else
@@ -299,6 +300,7 @@ public class CardCollector : MonoBehaviour
                     {
                         SelectCard.AssistRune.gameObject.SetActive(false);
                     }
+                    SelectCard.KeyWardParent.gameObject.SetActive(true);
                     //SelectCard.GetComponent<RectTransform>().sizeDelta = new Vector2(300, 500);
                 }
             }
@@ -324,6 +326,7 @@ public class CardCollector : MonoBehaviour
             if (!_handCards.Contains(card))
             {
                 _handCards.Add(card);
+                //card.transform.Find("Keyword").gameObject.SetActive(false);
             }
             _deckCards.Remove(card);
             card.gameObject.SetActive(true);
@@ -348,12 +351,12 @@ public class CardCollector : MonoBehaviour
             return -1;
         });
 
-        // ±âÁ¸ ÄÚµå
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½Úµï¿½
         //float xDelta = 1440f / _handCards.Count;
         ////float sideArea = (1440f - _cardAreaDistance) / 2; // ï¿½ï¿½ï¿½ï¿½ Scroll Rectï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½È¾ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         //for (int i = 0; i < _handCards.Count; i++)
         //{
-        //    //?ï¿½ê±¸ ?ï¿½ì¤˜??Animation???ï¿½í•´ MagicCircle???ï¿½ì‹?ï¿½ë¡œ ?ï¿½ì—ˆ??ê²ƒë„ ?ï¿½ì‹œ ???ï¿½ì˜ ?ï¿½ì‹?ï¿½ë¡œ ?ï¿½ì•„?ï¿??ï¿½ìƒ?ï¿½ìœ¼ï¿?Sortê°€ ?ï¿½ëŠ”??ê·¸ëŸ¬ï¿?Damageë¶€ë¶„ì—???ï¿½ë¥˜ê°€ ??ï¿?ï¿?
+        //    //?ï¿½ê±¸ ?ï¿½ì¤˜??Animation???ï¿½í•´ MagicCircle???ï¿½ì‹?ï¿½ë¡œ ?ï¿½ì—ˆ??ê²ƒë„ ?ï¿½ì‹œ ???ï¿½ì˜ ?ï¿½ì‹?ï¿½ë¡œ ?ï¿½ì•„?ï¿½??ï¿½ìƒ?ï¿½ìœ¼ï¿½?Sortê°€ ?ï¿½ëŠ”??ê·¸ëŸ¬ï¿½?Damageë¶€ë¶„ì—???ï¿½ë¥˜ê°€ ??ï¿½?ï¿½?
         //    //_handCards[i].transform.SetParent(this.transform); 
         //    RectTransform rect = _handCards[i].GetComponent<RectTransform>();
         //    rect.anchoredPosition = new Vector3(i * xDelta + rect.sizeDelta.x / 2 + 150 + _offset.x, rect.sizeDelta.y / 2 + _offset.y, 0);
@@ -362,7 +365,7 @@ public class CardCollector : MonoBehaviour
         //    _handCards[i].IsFront = _isFront;
         //}
 
-        // °í¶ó´ÏÇ¥ ÄÚµå
+        // ï¿½ï¿½ï¿½ï¿½ï¿½Ç¥ ï¿½Úµï¿½
         List<PRS> originCardPRS = new List<PRS>();
         originCardPRS = RoundSort(_myCardLeft, _myCardRight, _handCards.Count, 0.5f, Vector3.one);
 
@@ -383,7 +386,7 @@ public class CardCollector : MonoBehaviour
 
         switch (cardCount)
         {
-            // 1 ~ 3 Àº ÇÏµåÄÚµùÇÑ°Í Á÷Á¢º¸¸é¼­ ¼öÄ¡°ª³ÖÀº°Í µÇ¸é ³ªÁß¿¡´Â ¼öÁ¤ÇÒ µí
+            // 1 ~ 3 ï¿½ï¿½ ï¿½Ïµï¿½ï¿½Úµï¿½ï¿½Ñ°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½é¼­ ï¿½ï¿½Ä¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ç¸ï¿½ ï¿½ï¿½ï¿½ß¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
             case 1:
                 cardLerp = new float[] { 0.5f };
                 break;
@@ -417,7 +420,7 @@ public class CardCollector : MonoBehaviour
             if(cardCount >= 4)
             {
                 float curve = Mathf.Sqrt(Mathf.Pow(height, 2) - Mathf.Pow(cardLerp[i] - 0.5f, 2));
-                //curve = height >= 0 ? curve : -curve; // ÀÌ°Ç µÚÁýÀ»¶§ Áö±ÝÀº ÇÊ¿ä¾øÀ¸
+                //curve = height >= 0 ? curve : -curve; // ï¿½Ì°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê¿ï¿½ï¿½ï¿½ï¿½
                 targetPos.y += curve;
                 targetRot = Quaternion.Slerp(leftRect.rotation, rightRect.rotation, cardLerp[i]);
             }
@@ -505,15 +508,15 @@ public class CardCollector : MonoBehaviour
             }
         }
 
-        // ÅÏ Á¾·ù ¹öÆ° ¾Æ¿ô¶óÀÎ È°¼ºÈ­ Á¶°Ç
-        // 1. ¸¶³ª°¡ ¾øÀ» ¶§
-        // 2. ¾µ ¼ö ÀÖ´Â Ä«µå°¡ ¾øÀ» ¶§
-        // 3. ¸¶¹ýÁø¿¡ ·éÀÌ ¾øÀ» ¶§
+        // ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Æ° ï¿½Æ¿ï¿½ï¿½ï¿½ï¿½ï¿½ È°ï¿½ï¿½È­ ï¿½ï¿½ï¿½ï¿½
+        // 1. ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
+        // 2. ï¿½ï¿½ ï¿½ï¿½ ï¿½Ö´ï¿½ Ä«ï¿½å°¡ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
+        // 3. ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
 
         bool isHaveMana = DummyCost.Instance.CanRune(1);
         if (isHaveMana == false)
         {
-            // ÅÏ Á¾·ù ¹öÆ° ¾Æ¿ô¶óÀÎ È°¼ºÈ­
+            // ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Æ° ï¿½Æ¿ï¿½ï¿½ï¿½ï¿½ï¿½ È°ï¿½ï¿½È­
         }
     }
 
