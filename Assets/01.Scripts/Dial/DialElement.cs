@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class DialElement : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
+public class DialElement : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IDragHandler
 {
     private Dial _dial;
     private Image _image;
@@ -13,6 +13,8 @@ public class DialElement : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     private float _rotDamp = 3;
     [SerializeField]
     private int _selectCount = 3;
+    [SerializeField]
+    private float _dragDistance = 800;
 
     #region Swipt Parameta
     private Vector2 touchBeganPos;
@@ -35,6 +37,7 @@ public class DialElement : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         _fingerID = eventData.pointerId;
 
         _dial.EditSelectArea(this);
+        Debug.Log("click");
     }
 
     public void OnPointerUp(PointerEventData eventData)
@@ -42,12 +45,26 @@ public class DialElement : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         _fingerID = -1;
     }
 
+    public void OnDrag(PointerEventData eventData)
+    {
+        //if (Vector2.Distance(eventData.position, new Vector2(0, -1480)) < _dragDistance)
+        //{
+        //    Vector3 rot = _image.transform.eulerAngles;
+        //    rot.z += -1 * eventData.delta.x * _rotDamp * Time.deltaTime;
+        //    _image.transform.rotation = Quaternion.Euler(rot);
+        //}
+
+        Vector3 rot = _image.transform.eulerAngles;
+        rot.z += -1 * eventData.delta.x * _rotDamp * Time.deltaTime;
+        _image.transform.rotation = Quaternion.Euler(rot);
+    }
+
     private void Start()
     {
         _dial = GetComponentInParent<Dial>();
         _selectCardList = new List<TestCard>();
         _image = GetComponent<Image>();
-        _image.alphaHitTestMinimumThreshold = 0.0f;
+        _image.alphaHitTestMinimumThreshold = 0.04f;
     }
 
     private void Update()
@@ -67,24 +84,24 @@ public class DialElement : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
             }
             if (touch.phase == TouchPhase.Moved)
             {
-                if (_fingerID != -1 && _dial.GetSelectAreaForElement() == this)
-                {
-                    if (Input.touchCount > 0)
-                    {
-                        if (touch.deltaPosition.x < 0)
-                        {
-                            Vector3 rot = _image.transform.eulerAngles;
-                            rot.z += _rotDamp;
-                            _image.transform.rotation = Quaternion.Euler(rot);
-                        }
-                        else if (touch.deltaPosition.x > 0)
-                        {
-                            Vector3 rot = _image.transform.eulerAngles;
-                            rot.z -= _rotDamp;
-                            _image.transform.rotation = Quaternion.Euler(rot);
-                        }
-                    }
-                }
+                //if (_fingerID != -1 && _dial.GetSelectAreaForElement() == this)
+                //{
+                //    if (Input.touchCount > 0)
+                //    {
+                //        if (touch.deltaPosition.x < 0)
+                //        {
+                //            Vector3 rot = _image.transform.eulerAngles;
+                //            rot.z += _rotDamp;
+                //            _image.transform.rotation = Quaternion.Euler(rot);
+                //        }
+                //        else if (touch.deltaPosition.x > 0)
+                //        {
+                //            Vector3 rot = _image.transform.eulerAngles;
+                //            rot.z -= _rotDamp;
+                //            _image.transform.rotation = Quaternion.Euler(rot);
+                //        }
+                //    }
+                //}
             }
             if (touch.phase == TouchPhase.Ended)
             {
@@ -146,6 +163,11 @@ public class DialElement : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
                 }
             }
         }
+    }
+
+    public void RemoveSelectCard(TestCard card)
+    {
+
     }
 
     public bool IsAllSelect()

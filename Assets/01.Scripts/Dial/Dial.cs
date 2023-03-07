@@ -88,14 +88,14 @@ public class Dial : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
                 if (_cardDict.ContainsKey(3))
                 {
                     float angle = -2 * Mathf.PI / _cardDict[3].Count;
-                    float distance = (_dialElementList[0].GetComponent<RectTransform>().sizeDelta.x - _dialElementList[1].GetComponent<RectTransform>().sizeDelta.x / 2) / 2;
-                    //distance += _dialElementList[1].GetComponent<RectTransform>().sizeDelta.x / 2;
-                    distance += 50;
+                    //float distance = (_dialElementList[0].GetComponent<RectTransform>().sizeDelta.x - _dialElementList[1].GetComponent<RectTransform>().sizeDelta.x / 2) / 2;
+                    ////distance += _dialElementList[1].GetComponent<RectTransform>().sizeDelta.x / 2;
+                    //distance += 50;
 
                     for (int i = 0; i < _cardDict[3].Count; i++)
                     {
-                        float height = Mathf.Sin(angle * i + (90 * Mathf.Deg2Rad)) * distance;
-                        float width = Mathf.Cos(angle * i + (90 * Mathf.Deg2Rad)) * distance;
+                        float height = Mathf.Sin(angle * i + (90 * Mathf.Deg2Rad)) * 500;
+                        float width = Mathf.Cos(angle * i + (90 * Mathf.Deg2Rad)) * 500;
                         _cardDict[3][i].GetComponent<RectTransform>().anchoredPosition = new Vector3(width, height, 0);
 
                         Vector2 direction = new Vector2(
@@ -135,14 +135,14 @@ public class Dial : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
                 if (_cardDict.ContainsKey(2))
                 {
                     float angle = -2 * Mathf.PI / _cardDict[2].Count;
-                    float distance = (_dialElementList[1].GetComponent<RectTransform>().sizeDelta.x - _dialElementList[2].GetComponent<RectTransform>().sizeDelta.x) / 2;
-                    //distance += _dialElementList[2].GetComponent<RectTransform>().sizeDelta.x / 2;
-                    distance += 50;
+                    //float distance = (_dialElementList[1].GetComponent<RectTransform>().sizeDelta.x - _dialElementList[2].GetComponent<RectTransform>().sizeDelta.x) / 2;
+                    ////distance += _dialElementList[2].GetComponent<RectTransform>().sizeDelta.x / 2;
+                    //distance += 50;
 
                     for (int i = 0; i < _cardDict[2].Count; i++)
                     {
-                        float height = Mathf.Sin(angle * i + (90 * Mathf.Deg2Rad)) * distance;
-                        float width = Mathf.Cos(angle * i + (90 * Mathf.Deg2Rad)) * distance;
+                        float height = Mathf.Sin(angle * i + (90 * Mathf.Deg2Rad)) * 400;
+                        float width = Mathf.Cos(angle * i + (90 * Mathf.Deg2Rad)) * 400;
                         _cardDict[2][i].GetComponent<RectTransform>().anchoredPosition = new Vector3(width, height, 0);
 
                         Vector2 direction = new Vector2(
@@ -182,14 +182,14 @@ public class Dial : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
                 if (_cardDict.ContainsKey(1))
                 {
                     float angle = -2 * Mathf.PI / _cardDict[1].Count;
-                    float distance = (_dialElementList[2].GetComponent<RectTransform>().sizeDelta.x - _dialElementList[2].GetComponent<RectTransform>().sizeDelta.x / 2) / 2;
-                    //distance += _dialElementList[2].GetComponent<RectTransform>().sizeDelta.x / 2;
-                    distance += 50;
+                    //float distance = (_dialElementList[2].GetComponent<RectTransform>().sizeDelta.x - _dialElementList[2].GetComponent<RectTransform>().sizeDelta.x / 2) / 2;
+                    ////distance += _dialElementList[2].GetComponent<RectTransform>().sizeDelta.x / 2;
+                    //distance += 50;
 
                     for (int i = 0; i < _cardDict[1].Count; i++)
                     {
-                        float height = Mathf.Sin(angle * i + (90 * Mathf.Deg2Rad)) * distance;
-                        float width = Mathf.Cos(angle * i + (90 * Mathf.Deg2Rad)) * distance;
+                        float height = Mathf.Sin(angle * i + (90 * Mathf.Deg2Rad)) * 300;
+                        float width = Mathf.Cos(angle * i + (90 * Mathf.Deg2Rad)) * 300;
                         _cardDict[1][i].GetComponent<RectTransform>().anchoredPosition = new Vector3(width, height, 0);
 
                         Vector2 direction = new Vector2(
@@ -237,18 +237,18 @@ public class Dial : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         {
             case 1:
                 // 안개 두개가 커짐
-                seq.Append(_dialElementList[1].GetComponent<RectTransform>().DOSizeDelta(new Vector2(1150, 1150), dotweenTime));
-                seq.Join(_dialElementList[2].GetComponent<RectTransform>().DOSizeDelta(new Vector2(900, 900), dotweenTime));
+                seq.Append(_dialElementList[1].GetComponent<RectTransform>().DOSizeDelta(new Vector2(1700, 1700), dotweenTime));
+                seq.Join(_dialElementList[2].GetComponent<RectTransform>().DOSizeDelta(new Vector2(1700, 1700), dotweenTime));
                 break;
             case 2:
                 // 중간이 커지고 가장 안에가 작아짐
-                seq.Append(_dialElementList[1].GetComponent<RectTransform>().DOSizeDelta(new Vector2(1150, 1150), dotweenTime));
-                seq.Join(_dialElementList[2].GetComponent<RectTransform>().DOSizeDelta(new Vector2(500, 500), dotweenTime));
+                seq.Append(_dialElementList[1].GetComponent<RectTransform>().DOSizeDelta(new Vector2(1700, 1700), dotweenTime));
+                seq.Join(_dialElementList[2].GetComponent<RectTransform>().DOSizeDelta(new Vector2(900, 900), dotweenTime));
                 break;
             case 3:
                 // 안에 두개가 작아짐
-                seq.Append(_dialElementList[1].GetComponent<RectTransform>().DOSizeDelta(new Vector2(800, 800), dotweenTime));
-                seq.Join(_dialElementList[2].GetComponent<RectTransform>().DOSizeDelta(new Vector2(500, 500), dotweenTime));
+                seq.Append(_dialElementList[1].GetComponent<RectTransform>().DOSizeDelta(new Vector2(900, 900), dotweenTime));
+                seq.Join(_dialElementList[2].GetComponent<RectTransform>().DOSizeDelta(new Vector2(900, 900), dotweenTime));
                 break;
             default:
                 break;

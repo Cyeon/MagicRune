@@ -23,10 +23,16 @@ public class TestCard : MonoBehaviour, IPointerClickHandler
         //      - 마법 선택되기
         // 2. 가온대 아님
         //      - 가온대로 보내기(각도 조절)
+        //if(_d)
+
 
         if (_dialElement.IsHaveCard(this) == false)
         {
             _dialElement.AddSelectCard(this);
+        }
+        else
+        {
+
         }
     }
 
