@@ -20,6 +20,7 @@ public class UIManager : MonoSingleton<UIManager>
     private Slider _enemyHealthFeedbackSlider;
     private TextMeshProUGUI _enemyHealthText;
     public Transform enemyIcon;
+    public Image enemyImage;
 
     [Header("Player UI")]
     [SerializeField] private Transform _playerSlideBar;
@@ -93,6 +94,8 @@ public class UIManager : MonoSingleton<UIManager>
         _statusDescInfo = _statusDescPanel.transform.Find("Infomation").GetComponent<TextMeshPro>();
 
         _gr = _canvas.GetComponent<GraphicRaycaster>();
+
+        enemyImage = enemyIcon.GetComponent<Image>();
     }
 
     public void OnDestroy()
@@ -134,7 +137,7 @@ public class UIManager : MonoSingleton<UIManager>
         seq.Append(_turnBackground.DOFade(0, 0.5f));
         seq.Join(_turnText.DOFade(0, 0.5f));
         seq.AppendCallback(() => _turnPanel.SetActive(false));
-        seq.AppendCallback(() => GameManager.Instance.TurnChange());
+        seq.AppendCallback(() => AttackManager.Instance.TurnChange());
     }
 
     #region Health Bar
@@ -175,7 +178,7 @@ public class UIManager : MonoSingleton<UIManager>
     public void UpdateHealthbar(bool isPlayer)
     {
         SliderInit(isPlayer);
-        Unit unit = isPlayer ? GameManager.Instance.player : GameManager.Instance.enemy;
+        Unit unit = isPlayer ? AttackManager.Instance.player : AttackManager.Instance.enemy;
 
         if (unit.Shield > 0)
         {
@@ -241,13 +244,13 @@ public class UIManager : MonoSingleton<UIManager>
 
     public void AddStatus(Unit unit, Status status)
     {
-        Transform trm = unit == GameManager.Instance.player ? _statusPlayerPanel : _statusEnemyPanel;
+        Transform trm = unit == AttackManager.Instance.player ? _statusPlayerPanel : _statusEnemyPanel;
         GetStatusPanel(status, trm);
     }
 
     public GameObject GetStatusPanelStatusObj(Unit unit, StatusName name)
     {
-        Transform trm = unit == GameManager.Instance.player ? _statusPlayerPanel : _statusEnemyPanel;
+        Transform trm = unit == AttackManager.Instance.player ? _statusPlayerPanel : _statusEnemyPanel;
 
         GameObject obj = null;
         for (int i = 0; i < trm.childCount; i++)

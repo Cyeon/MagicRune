@@ -31,7 +31,7 @@ public class PatternManager : MonoSingleton<PatternManager>
         return codiPatterns.Where(e => e.info.patternName == name).FirstOrDefault();
     }
 
-    public void FuncInovke(List<string> funcList)
+    public void FuncInovke(List<PatternFuncEnum> funcList)
     {
         foreach(var name in funcList)
         {
