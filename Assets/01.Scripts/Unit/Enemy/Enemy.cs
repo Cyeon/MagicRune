@@ -54,4 +54,9 @@ public class Enemy : Unit
         UIManager.Instance.enemyIcon.DORewind();
         UIManager.Instance.enemyIcon.localScale = Vector3.one;
     }
+
+    private void OnDestroy()
+    {
+        DOTween.KillAll();
+    }
 }

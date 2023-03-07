@@ -15,13 +15,14 @@ public class WinLoseUI : MonoBehaviour
     public Button restartButton = null;
     public Button quitButton = null;
 
-    private void Awake()
+    private void Start()
     {
         restartButton.onClick.AddListener(() => ClickRestart());
         quitButton.onClick.AddListener(() => ClickQuit());
         EventManager.StartListening(Define.GAME_LOSE, () => winLoseText.text = "LOSE");
-        EventManager.StartListening(Define.GAME_WIN, () => winLoseText.text = "WIN");
-        EventManager.StartListening(Define.GAME_END, () => background.SetActive(true));
+        //EventManager.StartListening(Define.GAME_WIN, () => winLoseText.text = "WIN");
+        EventManager.StartListening(Define.GAME_WIN, () => AttackManager.Instance.Win());
+        //EventManager.StartListening(Define.GAME_END, () => background.SetActive(true));
     }
 
     private void ClickRestart()
@@ -37,7 +38,7 @@ public class WinLoseUI : MonoBehaviour
     private void OnDestroy()
     {
         EventManager.StopListening(Define.GAME_LOSE, () => winLoseText.text = "LOSE");
-        EventManager.StopListening(Define.GAME_WIN, () => winLoseText.text = "WIN");
-        EventManager.StopListening(Define.GAME_END, () => background.SetActive(true));
+        EventManager.StopListening(Define.GAME_WIN, () => AttackManager.Instance.Win());
+        //EventManager.StopListening(Define.GAME_END, () => background.SetActive(true));
     }
 }

@@ -6,9 +6,7 @@ using UnityEngine;
 public class MapManager : MonoSingleton<MapManager>
 {
     public static EnemySO SelectEnemy;
-
-    [SerializeField]
-    private AttackMapListSO _attackMap;
+    public AttackMapListSO attackMap;
 
     private int _floor = 1;
     public int Floor => _floor;
@@ -16,13 +14,7 @@ public class MapManager : MonoSingleton<MapManager>
     [SerializeField]
     private List<MapPanel> _mapPanelList = new List<MapPanel>();
 
-    private void Start()
-    {
-        _attackMap.Reset();
-        MapInit();
-    }
-
-    private void MapInit()
+    public void MapInit()
     {
         foreach(MapPanel panel in _mapPanelList)
         {
@@ -33,11 +25,11 @@ public class MapManager : MonoSingleton<MapManager>
     private EnemySO GetAttackEnemy()
     {
         List<EnemySO> enemyList = new List<EnemySO> ();
-        for(int i = 0; i < _attackMap.map.Count; ++i)
+        for(int i = 0; i < attackMap.map.Count; ++i)
         {
-            if (_attackMap.map[i].minFloor <=  Floor && _attackMap.map[i].maxFloor >= Floor)
+            if (attackMap.map[i].minFloor <=  Floor && attackMap.map[i].maxFloor >= Floor)
             {
-                foreach(var enemy in _attackMap.map[i].enemyList)
+                foreach(var enemy in attackMap.map[i].enemyList)
                 {
                     if(!enemy.IsEnter) enemyList.Add (enemy);
                 }
@@ -45,6 +37,7 @@ public class MapManager : MonoSingleton<MapManager>
         }
             
         int idx = Random.Range(0, enemyList.Count);
+        Debug.Log(idx);
         enemyList[idx].IsEnter = true;
         return enemyList[idx];
     }

@@ -635,7 +635,7 @@ RectTransform:
   - {fileID: 321321317}
   - {fileID: 1995296604}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -1353,18 +1353,6 @@ MonoBehaviour:
   <OnTakeDamageFeedback>k__BackingField:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
-        m_MethodName: UpdatePlayerHealthbar
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 1761972443}
         m_TargetAssemblyTypeName: MoreMountains.Feedbacks.MMFeedbacks, MoreMountains.Feedbacks
         m_MethodName: PlayFeedbacks
@@ -1393,7 +1381,7 @@ Transform:
   m_Children:
   - {fileID: 1761972446}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &828686903
 GameObject:
@@ -1424,10 +1412,9 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1809552960}
   - {fileID: 2002842252}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &828686905
 MonoBehaviour:
@@ -3291,8 +3278,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 828686904}
-  m_RootOrder: 0
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1809552961
 MonoBehaviour:
@@ -3306,7 +3293,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24f97ec0fc2e1a64a8976b503fee7305, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _attackMap: {fileID: 11400000, guid: eb92d7dde3ace614293007a654bb031c, type: 2}
+  attackMap: {fileID: 11400000, guid: eb92d7dde3ace614293007a654bb031c, type: 2}
   _mapPanelList:
   - {fileID: 552303125}
   - {fileID: 1639271881}
@@ -3738,7 +3725,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 828686904}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2002842253
 MonoBehaviour:

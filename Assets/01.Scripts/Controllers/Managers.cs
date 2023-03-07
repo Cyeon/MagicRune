@@ -6,6 +6,14 @@ public class Managers : MonoBehaviour
 {
     private void Awake()
     {
-        DontDestroyOnLoad(this);
+        var obj = FindObjectsOfType<Managers>();
+        if (obj.Length == 1)
+        {
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 }
