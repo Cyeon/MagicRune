@@ -1,22 +1,22 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class DialElement : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IDragHandler
+public class DialElement : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IDragHandler, IEndDragHandler, IBeginDragHandler, IPointerEnterHandler, IPointerExitHandler
 {
     private Dial _dial;
     private Image _image;
 
-    [SerializeField]
-    private float _rotDamp = 3;
+    
     [SerializeField]
     private int _selectCount = 3;
     [SerializeField]
     private float _dragDistance = 800;
 
-    #region Swipt Parameta
+    #region Swipe Parameta
     private Vector2 touchBeganPos;
     private Vector2 touchEndedPos;
     private Vector2 touchDif;
@@ -24,11 +24,23 @@ public class DialElement : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     private float swipeSensitivity = 5;
     #endregion
 
+    #region Drag Parameta
+    private float _currentSpeed;
+    [SerializeField]
+    private float _rotDamp = 3;
+    [SerializeField]
+    private float _rotAcc = 0.5f;
+    [SerializeField]
+    private float _rotDeAcc = 0.5f;
+    private Vector2 _moveDirection = Vector2.zero;
+    #endregion
+
     private int _fingerID = -1;
 
     private bool _isSelect = false;
     public bool IsSelect { get => _isSelect; set => _isSelect = value; }
     private bool _isAllSelect = false;
+    private bool _isPointerIn = false;
 
     private List<TestCard> _selectCardList;
 
@@ -36,27 +48,71 @@ public class DialElement : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     {
         _fingerID = eventData.pointerId;
 
-        _dial.EditSelectArea(this);
-        Debug.Log("click");
     }
 
     public void OnPointerUp(PointerEventData eventData)
     {
         _fingerID = -1;
+        _dial.EditSelectArea(this);
+    }
+
+    public void OnBeginDrag(PointerEventData eventData)
+    {
+        StopAllCoroutines();
     }
 
     public void OnDrag(PointerEventData eventData)
     {
-        //if (Vector2.Distance(eventData.position, new Vector2(0, -1480)) < _dragDistance)
-        //{
-        //    Vector3 rot = _image.transform.eulerAngles;
-        //    rot.z += -1 * eventData.delta.x * _rotDamp * Time.deltaTime;
-        //    _image.transform.rotation = Quaternion.Euler(rot);
-        //}
+        // 마우스 포인터가 마법진 위에 일때
+        if (_isPointerIn == true)
+        {
+            //if (_currentSpeed < _rotDamp)
+            //{
+            //    _currentSpeed += _rotAcc;
+            //}
 
-        Vector3 rot = _image.transform.eulerAngles;
-        rot.z += -1 * eventData.delta.x * _rotDamp * Time.deltaTime;
-        _image.transform.rotation = Quaternion.Euler(rot);
+            Movement(eventData.delta.x > 0 ? 1 : -1);
+            Vector3 rot = _image.transform.eulerAngles;
+            rot.z += -1 * _moveDirection.x * _currentSpeed/* * Time.deltaTime*/;
+            _image.transform.rotation = Quaternion.Lerp(_image.transform.rotation, Quaternion.Euler(rot), 0.7f);
+            Debug.Log(eventData.delta.x);
+        }
+        //else
+        //{
+        //    StartCoroutine(EndDrag(eventData));
+        //}
+    }
+
+    public void OnEndDrag(PointerEventData eventData)
+    {
+        StartCoroutine(EndDrag(eventData));
+        //Movement(eventData.delta.x > 0 ? 1 : -1);
+        //Vector3 rot = _image.transform.eulerAngles;
+        //rot.z += -1 * _currentSpeed/* * Time.deltaTime*/;
+        //_image.transform.rotation = Quaternion.Lerp(_image.transform.rotation, Quaternion.Euler(rot), 0.7f);
+    }
+
+    private IEnumerator EndDrag(PointerEventData eventData)
+    {
+        while(_currentSpeed > 0)
+        {
+            Movement(0);
+            Vector3 rot = _image.transform.eulerAngles;
+            rot.z += -1 * _moveDirection.x * _currentSpeed/* * Time.deltaTime*/;
+            _image.transform.rotation = Quaternion.Lerp(_image.transform.rotation, Quaternion.Euler(rot), 0.7f);
+            yield return new WaitForSeconds(0.01f);
+        }
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        _isPointerIn = true;
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        _isPointerIn = false;
+        StartCoroutine(EndDrag(eventData));
     }
 
     private void Start()
@@ -70,6 +126,33 @@ public class DialElement : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     private void Update()
     {
         Swipe1();
+    }
+
+    public void Movement(int dir)
+    {
+        if(dir != 0)
+        {
+            if(dir != _moveDirection.x)
+            {
+                _currentSpeed = 0f;
+            }
+            _moveDirection.x = dir;
+        }
+        _currentSpeed = CulculateSpeed(dir);
+    }
+
+    private float CulculateSpeed(int dir)
+    {
+        if (dir != 0)
+        {
+            _currentSpeed += _rotAcc * Time.deltaTime;
+        }
+        else
+        {
+            _currentSpeed -= _rotDeAcc * Time.deltaTime;
+        }
+
+        return Mathf.Clamp(_currentSpeed, 0, _rotDamp);
     }
 
     public void Swipe1()
@@ -152,14 +235,18 @@ public class DialElement : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     {
         if(card != null)
         {
-            if(_selectCardList.Count < _selectCount)
+            if (_selectCardList.Count < _selectCount)
             {
                 card.SetActiveOutline(true);
                 _selectCardList.Add(card);
 
-                if(_selectCardList.Count == _selectCount)
+                if (_selectCardList.Count == _selectCount)
                 {
                     _isAllSelect = true;
+                }
+                else
+                {
+                    _isAllSelect = false;
                 }
             }
         }
@@ -167,7 +254,23 @@ public class DialElement : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
     public void RemoveSelectCard(TestCard card)
     {
+        if(card != null)
+        {
+            if(_selectCardList.Count > 0)
+            {
+                card.SetActiveOutline(false);
+                _selectCardList.Remove(card);
 
+                if (_selectCardList.Count == _selectCount)
+                {
+                    _isAllSelect = true;
+                }
+                else
+                {
+                    _isAllSelect = false;
+                }
+            }
+        }
     }
 
     public bool IsAllSelect()

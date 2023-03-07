@@ -2007,7 +2007,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 2374921ea11354f49b1c43edba3c8170, type: 3}
+  m_Sprite: {fileID: 21300000, guid: d8748b98b601e57478d5eca15cefb853, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -2037,10 +2037,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c85a560f068d314aab87c136007a26e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rotDamp: 3
-  _selectCount: 3
+  _selectCount: 2
   _dragDistance: 800
   swipeSensitivity: 5
+  _rotDamp: 6
+  _rotAcc: 6
+  _rotDeAcc: 0.3
 --- !u!1 &415606275
 GameObject:
   m_ObjectHideFlags: 0
@@ -3819,6 +3821,7 @@ GameObject:
   - component: {fileID: 639365299}
   - component: {fileID: 639365301}
   - component: {fileID: 639365300}
+  - component: {fileID: 639365302}
   m_Layer: 5
   m_Name: Star
   m_TagString: Untagged
@@ -3860,7 +3863,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 0
+  m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -3884,6 +3887,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 639365298}
   m_CullTransparentMesh: 1
+--- !u!114 &639365302
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 639365298}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d03f7e036d0ef094faba7b9a6bbbd8a7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &651410805
 GameObject:
   m_ObjectHideFlags: 0
@@ -4463,7 +4478,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 096b4eae6e3417348a74011a44b83e54, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 98dfe875fc4d904469f5a258c62a2d86, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -4493,10 +4508,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c85a560f068d314aab87c136007a26e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rotDamp: 3
   _selectCount: 3
   _dragDistance: 800
   swipeSensitivity: 5
+  _rotDamp: 6
+  _rotAcc: 6
+  _rotDeAcc: 0.3
 --- !u!1 &734689489
 GameObject:
   m_ObjectHideFlags: 0
@@ -7032,7 +7049,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 934364b1cadb7b440ab9fa19e648f978, type: 3}
+  m_Sprite: {fileID: 21300000, guid: d81f7120f174806499497b8fab91793a, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -7062,10 +7079,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c85a560f068d314aab87c136007a26e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rotDamp: 3
-  _selectCount: 3
+  _selectCount: 1
   _dragDistance: 800
   swipeSensitivity: 5
+  _rotDamp: 6
+  _rotAcc: 6
+  _rotDeAcc: 0.3
 --- !u!1 &1215621361
 GameObject:
   m_ObjectHideFlags: 0

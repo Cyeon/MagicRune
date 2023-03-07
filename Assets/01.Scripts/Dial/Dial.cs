@@ -94,8 +94,8 @@ public class Dial : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
                     for (int i = 0; i < _cardDict[3].Count; i++)
                     {
-                        float height = Mathf.Sin(angle * i + (90 * Mathf.Deg2Rad)) * 500;
-                        float width = Mathf.Cos(angle * i + (90 * Mathf.Deg2Rad)) * 500;
+                        float height = Mathf.Sin(angle * i + (90 * Mathf.Deg2Rad)) * 470;
+                        float width = Mathf.Cos(angle * i + (90 * Mathf.Deg2Rad)) * 470;
                         _cardDict[3][i].GetComponent<RectTransform>().anchoredPosition = new Vector3(width, height, 0);
 
                         Vector2 direction = new Vector2(
@@ -141,8 +141,8 @@ public class Dial : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
                     for (int i = 0; i < _cardDict[2].Count; i++)
                     {
-                        float height = Mathf.Sin(angle * i + (90 * Mathf.Deg2Rad)) * 400;
-                        float width = Mathf.Cos(angle * i + (90 * Mathf.Deg2Rad)) * 400;
+                        float height = Mathf.Sin(angle * i + (90 * Mathf.Deg2Rad)) * 370;
+                        float width = Mathf.Cos(angle * i + (90 * Mathf.Deg2Rad)) * 370;
                         _cardDict[2][i].GetComponent<RectTransform>().anchoredPosition = new Vector3(width, height, 0);
 
                         Vector2 direction = new Vector2(
@@ -188,8 +188,8 @@ public class Dial : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
                     for (int i = 0; i < _cardDict[1].Count; i++)
                     {
-                        float height = Mathf.Sin(angle * i + (90 * Mathf.Deg2Rad)) * 300;
-                        float width = Mathf.Cos(angle * i + (90 * Mathf.Deg2Rad)) * 300;
+                        float height = Mathf.Sin(angle * i + (90 * Mathf.Deg2Rad)) * 260;
+                        float width = Mathf.Cos(angle * i + (90 * Mathf.Deg2Rad)) * 260;
                         _cardDict[1][i].GetComponent<RectTransform>().anchoredPosition = new Vector3(width, height, 0);
 
                         Vector2 direction = new Vector2(
