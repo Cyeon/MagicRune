@@ -32,10 +32,10 @@ public class StatusFuncList : MonoBehaviour
 
     public void AddFire()
     {
-        Status status = StatusManager.Instance.GetUnitHaveStauts(GameManager.Instance.attackUnit, StatusName.Ice);
+        Status status = StatusManager.Instance.GetUnitHaveStauts(AttackManager.Instance.attackUnit, StatusName.Ice);
         if (status != null)
         {
-            GameManager.Instance.attackUnit.TakeDamage(status.typeValue * 2);
+            AttackManager.Instance.attackUnit.TakeDamage(status.typeValue * 2);
             status.typeValue = 0;
             UIManager.Instance.RemoveStatusPanel(status.unit, status.statusName);
         }

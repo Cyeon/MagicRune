@@ -24,7 +24,6 @@ public class StatusManager : MonoSingleton<StatusManager>
             if (funStatus.typeValue > 0)
             {
                 funStatus.statusFunc?.Invoke();
-                Debug.Log(string.Format("{0}, {1}", funStatus.debugName, funStatus.typeValue));
             }
         }
 
@@ -98,7 +97,7 @@ public class StatusManager : MonoSingleton<StatusManager>
         List<Status> statusList = new List<Status>();
         if(unit.unitStatusDic.TryGetValue(status.invokeTime, out statusList))
         {
-            if (unit == GameManager.Instance.enemy)
+            if (unit == AttackManager.Instance.enemy)
                 //UIManager.Instance.StatusPopup(newStatus, UIManager.Instance.enemyIcon.transform.position);
                 UIManager.Instance.StatusPopup(newStatus);
 
