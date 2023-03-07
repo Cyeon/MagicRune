@@ -29,7 +29,12 @@ public class MapManager : MonoSingleton<MapManager>
     [SerializeField]
     private List<MapPanel> _mapPanelList = new List<MapPanel>();
 
-    public void MapInit()
+    private void Start()
+    {
+        MapInit();
+    }
+
+    private void MapInit()
     {
         foreach(MapPanel panel in _mapPanelList)
         {
@@ -86,7 +91,10 @@ public class MapManager : MonoSingleton<MapManager>
         }
             
         int idx = Random.Range(0, enemyList.Count);
-        Debug.Log(idx);
+        if(enemyList.Count == 0)
+        {
+            return attackMap.map[0].enemyList[0];
+        }
         enemyList[idx].IsEnter = true;
         return enemyList[idx];
     }

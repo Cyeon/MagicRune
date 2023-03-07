@@ -10,6 +10,7 @@ public class Managers : MonoBehaviour
         if (obj.Length == 1)
         {
             DontDestroyOnLoad(gameObject);
+            MapManager.Instance.attackMap.EnterReset();
         }
         else
         {
