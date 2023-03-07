@@ -29,9 +29,12 @@ public class MapManager : MonoSingleton<MapManager>
     [SerializeField]
     private List<MapPanel> _mapPanelList = new List<MapPanel>();
 
+    public PlayerHealthBar playerHealthBar;
+
     private void Start()
     {
         MapInit();
+        playerHealthBar.Reload();
     }
 
     private void MapInit()
