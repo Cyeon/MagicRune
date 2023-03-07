@@ -70,6 +70,26 @@ public class Dial : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         //CardSort();
     }
 
+    private void Update()
+    {
+        if (Input.touchCount > 0)
+        {
+            Touch t = Input.GetTouch(0);
+            switch (t.tapCount)
+            {
+                case 1:
+                    EditSelectArea(1);
+                    break;
+                case 2:
+                    EditSelectArea(2);
+                    break;
+                case 3:
+                    EditSelectArea(3);
+                    break;
+            }
+        }
+    }
+
     public void AddCard(TestCard card, int tier)
     {
         if (card != null)
@@ -94,8 +114,8 @@ public class Dial : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
                     for (int i = 0; i < _cardDict[3].Count; i++)
                     {
-                        float height = Mathf.Sin(angle * i + (90 * Mathf.Deg2Rad)) * 470;
-                        float width = Mathf.Cos(angle * i + (90 * Mathf.Deg2Rad)) * 470;
+                        float height = Mathf.Sin(angle * i + (90 * Mathf.Deg2Rad)) * 450; // 470
+                        float width = Mathf.Cos(angle * i + (90 * Mathf.Deg2Rad)) * 450;
                         _cardDict[3][i].GetComponent<RectTransform>().anchoredPosition = new Vector3(width, height, 0);
 
                         Vector2 direction = new Vector2(
@@ -141,8 +161,8 @@ public class Dial : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
                     for (int i = 0; i < _cardDict[2].Count; i++)
                     {
-                        float height = Mathf.Sin(angle * i + (90 * Mathf.Deg2Rad)) * 370;
-                        float width = Mathf.Cos(angle * i + (90 * Mathf.Deg2Rad)) * 370;
+                        float height = Mathf.Sin(angle * i + (90 * Mathf.Deg2Rad)) * 455; // 370
+                        float width = Mathf.Cos(angle * i + (90 * Mathf.Deg2Rad)) * 455;
                         _cardDict[2][i].GetComponent<RectTransform>().anchoredPosition = new Vector3(width, height, 0);
 
                         Vector2 direction = new Vector2(
@@ -188,8 +208,8 @@ public class Dial : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
                     for (int i = 0; i < _cardDict[1].Count; i++)
                     {
-                        float height = Mathf.Sin(angle * i + (90 * Mathf.Deg2Rad)) * 260;
-                        float width = Mathf.Cos(angle * i + (90 * Mathf.Deg2Rad)) * 260;
+                        float height = Mathf.Sin(angle * i + (90 * Mathf.Deg2Rad)) * 380; // 260
+                        float width = Mathf.Cos(angle * i + (90 * Mathf.Deg2Rad)) * 380;
                         _cardDict[1][i].GetComponent<RectTransform>().anchoredPosition = new Vector3(width, height, 0);
 
                         Vector2 direction = new Vector2(
@@ -230,25 +250,75 @@ public class Dial : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         }
     }
 
+    public void AllMagicActive(bool value)
+    {
+        if (_cardDict.ContainsKey(1))
+        {
+            for (int i = 0; i < _cardDict[1].Count; i++)
+            {
+                _cardDict[1][i].gameObject.SetActive(false);
+            }
+        }
+        if (_cardDict.ContainsKey(2))
+        {
+            for (int i = 0; i < _cardDict[2].Count; i++)
+            {
+                _cardDict[2][i].gameObject.SetActive(false);
+            }
+        }
+        if (_cardDict.ContainsKey(3))
+        {
+            for (int i = 0; i < _cardDict[3].Count; i++)
+            {
+                _cardDict[3][i].gameObject.SetActive(false);
+            }
+        }
+    }
+
     public void EditSelectArea(int index, float dotweenTime = 0.2f)
     {
         Sequence seq = DOTween.Sequence();
+        seq.AppendCallback(() => AllMagicActive(false));
+        seq.Append(_dialElementList[0].GetComponent<RectTransform>().DOSizeDelta(new Vector2(500, 500), dotweenTime));
+        seq.Append(_dialElementList[0].GetComponent<RectTransform>().DOSizeDelta(new Vector2(1700, 1700), dotweenTime).OnComplete(() => CardSort()));
         switch (index)
         {
+            //case 1:
+            //    // 안개 두개가 커짐
+            //    seq.Append(_dialElementList[1].GetComponent<RectTransform>().DOSizeDelta(new Vector2(1700, 1700), dotweenTime));
+            //    seq.Join(_dialElementList[2].GetComponent<RectTransform>().DOSizeDelta(new Vector2(1700, 1700), dotweenTime));
+            //    break;
+            //case 2:
+            //    // 중간이 커지고 가장 안에가 작아짐
+            //    seq.Append(_dialElementList[1].GetComponent<RectTransform>().DOSizeDelta(new Vector2(1700, 1700), dotweenTime));
+            //    seq.Join(_dialElementList[2].GetComponent<RectTransform>().DOSizeDelta(new Vector2(900, 900), dotweenTime));
+            //    break;
+            //case 3:
+            //    // 안에 두개가 작아짐
+            //    seq.Append(_dialElementList[1].GetComponent<RectTransform>().DOSizeDelta(new Vector2(900, 900), dotweenTime));
+            //    seq.Join(_dialElementList[2].GetComponent<RectTransform>().DOSizeDelta(new Vector2(900, 900), dotweenTime));
+            //    break;
+
             case 1:
-                // 안개 두개가 커짐
-                seq.Append(_dialElementList[1].GetComponent<RectTransform>().DOSizeDelta(new Vector2(1700, 1700), dotweenTime));
-                seq.Join(_dialElementList[2].GetComponent<RectTransform>().DOSizeDelta(new Vector2(1700, 1700), dotweenTime));
+                seq.InsertCallback(dotweenTime, () =>
+                {
+                    _dialElementList[1].GetComponent<Image>().color = Color.clear;
+                    _dialElementList[2].GetComponent<Image>().color = Color.clear;
+                });
                 break;
             case 2:
-                // 중간이 커지고 가장 안에가 작아짐
-                seq.Append(_dialElementList[1].GetComponent<RectTransform>().DOSizeDelta(new Vector2(1700, 1700), dotweenTime));
-                seq.Join(_dialElementList[2].GetComponent<RectTransform>().DOSizeDelta(new Vector2(900, 900), dotweenTime));
+                seq.InsertCallback(dotweenTime, () =>
+                {
+                    _dialElementList[1].GetComponent<Image>().color = Color.clear;
+                    _dialElementList[2].GetComponent<Image>().color = Color.white;
+                });
                 break;
             case 3:
-                // 안에 두개가 작아짐
-                seq.Append(_dialElementList[1].GetComponent<RectTransform>().DOSizeDelta(new Vector2(900, 900), dotweenTime));
-                seq.Join(_dialElementList[2].GetComponent<RectTransform>().DOSizeDelta(new Vector2(900, 900), dotweenTime));
+                seq.InsertCallback(dotweenTime, () =>
+                {
+                    _dialElementList[1].GetComponent<Image>().color = Color.white;
+                    _dialElementList[2].GetComponent<Image>().color = Color.white;
+                });
                 break;
             default:
                 break;
@@ -256,9 +326,12 @@ public class Dial : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         seq.AppendCallback(() =>
         {
             _selectArea = index;
-
-            CardSort();
         });
+        //seq.AppendInterval(0.1f);
+        //seq.AppendCallback(() =>
+        //{
+        //    CardSort();
+        //});
     }
 
     public void EditSelectArea(DialElement dial)
