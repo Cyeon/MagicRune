@@ -32,7 +32,7 @@ public class TestCard : MonoBehaviour, IPointerClickHandler
         }
         else
         {
-
+            _dialElement.RemoveSelectCard(this);
         }
     }
 
