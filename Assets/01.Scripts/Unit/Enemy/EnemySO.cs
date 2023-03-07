@@ -14,6 +14,5 @@ public class EnemySO : ScriptableObject
     public GameObject prefab;
     public bool IsEnter = false;
 
-    [HideInInspector]
     public List<Pattern> patternList;
 }
