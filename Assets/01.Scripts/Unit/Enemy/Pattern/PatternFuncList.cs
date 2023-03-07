@@ -3,6 +3,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum PatternFuncEnum
+{
+    AddAtkDmg,
+    RemAtkDmg,
+    AddShield,
+    AddIceStatus,
+    Attack,
+    ShieldUse,
+    TurnChange,
+    DelayShake,
+    Beeeeem,
+    TurnSkip
+}
+
 public class PatternFuncList : MonoBehaviour
 {
     private float _addDmg;
@@ -20,37 +34,36 @@ public class PatternFuncList : MonoBehaviour
         transform.DOKill();
     }
 
-    public void FuncInvoke(string funcName)
+    public void FuncInvoke(PatternFuncEnum funcName)
     {
-        Invoke(funcName, 0f);
+        Invoke(funcName.ToString() , 0f);
     }
 
     public void AddAtkDmg()
     {
-        GameManager.Instance.enemy.atkDamage += value;
+        AttackManager.Instance.enemy.atkDamage += value;
         _addDmg = value;
     }
 
     public void RemAtkDmg()
     {
-        GameManager.Instance.enemy.atkDamage -= _addDmg;
+        AttackManager.Instance.enemy.atkDamage -= _addDmg;
     }
 
     public void AddShield()
     {
-        GameManager.Instance.enemy.Shield += value;
+        AttackManager.Instance.enemy.Shield += value;
     }
 
-    public void AddStatus(string statusName)
+    public void AddIceStatus()
     {
-        StatusName status;
+        AddStatus(StatusName.Ice);
+    }
 
+    private void AddStatus(StatusName statusName)
+    {
         float v = value > 0 ? value : 1;
-
-        if (System.Enum.TryParse(statusName, out status))
-            StatusManager.Instance.AddStatus(GameManager.Instance.player, status, (int)v);
-        else
-            Debug.LogError(string.Format("{0} status is not found.", statusName));
+        StatusManager.Instance.AddStatus(AttackManager.Instance.player, statusName, (int)v);
     }
 
     public void Attack()
@@ -62,12 +75,12 @@ public class PatternFuncList : MonoBehaviour
         seq.AppendCallback(() => DelayAttack());
         seq.Append(UIManager.Instance.enemyIcon.DOLocalMoveY(130, 0.2f)).SetEase(Ease.Linear);
         seq.AppendInterval(0.1f);
-        seq.AppendCallback(() => GameManager.Instance.TurnChange());
+        seq.AppendCallback(() => AttackManager.Instance.TurnChange());
     }
 
     private void DelayAttack()
     {
-        GameManager.Instance.enemy.Attack();
+        AttackManager.Instance.enemy.Attack();
     }
 
     public void ShieldUse()
@@ -79,14 +92,14 @@ public class PatternFuncList : MonoBehaviour
 
     public void TurnChange()
     {
-        GameManager.Instance.TurnChange();
+        AttackManager.Instance.TurnChange();
     }
 
     public void DelayShake()
     {
         Sequence seq = DOTween.Sequence();
         seq.Append(Camera.main.DOShakeRotation(2));
-        seq.AppendCallback(() => GameManager.Instance.TurnChange());
+        seq.AppendCallback(() => AttackManager.Instance.TurnChange());
     }
 
     public void Beeeeem()
@@ -94,15 +107,15 @@ public class PatternFuncList : MonoBehaviour
         Sequence seq = DOTween.Sequence();
         seq.Append(UIManager.Instance.enemyIcon.DOShakeRotation(2, 90, 5)).SetEase(Ease.Linear);
         SoundManager.Instance.PlaySound(beamSound, SoundType.Effect);
-        seq.AppendCallback(() => GameManager.Instance.enemy.isSkip = true);
-        seq.AppendCallback(() => GameManager.Instance.player.TakeDamage(value));
+        seq.AppendCallback(() => AttackManager.Instance.enemy.isSkip = true);
+        seq.AppendCallback(() => AttackManager.Instance.player.TakeDamage(value));
         seq.AppendInterval(0.2f);
-        seq.AppendCallback(() => GameManager.Instance.TurnChange());
+        seq.AppendCallback(() => AttackManager.Instance.TurnChange());
     }
 
     public void TurnSkip()
     {
-        GameManager.Instance.enemy.isSkip = false;
-        GameManager.Instance.TurnChange();
+        AttackManager.Instance.enemy.isSkip = false;
+        AttackManager.Instance.TurnChange();
     }
 }

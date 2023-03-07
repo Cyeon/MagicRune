@@ -35,7 +35,7 @@ public class Enemy : Unit
 
         InvokeStatus(StatusInvokeTime.Attack);
 
-        GameManager.Instance.player.TakeDamage(currentDmg);
+        AttackManager.Instance.player.TakeDamage(currentDmg);
         SoundManager.Instance.PlaySound(attackSound, SoundType.Effect);
     }
 
