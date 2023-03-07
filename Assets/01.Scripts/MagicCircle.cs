@@ -651,7 +651,7 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
         {
             foreach (var e in _effectDict[effectType])
             {
-                Unit target = e.pair.IsEnemy == true ? GameManager.Instance.enemy : GameManager.Instance.player;
+                Unit target = e.pair.IsEnemy == true ? AttackManager.Instance.enemy : AttackManager.Instance.player;
                 AttackEffectFunction(effectType, target, e.pair)?.Invoke();
             }
         }
@@ -677,10 +677,10 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                 switch (e.AttackType)
                 {
                     case AttackType.Single:
-                        action = () => GameManager.Instance.player.Attack(int.Parse(e.Effect));
+                        action = () => AttackManager.Instance.player.Attack(int.Parse(e.Effect));
                         break;
                     case AttackType.Double:
-                        action = () => GameManager.Instance.player.Attack(int.Parse(e.Effect) * c);
+                        action = () => AttackManager.Instance.player.Attack(int.Parse(e.Effect) * c);
                         break;
                 }
                 break;
@@ -688,10 +688,10 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                 switch (e.AttackType)
                 {
                     case AttackType.Single:
-                        action = () => GameManager.Instance.player.Shield += int.Parse(e.Effect);
+                        action = () => AttackManager.Instance.player.Shield += int.Parse(e.Effect);
                         break;
                     case AttackType.Double:
-                        action = () => GameManager.Instance.player.Shield += int.Parse(e.Effect) * c;
+                        action = () => AttackManager.Instance.player.Shield += int.Parse(e.Effect) * c;
                         break;
                 }
                 break;

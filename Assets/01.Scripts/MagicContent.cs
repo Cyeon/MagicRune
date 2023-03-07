@@ -232,7 +232,7 @@ public class MagicContent : MonoBehaviour
             Debug.Log("상태이살 미시알 발사");
             foreach (var d in _magicCircle.TempEffectDict[EffectType.Status])
             {
-                Unit target = d.pair.IsEnemy == true ? GameManager.Instance.enemy : GameManager.Instance.player;
+                Unit target = d.pair.IsEnemy == true ? AttackManager.Instance.enemy : AttackManager.Instance.player;
 
                 BezierMissile go = Instantiate(_attackEffect, _attackEffectParent);
                 go.SetTrailColor(EffectType.Status);
@@ -249,7 +249,7 @@ public class MagicContent : MonoBehaviour
             Debug.Log("방어 미시알 발사");
             foreach (var d in _magicCircle.TempEffectDict[EffectType.Defence])
             {
-                Unit target = d.pair.IsEnemy == true ? GameManager.Instance.enemy : GameManager.Instance.player;
+                Unit target = d.pair.IsEnemy == true ? AttackManager.Instance.enemy : AttackManager.Instance.player;
 
                 BezierMissile go = Instantiate(_attackEffect, _attackEffectParent);
                 go.SetTrailColor(EffectType.Defence);
@@ -266,7 +266,7 @@ public class MagicContent : MonoBehaviour
             Debug.Log("공격 미시알 발사");
             foreach (var d in _magicCircle.TempEffectDict[EffectType.Attack])
             {
-                Unit target = d.pair.IsEnemy == true ? GameManager.Instance.enemy : GameManager.Instance.player;
+                Unit target = d.pair.IsEnemy == true ? AttackManager.Instance.enemy : AttackManager.Instance.player;
 
                 BezierMissile go = Instantiate(_attackEffect, _attackEffectParent);
                 go.SetTrailColor(EffectType.Attack);
@@ -283,7 +283,7 @@ public class MagicContent : MonoBehaviour
             Debug.Log("드로우 미시알 발사");
             foreach (var d in _magicCircle.TempEffectDict[EffectType.Draw])
             {
-                Unit target = d.pair.IsEnemy == true ? GameManager.Instance.enemy : GameManager.Instance.player;
+                Unit target = d.pair.IsEnemy == true ? AttackManager.Instance.enemy : AttackManager.Instance.player;
 
                 BezierMissile go = Instantiate(_attackEffect, _attackEffectParent);
                 go.SetTrailColor(EffectType.Draw);
@@ -300,7 +300,7 @@ public class MagicContent : MonoBehaviour
             Debug.Log("파괴 미시알 발사");
             foreach (var d in _magicCircle.TempEffectDict[EffectType.Destroy])
             {
-                Unit target = d.pair.IsEnemy == true ? GameManager.Instance.enemy : GameManager.Instance.player;
+                Unit target = d.pair.IsEnemy == true ? AttackManager.Instance.enemy : AttackManager.Instance.player;
 
                 BezierMissile go = Instantiate(_attackEffect, _attackEffectParent);
                 go.SetTrailColor(EffectType.Destroy);

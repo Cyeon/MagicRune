@@ -12,7 +12,7 @@ public enum GameTurn
     Unknown
 }
 
-public class GameManager : MonoSingleton<GameManager>
+public class AttackManager : MonoSingleton<AttackManager>
 {
     [SerializeField]
     private GameTurn _gameTurn = GameTurn.Unknown;
