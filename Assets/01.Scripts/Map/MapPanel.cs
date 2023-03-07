@@ -26,7 +26,7 @@ public class MapPanel : MonoBehaviour
 
     public void Choose()
     {
-        MapManager.selectEnemy = _enemy;
+        MapManager.SelectEnemy = _enemy;
         SceneManager.LoadScene("MainBattleScene");
     }
 }

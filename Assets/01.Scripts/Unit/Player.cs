@@ -10,6 +10,7 @@ public class Player : Unit
     private void Awake()
     {
         _isPlayer = true;
+        DontDestroyOnLoad(this);
     }
 
     public void Attack(float dmg)

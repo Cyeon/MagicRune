@@ -5,20 +5,16 @@ using UnityEngine;
 
 public class MapManager : MonoSingleton<MapManager>
 {
+    public static EnemySO SelectEnemy;
+
     [SerializeField]
     private AttackMapListSO _attackMap;
-    public static EnemySO selectEnemy;
 
     private int _floor = 1;
     public int Floor => _floor;
 
     [SerializeField]
     private List<MapPanel> _mapPanelList = new List<MapPanel>();
-
-    private void Awake()
-    {
-
-    }
 
     private void Start()
     {
