@@ -5,5 +5,7 @@ using UnityEngine;
 public class GameManager : MonoSingleton<GameManager>
 {
     public Player player;
-    public PlayerHealthBar playerHealthBar;
+
+    private int _gold = 0;
+    public int Gold => _gold;
 }
