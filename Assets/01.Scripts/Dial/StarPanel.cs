@@ -65,7 +65,7 @@ public class StarPanel : MonoBehaviour
                         {
                             if (results[0].gameObject.CompareTag("Star"))
                             {
-                                Debug.Log("АјАн!");
+                                _dial.Attack();
                             }
                         }
                     }
