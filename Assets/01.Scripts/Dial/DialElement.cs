@@ -176,7 +176,6 @@ public class DialElement : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         if (inBoolean)
         {
             int index = (int)(_image.transform.eulerAngles.z / oneDinstance) % (_cardList.Count);
-            Debug.Log(index);
             SelectCard = _cardList[index];
         }
         else if (outBoolean)
@@ -188,7 +187,6 @@ public class DialElement : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
             int index = (int)(_image.transform.eulerAngles.z / oneDinstance) % (_cardList.Count);
             index = (index + 1) % _cardList.Count;
-            Debug.Log(index);
             SelectCard = _cardList[index];
         }
         else

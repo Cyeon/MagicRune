@@ -23,7 +23,7 @@ public class Dial : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     [Range(1, 3)]
     private int _selectArea = 1;
 
-    #region Swipt Parameta
+    #region Swipe Parameta
     private Vector2 touchBeganPos;
     private Vector2 touchEndedPos;
     private Vector2 touchDif;
