@@ -42,6 +42,30 @@ public class DialElement : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
     private List<TestCard> _cardList;
     private TestCard _selectCard;
+    public TestCard SelectCard
+    {
+        get => _selectCard;
+        set
+        {
+            if(value == null)
+            {
+                if(_selectCard != null)
+                {
+                    _selectCard.SetActiveOutline(false);
+                }
+                _selectCard = value;
+            }
+            else
+            {
+                if(_selectCard != null)
+                {
+                    _selectCard.SetActiveOutline(false);
+                }
+                _selectCard = value;
+                _selectCard.SetActiveOutline(true);
+            }
+        }
+    }
     [SerializeField, Range(0f, 90f)]
     private float _selectOffset;
 
@@ -110,10 +134,13 @@ public class DialElement : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
             //if (Mathf.Abs(_image.transform.rotation.z) % _cardList.Count <= _selectOffset)
             //{
-            //    StopAllCoroutines();
-
-            //    Debug.Log(1);
-            //    _image.transform.DORotate(new Vector3(0, 0, (_image.transform.rotation.z / _cardList.Count) * (360f / _cardList.Count)), 0.3f);
+            //    int index = (int)(_image.transform.rotation.z / _cardList.Count);
+            //    SelectCard = _cardList[index];
+            //    yield break;
+            //}
+            //else
+            //{
+            //    SelectCard = null;
             //}
             yield return new WaitForSeconds(0.01f);
         }
@@ -141,6 +168,18 @@ public class DialElement : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     private void Update()
     {
         Swipe1();
+
+        if ((Mathf.Abs(_image.transform.eulerAngles.z) % (360f / _cardList.Count)) <= _selectOffset)
+        {
+            int index = (int)(Mathf.Abs(_image.transform.eulerAngles.z) / (360f / _cardList.Count)) % _cardList.Count;
+            index = _image.transform.eulerAngles.z < 0 ? _cardList.Count - index : index;
+            Debug.Log(index);
+            SelectCard = _cardList[index];
+        }
+        else
+        {
+            SelectCard = null;
+        }
     }
 
     public void SetCardList(List<TestCard> list)
