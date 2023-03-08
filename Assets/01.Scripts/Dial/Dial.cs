@@ -10,9 +10,7 @@ using UnityEngine.UI;
 public class Dial : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
     [SerializeField]
-    private List<Image> _dialImageList;
-    [SerializeField]
-    private float _rotDamp = 1;
+    private DeckSO _deck;
 
     private int _fingerID = -1;
 
@@ -52,13 +50,17 @@ public class Dial : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         }
         _dialElementList = new List<DialElement>();
 
-        for (int i = 1; i <= 3; i++)
+        // 그냥 3으로 해도되는데 그냥 이렇게 함
+        for (int i = 1; i <= _deck.list.Count; i++)
         {
-            for (int j = 1; j <= 5; j++)
+            for (int j = 1; j <= _deck.list[i - 1].list.Count; j++)
             {
                 GameObject g = Instantiate(tempCard, this.transform.GetChild(i - 1));
-                g.GetComponent<TestCard>().Dial = this;
-                AddCard(g.GetComponent<TestCard>(), 4 - i);
+                TestCard c = g.GetComponent<TestCard>();
+                c.Dial = this;
+                c.SetMagic(_deck.list[i - 1].list[j - 1]);
+                c.UpdateUI();
+                AddCard(c, 4 - i);
             }
         }
 
