@@ -4,13 +4,10 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Map : MonoBehaviour
+[System.Serializable]
+public class Map
 {
     public MapType type;
-    public Image icon;
-
-    private void Awake()
-    {
-        icon = GetComponent<Image>();
-    }
+    public Sprite icon;
+    public Color color;
 }

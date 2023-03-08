@@ -40,7 +40,7 @@ public class AttackManager : MonoSingleton<AttackManager>
 
     public void GameStart()
     {
-        enemy = EnemyManager.Instance.SpawnEnemy(MapManager.SelectEnemy);
+        enemy = EnemyManager.Instance.SpawnEnemy(MapManager.Instance.selectEnemy);
         PatternManager.Instance.PatternInit(enemy.enemyInfo.patternList);
 
         player = GameManager.Instance.player;

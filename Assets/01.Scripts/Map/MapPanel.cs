@@ -36,7 +36,7 @@ public class MapPanel : MonoBehaviour
     {
         if(_mapType == MapType.Attack)
         {
-            MapManager.SelectEnemy = _enemy;
+            MapManager.Instance.selectEnemy = _enemy;
             SceneManager.LoadScene("MainBattleScene");
         }
     }

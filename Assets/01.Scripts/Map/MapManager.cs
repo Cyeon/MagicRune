@@ -26,7 +26,6 @@ public class MapManager : MonoSingleton<MapManager>
     public int Chapter => _chapter;
     private Chapter _currentChapter = null;
 
-    [SerializeField] private GameObject _mapPrefab;
     public List<Map> mapList = new List<Map>();
 
     private int Stage => Floor - ((this.Chapter - 1) * 10) - 1;
@@ -34,38 +33,18 @@ public class MapManager : MonoSingleton<MapManager>
     private int _floor = 1;
     public int Floor => _floor;
 
-    public static EnemySO SelectEnemy;
+    public EnemySO selectEnemy;
     public AttackMapListSO attackMap;
 
     public MapUI ui;
+
     [SerializeField]
     private Sprite _eventIcon;
     [SerializeField]
     private Sprite _attackIcon;
 
     private bool _isFirst = true;
-
-    private void Awake()
-    {
-        SceneManager.sceneLoaded += OnSceneLoad;
-    }
-
-    private void OnSceneLoad(Scene arg0, LoadSceneMode arg1)
-    {
-
-        if (arg0.name == "MapScene")
-        {
-            ui = FindObjectOfType<MapUI>();
-            if (_isFirst)
-            {
-                _isFirst = false;
-                return;
-            }
-
-            SceneUISetting();
-            NextStage();
-        }
-    }
+    public bool isSceneLoad = false;
 
     private void Start()
     {
@@ -77,40 +56,32 @@ public class MapManager : MonoSingleton<MapManager>
     {
         mapList.Clear();
         _currentChapter = chapterList[Chapter - 1];
-        StageInit();
-        mapList[0].icon.color = Color.white;
-    }
 
-    private void StageInit()
-    {
         int stage = 1;
         foreach (var chance in _currentChapter.stageList)
         {
-            Map map = Instantiate(_mapPrefab, ui.StageList.transform).GetComponent<Map>();
-            map.name = "Stage " + stage;
+            Map map = new Map();
 
-            int random = Random.Range(0, 100);
+            int random = Random.Range(1, 100);
             if (random <= chance)
             {
                 map.type = MapType.Event;
-                map.icon.sprite = _eventIcon;
+                map.icon = _eventIcon;
             }
             else
             {
                 map.type = MapType.Attack;
-                map.icon.sprite = _attackIcon;
+                map.icon = _attackIcon;
             }
-            map.icon.color = Color.gray;
+
+            map.color = Color.gray;
 
             mapList.Add(map);
             stage++;
         }
-    }
 
-    private void SceneUISetting()
-    {
-        StageInit();
-        ui.StageList.transform.localPosition = new Vector2(Stage * -300, ui.StageList.transform.localPosition.y);
+        mapList[0].color = Color.white;
+        ui.StageUI();
     }
 
     private void MapInit()
@@ -133,43 +104,35 @@ public class MapManager : MonoSingleton<MapManager>
         }
     }
 
-    private void NextStage()
+    public void NextStage()
     {
-        mapList[Stage].icon.sprite = SelectEnemy.icon;
-        ui.maps.ForEach(x => x.transform.DOScale(0, 0.5f));
+        if(_isFirst)
+        {
+            _isFirst = false;
+            return;
+        }
+
+        if (isSceneLoad) return;
+
+        Debug.Log(Stage);
+        
+        ui.StageUI();
+        ui.StageList.transform.DOLocalMoveX(Stage * -300f, 0);
+
+        mapList[Stage].icon = ui.stages[Stage].sprite = selectEnemy.icon;
+        _floor += 1;
 
         Sequence seq = DOTween.Sequence();
         seq.AppendInterval(0.5f);
         seq.Append(ui.StageList.transform.DOLocalMoveX(ui.StageList.transform.localPosition.x + -300f, 1f));
-        seq.AppendCallback(() => _floor++);
-        seq.Append(mapList[Stage].icon.DOColor(Color.white, 0.5f));
+        seq.Append(ui.stages[Stage].DOColor(Color.white, 0.5f));
         seq.AppendCallback(() =>
         {
+            mapList[Stage].color = Color.white;
             MapInit();
+            isSceneLoad = false;
         });
     }
-
-    //private MapType GetMapType()
-    //{
-    //    float sum = 0f;
-    //    foreach(var map in chapterList)
-    //    {
-    //        sum += map.percent;
-    //    }
-
-    //    float value = Random.Range(0, sum);
-    //    float temp = 0f;
-
-    //    for(int i = 0; i < chapterList.Count; i++) 
-    //    { 
-    //        if(value >= temp && value < temp + chapterList[i].percent)
-    //            return chapterList[i].type;
-
-    //        temp += chapterList[i].percent;
-    //    }
-
-    //    return MapType.Attack;
-    //}
 
     private EnemySO GetAttackEnemy()
     {
