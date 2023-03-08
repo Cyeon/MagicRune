@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using DG.Tweening;
+using UnityEngine.SceneManagement;
 
 public  enum MapType
 {
@@ -42,9 +43,28 @@ public class MapManager : MonoSingleton<MapManager>
     [SerializeField]
     private Sprite _attackIcon;
 
+    private bool _isFirst = true;
+
     private void Awake()
     {
-        ui = FindObjectOfType<MapUI>();
+        SceneManager.sceneLoaded += OnSceneLoad;
+    }
+
+    private void OnSceneLoad(Scene arg0, LoadSceneMode arg1)
+    {
+
+        if (arg0.name == "MapScene")
+        {
+            ui = FindObjectOfType<MapUI>();
+            if (_isFirst)
+            {
+                _isFirst = false;
+                return;
+            }
+
+            SceneUISetting();
+            NextStage();
+        }
     }
 
     private void Start()
@@ -57,15 +77,20 @@ public class MapManager : MonoSingleton<MapManager>
     {
         mapList.Clear();
         _currentChapter = chapterList[Chapter - 1];
+        StageInit();
+        mapList[0].icon.color = Color.white;
+    }
 
+    private void StageInit()
+    {
         int stage = 1;
-        foreach(var chance in _currentChapter.stageList)
+        foreach (var chance in _currentChapter.stageList)
         {
             Map map = Instantiate(_mapPrefab, ui.StageList.transform).GetComponent<Map>();
             map.name = "Stage " + stage;
 
             int random = Random.Range(0, 100);
-            if(random <= chance)
+            if (random <= chance)
             {
                 map.type = MapType.Event;
                 map.icon.sprite = _eventIcon;
@@ -78,10 +103,14 @@ public class MapManager : MonoSingleton<MapManager>
             map.icon.color = Color.gray;
 
             mapList.Add(map);
-            stage++;       
+            stage++;
         }
+    }
 
-        mapList[0].icon.color = Color.white;
+    private void SceneUISetting()
+    {
+        StageInit();
+        ui.StageList.transform.localPosition = new Vector2(Stage * -300, ui.StageList.transform.localPosition.y);
     }
 
     private void MapInit()
@@ -106,6 +135,7 @@ public class MapManager : MonoSingleton<MapManager>
 
     private void NextStage()
     {
+        mapList[Stage].icon.sprite = SelectEnemy.icon;
         ui.maps.ForEach(x => x.transform.DOScale(0, 0.5f));
 
         Sequence seq = DOTween.Sequence();
