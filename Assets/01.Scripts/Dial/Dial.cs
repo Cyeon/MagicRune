@@ -176,15 +176,18 @@ public class Dial : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         Dictionary<EffectType, List<EffectObjectPair>> effectDict = new Dictionary<EffectType, List<EffectObjectPair>>();
         foreach (DialElement d in _dialElementList)
         {
-            foreach(Pair p in d.SelectCard.Magic.MainRune.EffectDescription)
+            if (d.SelectCard != null)
             {
-                if (effectDict.ContainsKey(p.EffectType))
+                foreach (Pair p in d.SelectCard.Magic.MainRune.EffectDescription)
                 {
-                    effectDict[p.EffectType].Add(new EffectObjectPair(p, d.SelectCard.Magic.RuneEffect));
-                }
-                else
-                {
-                    effectDict.Add(p.EffectType, new List<EffectObjectPair> { new EffectObjectPair(p, d.SelectCard.Magic.RuneEffect) });
+                    if (effectDict.ContainsKey(p.EffectType))
+                    {
+                        effectDict[p.EffectType].Add(new EffectObjectPair(p, d.SelectCard.Magic.RuneEffect));
+                    }
+                    else
+                    {
+                        effectDict.Add(p.EffectType, new List<EffectObjectPair> { new EffectObjectPair(p, d.SelectCard.Magic.RuneEffect) });
+                    }
                 }
             }
         }
