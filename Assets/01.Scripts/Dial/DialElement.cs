@@ -1,3 +1,5 @@
+using DG.Tweening;
+using MyBox;
 using System.Collections;
 using System.Collections.Generic;
 using System.Security.Cryptography;
@@ -10,9 +12,6 @@ public class DialElement : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     private Dial _dial;
     private Image _image;
 
-    
-    [SerializeField]
-    private int _selectCount = 3;
     [SerializeField]
     private float _dragDistance = 800;
 
@@ -33,16 +32,18 @@ public class DialElement : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     [SerializeField]
     private float _rotDeAcc = 0.5f;
     private Vector2 _moveDirection = Vector2.zero;
+    [SerializeField]
+    private float _touchDamp = 5f;
     #endregion
 
     private int _fingerID = -1;
 
-    private bool _isSelect = false;
-    public bool IsSelect { get => _isSelect; set => _isSelect = value; }
-    private bool _isAllSelect = false;
     private bool _isPointerIn = false;
 
-    private List<TestCard> _selectCardList;
+    private List<TestCard> _cardList;
+    private TestCard _selectCard;
+    [SerializeField, Range(0f, 90f)]
+    private float _selectOffset;
 
     public void OnPointerDown(PointerEventData eventData)
     {
@@ -71,11 +72,17 @@ public class DialElement : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
             //    _currentSpeed += _rotAcc;
             //}
 
+            
+
+            
+        }
+
+        if (Mathf.Abs(eventData.delta.x) >= _touchDamp)
+        {
             Movement(eventData.delta.x > 0 ? 1 : -1);
             Vector3 rot = _image.transform.eulerAngles;
-            rot.z += -1 * _moveDirection.x * _currentSpeed/* * Time.deltaTime*/;
+            rot.z += -1 * _moveDirection.x * _currentSpeed;
             _image.transform.rotation = Quaternion.Lerp(_image.transform.rotation, Quaternion.Euler(rot), 0.7f);
-            Debug.Log(eventData.delta.x);
         }
         //else
         //{
@@ -100,6 +107,14 @@ public class DialElement : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
             Vector3 rot = _image.transform.eulerAngles;
             rot.z += -1 * _moveDirection.x * _currentSpeed/* * Time.deltaTime*/;
             _image.transform.rotation = Quaternion.Lerp(_image.transform.rotation, Quaternion.Euler(rot), 0.7f);
+
+            //if (Mathf.Abs(_image.transform.rotation.z) % _cardList.Count <= _selectOffset)
+            //{
+            //    StopAllCoroutines();
+
+            //    Debug.Log(1);
+            //    _image.transform.DORotate(new Vector3(0, 0, (_image.transform.rotation.z / _cardList.Count) * (360f / _cardList.Count)), 0.3f);
+            //}
             yield return new WaitForSeconds(0.01f);
         }
     }
@@ -112,20 +127,25 @@ public class DialElement : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     public void OnPointerExit(PointerEventData eventData)
     {
         _isPointerIn = false;
-        StartCoroutine(EndDrag(eventData));
+        //StartCoroutine(EndDrag(eventData));
     }
 
     private void Start()
     {
         _dial = GetComponentInParent<Dial>();
-        _selectCardList = new List<TestCard>();
         _image = GetComponent<Image>();
-        //_image.alphaHitTestMinimumThreshold = 0.04f;
+        _cardList = new List<TestCard>();
+        _image.alphaHitTestMinimumThreshold = 0.04f;
     }
 
     private void Update()
     {
         Swipe1();
+    }
+
+    public void SetCardList(List<TestCard> list)
+    {
+        _cardList = new List<TestCard>(list);
     }
 
     public void Movement(int dir)
@@ -145,8 +165,8 @@ public class DialElement : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     {
         if (dir != 0)
         {
-            //_currentSpeed += _rotAcc * Time.deltaTime;
-            _currentSpeed = _rotDamp * Time.deltaTime;
+            _currentSpeed += _rotAcc * Time.deltaTime;
+            //_currentSpeed = _rotDamp * Time.deltaTime;
         }
         else
         {
@@ -206,16 +226,10 @@ public class DialElement : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
                     else if (touchDif.x > 0 && Mathf.Abs(touchDif.y) < Mathf.Abs(touchDif.x))
                     {
                         //Debug.Log("right");
-                        //Vector3 rot = _dialImage.transform.eulerAngles;
-                        //rot.z -= _rotDamp;
-                        //_dialImage.transform.rotation = Quaternion.Euler(rot);
                     }
                     else if (touchDif.x < 0 && Mathf.Abs(touchDif.y) < Mathf.Abs(touchDif.x))
                     {
                         //Debug.Log("Left");
-                        //Vector3 rot = _dialImage.transform.eulerAngles;
-                        //rot.z += _rotDamp;
-                        //_dialImage.transform.rotation = Quaternion.Euler(rot);
                     }
                 }
                 //��ġ.
@@ -225,57 +239,5 @@ public class DialElement : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
                 }
             }
         }
-    }
-
-    public bool IsHaveCard(TestCard card)
-    {
-        return _selectCardList.Find(x => x == card) != null;
-    }
-
-    public void AddSelectCard(TestCard card)
-    {
-        if(card != null)
-        {
-            if (_selectCardList.Count < _selectCount)
-            {
-                card.SetActiveOutline(true);
-                _selectCardList.Add(card);
-
-                if (_selectCardList.Count == _selectCount)
-                {
-                    _isAllSelect = true;
-                }
-                else
-                {
-                    _isAllSelect = false;
-                }
-            }
-        }
-    }
-
-    public void RemoveSelectCard(TestCard card)
-    {
-        if(card != null)
-        {
-            if(_selectCardList.Count > 0)
-            {
-                card.SetActiveOutline(false);
-                _selectCardList.Remove(card);
-
-                if (_selectCardList.Count == _selectCount)
-                {
-                    _isAllSelect = true;
-                }
-                else
-                {
-                    _isAllSelect = false;
-                }
-            }
-        }
-    }
-
-    public bool IsAllSelect()
-    {
-        return _isAllSelect;
     }
 }

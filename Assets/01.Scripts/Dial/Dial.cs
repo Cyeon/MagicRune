@@ -51,20 +51,25 @@ public class Dial : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
             _cardDict.Add(i, new List<TestCard>());
         }
         _dialElementList = new List<DialElement>();
-        for(int i = 0; i < 3; i++)
-        {
-            _dialElementList.Add(this.transform.GetChild(i).GetComponent<DialElement>());
-        }
 
         for (int i = 1; i <= 3; i++)
         {
-            for(int j = 1; j <= 5; j++)
+            for (int j = 1; j <= 5; j++)
             {
                 GameObject g = Instantiate(tempCard, this.transform.GetChild(i - 1));
                 g.GetComponent<TestCard>().Dial = this;
                 AddCard(g.GetComponent<TestCard>(), 4 - i);
             }
         }
+
+        for (int i = 0; i < 3; i++)
+        {
+            DialElement d = this.transform.GetChild(i).GetComponent<DialElement>();
+            d.SetCardList(_cardDict[3 - i]);
+            _dialElementList.Add(d);
+        }
+
+        
 
         //EditSelectArea(3);
         //CardSort();
@@ -257,8 +262,8 @@ public class Dial : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
             for (int i = 0; i < _cardDict[3].Count; i++)
             {
-                float height = Mathf.Sin(angle * i + (90 * Mathf.Deg2Rad)) * 750; // 470
-                float width = Mathf.Cos(angle * i + (90 * Mathf.Deg2Rad)) * 750; // 450
+                float height = Mathf.Sin(angle * i + (90 * Mathf.Deg2Rad)) * 695; // 470
+                float width = Mathf.Cos(angle * i + (90 * Mathf.Deg2Rad)) * 695; // 450
                 _cardDict[3][i].GetComponent<RectTransform>().anchoredPosition = new Vector3(width, height, 0);
 
                 Vector2 direction = new Vector2(
@@ -277,8 +282,8 @@ public class Dial : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
             for (int i = 0; i < _cardDict[2].Count; i++)
             {
-                float height = Mathf.Sin(angle * i + (90 * Mathf.Deg2Rad)) * 535; // 470
-                float width = Mathf.Cos(angle * i + (90 * Mathf.Deg2Rad)) * 535; // 450
+                float height = Mathf.Sin(angle * i + (90 * Mathf.Deg2Rad)) * 510; // 470
+                float width = Mathf.Cos(angle * i + (90 * Mathf.Deg2Rad)) * 510; // 450
                 _cardDict[2][i].GetComponent<RectTransform>().anchoredPosition = new Vector3(width, height, 0);
 
                 Vector2 direction = new Vector2(
@@ -297,8 +302,8 @@ public class Dial : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
             for (int i = 0; i < _cardDict[1].Count; i++)
             {
-                float height = Mathf.Sin(angle * i + (90 * Mathf.Deg2Rad)) * 345; // 470
-                float width = Mathf.Cos(angle * i + (90 * Mathf.Deg2Rad)) * 345; // 450
+                float height = Mathf.Sin(angle * i + (90 * Mathf.Deg2Rad)) * 328; // 470
+                float width = Mathf.Cos(angle * i + (90 * Mathf.Deg2Rad)) * 328; // 450
                 _cardDict[1][i].GetComponent<RectTransform>().anchoredPosition = new Vector3(width, height, 0);
 
                 Vector2 direction = new Vector2(

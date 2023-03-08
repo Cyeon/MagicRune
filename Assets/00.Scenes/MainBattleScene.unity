@@ -1165,7 +1165,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &258796246
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2097,7 +2097,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -2413806693520163455, guid: ebe73ca9363db456bacf42c025bb4847, type: 3}
+  m_Sprite: {fileID: 21300000, guid: e9d67dc4077f2ed4b9c507b9d7c9cd59, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -2127,12 +2127,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c85a560f068d314aab87c136007a26e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _selectCount: 2
   _dragDistance: 800
   swipeSensitivity: 5
   _rotDamp: 100
-  _rotAcc: 5
-  _rotDeAcc: 3
+  _rotAcc: 60
+  _rotDeAcc: 10
+  _touchDamp: 5
+  _selectOffset: 5
 --- !u!1 &415606275
 GameObject:
   m_ObjectHideFlags: 0
@@ -3262,7 +3263,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &543899638
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4645,7 +4646,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -2413806693520163455, guid: ebe73ca9363db456bacf42c025bb4847, type: 3}
+  m_Sprite: {fileID: 21300000, guid: e9d67dc4077f2ed4b9c507b9d7c9cd59, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -4675,12 +4676,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c85a560f068d314aab87c136007a26e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _selectCount: 3
   _dragDistance: 800
   swipeSensitivity: 5
   _rotDamp: 100
-  _rotAcc: 5
-  _rotDeAcc: 3
+  _rotAcc: 60
+  _rotDeAcc: 10
+  _touchDamp: 5
+  _selectOffset: 5
 --- !u!1 &734689489
 GameObject:
   m_ObjectHideFlags: 0
@@ -7216,7 +7218,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -2413806693520163455, guid: ebe73ca9363db456bacf42c025bb4847, type: 3}
+  m_Sprite: {fileID: 21300000, guid: e9d67dc4077f2ed4b9c507b9d7c9cd59, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -7246,12 +7248,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c85a560f068d314aab87c136007a26e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _selectCount: 1
   _dragDistance: 800
   swipeSensitivity: 5
   _rotDamp: 100
-  _rotAcc: 5
-  _rotDeAcc: 3
+  _rotAcc: 60
+  _rotDeAcc: 10
+  _touchDamp: 5
+  _selectOffset: 5
 --- !u!1 &1215621361
 GameObject:
   m_ObjectHideFlags: 0
@@ -11328,7 +11331,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1812150808
 RectTransform:
   m_ObjectHideFlags: 0
@@ -12939,8 +12942,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
-  m_RaycastTarget: 1
+  m_Color: {r: 0, g: 0, b: 0, a: 0.3529412}
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 0
   m_OnCullStateChanged:
