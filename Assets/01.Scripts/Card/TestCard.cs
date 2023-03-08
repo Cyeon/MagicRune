@@ -9,6 +9,8 @@ public class TestCard : MonoBehaviour
     private DialElement _dialElement;
 
     [SerializeField]
+    private CardSO _magic;
+    [SerializeField]
     private GameObject _outline;
 
     private void Start()
