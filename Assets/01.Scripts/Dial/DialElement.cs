@@ -53,7 +53,7 @@ public class DialElement : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     public void OnPointerUp(PointerEventData eventData)
     {
         _fingerID = -1;
-        _dial.EditSelectArea(this);
+        //_dial.EditSelectArea(this);
     }
 
     public void OnBeginDrag(PointerEventData eventData)
@@ -120,7 +120,7 @@ public class DialElement : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         _dial = GetComponentInParent<Dial>();
         _selectCardList = new List<TestCard>();
         _image = GetComponent<Image>();
-        _image.alphaHitTestMinimumThreshold = 0.04f;
+        //_image.alphaHitTestMinimumThreshold = 0.04f;
     }
 
     private void Update()
@@ -145,7 +145,8 @@ public class DialElement : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     {
         if (dir != 0)
         {
-            _currentSpeed += _rotAcc * Time.deltaTime;
+            //_currentSpeed += _rotAcc * Time.deltaTime;
+            _currentSpeed = _rotDamp * Time.deltaTime;
         }
         else
         {

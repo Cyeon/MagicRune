@@ -66,7 +66,7 @@ public class Dial : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
             }
         }
 
-        EditSelectArea(3);
+        //EditSelectArea(3);
         //CardSort();
     }
 
@@ -103,151 +103,213 @@ public class Dial : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
     private void CardSort()
     {
-        switch (_selectArea)
+        //switch (_selectArea)
+        //{
+        //    case 3:
+        //        if (_cardDict.ContainsKey(3))
+        //        {
+        //            float angle = -2 * Mathf.PI / _cardDict[3].Count;
+        //            //float distance = (_dialElementList[0].GetComponent<RectTransform>().sizeDelta.x - _dialElementList[1].GetComponent<RectTransform>().sizeDelta.x / 2) / 2;
+        //            ////distance += _dialElementList[1].GetComponent<RectTransform>().sizeDelta.x / 2;
+        //            //distance += 50;
+
+        //            for (int i = 0; i < _cardDict[3].Count; i++)
+        //            {
+        //                float height = Mathf.Sin(angle * i + (90 * Mathf.Deg2Rad)) * 470; // 470
+        //                float width = Mathf.Cos(angle * i + (90 * Mathf.Deg2Rad)) * 470; // 450
+        //                _cardDict[3][i].GetComponent<RectTransform>().anchoredPosition = new Vector3(width, height, 0);
+
+        //                Vector2 direction = new Vector2(
+        //                    _cardDict[3][i].transform.position.x - transform.position.x,
+        //                    _cardDict[3][i].transform.position.y - transform.position.y
+        //                );
+
+        //                float ang = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        //                Quaternion angleAxis = Quaternion.AngleAxis(ang - 90f, Vector3.forward);
+        //                _cardDict[3][i].GetComponent<RectTransform>().rotation = angleAxis;
+        //            }
+        //        }
+
+        //        if (_cardDict.ContainsKey(2))
+        //        {
+        //            for (int i = 0; i < _cardDict[2].Count; i++)
+        //            {
+        //                _cardDict[2][i].gameObject.SetActive(false);
+        //            }
+        //        }
+        //        if (_cardDict.ContainsKey(1))
+        //        {
+        //            for (int i = 0; i < _cardDict[1].Count; i++)
+        //            {
+        //                _cardDict[1][i].gameObject.SetActive(false);
+        //            }
+        //        }
+        //        if (_cardDict.ContainsKey(3))
+        //        {
+        //            for (int i = 0; i < _cardDict[3].Count; i++)
+        //            {
+        //                _cardDict[3][i].gameObject.SetActive(true);
+        //            }
+        //        }
+        //        break;
+        //    case 2:
+        //        if (_cardDict.ContainsKey(2))
+        //        {
+        //            float angle = -2 * Mathf.PI / _cardDict[2].Count;
+        //            //float distance = (_dialElementList[1].GetComponent<RectTransform>().sizeDelta.x - _dialElementList[2].GetComponent<RectTransform>().sizeDelta.x) / 2;
+        //            ////distance += _dialElementList[2].GetComponent<RectTransform>().sizeDelta.x / 2;
+        //            //distance += 50;
+
+        //            for (int i = 0; i < _cardDict[2].Count; i++)
+        //            {
+        //                float height = Mathf.Sin(angle * i + (90 * Mathf.Deg2Rad)) * 370; // 370
+        //                float width = Mathf.Cos(angle * i + (90 * Mathf.Deg2Rad)) * 370; // 455
+        //                _cardDict[2][i].GetComponent<RectTransform>().anchoredPosition = new Vector3(width, height, 0);
+
+        //                Vector2 direction = new Vector2(
+        //                    _cardDict[2][i].transform.position.x - transform.position.x,
+        //                    _cardDict[2][i].transform.position.y - transform.position.y
+        //                );
+
+        //                float ang = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        //                Quaternion angleAxis = Quaternion.AngleAxis(ang - 90f, Vector3.forward);
+        //                _cardDict[2][i].GetComponent<RectTransform>().rotation = angleAxis;
+        //            }
+        //        }
+
+        //        if (_cardDict.ContainsKey(1))
+        //        {
+        //            for (int i = 0; i < _cardDict[1].Count; i++)
+        //            {
+        //                _cardDict[1][i].gameObject.SetActive(false);
+        //            }
+        //        }
+        //        if (_cardDict.ContainsKey(3))
+        //        {
+        //            for (int i = 0; i < _cardDict[3].Count; i++)
+        //            {
+        //                _cardDict[3][i].gameObject.SetActive(false);
+        //            }
+        //        }
+        //        if (_cardDict.ContainsKey(2))
+        //        {
+        //            for (int i = 0; i < _cardDict[2].Count; i++)
+        //            {
+        //                _cardDict[2][i].gameObject.SetActive(true);
+        //            }
+        //        }
+        //        break;
+        //    case 1:
+        //        if (_cardDict.ContainsKey(1))
+        //        {
+        //            float angle = -2 * Mathf.PI / _cardDict[1].Count;
+        //            //float distance = (_dialElementList[2].GetComponent<RectTransform>().sizeDelta.x - _dialElementList[2].GetComponent<RectTransform>().sizeDelta.x / 2) / 2;
+        //            ////distance += _dialElementList[2].GetComponent<RectTransform>().sizeDelta.x / 2;
+        //            //distance += 50;
+
+        //            for (int i = 0; i < _cardDict[1].Count; i++)
+        //            {
+        //                float height = Mathf.Sin(angle * i + (90 * Mathf.Deg2Rad)) * 260; // 260
+        //                float width = Mathf.Cos(angle * i + (90 * Mathf.Deg2Rad)) * 260; // 380
+        //                _cardDict[1][i].GetComponent<RectTransform>().anchoredPosition = new Vector3(width, height, 0);
+
+        //                Vector2 direction = new Vector2(
+        //                    _cardDict[1][i].transform.position.x - transform.position.x,
+        //                    _cardDict[1][i].transform.position.y - transform.position.y
+        //                );
+
+        //                float ang = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        //                Quaternion angleAxis = Quaternion.AngleAxis(ang - 90f, Vector3.forward);
+        //                _cardDict[1][i].GetComponent<RectTransform>().rotation = angleAxis;
+        //            }
+        //        }
+
+        //        if (_cardDict.ContainsKey(2))
+        //        {
+        //            for (int i = 0; i < _cardDict[2].Count; i++)
+        //            {
+        //                _cardDict[2][i].gameObject.SetActive(false);
+        //            }
+        //        }
+        //        if (_cardDict.ContainsKey(3))
+        //        {
+        //            for (int i = 0; i < _cardDict[3].Count; i++)
+        //            {
+        //                _cardDict[3][i].gameObject.SetActive(false);
+        //            }
+        //        }
+        //        if (_cardDict.ContainsKey(1))
+        //        {
+        //            for (int i = 0; i < _cardDict[1].Count; i++)
+        //            {
+        //                _cardDict[1][i].gameObject.SetActive(true);
+        //            }
+        //        }
+        //        break;
+        //    default:
+        //        break;
+        //}
+
+
+        if (_cardDict.ContainsKey(3))
         {
-            case 3:
-                if (_cardDict.ContainsKey(3))
-                {
-                    float angle = -2 * Mathf.PI / _cardDict[3].Count;
-                    //float distance = (_dialElementList[0].GetComponent<RectTransform>().sizeDelta.x - _dialElementList[1].GetComponent<RectTransform>().sizeDelta.x / 2) / 2;
-                    ////distance += _dialElementList[1].GetComponent<RectTransform>().sizeDelta.x / 2;
-                    //distance += 50;
+            float angle = -2 * Mathf.PI / _cardDict[3].Count;
 
-                    for (int i = 0; i < _cardDict[3].Count; i++)
-                    {
-                        float height = Mathf.Sin(angle * i + (90 * Mathf.Deg2Rad)) * 470; // 470
-                        float width = Mathf.Cos(angle * i + (90 * Mathf.Deg2Rad)) * 470; // 450
-                        _cardDict[3][i].GetComponent<RectTransform>().anchoredPosition = new Vector3(width, height, 0);
+            for (int i = 0; i < _cardDict[3].Count; i++)
+            {
+                float height = Mathf.Sin(angle * i + (90 * Mathf.Deg2Rad)) * 750; // 470
+                float width = Mathf.Cos(angle * i + (90 * Mathf.Deg2Rad)) * 750; // 450
+                _cardDict[3][i].GetComponent<RectTransform>().anchoredPosition = new Vector3(width, height, 0);
 
-                        Vector2 direction = new Vector2(
-                            _cardDict[3][i].transform.position.x - transform.position.x,
-                            _cardDict[3][i].transform.position.y - transform.position.y
-                        );
+                Vector2 direction = new Vector2(
+                    _cardDict[3][i].transform.position.x - transform.position.x,
+                    _cardDict[3][i].transform.position.y - transform.position.y
+                );
 
-                        float ang = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-                        Quaternion angleAxis = Quaternion.AngleAxis(ang - 90f, Vector3.forward);
-                        _cardDict[3][i].GetComponent<RectTransform>().rotation = angleAxis;
-                    }
-                }
+                float ang = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+                Quaternion angleAxis = Quaternion.AngleAxis(ang - 90f, Vector3.forward);
+                _cardDict[3][i].GetComponent<RectTransform>().rotation = angleAxis;
+            }
+        }
+        if (_cardDict.ContainsKey(2))
+        {
+            float angle = -2 * Mathf.PI / _cardDict[2].Count;
 
-                if (_cardDict.ContainsKey(2))
-                {
-                    for (int i = 0; i < _cardDict[2].Count; i++)
-                    {
-                        _cardDict[2][i].gameObject.SetActive(false);
-                    }
-                }
-                if (_cardDict.ContainsKey(1))
-                {
-                    for (int i = 0; i < _cardDict[1].Count; i++)
-                    {
-                        _cardDict[1][i].gameObject.SetActive(false);
-                    }
-                }
-                if (_cardDict.ContainsKey(3))
-                {
-                    for (int i = 0; i < _cardDict[3].Count; i++)
-                    {
-                        _cardDict[3][i].gameObject.SetActive(true);
-                    }
-                }
-                break;
-            case 2:
-                if (_cardDict.ContainsKey(2))
-                {
-                    float angle = -2 * Mathf.PI / _cardDict[2].Count;
-                    //float distance = (_dialElementList[1].GetComponent<RectTransform>().sizeDelta.x - _dialElementList[2].GetComponent<RectTransform>().sizeDelta.x) / 2;
-                    ////distance += _dialElementList[2].GetComponent<RectTransform>().sizeDelta.x / 2;
-                    //distance += 50;
+            for (int i = 0; i < _cardDict[2].Count; i++)
+            {
+                float height = Mathf.Sin(angle * i + (90 * Mathf.Deg2Rad)) * 535; // 470
+                float width = Mathf.Cos(angle * i + (90 * Mathf.Deg2Rad)) * 535; // 450
+                _cardDict[2][i].GetComponent<RectTransform>().anchoredPosition = new Vector3(width, height, 0);
 
-                    for (int i = 0; i < _cardDict[2].Count; i++)
-                    {
-                        float height = Mathf.Sin(angle * i + (90 * Mathf.Deg2Rad)) * 370; // 370
-                        float width = Mathf.Cos(angle * i + (90 * Mathf.Deg2Rad)) * 370; // 455
-                        _cardDict[2][i].GetComponent<RectTransform>().anchoredPosition = new Vector3(width, height, 0);
+                Vector2 direction = new Vector2(
+                    _cardDict[2][i].transform.position.x - transform.position.x,
+                    _cardDict[2][i].transform.position.y - transform.position.y
+                );
 
-                        Vector2 direction = new Vector2(
-                            _cardDict[2][i].transform.position.x - transform.position.x,
-                            _cardDict[2][i].transform.position.y - transform.position.y
-                        );
+                float ang = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+                Quaternion angleAxis = Quaternion.AngleAxis(ang - 90f, Vector3.forward);
+                _cardDict[2][i].GetComponent<RectTransform>().rotation = angleAxis;
+            }
+        }
+        if (_cardDict.ContainsKey(1))
+        {
+            float angle = -2 * Mathf.PI / _cardDict[1].Count;
 
-                        float ang = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-                        Quaternion angleAxis = Quaternion.AngleAxis(ang - 90f, Vector3.forward);
-                        _cardDict[2][i].GetComponent<RectTransform>().rotation = angleAxis;
-                    }
-                }
+            for (int i = 0; i < _cardDict[1].Count; i++)
+            {
+                float height = Mathf.Sin(angle * i + (90 * Mathf.Deg2Rad)) * 345; // 470
+                float width = Mathf.Cos(angle * i + (90 * Mathf.Deg2Rad)) * 345; // 450
+                _cardDict[1][i].GetComponent<RectTransform>().anchoredPosition = new Vector3(width, height, 0);
 
-                if (_cardDict.ContainsKey(1))
-                {
-                    for (int i = 0; i < _cardDict[1].Count; i++)
-                    {
-                        _cardDict[1][i].gameObject.SetActive(false);
-                    }
-                }
-                if (_cardDict.ContainsKey(3))
-                {
-                    for (int i = 0; i < _cardDict[3].Count; i++)
-                    {
-                        _cardDict[3][i].gameObject.SetActive(false);
-                    }
-                }
-                if (_cardDict.ContainsKey(2))
-                {
-                    for (int i = 0; i < _cardDict[2].Count; i++)
-                    {
-                        _cardDict[2][i].gameObject.SetActive(true);
-                    }
-                }
-                break;
-            case 1:
-                if (_cardDict.ContainsKey(1))
-                {
-                    float angle = -2 * Mathf.PI / _cardDict[1].Count;
-                    //float distance = (_dialElementList[2].GetComponent<RectTransform>().sizeDelta.x - _dialElementList[2].GetComponent<RectTransform>().sizeDelta.x / 2) / 2;
-                    ////distance += _dialElementList[2].GetComponent<RectTransform>().sizeDelta.x / 2;
-                    //distance += 50;
+                Vector2 direction = new Vector2(
+                    _cardDict[1][i].transform.position.x - transform.position.x,
+                    _cardDict[1][i].transform.position.y - transform.position.y
+                );
 
-                    for (int i = 0; i < _cardDict[1].Count; i++)
-                    {
-                        float height = Mathf.Sin(angle * i + (90 * Mathf.Deg2Rad)) * 260; // 260
-                        float width = Mathf.Cos(angle * i + (90 * Mathf.Deg2Rad)) * 260; // 380
-                        _cardDict[1][i].GetComponent<RectTransform>().anchoredPosition = new Vector3(width, height, 0);
-
-                        Vector2 direction = new Vector2(
-                            _cardDict[1][i].transform.position.x - transform.position.x,
-                            _cardDict[1][i].transform.position.y - transform.position.y
-                        );
-
-                        float ang = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-                        Quaternion angleAxis = Quaternion.AngleAxis(ang - 90f, Vector3.forward);
-                        _cardDict[1][i].GetComponent<RectTransform>().rotation = angleAxis;
-                    }
-                }
-
-                if (_cardDict.ContainsKey(2))
-                {
-                    for (int i = 0; i < _cardDict[2].Count; i++)
-                    {
-                        _cardDict[2][i].gameObject.SetActive(false);
-                    }
-                }
-                if (_cardDict.ContainsKey(3))
-                {
-                    for (int i = 0; i < _cardDict[3].Count; i++)
-                    {
-                        _cardDict[3][i].gameObject.SetActive(false);
-                    }
-                }
-                if (_cardDict.ContainsKey(1))
-                {
-                    for (int i = 0; i < _cardDict[1].Count; i++)
-                    {
-                        _cardDict[1][i].gameObject.SetActive(true);
-                    }
-                }
-                break;
-            default:
-                break;
+                float ang = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+                Quaternion angleAxis = Quaternion.AngleAxis(ang - 90f, Vector3.forward);
+                _cardDict[1][i].GetComponent<RectTransform>().rotation = angleAxis;
+            }
         }
     }
 
@@ -351,7 +413,7 @@ public class Dial : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
         if (index == -1) return;
 
-        EditSelectArea(3 - index);
+        //EditSelectArea(3 - index);
     }
 
     public int GetSelectAreaForInt()

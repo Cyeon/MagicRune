@@ -13,7 +13,7 @@ public class StarPanel : MonoBehaviour, IPointerClickHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        _dial.EditSelectArea((_dial.GetSelectAreaForInt() + 1) % 4);
+        //_dial.EditSelectArea((_dial.GetSelectAreaForInt() + 1) % 4);
     }
 
     void Start()
