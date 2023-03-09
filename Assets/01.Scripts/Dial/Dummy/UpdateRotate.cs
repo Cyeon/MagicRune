@@ -37,10 +37,20 @@ public class UpdateRotate : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
 
             float temp = Input.mousePosition.x > Screen.width / 2 ? offset.x - offset.y : offset.x + offset.y;
 
-            if (offset.x > 0)
-                temp = Mathf.Clamp(temp, 0, offset.x);
-            else
-                temp = Mathf.Clamp(temp, offset.x, 0);
+            if (Mathf.Abs(offset.x) > Mathf.Abs(offset.y))
+            {
+                if (offset.x > 0)
+                    temp = Mathf.Clamp(temp, 0, offset.x);
+                else
+                    temp = Mathf.Clamp(temp, offset.x, 0);
+            }
+            else 
+            {
+                if (offset.y > 0)
+                    temp = Mathf.Clamp(temp, -offset.y, offset.y);
+                else
+                    temp = Mathf.Clamp(temp, offset.y, -offset.y);
+            }
 
             rot.z += -1 * temp / rotateDamp;
 
