@@ -90,15 +90,12 @@ public class MapManager : MonoSingleton<MapManager>
         {
             foreach (var map in ui.maps)
             {
-                map.gameObject.SetActive(true);
                 map.Init(GetAttackEnemy());
                 map.transform.DOScale(1.2f, 0.8f);
             }
         }
         else
         {
-
-            ui.maps[1].gameObject.SetActive(true);
             ui.maps[1].Init(GetAttackEnemy());
             ui.maps[1].transform.DOScale(1.2f, 0.8f);
         }
