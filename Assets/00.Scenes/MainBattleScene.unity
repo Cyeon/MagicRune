@@ -1831,7 +1831,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 1301}
   m_SizeDelta: {x: 1440, y: 1440}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &390043420
@@ -2129,11 +2129,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _dragDistance: 800
   swipeSensitivity: 5
-  _rotDamp: 100
-  _rotAcc: 60
-  _rotDeAcc: 10
-  _touchDamp: 5
-  _selectOffset: 7
+  _touchDamp: 7
+  _selectOffset: 20
 --- !u!1 &415606275
 GameObject:
   m_ObjectHideFlags: 0
@@ -4680,11 +4677,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _dragDistance: 800
   swipeSensitivity: 5
-  _rotDamp: 100
-  _rotAcc: 60
-  _rotDeAcc: 10
-  _touchDamp: 5
-  _selectOffset: 7
+  _touchDamp: 10
+  _selectOffset: 14
 --- !u!1 &734689489
 GameObject:
   m_ObjectHideFlags: 0
@@ -7252,11 +7246,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _dragDistance: 800
   swipeSensitivity: 5
-  _rotDamp: 100
-  _rotAcc: 60
-  _rotDeAcc: 10
   _touchDamp: 5
-  _selectOffset: 7
+  _selectOffset: 25
 --- !u!1 &1215621361
 GameObject:
   m_ObjectHideFlags: 0
@@ -10307,7 +10298,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _deck: {fileID: 11400000, guid: 5bc9291412883814baef3369b440d548, type: 2}
   tempCard: {fileID: 8165298467326144068, guid: d80daf2e6dc89fc4b9c1606735cfa39a, type: 3}
-  _bezierMissile: {fileID: 0}
+  _bezierMissile: {fileID: 1426304098941858083, guid: 9dd93f28a2b7477439d08440675ea353, type: 3}
   swipeSensitivity: 5
 --- !u!1 &1661102361
 GameObject:
@@ -13200,6 +13191,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Dial_Desc_Area
       objectReference: {fileID: 0}
+    - target: {fileID: 3713790094285829774, guid: eb4cb5148bf743e4bb8e3a2ac8f8a8b3, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7954677660298225140, guid: eb4cb5148bf743e4bb8e3a2ac8f8a8b3, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -13218,7 +13213,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7954677660298225140, guid: eb4cb5148bf743e4bb8e3a2ac8f8a8b3, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7954677660298225140, guid: eb4cb5148bf743e4bb8e3a2ac8f8a8b3, type: 3}
       propertyPath: m_AnchorMin.x
@@ -13226,7 +13221,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7954677660298225140, guid: eb4cb5148bf743e4bb8e3a2ac8f8a8b3, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7954677660298225140, guid: eb4cb5148bf743e4bb8e3a2ac8f8a8b3, type: 3}
       propertyPath: m_SizeDelta.x

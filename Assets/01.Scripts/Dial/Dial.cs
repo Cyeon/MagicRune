@@ -1,5 +1,6 @@
 using DG.Tweening;
 using MyBox;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
@@ -7,12 +8,10 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class Dial : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
+public class Dial : MonoBehaviour
 {
     [SerializeField]
     private DeckSO _deck;
-
-    private int _fingerID = -1;
 
     [SerializeField]
     private GameObject tempCard;
@@ -20,10 +19,8 @@ public class Dial : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     private BezierMissile _bezierMissile;
 
     private Dictionary<int, List<TestCard>> _cardDict;
+    private Dictionary<EffectType, List<EffectObjectPair>> _effectDict;
     private List<DialElement> _dialElementList;
-
-    [Range(1, 3)]
-    private int _selectArea = 1;
 
     #region Swipe Parameta
     private Vector2 touchBeganPos;
@@ -32,16 +29,6 @@ public class Dial : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     [SerializeField]
     private float swipeSensitivity = 5;
     #endregion
-
-    public void OnPointerDown(PointerEventData eventData)
-    {
-        _fingerID = eventData.pointerId;
-    }
-
-    public void OnPointerUp(PointerEventData eventData)
-    {
-        _fingerID = -1;
-    }
 
     private void Start()
     {
@@ -175,31 +162,213 @@ public class Dial : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
     public void Attack()
     {
-        Dictionary<EffectType, List<EffectObjectPair>> effectDict = new Dictionary<EffectType, List<EffectObjectPair>>();
+        _effectDict = new Dictionary<EffectType, List<EffectObjectPair>>();
         foreach (DialElement d in _dialElementList)
         {
             if (d.SelectCard != null)
             {
                 foreach (Pair p in d.SelectCard.Magic.MainRune.EffectDescription)
                 {
-                    if (effectDict.ContainsKey(p.EffectType))
+                    if (_effectDict.ContainsKey(p.EffectType))
                     {
-                        effectDict[p.EffectType].Add(new EffectObjectPair(p, d.SelectCard.Magic.RuneEffect));
+                        _effectDict[p.EffectType].Add(new EffectObjectPair(p, d.SelectCard.Magic.RuneEffect));
                     }
                     else
                     {
-                        effectDict.Add(p.EffectType, new List<EffectObjectPair> { new EffectObjectPair(p, d.SelectCard.Magic.RuneEffect) });
+                        _effectDict.Add(p.EffectType, new List<EffectObjectPair> { new EffectObjectPair(p, d.SelectCard.Magic.RuneEffect) });
                     }
                 }
             }
         }
 
-        // 잘되내
-        foreach(var d in effectDict)
+        // 디버그 용
+#if UNITY_EDITOR
+        foreach(var d in _effectDict)
         {
             Debug.Log($"{d.Key} : {d.Value}");
         }
+#endif
 
-        // 뭐... 히히 베지어 미사일 발싸!
+        
+        GameObject g = null;
+        for(int i = _dialElementList.Count - 1; i >= 0; i--)
+        {
+            if(_dialElementList[i].SelectCard != null)
+            {
+                g = _dialElementList[i].SelectCard.Magic.RuneEffect;
+                break;
+            }
+        }
+
+        if (g == null)
+        {
+            _effectDict.Clear();
+            return;
+        }
+        UIManager.Instance.CardDescDown();
+        BezierMissile b = Instantiate(_bezierMissile, this.transform.parent);
+        b.SetEffect(g);
+        b.SetTrailColor(EffectType.Attack);
+        b.Init(new Vector2(0, -1480), new Vector2(0, 607), 1.5f, 0, 0, () =>
+        {
+            for (int i = 0; i < (int)EffectType.Etc; i++)
+            {
+                AttackFunction((EffectType)i);
+            }
+
+            _effectDict.Clear();
+        });
+    }
+
+    public void AttackFunction(EffectType effectType)
+    {
+        if (_effectDict.ContainsKey(effectType))
+        {
+            foreach (var e in _effectDict[effectType])
+            {
+                Unit target = e.pair.IsEnemy == true ? GameManager.Instance.enemy : GameManager.Instance.player;
+                AttackEffectFunction(effectType, target, e.pair)?.Invoke();
+            }
+        }
+    }
+
+    public Action AttackEffectFunction(EffectType effectType, Unit target, Pair e)
+    {
+        Action action = null;
+        //int c = 0;
+        //for (int i = 0; i < _effectDict[RuneType.Assist].Count; i++)
+        //{
+        //    if (_runeTempDict[RuneType.Assist][i].Rune != null && _runeTempDict[RuneType.Assist][i].Rune.AssistRune.Attribute == e.AttributeType)
+        //    {
+        //        c++;
+        //    }
+        //}
+        //if (_runeTempDict[RuneType.Main][0].Rune != null && _runeTempDict[RuneType.Main][0].Rune.AssistRune.Attribute == e.AttributeType)
+        //    c++;
+
+        switch (effectType)
+        {
+            case EffectType.Attack:
+                switch (e.AttackType)
+                {
+                    case AttackType.Single:
+                        action = () => GameManager.Instance.player.Attack(int.Parse(e.Effect));
+                        break;
+                    case AttackType.Double:
+                        //action = () => GameManager.Instance.player.Attack(int.Parse(e.Effect) * c);
+                        action = () => GameManager.Instance.player.Attack(int.Parse(e.Effect));
+                        break;
+                }
+                break;
+            case EffectType.Defence:
+                switch (e.AttackType)
+                {
+                    case AttackType.Single:
+                        action = () => GameManager.Instance.player.Shield += int.Parse(e.Effect);
+                        break;
+                    case AttackType.Double:
+                        //action = () => GameManager.Instance.player.Shield += int.Parse(e.Effect) * c;
+                        action = () => GameManager.Instance.player.Shield += int.Parse(e.Effect);
+                        break;
+                }
+                break;
+            case EffectType.Status:
+                switch (e.AttackType)
+                {
+                    case AttackType.Single:
+                        action = () => StatusManager.Instance.AddStatus(target, e.StatusType, int.Parse(e.Effect));
+                        break;
+                    case AttackType.Double:
+                        //action = () => StatusManager.Instance.AddStatus(target, e.StatusType, int.Parse(e.Effect) * c);
+                        action = () => StatusManager.Instance.AddStatus(target, e.StatusType, int.Parse(e.Effect));
+                        break;
+                }
+                break;
+            case EffectType.Destroy:
+                action = () => StatusManager.Instance.RemStatus(target, e.StatusType);
+                break;
+            case EffectType.Draw:
+                // 지금은 일단 주석...
+                //action = () => _cardCollector.CardDraw(int.Parse(e.Effect));
+                break;
+            case EffectType.Etc:
+                action = null;
+                break;
+        }
+
+        return action;
+
+        //switch (e.Condition.ConditionType)
+        //{
+        //    case ConditionType.None:
+        //        return action;
+        //    case ConditionType.HeathComparison:
+        //        if (target.IsHealthAmount(e.Condition.Value, e.Condition.ComparisonType))
+        //        {
+        //            return action;
+        //        }
+        //        break;
+        //    case ConditionType.AssistRuneCount:
+        //        int count = 0;
+        //        for (int i = 0; i < _runeTempDict[RuneType.Assist].Count; i++)
+        //        {
+        //            if (_runeTempDict[RuneType.Assist][i].Rune != null)
+        //            {
+        //                count++;
+        //            }
+        //        }
+        //        if (count >= e.Condition.Value)
+        //        {
+        //            return action;
+        //        }
+        //        break;
+        //    case ConditionType.AttributeComparison:
+        //        int cnt = 0;
+        //        if (_runeTempDict[RuneType.Main][0].Rune.MainRune.Attribute == e.Condition.AttributeType)
+        //            cnt++;
+        //        for (int i = 0; i < _runeTempDict[RuneType.Assist].Count; i++)
+        //        {
+        //            if (_runeTempDict[RuneType.Assist][i].Rune.AssistRune.Attribute == e.Condition.AttributeType)
+        //            {
+        //                cnt++;
+        //            }
+        //        }
+
+        //        switch (e.Condition.ComparisonType)
+        //        {
+        //            case ComparisonType.MoreThan:
+        //                if (cnt >= e.Condition.Value)
+        //                {
+        //                    return action;
+        //                }
+        //                break;
+        //            case ComparisonType.LessThan:
+        //                if (cnt <= e.Condition.Value)
+        //                {
+        //                    return action;
+        //                }
+        //                break;
+        //        }
+        //        break;
+        //    case ConditionType.StatusComparison:
+        //        switch (e.Condition.ComparisonType)
+        //        {
+        //            case ComparisonType.MoreThan:
+        //                if (StatusManager.Instance.GetUnitStatusValue(target, e.Condition.StatusType) >= e.Condition.Value)
+        //                {
+        //                    return action;
+        //                }
+        //                break;
+        //            case ComparisonType.LessThan:
+        //                if (StatusManager.Instance.GetUnitStatusValue(target, e.Condition.StatusType) <= e.Condition.Value)
+        //                {
+        //                    return action;
+        //                }
+        //                break;
+        //        }
+        //        break;
+        //}
+
+        //return null;
     }
 }

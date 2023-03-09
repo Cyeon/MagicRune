@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -65,6 +66,36 @@ public class BezierMissile : MonoBehaviour
         _endAction = action;
     }
 
+    public void Init(Vector2 _startTr, Vector2 _endTr, float _speed, float _newPointDistanceFromStartTr, float _newPointDistanceFromEndTr, Action action = null)
+    {
+        m_speed = _speed;
+
+        // 끝에 도착할 시간을 랜덤으로 줌.
+        m_timerMax = Random.Range(0.8f, 1.0f);
+
+        // 시작 지점.
+        m_points[0] = _startTr;
+
+        // 시작 지점을 기준으로 랜덤 포인트 지정.
+        m_points[1] = _startTr +
+            (_newPointDistanceFromStartTr * Random.Range(-1.0f, 1.0f) * new Vector2(_startTr.x, 0)) + // X (좌, 우 전체)
+            (_newPointDistanceFromStartTr * Random.Range(-0.15f, 1.0f) * new Vector2(0, _startTr.y));  // Y (아래쪽 조금, 위쪽 전체)
+                                                                                        //(_newPointDistanceFromStartTr * Random.Range(-1.0f, -0.8f) * _startTr.forward); // Z (뒤 쪽만)
+
+        // 도착 지점을 기준으로 랜덤 포인트 지정.
+        m_points[2] = _endTr +
+            (_newPointDistanceFromEndTr * Random.Range(-1.0f, 1.0f) * new Vector2(_endTr.x, 0)) + // X (좌, 우 전체)
+            (_newPointDistanceFromEndTr * Random.Range(-1.0f, 1.0f) * new Vector2(0, _endTr.y)); // Y (위, 아래 전체)
+                                                                                  //(_newPointDistanceFromEndTr * Random.Range(0.8f, 1.0f) * _endTr.forward); // Z (앞 쪽만)
+
+        // 도착 지점.
+        m_points[3] = _endTr;
+
+        _rect.anchoredPosition = _startTr;
+
+        _endAction = action;
+    }
+
     public void SetTrailColor(EffectType type)
     {
         switch (type)
@@ -96,7 +127,9 @@ public class BezierMissile : MonoBehaviour
 
     public void SetEffect(GameObject go)
     {
-        Instantiate(go, this.transform);
+        GameObject g = Instantiate(go, this.transform);
+        g.transform.localScale *= 3f;
+        //g.transform.DOScale(Vector3.one * 200f, 0.2f);
     }
 
     void Update()
