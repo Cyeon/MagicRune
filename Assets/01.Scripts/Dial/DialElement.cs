@@ -112,7 +112,7 @@ public class DialElement : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         //_dial.EditSelectArea(this);
     }
 
-    private void Start()
+    private void Awake()
     {
         _dial = GetComponentInParent<Dial>();
         _image = GetComponent<Image>();
@@ -124,45 +124,48 @@ public class DialElement : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     {
         Swipe1();
 
-        float oneDinstance = 360f / _magicList.Count;
-        bool inBoolean = (_image.transform.eulerAngles.z % oneDinstance) <= _selectOffset;
-        bool outBoolean = (oneDinstance - (_image.transform.eulerAngles.z % oneDinstance)) <= _selectOffset;
-        if (inBoolean)
+        if (_magicList.Count > 0)
         {
-            int index = (int)(_image.transform.eulerAngles.z / oneDinstance) % (_magicList.Count);
-            if (_magicList[index].IsCoolTime == false)
+            float oneDinstance = 360f / _magicList.Count;
+            bool inBoolean = (_image.transform.eulerAngles.z % oneDinstance) <= _selectOffset;
+            bool outBoolean = (oneDinstance - (_image.transform.eulerAngles.z % oneDinstance)) <= _selectOffset;
+            if (inBoolean)
             {
-                SelectCard = _magicList[index];
-                if (_isRotate == true)
+                int index = (int)(_image.transform.eulerAngles.z / oneDinstance) % (_magicList.Count);
+                if (_magicList[index].IsCoolTime == false)
                 {
-                    UIManager.Instance.CardDescPopup(SelectCard);
+                    SelectCard = _magicList[index];
+                    if (_isRotate == true)
+                    {
+                        UIManager.Instance.CardDescPopup(SelectCard);
+                    }
                 }
             }
-        }
-        else if (outBoolean)
-        {
-            //int index = (int)(oneDinstance - (_image.transform.eulerAngles.z / oneDinstance)) % (_cardList.Count);
-            //Debug.Log(index);
-            //index = (index - 1) % _cardList.Count;
-            //SelectCard = _cardList[index];
+            else if (outBoolean)
+            {
+                //int index = (int)(oneDinstance - (_image.transform.eulerAngles.z / oneDinstance)) % (_cardList.Count);
+                //Debug.Log(index);
+                //index = (index - 1) % _cardList.Count;
+                //SelectCard = _cardList[index];
 
-            int index = (int)(_image.transform.eulerAngles.z / oneDinstance) % (_magicList.Count);
-            index = (index + 1) % _magicList.Count;
-            if (_magicList[index].IsCoolTime == false)
+                int index = (int)(_image.transform.eulerAngles.z / oneDinstance) % (_magicList.Count);
+                index = (index + 1) % _magicList.Count;
+                if (_magicList[index].IsCoolTime == false)
+                {
+                    SelectCard = _magicList[index];
+                    if (_isRotate == true)
+                    {
+                        UIManager.Instance.CardDescPopup(SelectCard);
+                    }
+                }
+            }
+            else
             {
-                SelectCard = _magicList[index];
+                SelectCard = null;
                 if (_isRotate == true)
                 {
                     UIManager.Instance.CardDescPopup(SelectCard);
                 }
-            }
-        }
-        else
-        {
-            SelectCard = null;
-            if (_isRotate == true)
-            {
-                UIManager.Instance.CardDescPopup(SelectCard);
             }
         }
 

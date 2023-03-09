@@ -30,7 +30,7 @@ public class Dial : MonoBehaviour
     private float swipeSensitivity = 5;
     #endregion
 
-    private void Start()
+    private void Awake()
     {
         _magicDict = new Dictionary<int, List<TestCard>>(3);
         for (int i = 1; i <= 3; i++)
@@ -38,7 +38,10 @@ public class Dial : MonoBehaviour
             _magicDict.Add(i, new List<TestCard>());
         }
         _dialElementList = new List<DialElement>();
+    }
 
+    private void Start()
+    {
         // 그냥 3으로 해도되는데 그냥 이렇게 함
         for (int i = 1; i <= _deck.List.Count; i++)
         {

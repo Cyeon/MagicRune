@@ -16,6 +16,7 @@ public class TestCard : MonoBehaviour
     private Transform _magicArea;
     private Image _magicImage;
     private GameObject _outline;
+    private Text _coolTimeText;
     #endregion
 
     private int _coolTime;
@@ -27,6 +28,7 @@ public class TestCard : MonoBehaviour
         _magicArea = transform.Find("MagicArea");
         _magicImage = _magicArea.Find("MagicImage").GetComponent<Image>();
         _outline = _magicArea.Find("Outline").gameObject;
+        _coolTimeText = _magicArea.Find("CoolTimeText").GetComponent<Text>();
     }
 
     public void SetActiveOutline(bool value)
@@ -49,6 +51,8 @@ public class TestCard : MonoBehaviour
         _coolTime = _magic.MainRune.CoolTime;
         _magicImage.color = Color.gray;
         SetActiveOutline(false);
+        _coolTimeText.text = _coolTime.ToString();
+        _coolTimeText.gameObject.SetActive(true);
     }
 
     public void SetCoolTime(int value)
@@ -59,10 +63,13 @@ public class TestCard : MonoBehaviour
         {
             _magicImage.color = Color.gray;
             SetActiveOutline(false);
+            _coolTimeText.text = _coolTime.ToString();
+            _coolTimeText.gameObject.SetActive(true);
         }
         else
         {
             _magicImage.color = Color.white;
+            _coolTimeText.gameObject.SetActive(false);
         }
     }
 
