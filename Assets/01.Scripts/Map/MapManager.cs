@@ -8,13 +8,15 @@ using UnityEngine.SceneManagement;
 public  enum PortalType
 {
     Attack,
-    Event
+    Event,
+    Boss
 }
 
 [System.Serializable] 
 public class Chapter
 {
     public int chapter = 0;
+    public EnemySO boss;
     public float[] stageList = new float[9];
 }
 
@@ -44,7 +46,6 @@ public class MapManager : MonoSingleton<MapManager>
     private Sprite _attackIcon;
 
     private bool _isFirst = true;
-    public int isSceneLoad = 0;
 
     private void Start()
     {
@@ -58,7 +59,6 @@ public class MapManager : MonoSingleton<MapManager>
         portalList.Clear();
         _currentChapter = chapterList[Chapter - 1];
 
-        int stage = 1;
         foreach (var chance in _currentChapter.stageList)
         {
             Portal map = new Portal();
@@ -78,8 +78,13 @@ public class MapManager : MonoSingleton<MapManager>
             map.color = Color.gray;
 
             portalList.Add(map);
-            stage++;
         }
+
+        Portal portal = new Portal();
+        portal.type = PortalType.Boss;
+        portal.color = Color.gray;
+        portal.icon = _currentChapter.boss.icon;
+        portalList.Add(portal);
 
         portalList[0].color = Color.white;
         ui.StageUI();
@@ -87,7 +92,7 @@ public class MapManager : MonoSingleton<MapManager>
 
     private void PortalInit()
     {
-        ui.PortalEffectUp();
+        ui.PortalEffectUp(portalList[Stage].type);
 
         if (portalList[Stage].type == PortalType.Attack)
         {
@@ -96,6 +101,11 @@ public class MapManager : MonoSingleton<MapManager>
                 portal.Init(GetAttackEnemy());
                 portal.transform.DOScale(1f, 0.8f);
             }
+        }
+        else if (portalList[Stage].type == PortalType.Boss)
+        {
+            ui.portals[1].Init(_currentChapter.boss);
+            ui.portals[1].transform.DOScale(2f, 1f);
         }
         else
         {

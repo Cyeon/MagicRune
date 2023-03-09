@@ -14,7 +14,8 @@ public class MapUI : MonoBehaviour
     public List<Image> stages = new List<Image>();
 
     [SerializeField] private Transform _portalParent;
-    private List<Transform> _portalEffects = new List<Transform>();
+    private List<Transform> _attackPortalEffects = new List<Transform>();
+    private List<Transform> _bossPortalEffects = new List<Transform>();
 
     private TextMeshProUGUI _healthText;
     private TextMeshProUGUI _goldText;
@@ -34,9 +35,14 @@ public class MapUI : MonoBehaviour
             stages.Add(StageList.GetChild(i).GetComponent<Image>());
         }
 
-        for(int i = 0; i < _portalParent.childCount; ++i)
+        for(int i = 0; i < _portalParent.Find("AttackPortal").childCount; ++i)
         {
-            _portalEffects.Add(_portalParent.GetChild(i));
+            _attackPortalEffects.Add(_portalParent.Find("AttackPortal").GetChild(i));
+        }
+
+        for (int i = 0; i < _portalParent.Find("BossPortal").childCount; ++i)
+        {
+            _bossPortalEffects.Add(_portalParent.Find("BossPortal").GetChild(i));
         }
 
         _goldText = transform.Find("GoldBar").GetComponentInChildren<TextMeshProUGUI>();
@@ -53,16 +59,20 @@ public class MapUI : MonoBehaviour
 
     public void StageUI()
     {
-        for(int i = 0; i < 9; ++i)
+        for(int i = 0; i < 10; ++i)
         {
             stages[i].sprite = MapManager.Instance.portalList[i].icon;
             stages[i].color = MapManager.Instance.portalList[i].color;
         }
+
     }
 
-    public void PortalEffectUp()
+    public void PortalEffectUp(PortalType type)
     {
-        _portalEffects.ForEach(x => x.DOScale(1.2f, 1f));
+        if (type == PortalType.Attack)
+            _attackPortalEffects.ForEach(x => x.DOScale(1.2f, 1f));
+        else
+            _bossPortalEffects.ForEach(x => x.DOScale(2f, 1f));
     }
 
     public void InfoUIReload()
