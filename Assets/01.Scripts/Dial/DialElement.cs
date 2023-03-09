@@ -7,6 +7,8 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using UnityEngine.UIElements;
+using Image = UnityEngine.UI.Image;
 
 public class DialElement : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IDragHandler, IEndDragHandler, IBeginDragHandler, IPointerEnterHandler, IPointerExitHandler
 {
@@ -69,16 +71,18 @@ public class DialElement : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     }
     [SerializeField, Range(0f, 90f)]
     private float _selectOffset;
+    private bool _isRotate = false;
 
     public void OnPointerDown(PointerEventData eventData)
     {
         _fingerID = eventData.pointerId;
-
+        _isRotate = true;
     }
 
     public void OnPointerUp(PointerEventData eventData)
     {
         _fingerID = -1;
+        _isRotate = false;
         //_dial.EditSelectArea(this);
     }
 
@@ -181,9 +185,10 @@ public class DialElement : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         {
             int index = (int)(_image.transform.eulerAngles.z / oneDinstance) % (_cardList.Count);
             SelectCard = _cardList[index];
-            _image.transform.eulerAngles = new Vector3(0, 0, (int)(_image.transform.eulerAngles.z / oneDinstance) * oneDinstance);
-            // 돌리고 있을 때만
-            UIManager.Instance.CardDescPopup(SelectCard);
+            if (_isRotate == true)
+            {
+                UIManager.Instance.CardDescPopup(SelectCard);
+            }
         }
         else if (outBoolean)
         {
@@ -195,13 +200,18 @@ public class DialElement : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
             int index = (int)(_image.transform.eulerAngles.z / oneDinstance) % (_cardList.Count);
             index = (index + 1) % _cardList.Count;
             SelectCard = _cardList[index];
-            // 돌리고 있을 때만
-            UIManager.Instance.CardDescPopup(SelectCard);
+            if (_isRotate == true)
+            {
+                UIManager.Instance.CardDescPopup(SelectCard);
+            }
         }
         else
         {
             SelectCard = null;
-            UIManager.Instance.CardDescPopup(SelectCard);
+            if (_isRotate == true)
+            {
+                UIManager.Instance.CardDescPopup(SelectCard);
+            }
         }
     }
 
