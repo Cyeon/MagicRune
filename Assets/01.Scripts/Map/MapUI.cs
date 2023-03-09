@@ -30,10 +30,8 @@ public class MapUI : MonoBehaviour
 
     private void OnEnable()
     {
-        DOTween.KillAll();
         MapManager.Instance.ui = this;
         MapManager.Instance.NextStage();
-        MapManager.Instance.isSceneLoad = true;
     }
 
     public void StageUI()

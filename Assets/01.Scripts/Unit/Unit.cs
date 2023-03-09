@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Rendering;
+using UnityEngine.SceneManagement;
 
 public class Unit : MonoBehaviour
 {
@@ -25,11 +26,7 @@ public class Unit : MonoBehaviour
             }
             if (_health <= 0)
             {
-                EventManager.TriggerEvent(Define.GAME_END);
-                if (_isPlayer)
-                    EventManager.TriggerEvent(Define.GAME_LOSE);
-                else
-                    EventManager.TriggerEvent(Define.GAME_WIN);
+                AttackManager.Instance.Win();
             }
         }
     }

@@ -44,7 +44,7 @@ public class MapManager : MonoSingleton<MapManager>
     private Sprite _attackIcon;
 
     private bool _isFirst = true;
-    public bool isSceneLoad = false;
+    public int isSceneLoad = 0;
 
     private void Start()
     {
@@ -112,10 +112,8 @@ public class MapManager : MonoSingleton<MapManager>
             return;
         }
 
-        if (isSceneLoad) return;
+        DOTween.KillAll();
 
-        Debug.Log(Stage);
-        
         ui.StageUI();
         ui.StageList.transform.DOLocalMoveX(Stage * -300f, 0);
 
@@ -124,13 +122,12 @@ public class MapManager : MonoSingleton<MapManager>
 
         Sequence seq = DOTween.Sequence();
         seq.AppendInterval(0.5f);
-        seq.Append(ui.StageList.transform.DOLocalMoveX(ui.StageList.transform.localPosition.x + -300f, 1f));
+        seq.Append(ui.StageList.transform.DOLocalMoveX(Stage * -300f, 1f));
         seq.Append(ui.stages[Stage].DOColor(Color.white, 0.5f));
         seq.AppendCallback(() =>
         {
             mapList[Stage].color = Color.white;
             MapInit();
-            isSceneLoad = false;
         });
     }
 
