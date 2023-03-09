@@ -18,11 +18,14 @@ public enum AttributeType
     Wind, // 바람
 }
 
+/// <summary>
+/// 행동 유형, 이 순서대로 행동이 나가니까 순서 중요!
+/// </summary>
 public enum EffectType
 {
-    Attack, // 공격하는거 예) 5데미지
-    Defence, // 방어하는거 예) 5방어
     Status,
+    Defence, // 방어하는거 예) 5방어
+    Attack, // 공격하는거 예) 5데미지
     Destroy,
     Draw,
     Etc, // 기타 효과 예) 1장 드로우, 화상효과 부여 등...

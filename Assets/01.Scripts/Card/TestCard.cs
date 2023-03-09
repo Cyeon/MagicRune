@@ -48,6 +48,7 @@ public class TestCard : MonoBehaviour
     {
         _coolTime = _magic.MainRune.CoolTime;
         _magicImage.color = Color.gray;
+        SetActiveOutline(false);
     }
 
     public void SetCoolTime(int value)
@@ -57,6 +58,7 @@ public class TestCard : MonoBehaviour
         if(_coolTime > 0)
         {
             _magicImage.color = Color.gray;
+            SetActiveOutline(false);
         }
         else
         {

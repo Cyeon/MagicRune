@@ -35,7 +35,7 @@ public class DialElement : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
     private int _fingerID = -1;
 
-    private List<TestCard> _cardList;
+    private List<TestCard> _magicList;
     private TestCard _selectCard;
     public TestCard SelectCard
     {
@@ -78,17 +78,36 @@ public class DialElement : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         _fingerID = -1;
         _isRotate = false;
 
-        float oneDinstance = 360f / _cardList.Count;
+        float oneDinstance = 360f / _magicList.Count;
         bool inBoolean = (_image.transform.eulerAngles.z % oneDinstance) <= _selectOffset;
         bool outBoolean = (oneDinstance - (_image.transform.eulerAngles.z % oneDinstance)) <= _selectOffset;
         if (inBoolean)
         {
-            // 돌리고 있을 때만
-            DOTween.To(() => _image.transform.eulerAngles, x => _image.transform.eulerAngles = x, new Vector3(0, 0, ((int)(_image.transform.eulerAngles.z / oneDinstance)) * oneDinstance), 0.3f);
+            int index = (int)(_image.transform.eulerAngles.z / oneDinstance) % (_magicList.Count);
+            if (_magicList[index].IsCoolTime == false)
+            {
+                // 돌리고 있을 때만
+                DOTween.To(
+                    () => _image.transform.eulerAngles,
+                    x => _image.transform.eulerAngles = x,
+                    new Vector3(0, 0, ((int)(_image.transform.eulerAngles.z / oneDinstance)) * oneDinstance),
+                    0.3f
+                );
+            }
         }
         else if (outBoolean)
         {
-            DOTween.To(() => _image.transform.eulerAngles, x => _image.transform.eulerAngles = x, new Vector3(0, 0, ((int)(_image.transform.eulerAngles.z / oneDinstance) + 1) * oneDinstance), 0.3f);
+            int index = (int)(_image.transform.eulerAngles.z / oneDinstance) % (_magicList.Count);
+            index = (index + 1) % _magicList.Count;
+            if (_magicList[index].IsCoolTime == false)
+            {
+                DOTween.To(
+                    () => _image.transform.eulerAngles,
+                    x => _image.transform.eulerAngles = x,
+                    new Vector3(0, 0, ((int)(_image.transform.eulerAngles.z / oneDinstance) + 1) * oneDinstance),
+                    0.3f
+                );
+            }
         }
         //_dial.EditSelectArea(this);
     }
@@ -97,7 +116,7 @@ public class DialElement : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     {
         _dial = GetComponentInParent<Dial>();
         _image = GetComponent<Image>();
-        _cardList = new List<TestCard>();
+        _magicList = new List<TestCard>();
         _image.alphaHitTestMinimumThreshold = 0.04f;
     }
 
@@ -105,16 +124,19 @@ public class DialElement : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     {
         Swipe1();
 
-        float oneDinstance = 360f / _cardList.Count;
+        float oneDinstance = 360f / _magicList.Count;
         bool inBoolean = (_image.transform.eulerAngles.z % oneDinstance) <= _selectOffset;
         bool outBoolean = (oneDinstance - (_image.transform.eulerAngles.z % oneDinstance)) <= _selectOffset;
         if (inBoolean)
         {
-            int index = (int)(_image.transform.eulerAngles.z / oneDinstance) % (_cardList.Count);
-            SelectCard = _cardList[index];
-            if (_isRotate == true)
+            int index = (int)(_image.transform.eulerAngles.z / oneDinstance) % (_magicList.Count);
+            if (_magicList[index].IsCoolTime == false)
             {
-                UIManager.Instance.CardDescPopup(SelectCard);
+                SelectCard = _magicList[index];
+                if (_isRotate == true)
+                {
+                    UIManager.Instance.CardDescPopup(SelectCard);
+                }
             }
         }
         else if (outBoolean)
@@ -124,12 +146,15 @@ public class DialElement : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
             //index = (index - 1) % _cardList.Count;
             //SelectCard = _cardList[index];
 
-            int index = (int)(_image.transform.eulerAngles.z / oneDinstance) % (_cardList.Count);
-            index = (index + 1) % _cardList.Count;
-            SelectCard = _cardList[index];
-            if (_isRotate == true)
+            int index = (int)(_image.transform.eulerAngles.z / oneDinstance) % (_magicList.Count);
+            index = (index + 1) % _magicList.Count;
+            if (_magicList[index].IsCoolTime == false)
             {
-                UIManager.Instance.CardDescPopup(SelectCard);
+                SelectCard = _magicList[index];
+                if (_isRotate == true)
+                {
+                    UIManager.Instance.CardDescPopup(SelectCard);
+                }
             }
         }
         else
@@ -173,7 +198,7 @@ public class DialElement : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
     public void SetCardList(List<TestCard> list)
     {
-        _cardList = new List<TestCard>(list);
+        _magicList = new List<TestCard>(list);
     }
 
     public void Swipe1()

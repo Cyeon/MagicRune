@@ -40,14 +40,14 @@ public class Dial : MonoBehaviour
         _dialElementList = new List<DialElement>();
 
         // 그냥 3으로 해도되는데 그냥 이렇게 함
-        for (int i = 1; i <= _deck.list.Count; i++)
+        for (int i = 1; i <= _deck.List.Count; i++)
         {
-            for (int j = 1; j <= _deck.list[i - 1].list.Count; j++)
+            for (int j = 1; j <= _deck.List[i - 1].List.Count; j++)
             {
                 GameObject g = Instantiate(tempCard, this.transform.GetChild(i - 1));
                 TestCard c = g.GetComponent<TestCard>();
                 c.Dial = this;
-                c.SetMagic(_deck.list[i - 1].list[j - 1]);
+                c.SetMagic(_deck.List[i - 1].List[j - 1]);
                 c.UpdateUI();
                 AddCard(c, 4 - i);
             }
@@ -195,7 +195,7 @@ public class Dial : MonoBehaviour
             GameObject g = null;
             for (int i = _dialElementList.Count - 1; i >= 0; i--)
             {
-                if (_dialElementList[i].SelectCard != null)
+                if (_dialElementList[i].SelectCard != null && _dialElementList[i].SelectCard.IsCoolTime == false)
                 {
                     g = _dialElementList[i].SelectCard.Magic.RuneEffect;
                     break;
@@ -203,7 +203,7 @@ public class Dial : MonoBehaviour
             }
             for (int i = _dialElementList.Count - 1; i >= 0; i--)
             {
-                if (_dialElementList[i].SelectCard != null)
+                if (_dialElementList[i].SelectCard != null && _dialElementList[i].SelectCard.IsCoolTime == false)
                 {
                     _dialElementList[i].SelectCard.SetCoolTime();
                 }

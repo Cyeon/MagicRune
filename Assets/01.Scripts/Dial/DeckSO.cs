@@ -6,11 +6,12 @@ using UnityEngine;
 [Serializable]
 public class CardList
 {
-    public List<CardSO> list;
+    public int MaxCost;
+    public List<CardSO> List;
 }
 
 [CreateAssetMenu(menuName = "SO/Dial/Deck")]
 public class DeckSO : ScriptableObject
 {
-    public List<CardList> list;
+    public List<CardList> List;
 }
