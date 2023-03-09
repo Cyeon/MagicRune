@@ -23,6 +23,7 @@ public class GameManager : MonoSingleton<GameManager>
     public Unit attackUnit = null;
 
     public MagicCircle MagicCircle;
+    public Dial Dial;
     public AudioClip turnChangeSound = null;
 
     private void Awake()
@@ -105,6 +106,7 @@ public class GameManager : MonoSingleton<GameManager>
 
                 SoundManager.Instance.PlaySound(turnChangeSound, SoundType.Effect);
 
+                this.Dial.AllMagicSetCoolTime();
                 UIManager.Instance.Turn("Enemy Turn");
                 gameTurn = GameTurn.PlayerWait;
                 break;

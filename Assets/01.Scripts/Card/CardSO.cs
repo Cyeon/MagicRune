@@ -107,7 +107,7 @@ public class RuneProperty
     [Min(0), Tooltip("코스트")]
     public int Cost; // 코스트
     [Min(0), Tooltip("재사용 가능 턴")]
-    public int DelayTurn; // 재사용 가능 ]897
+    public int CoolTime; // 재사용 가능 ]897
     // 나중에 공격 범위도
 }
 

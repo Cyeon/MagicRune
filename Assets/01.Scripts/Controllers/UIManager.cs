@@ -396,7 +396,7 @@ public class UIManager : MonoSingleton<UIManager>
         _cardDescSkillIcon.sprite = rune.CardImage;
         _cardDescInfo.text = rune.CardDescription;
         _cardDescMana.text = rune.Cost.ToString();
-        _cardDescCool.text = rune.DelayTurn.ToString();
+        _cardDescCool.text = rune.CoolTime.ToString();
 
         for(int i = 0; i < _cardDescKeyword.childCount; i++)
         {

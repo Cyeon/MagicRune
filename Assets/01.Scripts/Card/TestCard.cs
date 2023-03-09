@@ -18,6 +18,9 @@ public class TestCard : MonoBehaviour
     private GameObject _outline;
     #endregion
 
+    private int _coolTime;
+    public bool IsCoolTime => _coolTime > 0;
+
     private void Awake()
     {
         _dialElement = GetComponentInParent<DialElement>();
@@ -39,5 +42,30 @@ public class TestCard : MonoBehaviour
     public void UpdateUI()
     {
         _magicImage.sprite = _magic.RuneImage;
+    }
+
+    public void SetCoolTime()
+    {
+        _coolTime = _magic.MainRune.CoolTime;
+        _magicImage.color = Color.gray;
+    }
+
+    public void SetCoolTime(int value)
+    {
+        _coolTime = value;
+
+        if(_coolTime > 0)
+        {
+            _magicImage.color = Color.gray;
+        }
+        else
+        {
+            _magicImage.color = Color.white;
+        }
+    }
+
+    public int GetCoolTime()
+    {
+        return _coolTime;
     }
 }

@@ -18,7 +18,7 @@ public class Dial : MonoBehaviour
     [SerializeField]
     private BezierMissile _bezierMissile;
 
-    private Dictionary<int, List<TestCard>> _cardDict;
+    private Dictionary<int, List<TestCard>> _magicDict;
     private Dictionary<EffectType, List<EffectObjectPair>> _effectDict;
     private List<DialElement> _dialElementList;
 
@@ -32,10 +32,10 @@ public class Dial : MonoBehaviour
 
     private void Start()
     {
-        _cardDict = new Dictionary<int, List<TestCard>>(3);
+        _magicDict = new Dictionary<int, List<TestCard>>(3);
         for (int i = 1; i <= 3; i++)
         {
-            _cardDict.Add(i, new List<TestCard>());
+            _magicDict.Add(i, new List<TestCard>());
         }
         _dialElementList = new List<DialElement>();
 
@@ -56,7 +56,7 @@ public class Dial : MonoBehaviour
         for (int i = 0; i < 3; i++)
         {
             DialElement d = this.transform.GetChild(i).GetComponent<DialElement>();
-            d.SetCardList(_cardDict[3 - i]);
+            d.SetCardList(_magicDict[3 - i]);
             _dialElementList.Add(d);
         }
     }
@@ -65,7 +65,7 @@ public class Dial : MonoBehaviour
     {
         if (card != null)
         {
-            _cardDict[tier].Add(card);
+            _magicDict[tier].Add(card);
 
             CardSort();
         }
@@ -73,151 +73,162 @@ public class Dial : MonoBehaviour
 
     private void CardSort()
     {
-        if (_cardDict.ContainsKey(3))
+        if (_magicDict.ContainsKey(3))
         {
-            float angle = -2 * Mathf.PI / _cardDict[3].Count;
+            float angle = -2 * Mathf.PI / _magicDict[3].Count;
 
-            for (int i = 0; i < _cardDict[3].Count; i++)
+            for (int i = 0; i < _magicDict[3].Count; i++)
             {
                 float height = Mathf.Sin(angle * i + (90 * Mathf.Deg2Rad)) * 695; // 470
                 float width = Mathf.Cos(angle * i + (90 * Mathf.Deg2Rad)) * 695; // 450
-                _cardDict[3][i].GetComponent<RectTransform>().anchoredPosition = new Vector3(width, height, 0);
+                _magicDict[3][i].GetComponent<RectTransform>().anchoredPosition = new Vector3(width, height, 0);
 
                 Vector2 direction = new Vector2(
-                    _cardDict[3][i].transform.position.x - transform.position.x,
-                    _cardDict[3][i].transform.position.y - transform.position.y
+                    _magicDict[3][i].transform.position.x - transform.position.x,
+                    _magicDict[3][i].transform.position.y - transform.position.y
                 );
 
                 float ang = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
                 Quaternion angleAxis = Quaternion.AngleAxis(ang - 90f, Vector3.forward);
-                _cardDict[3][i].GetComponent<RectTransform>().rotation = angleAxis;
+                _magicDict[3][i].GetComponent<RectTransform>().rotation = angleAxis;
             }
         }
-        if (_cardDict.ContainsKey(2))
+        if (_magicDict.ContainsKey(2))
         {
-            float angle = -2 * Mathf.PI / _cardDict[2].Count;
+            float angle = -2 * Mathf.PI / _magicDict[2].Count;
 
-            for (int i = 0; i < _cardDict[2].Count; i++)
+            for (int i = 0; i < _magicDict[2].Count; i++)
             {
                 float height = Mathf.Sin(angle * i + (90 * Mathf.Deg2Rad)) * 510; // 470
                 float width = Mathf.Cos(angle * i + (90 * Mathf.Deg2Rad)) * 510; // 450
-                _cardDict[2][i].GetComponent<RectTransform>().anchoredPosition = new Vector3(width, height, 0);
+                _magicDict[2][i].GetComponent<RectTransform>().anchoredPosition = new Vector3(width, height, 0);
 
                 Vector2 direction = new Vector2(
-                    _cardDict[2][i].transform.position.x - transform.position.x,
-                    _cardDict[2][i].transform.position.y - transform.position.y
+                    _magicDict[2][i].transform.position.x - transform.position.x,
+                    _magicDict[2][i].transform.position.y - transform.position.y
                 );
 
                 float ang = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
                 Quaternion angleAxis = Quaternion.AngleAxis(ang - 90f, Vector3.forward);
-                _cardDict[2][i].GetComponent<RectTransform>().rotation = angleAxis;
+                _magicDict[2][i].GetComponent<RectTransform>().rotation = angleAxis;
             }
         }
-        if (_cardDict.ContainsKey(1))
+        if (_magicDict.ContainsKey(1))
         {
-            float angle = -2 * Mathf.PI / _cardDict[1].Count;
+            float angle = -2 * Mathf.PI / _magicDict[1].Count;
 
-            for (int i = 0; i < _cardDict[1].Count; i++)
+            for (int i = 0; i < _magicDict[1].Count; i++)
             {
                 float height = Mathf.Sin(angle * i + (90 * Mathf.Deg2Rad)) * 328; // 470
                 float width = Mathf.Cos(angle * i + (90 * Mathf.Deg2Rad)) * 328; // 450
-                _cardDict[1][i].GetComponent<RectTransform>().anchoredPosition = new Vector3(width, height, 0);
+                _magicDict[1][i].GetComponent<RectTransform>().anchoredPosition = new Vector3(width, height, 0);
 
                 Vector2 direction = new Vector2(
-                    _cardDict[1][i].transform.position.x - transform.position.x,
-                    _cardDict[1][i].transform.position.y - transform.position.y
+                    _magicDict[1][i].transform.position.x - transform.position.x,
+                    _magicDict[1][i].transform.position.y - transform.position.y
                 );
 
                 float ang = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
                 Quaternion angleAxis = Quaternion.AngleAxis(ang - 90f, Vector3.forward);
-                _cardDict[1][i].GetComponent<RectTransform>().rotation = angleAxis;
+                _magicDict[1][i].GetComponent<RectTransform>().rotation = angleAxis;
             }
         }
     }
 
     public void AllMagicActive(bool value)
     {
-        if (_cardDict.ContainsKey(1))
+        if (_magicDict.ContainsKey(1))
         {
-            for (int i = 0; i < _cardDict[1].Count; i++)
+            for (int i = 0; i < _magicDict[1].Count; i++)
             {
-                _cardDict[1][i].gameObject.SetActive(false);
+                _magicDict[1][i].gameObject.SetActive(false);
             }
         }
-        if (_cardDict.ContainsKey(2))
+        if (_magicDict.ContainsKey(2))
         {
-            for (int i = 0; i < _cardDict[2].Count; i++)
+            for (int i = 0; i < _magicDict[2].Count; i++)
             {
-                _cardDict[2][i].gameObject.SetActive(false);
+                _magicDict[2][i].gameObject.SetActive(false);
             }
         }
-        if (_cardDict.ContainsKey(3))
+        if (_magicDict.ContainsKey(3))
         {
-            for (int i = 0; i < _cardDict[3].Count; i++)
+            for (int i = 0; i < _magicDict[3].Count; i++)
             {
-                _cardDict[3][i].gameObject.SetActive(false);
+                _magicDict[3][i].gameObject.SetActive(false);
             }
         }
     }
 
     public void Attack()
     {
-        _effectDict = new Dictionary<EffectType, List<EffectObjectPair>>();
-        foreach (DialElement d in _dialElementList)
+        if (GameManager.Instance.GameTurn == GameTurn.Player)
         {
-            if (d.SelectCard != null)
+            _effectDict = new Dictionary<EffectType, List<EffectObjectPair>>();
+            foreach (DialElement d in _dialElementList)
             {
-                foreach (Pair p in d.SelectCard.Magic.MainRune.EffectDescription)
+                if (d.SelectCard != null)
                 {
-                    if (_effectDict.ContainsKey(p.EffectType))
+                    foreach (Pair p in d.SelectCard.Magic.MainRune.EffectDescription)
                     {
-                        _effectDict[p.EffectType].Add(new EffectObjectPair(p, d.SelectCard.Magic.RuneEffect));
-                    }
-                    else
-                    {
-                        _effectDict.Add(p.EffectType, new List<EffectObjectPair> { new EffectObjectPair(p, d.SelectCard.Magic.RuneEffect) });
+                        if (_effectDict.ContainsKey(p.EffectType))
+                        {
+                            _effectDict[p.EffectType].Add(new EffectObjectPair(p, d.SelectCard.Magic.RuneEffect));
+                        }
+                        else
+                        {
+                            _effectDict.Add(p.EffectType, new List<EffectObjectPair> { new EffectObjectPair(p, d.SelectCard.Magic.RuneEffect) });
+                        }
                     }
                 }
             }
-        }
 
-        // 디버그 용
+            // 디버그 용
 #if UNITY_EDITOR
-        foreach(var d in _effectDict)
-        {
-            Debug.Log($"{d.Key} : {d.Value}");
-        }
+            foreach (var d in _effectDict)
+            {
+                Debug.Log($"{d.Key} : {d.Value}");
+            }
 #endif
 
-        
-        GameObject g = null;
-        for(int i = _dialElementList.Count - 1; i >= 0; i--)
-        {
-            if(_dialElementList[i].SelectCard != null)
-            {
-                g = _dialElementList[i].SelectCard.Magic.RuneEffect;
-                break;
-            }
-        }
 
-        if (g == null)
-        {
-            _effectDict.Clear();
-            return;
-        }
-        UIManager.Instance.CardDescDown();
-        BezierMissile b = Instantiate(_bezierMissile, this.transform.parent);
-        b.SetEffect(g);
-        b.SetTrailColor(EffectType.Attack);
-        b.Init(new Vector2(0, -1480), new Vector2(0, 607), 1.5f, 0, 0, () =>
-        {
-            for (int i = 0; i < (int)EffectType.Etc; i++)
+            GameObject g = null;
+            for (int i = _dialElementList.Count - 1; i >= 0; i--)
             {
-                AttackFunction((EffectType)i);
+                if (_dialElementList[i].SelectCard != null)
+                {
+                    g = _dialElementList[i].SelectCard.Magic.RuneEffect;
+                    break;
+                }
+            }
+            for (int i = _dialElementList.Count - 1; i >= 0; i--)
+            {
+                if (_dialElementList[i].SelectCard != null)
+                {
+                    _dialElementList[i].SelectCard.SetCoolTime();
+                }
             }
 
-            _effectDict.Clear();
-        });
+            if (g == null)
+            {
+                _effectDict.Clear();
+                return;
+            }
+            UIManager.Instance.CardDescDown();
+            BezierMissile b = Instantiate(_bezierMissile, this.transform.parent);
+            b.SetEffect(g);
+            b.SetTrailColor(EffectType.Attack);
+            b.Init(new Vector2(0, -1480), new Vector2(0, 607), 1.5f, 0, 0, () =>
+            {
+                for (int i = 0; i < (int)EffectType.Etc; i++)
+                {
+                    AttackFunction((EffectType)i);
+                }
+
+                GameManager.Instance.PlayerTurnEnd();
+                _effectDict.Clear();
+            });
+        }
     }
 
     public void AttackFunction(EffectType effectType)
@@ -370,5 +381,33 @@ public class Dial : MonoBehaviour
         //}
 
         //return null;
+    }
+
+    public void AllMagicSetCoolTime()
+    {
+        foreach(var d in _magicDict)
+        {
+            foreach(TestCard m in d.Value)
+            {
+                if(m.GetCoolTime() > 0)
+                {
+                    m.SetCoolTime(m.GetCoolTime() - 1);
+                }
+            }
+        }
+    }
+
+    public void AllMagicSetCoolTime(int value)
+    {
+        foreach (var d in _magicDict)
+        {
+            foreach (TestCard m in d.Value)
+            {
+                if (m.GetCoolTime() > 0)
+                {
+                    m.SetCoolTime(value);
+                }
+            }
+        }
     }
 }

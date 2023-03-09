@@ -26,7 +26,7 @@ public class RuneDesc : MonoBehaviour
         _runeNameText.text = rune.Name;
         _runeDescText.text = rune.CardDescription;
         _manaText.text = rune.Cost.ToString();
-        _coolTImeText.text = rune.DelayTurn.ToString();
+        _coolTImeText.text = rune.CoolTime.ToString();
     }
 
     private void Update()
