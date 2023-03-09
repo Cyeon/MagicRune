@@ -10,7 +10,7 @@ using UnityEngine.UI;
 using UnityEngine.UIElements;
 using Image = UnityEngine.UI.Image;
 
-public class DialElement : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IDragHandler, IEndDragHandler, IBeginDragHandler, IPointerEnterHandler, IPointerExitHandler
+public class DialElement : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
     private Dial _dial;
     private Image _image;
@@ -27,21 +27,13 @@ public class DialElement : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     #endregion
 
     #region Drag Parameta
-    private float _currentSpeed;
-    [SerializeField]
     private float _rotDamp = 3;
     [SerializeField]
-    private float _rotAcc = 0.5f;
-    [SerializeField]
-    private float _rotDeAcc = 0.5f;
-    private Vector2 _moveDirection = Vector2.zero;
-    [SerializeField]
     private float _touchDamp = 5f;
+    private Vector3 _touchPos, offset;
     #endregion
 
     private int _fingerID = -1;
-
-    private bool _isPointerIn = false;
 
     private List<TestCard> _cardList;
     private TestCard _selectCard;
@@ -77,93 +69,28 @@ public class DialElement : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     {
         _fingerID = eventData.pointerId;
         _isRotate = true;
+
+        _touchPos = eventData.position;
     }
 
     public void OnPointerUp(PointerEventData eventData)
     {
         _fingerID = -1;
         _isRotate = false;
-        //_dial.EditSelectArea(this);
-    }
 
-    public void OnBeginDrag(PointerEventData eventData)
-    {
-        StopAllCoroutines();
-    }
-
-    public void OnDrag(PointerEventData eventData)
-    {
-        // 마우스 포인터가 마법진 위에 일때
-        if (_isPointerIn == true)
-        {
-            //if (_currentSpeed < _rotDamp)
-            //{
-            //    _currentSpeed += _rotAcc;
-            //}
-
-            
-
-            
-        }
-
-        if (Mathf.Abs(eventData.delta.x) >= _touchDamp)
-        {
-            Movement(eventData.delta.x > 0 ? 1 : -1);
-            Vector3 rot = _image.transform.eulerAngles;
-            rot.z += -1 * _moveDirection.x * _currentSpeed;
-            _image.transform.rotation = Quaternion.Lerp(_image.transform.rotation, Quaternion.Euler(rot), 0.7f);
-        }
-        //else
-        //{
-        //    StartCoroutine(EndDrag(eventData));
-        //}
-    }
-
-    public void OnEndDrag(PointerEventData eventData)
-    {
-        //StartCoroutine(EndDrag(eventData));
         float oneDinstance = 360f / _cardList.Count;
         bool inBoolean = (_image.transform.eulerAngles.z % oneDinstance) <= _selectOffset;
         bool outBoolean = (oneDinstance - (_image.transform.eulerAngles.z % oneDinstance)) <= _selectOffset;
-        if (inBoolean || outBoolean)
+        if (inBoolean)
         {
-            _image.transform.eulerAngles = new Vector3(0, 0, (int)(_image.transform.eulerAngles.z / oneDinstance) * oneDinstance);
             // 돌리고 있을 때만
+            DOTween.To(() => _image.transform.eulerAngles, x => _image.transform.eulerAngles = x, new Vector3(0, 0, ((int)(_image.transform.eulerAngles.z / oneDinstance)) * oneDinstance), 0.3f);
         }
-    }
-
-    private IEnumerator EndDrag(PointerEventData eventData)
-    {
-        while(_currentSpeed > 0)
+        else if (outBoolean)
         {
-            Movement(0);
-            Vector3 rot = _image.transform.eulerAngles;
-            rot.z += -1 * _moveDirection.x * _currentSpeed/* * Time.deltaTime*/;
-            _image.transform.rotation = Quaternion.Lerp(_image.transform.rotation, Quaternion.Euler(rot), 0.7f);
-
-            //if (Mathf.Abs(_image.transform.rotation.z) % _cardList.Count <= _selectOffset)
-            //{
-            //    int index = (int)(_image.transform.rotation.z / _cardList.Count);
-            //    SelectCard = _cardList[index];
-            //    yield break;
-            //}
-            //else
-            //{
-            //    SelectCard = null;
-            //}
-            yield return new WaitForSeconds(0.01f);
+            DOTween.To(() => _image.transform.eulerAngles, x => _image.transform.eulerAngles = x, new Vector3(0, 0, ((int)(_image.transform.eulerAngles.z / oneDinstance) + 1) * oneDinstance), 0.3f);
         }
-    }
-
-    public void OnPointerEnter(PointerEventData eventData)
-    {
-        _isPointerIn = true;
-    }
-
-    public void OnPointerExit(PointerEventData eventData)
-    {
-        _isPointerIn = false;
-        //StartCoroutine(EndDrag(eventData));
+        //_dial.EditSelectArea(this);
     }
 
     private void Start()
@@ -213,39 +140,30 @@ public class DialElement : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
                 UIManager.Instance.CardDescPopup(SelectCard);
             }
         }
+
+        if (_isRotate)
+        {
+            offset = ((Vector3)Input.GetTouch(_fingerID).position - _touchPos);
+
+            Vector3 rot = transform.eulerAngles;
+
+            float temp = Input.GetTouch(_fingerID).position.x > Screen.width / 2 ? offset.x - offset.y : offset.x + offset.y;
+
+            if (offset.x > 0)
+                temp = Mathf.Clamp(temp, 0, offset.x);
+            else
+                temp = Mathf.Clamp(temp, offset.x, 0);
+
+            rot.z += -1 * temp / _rotDamp;
+
+            transform.rotation = Quaternion.Euler(rot);
+            _touchPos = Input.GetTouch(_fingerID).position;
+        }
     }
 
     public void SetCardList(List<TestCard> list)
     {
         _cardList = new List<TestCard>(list);
-    }
-
-    public void Movement(int dir)
-    {
-        if(dir != 0)
-        {
-            if(dir != _moveDirection.x)
-            {
-                _currentSpeed = 0f;
-            }
-            _moveDirection.x = dir;
-        }
-        _currentSpeed = CulculateSpeed(dir);
-    }
-
-    private float CulculateSpeed(int dir)
-    {
-        if (dir != 0)
-        {
-            _currentSpeed += _rotAcc * Time.deltaTime;
-            //_currentSpeed = _rotDamp * Time.deltaTime;
-        }
-        else
-        {
-            _currentSpeed -= _rotDeAcc * Time.deltaTime;
-        }
-
-        return Mathf.Clamp(_currentSpeed, 0, _rotDamp);
     }
 
     public void Swipe1()
