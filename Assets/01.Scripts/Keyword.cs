@@ -7,7 +7,9 @@ using UnityEngine;
 public enum keywordEnum
 {
     extinction,
-    fire
+    fire,
+    ice,
+    hurt
 }
 
 [System.Serializable]
