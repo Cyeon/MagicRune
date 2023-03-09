@@ -5,7 +5,7 @@ using UnityEngine;
 using DG.Tweening;
 using UnityEngine.SceneManagement;
 
-public  enum MapType
+public  enum PortalType
 {
     Attack,
     Event
@@ -26,7 +26,7 @@ public class MapManager : MonoSingleton<MapManager>
     public int Chapter => _chapter;
     private Chapter _currentChapter = null;
 
-    public List<Map> mapList = new List<Map>();
+    public List<Portal> portalList = new List<Portal>();
 
     private int Stage => Floor - ((this.Chapter - 1) * 10) - 1;
 
@@ -49,55 +49,57 @@ public class MapManager : MonoSingleton<MapManager>
     private void Start()
     {
         ChapterInit();
-        MapInit();
+        PortalInit();
     }
 
     private void ChapterInit()
     {
-        mapList.Clear();
+        portalList.Clear();
         _currentChapter = chapterList[Chapter - 1];
 
         int stage = 1;
         foreach (var chance in _currentChapter.stageList)
         {
-            Map map = new Map();
+            Portal map = new Portal();
 
             int random = Random.Range(1, 100);
             if (random <= chance)
             {
-                map.type = MapType.Event;
+                map.type = PortalType.Event;
                 map.icon = _eventIcon;
             }
             else
             {
-                map.type = MapType.Attack;
+                map.type = PortalType.Attack;
                 map.icon = _attackIcon;
             }
 
             map.color = Color.gray;
 
-            mapList.Add(map);
+            portalList.Add(map);
             stage++;
         }
 
-        mapList[0].color = Color.white;
+        portalList[0].color = Color.white;
         ui.StageUI();
     }
 
-    private void MapInit()
+    private void PortalInit()
     {
-        if (mapList[Stage].type == MapType.Attack)
+        ui.PortalEffectUp();
+
+        if (portalList[Stage].type == PortalType.Attack)
         {
-            foreach (var map in ui.maps)
+            foreach (var portal in ui.portals)
             {
-                map.Init(GetAttackEnemy());
-                map.transform.DOScale(1.2f, 0.8f);
+                portal.Init(GetAttackEnemy());
+                portal.transform.DOScale(1f, 0.8f);
             }
         }
         else
         {
-            ui.maps[1].Init(GetAttackEnemy());
-            ui.maps[1].transform.DOScale(1.2f, 0.8f);
+            ui.portals[1].Init(GetAttackEnemy());
+            ui.portals[1].transform.DOScale(1f, 0.8f);
         }
     }
 
@@ -114,7 +116,7 @@ public class MapManager : MonoSingleton<MapManager>
         ui.StageUI();
         ui.StageList.transform.DOLocalMoveX(Stage * -300f, 0);
 
-        mapList[Stage].icon = ui.stages[Stage].sprite = selectEnemy.icon;
+        portalList[Stage].icon = ui.stages[Stage].sprite = selectEnemy.icon;
         _floor += 1;
 
         Sequence seq = DOTween.Sequence();
@@ -123,8 +125,8 @@ public class MapManager : MonoSingleton<MapManager>
         seq.Append(ui.stages[Stage].DOColor(Color.white, 0.5f));
         seq.AppendCallback(() =>
         {
-            mapList[Stage].color = Color.white;
-            MapInit();
+            portalList[Stage].color = Color.white;
+            PortalInit();
         });
     }
 
