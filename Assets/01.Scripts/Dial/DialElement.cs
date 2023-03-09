@@ -30,7 +30,7 @@ public class DialElement : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     private float _rotDamp = 3;
     [SerializeField]
     private float _touchDamp = 5f;
-    private Vector3 _touchPos, offset;
+    private Vector3 _touchPos, _offset;
     #endregion
 
     private int _fingerID = -1;
@@ -143,16 +143,26 @@ public class DialElement : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
         if (_isRotate)
         {
-            offset = ((Vector3)Input.GetTouch(_fingerID).position - _touchPos);
+            _offset = ((Vector3)Input.GetTouch(_fingerID).position - _touchPos);
 
             Vector3 rot = transform.eulerAngles;
 
-            float temp = Input.GetTouch(_fingerID).position.x > Screen.width / 2 ? offset.x - offset.y : offset.x + offset.y;
+            float temp = Input.mousePosition.x > Screen.width / 2 ? _offset.x - _offset.y : _offset.x + _offset.y;
 
-            if (offset.x > 0)
-                temp = Mathf.Clamp(temp, 0, offset.x);
+            if (Mathf.Abs(_offset.x) > Mathf.Abs(_offset.y))
+            {
+                if (_offset.x > 0)
+                    temp = Mathf.Clamp(temp, 0, _offset.x);
+                else
+                    temp = Mathf.Clamp(temp, _offset.x, 0);
+            }
             else
-                temp = Mathf.Clamp(temp, offset.x, 0);
+            {
+                if (_offset.y > 0)
+                    temp = Mathf.Clamp(temp, -_offset.y, _offset.y);
+                else
+                    temp = Mathf.Clamp(temp, _offset.y, -_offset.y);
+            }
 
             rot.z += -1 * temp / _rotDamp;
 
