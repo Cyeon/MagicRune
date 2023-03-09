@@ -137,7 +137,7 @@ public class UIManager : MonoSingleton<UIManager>
         seq.Append(_turnBackground.DOFade(0, 0.5f));
         seq.Join(_turnText.DOFade(0, 0.5f));
         seq.AppendCallback(() => _turnPanel.SetActive(false));
-        seq.AppendCallback(() => AttackManager.Instance.TurnChange());
+        seq.AppendCallback(() => BattleManager.Instance.TurnChange());
     }
 
     #region Health Bar
@@ -181,7 +181,7 @@ public class UIManager : MonoSingleton<UIManager>
     public void UpdateHealthbar(bool isPlayer)
     {
         SliderInit(isPlayer);
-        Unit unit = isPlayer ? AttackManager.Instance.player : AttackManager.Instance.enemy;
+        Unit unit = isPlayer ? BattleManager.Instance.player : BattleManager.Instance.enemy;
 
         if (unit.Shield > 0)
         {
@@ -247,13 +247,13 @@ public class UIManager : MonoSingleton<UIManager>
 
     public void AddStatus(Unit unit, Status status)
     {
-        Transform trm = unit == AttackManager.Instance.player ? _statusPlayerPanel : _statusEnemyPanel;
+        Transform trm = unit == BattleManager.Instance.player ? _statusPlayerPanel : _statusEnemyPanel;
         GetStatusPanel(status, trm);
     }
 
     public GameObject GetStatusPanelStatusObj(Unit unit, StatusName name)
     {
-        Transform trm = unit == AttackManager.Instance.player ? _statusPlayerPanel : _statusEnemyPanel;
+        Transform trm = unit == BattleManager.Instance.player ? _statusPlayerPanel : _statusEnemyPanel;
 
         GameObject obj = null;
         for (int i = 0; i < trm.childCount; i++)

@@ -24,9 +24,10 @@ public class Unit : MonoBehaviour
             {
                 _health = _maxHealth;
             }
-            if (_health <= 0)
+
+            if(_health <= 0)
             {
-                AttackManager.Instance.Win();
+                BattleManager.Instance.Win();
             }
         }
     }

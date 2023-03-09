@@ -41,18 +41,18 @@ public class PatternFuncList : MonoBehaviour
 
     public void AddAtkDmg()
     {
-        AttackManager.Instance.enemy.atkDamage += value;
+        BattleManager.Instance.enemy.atkDamage += value;
         _addDmg = value;
     }
 
     public void RemAtkDmg()
     {
-        AttackManager.Instance.enemy.atkDamage -= _addDmg;
+        BattleManager.Instance.enemy.atkDamage -= _addDmg;
     }
 
     public void AddShield()
     {
-        AttackManager.Instance.enemy.Shield += value;
+        BattleManager.Instance.enemy.Shield += value;
     }
 
     public void AddIceStatus()
@@ -63,7 +63,7 @@ public class PatternFuncList : MonoBehaviour
     private void AddStatus(StatusName statusName)
     {
         float v = value > 0 ? value : 1;
-        StatusManager.Instance.AddStatus(AttackManager.Instance.player, statusName, (int)v);
+        StatusManager.Instance.AddStatus(BattleManager.Instance.player, statusName, (int)v);
     }
 
     public void Attack()
@@ -75,12 +75,12 @@ public class PatternFuncList : MonoBehaviour
         seq.AppendCallback(() => DelayAttack());
         seq.Append(UIManager.Instance.enemyIcon.DOLocalMoveY(130, 0.2f)).SetEase(Ease.Linear);
         seq.AppendInterval(0.1f);
-        seq.AppendCallback(() => AttackManager.Instance.TurnChange());
+        seq.AppendCallback(() => BattleManager.Instance.TurnChange());
     }
 
     private void DelayAttack()
     {
-        AttackManager.Instance.enemy.Attack();
+        BattleManager.Instance.enemy.Attack();
     }
 
     public void ShieldUse()
@@ -92,14 +92,14 @@ public class PatternFuncList : MonoBehaviour
 
     public void TurnChange()
     {
-        AttackManager.Instance.TurnChange();
+        BattleManager.Instance.TurnChange();
     }
 
     public void DelayShake()
     {
         Sequence seq = DOTween.Sequence();
         seq.Append(Camera.main.DOShakeRotation(2));
-        seq.AppendCallback(() => AttackManager.Instance.TurnChange());
+        seq.AppendCallback(() => BattleManager.Instance.TurnChange());
     }
 
     public void Beeeeem()
@@ -107,15 +107,15 @@ public class PatternFuncList : MonoBehaviour
         Sequence seq = DOTween.Sequence();
         seq.Append(UIManager.Instance.enemyIcon.DOShakeRotation(2, 90, 5)).SetEase(Ease.Linear);
         SoundManager.Instance.PlaySound(beamSound, SoundType.Effect);
-        seq.AppendCallback(() => AttackManager.Instance.enemy.isSkip = true);
-        seq.AppendCallback(() => AttackManager.Instance.player.TakeDamage(value));
+        seq.AppendCallback(() => BattleManager.Instance.enemy.isSkip = true);
+        seq.AppendCallback(() => BattleManager.Instance.player.TakeDamage(value));
         seq.AppendInterval(0.2f);
-        seq.AppendCallback(() => AttackManager.Instance.TurnChange());
+        seq.AppendCallback(() => BattleManager.Instance.TurnChange());
     }
 
     public void TurnSkip()
     {
-        AttackManager.Instance.enemy.isSkip = false;
-        AttackManager.Instance.TurnChange();
+        BattleManager.Instance.enemy.isSkip = false;
+        BattleManager.Instance.TurnChange();
     }
 }

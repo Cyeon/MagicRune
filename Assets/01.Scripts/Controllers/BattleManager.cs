@@ -1,6 +1,7 @@
 using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -13,7 +14,7 @@ public enum GameTurn
     Unknown
 }
 
-public class AttackManager : MonoSingleton<AttackManager>
+public class BattleManager : MonoSingleton<BattleManager>
 {
     [SerializeField]
     private GameTurn _gameTurn = GameTurn.Unknown;
@@ -74,6 +75,8 @@ public class AttackManager : MonoSingleton<AttackManager>
 
     public void TurnChange()
     {
+        if (enemy.HP < 0) return;
+
         if (_gameTurn == GameTurn.Player || _gameTurn == GameTurn.Monster)
         {
             player?.InvokeStatus(StatusInvokeTime.End);
@@ -99,6 +102,7 @@ public class AttackManager : MonoSingleton<AttackManager>
                 break;
 
             case GameTurn.Player:
+
                 EventManager<bool>.TriggerEvent(Define.ON_START_MONSTER_TURN, false);
 
                 SoundManager.Instance.PlaySound(turnChangeSound, SoundType.Effect);
@@ -185,6 +189,11 @@ public class AttackManager : MonoSingleton<AttackManager>
     #endregion
 
     public void Win()
+    {
+        Invoke("MapScene", 1f);
+    }
+
+    private void MapScene()
     {
         SceneManager.LoadScene("MapScene");
     }
