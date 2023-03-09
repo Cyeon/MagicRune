@@ -44,6 +44,8 @@ public class MapManager : MonoSingleton<MapManager>
     private Sprite _eventIcon;
     [SerializeField]
     private Sprite _attackIcon;
+    [SerializeField]
+    private Sprite _bossIcon;
 
     private bool _isFirst = true;
 
@@ -83,7 +85,7 @@ public class MapManager : MonoSingleton<MapManager>
         Portal portal = new Portal();
         portal.type = PortalType.Boss;
         portal.color = Color.gray;
-        portal.icon = _currentChapter.boss.icon;
+        portal.icon = _bossIcon;
         portalList.Add(portal);
 
         portalList[0].color = Color.white;
