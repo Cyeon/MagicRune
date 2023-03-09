@@ -16,6 +16,8 @@ public class Dial : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
     [SerializeField]
     private GameObject tempCard;
+    [SerializeField]
+    private BezierMissile _bezierMissile;
 
     private Dictionary<int, List<TestCard>> _cardDict;
     private List<DialElement> _dialElementList;
