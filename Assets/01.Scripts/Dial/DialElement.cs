@@ -31,6 +31,9 @@ public class DialElement : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     [SerializeField]
     private float _touchDamp = 5f;
     private Vector3 _touchPos, _offset;
+
+    [SerializeField]
+    private bool _isUseRotateOffset;
     #endregion
 
     private int _fingerID = -1;
@@ -78,71 +81,55 @@ public class DialElement : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         _fingerID = -1;
         _isRotate = false;
 
-        //float oneDinstance = 360f / _magicList.Count;
-        //bool inBoolean = (_image.transform.eulerAngles.z % oneDinstance) <= _selectOffset;
-        //bool outBoolean = (oneDinstance - (_image.transform.eulerAngles.z % oneDinstance)) <= _selectOffset;
-        //if (inBoolean)
-        //{
-        //    int index = (int)(_image.transform.eulerAngles.z / oneDinstance) % (_magicList.Count);
-        //    if (_magicList[index].IsCoolTime == false)
-        //    {
-        //        // 돌리고 있을 때만
-        //        DOTween.To(
-        //            () => _image.transform.eulerAngles,
-        //            x => _image.transform.eulerAngles = x,
-        //            new Vector3(0, 0, ((int)(_image.transform.eulerAngles.z / oneDinstance)) * oneDinstance),
-        //            0.3f
-        //        );
-        //    }
-        //}
-        //else if (outBoolean)
-        //{
-        //    int index = (int)(_image.transform.eulerAngles.z / oneDinstance) % (_magicList.Count);
-        //    index = (index + 1) % _magicList.Count;
-        //    if (_magicList[index].IsCoolTime == false)
-        //    {
-        //        DOTween.To(
-        //            () => _image.transform.eulerAngles,
-        //            x => _image.transform.eulerAngles = x,
-        //            new Vector3(0, 0, ((int)(_image.transform.eulerAngles.z / oneDinstance) + 1) * oneDinstance),
-        //            0.3f
-        //        );
-        //    }
-        //}
-
-        float oneDinstance = 360f / _magicList.Count;
-        int index = (int)(_image.transform.eulerAngles.z / oneDinstance) % (_magicList.Count);
-
-        float leftDistance = Mathf.Abs(_image.transform.eulerAngles.z - (index - 1) * oneDinstance);
-        float rightDistance = Mathf.Abs(_image.transform.eulerAngles.z - (index + 1) * oneDinstance);
-        if (leftDistance < rightDistance)
+        if (_isUseRotateOffset)
         {
-            DOTween.To(
-                () => _image.transform.eulerAngles,
-                x => _image.transform.eulerAngles = x,
-                new Vector3(0, 0, ((index - 1) % _magicList.Count) * oneDinstance),
-                0.3f
-            );
-        }
-        else if(leftDistance > rightDistance)
-        {
-            DOTween.To(
-                () => _image.transform.eulerAngles,
-                x => _image.transform.eulerAngles = x,
-                new Vector3(0, 0, ((index + 1) % _magicList.Count) * oneDinstance),
-                0.3f
-            );
+            float oneDinstance = 360f / _magicList.Count;
+            bool inBoolean = (_image.transform.eulerAngles.z % oneDinstance) <= _selectOffset;
+            bool outBoolean = (oneDinstance - (_image.transform.eulerAngles.z % oneDinstance)) <= _selectOffset;
+            if (inBoolean)
+            {
+                int index = (int)(_image.transform.eulerAngles.z / oneDinstance) % (_magicList.Count);
+                if (_magicList[index].IsCoolTime == false)
+                {
+                    // 돌리고 있을 때만
+                    DOTween.To(
+                        () => _image.transform.eulerAngles,
+                        x => _image.transform.eulerAngles = x,
+                        new Vector3(0, 0, ((int)(_image.transform.eulerAngles.z / oneDinstance)) * oneDinstance),
+                        0.3f
+                    );
+                }
+            }
+            else if (outBoolean)
+            {
+                int index = (int)(_image.transform.eulerAngles.z / oneDinstance) % (_magicList.Count);
+                index = (index + 1) % _magicList.Count;
+                if (_magicList[index].IsCoolTime == false)
+                {
+                    DOTween.To(
+                        () => _image.transform.eulerAngles,
+                        x => _image.transform.eulerAngles = x,
+                        new Vector3(0, 0, ((int)(_image.transform.eulerAngles.z / oneDinstance) + 1) * oneDinstance),
+                        0.3f
+                    );
+                }
+            }
         }
         else
         {
-            DOTween.To(
-                () => _image.transform.eulerAngles,
-                x => _image.transform.eulerAngles = x,
-                new Vector3(0, 0, ((index - 1) % _magicList.Count) * oneDinstance),
-                0.3f
-            );
+            float oneDinstance = 360f / _magicList.Count;
+            int index = (int)(_image.transform.eulerAngles.z / oneDinstance) % (_magicList.Count);
+
+            float distance = _image.transform.eulerAngles.z % oneDinstance;
+            if (distance >= oneDinstance / 2f)
+            {
+                _image.transform.DORotate(new Vector3(0, 0, (index + 1) % _magicList.Count * oneDinstance), 0.3f, RotateMode.Fast);
+            }
+            else
+            {
+                _image.transform.DORotate(new Vector3(0, 0, index * oneDinstance), 0.3f, RotateMode.Fast);
+            }
         }
-        //_dial.EditSelectArea(this);
     }
 
     private void Awake()
