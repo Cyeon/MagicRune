@@ -160,18 +160,21 @@ public class UIManager : MonoSingleton<UIManager>
         }
     }
 
-    public void HealthbarInit(bool isPlayer, float health)
+    public void HealthbarInit(bool isPlayer, float health, float maxHealth = 0)
     {
         SliderInit(isPlayer);
 
-        hSlider.maxValue = health;
-        hSlider.value = health;
-        hText.text = string.Format("{0} / {1}", health, health);
+        if (maxHealth == 0)
+            maxHealth = health;
 
-        sSlider.maxValue = health;
+        hSlider.maxValue = maxHealth;
+        hSlider.value = health;
+        hText.text = string.Format("{0} / {1}", health, maxHealth);
+
+        sSlider.maxValue = maxHealth;
         sSlider.value = 0;
 
-        hfSlider.maxValue = health;
+        hfSlider.maxValue = maxHealth;
         hfSlider.value = 0;
     }
 

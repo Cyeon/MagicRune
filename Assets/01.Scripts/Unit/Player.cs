@@ -10,6 +10,16 @@ public class Player : Unit
     private void Awake()
     {
         _isPlayer = true;
+
+        var obj = FindObjectsOfType<Managers>();
+        if (obj.Length == 1)
+        {
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
     public void Attack(float dmg)

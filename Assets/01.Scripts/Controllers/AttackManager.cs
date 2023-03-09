@@ -2,6 +2,7 @@ using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public enum GameTurn
 {
@@ -39,12 +40,12 @@ public class AttackManager : MonoSingleton<AttackManager>
 
     public void GameStart()
     {
-        enemy = EnemyManager.Instance.SpawnEnemy(MapManager.selectEnemy);
+        enemy = EnemyManager.Instance.SpawnEnemy(MapManager.Instance.selectEnemy);
         PatternManager.Instance.PatternInit(enemy.enemyInfo.patternList);
-         
-        player = FindObjectOfType<Player>();
 
-        UIManager.instance.HealthbarInit(true, player.HP);
+        player = GameManager.Instance.player;
+
+        UIManager.instance.HealthbarInit(true, player.HP, player.MaxHealth);
 
         FeedbackManager.Instance.Init();
 
@@ -182,5 +183,10 @@ public class AttackManager : MonoSingleton<AttackManager>
     }
 
     #endregion
+
+    public void Win()
+    {
+        SceneManager.LoadScene("MapScene");
+    }
 
 }

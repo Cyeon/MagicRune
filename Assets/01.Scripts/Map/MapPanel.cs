@@ -10,6 +10,7 @@ public class MapPanel : MonoBehaviour
     private TextMeshProUGUI _titleText;
     private Image _image;
     private EnemySO _enemy;
+    private MapType _mapType;
 
     private void Awake()
     {
@@ -22,11 +23,21 @@ public class MapPanel : MonoBehaviour
         _enemy = enemy;
         _titleText.text = enemy.enemyName;
         _image.sprite = enemy.icon;
+        _mapType = MapType.Attack;
+    }
+
+    public void Init(MapType type)
+    {
+        _mapType = type;
+        _titleText.text = type.ToString();
     }
 
     public void Choose()
     {
-        MapManager.selectEnemy = _enemy;
-        SceneManager.LoadScene("MainBattleScene");
+        if(_mapType == MapType.Attack)
+        {
+            MapManager.Instance.selectEnemy = _enemy;
+            SceneManager.LoadScene("MainBattleScene");
+        }
     }
 }
