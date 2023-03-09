@@ -117,11 +117,15 @@ public class DialElement : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        StartCoroutine(EndDrag(eventData));
-        //Movement(eventData.delta.x > 0 ? 1 : -1);
-        //Vector3 rot = _image.transform.eulerAngles;
-        //rot.z += -1 * _currentSpeed/* * Time.deltaTime*/;
-        //_image.transform.rotation = Quaternion.Lerp(_image.transform.rotation, Quaternion.Euler(rot), 0.7f);
+        //StartCoroutine(EndDrag(eventData));
+        float oneDinstance = 360f / _cardList.Count;
+        bool inBoolean = (_image.transform.eulerAngles.z % oneDinstance) <= _selectOffset;
+        bool outBoolean = (oneDinstance - (_image.transform.eulerAngles.z % oneDinstance)) <= _selectOffset;
+        if (inBoolean || outBoolean)
+        {
+            _image.transform.eulerAngles = new Vector3(0, 0, (int)(_image.transform.eulerAngles.z / oneDinstance) * oneDinstance);
+            // 돌리고 있을 때만
+        }
     }
 
     private IEnumerator EndDrag(PointerEventData eventData)
@@ -177,6 +181,9 @@ public class DialElement : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         {
             int index = (int)(_image.transform.eulerAngles.z / oneDinstance) % (_cardList.Count);
             SelectCard = _cardList[index];
+            _image.transform.eulerAngles = new Vector3(0, 0, (int)(_image.transform.eulerAngles.z / oneDinstance) * oneDinstance);
+            // 돌리고 있을 때만
+            UIManager.Instance.CardDescPopup(SelectCard);
         }
         else if (outBoolean)
         {
@@ -188,10 +195,13 @@ public class DialElement : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
             int index = (int)(_image.transform.eulerAngles.z / oneDinstance) % (_cardList.Count);
             index = (index + 1) % _cardList.Count;
             SelectCard = _cardList[index];
+            // 돌리고 있을 때만
+            UIManager.Instance.CardDescPopup(SelectCard);
         }
         else
         {
             SelectCard = null;
+            UIManager.Instance.CardDescPopup(SelectCard);
         }
     }
 
