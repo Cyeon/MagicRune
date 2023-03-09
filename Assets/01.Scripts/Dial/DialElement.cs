@@ -3,6 +3,7 @@ using MyBox;
 using System.Collections;
 using System.Collections.Generic;
 using System.Security.Cryptography;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -42,6 +43,30 @@ public class DialElement : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
     private List<TestCard> _cardList;
     private TestCard _selectCard;
+    public TestCard SelectCard
+    {
+        get => _selectCard;
+        set
+        {
+            if(value == null)
+            {
+                if(_selectCard != null)
+                {
+                    _selectCard.SetActiveOutline(false);
+                }
+                _selectCard = value;
+            }
+            else
+            {
+                if(_selectCard != null)
+                {
+                    _selectCard.SetActiveOutline(false);
+                }
+                _selectCard = value;
+                _selectCard.SetActiveOutline(true);
+            }
+        }
+    }
     [SerializeField, Range(0f, 90f)]
     private float _selectOffset;
 
@@ -110,10 +135,13 @@ public class DialElement : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
             //if (Mathf.Abs(_image.transform.rotation.z) % _cardList.Count <= _selectOffset)
             //{
-            //    StopAllCoroutines();
-
-            //    Debug.Log(1);
-            //    _image.transform.DORotate(new Vector3(0, 0, (_image.transform.rotation.z / _cardList.Count) * (360f / _cardList.Count)), 0.3f);
+            //    int index = (int)(_image.transform.rotation.z / _cardList.Count);
+            //    SelectCard = _cardList[index];
+            //    yield break;
+            //}
+            //else
+            //{
+            //    SelectCard = null;
             //}
             yield return new WaitForSeconds(0.01f);
         }
@@ -141,6 +169,30 @@ public class DialElement : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     private void Update()
     {
         Swipe1();
+
+        float oneDinstance = 360f / _cardList.Count;
+        bool inBoolean = (_image.transform.eulerAngles.z % oneDinstance) <= _selectOffset;
+        bool outBoolean = (oneDinstance - (_image.transform.eulerAngles.z % oneDinstance)) <= _selectOffset;
+        if (inBoolean)
+        {
+            int index = (int)(_image.transform.eulerAngles.z / oneDinstance) % (_cardList.Count);
+            SelectCard = _cardList[index];
+        }
+        else if (outBoolean)
+        {
+            //int index = (int)(oneDinstance - (_image.transform.eulerAngles.z / oneDinstance)) % (_cardList.Count);
+            //Debug.Log(index);
+            //index = (index - 1) % _cardList.Count;
+            //SelectCard = _cardList[index];
+
+            int index = (int)(_image.transform.eulerAngles.z / oneDinstance) % (_cardList.Count);
+            index = (index + 1) % _cardList.Count;
+            SelectCard = _cardList[index];
+        }
+        else
+        {
+            SelectCard = null;
+        }
     }
 
     public void SetCardList(List<TestCard> list)

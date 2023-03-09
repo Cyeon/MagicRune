@@ -2052,7 +2052,7 @@ GameObject:
   - component: {fileID: 412972820}
   m_Layer: 5
   m_Name: Dial Element 2
-  m_TagString: Untagged
+  m_TagString: DialElement
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2133,7 +2133,7 @@ MonoBehaviour:
   _rotAcc: 60
   _rotDeAcc: 10
   _touchDamp: 5
-  _selectOffset: 5
+  _selectOffset: 7
 --- !u!1 &415606275
 GameObject:
   m_ObjectHideFlags: 0
@@ -3991,7 +3991,7 @@ GameObject:
   - component: {fileID: 639365302}
   m_Layer: 5
   m_Name: Star
-  m_TagString: Untagged
+  m_TagString: Star
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4067,6 +4067,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _dial: {fileID: 1649881533}
+  swipeSensitivity: 5
 --- !u!1 &651410805
 GameObject:
   m_ObjectHideFlags: 0
@@ -4601,7 +4602,7 @@ GameObject:
   - component: {fileID: 715822813}
   m_Layer: 5
   m_Name: Dial Element 1
-  m_TagString: Untagged
+  m_TagString: DialElement
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4682,7 +4683,7 @@ MonoBehaviour:
   _rotAcc: 60
   _rotDeAcc: 10
   _touchDamp: 5
-  _selectOffset: 5
+  _selectOffset: 7
 --- !u!1 &734689489
 GameObject:
   m_ObjectHideFlags: 0
@@ -7173,7 +7174,7 @@ GameObject:
   - component: {fileID: 1209172219}
   m_Layer: 5
   m_Name: Dial Element 3
-  m_TagString: Untagged
+  m_TagString: DialElement
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7254,7 +7255,7 @@ MonoBehaviour:
   _rotAcc: 60
   _rotDeAcc: 10
   _touchDamp: 5
-  _selectOffset: 5
+  _selectOffset: 7
 --- !u!1 &1215621361
 GameObject:
   m_ObjectHideFlags: 0
@@ -10244,8 +10245,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20f228e92357baf42af2febb8ef501bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _dialImageList: []
-  _rotDamp: 0.1
+  _deck: {fileID: 11400000, guid: 5bc9291412883814baef3369b440d548, type: 2}
   tempCard: {fileID: 8165298467326144068, guid: d80daf2e6dc89fc4b9c1606735cfa39a, type: 3}
   swipeSensitivity: 5
 --- !u!1 &1661102361
@@ -12888,7 +12888,7 @@ GameObject:
   - component: {fileID: 2096674099}
   m_Layer: 5
   m_Name: Box
-  m_TagString: Untagged
+  m_TagString: Box
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -12913,8 +12913,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 451.66}
-  m_SizeDelta: {x: 200, y: 903.31}
+  m_AnchoredPosition: {x: 0, y: 450}
+  m_SizeDelta: {x: 200, y: 900}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2096674099
 MonoBehaviour:
