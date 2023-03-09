@@ -1,6 +1,7 @@
 using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
@@ -14,6 +15,9 @@ public class MapUI : MonoBehaviour
 
     [SerializeField] private Transform _portalParent;
     private List<Transform> _portalEffects = new List<Transform>();
+
+    private TextMeshProUGUI _healthText;
+    private TextMeshProUGUI _goldText;
 
     private void Awake()
     {
@@ -34,12 +38,17 @@ public class MapUI : MonoBehaviour
         {
             _portalEffects.Add(_portalParent.GetChild(i));
         }
+
+        _goldText = transform.Find("GoldBar").GetComponentInChildren<TextMeshProUGUI>();
+        _healthText = transform.Find("HealthBar").GetComponentInChildren<TextMeshProUGUI>();
     }
 
     private void OnEnable()
     {
         MapManager.Instance.ui = this;
         MapManager.Instance.NextStage();
+
+        InfoUIReload();
     }
 
     public void StageUI()
@@ -54,5 +63,11 @@ public class MapUI : MonoBehaviour
     public void PortalEffectUp()
     {
         _portalEffects.ForEach(x => x.DOScale(1.2f, 1f));
+    }
+
+    public void InfoUIReload()
+    {
+        _goldText.text = GameManager.Instance.Gold.ToString();
+        _healthText.text = GameManager.Instance.player.HP.ToString();
     }
 }

@@ -50,6 +50,7 @@ public class MapManager : MonoSingleton<MapManager>
     {
         ChapterInit();
         PortalInit();
+        ui.InfoUIReload();
     }
 
     private void ChapterInit()
