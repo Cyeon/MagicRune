@@ -87,7 +87,7 @@ public class StatusManager : MonoSingleton<StatusManager>
         Status status = GetStatus(statusName);
         if(status == null)
         {
-            Debug.LogWarning(string.Format("{0} status not found."));
+            Debug.LogWarning(string.Format("{0} status not found.", statusName));
             return;
         }
 
