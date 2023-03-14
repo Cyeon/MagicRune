@@ -24,7 +24,7 @@ public class BezierMissile : MonoBehaviour
     private float m_timerCurrent = 0;
     private float m_speed;
 
-    private RectTransform _rect;
+    private Transform _transform;
 
     private Action _endAction;
 
@@ -32,11 +32,11 @@ public class BezierMissile : MonoBehaviour
 
     private void Awake()
     {
-        _rect = GetComponent<RectTransform>();
+        _transform = GetComponent<Transform>();
         _trail = GetComponent<TrailRenderer>();
     }
 
-    public void Init(RectTransform _startTr, RectTransform _endTr, float _speed, float _newPointDistanceFromStartTr, float _newPointDistanceFromEndTr, Action action = null)
+    public void Init(Transform _startTr, Transform _endTr, float _speed, float _newPointDistanceFromStartTr, float _newPointDistanceFromEndTr, Action action = null)
     {
         m_speed = _speed;
 
@@ -44,24 +44,24 @@ public class BezierMissile : MonoBehaviour
         m_timerMax = Random.Range(0.8f, 1.0f);
 
         // 시작 지점.
-        m_points[0] = Camera.main.ScreenToWorldPoint(_startTr.anchoredPosition);
+        m_points[0] = _startTr.position;
 
         // 시작 지점을 기준으로 랜덤 포인트 지정.
-        m_points[1] = Camera.main.ScreenToWorldPoint(_startTr.anchoredPosition3D) +
+        m_points[1] = _startTr.position +
             (_newPointDistanceFromStartTr * Random.Range(-1.0f, 1.0f) * _startTr.right) + // X (좌, 우 전체)
             (_newPointDistanceFromStartTr * Random.Range(-0.15f, 1.0f) * _startTr.up);  // Y (아래쪽 조금, 위쪽 전체)
             //(_newPointDistanceFromStartTr * Random.Range(-1.0f, -0.8f) * _startTr.forward); // Z (뒤 쪽만)
 
         // 도착 지점을 기준으로 랜덤 포인트 지정.
-        m_points[2] = _endTr.anchoredPosition3D +
+        m_points[2] = _endTr.position +
             (_newPointDistanceFromEndTr * Random.Range(-1.0f, 1.0f) * _endTr.right) + // X (좌, 우 전체)
             (_newPointDistanceFromEndTr * Random.Range(-1.0f, 1.0f) * _endTr.up); // Y (위, 아래 전체)
             //(_newPointDistanceFromEndTr * Random.Range(0.8f, 1.0f) * _endTr.forward); // Z (앞 쪽만)
 
         // 도착 지점.
-        m_points[3] = _endTr.anchoredPosition;
+        m_points[3] = _endTr.position;
 
-        _rect.anchoredPosition = _startTr.anchoredPosition;
+        _transform.position = _startTr.position;
 
         _endAction = action;
     }
@@ -91,7 +91,7 @@ public class BezierMissile : MonoBehaviour
         // 도착 지점.
         m_points[3] = _endTr;
 
-        _rect.anchoredPosition = _startTr;
+        _transform.position = _startTr;
 
         _endAction = action;
     }
@@ -143,13 +143,13 @@ public class BezierMissile : MonoBehaviour
         m_timerCurrent += Time.deltaTime * m_speed;
 
         // 베지어 곡선으로 X,Y,Z 좌표 얻기.
-        _rect.anchoredPosition = new Vector2(
+        _transform.position = new Vector2(
             CubicBezierCurve(m_points[0].x, m_points[1].x, m_points[2].x, m_points[3].x),
             CubicBezierCurve(m_points[0].y, m_points[1].y, m_points[2].y, m_points[3].y)
             //CubicBezierCurve(m_points[0].z, m_points[1].z, m_points[2].z, m_points[3].z)
         );
 
-        if(_rect.anchoredPosition == m_points[3])
+        if((Vector2)_transform.position == m_points[3])
         {
             // 도착한거임
             _endAction?.Invoke();

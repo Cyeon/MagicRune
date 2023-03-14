@@ -19,6 +19,11 @@ public class StarPanel : MonoBehaviour
     private float swipeSensitivity = 5;
     #endregion
 
+    [SerializeField]
+    private float _inDistance;
+    [SerializeField]
+    private float _outDistance;
+
     private void Start()
     {
         _spriteRenderer = GetComponent<SpriteRenderer>();
@@ -55,17 +60,11 @@ public class StarPanel : MonoBehaviour
                     if (touchDif.y > 0 && Mathf.Abs(touchDif.y) > Mathf.Abs(touchDif.x))
                     {
                         //Debug.Log("up");
-                        var ped = new PointerEventData(null);
-                        ped.position = touchBeganPos;
-                        List<RaycastResult> results = new List<RaycastResult>();
-                        UIManager.Instance.GR.Raycast(ped, results);
 
-                        if (results.Count > 0)
+                        float distance = Vector2.Distance(Define.MainCam.ScreenToWorldPoint(touchBeganPos), (Vector2)transform.position);
+                        if(distance >= _inDistance && distance <= _outDistance)
                         {
-                            if (results[0].gameObject.CompareTag("Star"))
-                            {
-                                _dial.Attack();
-                            }
+                            _dial.Attack();
                         }
                     }
                     else if (touchDif.y < 0 && Mathf.Abs(touchDif.y) > Mathf.Abs(touchDif.x))
@@ -89,4 +88,14 @@ public class StarPanel : MonoBehaviour
             }
         }
     }
+
+#if UNITY_EDITOR
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(this.transform.position, _inDistance);
+        Gizmos.DrawWireSphere(this.transform.position, _outDistance);
+        Gizmos.color = Color.white;
+    }
+#endif
 }

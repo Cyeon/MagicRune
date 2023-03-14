@@ -17,6 +17,8 @@ public class Dial : MonoBehaviour
     private GameObject tempCard;
     [SerializeField]
     private BezierMissile _bezierMissile;
+    [SerializeField]
+    private Transform _enemyPos;
 
     private Dictionary<int, List<TestCard>> _magicDict;
     private Dictionary<EffectType, List<EffectObjectPair>> _effectDict;
@@ -227,7 +229,7 @@ public class Dial : MonoBehaviour
             BezierMissile b = Instantiate(_bezierMissile, this.transform.parent);
             b.SetEffect(g);
             b.SetTrailColor(EffectType.Attack);
-            b.Init(new Vector2(0, -1480), new Vector2(0, 607), 1.5f, 0, 0, () =>
+            b.Init(this.transform, _enemyPos, 1.5f, 0, 0, () =>
             {
                 for (int i = 0; i < (int)EffectType.Etc; i++)
                 {

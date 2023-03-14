@@ -17,7 +17,7 @@ public class TestCard : MonoBehaviour
     private Transform _magicArea;
     private SpriteRenderer _magicImage;
     //private GameObject _outline;
-    private TextMeshProUGUI _coolTimeText;
+    private TextMeshPro _coolTimeText;
     #endregion
 
     private int _coolTime;
@@ -29,7 +29,7 @@ public class TestCard : MonoBehaviour
         _magicArea = transform.Find("MagicArea");
         _magicImage = _magicArea.Find("MagicImage").GetComponent<SpriteRenderer>();
         //_outline = _magicArea.Find("Outline").gameObject;
-        _coolTimeText = _magicArea.Find("CoolTimeText").GetComponent<TextMeshProUGUI>();
+        _coolTimeText = _magicArea.Find("CoolTimeText").GetComponent<TextMeshPro>();
     }
 
     public void SetActiveOutline(bool value)
