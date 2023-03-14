@@ -37,12 +37,16 @@ public class MapManager : MonoSingleton<MapManager>
     private void Awake()
     {
         stageOfPortalDic.Add(StageType.Attack, new List<Portal>());
+        stageOfPortalDic.Add(StageType.Boss, new List<Portal>());
+        stageOfPortalDic.Add(StageType.Event, new List<Portal>());
 
         Transform atkTrm = transform.Find("Attack");
         for (int i = 0; i < atkTrm.childCount; ++i)
         {
             stageOfPortalDic[StageType.Attack].Add(atkTrm.GetChild(i).GetComponent<AttackPortal>());
         }
+
+        stageOfPortalDic[StageType.Boss].Add(atkTrm.GetComponent<AttackPortal>());
     }
 
     private void Start()
@@ -108,7 +112,7 @@ public class MapManager : MonoSingleton<MapManager>
 
         foreach(var portal in stageOfPortalDic)
         {
-            portal.Value.ForEach(e => e.isUse = false);
+            portal.Value?.ForEach(e => e.isUse = false);
         }
 
         for(int i = 0; i < stageList.Count; ++i)
@@ -138,7 +142,7 @@ public class MapManager : MonoSingleton<MapManager>
         List<EnemySO> enemyList = new List<EnemySO>();
         for (int i = 0; i < attackMap.map.Count; ++i)
         {
-            if (attackMap.map[i].minFloor <= Floor && attackMap.map[i].maxFloor >= Floor)
+            if (attackMap.map[i].minFloor <= Floor + 1 && attackMap.map[i].maxFloor >= Floor + 1)
             {
                 foreach (var enemy in attackMap.map[i].enemyList)
                 {
@@ -179,7 +183,12 @@ public class MapManager : MonoSingleton<MapManager>
                 return atkPortal;
 
             case StageType.Boss:
-                break;
+                AttackPortal bossPortal = portal as AttackPortal;
+                bossPortal.enemy = _currentChapter.boss;
+                bossPortal.icon = bossPortal.enemy.icon;
+                bossPortal.portalName = bossPortal.enemy.enemyName;
+                bossPortal.isUse = true;
+                return bossPortal;
         }
 
         return null;
