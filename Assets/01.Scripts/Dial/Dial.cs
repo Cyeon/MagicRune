@@ -30,6 +30,8 @@ public class Dial : MonoBehaviour
     private float swipeSensitivity = 5;
     #endregion
 
+    private bool _isAttack;
+
     private void Awake()
     {
         _magicDict = new Dictionary<int, List<TestCard>>(3);
@@ -49,7 +51,7 @@ public class Dial : MonoBehaviour
             {
                 GameObject g = Instantiate(tempCard, this.transform.GetChild(i - 1));
                 TestCard c = g.GetComponent<TestCard>();
-                c.Dial = this;
+                c.Dial = this; 
                 c.SetMagic(_deck.List[i - 1].List[j - 1]);
                 c.UpdateUI();
                 AddCard(c, 4 - i);
@@ -165,12 +167,14 @@ public class Dial : MonoBehaviour
 
     public void Attack()
     {
+        if (_isAttack == true) return;
         if (GameManager.Instance.GameTurn == GameTurn.Player)
         {
+            _isAttack = true;
             _effectDict = new Dictionary<EffectType, List<EffectObjectPair>>();
             foreach (DialElement d in _dialElementList)
             {
-                if (d.SelectCard != null)
+                if (d.SelectCard != null && d.SelectCard.IsCoolTime == false)
                 {
                     foreach (Pair p in d.SelectCard.Magic.MainRune.EffectDescription)
                     {
@@ -231,6 +235,7 @@ public class Dial : MonoBehaviour
                 GameManager.Instance.PlayerTurnEnd();
                 _effectDict.Clear();
             });
+            _isAttack = false;
         }
     }
 
