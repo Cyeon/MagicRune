@@ -55,19 +55,18 @@ public class StarPanel : MonoBehaviour
                     if (touchDif.y > 0 && Mathf.Abs(touchDif.y) > Mathf.Abs(touchDif.x))
                     {
                         //Debug.Log("up");
-                        // 시작 위치가 스타 안이면
-                        //var ped = new PointerEventData(null);
-                        //ped.position = touchBeganPos;
-                        //List<RaycastResult> results = new List<RaycastResult>();
-                        //UIManager.Instance.GR.Raycast(ped, results);
+                        var ped = new PointerEventData(null);
+                        ped.position = touchBeganPos;
+                        List<RaycastResult> results = new List<RaycastResult>();
+                        UIManager.Instance.GR.Raycast(ped, results);
 
-                        //if (results.Count > 0)
-                        //{
-                        //    if (results[0].gameObject.CompareTag("Star"))
-                        //    {
-                        //        _dial.Attack();
-                        //    }
-                        //}
+                        if (results.Count > 0)
+                        {
+                            if (results[0].gameObject.CompareTag("Star"))
+                            {
+                                _dial.Attack();
+                            }
+                        }
                     }
                     else if (touchDif.y < 0 && Mathf.Abs(touchDif.y) > Mathf.Abs(touchDif.x))
                     {
@@ -86,18 +85,6 @@ public class StarPanel : MonoBehaviour
                 else
                 {
                     //Debug.Log("touch");
-                    var ped = new PointerEventData(null);
-                    ped.position = touchBeganPos;
-                    List<RaycastResult> results = new List<RaycastResult>();
-                    UIManager.Instance.GR.Raycast(ped, results);
-
-                    if (results.Count > 0)
-                    {
-                        if (results[0].gameObject.CompareTag("Star"))
-                        {
-                            _dial.Attack();
-                        }
-                    }
                 }
             }
         }

@@ -16,6 +16,9 @@ public class DialTwo : MonoBehaviour
 
     private int _selectArea = 0;
 
+    private float _rotateValue;
+    public float RotateValue { get => _rotateValue; set => _rotateValue = value; }
+
     private void Start()
     {
         CreateCard(3);
@@ -56,10 +59,10 @@ public class DialTwo : MonoBehaviour
         float angle = -2 * Mathf.PI / _deck.List[_selectArea - 1].List.Count;
         for (int i = 0; i < _deck.List[_selectArea - 1].List.Count; i++)
         {
-            TestCard c = Instantiate(_tempCard, this.transform);
+            TestCard c = Instantiate(_tempCard, this.transform.Find("Element"));
 
-            float height = Mathf.Sin(angle * i + (90 * Mathf.Deg2Rad)) * 575; // 470
-            float width = Mathf.Cos(angle * i + (90 * Mathf.Deg2Rad)) * 575; // 450
+            float height = Mathf.Sin(angle * i + (90 * Mathf.Deg2Rad)) * 525; // 470
+            float width = Mathf.Cos(angle * i + (90 * Mathf.Deg2Rad)) * 525; // 450
             c.GetComponent<RectTransform>().anchoredPosition = new Vector3(width, height, 0);
 
             Vector2 direction = new Vector2(
@@ -72,6 +75,26 @@ public class DialTwo : MonoBehaviour
             c.GetComponent<RectTransform>().rotation = angleAxis;
 
             _cardList.Add(c);
+        }
+    }
+
+    public void CardSort()
+    {
+        float angle = -2 * Mathf.PI / _cardList.Count;
+        for (int i = 0; i < _cardList.Count; i++)
+        {
+            float height = Mathf.Sin(angle * i + (90 * Mathf.Deg2Rad)) * 525;
+            float width = Mathf.Cos(angle * i + (90 * Mathf.Deg2Rad)) * 525;
+            _cardList[i].GetComponent<RectTransform>().anchoredPosition = new Vector3(width, height, 0);
+
+            Vector2 direction = new Vector2(
+                _cardList[i].transform.position.x - transform.position.x,
+                _cardList[i].transform.position.y - transform.position.y
+            );
+
+            float ang = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+            Quaternion angleAxis = Quaternion.AngleAxis(ang - 90f, Vector3.forward);
+            _cardList[i].GetComponent<RectTransform>().rotation = angleAxis;
         }
     }
 }
