@@ -2,10 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class DialTwoElement : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
     private DialTwo _dial;
+    private Image _image;
 
     private float _rotDamp = 3;
     [SerializeField]
@@ -33,6 +35,8 @@ public class DialTwoElement : MonoBehaviour, IPointerDownHandler, IPointerUpHand
     private void Start()
     {
         _dial = GetComponentInParent<DialTwo>();
+        _image = GetComponent<Image>();
+        _image.alphaHitTestMinimumThreshold = 0.1f;
     }
 
     private void Update()
