@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class PortalPanel : MonoBehaviour
+public class PortalPanel : MonoBehaviour, IPortalEnter
 {
     private TextMeshProUGUI _titleText;
     private Image _image;
@@ -17,6 +17,7 @@ public class PortalPanel : MonoBehaviour
     {
         _titleText = transform.Find("TItle_Text").GetComponent<TextMeshProUGUI>();
         _image = transform.Find("Map_Image").GetComponent<Image>();
+        transform.GetComponent<Button>().onClick.AddListener(() => PortalEnter());
     }
 
     public void Init(EnemySO enemy)
@@ -33,12 +34,17 @@ public class PortalPanel : MonoBehaviour
         _titleText.text = type.ToString();
     }
 
-    public void Choose()
+    public void PortalEnter()
     {
-        if (_mapType == PortalType.Attack)
+        switch(_mapType)
         {
-            MapManager.Instance.selectEnemy = _enemy;
-            SceneManager.LoadScene("MainBattleScene");
+            case PortalType.Attack:
+                MapManager.Instance.selectEnemy = _enemy;
+                SceneManager.LoadScene("MainBattleScene");
+                break;
+
+            case PortalType.Event:
+                break;
         }
     }
 }
