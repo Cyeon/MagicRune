@@ -21,6 +21,7 @@ public class UIManager : MonoSingleton<UIManager>
     private Slider _enemyHealthFeedbackSlider;
     private TextMeshProUGUI _enemyHealthText;
     public Transform enemyIcon;
+    public Image enemyImage;
 
     [Header("Player UI")]
     [SerializeField] private Transform _playerSlideBar;
@@ -94,6 +95,8 @@ public class UIManager : MonoSingleton<UIManager>
         _statusDescInfo = _statusDescPanel.transform.Find("Infomation").GetComponent<TextMeshPro>();
 
         _gr = _canvas.GetComponent<GraphicRaycaster>();
+
+        enemyImage = enemyIcon.GetComponent<Image>();
     }
 
     public void OnDestroy()
@@ -135,7 +138,7 @@ public class UIManager : MonoSingleton<UIManager>
         seq.Append(_turnBackground.DOFade(0, 0.5f));
         seq.Join(_turnText.DOFade(0, 0.5f));
         seq.AppendCallback(() => _turnPanel.SetActive(false));
-        seq.AppendCallback(() => GameManager.Instance.TurnChange());
+        seq.AppendCallback(() => BattleManager.Instance.TurnChange());
     }
 
     #region Health Bar
@@ -158,25 +161,28 @@ public class UIManager : MonoSingleton<UIManager>
         }
     }
 
-    public void HealthbarInit(bool isPlayer, float health)
+    public void HealthbarInit(bool isPlayer, float health, float maxHealth = 0)
     {
         SliderInit(isPlayer);
 
-        hSlider.maxValue = health;
-        hSlider.value = health;
-        hText.text = string.Format("{0} / {1}", health, health);
+        if (maxHealth == 0)
+            maxHealth = health;
 
-        sSlider.maxValue = health;
+        hSlider.maxValue = maxHealth;
+        hSlider.value = health;
+        hText.text = string.Format("{0} / {1}", health, maxHealth);
+
+        sSlider.maxValue = maxHealth;
         sSlider.value = 0;
 
-        hfSlider.maxValue = health;
+        hfSlider.maxValue = maxHealth;
         hfSlider.value = 0;
     }
 
     public void UpdateHealthbar(bool isPlayer)
     {
         SliderInit(isPlayer);
-        Unit unit = isPlayer ? GameManager.Instance.player : GameManager.Instance.enemy;
+        Unit unit = isPlayer ? BattleManager.Instance.player : BattleManager.Instance.enemy;
 
         if (unit.Shield > 0)
         {
@@ -242,13 +248,13 @@ public class UIManager : MonoSingleton<UIManager>
 
     public void AddStatus(Unit unit, Status status)
     {
-        Transform trm = unit == GameManager.Instance.player ? _statusPlayerPanel : _statusEnemyPanel;
+        Transform trm = unit == BattleManager.Instance.player ? _statusPlayerPanel : _statusEnemyPanel;
         GetStatusPanel(status, trm);
     }
 
     public GameObject GetStatusPanelStatusObj(Unit unit, StatusName name)
     {
-        Transform trm = unit == GameManager.Instance.player ? _statusPlayerPanel : _statusEnemyPanel;
+        Transform trm = unit == BattleManager.Instance.player ? _statusPlayerPanel : _statusEnemyPanel;
 
         GameObject obj = null;
         for (int i = 0; i < trm.childCount; i++)

@@ -4,19 +4,18 @@ using UnityEngine;
 
 public class EnemyManager : MonoSingleton<EnemyManager>
 {
-    public List<EnemySO> enemyList;
+    public EnemySO currentEnemy;
 
-    public Enemy SpawnEnemy()
+    public Enemy SpawnEnemy(EnemySO enemy = null)
     {
-        if(enemyList.Count > 0)
-        {
-            int index = Random.Range(0, enemyList.Count);
-            GameObject obj = Instantiate(enemyList[0].prefab);
-            Enemy enemy = obj.GetComponent<Enemy>();
-            enemy.Init(enemyList[0]);
-            return enemy;
-        }
+        if (enemy == null)
+            enemy = currentEnemy;
 
-        return null;
+        currentEnemy = enemy;
+        Enemy e = Instantiate(enemy.prefab).GetComponent<Enemy>();
+        UIManager.Instance.enemyImage.sprite = enemy.icon;
+        e.transform.position = Vector3.zero;
+        e.Init(enemy);
+        return e;
     }
 }

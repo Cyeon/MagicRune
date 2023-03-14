@@ -109,7 +109,7 @@ public class Card : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHand
     private Image _descriptionImage;
     private TMP_Text _descText;
     private UIOutline _outlineEffect;
-
+    public UIOutline OutlineEffect => _outlineEffect;
     // Rune Area
     private Transform _runeAreaParent;
     public Transform RuneAreaParent => _runeAreaParent;
@@ -204,7 +204,7 @@ public class Card : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHand
             _nameText.text = _rune.AssistRune.Name;
             _skillImage.sprite = _rune.AssistRune.CardImage;
             _costText.text = _rune.AssistRune.Cost.ToString();
-            _mainSubText.text = "서브 룬";
+            _mainSubText.text = "보조 룬";
             _descText.text = _rune.AssistRune.CardDescription;
             //_coolTimeText.text = _rune.AssistRune.DelayTurn.ToString();
             //_mainSubText.text = "보조";
@@ -285,7 +285,14 @@ public class Card : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHand
             _fingerId = eventData.pointerId;
             transform.DOKill();
             _keywardParent.gameObject.SetActive(true);
-            _assistRune.gameObject.SetActive(true);
+            if(_isFront == true)
+            {
+                _assistRune.gameObject.SetActive(true);
+            }
+            else
+            {
+                _assistRune.gameObject.SetActive(false);
+            }
         }
     }
 
@@ -364,7 +371,14 @@ public class Card : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHand
                     _collector.FingerID = _fingerId;
                     transform.DOKill();
                     _keywardParent.gameObject.SetActive(true);
-                    _assistRune.gameObject.SetActive(true);
+                    if (_isFront == true)
+                    {
+                        _assistRune.gameObject.SetActive(true);
+                    }
+                    else
+                    {
+                        _assistRune.gameObject.SetActive(false);
+                    }
                     _isClick = false;
                 }
             }
@@ -373,9 +387,9 @@ public class Card : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHand
 
     private void Setting()
     {
-        _collector = GameManager.Instance.MagicCircle.CardCollector;
+        _collector = BattleManager.Instance.MagicCircle.CardCollector;
         _rect = GetComponent<RectTransform>();
-        _magicCircle = GameManager.Instance.MagicCircle;
+        _magicCircle = BattleManager.Instance.MagicCircle;
 
         #region 예전 카드에서 세팅 필요했던 부분
         //_cardAreaParent = transform.Find("Card_Area");

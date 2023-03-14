@@ -10,6 +10,6 @@ public class FeedbackManager : MonoSingleton<FeedbackManager>
 
     public void Init()
     {
-        GameManager.Instance.enemy.OnTakeDamageFeedback.AddListener(() => _enemyAttackFeedback.PlayFeedbacks());
+        BattleManager.Instance.enemy.OnTakeDamageFeedback.AddListener(() => _enemyAttackFeedback.PlayFeedbacks());
     }
 }

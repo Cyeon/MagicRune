@@ -51,8 +51,6 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
     private Dictionary<RuneType, List<Card>> _runeTempDict;
     public Dictionary<RuneType, List<Card>> RuneTempDict => _runeTempDict;
 
-    //private Dictionary<string, string> _effectDict;
-    //private Dictionary<EffectType, List<EffectPair>> _effectDict;
     [SerializeField]
     private CustomDict _effectDict;
     public CustomDict EffectDict => _effectDict;
@@ -572,36 +570,6 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
             }
             _runeTempDict = new Dictionary<RuneType, List<Card>>(_runeDict);
             _tempEffectDict = new Dictionary<EffectType, List<EffectObjectPair>>(_effectDict);
-            _effectContent.AttackAnimation();
-        });
-        SoundManager.Instance.PlaySound(attackSound, SoundType.Effect);
-
-        //int damage = 0;
-        //seq.AppendInterval(0.1f);
-        seq.AppendCallback(() =>
-        {
-            // 부여, 방어, 공격, 삭제 순서
-
-            //_effectContent.AttackAnimation();
-
-            //AttackFunction(EffectType.Status);
-            //AttackFunction(EffectType.Defence);
-            //AttackFunction(EffectType.Attack);
-            //AttackFunction(EffectType.Draw);
-            //AttackFunction(EffectType.Destroy);
-
-        });
-        seq.AppendCallback(() =>
-        {
-            IsBig = false;
-
-            if (_cardCollector.IsFront == false)
-            {
-                _cardCollector.CardRotate();
-            }
-            _cardCollector.IsFront = true;
-            _cardCollector.UpdateCardOutline();
-
             foreach (var item in _runeDict)
             {
                 foreach (Card card in item.Value)
@@ -632,11 +600,44 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                     }
                 }
             }
+            _runeDict.Clear();
+
+            _effectContent.AttackAnimation();
+        });
+        SoundManager.Instance.PlaySound(attackSound, SoundType.Effect);
+
+        //int damage = 0;
+        //seq.AppendInterval(0.1f);
+        seq.AppendCallback(() =>
+        {
+            // 부여, 방어, 공격, 삭제 순서
+
+            //_effectContent.AttackAnimation();
+
+            //AttackFunction(EffectType.Status);
+            //AttackFunction(EffectType.Defence);
+            //AttackFunction(EffectType.Attack);
+            //AttackFunction(EffectType.Draw);
+            //AttackFunction(EffectType.Destroy);
+
+        });
+        seq.AppendCallback(() =>
+        {
+            IsBig = false;
+
+            if (_cardCollector.IsFront == false)
+            {
+                _cardCollector.CardRotate();
+            }
+            _cardCollector.IsFront = true;
+            _cardCollector.UpdateCardOutline();
+
+            
 
             _nameText.text = "";
             _effectText.text = "";
             _effectContent.Clear();
-            _runeDict.Clear();
+
             _effectDict.Clear();
 
             _cardCollector.UpdateCardOutline();
@@ -651,7 +652,7 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
         {
             foreach (var e in _effectDict[effectType])
             {
-                Unit target = e.pair.IsEnemy == true ? GameManager.Instance.enemy : GameManager.Instance.player;
+                Unit target = e.pair.IsEnemy == true ? BattleManager.Instance.enemy : BattleManager.Instance.player;
                 AttackEffectFunction(effectType, target, e.pair)?.Invoke();
             }
         }
@@ -677,10 +678,10 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                 switch (e.AttackType)
                 {
                     case AttackType.Single:
-                        action = () => GameManager.Instance.player.Attack(int.Parse(e.Effect));
+                        action = () => BattleManager.Instance.player.Attack(int.Parse(e.Effect));
                         break;
                     case AttackType.Double:
-                        action = () => GameManager.Instance.player.Attack(int.Parse(e.Effect) * c);
+                        action = () => BattleManager.Instance.player.Attack(int.Parse(e.Effect) * c);
                         break;
                 }
                 break;
@@ -688,10 +689,10 @@ public class MagicCircle : MonoBehaviour, IPointerClickHandler
                 switch (e.AttackType)
                 {
                     case AttackType.Single:
-                        action = () => GameManager.Instance.player.Shield += int.Parse(e.Effect);
+                        action = () => BattleManager.Instance.player.Shield += int.Parse(e.Effect);
                         break;
                     case AttackType.Double:
-                        action = () => GameManager.Instance.player.Shield += int.Parse(e.Effect) * c;
+                        action = () => BattleManager.Instance.player.Shield += int.Parse(e.Effect) * c;
                         break;
                 }
                 break;

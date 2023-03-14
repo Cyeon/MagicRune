@@ -10,6 +10,16 @@ public class Player : Unit
     private void Awake()
     {
         _isPlayer = true;
+
+        var obj = FindObjectsOfType<Managers>();
+        if (obj.Length == 1)
+        {
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
     public void Attack(float dmg)
@@ -18,7 +28,7 @@ public class Player : Unit
 
         InvokeStatus(StatusInvokeTime.Attack);
 
-        GameManager.Instance.enemy.TakeDamage(currentDmg);
+        BattleManager.Instance.enemy.TakeDamage(currentDmg);
         SoundManager.Instance.PlaySound(attackSound, SoundType.Effect);
 
     }

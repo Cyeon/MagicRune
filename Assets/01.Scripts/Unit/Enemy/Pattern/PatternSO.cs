@@ -10,7 +10,7 @@ public class PatternSO : ScriptableObject
     public string patternName;
     [ShowAssetPreview(32, 32), Tooltip("¾ÆÀÌÄÜ")] public Sprite icon;
 
-    public List<string> startFunc;
-    public List<string> turnFunc;
-    public List<string> endFunc;
+    public List<PatternFuncEnum> startFunc = new List<PatternFuncEnum>();
+    public List<PatternFuncEnum> turnFunc = new List<PatternFuncEnum>();
+    public List<PatternFuncEnum> endFunc = new List<PatternFuncEnum>();
 }
