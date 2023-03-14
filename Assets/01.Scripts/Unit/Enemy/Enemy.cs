@@ -35,7 +35,7 @@ public class Enemy : Unit
 
         InvokeStatus(StatusInvokeTime.Attack);
 
-        AttackManager.Instance.player.TakeDamage(currentDmg);
+        BattleManager.Instance.player.TakeDamage(currentDmg);
         SoundManager.Instance.PlaySound(attackSound, SoundType.Effect);
     }
 
@@ -53,5 +53,10 @@ public class Enemy : Unit
         idleSequence.Kill();
         UIManager.Instance.enemyIcon.DORewind();
         UIManager.Instance.enemyIcon.localScale = Vector3.one;
+    }
+
+    private void OnDestroy()
+    {
+        DOTween.KillAll();
     }
 }

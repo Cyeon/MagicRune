@@ -335,6 +335,7 @@ public class CardCollector : MonoBehaviour
         for (int i = 0; i < _handCards.Count; i++)
         {
             Card targetCard = _handCards[i];
+            targetCard.KeyWardParent.gameObject.SetActive(false);
             targetCard.MoveTransform(new PRS(Vector3.zero, Quaternion.identity, Vector3.one), false, 0.7f);
         }
         CardSort();

@@ -23,11 +23,12 @@ public class AttackMapListSO : ScriptableObject
 {
     public List<AttackMapInfo> map;
 
-    public void Reset()
+    public void EnterReset()
     {
         foreach(var m in map)
         {
             m.Reset();
         }
+        Debug.Log("¸®¼Â");
     }
 }

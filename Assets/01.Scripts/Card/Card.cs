@@ -387,9 +387,9 @@ public class Card : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHand
 
     private void Setting()
     {
-        _collector = AttackManager.Instance.MagicCircle.CardCollector;
+        _collector = BattleManager.Instance.MagicCircle.CardCollector;
         _rect = GetComponent<RectTransform>();
-        _magicCircle = AttackManager.Instance.MagicCircle;
+        _magicCircle = BattleManager.Instance.MagicCircle;
 
         #region 예전 카드에서 세팅 필요했던 부분
         //_cardAreaParent = transform.Find("Card_Area");

@@ -98,7 +98,7 @@ public class RuneProperty
     public string Name;
     [ShowAssetPreview(32, 32), Tooltip("이미지")]
     public Sprite CardImage;
-    [Tooltip("카드 설명"), ResizableTextArea]
+    [Tooltip("카드 설명"), /*ResizableTextArea, */TextArea]
     public string CardDescription;
     // 유형 Enum ? 필요한가?
     public List<Pair> EffectDescription;
@@ -114,7 +114,7 @@ public class RuneProperty
 [CreateAssetMenu(menuName = "SO/Rune")]
 public class CardSO : ScriptableObject
 {
-    
+
     [ShowAssetPreview(32, 32), Tooltip("마법진에 들어갈 룬 이미지")]
     public Sprite RuneImage;
     [ShowAssetPreview(32, 32), Tooltip("카드의 배경")]
