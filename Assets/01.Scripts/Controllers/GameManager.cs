@@ -8,4 +8,9 @@ public class GameManager : MonoSingleton<GameManager>
 
     private int _gold = 0;
     public int Gold => _gold;
+
+    private void Awake()
+    {
+        Application.targetFrameRate = 30;
+    }
 }
