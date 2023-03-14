@@ -31,7 +31,7 @@ MonoBehaviour:
         ComparisonType: 0
         Value: 0
         IsEnemy: 1
-      EffectType: 2
+      EffectType: 0
       StatusType: 2
       IsEnemy: 0
       AttackType: 0
@@ -52,7 +52,7 @@ MonoBehaviour:
       Effect: 20
     Attribute: 2
     Cost: 5
-    DelayTurn: 3
+    CoolTime: 2
   AssistRune:
     Name: "\uD654\uC5FC \uB3CC\uACA9"
     CardImage: {fileID: 21300000, guid: 5d12b271e7994bd41a4cd9bb9ef9f595, type: 3}
@@ -67,7 +67,7 @@ MonoBehaviour:
         ComparisonType: 0
         Value: 0
         IsEnemy: 1
-      EffectType: 2
+      EffectType: 0
       StatusType: 2
       IsEnemy: 0
       AttackType: 0
@@ -80,7 +80,7 @@ MonoBehaviour:
         ComparisonType: 0
         Value: 0
         IsEnemy: 1
-      EffectType: 0
+      EffectType: 2
       StatusType: 2
       IsEnemy: 1
       AttackType: 0
@@ -88,4 +88,4 @@ MonoBehaviour:
       Effect: 10
     Attribute: 2
     Cost: 3
-    DelayTurn: 1
+    CoolTime: 2

@@ -10,7 +10,7 @@ public class CameraResolution : MonoBehaviour
     private float scaleHeight;
     private float scaleWidth;
 
-    private void Awake()
+    private void Start()
     {
         camera = GetComponent<Camera>();
 

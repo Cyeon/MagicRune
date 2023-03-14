@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 using TMPro;
+using System.Data;
 
 public class UIManager : MonoSingleton<UIManager>
 {
@@ -401,7 +402,7 @@ public class UIManager : MonoSingleton<UIManager>
         _cardDescSkillIcon.sprite = rune.CardImage;
         _cardDescInfo.text = rune.CardDescription;
         _cardDescMana.text = rune.Cost.ToString();
-        _cardDescCool.text = rune.DelayTurn.ToString();
+        _cardDescCool.text = rune.CoolTime.ToString();
 
         for(int i = 0; i < _cardDescKeyword.childCount; i++)
         {
@@ -413,6 +414,23 @@ public class UIManager : MonoSingleton<UIManager>
             GameObject panel = word.KeywordInit(keyword);
             panel.transform.SetParent(_cardDescKeyword);
             panel.transform.localScale = Vector3.one;
+        }
+    }
+
+    public void CardDescPopup(TestCard card)
+    {
+        if (card == null)
+        {
+            _cardDescPanel.SetActive(false);
+        }
+        else
+        {
+            RuneProperty magic = card.Magic.MainRune;
+
+            _cardDescName.text = magic.Name;
+            _cardDescSkillIcon.sprite = magic.CardImage;
+            _cardDescInfo.text = magic.CardDescription;
+            _cardDescPanel.SetActive(true);
         }
     }
 
