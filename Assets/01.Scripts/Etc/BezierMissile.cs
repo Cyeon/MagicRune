@@ -129,6 +129,9 @@ public class BezierMissile : MonoBehaviour
     {
         GameObject g = Instantiate(go, this.transform);
         g.transform.localScale *= 3f;
+        Vector3 pos = g.transform.position;
+        pos.z = 0;
+        g.transform.position = pos;
         //g.transform.DOScale(Vector3.one * 200f, 0.2f);
     }
 
