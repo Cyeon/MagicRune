@@ -21,7 +21,7 @@ public class DialTwo : MonoBehaviour
 
     private void Start()
     {
-        CreateCard(3);
+        CreateCard(2);
     }
 
     private void CreateCard(int area = 1)
