@@ -4,7 +4,6 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-[System.Serializable]
 public class Portal
 {
     public PortalType type;

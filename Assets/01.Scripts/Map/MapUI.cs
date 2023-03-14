@@ -11,7 +11,7 @@ public class MapUI : MonoBehaviour
     public Transform StageList;
 
     public List<PortalPanel> portals = new List<PortalPanel>();
-    public List<Image> stages = new List<Image>();
+    public List<Image> stages = new List<Image>(); 
 
     [SerializeField] private Transform _portalParent;
     private List<Transform> _attackPortalEffects = new List<Transform>();
@@ -19,6 +19,10 @@ public class MapUI : MonoBehaviour
 
     private TextMeshProUGUI _healthText;
     private TextMeshProUGUI _goldText;
+
+    public Sprite stageAtkIcon;
+    public Sprite stageBossIcon;
+    public Sprite stageEventIcon;
 
     private void Awake()
     {

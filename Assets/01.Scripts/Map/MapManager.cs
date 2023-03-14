@@ -5,47 +5,31 @@ using UnityEngine;
 using DG.Tweening;
 using UnityEngine.SceneManagement;
 
-public  enum PortalType
-{
-    Attack,
-    Event,
-    Boss
-}
-
-[System.Serializable] 
-public class Chapter
-{
-    public int chapter = 0;
-    public EnemySO boss;
-    public float[] stageList = new float[9];
-}
-
 public class MapManager : MonoSingleton<MapManager>
 {
+    [Header("Chapter")]
     public List<Chapter> chapterList = new List<Chapter>();
 
     private int _chapter = 1;
     public int Chapter => _chapter;
     private Chapter _currentChapter = null;
 
-    public List<Portal> portalList = new List<Portal>();
-
-    private int Stage => Floor - ((this.Chapter - 1) * 10) - 1;
+    [Header("Stage")]
+    public List<Stage> stageList = new List<Stage>();
+    private int Stage => Floor - ((this.Chapter - 1) * 10);
 
     private int _floor = 1;
     public int Floor => _floor;
+
+    [Header("Portal")]
+
+
+
 
     public EnemySO selectEnemy;
     public AttackMapListSO attackMap;
 
     public MapUI ui;
-
-    [SerializeField]
-    private Sprite _eventIcon;
-    [SerializeField]
-    private Sprite _attackIcon;
-    [SerializeField]
-    private Sprite _bossIcon;
 
     private bool _isFirst = true;
 
@@ -58,37 +42,31 @@ public class MapManager : MonoSingleton<MapManager>
 
     private void ChapterInit()
     {
-        portalList.Clear();
+        stageList.Clear();
         _currentChapter = chapterList[Chapter - 1];
 
-        foreach (var chance in _currentChapter.stageList)
+        int idx = 0;
+        foreach (var chance in _currentChapter.eventStagesChance)
         {
-            Portal map = new Portal();
+            Stage stage = new Stage();
 
             int random = Random.Range(1, 100);
             if (random <= chance)
             {
-                map.type = PortalType.Event;
-                map.icon = _eventIcon;
+                stage.Init(StageType.Event, ui.stages[0]);
             }
             else
             {
-                map.type = PortalType.Attack;
-                map.icon = _attackIcon;
+                stage.Init(StageType.Attack, ui.stages[0]);
             }
-
-            map.color = Color.gray;
-
-            portalList.Add(map);
+            stageList.Add(stage);
         }
 
-        Portal portal = new Portal();
-        portal.type = PortalType.Boss;
-        portal.color = Color.gray;
-        portal.icon = _bossIcon;
-        portalList.Add(portal);
+        Stage bossStage = new Stage();
+        bossStage.Init(StageType.Boss, ui.stages[9]);
+        stageList.Add(bossStage);
 
-        portalList[0].color = Color.white;
+        stageList[0].color = Color.white;
         ui.StageUI();
     }
 
@@ -109,7 +87,7 @@ public class MapManager : MonoSingleton<MapManager>
             ui.portals[1].Init(_currentChapter.boss);
             ui.portals[1].transform.DOScale(2f, 1f);
         }
-        else
+        else if (portalList[Stage].type == PortalType.Event)
         {
             ui.portals[1].Init(GetAttackEnemy());
             ui.portals[1].transform.DOScale(1f, 0.8f);
@@ -129,7 +107,9 @@ public class MapManager : MonoSingleton<MapManager>
         ui.StageUI();
         ui.StageList.transform.DOLocalMoveX(Stage * -300f, 0);
 
-        portalList[Stage].icon = ui.stages[Stage].sprite = selectEnemy.icon;
+        if (portalList[Stage].type == PortalType.Attack)
+            portalList[Stage].icon = ui.stages[Stage].sprite = selectEnemy.icon;
+
         _floor += 1;
 
         Sequence seq = DOTween.Sequence();
