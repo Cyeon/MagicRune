@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -14,9 +15,9 @@ public class TestCard : MonoBehaviour
 
     #region UI
     private Transform _magicArea;
-    private Image _magicImage;
-    private GameObject _outline;
-    private Text _coolTimeText;
+    private SpriteRenderer _magicImage;
+    //private GameObject _outline;
+    private TextMeshProUGUI _coolTimeText;
     #endregion
 
     private int _coolTime;
@@ -26,14 +27,14 @@ public class TestCard : MonoBehaviour
     {
         _dialElement = GetComponentInParent<DialElement>();
         _magicArea = transform.Find("MagicArea");
-        _magicImage = _magicArea.Find("MagicImage").GetComponent<Image>();
-        _outline = _magicArea.Find("Outline").gameObject;
-        _coolTimeText = _magicArea.Find("CoolTimeText").GetComponent<Text>();
+        _magicImage = _magicArea.Find("MagicImage").GetComponent<SpriteRenderer>();
+        //_outline = _magicArea.Find("Outline").gameObject;
+        _coolTimeText = _magicArea.Find("CoolTimeText").GetComponent<TextMeshProUGUI>();
     }
 
     public void SetActiveOutline(bool value)
     {
-        _outline.SetActive(value);
+        //_outline.SetActive(value);
     }
 
     public void SetMagic(CardSO magic)
@@ -51,7 +52,7 @@ public class TestCard : MonoBehaviour
         _coolTime = _magic.MainRune.CoolTime;
         _magicImage.color = Color.gray;
         SetActiveOutline(false);
-        _coolTimeText.text = _coolTime.ToString();
+        _coolTimeText.SetText(_coolTime.ToString());
         _coolTimeText.gameObject.SetActive(true);
     }
 
@@ -63,7 +64,7 @@ public class TestCard : MonoBehaviour
         {
             _magicImage.color = Color.gray;
             SetActiveOutline(false);
-            _coolTimeText.text = _coolTime.ToString();
+            _coolTimeText.SetText(_coolTime.ToString());
             _coolTimeText.gameObject.SetActive(true);
         }
         else

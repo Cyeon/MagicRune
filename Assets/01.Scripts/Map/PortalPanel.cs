@@ -38,7 +38,7 @@ public class PortalPanel : MonoBehaviour
         if (_mapType == PortalType.Attack)
         {
             MapManager.Instance.selectEnemy = _enemy;
-            SceneManager.LoadScene("MainBattleScene");
+            SceneManager.LoadScene("DialScene");
         }
     }
 }

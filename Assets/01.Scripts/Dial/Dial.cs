@@ -84,9 +84,9 @@ public class Dial : MonoBehaviour
 
             for (int i = 0; i < _magicDict[3].Count; i++)
             {
-                float height = Mathf.Sin(angle * i + (90 * Mathf.Deg2Rad)) * 695; // 470
-                float width = Mathf.Cos(angle * i + (90 * Mathf.Deg2Rad)) * 695; // 450
-                _magicDict[3][i].GetComponent<RectTransform>().anchoredPosition = new Vector3(width, height, 0);
+                float height = Mathf.Sin(angle * i + (90 * Mathf.Deg2Rad)) * 4; // 470
+                float width = Mathf.Cos(angle * i + (90 * Mathf.Deg2Rad)) * 4; // 450
+                _magicDict[3][i].transform.position = new Vector3(width + this.transform.position.x, height + this.transform.position.y, 0);
 
                 Vector2 direction = new Vector2(
                     _magicDict[3][i].transform.position.x - transform.position.x,
@@ -95,7 +95,7 @@ public class Dial : MonoBehaviour
 
                 float ang = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
                 Quaternion angleAxis = Quaternion.AngleAxis(ang - 90f, Vector3.forward);
-                _magicDict[3][i].GetComponent<RectTransform>().rotation = angleAxis;
+                _magicDict[3][i].transform.rotation = angleAxis;
             }
         }
         if (_magicDict.ContainsKey(2))
@@ -104,9 +104,10 @@ public class Dial : MonoBehaviour
 
             for (int i = 0; i < _magicDict[2].Count; i++)
             {
-                float height = Mathf.Sin(angle * i + (90 * Mathf.Deg2Rad)) * 510; // 470
-                float width = Mathf.Cos(angle * i + (90 * Mathf.Deg2Rad)) * 510; // 450
-                _magicDict[2][i].GetComponent<RectTransform>().anchoredPosition = new Vector3(width, height, 0);
+                float height = Mathf.Sin(angle * i + (90 * Mathf.Deg2Rad)) * 2.9f; // 470
+                float width = Mathf.Cos(angle * i + (90 * Mathf.Deg2Rad)) * 2.9f; // 450
+                _magicDict[2][i].transform.position = new Vector3(width + this.transform.position.x, height + this.transform.position.y, 0);
+                _magicDict[2][i].transform.localScale = new Vector3(0.0133f, 0.0133f, 1);
 
                 Vector2 direction = new Vector2(
                     _magicDict[2][i].transform.position.x - transform.position.x,
@@ -115,7 +116,7 @@ public class Dial : MonoBehaviour
 
                 float ang = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
                 Quaternion angleAxis = Quaternion.AngleAxis(ang - 90f, Vector3.forward);
-                _magicDict[2][i].GetComponent<RectTransform>().rotation = angleAxis;
+                _magicDict[2][i].transform.rotation = angleAxis;
             }
         }
         if (_magicDict.ContainsKey(1))
@@ -124,9 +125,10 @@ public class Dial : MonoBehaviour
 
             for (int i = 0; i < _magicDict[1].Count; i++)
             {
-                float height = Mathf.Sin(angle * i + (90 * Mathf.Deg2Rad)) * 328; // 470
-                float width = Mathf.Cos(angle * i + (90 * Mathf.Deg2Rad)) * 328; // 450
-                _magicDict[1][i].GetComponent<RectTransform>().anchoredPosition = new Vector3(width, height, 0);
+                float height = Mathf.Sin(angle * i + (90 * Mathf.Deg2Rad)) * 1.7f; // 470
+                float width = Mathf.Cos(angle * i + (90 * Mathf.Deg2Rad)) * 1.7f; // 450
+                _magicDict[1][i].transform.position = new Vector3(width + this.transform.position.x, height + this.transform.position.y, 0);
+                _magicDict[1][i].transform.localScale = new Vector3(0.02f, 0.02f, 1);
 
                 Vector2 direction = new Vector2(
                     _magicDict[1][i].transform.position.x - transform.position.x,
@@ -135,7 +137,7 @@ public class Dial : MonoBehaviour
 
                 float ang = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
                 Quaternion angleAxis = Quaternion.AngleAxis(ang - 90f, Vector3.forward);
-                _magicDict[1][i].GetComponent<RectTransform>().rotation = angleAxis;
+                _magicDict[1][i].transform.rotation = angleAxis;
             }
         }
     }
@@ -271,11 +273,11 @@ public class Dial : MonoBehaviour
                 switch (e.AttackType)
                 {
                     case AttackType.Single:
-                        action = () => GameManager.Instance.player.Attack(int.Parse(e.Effect));
+                        action = () => BattleManager.Instance.player.Attack(int.Parse(e.Effect));
                         break;
                     case AttackType.Double:
                         //action = () => GameManager.Instance.player.Attack(int.Parse(e.Effect) * c);
-                        action = () => GameManager.Instance.player.Attack(int.Parse(e.Effect));
+                        action = () => BattleManager.Instance.player.Attack(int.Parse(e.Effect));
                         break;
                 }
                 break;
@@ -283,11 +285,11 @@ public class Dial : MonoBehaviour
                 switch (e.AttackType)
                 {
                     case AttackType.Single:
-                        action = () => GameManager.Instance.player.Shield += int.Parse(e.Effect);
+                        action = () => BattleManager.Instance.player.Shield += int.Parse(e.Effect);
                         break;
                     case AttackType.Double:
                         //action = () => GameManager.Instance.player.Shield += int.Parse(e.Effect) * c;
-                        action = () => GameManager.Instance.player.Shield += int.Parse(e.Effect);
+                        action = () => BattleManager.Instance.player.Shield += int.Parse(e.Effect);
                         break;
                 }
                 break;
@@ -316,79 +318,6 @@ public class Dial : MonoBehaviour
         }
 
         return action;
-
-        //switch (e.Condition.ConditionType)
-        //{
-        //    case ConditionType.None:
-        //        return action;
-        //    case ConditionType.HeathComparison:
-        //        if (target.IsHealthAmount(e.Condition.Value, e.Condition.ComparisonType))
-        //        {
-        //            return action;
-        //        }
-        //        break;
-        //    case ConditionType.AssistRuneCount:
-        //        int count = 0;
-        //        for (int i = 0; i < _runeTempDict[RuneType.Assist].Count; i++)
-        //        {
-        //            if (_runeTempDict[RuneType.Assist][i].Rune != null)
-        //            {
-        //                count++;
-        //            }
-        //        }
-        //        if (count >= e.Condition.Value)
-        //        {
-        //            return action;
-        //        }
-        //        break;
-        //    case ConditionType.AttributeComparison:
-        //        int cnt = 0;
-        //        if (_runeTempDict[RuneType.Main][0].Rune.MainRune.Attribute == e.Condition.AttributeType)
-        //            cnt++;
-        //        for (int i = 0; i < _runeTempDict[RuneType.Assist].Count; i++)
-        //        {
-        //            if (_runeTempDict[RuneType.Assist][i].Rune.AssistRune.Attribute == e.Condition.AttributeType)
-        //            {
-        //                cnt++;
-        //            }
-        //        }
-
-        //        switch (e.Condition.ComparisonType)
-        //        {
-        //            case ComparisonType.MoreThan:
-        //                if (cnt >= e.Condition.Value)
-        //                {
-        //                    return action;
-        //                }
-        //                break;
-        //            case ComparisonType.LessThan:
-        //                if (cnt <= e.Condition.Value)
-        //                {
-        //                    return action;
-        //                }
-        //                break;
-        //        }
-        //        break;
-        //    case ConditionType.StatusComparison:
-        //        switch (e.Condition.ComparisonType)
-        //        {
-        //            case ComparisonType.MoreThan:
-        //                if (StatusManager.Instance.GetUnitStatusValue(target, e.Condition.StatusType) >= e.Condition.Value)
-        //                {
-        //                    return action;
-        //                }
-        //                break;
-        //            case ComparisonType.LessThan:
-        //                if (StatusManager.Instance.GetUnitStatusValue(target, e.Condition.StatusType) <= e.Condition.Value)
-        //                {
-        //                    return action;
-        //                }
-        //                break;
-        //        }
-        //        break;
-        //}
-
-        //return null;
     }
 
     public void AllMagicSetCoolTime()

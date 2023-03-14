@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class StarPanel : MonoBehaviour
 {
-    private Image _image;
+    private SpriteRenderer _spriteRenderer;
 
     [SerializeField]
     private Dial _dial;
@@ -21,8 +21,8 @@ public class StarPanel : MonoBehaviour
 
     private void Start()
     {
-        _image = GetComponent<Image>();
-        _image.alphaHitTestMinimumThreshold = 0.1f;
+        _spriteRenderer = GetComponent<SpriteRenderer>();
+        //_image.alphaHitTestMinimumThreshold = 0.1f;
     }
 
     private void Update()
