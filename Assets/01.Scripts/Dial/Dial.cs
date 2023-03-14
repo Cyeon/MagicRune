@@ -168,7 +168,7 @@ public class Dial : MonoBehaviour
     public void Attack()
     {
         if (_isAttack == true) return;
-        if (GameManager.Instance.GameTurn == GameTurn.Player)
+        if (BattleManager.Instance.GameTurn == GameTurn.Player)
         {
             _isAttack = true;
             _effectDict = new Dictionary<EffectType, List<EffectObjectPair>>();
@@ -232,7 +232,7 @@ public class Dial : MonoBehaviour
                     AttackFunction((EffectType)i);
                 }
 
-                GameManager.Instance.PlayerTurnEnd();
+                BattleManager.Instance.PlayerTurnEnd();
                 _effectDict.Clear();
             });
             _isAttack = false;
@@ -245,7 +245,7 @@ public class Dial : MonoBehaviour
         {
             foreach (var e in _effectDict[effectType])
             {
-                Unit target = e.pair.IsEnemy == true ? GameManager.Instance.enemy : GameManager.Instance.player;
+                Unit target = e.pair.IsEnemy == true ? BattleManager.Instance.enemy : GameManager.Instance.player;
                 AttackEffectFunction(effectType, target, e.pair)?.Invoke();
             }
         }
