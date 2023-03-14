@@ -7,43 +7,44 @@ using UnityEngine.UI;
 public class Stage
 {
     public StageType type;
-    public Sprite icon
-    {
-        get => icon;
-        set
-        {
-            icon = value;
-            _image.sprite = value;
-        }
-    }
-    public Color color
-    {
-        get => color;
-        set
-        {
-            color = value;
-            _image.color = value;
-        }
-    }
+    public Sprite icon;
+    public Color color;
 
     private Image _image;
+    private int _index;
 
-    public void Init(StageType type, Image img)
+    public void Init(StageType type, Image img, int idx)
     {
         this.type = type;
         _image = img;
+        _index = idx;
 
         switch (type)
         {
             case StageType.Attack:
-                icon = MapManager.Instance.ui.stageAtkIcon; break;
+                ChangeResource(Color.gray, MapManager.Instance.ui.stageAtkIcon); break;
             case StageType.Event:
-                icon = MapManager.Instance.ui.stageEventIcon; break;
+                ChangeResource(Color.gray, MapManager.Instance.ui.stageEventIcon); break;
             case StageType.Boss:
-                icon = MapManager.Instance.ui.stageBossIcon; break;
+                ChangeResource(Color.gray, MapManager.Instance.ui.stageBossIcon); break;
+        }
+    }
+
+    public void ChangeResource(Color color, Sprite sprite = null)
+    {
+        if (_image == null) _image = MapManager.Instance.ui.stages[_index];
+
+        if (color != null)
+        {
+            _image.color = color;
+            this.color = color;
         }
 
-        color = Color.gray;
+        if(sprite != null)
+        {
+            _image.sprite = sprite;
+            icon = sprite;
+        }
     }
 }
 

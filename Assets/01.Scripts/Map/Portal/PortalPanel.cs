@@ -11,22 +11,24 @@ public class PortalPanel : MonoBehaviour
 {
     private TextMeshProUGUI _titleText;
     private Image _image;
-    private PortalType _mapType;
-
-    private EnemySO _enemy;
+    private Portal _portal;
 
     private void Awake()
     {
         _titleText = transform.Find("TItle_Text").GetComponent<TextMeshProUGUI>();
         _image = transform.Find("Map_Image").GetComponent<Image>();
-        transform.GetComponent<Button>().onClick.AddListener(null);
     }
 
-    public void Init(EnemySO enemy)
+    public void Init(Portal portal)
     {
-        _enemy = enemy;
-        _titleText.text = enemy.enemyName;
-        _image.sprite = enemy.icon;
-        _mapType = PortalType.Attack;
+        _portal = portal;
+        _titleText.text = portal.portalName;
+        _image.sprite = portal.icon;
+    }
+
+    public void Select()
+    {
+        MapManager.Instance.selectPortal = _portal;
+        _portal.Execute();
     }
 }

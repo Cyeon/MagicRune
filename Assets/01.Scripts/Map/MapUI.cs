@@ -61,19 +61,9 @@ public class MapUI : MonoBehaviour
         InfoUIReload();
     }
 
-    public void StageUI()
+    public void PortalEffectUp(StageType type)
     {
-        for(int i = 0; i < 10; ++i)
-        {
-            stages[i].sprite = MapManager.Instance.portalList[i].icon;
-            stages[i].color = MapManager.Instance.portalList[i].color;
-        }
-
-    }
-
-    public void PortalEffectUp(PortalType type)
-    {
-        if (type == PortalType.Attack)
+        if (type == StageType.Attack)
             _attackPortalEffects.ForEach(x => x.DOScale(1.2f, 1f));
         else
             _bossPortalEffects.ForEach(x => x.DOScale(2f, 1f));

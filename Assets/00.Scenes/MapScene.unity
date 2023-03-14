@@ -123,6 +123,40 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &57597766
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 57597767}
+  m_Layer: 0
+  m_Name: Attack
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &57597767
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 57597766}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 315139914}
+  - {fileID: 654562368}
+  - {fileID: 589595088}
+  m_Father: {fileID: 1809552960}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &57826274
 GameObject:
   m_ObjectHideFlags: 0
@@ -29758,6 +29792,53 @@ Light:
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+--- !u!1 &315139913
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 315139914}
+  - component: {fileID: 315139915}
+  m_Layer: 0
+  m_Name: Attack 1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &315139914
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 315139913}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 57597767}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &315139915
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 315139913}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b88f3014d3e4132488ee37f8f608b836, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  portalName: 
+  icon: {fileID: 0}
+  enemy: {fileID: 0}
 --- !u!1 &320506984
 GameObject:
   m_ObjectHideFlags: 0
@@ -29882,6 +29963,9 @@ MonoBehaviour:
   portals: []
   stages: []
   _portalParent: {fileID: 838379162}
+  stageAtkIcon: {fileID: 21300000, guid: f479ae9f363d70044a7dbdff8e37870d, type: 3}
+  stageBossIcon: {fileID: 21300000, guid: 93dec55783413534b8170684a375dfaf, type: 3}
+  stageEventIcon: {fileID: 21300000, guid: ad59a1179342b8f40af12ae617f1eb8f, type: 3}
 --- !u!1 &321321316
 GameObject:
   m_ObjectHideFlags: 0
@@ -34929,7 +35013,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 400690532}
         m_TargetAssemblyTypeName: PortalPanel, Assembly-CSharp
-        m_MethodName: Choose
+        m_MethodName: Select
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -39983,7 +40067,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 552303125}
         m_TargetAssemblyTypeName: PortalPanel, Assembly-CSharp
-        m_MethodName: Choose
+        m_MethodName: Select
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -40005,6 +40089,53 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bced49c8137806348af4393c9bedc660, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &589595087
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 589595088}
+  - component: {fileID: 589595089}
+  m_Layer: 0
+  m_Name: Attack 3
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &589595088
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 589595087}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 57597767}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &589595089
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 589595087}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b88f3014d3e4132488ee37f8f608b836, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  portalName: 
+  icon: {fileID: 0}
+  enemy: {fileID: 0}
 --- !u!1 &633962774
 GameObject:
   m_ObjectHideFlags: 0
@@ -40081,6 +40212,53 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 633962774}
   m_CullTransparentMesh: 1
+--- !u!1 &654562367
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 654562368}
+  - component: {fileID: 654562369}
+  m_Layer: 0
+  m_Name: Attack 2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &654562368
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 654562367}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 57597767}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &654562369
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 654562367}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b88f3014d3e4132488ee37f8f608b836, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  portalName: 
+  icon: {fileID: 0}
+  enemy: {fileID: 0}
 --- !u!1 &657900929
 GameObject:
   m_ObjectHideFlags: 0
@@ -45042,7 +45220,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 720195659}
         m_TargetAssemblyTypeName: PortalPanel, Assembly-CSharp
-        m_MethodName: Choose
+        m_MethodName: Select
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -110592,7 +110770,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 57597767}
   m_Father: {fileID: 828686904}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -110611,7 +110790,7 @@ MonoBehaviour:
   chapterList:
   - chapter: 1
     boss: {fileID: 11400000, guid: 2d0995c54f331a2499d596a93a78e957, type: 2}
-    stageList:
+    eventStagesChance:
     - 0
     - 0
     - 0
@@ -110621,13 +110800,10 @@ MonoBehaviour:
     - 0
     - 0
     - 0
-  portalList: []
+  selectPortal: {fileID: 0}
   selectEnemy: {fileID: 0}
   attackMap: {fileID: 11400000, guid: eb92d7dde3ace614293007a654bb031c, type: 2}
   ui: {fileID: 0}
-  _eventIcon: {fileID: 21300000, guid: 3042b019b052942a1baf7aa49d7ca6bb, type: 3}
-  _attackIcon: {fileID: 21300000, guid: f479ae9f363d70044a7dbdff8e37870d, type: 3}
-  _bossIcon: {fileID: 21300000, guid: 93dec55783413534b8170684a375dfaf, type: 3}
 --- !u!1 &1832666894
 GameObject:
   m_ObjectHideFlags: 0
