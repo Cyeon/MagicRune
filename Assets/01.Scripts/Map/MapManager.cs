@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using DG.Tweening;
-using UnityEngine.SceneManagement;
+using static MapDefine;
 
 public class MapManager : MonoSingleton<MapManager>
 {
@@ -28,9 +28,6 @@ public class MapManager : MonoSingleton<MapManager>
     [Header("Attack")]
     public EnemySO selectEnemy;
     public AttackMapListSO attackMap;
-
-    [HideInInspector]
-    public MapUI ui;
 
     private bool _isFirst = true;
 
@@ -59,8 +56,8 @@ public class MapManager : MonoSingleton<MapManager>
     {
         ChapterInit();
         PortalInit();
-        ui.InfoUIReload();
-    }
+        MapSceneUI.InfoUIReload();
+    } 
 
     private void ChapterInit()
     {
@@ -73,14 +70,14 @@ public class MapManager : MonoSingleton<MapManager>
             Stage stage = new Stage();
             int random = Random.Range(1, 100);
 
-            stage.Init(random <= chance ? StageType.Event : StageType.Attack, ui.stages[idx], idx);
+            stage.Init(random <= chance ? StageType.Event : StageType.Attack, MapSceneUI.stages[idx], idx);
             stageList.Add(stage);
 
             idx++;
         }
 
         Stage bossStage = new Stage();
-        bossStage.Init(StageType.Boss, ui.stages[9], 9);
+        bossStage.Init(StageType.Boss, MapSceneUI.stages[9], 9);
         stageList.Add(bossStage);
 
         stageList[0].ChangeResource(Color.white);
@@ -88,11 +85,11 @@ public class MapManager : MonoSingleton<MapManager>
 
     private void PortalInit()
     {
-        ui.PortalEffectUp(stageList[Stage].type);
+        MapSceneUI.PortalEffectUp(stageList[Stage].type);
 
         if (stageList[Stage].type == StageType.Attack)
         {
-            foreach(var portal in ui.portals)
+            foreach(var portal in MapSceneUI.portals)
             {
                 portal.Init(SpawnPortal(stageList[Stage].type));
                 portal.transform.DOScale(1f, 0.8f);
@@ -100,8 +97,8 @@ public class MapManager : MonoSingleton<MapManager>
         }
         else
         {
-            ui.portals[1].Init(SpawnPortal(stageList[Stage].type));
-            ui.portals[1].transform.DOScale(2f, 1f);
+            MapSceneUI.portals[1].Init(SpawnPortal(stageList[Stage].type));
+            MapSceneUI.portals[1].transform.DOScale(2f, 1f);
         }
     }
 
@@ -130,24 +127,24 @@ public class MapManager : MonoSingleton<MapManager>
 
             for (int i = 0; i < stageList.Count; ++i)
             {
-                ui.stages[i].sprite = stageList[i].icon;
-                ui.stages[i].color = stageList[i].color;
+                MapSceneUI.stages[i].sprite = stageList[i].icon;
+                MapSceneUI.stages[i].color = stageList[i].color;
             }
         }
         else
         {
-            ui.ResetPortal(stageList[Stage].type);
+            MapSceneUI.ResetPortal(stageList[Stage].type);
         }
         #endregion
 
-        ui.StageList.transform.DOLocalMoveX(Stage * -300f, 0);
+        MapSceneUI.StageList.transform.DOLocalMoveX(Stage * -300f, 0);
         stageList[Stage].ChangeResource(Color.white, selectPortal.icon);
         _floor += 1;
 
         Sequence seq = DOTween.Sequence();
         seq.AppendInterval(0.5f);
-        seq.Append(ui.StageList.transform.DOLocalMoveX(Stage * -300f, 1f));
-        seq.Append(ui.stages[Stage].DOColor(Color.white, 0.5f));
+        seq.Append(MapSceneUI.StageList.transform.DOLocalMoveX(Stage * -300f, 1f));
+        seq.Append(MapSceneUI.stages[Stage].DOColor(Color.white, 0.5f));
         seq.AppendCallback(() =>
         {
             stageList[Stage].color = Color.white;

@@ -55,9 +55,7 @@ public class MapUI : MonoBehaviour
 
     private void OnEnable()
     {
-        MapManager.Instance.ui = this;
         MapManager.Instance.NextStage();
-
         InfoUIReload();
     }
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
+using static MapDefine;
 
 [System.Serializable]
 public class Stage
@@ -23,17 +24,17 @@ public class Stage
         switch (type)
         {
             case StageType.Attack:
-                ChangeResource(Color.gray, MapManager.Instance.ui.stageAtkIcon); break;
+                ChangeResource(Color.gray, MapSceneUI.stageAtkIcon); break;
             case StageType.Event:
-                ChangeResource(Color.gray, MapManager.Instance.ui.stageEventIcon); break;
+                ChangeResource(Color.gray, MapSceneUI.stageEventIcon); break;
             case StageType.Boss:
-                ChangeResource(Color.gray, MapManager.Instance.ui.stageBossIcon); break;
+                ChangeResource(Color.gray, MapSceneUI.stageBossIcon); break;
         }
     }
 
     public void ChangeResource(Color color, Sprite sprite = null)
     {
-        if (_image == null) _image = MapManager.Instance.ui.stages[_index];
+        if (_image == null) _image = MapSceneUI.stages[_index];
 
         if (color != null)
         {
