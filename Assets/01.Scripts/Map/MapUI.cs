@@ -69,6 +69,16 @@ public class MapUI : MonoBehaviour
             _bossPortalEffects.ForEach(x => x.DOScale(2f, 1f));
     }
 
+    public void ResetPortal(StageType type)
+    {
+        if (type == StageType.Attack)
+            _attackPortalEffects.ForEach(x => x.DOScale(0,0));
+        else
+            _bossPortalEffects.ForEach(x => x.DOScale(0,0));
+
+        portals.ForEach(x => x.transform.DOScale(0, 0));
+    }
+
     public void InfoUIReload()
     {
         _goldText.text = GameManager.Instance.Gold.ToString();

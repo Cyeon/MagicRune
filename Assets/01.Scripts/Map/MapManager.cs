@@ -43,11 +43,16 @@ public class MapManager : MonoSingleton<MapManager>
         Transform atkTrm = transform.Find("Attack");
         for (int i = 0; i < atkTrm.childCount; ++i)
         {
-            stageOfPortalDic[StageType.Attack].Add(atkTrm.GetChild(i).GetComponent<AttackPortal>());
+            stageOfPortalDic[StageType.Attack].Add(atkTrm.GetChild(i).GetComponent<Portal>());
         }
 
-        stageOfPortalDic[StageType.Boss].Add(atkTrm.GetComponent<AttackPortal>());
-        stageOfPortalDic[StageType.Event].Add(atkTrm.GetComponent<AttackPortal>());
+        stageOfPortalDic[StageType.Boss].Add(atkTrm.GetComponent<Portal>());
+
+        atkTrm = transform.Find("Event");
+        for (int i = 0; i < atkTrm.childCount; ++i)
+        {
+            stageOfPortalDic[StageType.Event].Add(atkTrm.GetChild(i).GetComponent<Portal>());
+        }
     }
 
     private void Start()
@@ -109,22 +114,29 @@ public class MapManager : MonoSingleton<MapManager>
         }
 
         #region 초기화 부분
-        DOTween.KillAll();
-
-        foreach(var portal in stageOfPortalDic)
+        if (stageList[Stage].type != StageType.Event)
         {
-            if (portal.Value.Count > 0)
-                portal.Value.ForEach(e =>
-                {
-                    if(e != null)
-                        e.isUse = false;
-                });
+            DOTween.KillAll();
+
+            foreach (var portal in stageOfPortalDic)
+            {
+                if (portal.Value.Count > 0)
+                    portal.Value.ForEach(e =>
+                    {
+                        if (e != null)
+                            e.isUse = false;
+                    });
+            }
+
+            for (int i = 0; i < stageList.Count; ++i)
+            {
+                ui.stages[i].sprite = stageList[i].icon;
+                ui.stages[i].color = stageList[i].color;
+            }
         }
-
-        for(int i = 0; i < stageList.Count; ++i)
+        else
         {
-            ui.stages[i].sprite = stageList[i].icon;
-            ui.stages[i].color = stageList[i].color;
+            ui.ResetPortal(stageList[Stage].type);
         }
         #endregion
 
@@ -141,6 +153,36 @@ public class MapManager : MonoSingleton<MapManager>
             stageList[Stage].color = Color.white;
             PortalInit();
         });
+    }
+
+    private Portal SpawnPortal(StageType type)
+    {
+        List<Portal> pList = stageOfPortalDic[type].Where(e => e.isUse == false).ToList();
+        if(pList.Count == 0)
+        {
+            Debug.LogError("Not Found Portal Object");
+            return null;
+        }
+
+        int cnt = pList.Count;
+        Portal portal = pList[Random.Range(0, cnt)];
+
+        switch(type)
+        {
+            case StageType.Attack:
+            case StageType.Boss:
+                AttackPortal atkPortal = portal as AttackPortal;
+                atkPortal.enemy = type == StageType.Attack ? GetAttackEnemy() : _currentChapter.boss;
+                atkPortal.icon = atkPortal.enemy.icon;
+                atkPortal.portalName = atkPortal.enemy.enemyName;
+                atkPortal.isUse = true;
+                return atkPortal;
+
+            case StageType.Event:
+                return portal;
+        }
+
+        return null;
     }
 
     private EnemySO GetAttackEnemy()
@@ -164,39 +206,5 @@ public class MapManager : MonoSingleton<MapManager>
         }
         enemyList[idx].IsEnter = true;
         return enemyList[idx];
-    }
-
-    private Portal SpawnPortal(StageType type)
-    {
-        List<Portal> pList = stageOfPortalDic[type].Where(e => e.isUse == false).ToList();
-        if(pList.Count == 0)
-        {
-            Debug.LogError("Not Found Portal Object");
-            return null;
-        }
-
-        int cnt = pList.Count;
-        Portal portal = pList[Random.Range(0, cnt)];
-
-        switch(type)
-        {
-            case StageType.Attack:
-                AttackPortal atkPortal = portal as AttackPortal;
-                atkPortal.enemy = GetAttackEnemy();
-                atkPortal.icon = atkPortal.enemy.icon;
-                atkPortal.portalName = atkPortal.enemy.enemyName;
-                atkPortal.isUse = true;
-                return atkPortal;
-
-            case StageType.Boss:
-                AttackPortal bossPortal = portal as AttackPortal;
-                bossPortal.enemy = _currentChapter.boss;
-                bossPortal.icon = bossPortal.enemy.icon;
-                bossPortal.portalName = bossPortal.enemy.enemyName;
-                bossPortal.isUse = true;
-                return bossPortal;
-        }
-
-        return null;
     }
 }
