@@ -47,6 +47,7 @@ public class MapManager : MonoSingleton<MapManager>
         }
 
         stageOfPortalDic[StageType.Boss].Add(atkTrm.GetComponent<AttackPortal>());
+        stageOfPortalDic[StageType.Event].Add(atkTrm.GetComponent<AttackPortal>());
     }
 
     private void Start()
@@ -112,7 +113,12 @@ public class MapManager : MonoSingleton<MapManager>
 
         foreach(var portal in stageOfPortalDic)
         {
-            portal.Value?.ForEach(e => e.isUse = false);
+            if (portal.Value.Count > 0)
+                portal.Value.ForEach(e =>
+                {
+                    if(e != null)
+                        e.isUse = false;
+                });
         }
 
         for(int i = 0; i < stageList.Count; ++i)
