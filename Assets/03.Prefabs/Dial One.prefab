@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4048946619835483058}
   - component: {fileID: 6047878870979582957}
   - component: {fileID: 6047878870039173906}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Dial Element 1
   m_TagString: DialElement
   m_Icon: {fileID: 0}
@@ -71,9 +71,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 12
+  m_SortingLayerID: 894597731
+  m_SortingLayer: 1
+  m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: e9d67dc4077f2ed4b9c507b9d7c9cd59, type: 3}
   m_Color: {r: 0.8867924, g: 0.8867924, b: 0.8867924, a: 1}
   m_FlipX: 0
@@ -101,6 +101,8 @@ MonoBehaviour:
   swipeSensitivity: 5
   _touchDamp: 5
   _isUseRotateOffset: 0
+  _inDistance: 1.1
+  _outDistance: 2.3
   _selectOffset: 25
 --- !u!1 &6047878870470961746
 GameObject:
@@ -112,7 +114,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6738287192194539990}
   - component: {fileID: 6047878870470961748}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Dial One
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -155,6 +157,7 @@ MonoBehaviour:
   _deck: {fileID: 11400000, guid: 5bc9291412883814baef3369b440d548, type: 2}
   tempCard: {fileID: 8165298467326144068, guid: d80daf2e6dc89fc4b9c1606735cfa39a, type: 3}
   _bezierMissile: {fileID: 1426304098941858083, guid: 9dd93f28a2b7477439d08440675ea353, type: 3}
+  _enemyPos: {fileID: 0}
   swipeSensitivity: 5
 --- !u!1 &6047878870784061144
 GameObject:
@@ -166,7 +169,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4298104196072643750}
   - component: {fileID: 2540267238550916144}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Box
   m_TagString: Box
   m_Icon: {fileID: 0}
@@ -181,8 +184,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6047878870784061144}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.25, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: 2.23, z: 0}
+  m_LocalScale: {x: 1.5, y: 5.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6738287192194539990}
@@ -226,15 +229,15 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 10
+  m_SortingLayerID: 894597731
+  m_SortingLayer: 1
+  m_SortingOrder: 3
   m_Sprite: {fileID: 21300000, guid: e802b29e86b4ef74abe728250ecaf37c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 0.49019608}
   m_FlipX: 0
   m_FlipY: 0
-  m_DrawMode: 1
-  m_Size: {x: 0.2, y: 0.5}
+  m_DrawMode: 0
+  m_Size: {x: 0.2, y: 0.55}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -250,7 +253,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5756807473875803196}
   - component: {fileID: 299225324799502131}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -335,7 +338,7 @@ GameObject:
   - component: {fileID: 5797411372438697829}
   - component: {fileID: 6047878870979582958}
   - component: {fileID: 6047878871389924605}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Dial Element 2
   m_TagString: DialElement
   m_Icon: {fileID: 0}
@@ -395,9 +398,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 11
+  m_SortingLayerID: 894597731
+  m_SortingLayer: 1
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: e9d67dc4077f2ed4b9c507b9d7c9cd59, type: 3}
   m_Color: {r: 0.8301887, g: 0.8301887, b: 0.8301887, a: 1}
   m_FlipX: 0
@@ -425,6 +428,8 @@ MonoBehaviour:
   swipeSensitivity: 5
   _touchDamp: 7
   _isUseRotateOffset: 0
+  _inDistance: 2.3
+  _outDistance: 3.5
   _selectOffset: 20
 --- !u!1 &6047878871482624859
 GameObject:
@@ -437,7 +442,7 @@ GameObject:
   - component: {fileID: 4305602917336199513}
   - component: {fileID: 911937662986254376}
   - component: {fileID: 6047878871482624863}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Star
   m_TagString: Star
   m_Icon: {fileID: 0}
@@ -497,9 +502,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 13
+  m_SortingLayerID: 894597731
+  m_SortingLayer: 1
+  m_SortingOrder: 4
   m_Sprite: {fileID: 21300000, guid: 5bff23710b1e9c2458df774093d06b06, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -525,6 +530,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _dial: {fileID: 6047878870470961748}
   swipeSensitivity: 5
+  _inDistance: 0
+  _outDistance: 1.1
 --- !u!1 &6047878871695396145
 GameObject:
   m_ObjectHideFlags: 0
@@ -536,7 +543,7 @@ GameObject:
   - component: {fileID: 7988665054815852223}
   - component: {fileID: 6047878870979582959}
   - component: {fileID: 6047878871695396148}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Dial Element 3
   m_TagString: DialElement
   m_Icon: {fileID: 0}
@@ -596,9 +603,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 10
+  m_SortingLayerID: 894597731
+  m_SortingLayer: 1
+  m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: e9d67dc4077f2ed4b9c507b9d7c9cd59, type: 3}
   m_Color: {r: 0.6698113, g: 0.6698113, b: 0.6698113, a: 1}
   m_FlipX: 0
@@ -626,4 +633,6 @@ MonoBehaviour:
   swipeSensitivity: 5
   _touchDamp: 10
   _isUseRotateOffset: 0
+  _inDistance: 3.5
+  _outDistance: 4.6
   _selectOffset: 14
