@@ -10,5 +10,5 @@ public class Distractor
     public string text;
 
     [Tooltip("실행함수")]
-    public AdventureFunc func;
+    public DistractorFunc func;
 }

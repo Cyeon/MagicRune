@@ -1,22 +1,23 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-public enum AdventureFunc
-{
-
-}
+using static MapDefine;
 
 public class AdventurePortal : Portal
 {
     [SerializeField]
     private List<AdventureSO> adventureList = new List<AdventureSO>();
+    public DistracotrFuncList funcList;
+
+    private void Awake()
+    {
+        funcList = GetComponent<DistracotrFuncList>();
+    }
 
     public override void Execute()
     {
-        AdventureSO adventure = GetAdventure();
-        Debug.Log(adventure.name);
-        Debug.Log(adventure.message);
+        MapSceneUI.adventureUI.gameObject.SetActive(true);
+        MapSceneUI.adventureUI.Init(GetAdventure(), this);
     }
 
     public override void Init()
@@ -30,5 +31,10 @@ public class AdventurePortal : Portal
 
         int cnt = adventureList.Count;
         return adventureList[Random.Range(0, cnt)];
+    }
+
+    public void FuncInvoke(DistractorFunc func)
+    {
+        funcList.Invoke(func.ToString(), 0);
     }
 }

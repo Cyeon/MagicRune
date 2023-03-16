@@ -48,6 +48,7 @@ public class MapManager : MonoSingleton<MapManager>
         atkTrm = transform.Find("Event");
         for (int i = 0; i < atkTrm.childCount; ++i)
         {
+            if (atkTrm.GetChild(i).gameObject.activeSelf == false) continue;
             stageOfPortalDic[StageType.Event].Add(atkTrm.GetChild(i).GetComponent<Portal>());
         }
     }

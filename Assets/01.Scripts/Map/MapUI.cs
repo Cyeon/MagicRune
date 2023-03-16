@@ -24,6 +24,8 @@ public class MapUI : MonoBehaviour
     public Sprite stageBossIcon;
     public Sprite stageEventIcon;
 
+    public AdventureUI adventureUI;
+
     private void Awake()
     {
         StageList = transform.Find("StageSlider/StageImage");
