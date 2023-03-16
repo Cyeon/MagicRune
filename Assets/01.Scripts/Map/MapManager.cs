@@ -3,103 +3,103 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using DG.Tweening;
-using UnityEngine.SceneManagement;
-
-public  enum PortalType
-{
-    Attack,
-    Event
-}
-
-[System.Serializable] 
-public class Chapter
-{
-    public int chapter = 0;
-    public float[] stageList = new float[9];
-}
+using static MapDefine;
 
 public class MapManager : MonoSingleton<MapManager>
 {
+    [Header("Chapter")]
     public List<Chapter> chapterList = new List<Chapter>();
 
     private int _chapter = 1;
     public int Chapter => _chapter;
     private Chapter _currentChapter = null;
 
-    public List<Portal> portalList = new List<Portal>();
+    [Header("Stage")]
+    public List<Stage> stageList = new List<Stage>();
+    private int Stage => Floor - ((this.Chapter - 1) * 10);
 
-    private int Stage => Floor - ((this.Chapter - 1) * 10) - 1;
-
-    private int _floor = 1;
+    private int _floor = 0;
     public int Floor => _floor;
 
+    [Header("Portal")]
+    public Dictionary<StageType, List<Portal>> stageOfPortalDic = new Dictionary<StageType, List<Portal>>();
+    public Portal selectPortal;
+
+    [Header("Attack")]
     public EnemySO selectEnemy;
     public AttackMapListSO attackMap;
 
-    public MapUI ui;
-
-    [SerializeField]
-    private Sprite _eventIcon;
-    [SerializeField]
-    private Sprite _attackIcon;
-
     private bool _isFirst = true;
-    public int isSceneLoad = 0;
+
+    private void Awake()
+    {
+        stageOfPortalDic.Add(StageType.Attack, new List<Portal>());
+        stageOfPortalDic.Add(StageType.Boss, new List<Portal>());
+        stageOfPortalDic.Add(StageType.Event, new List<Portal>());
+
+        Transform atkTrm = transform.Find("Attack");
+        for (int i = 0; i < atkTrm.childCount; ++i)
+        {
+            stageOfPortalDic[StageType.Attack].Add(atkTrm.GetChild(i).GetComponent<Portal>());
+        }
+
+        stageOfPortalDic[StageType.Boss].Add(atkTrm.GetComponent<Portal>());
+
+        atkTrm = transform.Find("Event");
+        for (int i = 0; i < atkTrm.childCount; ++i)
+        {
+            if (atkTrm.GetChild(i).gameObject.activeSelf == false) continue;
+            stageOfPortalDic[StageType.Event].Add(atkTrm.GetChild(i).GetComponent<Portal>());
+        }
+    }
 
     private void Start()
     {
         ChapterInit();
         PortalInit();
-    }
+        MapSceneUI.InfoUIReload();
+    } 
 
     private void ChapterInit()
     {
-        portalList.Clear();
+        stageList.Clear();
         _currentChapter = chapterList[Chapter - 1];
 
-        int stage = 1;
-        foreach (var chance in _currentChapter.stageList)
+        int idx = 0;
+        foreach (var chance in _currentChapter.eventStagesChance)
         {
-            Portal map = new Portal();
-
+            Stage stage = new Stage();
             int random = Random.Range(1, 100);
-            if (random <= chance)
-            {
-                map.type = PortalType.Event;
-                map.icon = _eventIcon;
-            }
-            else
-            {
-                map.type = PortalType.Attack;
-                map.icon = _attackIcon;
-            }
 
-            map.color = Color.gray;
+            stage.Init(random <= chance ? StageType.Event : StageType.Attack, MapSceneUI.stages[idx], idx);
+            stageList.Add(stage);
 
-            portalList.Add(map);
-            stage++;
+            idx++;
         }
 
-        portalList[0].color = Color.white;
-        ui.StageUI();
+        Stage bossStage = new Stage();
+        bossStage.Init(StageType.Boss, MapSceneUI.stages[9], 9);
+        stageList.Add(bossStage);
+
+        stageList[0].ChangeResource(Color.white);
     }
 
     private void PortalInit()
     {
-        ui.PortalEffectUp();
+        MapSceneUI.PortalEffectUp(stageList[Stage].type);
 
-        if (portalList[Stage].type == PortalType.Attack)
+        if (stageList[Stage].type == StageType.Attack)
         {
-            foreach (var portal in ui.portals)
+            foreach(var portal in MapSceneUI.portals)
             {
-                portal.Init(GetAttackEnemy());
+                portal.Init(SpawnPortal(stageList[Stage].type));
                 portal.transform.DOScale(1f, 0.8f);
             }
         }
         else
         {
-            ui.portals[1].Init(GetAttackEnemy());
-            ui.portals[1].transform.DOScale(1f, 0.8f);
+            MapSceneUI.portals[1].Init(SpawnPortal(stageList[Stage].type));
+            MapSceneUI.portals[1].transform.DOScale(2f, 1f);
         }
     }
 
@@ -111,23 +111,76 @@ public class MapManager : MonoSingleton<MapManager>
             return;
         }
 
-        DOTween.KillAll();
+        #region 초기화 부분
+        if (stageList[Stage].type != StageType.Event)
+        {
+            DOTween.KillAll();
 
-        ui.StageUI();
-        ui.StageList.transform.DOLocalMoveX(Stage * -300f, 0);
+            foreach (var portal in stageOfPortalDic)
+            {
+                if (portal.Value.Count > 0)
+                    portal.Value.ForEach(e =>
+                    {
+                        if (e != null)
+                            e.isUse = false;
+                    });
+            }
 
-        portalList[Stage].icon = ui.stages[Stage].sprite = selectEnemy.icon;
+            for (int i = 0; i < stageList.Count; ++i)
+            {
+                MapSceneUI.stages[i].sprite = stageList[i].icon;
+                MapSceneUI.stages[i].color = stageList[i].color;
+            }
+        }
+        else
+        {
+            MapSceneUI.ResetPortal(stageList[Stage].type);
+        }
+        #endregion
+
+        MapSceneUI.StageList.transform.DOLocalMoveX(Stage * -300f, 0);
+        stageList[Stage].ChangeResource(Color.white, selectPortal.icon);
         _floor += 1;
 
         Sequence seq = DOTween.Sequence();
         seq.AppendInterval(0.5f);
-        seq.Append(ui.StageList.transform.DOLocalMoveX(Stage * -300f, 1f));
-        seq.Append(ui.stages[Stage].DOColor(Color.white, 0.5f));
+        seq.Append(MapSceneUI.StageList.transform.DOLocalMoveX(Stage * -300f, 1f));
+        seq.Append(MapSceneUI.stages[Stage].DOColor(Color.white, 0.5f));
         seq.AppendCallback(() =>
         {
-            portalList[Stage].color = Color.white;
+            stageList[Stage].color = Color.white;
             PortalInit();
         });
+    }
+
+    private Portal SpawnPortal(StageType type)
+    {
+        List<Portal> pList = stageOfPortalDic[type].Where(e => e.isUse == false).ToList();
+        if(pList.Count == 0)
+        {
+            Debug.LogError("Not Found Portal Object");
+            return null;
+        }
+
+        int cnt = pList.Count;
+        Portal portal = pList[Random.Range(0, cnt)];
+
+        switch(type)
+        {
+            case StageType.Attack:
+            case StageType.Boss:
+                AttackPortal atkPortal = portal as AttackPortal;
+                atkPortal.enemy = type == StageType.Attack ? GetAttackEnemy() : _currentChapter.boss;
+                atkPortal.icon = atkPortal.enemy.icon;
+                atkPortal.portalName = atkPortal.enemy.enemyName;
+                atkPortal.isUse = true;
+                return atkPortal;
+
+            case StageType.Event:
+                return portal;
+        }
+
+        return null;
     }
 
     private EnemySO GetAttackEnemy()
@@ -135,7 +188,7 @@ public class MapManager : MonoSingleton<MapManager>
         List<EnemySO> enemyList = new List<EnemySO>();
         for (int i = 0; i < attackMap.map.Count; ++i)
         {
-            if (attackMap.map[i].minFloor <= Floor && attackMap.map[i].maxFloor >= Floor)
+            if (attackMap.map[i].minFloor <= Floor + 1 && attackMap.map[i].maxFloor >= Floor + 1)
             {
                 foreach (var enemy in attackMap.map[i].enemyList)
                 {
