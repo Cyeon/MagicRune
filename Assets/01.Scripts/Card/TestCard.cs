@@ -32,6 +32,11 @@ public class TestCard : MonoBehaviour
         _coolTimeText = _magicArea.Find("CoolTimeText").GetComponent<TextMeshPro>();
     }
 
+    private void Start()
+    {
+        _coolTimeText.gameObject.SetActive(false);
+    }
+
     public void SetActiveOutline(bool value)
     {
         //_outline.SetActive(value);

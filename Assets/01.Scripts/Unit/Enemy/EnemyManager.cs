@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class EnemyManager : MonoSingleton<EnemyManager>
 {
+    [SerializeField]
+    private Enemy _enemy;
+
     public EnemySO currentEnemy;
 
     public Enemy SpawnEnemy(EnemySO enemy = null)
@@ -12,10 +15,10 @@ public class EnemyManager : MonoSingleton<EnemyManager>
             enemy = currentEnemy;
 
         currentEnemy = enemy;
-        Enemy e = Instantiate(enemy.prefab).GetComponent<Enemy>();
-        UIManager.Instance.enemyImage.sprite = enemy.icon;
-        e.transform.position = Vector3.zero;
-        e.Init(enemy);
-        return e;
+        //Enemy e = Instantiate(enemy.prefab).GetComponent<Enemy>();
+        //UIManager.Instance.enemyImage.sprite = enemy.icon;
+        //_enemy.transform.position = Vector3.zero;
+        _enemy.Init(enemy);
+        return _enemy;
     }
 }

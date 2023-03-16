@@ -130,7 +130,10 @@ public class BattleManager : MonoSingleton<BattleManager>
                 EventManager<int>.TriggerEvent(Define.ON_START_PLAYER_TURN, 5);
                 EventManager.TriggerEvent(Define.ON_START_PLAYER_TURN);
                 EventManager<bool>.TriggerEvent(Define.ON_START_PLAYER_TURN, true);
-                this.MagicCircle.CardCollector.UpdateCardOutline();
+                if (this.MagicCircle != null)
+                {
+                    this.MagicCircle.CardCollector.UpdateCardOutline();
+                }
 
                 SoundManager.instance.PlaySound(turnChangeSound, SoundType.Effect);
 
@@ -150,19 +153,22 @@ public class BattleManager : MonoSingleton<BattleManager>
                 break;
         }
 
-        foreach (var rList in this.MagicCircle.RuneDict)
+        if (this.MagicCircle != null)
         {
-            foreach (var r in rList.Value)
+            foreach (var rList in this.MagicCircle.RuneDict)
             {
-                if (r.Rune == null)
+                foreach (var r in rList.Value)
                 {
-                    Destroy(r.gameObject);
-                }
-                else
-                {
-                    r.gameObject.SetActive(false);
-                    r.transform.SetParent(this.MagicCircle.CardCollector.transform);
-                    r.SetIsEquip(false);
+                    if (r.Rune == null)
+                    {
+                        Destroy(r.gameObject);
+                    }
+                    else
+                    {
+                        r.gameObject.SetActive(false);
+                        r.transform.SetParent(this.MagicCircle.CardCollector.transform);
+                        r.SetIsEquip(false);
+                    }
                 }
             }
         }
@@ -178,12 +184,16 @@ public class BattleManager : MonoSingleton<BattleManager>
         {
             TurnChange();
         }
-        this.MagicCircle.RuneDict.Clear();
-        this.MagicCircle.EffectDict.Clear();
-        this.MagicCircle.EffectContent.Clear();
-        //this.MagicCircle.CardCollector.UpdateCardOutline();
-        this.MagicCircle.CardCollector.HandCardOutline(false);
-        this.MagicCircle.CardCollector.IsFront = true;
+
+        if (this.MagicCircle != null)
+        {
+            this.MagicCircle.RuneDict.Clear();
+            this.MagicCircle.EffectDict.Clear();
+            this.MagicCircle.EffectContent.Clear();
+            //this.MagicCircle.CardCollector.UpdateCardOutline();
+            this.MagicCircle.CardCollector.HandCardOutline(false);
+            this.MagicCircle.CardCollector.IsFront = true;
+        }
     }
 
     #endregion

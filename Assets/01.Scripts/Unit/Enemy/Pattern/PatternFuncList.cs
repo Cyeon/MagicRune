@@ -70,10 +70,10 @@ public class PatternFuncList : MonoBehaviour
     {
         Sequence seq = DOTween.Sequence();
         seq.AppendCallback(() => StartCoroutine(UIManager.Instance.PatternIconAnimationCoroutine()));
-        seq.Append(UIManager.Instance.enemyIcon.DOShakePosition(0.6f, 50, 5)).SetEase(Ease.Linear);
-        seq.Append(UIManager.Instance.enemyIcon.DOLocalMoveY(-1700f, 0.2f)).SetEase(Ease.Linear);
+        seq.Append(UIManager.Instance.enemyIcon.DOShakePosition(0.6f, 0.5f, 15)).SetEase(Ease.Linear);
+        seq.Append(UIManager.Instance.enemyIcon.DOMoveY(-10f, 0.2f)).SetEase(Ease.Linear);
         seq.AppendCallback(() => DelayAttack());
-        seq.Append(UIManager.Instance.enemyIcon.DOLocalMoveY(130, 0.2f)).SetEase(Ease.Linear);
+        seq.Append(UIManager.Instance.enemyIcon.DOMoveY(5.82f, 0.2f)).SetEase(Ease.Linear);
         seq.AppendInterval(0.1f);
         seq.AppendCallback(() => BattleManager.Instance.TurnChange());
     }
@@ -86,7 +86,7 @@ public class PatternFuncList : MonoBehaviour
     public void ShieldUse()
     {
         _shieldEffect.gameObject.SetActive(true);
-        _shieldEffect.Play();
+        //_shieldEffect.Play();
         Invoke("TurnChange", 2f);
     }
 
