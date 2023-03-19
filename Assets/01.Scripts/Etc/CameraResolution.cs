@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using UnityEngine;
+using UnityEngine.Rendering;
 using UnityEngine.UI;
 
 public class CameraResolution : MonoBehaviour
@@ -13,7 +15,11 @@ public class CameraResolution : MonoBehaviour
     private void Start()
     {
         camera = GetComponent<Camera>();
+        OnSetting();
+    }
 
+    private void OnSetting()
+    {
         Rect rect = camera.rect;
 
         scaleHeight = ((float)Screen.width / Screen.height) / ((float)9f / 18.5f); // (가로 / 세로)
@@ -29,25 +35,25 @@ public class CameraResolution : MonoBehaviour
             rect.x = (1f - scaleWidth) / 2f;
         }
         camera.rect = rect;
+    }
 
-        //int setWidth = 1440;
-        //int setHeight = 2960;
+    void OnEnable()
+    {
+#if !UNITY_EDITOR
+        RenderPipelineManager.beginCameraRendering += RenderPipelineManager_endCameraRendering;
+#endif
+    }
 
-        //int deviceWidth = Screen.width;
-        //int deviceHeight = Screen.height;
+    void OnDisable()
+    {
+#if !UNITY_EDITOR
+        RenderPipelineManager.beginCameraRendering -= RenderPipelineManager_endCameraRendering;
+#endif
+    }
 
-        //Screen.SetResolution(setWidth, (int)(((float)deviceHeight / deviceWidth) * setWidth), true);
-
-        //if ((float)setWidth / setHeight < (float)deviceWidth / deviceHeight)
-        //{
-        //    float newWidth = ((float)setWidth / setHeight) / ((float)deviceWidth / deviceHeight);
-        //    camera.rect = new Rect((1f - newWidth) / 2f, 0f, newWidth, 1f);
-        //}
-        //else
-        //{
-        //    float newHeight = ((float)deviceWidth / deviceHeight) / ((float)setWidth / setHeight);
-        //    camera.rect = new Rect(0f, (1f - newHeight) / 2f, 1f, newHeight);
-        //}
+    private void RenderPipelineManager_endCameraRendering(ScriptableRenderContext context, Camera camera)
+    {
+        GL.Clear(true, true, Color.black);
     }
 
     public void OnPreCull() => GL.Clear(true, true, Color.black);
