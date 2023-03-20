@@ -5,6 +5,14 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
+public enum OutlineType
+{
+    Default,
+    Cyan,
+    Red,
+    COUNT
+}
+
 public class TestCard : MonoBehaviour
 {
     public Dial Dial;
@@ -19,6 +27,9 @@ public class TestCard : MonoBehaviour
     //private GameObject _outline;
     private TextMeshPro _coolTimeText;
     #endregion
+
+    [SerializeField]
+    private Material[] _outlineMaterialArray;
 
     private int _coolTime;
     public bool IsCoolTime => _coolTime > 0;
@@ -37,9 +48,9 @@ public class TestCard : MonoBehaviour
         _coolTimeText.gameObject.SetActive(false);
     }
 
-    public void SetActiveOutline(bool value)
+    public void SetActiveOutline(OutlineType type)
     {
-        //_outline.SetActive(value);
+        _magicImage.material = _outlineMaterialArray[(int)type];
     }
 
     public void SetMagic(CardSO magic)
@@ -56,7 +67,7 @@ public class TestCard : MonoBehaviour
     {
         _coolTime = _magic.MainRune.CoolTime;
         _magicImage.color = Color.gray;
-        SetActiveOutline(false);
+        SetActiveOutline(OutlineType.Default);
         _coolTimeText.SetText(_coolTime.ToString());
         _coolTimeText.gameObject.SetActive(true);
     }
@@ -68,7 +79,7 @@ public class TestCard : MonoBehaviour
         if(_coolTime > 0)
         {
             _magicImage.color = Color.gray;
-            SetActiveOutline(false);
+            SetActiveOutline(OutlineType.Default);
             _coolTimeText.SetText(_coolTime.ToString());
             _coolTimeText.gameObject.SetActive(true);
         }

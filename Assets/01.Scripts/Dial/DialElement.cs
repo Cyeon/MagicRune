@@ -54,7 +54,7 @@ public class DialElement : MonoBehaviour
             {
                 if(_selectCard != null)
                 {
-                    _selectCard.SetActiveOutline(false);
+                    _selectCard.SetActiveOutline(OutlineType.Default);
                 }
                 _selectCard = value;
             }
@@ -62,10 +62,10 @@ public class DialElement : MonoBehaviour
             {
                 if(_selectCard != null)
                 {
-                    _selectCard.SetActiveOutline(false);
+                    _selectCard.SetActiveOutline(OutlineType.Default);
                 }
                 _selectCard = value;
-                _selectCard.SetActiveOutline(true);
+                _selectCard.SetActiveOutline(OutlineType.Cyan);
             }
         }
     }
