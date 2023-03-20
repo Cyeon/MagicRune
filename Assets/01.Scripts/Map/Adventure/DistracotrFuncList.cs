@@ -17,7 +17,7 @@ public class DistracotrFuncList : MonoBehaviour
         MapSceneUI.adventureUI.gameObject.SetActive(false);
     }
 
-    public void Healing()
+    public void Healing(int amount)
     {
         GameManager.Instance.player.HP += 10;
         MapSceneUI.InfoUIReload();

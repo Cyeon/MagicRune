@@ -7,12 +7,6 @@ public class AdventurePortal : Portal
 {
     [SerializeField]
     private List<AdventureSO> adventureList = new List<AdventureSO>();
-    public DistracotrFuncList funcList;
-
-    private void Awake()
-    {
-        funcList = GetComponent<DistracotrFuncList>();
-    }
 
     public override void Execute()
     {
@@ -31,10 +25,5 @@ public class AdventurePortal : Portal
 
         int cnt = adventureList.Count;
         return adventureList[Random.Range(0, cnt)];
-    }
-
-    public void FuncInvoke(DistractorFunc func)
-    {
-        funcList.Invoke(func.ToString(), 0);
     }
 }

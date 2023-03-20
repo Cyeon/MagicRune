@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
+using static UnityEngine.UI.Button;
 
 [CreateAssetMenu(menuName = "Map/Adventure/Adventure SO")]
 public class AdventureSO : ScriptableObject
@@ -14,4 +16,8 @@ public class AdventureSO : ScriptableObject
 
     [Tooltip("º±≈√¡ˆ")]
     public List<Distractor> distractors = new List<Distractor>();
+    public void OnValidate()
+    {
+        distractors.ForEach(e => e.function.list)
+    }
 }
