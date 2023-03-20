@@ -76,7 +76,7 @@ public class DialElement : MonoBehaviour
     private void Awake()
     {
         _dial = GetComponentInParent<Dial>();
-        _spriteRenderer = GetComponent<SpriteRenderer>();
+        _spriteRenderer = transform.Find("VisualSprite").GetComponent<SpriteRenderer>();
         _magicList = new List<TestCard>();
         //_spriteRenderer.alphaHitTestMinimumThreshold = 0.04f;
     }
@@ -210,23 +210,23 @@ public class DialElement : MonoBehaviour
                             {
                                 // 돌리고 있을 때만
                                 DOTween.To(
-                                    () => _spriteRenderer.transform.eulerAngles,
-                                    x => _spriteRenderer.transform.eulerAngles = x,
-                                    new Vector3(0, 0, ((int)(_spriteRenderer.transform.eulerAngles.z / oneDinstance)) * oneDinstance),
+                                    () => transform.eulerAngles,
+                                    x => transform.eulerAngles = x,
+                                    new Vector3(0, 0, ((int)(transform.eulerAngles.z / oneDinstance)) * oneDinstance),
                                     0.3f
                                 );
                             }
                         }
                         else if (outBoolean)
                         {
-                            int index = (int)(_spriteRenderer.transform.eulerAngles.z / oneDinstance) % (_magicList.Count);
+                            int index = (int)(transform.eulerAngles.z / oneDinstance) % (_magicList.Count);
                             index = (index + 1) % _magicList.Count;
                             if (_magicList[index].IsCoolTime == false)
                             {
                                 DOTween.To(
-                                    () => _spriteRenderer.transform.eulerAngles,
-                                    x => _spriteRenderer.transform.eulerAngles = x,
-                                    new Vector3(0, 0, ((int)(_spriteRenderer.transform.eulerAngles.z / oneDinstance) + 1) * oneDinstance),
+                                    () => transform.eulerAngles,
+                                    x => transform.eulerAngles = x,
+                                    new Vector3(0, 0, ((int)(transform.eulerAngles.z / oneDinstance) + 1) * oneDinstance),
                                     0.3f
                                 );
                             }
@@ -235,16 +235,16 @@ public class DialElement : MonoBehaviour
                     else
                     {
                         float oneDinstance = 360f / _magicList.Count;
-                        int index = (int)(_spriteRenderer.transform.eulerAngles.z / oneDinstance) % (_magicList.Count);
+                        int index = (int)(transform.eulerAngles.z / oneDinstance) % (_magicList.Count);
 
-                        float distance = _spriteRenderer.transform.eulerAngles.z % oneDinstance;
+                        float distance = transform.eulerAngles.z % oneDinstance;
                         if (distance >= oneDinstance / 2f)
                         {
-                            _spriteRenderer.transform.DORotate(new Vector3(0, 0, (index + 1) % _magicList.Count * oneDinstance), 0.3f, RotateMode.Fast);
+                            transform.DORotate(new Vector3(0, 0, (index + 1) % _magicList.Count * oneDinstance), 0.3f, RotateMode.Fast);
                         }
                         else
                         {
-                            _spriteRenderer.transform.DORotate(new Vector3(0, 0, index * oneDinstance), 0.3f, RotateMode.Fast);
+                            transform.DORotate(new Vector3(0, 0, index * oneDinstance), 0.3f, RotateMode.Fast);
                         }
                     }
                 }

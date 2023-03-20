@@ -109,7 +109,7 @@ public class Dial : MonoBehaviour
                 float height = Mathf.Sin(angle * i + (90 * Mathf.Deg2Rad)) * 2.9f; // 470
                 float width = Mathf.Cos(angle * i + (90 * Mathf.Deg2Rad)) * 2.9f; // 450
                 _magicDict[2][i].transform.position = new Vector3(width + this.transform.position.x, height + this.transform.position.y, 0);
-                _magicDict[2][i].transform.localScale = new Vector3(0.0133f, 0.0133f, 1);
+                //_magicDict[2][i].transform.localScale = new Vector3(0.0133f, 0.0133f, 1);
 
                 Vector2 direction = new Vector2(
                     _magicDict[2][i].transform.position.x - transform.position.x,
@@ -130,7 +130,7 @@ public class Dial : MonoBehaviour
                 float height = Mathf.Sin(angle * i + (90 * Mathf.Deg2Rad)) * 1.7f; // 470
                 float width = Mathf.Cos(angle * i + (90 * Mathf.Deg2Rad)) * 1.7f; // 450
                 _magicDict[1][i].transform.position = new Vector3(width + this.transform.position.x, height + this.transform.position.y, 0);
-                _magicDict[1][i].transform.localScale = new Vector3(0.02f, 0.02f, 1);
+                //_magicDict[1][i].transform.localScale = new Vector3(0.02f, 0.02f, 1);
 
                 Vector2 direction = new Vector2(
                     _magicDict[1][i].transform.position.x - transform.position.x,
