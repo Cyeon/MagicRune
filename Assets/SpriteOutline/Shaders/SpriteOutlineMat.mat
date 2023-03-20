@@ -11,10 +11,9 @@ Material:
   m_Shader: {fileID: 4800000, guid: 62505ee61d20098489c6f861ed25cce1, type: 3}
   m_ValidKeywords: []
   m_InvalidKeywords:
-  - _CONNECTEDALPHA_ON
   - _OUTLINEENABLED_ON
   - _OUTLINEMODE_SOLID
-  - _OUTLINEPOSITION_INSIDE_UNDER_SPRITE
+  - _OUTLINEPOSITION_INSIDE_OVER_SPRITE
   - _OUTLINESHAPE_CONTOUR
   - _TILEMODE_STRETCH
   m_LightmapFlags: 4
@@ -38,12 +37,12 @@ Material:
     m_Floats:
     - _AlphaThreshold: 0
     - _Angle: 45
-    - _ConnectedAlpha: 1
+    - _ConnectedAlpha: 0
     - _OutlineEnabled: 1
     - _OutlineMode: 0
-    - _OutlinePosition: 0
+    - _OutlinePosition: 1
     - _OutlineShape: 0
-    - _Thickness: 20
+    - _Thickness: 11.56
     - _TileMode: 0
     - _Weight: 0.5
     m_Colors:
