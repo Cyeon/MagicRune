@@ -4,9 +4,15 @@ using UnityEngine;
 
 public class ShopPortal : Portal
 {
+    public List<ShopItemSO> shopItemList = new List<ShopItemSO>();
+    public ShopItemSO GetRandomShopItem()
+    {
+        return shopItemList[Random.Range(0, shopItemList.Count)];
+    }
+
     public override void Execute()
     {
-        MapManager.Instance.NextStage();
+
     }
 
     public override void Init()
