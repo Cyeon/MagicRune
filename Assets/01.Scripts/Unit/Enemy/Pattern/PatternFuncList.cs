@@ -14,7 +14,10 @@ public enum PatternFuncEnum
     TurnChange,
     DelayShake,
     Beeeeem,
-    TurnSkip
+    TurnSkip,
+    DrainAttack,
+    ShieldAttack,
+    ShieldKeep,
 }
 
 public class PatternFuncList : MonoBehaviour
@@ -117,5 +120,30 @@ public class PatternFuncList : MonoBehaviour
     {
         BattleManager.Instance.enemy.isSkip = false;
         BattleManager.Instance.TurnChange();
+    }
+
+    public void DrainAttack()
+    {
+        Sequence seq = DOTween.Sequence();
+        seq.AppendCallback(() => StartCoroutine(UIManager.Instance.PatternIconAnimationCoroutine()));
+        seq.Append(UIManager.Instance.enemyIcon.DOShakePosition(0.6f, 50, 5)).SetEase(Ease.Linear);
+        seq.Append(UIManager.Instance.enemyIcon.DOLocalMoveY(-1700f, 0.2f)).SetEase(Ease.Linear);
+        seq.AppendCallback(() => DelayAttack());
+        seq.Append(UIManager.Instance.enemyIcon.DOLocalMoveY(130, 0.2f)).SetEase(Ease.Linear);
+        seq.AppendInterval(0.1f);
+        seq.AppendCallback(() => BattleManager.Instance.enemy.HP += value);
+        seq.AppendCallback(() => UIManager.Instance.UpdateHealthbar(false));
+        seq.AppendCallback(() => BattleManager.Instance.TurnChange());
+    }
+
+    public void ShieldAttack()
+    {
+        value = BattleManager.Instance.enemy.Shield;
+        Attack();
+    }
+
+    public void ShieldKeep()
+    {
+        BattleManager.Instance.enemy.Shield += BattleManager.Instance.enemy.Shield;
     }
 }
