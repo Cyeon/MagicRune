@@ -50,7 +50,7 @@ public class TestCard : MonoBehaviour
 
     public void SetActiveOutline(OutlineType type)
     {
-        _magicImage.material = _outlineMaterialArray[(int)type];
+        //_magicImage.material = _outlineMaterialArray[(int)type];
     }
 
     public void SetMagic(CardSO magic)
