@@ -36,6 +36,7 @@ public class MapManager : MonoSingleton<MapManager>
         stageOfPortalDic.Add(StageType.Attack, new List<Portal>());
         stageOfPortalDic.Add(StageType.Boss, new List<Portal>());
         stageOfPortalDic.Add(StageType.Event, new List<Portal>());
+        stageOfPortalDic.Add(StageType.Rest, new List<Portal>());
 
         Transform atkTrm = transform.Find("Attack");
         for (int i = 0; i < atkTrm.childCount; ++i)
@@ -50,6 +51,13 @@ public class MapManager : MonoSingleton<MapManager>
         {
             if (atkTrm.GetChild(i).gameObject.activeSelf == false) continue;
             stageOfPortalDic[StageType.Event].Add(atkTrm.GetChild(i).GetComponent<Portal>());
+        }
+
+        atkTrm = transform.Find("Rest");
+        for (int i = 0; i < atkTrm.childCount; ++i)
+        {
+            if (atkTrm.GetChild(i).gameObject.activeSelf == false) continue;
+            stageOfPortalDic[StageType.Rest].Add(atkTrm.GetChild(i).GetComponent<Portal>());
         }
     }
 
@@ -71,7 +79,8 @@ public class MapManager : MonoSingleton<MapManager>
             Stage stage = new Stage();
             int random = Random.Range(1, 100);
 
-            stage.Init(random <= chance ? StageType.Event : StageType.Attack, MapSceneUI.stages[idx], idx);
+            //stage.Init(random <= chance ? StageType.Event : StageType.Attack, MapSceneUI.stages[idx], idx);
+            stage.Init(random <= chance ? StageType.Rest : StageType.Attack, MapSceneUI.stages[idx], idx); // Debug
             stageList.Add(stage);
 
             idx++;
@@ -95,6 +104,14 @@ public class MapManager : MonoSingleton<MapManager>
                 portal.Init(SpawnPortal(stageList[Stage].type));
                 portal.transform.DOScale(1f, 0.8f);
             }
+        }
+        else if (stageList[Stage].type == StageType.Rest)
+        {
+            MapSceneUI.portals[0].Init(SpawnPortal(stageList[Stage].type));
+            MapSceneUI.portals[0].transform.DOScale(2f, 1f);
+
+            MapSceneUI.portals[2].Init(SpawnPortal(stageList[Stage].type));
+            MapSceneUI.portals[2].transform.DOScale(2f, 1f);
         }
         else
         {
@@ -177,6 +194,8 @@ public class MapManager : MonoSingleton<MapManager>
                 return atkPortal;
 
             case StageType.Event:
+                return portal;
+            case StageType.Rest:
                 return portal;
         }
 

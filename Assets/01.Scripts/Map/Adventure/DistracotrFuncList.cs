@@ -41,7 +41,7 @@ public class DistracotrFuncList : MonoBehaviour
         if (increaseMode == IncreaseMode.Amount)
             GameManager.Instance.player.AddHP(amount);
         else if (increaseMode == IncreaseMode.Percent)
-            GameManager.Instance.player.AddHP(GameManager.Instance.player.GetMaxHP() / 100 * amount);
+            GameManager.Instance.player.AddHPPercent(amount);
 
         MapSceneUI.InfoUIReload();
         NextStage();

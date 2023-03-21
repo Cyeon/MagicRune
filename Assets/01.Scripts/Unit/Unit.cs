@@ -146,6 +146,11 @@ public class Unit : MonoBehaviour
         UIManager.Instance.UpdateHealthbar(true);
     }
 
+    public void AddHPPercent(float value)
+    {
+        _health += value / 100 * _maxHealth;
+    }
+
     public void AddMaxHp(float amount)
     {
         _maxHealth += amount;
