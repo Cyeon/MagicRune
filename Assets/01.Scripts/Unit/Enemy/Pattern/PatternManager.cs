@@ -10,6 +10,8 @@ public class PatternManager : MonoSingleton<PatternManager>
 
     public PatternFuncList funcList;
 
+    private int _patternIndex = 0;
+
     private void Awake()
     {
         funcList = GetComponent<PatternFuncList>();
@@ -18,12 +20,16 @@ public class PatternManager : MonoSingleton<PatternManager>
     public void PatternInit(List<Pattern> patterns)
     {
         this.patterns = patterns;
+        _patternIndex = 0;
     }
 
     public Pattern GetPattern()
     {
-        int index = Random.Range(0, patterns.Count);
-        return patterns[index];
+        if (_patternIndex >=  patterns.Count)
+        {
+            _patternIndex = 0;
+        }
+        return patterns[_patternIndex++];
     }
 
     public Pattern GetCodiPattern(string name)
