@@ -58,7 +58,6 @@ public class MapUI : MonoBehaviour
     private void OnEnable()
     {
         MapManager.Instance.NextStage();
-        InfoUIReload();
     }
 
     public void PortalEffectUp(StageType type)

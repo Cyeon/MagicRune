@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using static MapDefine;
 
 public class ShopItemPanelUI : MonoBehaviour
 {
@@ -22,6 +23,7 @@ public class ShopItemPanelUI : MonoBehaviour
         if(item.CheckAvailability())
         {
             item.Buy();
+            MapSceneUI.InfoUIReload();
             gameObject.SetActive(false);
         }
     }

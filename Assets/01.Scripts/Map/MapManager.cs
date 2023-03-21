@@ -105,7 +105,9 @@ public class MapManager : MonoSingleton<MapManager>
 
     public void NextStage()
     {
-        if(_isFirst)
+        MapSceneUI.InfoUIReload();
+
+        if (_isFirst)
         {
             _isFirst = false;
             return;
