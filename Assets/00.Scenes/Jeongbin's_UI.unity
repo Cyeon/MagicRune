@@ -175,7 +175,6 @@ MonoBehaviour:
   _enemyShieldText: {fileID: 793505168}
   _enemySlideBar: {fileID: 1760491462}
   enemyIcon: {fileID: 1641264726}
-  enemyImage: {fileID: 0}
   _playerSlideBar: {fileID: 1397370420}
   _playerShieldText: {fileID: 1964991578}
   _statusPrefab: {fileID: 7390222988243923077, guid: 297b846f4403b5d458e8e91ca8b70a96, type: 3}
@@ -593,6 +592,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38cdd1af2214ed24da8589d6f837690d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _enemy: {fileID: 0}
   currentEnemy: {fileID: 0}
 --- !u!1 &133344191
 GameObject:
@@ -2010,6 +2010,8 @@ MonoBehaviour:
   swipeSensitivity: 5
   _touchDamp: 7
   _isUseRotateOffset: 0
+  _inDistance: 0
+  _outDistance: 0
   _selectOffset: 20
 --- !u!1 &415606275
 GameObject:
@@ -4023,6 +4025,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _dial: {fileID: 1649881533}
   swipeSensitivity: 5
+  _inDistance: 0
+  _outDistance: 0
 --- !u!1 &640703302
 GameObject:
   m_ObjectHideFlags: 0
@@ -4794,6 +4798,8 @@ MonoBehaviour:
   swipeSensitivity: 5
   _touchDamp: 10
   _isUseRotateOffset: 0
+  _inDistance: 0
+  _outDistance: 0
   _selectOffset: 14
 --- !u!224 &716147045 stripped
 RectTransform:
@@ -7755,6 +7761,8 @@ MonoBehaviour:
   swipeSensitivity: 5
   _touchDamp: 5
   _isUseRotateOffset: 0
+  _inDistance: 0
+  _outDistance: 0
   _selectOffset: 25
 --- !u!1 &1215621361
 GameObject:
@@ -10525,6 +10533,7 @@ MonoBehaviour:
   _deck: {fileID: 11400000, guid: 5bc9291412883814baef3369b440d548, type: 2}
   tempCard: {fileID: 8165298467326144068, guid: d80daf2e6dc89fc4b9c1606735cfa39a, type: 3}
   _bezierMissile: {fileID: 1426304098941858083, guid: 9dd93f28a2b7477439d08440675ea353, type: 3}
+  _enemyPos: {fileID: 0}
   swipeSensitivity: 5
 --- !u!1 &1661102361
 GameObject:
