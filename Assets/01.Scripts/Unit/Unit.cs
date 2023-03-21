@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Rendering;
@@ -20,7 +21,7 @@ public class Unit : MonoBehaviour
     public float HP
     {
         get => _health;
-        set
+        protected set
         {
             if (_isDie) return;
 
@@ -127,5 +128,26 @@ public class Unit : MonoBehaviour
                 StatusManager.Instance.StatusFuncInvoke(status, this);
             }
         }
+    }
+
+    public float GetMaxHP()
+    {
+        return _maxHealth;
+    }
+
+    public float GetHP()
+    {
+        return HP;
+    }
+
+    public void AddHP(float value)
+    {
+        _health += value;
+        UIManager.Instance.UpdateHealthbar(true);
+    }
+
+    public void AddMaxHp(float amount)
+    {
+        _maxHealth += amount;
     }
 }

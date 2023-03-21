@@ -39,9 +39,9 @@ public class DistracotrFuncList : MonoBehaviour
     public void AddHp(int amount)
     {
         if (increaseMode == IncreaseMode.Amount)
-            GameManager.Instance.player.HP += amount;
+            GameManager.Instance.player.AddHP(amount);
         else if (increaseMode == IncreaseMode.Percent)
-            GameManager.Instance.player.HP += (GameManager.Instance.player.MaxHealth / 100) * amount;
+            GameManager.Instance.player.AddHP(GameManager.Instance.player.GetMaxHP() / 100 * amount);
 
         MapSceneUI.InfoUIReload();
         NextStage();
@@ -49,7 +49,7 @@ public class DistracotrFuncList : MonoBehaviour
 
     public void AddMaxHp(int amount)
     {
-        GameManager.Instance.player.SetMaxHp(amount);
+        GameManager.Instance.player.AddMaxHp(amount);
         MapSceneUI.InfoUIReload();
         NextStage();
     }

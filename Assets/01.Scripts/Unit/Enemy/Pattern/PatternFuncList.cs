@@ -131,7 +131,7 @@ public class PatternFuncList : MonoBehaviour
         seq.AppendCallback(() => DelayAttack());
         seq.Append(UIManager.Instance.enemyIcon.DOLocalMoveY(130, 0.2f)).SetEase(Ease.Linear);
         seq.AppendInterval(0.1f);
-        seq.AppendCallback(() => BattleManager.Instance.enemy.HP += value);
+        seq.AppendCallback(() => BattleManager.Instance.enemy.AddHP(value));
         seq.AppendCallback(() => UIManager.Instance.UpdateHealthbar(false));
         seq.AppendCallback(() => BattleManager.Instance.TurnChange());
     }
