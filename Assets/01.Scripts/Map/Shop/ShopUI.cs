@@ -34,5 +34,6 @@ public class ShopUI : MonoBehaviour
     {
         ShopItemPanelUI ui = Instantiate(item.panelPrefab, _storeShelf);
         ui.Init(item);
+        ui.userGold = _goldText;
     }
 }

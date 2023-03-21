@@ -1,0 +1,63 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b089f4c99f402c419e87fb17ecd4ab5, type: 3}
+  m_Name: NewSnowBall
+  m_EditorClassIdentifier: 
+  RuneImage: {fileID: 21300000, guid: 141ab0461b6f36e4aabafb8360acfe98, type: 3}
+  CardBackground: {fileID: 0}
+  RuneEffect: {fileID: 124842, guid: 16378541428887043a2d2ba231613bb9, type: 3}
+  RuneAudio: {fileID: 0}
+  AssistRuneCount: 5
+  keywordList: 
+  MainRune:
+    Name: "\uB208\uB369\uC774"
+    CardImage: {fileID: 21300000, guid: 141ab0461b6f36e4aabafb8360acfe98, type: 3}
+    CardDescription: "\uB208\uC2F8\uC6C0\uC744 \uD558\uC790\n5\uB370\uBBF8\uC9C0,
+      5\uBE59\uACB0"
+    EffectDescription:
+    - Condition:
+        ConditionType: 0
+        AttributeType: 0
+        StatusType: 0
+        ComparisonType: 0
+        Value: 0
+        IsEnemy: 0
+      EffectType: 2
+      StatusType: 0
+      IsEnemy: 1
+      AttackType: 0
+      AttributeType: 0
+      Effect: 5
+    - Condition:
+        ConditionType: 0
+        AttributeType: 0
+        StatusType: 0
+        ComparisonType: 0
+        Value: 0
+        IsEnemy: 0
+      EffectType: 0
+      StatusType: 3
+      IsEnemy: 1
+      AttackType: 0
+      AttributeType: 0
+      Effect: 5
+    Attribute: 3
+    Cost: 0
+    CoolTime: 2
+  AssistRune:
+    Name: 
+    CardImage: {fileID: 0}
+    CardDescription: 
+    EffectDescription: []
+    Attribute: 0
+    Cost: 0
+    CoolTime: 0

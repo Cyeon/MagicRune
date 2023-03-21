@@ -88,16 +88,20 @@ public class MapManager : MonoSingleton<MapManager>
     {
         MapSceneUI.PortalEffectUp(stageList[Stage].type);
 
+        float time = 1.2f;
+
         if (stageList[Stage].type == StageType.Attack)
         {
             foreach(var portal in MapSceneUI.portals)
             {
+                StartCoroutine(portal.Effecting(time));
                 portal.Init(SpawnPortal(stageList[Stage].type));
                 portal.transform.DOScale(1f, 0.8f);
             }
         }
         else
         {
+            StartCoroutine(MapSceneUI.portals[1].Effecting(1.8f));
             MapSceneUI.portals[1].Init(SpawnPortal(stageList[Stage].type));
             MapSceneUI.portals[1].transform.DOScale(2f, 1f);
         }
@@ -105,7 +109,9 @@ public class MapManager : MonoSingleton<MapManager>
 
     public void NextStage()
     {
-        if(_isFirst)
+        MapSceneUI.InfoUIReload();
+
+        if (_isFirst)
         {
             _isFirst = false;
             return;
@@ -188,7 +194,7 @@ public class MapManager : MonoSingleton<MapManager>
         List<EnemySO> enemyList = new List<EnemySO>();
         for (int i = 0; i < attackMap.map.Count; ++i)
         {
-            if (attackMap.map[i].minFloor <= Floor + 1 && attackMap.map[i].maxFloor >= Floor + 1)
+            if (attackMap.map[i].MinFloor <= Floor + 1 && attackMap.map[i].MaxFloor >= Floor + 1)
             {
                 foreach (var enemy in attackMap.map[i].enemyList)
                 {

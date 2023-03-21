@@ -16,6 +16,8 @@ public enum AttributeType
     Fire, // 불
     Ice, // 얼음
     Wind, // 바람
+    Ground, // 땅
+    Electric, // 전기
 }
 
 /// <summary>

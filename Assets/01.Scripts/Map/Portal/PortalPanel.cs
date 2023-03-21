@@ -13,6 +13,8 @@ public class PortalPanel : MonoBehaviour
     private Image _image;
     private Portal _portal;
 
+    public bool isEffecting = false;
+
     private void Awake()
     {
         _titleText = transform.Find("TItle_Text").GetComponent<TextMeshProUGUI>();
@@ -28,7 +30,16 @@ public class PortalPanel : MonoBehaviour
 
     public void Select()
     {
+        if (isEffecting) return;
+
         MapManager.Instance.selectPortal = _portal;
         _portal.Execute();
+    }
+
+    public IEnumerator Effecting(float time)
+    {
+        isEffecting = true;
+        yield return new WaitForSeconds(time);
+        isEffecting = false;
     }
 }
