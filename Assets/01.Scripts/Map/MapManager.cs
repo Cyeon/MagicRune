@@ -101,7 +101,7 @@ public class MapManager : MonoSingleton<MapManager>
         }
         else
         {
-            StartCoroutine(MapSceneUI.portals[1].Effecting(2.0f));
+            StartCoroutine(MapSceneUI.portals[1].Effecting(1.8f));
             MapSceneUI.portals[1].Init(SpawnPortal(stageList[Stage].type));
             MapSceneUI.portals[1].transform.DOScale(2f, 1f);
         }
