@@ -175,6 +175,7 @@ MonoBehaviour:
   _enemyShieldText: {fileID: 793505168}
   _enemySlideBar: {fileID: 1760491462}
   enemyIcon: {fileID: 1641264726}
+  enemyImage: {fileID: 0}
   _playerSlideBar: {fileID: 1397370420}
   _playerShieldText: {fileID: 1964991578}
   _statusPrefab: {fileID: 7390222988243923077, guid: 297b846f4403b5d458e8e91ca8b70a96, type: 3}
@@ -749,8 +750,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38cdd1af2214ed24da8589d6f837690d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyList:
-  - {fileID: 11400000, guid: 86bf330ac11acb9449a85e6c3dc0ed14, type: 2}
+  currentEnemy: {fileID: 0}
 --- !u!1 &133344191
 GameObject:
   m_ObjectHideFlags: 0
@@ -5394,13 +5394,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6c56095b31cbc9439a2e698da204317, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameTurn: 4
+  _gameTurn: 4
   player: {fileID: 0}
   enemy: {fileID: 0}
   currentUnit: {fileID: 0}
   attackUnit: {fileID: 0}
   MagicCircle: {fileID: 1502645725}
-  Dial: {fileID: 1649881533}
   turnChangeSound: {fileID: 8300000, guid: a851004179da45a449b2eb238ac440c7, type: 3}
 --- !u!1 &1038780379
 GameObject:
@@ -9688,17 +9687,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 6047878870470961749, guid: d97cab570bc02de4f9f2a665ef076cc9, type: 3}
   m_PrefabInstance: {fileID: 6047878870979582953}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1649881533 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6047878870470961748, guid: d97cab570bc02de4f9f2a665ef076cc9, type: 3}
-  m_PrefabInstance: {fileID: 6047878870979582953}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 20f228e92357baf42af2febb8ef501bb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1661102361
 GameObject:
   m_ObjectHideFlags: 0
@@ -12698,7 +12686,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6047878870470961749, guid: d97cab570bc02de4f9f2a665ef076cc9, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -1242
+      value: -1532
       objectReference: {fileID: 0}
     - target: {fileID: 6047878870470961749, guid: d97cab570bc02de4f9f2a665ef076cc9, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
