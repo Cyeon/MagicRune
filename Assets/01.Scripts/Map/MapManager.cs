@@ -188,7 +188,7 @@ public class MapManager : MonoSingleton<MapManager>
         List<EnemySO> enemyList = new List<EnemySO>();
         for (int i = 0; i < attackMap.map.Count; ++i)
         {
-            if (attackMap.map[i].minFloor <= Floor + 1 && attackMap.map[i].maxFloor >= Floor + 1)
+            if (attackMap.map[i].MinFloor <= Floor + 1 && attackMap.map[i].MaxFloor >= Floor + 1)
             {
                 foreach (var enemy in attackMap.map[i].enemyList)
                 {

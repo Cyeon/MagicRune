@@ -3,10 +3,22 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
+public class Floor
+{
+    public int chapter;
+    [Range(1, 10)]
+    public int stage;
+}
+
+[System.Serializable]
 public class AttackMapInfo
 {
-    public int minFloor = 1;
-    public int maxFloor = 1;
+    [SerializeField] private Floor _minFloor;
+    public int MinFloor => (_minFloor.chapter - 1) * 10 + _minFloor.stage;
+
+    [SerializeField] private Floor _maxFloor;
+    public int MaxFloor => (_maxFloor.chapter - 1) * 10 + _maxFloor.stage;
+
     public List<EnemySO> enemyList = new List<EnemySO>();
 
     public void Reset()
