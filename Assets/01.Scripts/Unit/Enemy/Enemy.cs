@@ -9,8 +9,6 @@ public class Enemy : Unit
     public float atkDamage;
     public Pattern pattern;
 
-    public bool isSkip = false;
-
     public AudioClip attackSound = null;
 
     private Sequence idleSequence = null;
