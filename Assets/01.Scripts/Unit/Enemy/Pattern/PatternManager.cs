@@ -6,7 +6,6 @@ using UnityEngine;
 public class PatternManager : MonoSingleton<PatternManager>
 {
     public List<Pattern> patterns = new List<Pattern>();
-    public List<Pattern> codiPatterns = new List<Pattern>();
 
     public PatternFuncList funcList;
 
@@ -30,11 +29,6 @@ public class PatternManager : MonoSingleton<PatternManager>
             _patternIndex = 0;
         }
         return patterns[_patternIndex++];
-    }
-
-    public Pattern GetCodiPattern(string name)
-    {
-        return codiPatterns.Where(e => e.info.patternName == name).FirstOrDefault();
     }
 
     public void FuncInovke(List<PatternFuncEnum> funcList)

@@ -121,10 +121,7 @@ public class BattleManager : MonoSingleton<BattleManager>
                 StatusManager.Instance.StatusTurnChange(enemy);
 
                 enemy.pattern?.End();
-                if (enemy.isSkip)
-                    enemy.pattern = PatternManager.Instance.GetCodiPattern("TurnSkip");
-                else
-                    enemy.pattern = PatternManager.Instance.GetPattern();
+                enemy.pattern = PatternManager.Instance.GetPattern();
                 enemy.pattern?.Start();
 
                 EventManager<int>.TriggerEvent(Define.ON_START_PLAYER_TURN, 5);

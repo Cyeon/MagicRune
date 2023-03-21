@@ -110,7 +110,6 @@ public class PatternFuncList : MonoBehaviour
         Sequence seq = DOTween.Sequence();
         seq.Append(UIManager.Instance.enemyIcon.DOShakeRotation(2, 90, 5)).SetEase(Ease.Linear);
         SoundManager.Instance.PlaySound(beamSound, SoundType.Effect);
-        seq.AppendCallback(() => BattleManager.Instance.enemy.isSkip = true);
         seq.AppendCallback(() => BattleManager.Instance.player.TakeDamage(value));
         seq.AppendInterval(0.2f);
         seq.AppendCallback(() => BattleManager.Instance.TurnChange());
@@ -118,7 +117,6 @@ public class PatternFuncList : MonoBehaviour
 
     public void TurnSkip()
     {
-        BattleManager.Instance.enemy.isSkip = false;
         BattleManager.Instance.TurnChange();
     }
 
