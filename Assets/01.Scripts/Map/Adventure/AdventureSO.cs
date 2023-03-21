@@ -16,8 +16,4 @@ public class AdventureSO : ScriptableObject
 
     [Tooltip("¼±ÅÃÁö")]
     public List<Distractor> distractors = new List<Distractor>();
-    public void OnValidate()
-    {
-        distractors.ForEach(e => e.function.list)
-    }
 }

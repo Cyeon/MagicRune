@@ -9,18 +9,58 @@ public enum DistractorFunc
     Healing
 }
 
+public enum IncreaseMode
+{
+    Amount,
+    Percent,
+    Unknown
+}
 public class DistracotrFuncList : MonoBehaviour
 {
+    private IncreaseMode increaseMode = IncreaseMode.Unknown;
+
+    /// <summary>
+    /// Healing, IncreaseMaxHp 사용 전 Amount로 더해줄지 percent로 계산해서 더해줄지 결정 해주기 
+    /// </summary>
+    /// <param name="num">0->Amount, 1->Percent</param>
+    public void SetMode(int num) // Inspector에서 사용하기 위해 enum이 아닌 int 형
+    {
+        Debug.Log($"Set IncreaseMode {(IncreaseMode)num}");
+        increaseMode = (IncreaseMode)num;
+    }
+
     public void NextStage()
     {
         MapManager.Instance.NextStage();
         MapSceneUI.adventureUI.gameObject.SetActive(false);
     }
 
-    public void Healing(int amount)
+    public void AddHp(int amount)
     {
-        GameManager.Instance.player.HP += 10;
+        if (increaseMode == IncreaseMode.Amount)
+            GameManager.Instance.player.HP += amount;
+        else if (increaseMode == IncreaseMode.Percent)
+            GameManager.Instance.player.HP += (GameManager.Instance.player.MaxHealth / 100) * amount;
+
         MapSceneUI.InfoUIReload();
         NextStage();
+    }
+
+    public void AddMaxHp(int amount)
+    {
+        GameManager.Instance.player.SetMaxHp(amount);
+        MapSceneUI.InfoUIReload();
+        NextStage();
+    }
+
+    public void AddGold(int amount)
+    {
+        GameManager.Instance.AddGold(amount);
+        MapSceneUI.InfoUIReload();
+        NextStage();
+    }
+    public void BattleEnemy(EnemySO enemy)
+    {
+
     }
 }

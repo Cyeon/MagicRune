@@ -8,4 +8,9 @@ public class GameManager : MonoSingleton<GameManager>
 
     private int _gold = 0;
     public int Gold => _gold;
+
+    public void AddGold(int amount)
+    {
+        _gold += amount;
+    }
 }
