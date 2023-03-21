@@ -4,21 +4,20 @@ using UnityEngine;
 
 public class ShopPortal : Portal
 {
+    [SerializeField] private ShopUI _shopUI;
     public List<ShopItemSO> shopItemList = new List<ShopItemSO>();
-    public ShopItemSO GetRandomShopItem()
-    {
-        return shopItemList[Random.Range(0, shopItemList.Count)];
-    }
 
     public override void Execute()
     {
-
+        _shopUI.Open();
+        foreach(ShopItemSO item in shopItemList)
+        {
+            _shopUI.ShopItemProduct(item);
+        }
     }
 
     public override void Init()
     {
 
     }
-
-    
 }

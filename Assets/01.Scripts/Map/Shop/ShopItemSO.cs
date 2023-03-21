@@ -16,9 +16,14 @@ public class ShopItemSO : ScriptableObject
     private bool _isBuy = false;
     public bool IsBuy => _isBuy;
 
+    public bool CheckAvailability()
+    {
+        if (IsBuy || gold > GameManager.Instance.Gold) return false;
+        return true;
+    }
+
     public void Buy()
     {
-        if (gold > GameManager.Instance.Gold) return;
         GameManager.Instance.Gold -= gold;
         _isBuy = true;
         Execute();
