@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using static MapDefine;
 
 public enum DistractorFunc
@@ -61,6 +62,7 @@ public class DistracotrFuncList : MonoBehaviour
     }
     public void BattleEnemy(EnemySO enemy)
     {
-
+        MapManager.Instance.selectEnemy = enemy;
+        SceneManager.LoadScene("DialScene");
     }
 }

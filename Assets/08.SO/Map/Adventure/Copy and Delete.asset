@@ -12,7 +12,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 785ffbcf96aa1424782615e0a3087e7e, type: 3}
   m_Name: Copy and Delete
   m_EditorClassIdentifier: 
-  adventureName: 
+  adventureName: "\uC904\uAE4C \uB9D0\uAE4C \uC904\uAE4C \uB9D0\uAE4C"
   image: {fileID: 0}
-  message: 
-  distractors: []
+  message: "\uC2E0\uC804\uC5D0 \uB4E4\uC5B4\uC11C\uC790 \uBCF4\uB77C \uBE5B\uC758
+    \uC131\uBB3C\uACFC \uD30C\uB780 \uBE5B\uC758 \uC131\uBB3C\uC744 \uBC1C\uACAC\uD560
+    \uC218 \uC788\uC5C8\uC2B5\uB2C8\uB2E4."
+  distractors:
+  - text: "[\uBCF4\uB77C \uBE5B\uC758 \uC131\uBB3C] \uB79C\uB364\uD55C \uCE74\uB4DC
+      1\uC7A5\uC774 \uBCF5\uC81C\uB429\uB2C8\uB2E4."
+    function:
+      m_PersistentCalls:
+        m_Calls: []
+  - text: "[\uD30C\uB780 \uBE5B\uC758 \uC131\uBB3C] \uC120\uD0DD\uD55C \uCE74\uB4DC
+      1\uC7A5\uC744 \uC81C\uAC70\uD569\uB2C8\uB2E4."
+    function:
+      m_PersistentCalls:
+        m_Calls: []
+  - text: "[\uB5A0\uB098\uAE30]"
+    function:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 896080243694524714, guid: 224f0ca2aa1150447ad34e73a82c6cf7, type: 3}
+          m_TargetAssemblyTypeName: DistracotrFuncList, Assembly-CSharp
+          m_MethodName: NextStage
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2

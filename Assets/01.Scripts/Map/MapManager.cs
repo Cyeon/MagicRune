@@ -16,7 +16,7 @@ public class MapManager : MonoSingleton<MapManager>
 
     [Header("Stage")]
     public List<Stage> stageList = new List<Stage>();
-    private int Stage => Floor - ((this.Chapter - 1) * 10);
+ [SerializeField]   private int Stage => Floor - ((this.Chapter - 1) * 10);
 
     private int _floor = 0;
     public int Floor => _floor;
@@ -125,16 +125,16 @@ public class MapManager : MonoSingleton<MapManager>
                             e.isUse = false;
                     });
             }
-
-            for (int i = 0; i < stageList.Count; ++i)
-            {
-                MapSceneUI.stages[i].sprite = stageList[i].icon;
-                MapSceneUI.stages[i].color = stageList[i].color;
-            }
         }
         else
         {
             MapSceneUI.ResetPortal(stageList[Stage].type);
+        }
+
+        for (int i = 0; i < stageList.Count; ++i)
+        {
+            MapSceneUI.stages[i].sprite = stageList[i].icon;
+            MapSceneUI.stages[i].color = stageList[i].color;
         }
         #endregion
 
