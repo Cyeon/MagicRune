@@ -7,8 +7,6 @@ public class ShopUI : MonoBehaviour
 {
     private TextMeshProUGUI _goldText;
     private Transform _storeShelf;
-    [SerializeField]
-    private ShopItemPanelUI _itemPanel;
 
     private void Awake()
     {
@@ -34,7 +32,7 @@ public class ShopUI : MonoBehaviour
 
     public void ShopItemProduct(ShopItemSO item)
     {
-        ShopItemPanelUI ui = Instantiate(_itemPanel, _storeShelf);
+        ShopItemPanelUI ui = Instantiate(item.panelPrefab, _storeShelf);
         ui.Init(item);
     }
 }
