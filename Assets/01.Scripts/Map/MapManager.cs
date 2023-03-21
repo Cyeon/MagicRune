@@ -88,16 +88,20 @@ public class MapManager : MonoSingleton<MapManager>
     {
         MapSceneUI.PortalEffectUp(stageList[Stage].type);
 
+        float time = 1.2f;
+
         if (stageList[Stage].type == StageType.Attack)
         {
             foreach(var portal in MapSceneUI.portals)
             {
+                StartCoroutine(portal.Effecting(time));
                 portal.Init(SpawnPortal(stageList[Stage].type));
                 portal.transform.DOScale(1f, 0.8f);
             }
         }
         else
         {
+            StartCoroutine(MapSceneUI.portals[1].Effecting(2.0f));
             MapSceneUI.portals[1].Init(SpawnPortal(stageList[Stage].type));
             MapSceneUI.portals[1].transform.DOScale(2f, 1f);
         }

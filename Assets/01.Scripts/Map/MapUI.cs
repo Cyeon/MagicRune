@@ -2,7 +2,6 @@ using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -63,7 +62,10 @@ public class MapUI : MonoBehaviour
     public void PortalEffectUp(StageType type)
     {
         if (type == StageType.Attack)
-            _attackPortalEffects.ForEach(x => x.DOScale(1.2f, 1f));
+            _attackPortalEffects.ForEach(x =>
+            {
+                x.DOScale(1.2f, 1f);
+            });
         else
             _bossPortalEffects.ForEach(x => x.DOScale(2f, 1f));
     }
