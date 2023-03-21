@@ -36,6 +36,7 @@ public class AdventureUI : MonoBehaviour
     {
         _storyPanel.SetActive(false);
         _distractorPanel.SetActive(true);
+
     }
 
     public void Init(AdventureSO info, AdventurePortal portal)
@@ -54,7 +55,7 @@ public class AdventureUI : MonoBehaviour
             _distractorText[i].text = info.distractors[i].text;
             _distractorButtons[i].onClick.RemoveAllListeners();
             int index = i;
-            _distractorButtons[i].onClick.AddListener(() => portal.funcList.Invoke(info.distractors[index].func.ToString(), 0));
+            _distractorButtons[i].onClick.AddListener(() => info.distractors[index].function.Invoke());
             _distractorButtons[i].gameObject.SetActive(true);
         }
     }

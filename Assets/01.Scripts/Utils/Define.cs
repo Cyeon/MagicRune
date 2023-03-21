@@ -1,3 +1,4 @@
+using UnityEngine;
 /// <summary>
 /// 상수 매니저
 /// </summary>
@@ -14,4 +15,17 @@ public class Define
     public const int GAME_END = 1002;
 
     public const int CLICK_VIEW_UI = 10000;
+
+    private static Camera _mainCam;
+    public static Camera MainCam
+    {
+        get
+        {
+            if(_mainCam == null)
+            {
+                _mainCam = Camera.main;
+            }
+            return _mainCam;
+        }
+    }
 }

@@ -15,11 +15,16 @@ public class Enemy : Unit
 
     private Sequence idleSequence = null;
 
+    private SpriteRenderer _spriteRenderer;
+
     public void Init(EnemySO so)
     {
         enemyInfo = so;
         _maxHealth = enemyInfo.health;
         HP = enemyInfo.health;
+        if (_spriteRenderer == null)
+            _spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+        _spriteRenderer.sprite = so.icon;
 
         UIManager.Instance.HealthbarInit(false, _maxHealth);
     }

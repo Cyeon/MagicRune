@@ -15,7 +15,7 @@
 		[KeywordEnum(Inside under sprite, Inside over sprite, Outside)] _OutlinePosition("Outline Position (Frame Only)", Float) = 0
 
 		[Header(Solid Settings)]
-		[HDR] _SolidOutline ("Outline Color Base", Color) = (1,1,1,1)
+		_SolidOutline ("Outline Color Base", Color) = (1,1,1,1)
 
 		[Header(Gradient Settings)]
 		_GradientOutline1 ("Outline Color 1", Color) = (1,1,1,1)

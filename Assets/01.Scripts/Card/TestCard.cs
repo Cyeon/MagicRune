@@ -1,8 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+
+public enum OutlineType
+{
+    Default,
+    Cyan,
+    Red,
+    COUNT
+}
 
 public class TestCard : MonoBehaviour
 {
@@ -14,10 +23,13 @@ public class TestCard : MonoBehaviour
 
     #region UI
     private Transform _magicArea;
-    private Image _magicImage;
-    private GameObject _outline;
-    private Text _coolTimeText;
+    private SpriteRenderer _magicImage;
+    //private GameObject _outline;
+    private TextMeshPro _coolTimeText;
     #endregion
+
+    [SerializeField]
+    private Material[] _outlineMaterialArray;
 
     private int _coolTime;
     public bool IsCoolTime => _coolTime > 0;
@@ -26,14 +38,19 @@ public class TestCard : MonoBehaviour
     {
         _dialElement = GetComponentInParent<DialElement>();
         _magicArea = transform.Find("MagicArea");
-        _magicImage = _magicArea.Find("MagicImage").GetComponent<Image>();
-        _outline = _magicArea.Find("Outline").gameObject;
-        _coolTimeText = _magicArea.Find("CoolTimeText").GetComponent<Text>();
+        _magicImage = _magicArea.Find("MagicImage").GetComponent<SpriteRenderer>();
+        //_outline = _magicArea.Find("Outline").gameObject;
+        _coolTimeText = _magicArea.Find("CoolTimeText").GetComponent<TextMeshPro>();
     }
 
-    public void SetActiveOutline(bool value)
+    private void Start()
     {
-        _outline.SetActive(value);
+        _coolTimeText.gameObject.SetActive(false);
+    }
+
+    public void SetActiveOutline(OutlineType type)
+    {
+        //_magicImage.material = _outlineMaterialArray[(int)type];
     }
 
     public void SetMagic(CardSO magic)
@@ -50,8 +67,8 @@ public class TestCard : MonoBehaviour
     {
         _coolTime = _magic.MainRune.CoolTime;
         _magicImage.color = Color.gray;
-        SetActiveOutline(false);
-        _coolTimeText.text = _coolTime.ToString();
+        SetActiveOutline(OutlineType.Default);
+        _coolTimeText.SetText(_coolTime.ToString());
         _coolTimeText.gameObject.SetActive(true);
     }
 
@@ -62,8 +79,8 @@ public class TestCard : MonoBehaviour
         if(_coolTime > 0)
         {
             _magicImage.color = Color.gray;
-            SetActiveOutline(false);
-            _coolTimeText.text = _coolTime.ToString();
+            SetActiveOutline(OutlineType.Default);
+            _coolTimeText.SetText(_coolTime.ToString());
             _coolTimeText.gameObject.SetActive(true);
         }
         else

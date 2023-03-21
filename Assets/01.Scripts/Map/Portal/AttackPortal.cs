@@ -10,7 +10,7 @@ public class AttackPortal : Portal
     public override void Execute()
     {
         MapManager.Instance.selectEnemy = enemy;
-        SceneManager.LoadScene("MainBattleScene");
+        SceneManager.LoadScene("DialScene");
     }
 
     public override void Init()

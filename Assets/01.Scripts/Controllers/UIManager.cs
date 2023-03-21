@@ -21,7 +21,6 @@ public class UIManager : MonoSingleton<UIManager>
     private Slider _enemyHealthFeedbackSlider;
     private TextMeshProUGUI _enemyHealthText;
     public Transform enemyIcon;
-    public Image enemyImage;
 
     [Header("Player UI")]
     [SerializeField] private Transform _playerSlideBar;
@@ -95,8 +94,6 @@ public class UIManager : MonoSingleton<UIManager>
         _statusDescInfo = _statusDescPanel.transform.Find("Infomation").GetComponent<TextMeshPro>();
 
         _gr = _canvas.GetComponent<GraphicRaycaster>();
-
-        enemyImage = enemyIcon.GetComponent<Image>();
     }
 
     public void OnDestroy()

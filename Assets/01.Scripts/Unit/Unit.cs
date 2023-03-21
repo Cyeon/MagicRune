@@ -14,11 +14,16 @@ public class Unit : MonoBehaviour
     [SerializeField] protected float _maxHealth;
     public float MaxHealth => _maxHealth;
     [SerializeField] private float _health = 10f;
+
+    private bool _isDie = false;
+
     public float HP
     {
         get => _health;
         set
         {
+            if (_isDie) return;
+
             _health = value;
             if (_health > _maxHealth)
             {
@@ -28,6 +33,7 @@ public class Unit : MonoBehaviour
             if(_health <= 0)
             {
                 BattleManager.Instance.Win();
+                _isDie = true;
             }
         }
     }

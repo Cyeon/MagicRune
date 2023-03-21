@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
+using static UnityEngine.UI.Button;
 
 [CreateAssetMenu(menuName = "Map/Adventure/Adventure SO")]
 public class AdventureSO : ScriptableObject

@@ -1,0 +1,78 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 785ffbcf96aa1424782615e0a3087e7e, type: 3}
+  m_Name: No Pain, No Gain
+  m_EditorClassIdentifier: 
+  adventureName: "\uACE0\uD1B5 \uC5C6\uC778 \uC5BB\uB294 \uAC83\uB3C4 \uC5C6\uB2E4"
+  image: {fileID: 0}
+  message: "\uC9C0\uB098\uAC00\uB358 \uC911 \uAC00\uC2DC \uB364\uBD88\uC774 \uC6B0\uAC70\uC9C4
+    \uACF3\uC744 \uBC1C\uACAC\uD588\uC2B5\uB2C8\uB2E4. \uBC18\uC9DD\uC774\uB294 \uAC83\uC774
+    \uBCF4\uC5EC \uC790\uC138\uD788 \uBCF4\uB2C8, \uB364\uBD88 \uBC11\uC5D0 \uC788\uB294
+    \uAE08\uD654 \uC8FC\uBA38\uB2C8\uB97C \uBC1C\uACAC\uD558\uC600\uC2B5\uB2C8\uB2E4."
+  distractors:
+  - text: "[\uC0B4\uD3B4\uBCF8\uB2E4] \uAE08\uD654 30\uAC1C\uB97C \uC5BB\uACE0, 
+      \uCCB4\uB825\uC744 5 \uC783\uC2B5\uB2C8\uB2E4."
+    function:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 896080243694524714, guid: 224f0ca2aa1150447ad34e73a82c6cf7, type: 3}
+          m_TargetAssemblyTypeName: DistracotrFuncList, Assembly-CSharp
+          m_MethodName: AddGold
+          m_Mode: 3
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 30
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 896080243694524714, guid: 224f0ca2aa1150447ad34e73a82c6cf7, type: 3}
+          m_TargetAssemblyTypeName: DistracotrFuncList, Assembly-CSharp
+          m_MethodName: SetMode
+          m_Mode: 3
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 896080243694524714, guid: 224f0ca2aa1150447ad34e73a82c6cf7, type: 3}
+          m_TargetAssemblyTypeName: DistracotrFuncList, Assembly-CSharp
+          m_MethodName: IncreaseMaxHp
+          m_Mode: 3
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: -5
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - text: "[\uB5A0\uB098\uAE30]"
+    function:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 896080243694524714, guid: 224f0ca2aa1150447ad34e73a82c6cf7, type: 3}
+          m_TargetAssemblyTypeName: DistracotrFuncList, Assembly-CSharp
+          m_MethodName: NextStage
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
