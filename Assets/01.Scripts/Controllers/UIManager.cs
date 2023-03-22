@@ -388,45 +388,19 @@ public class UIManager : MonoSingleton<UIManager>
 
     #region Description
 
-    public void CardDescPopup(Card card)
+    public void CardDescPopup(Rune rune)
     {
-        _cardDescPanel.SetActive(true);
-        //_cardDescPanel.transform.position = pos + new Vector3(0, 700, 0);
-
-        RuneProperty rune = card.IsFront ? card.Rune.MainRune : card.Rune.AssistRune;
-        
-        _cardDescName.text = rune.Name;
-        _cardDescSkillIcon.sprite = rune.CardImage;
-        _cardDescInfo.text = rune.CardDescription;
-        _cardDescMana.text = rune.Cost.ToString();
-        _cardDescCool.text = rune.CoolTime.ToString();
-
-        for(int i = 0; i < _cardDescKeyword.childCount; i++)
-        {
-            Destroy(_cardDescKeyword.GetChild(i).gameObject);
-        }
-
-        foreach(var keyword in card.Rune.keywordList)
-        {
-            GameObject panel = word.KeywordInit(keyword);
-            panel.transform.SetParent(_cardDescKeyword);
-            panel.transform.localScale = Vector3.one;
-        }
-    }
-
-    public void CardDescPopup(TestCard card)
-    {
-        if (card == null)
+        if (rune == null)
         {
             _cardDescPanel.SetActive(false);
         }
         else
         {
-            RuneProperty magic = card.Magic.MainRune;
+            RuneSO magic = rune.Magic;
 
             _cardDescName.text = magic.Name;
-            _cardDescSkillIcon.sprite = magic.CardImage;
-            _cardDescInfo.text = magic.CardDescription;
+            _cardDescSkillIcon.sprite = magic.RuneImage;
+            _cardDescInfo.text = magic.MainRune.CardDescription;
             _cardDescPanel.SetActive(true);
         }
     }

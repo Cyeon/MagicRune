@@ -43,9 +43,9 @@ public class DialElement : MonoBehaviour
 
     private int _fingerID = -1;
 
-    private List<TestCard> _magicList;
-    private TestCard _selectCard;
-    public TestCard SelectCard
+    private List<Rune> _magicList;
+    private Rune _selectCard;
+    public Rune SelectCard
     {
         get => _selectCard;
         set
@@ -77,7 +77,7 @@ public class DialElement : MonoBehaviour
     {
         _dial = GetComponentInParent<Dial>();
         _spriteRenderer = transform.Find("VisualSprite").GetComponent<SpriteRenderer>();
-        _magicList = new List<TestCard>();
+        _magicList = new List<Rune>();
         //_spriteRenderer.alphaHitTestMinimumThreshold = 0.04f;
     }
 
@@ -160,9 +160,9 @@ public class DialElement : MonoBehaviour
         }
     }
 
-    public void SetCardList(List<TestCard> list)
+    public void SetCardList(List<Rune> list)
     {
-        _magicList = new List<TestCard>(list);
+        _magicList = new List<Rune>(list);
     }
 
     public void Swipe1()
