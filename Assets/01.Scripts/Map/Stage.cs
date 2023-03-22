@@ -29,8 +29,8 @@ public class Stage
                 ChangeResource(Color.gray, MapSceneUI.stageEventIcon); break;
             case StageType.Boss:
                 ChangeResource(Color.gray, MapSceneUI.stageBossIcon); break;
-            case StageType.Rest:
-                ChangeResource(Color.gray, MapSceneUI.stageRestIcon); break;
+                //case StageType.Rest:
+                //ChangeResource(Color.gray, MapSceneUI.stageRestIcon); break;
         }
     }
 
@@ -57,5 +57,5 @@ public enum StageType
     Attack,
     Event,
     Boss,
-    Rest
+    //Rest
 }

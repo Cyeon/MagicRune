@@ -66,6 +66,11 @@ public class MapUI : MonoBehaviour
     {
         if (type == StageType.Attack)
             _attackPortalEffects.ForEach(x => x.DOScale(1.2f, 1f));
+        //else if(type == StageType.Rest)
+        //{
+        //    _attackPortalEffects[0].DOScale(1.2f, 1f);
+        //    _attackPortalEffects[_attackPortalEffects.Count - 1].DOScale(1.2f, 1f);
+        //}
         else
             _bossPortalEffects.ForEach(x => x.DOScale(2f, 1f));
     }
@@ -73,11 +78,16 @@ public class MapUI : MonoBehaviour
     public void ResetPortal(StageType type)
     {
         if (type == StageType.Attack)
-            _attackPortalEffects.ForEach(x => x.DOScale(0,0));
+            _attackPortalEffects.ForEach(x => x.transform.localScale = Vector3.zero);
+        //else if (type == StageType.Rest)
+        //{
+        //    _attackPortalEffects[0].transform.localScale = Vector3.zero;
+        //    _attackPortalEffects[_attackPortalEffects.Count - 1].transform.localScale = Vector3.zero;
+        //}
         else
-            _bossPortalEffects.ForEach(x => x.DOScale(0,0));
+            _bossPortalEffects.ForEach(x => x.transform.localScale = Vector3.zero);
 
-        portals.ForEach(x => x.transform.DOScale(0, 0));
+        portals.ForEach(x => x.transform.localScale = Vector3.zero);
     }
 
     public void InfoUIReload()
