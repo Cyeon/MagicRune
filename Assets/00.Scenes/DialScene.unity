@@ -1299,9 +1299,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   patterns: []
-  codiPatterns:
-  - value: 0
-    info: {fileID: 11400000, guid: e66e30a51653944498f8f9a0c3c0f393, type: 2}
   funcList: {fileID: 417906623}
 --- !u!1 &489929716
 GameObject:
@@ -1492,7 +1489,6 @@ MonoBehaviour:
   pattern:
     value: 0
     info: {fileID: 0}
-  isSkip: 0
   attackSound: {fileID: 0}
 --- !u!114 &514474097
 MonoBehaviour:
@@ -7394,6 +7390,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2070569600}
   m_CullTransparentMesh: 1
+--- !u!1 &2135210294
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2135210295}
+  m_Layer: 0
+  m_Name: Reward
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2135210295
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2135210294}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 737.91187, y: 1733.3846, z: -6.744432}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 12
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1443791910484599370
 PrefabInstance:
   m_ObjectHideFlags: 0

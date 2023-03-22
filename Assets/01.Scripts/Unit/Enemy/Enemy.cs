@@ -58,6 +58,13 @@ public class Enemy : Unit
         UIManager.Instance.enemyIcon.localScale = Vector3.one;
     }
 
+    protected override void Die()
+    {
+        base.Die();
+
+
+    }
+
     private void OnDestroy()
     {
         DOTween.KillAll();
