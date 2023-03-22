@@ -8,15 +8,10 @@ using Random = UnityEngine.Random;
 
 public enum EnhanceType
 {
+    Change, // 변경
     Sacrifice, // 재물
+    Grant, // 부여
     COUNT,
-}
-
-[System.Serializable]
-public class EnhanceActionPair
-{
-    public EnhanceType Type;
-    public AdventureSO[] Action;
 }
 
 public class RestPortal : Portal
@@ -28,9 +23,13 @@ public class RestPortal : Portal
 
     [SerializeField]
     private Canvas _restCanvas;
+    [SerializeField]
+    private Canvas _mainCanvas;
+    private Button _restBtn;
+    private Button _enhanceBtn;
 
     [SerializeField]
-    private ParticleSystem _healthParticle;
+    private RestUI _restUI;
 
     public override void Init()
     {
@@ -39,19 +38,8 @@ public class RestPortal : Portal
 
     public override void Execute()
     {
-        StartCoroutine(PlayerHealthCoroutine());
-    }
-
-    private IEnumerator PlayerHealthCoroutine()
-    {
+        _mainCanvas.enabled = false;
         _restCanvas.enabled = true;
-        _healthParticle.gameObject.SetActive(true);
-        Debug.Log(GameManager.Instance.player.GetHP());
-        GameManager.Instance.player.AddHPPercent(_healthPercent);
-        Debug.Log(GameManager.Instance.player.GetHP());
-        yield return new WaitForSeconds(0.5f);
-
-        _restCanvas.enabled = false;
-        MapManager.Instance.NextStage();
+        _restUI.PortalAnimation();
     }
 }

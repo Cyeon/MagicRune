@@ -197,6 +197,8 @@ public class MapManager : MonoSingleton<MapManager>
 
             //case StageType.Rest:
             //    return portal;
+            case StageType.Event:
+                return portal;
         }
 
         return null;
