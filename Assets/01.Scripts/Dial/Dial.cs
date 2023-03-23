@@ -45,8 +45,8 @@ public class Dial : MonoBehaviour
         }
         _dialElementList = new List<DialElement>();
 
-        _deck = DeckManager.Instance.Deck;
-        _selectedDeck = DeckManager.Instance.SelectedDeck;
+        //_deck = DeckManager.Instance.Deck;
+        //_selectedDeck = DeckManager.Instance.SelectedDeck;
     }
 
     private void Start()
@@ -66,16 +66,30 @@ public class Dial : MonoBehaviour
         //    }
         //}
 
-        for(int i = 0; i < _deck.Count; i++)
+        _deck.Clear();
+
+        for(int i = 0; i < DeckManager.Instance.Deck.Count; i++)
         {
             int index = Random.Range(1, 4);
             GameObject g = Instantiate(tempCard, this.transform.GetChild(index - 1));
             Rune r = g.GetComponent<Rune>();
             r.Dial = this;
-            r.SetMagic(_deck[i].Magic);
+            r.SetMagic(DeckManager.Instance._defaultRune[i]);
             r.UpdateUI();
             AddCard(r, index);
+            _deck.Add(r);
+        }       
 
+        for(int i = 0; i < DeckManager.Instance.Deck.Count; i++) //룬 개수 적어서 임시로 한 번 더 돌렸음 
+        {
+            int index = Random.Range(1, 4);
+            GameObject g = Instantiate(tempCard, this.transform.GetChild(index - 1));
+            Rune r = g.GetComponent<Rune>();
+            r.Dial = this;
+            r.SetMagic(DeckManager.Instance._defaultRune[i]);
+            r.UpdateUI();
+            AddCard(r, index);
+            _deck.Add(r);
         }
 
         for (int i = 0; i < 3; i++)

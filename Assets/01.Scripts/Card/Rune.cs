@@ -15,6 +15,11 @@ public enum OutlineType
 
 public class Rune : MonoBehaviour
 {
+    public Rune(RuneSO magic)
+    {
+        _magic = magic;
+    }
+
     public Dial Dial;
     private DialElement _dialElement;
 
