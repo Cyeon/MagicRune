@@ -13,6 +13,7 @@ public class MapManager : MonoSingleton<MapManager>
     private int _chapter = 1;
     public int Chapter => _chapter;
     private Chapter _currentChapter = null;
+    public Chapter CurrentChapter => _currentChapter;
 
     [Header("Stage")]
     public List<Stage> stageList = new List<Stage>();
