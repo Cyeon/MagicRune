@@ -1,5 +1,8 @@
+using MyBox;
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Data;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -13,85 +16,57 @@ public enum OutlineType
     COUNT
 }
 
-public class Rune : MonoBehaviour
+[Serializable]
+public class Rune
 {
-    public Rune(RuneSO magic)
-    {
-        _magic = magic;
-    }
+    [SerializeField, DisplayInspector]
+    private RuneSO _runeSO;
 
-    public Dial Dial;
-    private DialElement _dialElement;
-
-    private RuneSO _magic;
-    public RuneSO Magic => _magic;
-
-    #region UI
-    private Transform _magicArea;
-    private SpriteRenderer _magicImage;
-    //private GameObject _outline;
-    private TextMeshPro _coolTimeText;
-    #endregion
-
-    [SerializeField]
-    private Material[] _outlineMaterialArray;
+    private List<Pair> _effectList = new List<Pair>();
 
     private int _coolTime;
     public bool IsCoolTime => _coolTime > 0;
 
-    private void Awake()
+    public Rune(RuneSO rune)
     {
-        _dialElement = GetComponentInParent<DialElement>();
-        _magicArea = transform.Find("MagicArea");
-        _magicImage = _magicArea.Find("MagicImage").GetComponent<SpriteRenderer>();
-        //_outline = _magicArea.Find("Outline").gameObject;
-        _coolTimeText = _magicArea.Find("CoolTimeText").GetComponent<TextMeshPro>();
+        _runeSO = rune;
+
+        SettingEffect();
     }
 
-    private void Start()
+    public RuneSO GetRune()
     {
-        _coolTimeText.gameObject.SetActive(false);
+        return _runeSO;
     }
 
-    public void SetActiveOutline(OutlineType type)
+    public void SetRune(RuneSO rune)
     {
-        //_magicImage.material = _outlineMaterialArray[(int)type];
+        _runeSO = rune;
+
+        SettingEffect();
     }
 
-    public void SetMagic(RuneSO magic)
+    private void SettingEffect()
     {
-        _magic = magic;
+        Clear();
+        _effectList = new List<Pair>(_runeSO.MainRune.EffectDescription);
     }
 
-    public void UpdateUI()
+    private void Clear()
     {
-        _magicImage.sprite = _magic.RuneImage;
+        _effectList.Clear();
     }
 
-    public void SetCoolTime()
+    public void AddEffect(Pair effect)
     {
-        _magicImage.color = Color.gray;
-        SetActiveOutline(OutlineType.Default);
-        _coolTimeText.SetText(_coolTime.ToString());
-        _coolTimeText.gameObject.SetActive(true);
+        _effectList.Add(effect);
     }
 
-    public void SetCoolTime(int value)
+    public void SetCoolTime(int cooltime)
     {
-        _coolTime = value;
+        _coolTime = cooltime;
 
-        if(_coolTime > 0)
-        {
-            _magicImage.color = Color.gray;
-            SetActiveOutline(OutlineType.Default);
-            _coolTimeText.SetText(_coolTime.ToString());
-            _coolTimeText.gameObject.SetActive(true);
-        }
-        else
-        {
-            _magicImage.color = Color.white;
-            _coolTimeText.gameObject.SetActive(false);
-        }
+        // ÈÄÃ³¸®
     }
 
     public int GetCoolTime()

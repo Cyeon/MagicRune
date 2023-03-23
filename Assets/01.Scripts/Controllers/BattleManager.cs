@@ -1,8 +1,10 @@
 using DG.Tweening;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Security.Cryptography;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 
 public enum GameTurn
@@ -25,6 +27,8 @@ public class BattleManager : MonoSingleton<BattleManager>
     public Unit attackUnit = null;
 
     public AudioClip turnChangeSound = null;
+
+    public UnityEvent OnEnemyDie;
 
     private void Awake()
     {
@@ -74,7 +78,7 @@ public class BattleManager : MonoSingleton<BattleManager>
 
     public void TurnChange()
     {
-        if (enemy.HP < 0) return;
+        if (enemy.HP <= 0 || player.HP <= 0) return;
 
         if (_gameTurn == GameTurn.Player || _gameTurn == GameTurn.Monster)
         {
@@ -159,13 +163,9 @@ public class BattleManager : MonoSingleton<BattleManager>
 
     #endregion
 
-    public void Win()
+    public void NextStage()
     {
-        Invoke("MapScene", 1f);
-    }
-
-    private void MapScene()
-    {
+        RewardManager.ResetRewardList();
         SceneManager.LoadScene("MapScene");
     }
 

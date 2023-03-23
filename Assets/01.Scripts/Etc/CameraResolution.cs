@@ -19,7 +19,7 @@ public class CameraResolution : MonoBehaviour
     {
         Rect rect = Define.MainCam.rect;
 
-        scaleHeight = ((float)Screen.width / Screen.height) / ((float)9f / 18.5f); // (가로 / 세로)
+        scaleHeight = ((float)Screen.width / Screen.height) / ((float)9f / 18.5f); // (가�?/ ?�로)
         scaleWidth = 1f / scaleHeight;
         if (scaleHeight < 1)
         {

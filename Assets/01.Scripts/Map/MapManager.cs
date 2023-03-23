@@ -13,10 +13,11 @@ public class MapManager : MonoSingleton<MapManager>
     private int _chapter = 1;
     public int Chapter => _chapter;
     private Chapter _currentChapter = null;
+    public Chapter CurrentChapter => _currentChapter;
 
     [Header("Stage")]
     public List<Stage> stageList = new List<Stage>();
- [SerializeField]   private int Stage => Floor - ((this.Chapter - 1) * 10);
+ [SerializeField]   private int Stage => Floor - ((this.Chapter - 1) * 9);
 
     private int _floor = 0;
     public int Floor => _floor;
@@ -36,6 +37,7 @@ public class MapManager : MonoSingleton<MapManager>
         stageOfPortalDic.Add(StageType.Attack, new List<Portal>());
         stageOfPortalDic.Add(StageType.Boss, new List<Portal>());
         stageOfPortalDic.Add(StageType.Event, new List<Portal>());
+        //stageOfPortalDic.Add(StageType.Rest, new List<Portal>());
 
         Transform atkTrm = transform.Find("Attack");
         for (int i = 0; i < atkTrm.childCount; ++i)
@@ -51,6 +53,13 @@ public class MapManager : MonoSingleton<MapManager>
             if (atkTrm.GetChild(i).gameObject.activeSelf == false) continue;
             stageOfPortalDic[StageType.Event].Add(atkTrm.GetChild(i).GetComponent<Portal>());
         }
+
+        //atkTrm = transform.Find("Rest");
+        //for (int i = 0; i < atkTrm.childCount; ++i)
+        //{
+        //    if (atkTrm.GetChild(i).gameObject.activeSelf == false) continue;
+        //    stageOfPortalDic[StageType.Rest].Add(atkTrm.GetChild(i).GetComponent<Portal>());
+        //}
     }
 
     private void Start()
@@ -58,6 +67,8 @@ public class MapManager : MonoSingleton<MapManager>
         ChapterInit();
         PortalInit();
         MapSceneUI.InfoUIReload();
+
+        RewardManager.ImageLoad();
     } 
 
     private void ChapterInit()
@@ -72,6 +83,7 @@ public class MapManager : MonoSingleton<MapManager>
             int random = Random.Range(1, 100);
 
             stage.Init(random <= chance ? StageType.Event : StageType.Attack, MapSceneUI.stages[idx], idx);
+            //stage.Init(random <= chance ? StageType.Rest : StageType.Attack, MapSceneUI.stages[idx], idx); // Debug
             stageList.Add(stage);
 
             idx++;
@@ -99,6 +111,14 @@ public class MapManager : MonoSingleton<MapManager>
                 portal.transform.DOScale(1f, 0.8f);
             }
         }
+        //else if (stageList[Stage].type == StageType.Rest)
+        //{
+        //    MapSceneUI.portals[0].Init(SpawnPortal(stageList[Stage].type));
+        //    MapSceneUI.portals[0].transform.DOScale(2f, 1f);
+
+        //    MapSceneUI.portals[2].Init(SpawnPortal(stageList[Stage].type));
+        //    MapSceneUI.portals[2].transform.DOScale(2f, 1f);
+        //}
         else
         {
             StartCoroutine(MapSceneUI.portals[1].Effecting(1.8f));
@@ -144,6 +164,12 @@ public class MapManager : MonoSingleton<MapManager>
         }
         #endregion
 
+        if (stageList[Stage].type == StageType.Boss)
+        {
+            NextChapter();
+            return;
+        }
+
         MapSceneUI.StageList.transform.DOLocalMoveX(Stage * -300f, 0);
         stageList[Stage].ChangeResource(Color.white, selectPortal.icon);
         _floor += 1;
@@ -159,6 +185,17 @@ public class MapManager : MonoSingleton<MapManager>
         });
     }
 
+    public void NextChapter()
+    {
+        if(Chapter < chapterList.Count)
+        {
+            _chapter++;
+        }
+
+        ChapterInit();
+        PortalInit();
+    }
+
     private Portal SpawnPortal(StageType type)
     {
         List<Portal> pList = stageOfPortalDic[type].Where(e => e.isUse == false).ToList();
@@ -168,10 +205,12 @@ public class MapManager : MonoSingleton<MapManager>
             return null;
         }
 
-        int cnt = pList.Count;
-        Portal portal = pList[Random.Range(0, cnt)];
+        Portal portal = null;
 
-        switch(type)
+        int cnt = pList.Count;
+        portal = pList[Random.Range(0, cnt)];
+        switch (type)
+
         {
             case StageType.Attack:
             case StageType.Boss:
@@ -182,6 +221,8 @@ public class MapManager : MonoSingleton<MapManager>
                 atkPortal.isUse = true;
                 return atkPortal;
 
+            //case StageType.Rest:
+            //    return portal;
             case StageType.Event:
                 return portal;
         }

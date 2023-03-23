@@ -43,9 +43,9 @@ public class DialElement : MonoBehaviour
 
     private int _fingerID = -1;
 
-    private List<Rune> _magicList;
-    private Rune _selectCard;
-    public Rune SelectCard
+    private List<RuneUI> _magicList;
+    private RuneUI _selectCard;
+    public RuneUI SelectCard
     {
         get => _selectCard;
         set
@@ -77,7 +77,7 @@ public class DialElement : MonoBehaviour
     {
         _dial = GetComponentInParent<Dial>();
         _spriteRenderer = transform.Find("VisualSprite").GetComponent<SpriteRenderer>();
-        _magicList = new List<Rune>();
+        _magicList = new List<RuneUI>();
         //_spriteRenderer.alphaHitTestMinimumThreshold = 0.04f;
     }
 
@@ -93,12 +93,12 @@ public class DialElement : MonoBehaviour
             if (inBoolean)
             {
                 int index = (int)(_spriteRenderer.transform.eulerAngles.z / oneDinstance) % (_magicList.Count);
-                if (_magicList[index].IsCoolTime == false)
+                if (_magicList[index].Rune.IsCoolTime == false)
                 {
                     SelectCard = _magicList[index];
                     if (_isRotate == true)
                     {
-                        UIManager.Instance.CardDescPopup(SelectCard);
+                        UIManager.Instance.CardDescPopup(SelectCard.Rune);
                     }
                 }
             }
@@ -111,12 +111,12 @@ public class DialElement : MonoBehaviour
 
                 int index = (int)(_spriteRenderer.transform.eulerAngles.z / oneDinstance) % (_magicList.Count);
                 index = (index + 1) % _magicList.Count;
-                if (_magicList[index].IsCoolTime == false)
+                if (_magicList[index].Rune.IsCoolTime == false)
                 {
                     SelectCard = _magicList[index];
                     if (_isRotate == true)
                     {
-                        UIManager.Instance.CardDescPopup(SelectCard);
+                        UIManager.Instance.CardDescPopup(SelectCard.Rune);
                     }
                 }
             }
@@ -125,7 +125,8 @@ public class DialElement : MonoBehaviour
                 SelectCard = null;
                 if (_isRotate == true)
                 {
-                    UIManager.Instance.CardDescPopup(SelectCard);
+                    Rune rune = SelectCard == null ? null : SelectCard.Rune;
+                    UIManager.Instance.CardDescPopup(rune);
                 }
             }
         }
@@ -160,9 +161,9 @@ public class DialElement : MonoBehaviour
         }
     }
 
-    public void SetCardList(List<Rune> list)
+    public void SetCardList(List<RuneUI> list)
     {
-        _magicList = new List<Rune>(list);
+        _magicList = new List<RuneUI>(list);
     }
 
     public void Swipe1()
@@ -206,7 +207,7 @@ public class DialElement : MonoBehaviour
                         if (inBoolean)
                         {
                             int index = (int)(_spriteRenderer.transform.eulerAngles.z / oneDinstance) % (_magicList.Count);
-                            if (_magicList[index].IsCoolTime == false)
+                            if (_magicList[index].Rune.IsCoolTime == false)
                             {
                                 // 돌리고 있을 때만
                                 DOTween.To(
@@ -221,7 +222,7 @@ public class DialElement : MonoBehaviour
                         {
                             int index = (int)(transform.eulerAngles.z / oneDinstance) % (_magicList.Count);
                             index = (index + 1) % _magicList.Count;
-                            if (_magicList[index].IsCoolTime == false)
+                            if (_magicList[index].Rune.IsCoolTime == false)
                             {
                                 DOTween.To(
                                     () => transform.eulerAngles,
