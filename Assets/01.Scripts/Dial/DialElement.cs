@@ -76,7 +76,7 @@ public class DialElement : MonoBehaviour
     private void Awake()
     {
         _dial = GetComponentInParent<Dial>();
-        _spriteRenderer = transform.Find("VisualSprite").GetComponent<SpriteRenderer>();
+        _spriteRenderer = transform.Find("LineVisualSprite").GetComponent<SpriteRenderer>();
         _magicList = new List<RuneUI>();
         //_spriteRenderer.alphaHitTestMinimumThreshold = 0.04f;
     }
