@@ -30,7 +30,7 @@ public class RestUI : MonoBehaviour
         _enhanceBtn.onClick.AddListener(() =>
         {
             Debug.Log("Attack Complete");
-            MapManager.Instance.NextStage();
+            NextStage();
         });
     }
 
