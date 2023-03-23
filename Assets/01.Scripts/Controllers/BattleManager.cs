@@ -166,7 +166,7 @@ public class BattleManager : MonoSingleton<BattleManager>
     public void NextStage()
     {
         RewardManager.ResetRewardList();
-        SceneManager.LoadScene("MapScene");
+        SceneManagerEX.Instance.LoadScene(Define.Scene.MapScene);
     }
 
 }
