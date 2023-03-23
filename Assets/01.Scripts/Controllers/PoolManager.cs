@@ -1,81 +1,153 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
-using System;
 
-public class PoolManager
+public class PoolManager : MonoSingleton<PoolManager>
 {
-    public static Dictionary<string, object> pool = new Dictionary<string, object>();
-    public static Dictionary<string, GameObject> prefabDictionary = new Dictionary<string, GameObject>();
-
-    public static void CreatePool<T>(string name, GameObject parent, int count = 5) where T : MonoBehaviour
+    #region POOL
+    class Pool
     {
-        Queue<T> q = new Queue<T>();
-        T prefab = Resources.Load<T>("Prefabs/" + name);
+        public GameObject Original { get; private set; }
+        public Transform Root { get; set; }
 
-        for (int i = 0; i < count; i++)
+        Stack<Poolable> _poolStack = new Stack<Poolable>();
+
+        public void Init(GameObject original, int count = 5)
         {
-            GameObject g = GameObject.Instantiate(prefab.gameObject, parent.transform);
+            Original = original;
+            Root = new GameObject().transform;
+            Root.name = $"{original.name}_Root";
 
-            g.SetActive(false);
-            q.Enqueue(g.GetComponent<T>());
+            for(int i = 0; i < count; ++i)
+            {
+                // 생성
+                Push(Create());
+            }
         }
 
-        try
+        Poolable Create()
         {
-            pool.Add(name, q);
-            prefabDictionary.Add(name, prefab.gameObject);
-        }
-        catch (ArgumentException e)
-        {
-            Debug.Log(e);
-            pool.Clear();
-            prefabDictionary.Clear();
-            pool.Add(name, q);
-            prefabDictionary.Add(name, prefab.gameObject);
-        }
-    }
+            GameObject go = Object.Instantiate<GameObject>(Original);
+            go.name = Original.name;
 
-    public static T GetItem<T>(string name) where T : MonoBehaviour
-    {
-        T item = null;
-        if (pool.ContainsKey(name))
-        {
-            Queue<T> q = (Queue<T>)pool[name];
-            T firstItem = q.Peek();
+            Poolable component = go.GetComponent<Poolable>();
+            if(component == null)
+            {
+                component = go.AddComponent<Poolable>();
+            }
+            return component;
+        }
 
-            if (firstItem.gameObject.activeSelf)
-            {  //첫번째 아이템이 이미 사용중이라면
-                q.Enqueue(q.Dequeue());
-                foreach (var poolObj in q)
-                {
-                    if (poolObj.gameObject.activeSelf == false)
-                    {
-                        item = poolObj;
-                        item.gameObject.SetActive(true);
-                        break;
-                    }
-                }
-                if (item == null)
-                {
-                    GameObject prefab = prefabDictionary[name];
-                    GameObject g = GameObject.Instantiate(prefab, firstItem.transform.parent);
-                    item = g.GetComponent<T>();
-                }
+        public void Push(Poolable poolable)
+        {
+            if (poolable == null) return;
+
+            poolable.Reset();
+            poolable.gameObject.SetActive(false);
+            poolable.transform.parent = Root;
+            poolable.isUsing = false;
+
+            _poolStack.Push(poolable);
+        }
+
+        public Poolable Pop(Transform parent)
+        {
+            Poolable poolable;
+
+            if(_poolStack.Count > 0)
+            {
+                poolable = _poolStack.Pop();
             }
             else
             {
-                item = q.Dequeue();
-                item.gameObject.SetActive(true);
+                poolable = Create();
             }
-            IPoolable ipool = item.GetComponent<IPoolable>();
-            if (ipool != null)
-            {
-                ipool.OnPool();
-            }
-            q.Enqueue(item);
 
+            poolable.gameObject.SetActive(true);
+
+            // DontDestroyLoad 해제
+            if(parent == null)
+            {
+                poolable.transform.parent = SceneManagerEX.Instance.CurrentScene.transform;
+            }
+
+            poolable.transform.parent = parent;
+            poolable.isUsing = true;
+
+            return poolable;
         }
-        return item;
+    }
+    #endregion
+
+    Dictionary<string, Pool> _pool = new Dictionary<string, Pool>();
+    Transform _root;
+
+    private void Awake()
+    {
+        Init();
+    }
+
+    public void Init()
+    {
+        if(_root == null)
+        {
+            _root = new GameObject { name = "@Pool_Root" }.transform;
+            Object.DontDestroyOnLoad(_root);
+        }
+    }
+
+    public void CreatePool(GameObject original, int count = 5)
+    {
+        Pool pool = new Pool();
+        pool.Init(original, count);
+        pool.Root.parent = _root;
+
+        _pool.Add(original.name, pool);
+    }
+
+    public void Push(Poolable poolable)
+    {
+        string name = poolable.gameObject.name;
+        if(_pool.ContainsKey(name) == false)
+        {
+            GameObject.Destroy(poolable.gameObject);
+            return;
+        }
+
+        _pool[name].Push(poolable);
+    }
+
+    public Poolable Pop(GameObject original, Transform parent = null)
+    {
+        if (_pool.ContainsKey(original.name) == false)
+        {
+            CreatePool(original);
+        }
+
+        return _pool[original.name].Pop(parent);
+    }
+
+    public Poolable Pop(string path, Transform parent = null)
+    {
+        GameObject p = Resources.Load<GameObject>("Prefabs/" + path);
+        return Pop(p, parent);
+    }
+
+    public GameObject GetOriginal(string name)
+    {
+        if (_pool.ContainsKey(name) == false) return null;
+
+        return _pool[name].Original;
+    }
+
+    public void Clear()
+    {
+        foreach(Transform child in _root)
+        {
+            GameObject.Destroy(child.gameObject);
+        }
+
+        _pool.Clear();
     }
 }
