@@ -1,8 +1,10 @@
 using DG.Tweening;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Security.Cryptography;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 
 public enum GameTurn
@@ -25,6 +27,8 @@ public class BattleManager : MonoSingleton<BattleManager>
     public Unit attackUnit = null;
 
     public AudioClip turnChangeSound = null;
+
+    public UnityEvent OnEnemyDie;
 
     private void Awake()
     {
