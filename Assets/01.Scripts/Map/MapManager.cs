@@ -59,6 +59,8 @@ public class MapManager : MonoSingleton<MapManager>
         ChapterInit();
         PortalInit();
         MapSceneUI.InfoUIReload();
+
+        RewardManager.ImageLoad();
     } 
 
     private void ChapterInit()

@@ -78,7 +78,7 @@ public class BattleManager : MonoSingleton<BattleManager>
 
     public void TurnChange()
     {
-        if (enemy.HP < 0) return;
+        if (enemy.HP <= 0 || player.HP <= 0) return;
 
         if (_gameTurn == GameTurn.Player || _gameTurn == GameTurn.Monster)
         {
@@ -163,12 +163,7 @@ public class BattleManager : MonoSingleton<BattleManager>
 
     #endregion
 
-    public void Win()
-    {
-        Invoke("MapScene", 1f);
-    }
-
-    private void MapScene()
+    public void NextStage()
     {
         SceneManager.LoadScene("MapScene");
     }
