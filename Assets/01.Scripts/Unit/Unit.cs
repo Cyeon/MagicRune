@@ -30,11 +30,7 @@ public class Unit : MonoBehaviour
                 _health = _maxHealth;
             }
 
-            if(_health <= 0)
-            {
-                BattleManager.Instance.Win();
-                _isDie = true;
-            }
+            if (_health <= 0) Die();
         }
     }
 
@@ -127,5 +123,13 @@ public class Unit : MonoBehaviour
                 StatusManager.Instance.StatusFuncInvoke(status, this);
             }
         }
+    }
+
+    /// <summary>
+    /// 죽었을 때 실행할 함수
+    /// </summary>
+    protected virtual void Die()
+    {
+        _isDie = true;
     }
 }

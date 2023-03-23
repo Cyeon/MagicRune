@@ -58,6 +58,15 @@ public class Enemy : Unit
         UIManager.Instance.enemyIcon.localScale = Vector3.one;
     }
 
+    protected override void Die()
+    {
+        base.Die();
+
+        REGold reward = new REGold();
+        reward.gold = MapManager.Instance.CurrentChapter.Gold;
+        reward.AddRewardList();
+    }
+
     private void OnDestroy()
     {
         DOTween.KillAll();

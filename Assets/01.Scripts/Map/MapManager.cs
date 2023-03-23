@@ -13,10 +13,11 @@ public class MapManager : MonoSingleton<MapManager>
     private int _chapter = 1;
     public int Chapter => _chapter;
     private Chapter _currentChapter = null;
+    public Chapter CurrentChapter => _currentChapter;
 
     [Header("Stage")]
     public List<Stage> stageList = new List<Stage>();
- [SerializeField]   private int Stage => Floor - ((this.Chapter - 1) * 10);
+ [SerializeField]   private int Stage => Floor - ((this.Chapter - 1) * 9);
 
     private int _floor = 0;
     public int Floor => _floor;
@@ -144,6 +145,12 @@ public class MapManager : MonoSingleton<MapManager>
         }
         #endregion
 
+        if (stageList[Stage].type == StageType.Boss)
+        {
+            NextChapter();
+            return;
+        }
+
         MapSceneUI.StageList.transform.DOLocalMoveX(Stage * -300f, 0);
         stageList[Stage].ChangeResource(Color.white, selectPortal.icon);
         _floor += 1;
@@ -157,6 +164,17 @@ public class MapManager : MonoSingleton<MapManager>
             stageList[Stage].color = Color.white;
             PortalInit();
         });
+    }
+
+    public void NextChapter()
+    {
+        if(Chapter < chapterList.Count)
+        {
+            _chapter++;
+        }
+
+        ChapterInit();
+        PortalInit();
     }
 
     private Portal SpawnPortal(StageType type)
