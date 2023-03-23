@@ -9,6 +9,7 @@ public class ShopItemPanelUI : MonoBehaviour
     public Image icon;
     public TextMeshProUGUI goldText;
     public ShopItemSO item;
+    public TextMeshProUGUI userGold;
 
     public void Init(ShopItemSO item)
     {
@@ -22,6 +23,7 @@ public class ShopItemPanelUI : MonoBehaviour
         if(item.CheckAvailability())
         {
             item.Buy();
+            userGold.text = GameManager.Instance.Gold.ToString();
             gameObject.SetActive(false);
         }
     }

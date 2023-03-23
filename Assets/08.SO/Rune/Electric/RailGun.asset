@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 515e99370d3aa5f418657fa56f9752b2, type: 3}
+  m_Name: RailGun
+  m_EditorClassIdentifier: 
+  Name: "\uB808\uC77C\uAC74"
+  RuneImage: {fileID: 21300000, guid: 917c9c2bd000e8c4c8a4e6784397f806, type: 3}
+  RuneEffect: {fileID: 2263835852787562583, guid: 4db3ad255c1a72e47855229ad1dd3585, type: 3}
+  CoolTime: 2
+  MainRune:
+    CardDescription: "10 \uCDA9\uC804\uC744 \uC18C\uBAA8\uD55C\uB2E4. 30 \uB300\uBBF8\uC9C0\uB97C
+      \uC900\uB2E4."
+    EffectDescription:
+    - Condition:
+        ConditionType: 0
+        AttributeType: 0
+        StatusType: 0
+        ComparisonType: 0
+        Value: 0
+        IsEnemy: 0
+      EffectType: 2
+      StatusType: 0
+      IsEnemy: 1
+      AttackType: 0
+      AttributeType: 0
+      Effect: 30
+    Attribute: 6
+  keywordList: 

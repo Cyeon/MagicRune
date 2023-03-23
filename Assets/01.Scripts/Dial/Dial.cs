@@ -7,12 +7,14 @@ using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 public class Dial : MonoBehaviour
 {
     [SerializeField]
-    private DeckSO _deck;
-
+    private List<Rune> _deck; // 소지하고 있는 모든 룬 
+    [SerializeField]
+    private List<Rune> _selectedDeck = null; // 사전에 설정해둔 다이얼 안쪽의 1번째 줄 덱. 
     [SerializeField]
     private GameObject tempCard;
     [SerializeField]
@@ -20,7 +22,7 @@ public class Dial : MonoBehaviour
     [SerializeField]
     private Transform _enemyPos;
 
-    private Dictionary<int, List<TestCard>> _magicDict;
+    private Dictionary<int, List<Rune>> _magicDict;
     private Dictionary<EffectType, List<EffectObjectPair>> _effectDict;
     private List<DialElement> _dialElementList;
 
@@ -36,28 +38,58 @@ public class Dial : MonoBehaviour
 
     private void Awake()
     {
-        _magicDict = new Dictionary<int, List<TestCard>>(3);
+        _magicDict = new Dictionary<int, List<Rune>>(3);
         for (int i = 1; i <= 3; i++)
         {
-            _magicDict.Add(i, new List<TestCard>());
+            _magicDict.Add(i, new List<Rune>());
         }
         _dialElementList = new List<DialElement>();
+
+        //_deck = DeckManager.Instance.Deck;
+        //_selectedDeck = DeckManager.Instance.SelectedDeck;
     }
 
     private void Start()
     {
-        // 그냥 3으로 해도되는데 그냥 이렇게 함
-        for (int i = 1; i <= _deck.List.Count; i++)
+        // 맨 처음 룬 생성해 주는 거 
+        //// 그냥 3으로 해도되는데 그냥 이렇게 함
+        //for (int i = 1; i <= _deck.List.Count; i++)
+        //{
+        //    for (int j = 1; j <= _deck.List[i - 1].Count; j++)
+        //    {
+        //        GameObject g = Instantiate(tempCard, this.transform.GetChild(i - 1));
+        //        Rune c = g.GetComponent<Rune>();
+        //        c.Dial = this;
+        //        c.SetMagic(_deck.List[i - 1].List[j - 1]);
+        //        c.UpdateUI();
+        //        AddCard(c, 4 - i);
+        //    }
+        //}
+
+        _deck.Clear();
+
+        for(int i = 0; i < DeckManager.Instance.Deck.Count; i++)
         {
-            for (int j = 1; j <= _deck.List[i - 1].List.Count; j++)
-            {
-                GameObject g = Instantiate(tempCard, this.transform.GetChild(i - 1));
-                TestCard c = g.GetComponent<TestCard>();
-                c.Dial = this; 
-                c.SetMagic(_deck.List[i - 1].List[j - 1]);
-                c.UpdateUI();
-                AddCard(c, 4 - i);
-            }
+            int index = Random.Range(1, 4);
+            GameObject g = Instantiate(tempCard, this.transform.GetChild(index - 1));
+            Rune r = g.GetComponent<Rune>();
+            r.Dial = this;
+            r.SetMagic(DeckManager.Instance._defaultRune[i]);
+            r.UpdateUI();
+            AddCard(r, index);
+            _deck.Add(r);
+        }       
+
+        for(int i = 0; i < DeckManager.Instance.Deck.Count; i++) //룬 개수 적어서 임시로 한 번 더 돌렸음 
+        {
+            int index = Random.Range(1, 4);
+            GameObject g = Instantiate(tempCard, this.transform.GetChild(index - 1));
+            Rune r = g.GetComponent<Rune>();
+            r.Dial = this;
+            r.SetMagic(DeckManager.Instance._defaultRune[i]);
+            r.UpdateUI();
+            AddCard(r, index);
+            _deck.Add(r);
         }
 
         for (int i = 0; i < 3; i++)
@@ -68,7 +100,7 @@ public class Dial : MonoBehaviour
         }
     }
 
-    public void AddCard(TestCard card, int tier)
+    public void AddCard(Rune card, int tier)
     {
         if (card != null)
         {
@@ -326,7 +358,7 @@ public class Dial : MonoBehaviour
     {
         foreach(var d in _magicDict)
         {
-            foreach(TestCard m in d.Value)
+            foreach(Rune m in d.Value)
             {
                 if(m.GetCoolTime() > 0)
                 {
@@ -340,7 +372,7 @@ public class Dial : MonoBehaviour
     {
         foreach (var d in _magicDict)
         {
-            foreach (TestCard m in d.Value)
+            foreach (Rune m in d.Value)
             {
                 if (m.GetCoolTime() > 0)
                 {
