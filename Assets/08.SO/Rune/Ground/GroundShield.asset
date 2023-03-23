@@ -12,12 +12,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 515e99370d3aa5f418657fa56f9752b2, type: 3}
   m_Name: GroundShield
   m_EditorClassIdentifier: 
-  Name: 
-  RuneImage: {fileID: 0}
-  RuneEffect: {fileID: 0}
-  CoolTime: 0
+  Name: "\uB300\uC9C0 \uBC29\uD328"
+  RuneImage: {fileID: 21300000, guid: 1a38c87c70647f94aa71bb436f9f39bb, type: 3}
+  RuneEffect: {fileID: 1547237095513110813, guid: 3532cad2a816abc41b9acf7d2935ecac, type: 3}
+  CoolTime: 2
   MainRune:
-    CardDescription: 
-    EffectDescription: []
-    Attribute: 0
+    CardDescription: "10 \uBC29\uC5B4\uB97C \uD68D\uB4DD\uD55C\uB2E4."
+    EffectDescription:
+    - Condition:
+        ConditionType: 0
+        AttributeType: 0
+        StatusType: 0
+        ComparisonType: 0
+        Value: 0
+        IsEnemy: 0
+      EffectType: 1
+      StatusType: 0
+      IsEnemy: 0
+      AttackType: 0
+      AttributeType: 0
+      Effect: 10
+    Attribute: 5
   keywordList: 

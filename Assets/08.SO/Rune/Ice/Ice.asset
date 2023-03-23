@@ -12,12 +12,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 515e99370d3aa5f418657fa56f9752b2, type: 3}
   m_Name: Ice
   m_EditorClassIdentifier: 
-  Name: 
-  RuneImage: {fileID: 0}
-  RuneEffect: {fileID: 0}
-  CoolTime: 0
+  Name: "\uB0C9\uAC01"
+  RuneImage: {fileID: 21300000, guid: c89e4ea4fe726e74aa1a1a5914f5e421, type: 3}
+  RuneEffect: {fileID: 124842, guid: 16378541428887043a2d2ba231613bb9, type: 3}
+  CoolTime: 2
   MainRune:
-    CardDescription: 
-    EffectDescription: []
-    Attribute: 0
+    CardDescription: "3 \uBE59\uACB0\uC744 \uBD80\uC5EC\uD55C\uB2E4."
+    EffectDescription:
+    - Condition:
+        ConditionType: 0
+        AttributeType: 0
+        StatusType: 0
+        ComparisonType: 0
+        Value: 0
+        IsEnemy: 0
+      EffectType: 0
+      StatusType: 3
+      IsEnemy: 1
+      AttackType: 0
+      AttributeType: 0
+      Effect: 3
+    Attribute: 3
   keywordList: 

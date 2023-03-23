@@ -12,12 +12,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 515e99370d3aa5f418657fa56f9752b2, type: 3}
   m_Name: MagicShield
   m_EditorClassIdentifier: 
-  Name: 
-  RuneImage: {fileID: 0}
+  Name: "\uB9C8\uB825 \uBC29\uD328"
+  RuneImage: {fileID: 21300000, guid: e0673ec0ba9c55c4ca60133347249a49, type: 3}
   RuneEffect: {fileID: 0}
   CoolTime: 0
   MainRune:
-    CardDescription: 
-    EffectDescription: []
-    Attribute: 0
+    CardDescription: "5 \uBC29\uC5B4\uB97C \uD68D\uB4DD\uD55C\uB2E4."
+    EffectDescription:
+    - Condition:
+        ConditionType: 0
+        AttributeType: 0
+        StatusType: 0
+        ComparisonType: 0
+        Value: 0
+        IsEnemy: 0
+      EffectType: 1
+      StatusType: 0
+      IsEnemy: 0
+      AttackType: 0
+      AttributeType: 0
+      Effect: 5
+    Attribute: 1
   keywordList: 
