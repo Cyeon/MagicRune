@@ -4,6 +4,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -11,8 +12,8 @@ using Random = UnityEngine.Random;
 
 public class Dial : MonoBehaviour
 {
-    [SerializeField]
-    private List<Rune> _deck; // 소지하고 있는 모든 룬 
+    //[SerializeField]
+    //private List<Rune> _deck; // 소지하고 있는 모든 룬 
     [SerializeField]
     private List<Rune> _selectedDeck = null; // 사전에 설정해둔 다이얼 안쪽의 1번째 줄 덱. 
     [SerializeField]
@@ -22,7 +23,7 @@ public class Dial : MonoBehaviour
     [SerializeField]
     private Transform _enemyPos;
 
-    private Dictionary<int, List<Rune>> _magicDict;
+    private Dictionary<int, List<RuneUI>> _magicDict;
     private Dictionary<EffectType, List<EffectObjectPair>> _effectDict;
     private List<DialElement> _dialElementList;
 
@@ -38,10 +39,10 @@ public class Dial : MonoBehaviour
 
     private void Awake()
     {
-        _magicDict = new Dictionary<int, List<Rune>>(3);
+        _magicDict = new Dictionary<int, List<RuneUI>>(3);
         for (int i = 1; i <= 3; i++)
         {
-            _magicDict.Add(i, new List<Rune>());
+            _magicDict.Add(i, new List<RuneUI>());
         }
         _dialElementList = new List<DialElement>();
 
@@ -66,41 +67,52 @@ public class Dial : MonoBehaviour
         //    }
         //}
 
-        _deck.Clear();
+        //_deck.Clear();
 
-        for(int i = 0; i < DeckManager.Instance.Deck.Count; i++)
+        for (int i = 0; i < DeckManager.Instance.Deck.Count; i++)
         {
             int index = Random.Range(1, 4);
-            GameObject g = Instantiate(tempCard, this.transform.GetChild(index - 1));
-            Rune r = g.GetComponent<Rune>();
+            //GameObject g = Instantiate(tempCard, this.transform.GetChild(index - 1));
+            RuneUI r = ResourceManager.Instance.Instantiate("Rune").GetComponent<RuneUI>();
+            r.transform.SetParent(this.transform.GetChild(3 - index).transform);
             r.Dial = this;
-            r.SetMagic(DeckManager.Instance._defaultRune[i]);
+            r.DialElement = this.transform.GetChild(3 - index).GetComponent<DialElement>();
+            r.SetRune(DeckManager.Instance.Deck[i]);
             r.UpdateUI();
             AddCard(r, index);
-            _deck.Add(r);
-        }       
-
-        for(int i = 0; i < DeckManager.Instance.Deck.Count; i++) //룬 개수 적어서 임시로 한 번 더 돌렸음 
-        {
-            int index = Random.Range(1, 4);
-            GameObject g = Instantiate(tempCard, this.transform.GetChild(index - 1));
-            Rune r = g.GetComponent<Rune>();
-            r.Dial = this;
-            r.SetMagic(DeckManager.Instance._defaultRune[i]);
-            r.UpdateUI();
-            AddCard(r, index);
-            _deck.Add(r);
         }
 
         for (int i = 0; i < 3; i++)
         {
             DialElement d = this.transform.GetChild(i).GetComponent<DialElement>();
-            d.SetCardList(_magicDict[3 - i]);
+
+            List<RuneUI> runeList = new List<RuneUI>();
+            for (int j = 0; j < _magicDict[3 - i].Count; j++)
+            {
+                runeList.Add(_magicDict[3 - i][j]);
+            }
+            d.SetCardList(runeList);
             _dialElementList.Add(d);
         }
+
+        
+
+        //for(int i = 0; i < DeckManager.Instance.Deck.Count; i++) //룬 개수 적어서 임시로 한 번 더 돌렸음 
+        //{
+        //    int index = Random.Range(1, 4);
+        //    GameObject g = Instantiate(tempCard, this.transform.GetChild(index - 1));
+        //    Rune r = g.GetComponent<Rune>();
+        //    r.Dial = this;
+        //    r.SetMagic(DeckManager.Instance._defaultRune[i]);
+        //    r.UpdateUI();
+        //    AddCard(r, index);
+        //    _deck.Add(r);
+        //}
+
+        
     }
 
-    public void AddCard(Rune card, int tier)
+    public void AddCard(RuneUI card, int tier)
     {
         if (card != null)
         {
@@ -210,45 +222,37 @@ public class Dial : MonoBehaviour
             _effectDict = new Dictionary<EffectType, List<EffectObjectPair>>();
             foreach (DialElement d in _dialElementList)
             {
-                if (d.SelectCard != null && d.SelectCard.IsCoolTime == false)
+                if (d.SelectCard != null && d.SelectCard.Rune.IsCoolTime == false)
                 {
-                    foreach (Pair p in d.SelectCard.Magic.MainRune.EffectDescription)
+                    foreach (Pair p in d.SelectCard.Rune.GetRune().MainRune.EffectDescription)
                     {
                         if (_effectDict.ContainsKey(p.EffectType))
                         {
-                            _effectDict[p.EffectType].Add(new EffectObjectPair(p, d.SelectCard.Magic.RuneEffect));
+                            _effectDict[p.EffectType].Add(new EffectObjectPair(p, d.SelectCard.Rune.GetRune().RuneEffect));
                         }
                         else
                         {
-                            _effectDict.Add(p.EffectType, new List<EffectObjectPair> { new EffectObjectPair(p, d.SelectCard.Magic.RuneEffect) });
+                            _effectDict.Add(p.EffectType, new List<EffectObjectPair> { new EffectObjectPair(p, d.SelectCard.Rune.GetRune().RuneEffect) });
                         }
                     }
                 }
             }
 
-            // 디버그 용
-#if UNITY_EDITOR
-            foreach (var d in _effectDict)
-            {
-                Debug.Log($"{d.Key} : {d.Value}");
-            }
-#endif
-
 
             GameObject g = null;
             for (int i = _dialElementList.Count - 1; i >= 0; i--)
             {
-                if (_dialElementList[i].SelectCard != null && _dialElementList[i].SelectCard.IsCoolTime == false)
+                if (_dialElementList[i].SelectCard != null && _dialElementList[i].SelectCard.Rune.IsCoolTime == false)
                 {
-                    g = _dialElementList[i].SelectCard.Magic.RuneEffect;
+                    g = _dialElementList[i].SelectCard.Rune.GetRune().RuneEffect;
                     break;
                 }
             }
             for (int i = _dialElementList.Count - 1; i >= 0; i--)
             {
-                if (_dialElementList[i].SelectCard != null && _dialElementList[i].SelectCard.IsCoolTime == false)
+                if (_dialElementList[i].SelectCard != null && _dialElementList[i].SelectCard.Rune.IsCoolTime == false)
                 {
-                    _dialElementList[i].SelectCard.SetCoolTime();
+                    _dialElementList[i].SelectCard.Rune.GetRune();
                 }
             }
 
@@ -358,11 +362,11 @@ public class Dial : MonoBehaviour
     {
         foreach(var d in _magicDict)
         {
-            foreach(Rune m in d.Value)
+            foreach(RuneUI m in d.Value)
             {
-                if(m.GetCoolTime() > 0)
+                if(m.Rune.GetCoolTime() > 0)
                 {
-                    m.SetCoolTime(m.GetCoolTime() - 1);
+                    m.Rune.SetCoolTime(m.Rune.GetCoolTime() - 1);
                 }
             }
         }
@@ -372,11 +376,11 @@ public class Dial : MonoBehaviour
     {
         foreach (var d in _magicDict)
         {
-            foreach (Rune m in d.Value)
+            foreach (RuneUI m in d.Value)
             {
-                if (m.GetCoolTime() > 0)
+                if (m.Rune.GetCoolTime() > 0)
                 {
-                    m.SetCoolTime(value);
+                    m.Rune.SetCoolTime(value);
                 }
             }
         }

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Rendering;
@@ -20,7 +21,7 @@ public class Unit : MonoBehaviour
     public float HP
     {
         get => _health;
-        set
+        protected set
         {
             if (_isDie) return;
 
@@ -30,11 +31,7 @@ public class Unit : MonoBehaviour
                 _health = _maxHealth;
             }
 
-            if(_health <= 0)
-            {
-                BattleManager.Instance.Win();
-                _isDie = true;
-            }
+            if (_health <= 0) Die();
         }
     }
 
@@ -49,7 +46,7 @@ public class Unit : MonoBehaviour
         }
     }
 
-    #region  ?íƒœ?´ìƒ ê´€??ë³€??
+    #region  ?ï¿½íƒœ?ï¿½ìƒ ê´€??ë³€??
 
     public float currentDmg = 0;
 
@@ -68,7 +65,7 @@ public class Unit : MonoBehaviour
     }
     
     /// <summary>
-    /// µ¥¹ÌÁö ¹Þ´Â ÇÔ¼ö
+    /// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Þ´ï¿½ ï¿½Ô¼ï¿½
     /// </summary>
     /// <param name="damage"></param>
     public void TakeDamage(float damage, bool isFixed = false, Status status = null)
@@ -127,5 +124,36 @@ public class Unit : MonoBehaviour
                 StatusManager.Instance.StatusFuncInvoke(status, this);
             }
         }
+    }
+
+    public float GetMaxHP()
+    {
+        return _maxHealth;
+    }
+
+    public float GetHP()
+    {
+        return HP;
+    }
+
+    public void AddHP(float value)
+    {
+        _health += value;
+        UIManager.Instance.UpdateHealthbar(true);
+    }
+
+    public void AddHPPercent(float value)
+    {
+        _health += value / 100 * _maxHealth;
+    }
+
+    public void AddMaxHp(float amount)
+    {
+        _maxHealth += amount;
+    }
+    
+    protected virtual void Die()
+    {
+        _isDie = true;
     }
 }

@@ -5184,7 +5184,8 @@ GameObject:
   m_Component:
   - component: {fileID: 7059365914773506579}
   - component: {fileID: 2562103841994017897}
-  - component: {fileID: 3486476819428296766}
+  - component: {fileID: 1824085200979876588}
+  - component: {fileID: 6156237510808415929}
   m_Layer: 0
   m_Name: Rune
   m_TagString: Card
@@ -5201,7 +5202,7 @@ Transform:
   m_GameObject: {fileID: 8165298467326144068}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.1, y: 0.1, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1132996313454579265}
@@ -5260,7 +5261,7 @@ SpriteMask:
   m_BackSortingOrder: 0
   m_IsCustomRangeActive: 0
   m_SpriteSortPoint: 0
---- !u!114 &3486476819428296766
+--- !u!114 &1824085200979876588
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -5269,11 +5270,25 @@ MonoBehaviour:
   m_GameObject: {fileID: 8165298467326144068}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b3f21595b77634346bd6a397618befa0, type: 3}
+  m_Script: {fileID: 11500000, guid: 377e1eb47c894e147a57c46db7f22ddb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Dial: {fileID: 0}
+  DialElement: {fileID: 0}
   _outlineMaterialArray:
   - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   - {fileID: 2100000, guid: 4b377fc14ac999e44a9af0c6b3fad9bb, type: 2}
   - {fileID: 2100000, guid: 528df635e9a28b34a92eb297e1dccd51, type: 2}
+--- !u!114 &6156237510808415929
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8165298467326144068}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1fb6d3b2c3d3fa04d9ffb5368660f72f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isUsing: 0

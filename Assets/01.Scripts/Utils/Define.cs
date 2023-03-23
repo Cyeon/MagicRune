@@ -51,4 +51,11 @@ public class Define
             return _mainCam;
         }
     }
+
+    public enum Scene
+    {
+        Unknown,
+        MapScene,
+        DialScene,
+    }
 }

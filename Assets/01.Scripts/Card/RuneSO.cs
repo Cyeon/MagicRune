@@ -54,6 +54,14 @@ public enum AttackType
     Double,
 }
 
+public enum RuneRarity
+{
+    Normal,
+    Rare,
+    Epic,
+    Legendary,
+}
+
 [Serializable]
 public class Condition
 {
@@ -119,6 +127,7 @@ public class RuneSO : ScriptableObject
     public GameObject RuneEffect;
     [Min(0), Tooltip("재사용 가능 턴")]
     public int CoolTime; // 재사용 가능
+    public RuneRarity Rarity;
     [Tooltip("메인 룬의 속성")]
     public RuneProperty MainRune;
 

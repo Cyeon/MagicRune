@@ -32,9 +32,4 @@ public class Player : Unit
         SoundManager.Instance.PlaySound(attackSound, SoundType.Effect);
 
     }
-
-    public void SetMaxHp(int amount)
-    {
-        _maxHealth += amount;
-    }
 }

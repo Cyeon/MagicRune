@@ -22,6 +22,7 @@ public class MapUI : MonoBehaviour
     public Sprite stageAtkIcon;
     public Sprite stageBossIcon;
     public Sprite stageEventIcon;
+    public Sprite stageRestIcon;
 
     public AdventureUI adventureUI;
 
@@ -73,11 +74,11 @@ public class MapUI : MonoBehaviour
     public void ResetPortal(StageType type)
     {
         if (type == StageType.Attack)
-            _attackPortalEffects.ForEach(x => x.DOScale(0,0));
+            _attackPortalEffects.ForEach(x => x.transform.localScale = Vector3.zero);
         else
-            _bossPortalEffects.ForEach(x => x.DOScale(0,0));
+            _bossPortalEffects.ForEach(x => x.transform.localScale = Vector3.zero);
 
-        portals.ForEach(x => x.transform.DOScale(0, 0));
+        portals.ForEach(x => x.transform.localScale = Vector3.zero);
     }
 
     public void InfoUIReload()

@@ -1,4 +1,5 @@
 using DG.Tweening;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,6 +15,7 @@ public class Enemy : Unit
     private Sequence idleSequence = null;
 
     private SpriteRenderer _spriteRenderer;
+
 
     public void Init(EnemySO so)
     {
@@ -56,6 +58,17 @@ public class Enemy : Unit
         idleSequence.Kill();
         UIManager.Instance.enemyIcon.DORewind();
         UIManager.Instance.enemyIcon.localScale = Vector3.one;
+    }
+
+    protected override void Die()
+    {
+        base.Die();
+
+        REGold reward = new REGold();
+        reward.gold = MapManager.Instance.CurrentChapter.Gold;
+        reward.AddRewardList();
+
+        BattleManager.Instance.OnEnemyDie.Invoke();
     }
 
     private void OnDestroy()

@@ -396,7 +396,7 @@ public class UIManager : MonoSingleton<UIManager>
         }
         else
         {
-            RuneSO magic = rune.Magic;
+            RuneSO magic = rune.GetRune();
 
             _cardDescName.text = magic.Name;
             _cardDescSkillIcon.sprite = magic.RuneImage;
