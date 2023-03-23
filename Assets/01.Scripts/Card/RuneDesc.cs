@@ -19,13 +19,12 @@ public class RuneDesc : MonoBehaviour
         _coolTImeText = transform.Find("CoolTime/Value").GetComponent<Text>();
     }
 
-    public void UpdateUI(RuneProperty rune)
+    public void UpdateUI(RuneSO rune)
     {
         if (rune == null) return;
 
         _runeNameText.text = rune.Name;
-        _runeDescText.text = rune.CardDescription;
-        _manaText.text = rune.Cost.ToString();
+        _runeDescText.text = rune.MainRune.CardDescription;
         _coolTImeText.text = rune.CoolTime.ToString();
     }
 

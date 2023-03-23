@@ -1,4 +1,27 @@
+using System;
 using UnityEngine;
+
+[Serializable]
+public class EffectPair
+{
+    public Condition Condition;
+    public string Effect;
+    public float Value;
+}
+
+[Serializable]
+public class EffectObjectPair
+{
+    public Pair pair;
+    public GameObject effect;
+
+    public EffectObjectPair(Pair pair, GameObject effect)
+    {
+        this.pair = pair;
+        this.effect = effect;
+    }
+}
+
 /// <summary>
 /// 상수 매니저
 /// </summary>

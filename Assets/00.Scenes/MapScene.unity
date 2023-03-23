@@ -51554,6 +51554,7 @@ Transform:
   m_Children:
   - {fileID: 2002842252}
   - {fileID: 1809552960}
+  - {fileID: 1993763684}
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -113127,8 +113128,8 @@ MonoBehaviour:
   - chapter: 1
     boss: {fileID: 11400000, guid: 2d0995c54f331a2499d596a93a78e957, type: 2}
     eventStagesChance:
-    - 100
-    - 100
+    - 0
+    - 0
     - 0
     - 0
     - 0
@@ -118366,6 +118367,63 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: -76}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &1993763683
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1993763684}
+  - component: {fileID: 1993763685}
+  m_Layer: 0
+  m_Name: DeckManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1993763684
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1993763683}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 828686904}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1993763685
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1993763683}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 645979b17e6ea1c4d8fad8dc629e3c4c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _defaultRune:
+  - {fileID: 11400000, guid: e0371d844e33efa4692cac3c056ace66, type: 2}
+  - {fileID: 11400000, guid: aa4ec283b01aaa9489aa3ef6a76fe1f4, type: 2}
+  - {fileID: 11400000, guid: 49e5cb748312c1c41b629434d3c688ca, type: 2}
+  - {fileID: 11400000, guid: 649bb38fb4061a64db77f7d49317f6d6, type: 2}
+  - {fileID: 11400000, guid: dbc5286512fd3ff4cbf40f13487d5c24, type: 2}
+  - {fileID: 11400000, guid: d7f078f7b9f7a0347b19df2606c4ad99, type: 2}
+  - {fileID: 11400000, guid: caa987ee3d444e44d9d2ab38f89a13f1, type: 2}
+  - {fileID: 11400000, guid: a82d95cddd043ee4fbe694f591035c3c, type: 2}
+  - {fileID: 11400000, guid: b3d5cacbcf167b5459bc8f0ae5f3b9b1, type: 2}
+  - {fileID: 11400000, guid: 6cb4ad02723426444ba4d000e6934f01, type: 2}
+  _selectedDeck: []
+  _deck: []
 --- !u!1 &1995296603
 GameObject:
   m_ObjectHideFlags: 0
