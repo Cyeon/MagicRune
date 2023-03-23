@@ -31,11 +31,7 @@ public class Unit : MonoBehaviour
                 _health = _maxHealth;
             }
 
-            if(_health <= 0)
-            {
-                BattleManager.Instance.Win();
-                _isDie = true;
-            }
+            if (_health <= 0) Die();
         }
     }
 
@@ -50,7 +46,7 @@ public class Unit : MonoBehaviour
         }
     }
 
-    #region  ?íƒœ?´ìƒ ê´€??ë³€??
+    #region  ?ï¿½íƒœ?ï¿½ìƒ ê´€??ë³€??
 
     public float currentDmg = 0;
 
@@ -69,7 +65,7 @@ public class Unit : MonoBehaviour
     }
     
     /// <summary>
-    /// µ¥¹ÌÁö ¹Þ´Â ÇÔ¼ö
+    /// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Þ´ï¿½ ï¿½Ô¼ï¿½
     /// </summary>
     /// <param name="damage"></param>
     public void TakeDamage(float damage, bool isFixed = false, Status status = null)
@@ -154,5 +150,10 @@ public class Unit : MonoBehaviour
     public void AddMaxHp(float amount)
     {
         _maxHealth += amount;
+    }
+    
+    protected virtual void Die()
+    {
+        _isDie = true;
     }
 }
