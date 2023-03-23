@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class RewardPanel : MonoBehaviour, IPoolable
+public class RewardPanel : MonoBehaviour
 {
     private Button _button;
     private Image _icon;
@@ -17,6 +17,8 @@ public class RewardPanel : MonoBehaviour, IPoolable
 
         _button.onClick.AddListener(() => reward.GiveReward());
         _button.onClick.AddListener(() => gameObject.SetActive(false));
+
+        
     }
 
     public void OnPool()
