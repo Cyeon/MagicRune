@@ -64,7 +64,7 @@ public class Enemy : Unit
 
         REGold reward = new REGold();
         reward.gold = MapManager.Instance.CurrentChapter.Gold;
-        RewardManager.AddRewardList(reward);
+        reward.AddRewardList();
     }
 
     private void OnDestroy()
