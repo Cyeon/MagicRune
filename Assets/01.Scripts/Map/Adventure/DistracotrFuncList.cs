@@ -33,7 +33,8 @@ public class DistracotrFuncList : MonoBehaviour
     public void NextStage()
     {
         MapManager.Instance.NextStage();
-        MapSceneUI.adventureUI.gameObject.SetActive(false);
+        CanvasManager.Instance.GetCanvas("MapUI").enabled = false;
+        //MapSceneUI.adventureUI.gameObject.SetActive(false);
     }
 
     public void AddHp(int amount)
@@ -43,21 +44,24 @@ public class DistracotrFuncList : MonoBehaviour
         else if (increaseMode == IncreaseMode.Percent)
             GameManager.Instance.player.AddHPPercent(amount);
 
-        MapSceneUI.InfoUIReload();
+        //MapSceneUI.InfoUIReload();
+        CanvasManager.Instance.GetCanvas("MapUI").GetComponent<MapUI>().InfoUIReload();
         NextStage();
     }
 
     public void AddMaxHp(int amount)
     {
         GameManager.Instance.player.AddMaxHp(amount);
-        MapSceneUI.InfoUIReload();
+        //MapSceneUI.InfoUIReload();
+        CanvasManager.Instance.GetCanvas("MapUI").GetComponent<MapUI>().InfoUIReload(); // GetComponent 너무 많다 뱐수로 뺴자
         NextStage();
     }
 
     public void AddGold(int amount)
     {
         GameManager.Instance.AddGold(amount);
-        MapSceneUI.InfoUIReload();
+        //MapSceneUI.InfoUIReload();
+        CanvasManager.Instance.GetCanvas("MapUI").GetComponent<MapUI>().InfoUIReload();
         NextStage();
     }
     public void BattleEnemy(EnemySO enemy)

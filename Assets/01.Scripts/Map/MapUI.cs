@@ -22,9 +22,6 @@ public class MapUI : MonoBehaviour
     public Sprite stageAtkIcon;
     public Sprite stageBossIcon;
     public Sprite stageEventIcon;
-    public Sprite stageRestIcon;
-
-    public AdventureUI adventureUI;
 
     private void Awake()
     {
