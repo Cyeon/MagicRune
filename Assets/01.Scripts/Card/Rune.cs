@@ -23,6 +23,7 @@ public class Rune
     private RuneSO _runeSO;
 
     private List<Pair> _effectList = new List<Pair>();
+    public List<Pair> EffectList => _effectList;
 
     private int _coolTime;
     public bool IsCoolTime => _coolTime > 0;
@@ -50,6 +51,28 @@ public class Rune
     {
         Clear();
         _effectList = new List<Pair>(_runeSO.MainRune.EffectDescription);
+
+        _effectList = SortingEffect();
+    }
+
+    private List<Pair> SortingEffect()
+    {
+        List<Pair> sortingList = new List<Pair>();
+
+        if (_effectList.Count == 0) return _effectList;
+
+        for(int i = 0; i < (int)EffectType.Etc; i++)
+        {
+            for(int j = 0; j < _effectList.Count; j++)
+            {
+                if (_effectList[j].EffectType == (EffectType)i)
+                {
+                    sortingList.Add(_effectList[j]);
+                }
+            }
+        }
+
+        return sortingList;
     }
 
     private void Clear()
@@ -60,6 +83,8 @@ public class Rune
     public void AddEffect(Pair effect)
     {
         _effectList.Add(effect);
+
+        _effectList = SortingEffect();
     }
 
     public void SetCoolTime(int cooltime)

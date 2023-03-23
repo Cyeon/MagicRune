@@ -1,5 +1,6 @@
 using DG.Tweening;
 using MyBox;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Security.Cryptography;
@@ -166,6 +167,83 @@ public class DialElement : MonoBehaviour
         _magicList = new List<RuneUI>(list);
     }
 
+    public void Attack()
+    {
+        for(int i = 0; i < _selectCard.Rune.EffectList.Count; i++)
+        {
+            Pair pair = _selectCard.Rune.EffectList[i];
+            Unit target = pair.IsEnemy == true ? BattleManager.Instance.enemy : GameManager.Instance.player;
+            AttackEffectFunction(pair.EffectType, target, pair);
+        }
+    }
+
+    public Action AttackEffectFunction(EffectType effectType, Unit target, Pair e)
+    {
+        Action action = null;
+        //int c = 0;
+        //for (int i = 0; i < _effectDict[RuneType.Assist].Count; i++)
+        //{
+        //    if (_runeTempDict[RuneType.Assist][i].Rune != null && _runeTempDict[RuneType.Assist][i].Rune.AssistRune.Attribute == e.AttributeType)
+        //    {
+        //        c++;
+        //    }
+        //}
+        //if (_runeTempDict[RuneType.Main][0].Rune != null && _runeTempDict[RuneType.Main][0].Rune.AssistRune.Attribute == e.AttributeType)
+        //    c++;
+
+        switch (effectType)
+        {
+            case EffectType.Attack:
+                switch (e.AttackType)
+                {
+                    case AttackType.Single:
+                        action = () => BattleManager.Instance.player.Attack(int.Parse(e.Effect));
+                        break;
+                    case AttackType.Double:
+                        //action = () => GameManager.Instance.player.Attack(int.Parse(e.Effect) * c);
+                        action = () => BattleManager.Instance.player.Attack(int.Parse(e.Effect));
+                        break;
+                }
+                break;
+            case EffectType.Defence:
+                switch (e.AttackType)
+                {
+                    case AttackType.Single:
+                        action = () => BattleManager.Instance.player.Shield += int.Parse(e.Effect);
+                        break;
+                    case AttackType.Double:
+                        //action = () => GameManager.Instance.player.Shield += int.Parse(e.Effect) * c;
+                        action = () => BattleManager.Instance.player.Shield += int.Parse(e.Effect);
+                        break;
+                }
+                break;
+            case EffectType.Status:
+                switch (e.AttackType)
+                {
+                    case AttackType.Single:
+                        action = () => StatusManager.Instance.AddStatus(target, e.StatusType, int.Parse(e.Effect));
+                        break;
+                    case AttackType.Double:
+                        //action = () => StatusManager.Instance.AddStatus(target, e.StatusType, int.Parse(e.Effect) * c);
+                        action = () => StatusManager.Instance.AddStatus(target, e.StatusType, int.Parse(e.Effect));
+                        break;
+                }
+                break;
+            case EffectType.Destroy:
+                action = () => StatusManager.Instance.RemStatus(target, e.StatusType);
+                break;
+            case EffectType.Draw:
+                // 지금은 일단 주석...
+                //action = () => _cardCollector.CardDraw(int.Parse(e.Effect));
+                break;
+            case EffectType.Etc:
+                action = null;
+                break;
+        }
+
+        return action;
+    }
+
     public void Swipe1()
     {
         if (Input.touchCount > 0)
@@ -215,7 +293,7 @@ public class DialElement : MonoBehaviour
                                     x => transform.eulerAngles = x,
                                     new Vector3(0, 0, ((int)(transform.eulerAngles.z / oneDinstance)) * oneDinstance),
                                     0.3f
-                                );
+                                ).OnComplete(() => UIManager.Instance.CardDescPopup(_selectCard.Rune));
                             }
                         }
                         else if (outBoolean)
@@ -229,7 +307,7 @@ public class DialElement : MonoBehaviour
                                     x => transform.eulerAngles = x,
                                     new Vector3(0, 0, ((int)(transform.eulerAngles.z / oneDinstance) + 1) * oneDinstance),
                                     0.3f
-                                );
+                                ).OnComplete(() => UIManager.Instance.CardDescPopup(_selectCard.Rune));
                             }
                         }
                     }
@@ -241,11 +319,11 @@ public class DialElement : MonoBehaviour
                         float distance = transform.eulerAngles.z % oneDinstance;
                         if (distance >= oneDinstance / 2f)
                         {
-                            transform.DORotate(new Vector3(0, 0, (index + 1) % _magicList.Count * oneDinstance), 0.3f, RotateMode.Fast);
+                            transform.DORotate(new Vector3(0, 0, (index + 1) % _magicList.Count * oneDinstance), 0.3f, RotateMode.Fast).OnComplete(() => UIManager.Instance.CardDescPopup(_selectCard.Rune));
                         }
                         else
                         {
-                            transform.DORotate(new Vector3(0, 0, index * oneDinstance), 0.3f, RotateMode.Fast);
+                            transform.DORotate(new Vector3(0, 0, index * oneDinstance), 0.3f, RotateMode.Fast).OnComplete(() => UIManager.Instance.CardDescPopup(_selectCard.Rune));
                         }
                     }
                 }

@@ -73,6 +73,7 @@ public class UIManager : MonoSingleton<UIManager>
         _turnBackground = _turnPanel?.GetComponent<Image>();
         _turnText = _turnPanel?.GetComponentInChildren<TextMeshProUGUI>();
 
+        // ½Ï º¯°æ
         _enemyHealthSlider = _enemySlideBar.Find("HealthBar").GetComponent<Slider>();
         _enemyHealthFeedbackSlider = _enemySlideBar.Find("HealthFeedbackBar").GetComponent<Slider>();
         _enemyShieldSlider = _enemySlideBar.Find("ShieldBar").GetComponent<Slider>();

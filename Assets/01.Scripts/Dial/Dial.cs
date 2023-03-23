@@ -262,15 +262,20 @@ public class Dial : MonoBehaviour
                 return;
             }
             UIManager.Instance.CardDescDown();
-            BezierMissile b = Instantiate(_bezierMissile, this.transform.parent);
+            BezierMissile b = ResourceManager.Instance.Instantiate("BezierMissile", this.transform.parent).GetComponent<BezierMissile>();
             b.SetEffect(g);
             b.SetTrailColor(EffectType.Attack);
             b.Init(this.transform, _enemyPos, 1.5f, 0, 0, () =>
             {
-                for (int i = 0; i < (int)EffectType.Etc; i++)
+                for(int i = 0; i < 3; i++)
                 {
-                    AttackFunction((EffectType)i);
+                    _dialElementList[i].Attack();
                 }
+
+                //for (int i = 0; i < (int)EffectType.Etc; i++)
+                //{
+                //    AttackFunction((EffectType)i);
+                //}
 
                 BattleManager.Instance.PlayerTurnEnd();
                 _effectDict.Clear();
