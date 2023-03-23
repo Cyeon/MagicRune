@@ -13,11 +13,6 @@ public class RewardUI : MonoBehaviour
     private GameObject _victoryPanel;
     [SerializeField] private GameObject _rewardPanel;
 
-    private void Start()
-    {
-        PoolManager.CreatePool<RewardPanel>("Reward_Image", _rewardPanel, 4);
-    }
-
     public void VictoryPanelPopup()
     {
         _backgroundBlur.SetActive(true);
@@ -25,7 +20,7 @@ public class RewardUI : MonoBehaviour
 
         foreach(var reward in RewardManager.GetRewardList())
         {
-            RewardPanel panel = PoolManager.GetItem<RewardPanel>("Reward_Image");
+            RewardPanel panel = ResourceManager.Instance.Instantiate("Reward_Image").GetComponent<RewardPanel>();
             panel.Init(reward);
         }
     }
