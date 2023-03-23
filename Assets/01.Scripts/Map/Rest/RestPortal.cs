@@ -38,8 +38,8 @@ public class RestPortal : Portal
 
     public override void Execute()
     {
-        _mainCanvas.enabled = false;
-        _restCanvas.enabled = true;
-        _restUI.PortalAnimation();
+        CanvasManager.Instance.GetCanvas("MapUI").enabled = false;
+        CanvasManager.Instance.GetCanvas("Rest").enabled = true;
+        _restUI.PortalStartAnimation();
     }
 }

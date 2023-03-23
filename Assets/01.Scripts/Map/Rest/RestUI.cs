@@ -21,12 +21,8 @@ public class RestUI : MonoBehaviour
     [SerializeField]
     private GameObject _orangePortal;
 
-    private Canvas _canvas;
-
     private void Start()
     {
-        _canvas = GetComponent<Canvas>();
-
         _restBtn.onClick.RemoveAllListeners();
         _restBtn.onClick.AddListener(() => StartCoroutine(RestCoroutine()));
 
@@ -38,7 +34,7 @@ public class RestUI : MonoBehaviour
         });
     }
 
-    public void PortalAnimation()
+    public void PortalStartAnimation()
     {
         _orangePortal.SetActive(true);
         _greenPortal.SetActive(true);
@@ -57,7 +53,15 @@ public class RestUI : MonoBehaviour
 
         yield return new WaitForSeconds(1.5f);
 
-        _canvas.enabled = false;
+        NextStage();
+    }
+
+    private void NextStage()
+    {
+        _orangePortal.SetActive(false);
+        _greenPortal.SetActive(false);
+        CanvasManager.Instance.GetCanvas(this.name).enabled = false;
+        CanvasManager.Instance.GetCanvas("MapUI").enabled = true;
         MapManager.Instance.NextStage();
     }
 }

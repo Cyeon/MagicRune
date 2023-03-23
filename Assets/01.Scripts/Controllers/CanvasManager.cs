@@ -11,6 +11,11 @@ public class CanvasManager : MonoSingleton<CanvasManager>
 
     private Dictionary<string, Canvas> _canvasDict = new Dictionary<string, Canvas>();
 
+    private void Awake()
+    {
+        SetCanvas();
+    }
+
     public void SetCanvas()
     {
         Clear();
@@ -20,11 +25,6 @@ public class CanvasManager : MonoSingleton<CanvasManager>
         {
             _canvasDict.Add(canvasArray[i].name, canvasArray[i]);
         }
-
-        foreach(var c in _canvasDict)
-        {
-            Debug.Log($"{c.Key} : {c.Value}, {c.Value.transform.parent}");
-        }
     }
 
     public Canvas[] GetCanvasArray()
@@ -33,7 +33,6 @@ public class CanvasManager : MonoSingleton<CanvasManager>
 
         if (_isOnlyParentObject)
         {
-            //Canvas[] parentCanvasArray = canvasArray.ForEach(x => x.transform.parent == null).ToArray();
             Canvas[] parentCanvasArray = canvasArray.Where(x => x.transform.parent == null).ToArray();
 
             return parentCanvasArray;
@@ -47,6 +46,22 @@ public class CanvasManager : MonoSingleton<CanvasManager>
         if (_canvasDict.ContainsKey(name))
         {
             return _canvasDict[name];
+        }
+        else
+        {
+            string canvasName = name + " Canvas";
+            if (_canvasDict.ContainsKey(canvasName))
+            {
+                return _canvasDict[canvasName];
+            }
+            else
+            {
+                string canvasNameSecond = name + "Canvas";
+                if (_canvasDict.ContainsKey(canvasNameSecond))
+                {
+                    return _canvasDict[canvasNameSecond];
+                }
+            }
         }
 
         return null;
