@@ -16,10 +16,8 @@ public class RestUI : MonoBehaviour
 
     [SerializeField]
     private GameObject _healthParticle;
-    [SerializeField]
-    private GameObject _greenPortal;
-    [SerializeField]
-    private GameObject _orangePortal;
+
+    private EnhanceType _enhanceType;
 
     private void Start()
     {
@@ -29,21 +27,26 @@ public class RestUI : MonoBehaviour
         _enhanceBtn.onClick.RemoveAllListeners();
         _enhanceBtn.onClick.AddListener(() =>
         {
-            Debug.Log("Attack Complete");
+            Debug.Log("Enhance Complete");
             NextStage();
         });
     }
 
+    public void SetEnhanceType(EnhanceType type)
+    {
+        _enhanceType = type;
+    }
+
     public void PortalStartAnimation()
     {
-        _orangePortal.SetActive(true);
-        _greenPortal.SetActive(true);
+        _restBtn.gameObject.SetActive(true);
+        _enhanceBtn.gameObject.SetActive(true);
 
-        _orangePortal.transform.localScale = Vector3.zero;
-        _greenPortal.transform.localScale = Vector3.zero;
+        _restBtn.transform.localScale = Vector3.zero;
+        _enhanceBtn.transform.localScale = Vector3.zero;
 
-        _orangePortal.transform.DOScale(1.5f, 0.1f);
-        _greenPortal.transform.DOScale(1.5f, 0.1f);
+        _restBtn.transform.DOScale(1.5f, 0.1f);
+        _enhanceBtn.transform.DOScale(1.5f, 0.1f);
     }
 
     private IEnumerator RestCoroutine()
@@ -58,8 +61,8 @@ public class RestUI : MonoBehaviour
 
     private void NextStage()
     {
-        _orangePortal.SetActive(false);
-        _greenPortal.SetActive(false);
+        _restBtn.gameObject.SetActive(false);
+        _enhanceBtn.gameObject.SetActive(false);
         CanvasManager.Instance.GetCanvas(this.name).enabled = false;
         CanvasManager.Instance.GetCanvas("MapUI").enabled = true;
         MapManager.Instance.NextStage();

@@ -21,10 +21,6 @@ public class RestPortal : Portal
     private int _healthPercent = 25;
     #endregion
 
-    [SerializeField]
-    private Canvas _restCanvas;
-    [SerializeField]
-    private Canvas _mainCanvas;
     private Button _restBtn;
     private Button _enhanceBtn;
 
