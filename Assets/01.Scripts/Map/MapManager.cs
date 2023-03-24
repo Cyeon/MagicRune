@@ -32,6 +32,19 @@ public class MapManager : MonoSingleton<MapManager>
 
     private bool _isFirst = true;
 
+    private MapUI _mapSceneUI;
+    public MapUI MapSceneUI
+    {
+        get
+        {
+            if (_mapSceneUI == null)
+            {
+                _mapSceneUI = CanvasManager.Instance.GetCanvas("MapUI").GetComponent<MapUI>();
+            }
+            return _mapSceneUI;
+        }
+    }
+
     private void Awake()
     {
         stageOfPortalDic.Add(StageType.Attack, new List<Portal>());
@@ -67,6 +80,7 @@ public class MapManager : MonoSingleton<MapManager>
         ChapterInit();
         PortalInit();
         MapSceneUI.InfoUIReload();
+        //CanvasManager.instance.GetCanvas("MapUI").GetComponent<MapUI>().InfoUIReload();
 
         RewardManager.ImageLoad();
     } 
@@ -83,7 +97,6 @@ public class MapManager : MonoSingleton<MapManager>
             int random = Random.Range(1, 100);
 
             stage.Init(random <= chance ? StageType.Event : StageType.Attack, MapSceneUI.stages[idx], idx);
-            //stage.Init(random <= chance ? StageType.Rest : StageType.Attack, MapSceneUI.stages[idx], idx); // Debug
             stageList.Add(stage);
 
             idx++;

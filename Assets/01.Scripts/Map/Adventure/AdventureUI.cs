@@ -30,6 +30,8 @@ public class AdventureUI : MonoBehaviour
         _distractorPanel = transform.Find("Distractor").gameObject;
         _distractorButtons = _distractorPanel.GetComponentsInChildren<Button>(true);
         _distractorButtons.ForEach(x => _distractorText.Add(x.GetComponentInChildren<TextMeshProUGUI>(true)));
+
+        GetComponent<Canvas>().enabled = false;
     }
 
     private void StoryClick()

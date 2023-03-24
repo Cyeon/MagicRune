@@ -5,9 +5,12 @@ using UnityEngine.UI;
 using DG.Tweening;
 using TMPro;
 using System.Data;
+using System;
 
 public class UIManager : MonoSingleton<UIManager>
 {
+    private Dictionary<Type, object[]> _uiObject = new Dictionary<Type, object[]>();
+
     [SerializeField] private Transform _canvas;
     public Keyword word;
 
@@ -95,6 +98,11 @@ public class UIManager : MonoSingleton<UIManager>
         _statusDescInfo = _statusDescPanel.transform.Find("Infomation").GetComponent<TextMeshPro>();
 
         _gr = _canvas.GetComponent<GraphicRaycaster>();
+    }
+
+    public void Bind<T>(Type type) where T : UnityEngine.Object
+    {
+
     }
 
     public void OnDestroy()

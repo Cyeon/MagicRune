@@ -21,6 +21,8 @@ public class RestUI : MonoBehaviour
 
     private void Start()
     {
+        GetComponent<Canvas>().enabled = false;
+
         _restBtn.onClick.RemoveAllListeners();
         _restBtn.onClick.AddListener(() => StartCoroutine(RestCoroutine()));
 

@@ -15,6 +15,19 @@ public class Stage
     private Image _image;
     private int _index;
 
+    private MapUI _mapSceneUI;
+    public MapUI MapSceneUI
+    {
+        get
+        {
+            if (_mapSceneUI == null)
+            {
+                _mapSceneUI = CanvasManager.Instance.GetCanvas("MapUI").GetComponent<MapUI>();
+            }
+            return _mapSceneUI;
+        }
+    }
+
     public void Init(StageType type, Image img, int idx)
     {
         this.type = type;

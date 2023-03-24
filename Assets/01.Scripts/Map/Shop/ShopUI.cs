@@ -12,6 +12,8 @@ public class ShopUI : MonoBehaviour
     {
         _goldText = transform.Find("GoldBar/Amount").GetComponent<TextMeshProUGUI>();
         _storeShelf = transform.Find("StoreShelf");
+
+        GetComponent<Canvas>().enabled = false;
     }
     
     public void Exit()
