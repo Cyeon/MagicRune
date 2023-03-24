@@ -10,11 +10,12 @@ public abstract class BaseScene : MonoBehaviour
     private void Awake()
     {
         Init();
+
     }
 
     protected virtual void Init()
     {
-
+        CanvasManager.Instance.SetCanvas();
     }
 
     public abstract void Clear();

@@ -9,7 +9,7 @@ using System;
 
 public class UIManager : MonoSingleton<UIManager>
 {
-    private Dictionary<Type, object[]> _uiObject = new Dictionary<Type, object[]>();
+    private Dictionary<Type, List<UnityEngine.Object>> _uiObject = new Dictionary<Type, List<UnityEngine.Object>>();
 
     [SerializeField] private Transform _canvas;
     public Keyword word;
@@ -58,7 +58,7 @@ public class UIManager : MonoSingleton<UIManager>
     private TextMeshPro _statusDescInfo;
 
     public GameObject cardAssistPanel;
- 
+
     [Header("ETC")]
     [SerializeField] private GameObject _damagePopup;
     [SerializeField] private GameObject _infoMessage;
@@ -98,11 +98,112 @@ public class UIManager : MonoSingleton<UIManager>
         _statusDescInfo = _statusDescPanel.transform.Find("Infomation").GetComponent<TextMeshPro>();
 
         _gr = _canvas.GetComponent<GraphicRaycaster>();
+
+
     }
 
-    public void Bind<T>(Type type) where T : UnityEngine.Object
+    private void Start()
     {
+        // Debug용 코드 삭제 해야함
+        Bind<RawImage>("Player BG Panel", CanvasManager.instance.GetCanvas("Main").gameObject);
 
+        Get<RawImage>("Player BG Panel").gameObject.SetActive(false);
+    }
+
+    /// <summary>
+    /// UI 바인딩 함수
+    /// </summary>
+    /// <typeparam name="T">UI의 타입</typeparam>
+    /// <param name="type">정의된 열거자</param>
+    /// <param name="gameObject">찾을 캔버스</param>
+    public void Bind<T>(Type type, GameObject gameObject = null) where T : UnityEngine.Object
+    {
+        string[] names = Enum.GetNames(type);
+        List<UnityEngine.Object> objects = new List<UnityEngine.Object>(names.Length);
+
+        for (int i = 0; i < names.Length; i++)
+        {
+            objects[i] = Utill.FindChild<T>(gameObject, names[i], true);
+            if (objects[i] == null)
+            {
+                Debug.LogWarning($"Failed to bind {names[i]}");
+            }
+        }
+        _uiObject.Add(typeof(T), objects);
+    }
+
+    /// <summary>
+    /// UI 바인딩 함수
+    /// </summary>
+    /// <typeparam name="T">UI의 타입</typeparam>
+    /// <param name="name">정의된 UI 이름</param>
+    /// <param name="gameObject">찾을 캔버스</param>
+    public void Bind<T>(string name, GameObject gameObject = null) where T : UnityEngine.Object
+    {
+        UnityEngine.Object objects = null;
+        objects = Utill.FindChild<T>(gameObject, name, true);
+        if (objects == null)
+        {
+            Debug.LogWarning($"Failed to bind {name}");
+        }
+
+        if (_uiObject.ContainsKey(typeof(T)) == false)
+        {
+            _uiObject.Add(typeof(T), new List<UnityEngine.Object> { objects });
+        }
+        else
+        {
+            _uiObject[typeof(T)].Add(objects);
+        }
+
+    }
+
+    public T Get<T>(int index) where T : UnityEngine.Object
+    {
+        List<UnityEngine.Object> objects = null;
+
+        //if (_uiObject.TryGetValue(typeof(T), out objects) == false)
+        //{
+        //    return null;
+        //}
+
+        //if (objects.Count <= index)
+        //{
+        //    return null;
+        //}
+
+        //return objects[index] as T;
+
+        if (_uiObject.ContainsKey(typeof(T)))
+        {
+            objects = new List<UnityEngine.Object>(_uiObject[typeof(T)]);
+            return objects[index] as T;
+        }
+        else
+        {
+            return null;
+        }
+    }
+
+    public T Get<T>(string name) where T : UnityEngine.Object
+    {
+        List<UnityEngine.Object> objects = null;
+
+        //objects = _ui
+        //if (_uiObject.TryGetValue(typeof(T), out objects) == true)
+        //{
+        //    return objects.Find(x => x.name == name) as T;
+        //}
+
+        if (_uiObject.ContainsKey(typeof(T)))
+        {
+            objects = new List<UnityEngine.Object>(_uiObject[typeof(T)]);
+            return objects.Find(x => x.name == name) as T;
+        }
+        else
+        {
+            return null;
+        }
     }
 
     public void OnDestroy()

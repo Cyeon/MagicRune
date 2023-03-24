@@ -6,6 +6,8 @@ public class DialScene : BaseScene
 {
     protected override void Init()
     {
+        base.Init();
+
         SceneType = Define.Scene.DialScene;
     }
 
