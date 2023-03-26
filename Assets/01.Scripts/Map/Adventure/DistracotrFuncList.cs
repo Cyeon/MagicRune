@@ -4,12 +4,6 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using static MapDefine;
 
-public enum DistractorFunc
-{
-    NextStage,
-    Healing
-}
-
 public enum IncreaseMode
 {
     Amount,
