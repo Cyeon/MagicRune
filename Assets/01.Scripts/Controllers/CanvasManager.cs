@@ -125,6 +125,11 @@ public class CanvasManager : MonoSingleton<CanvasManager>
         return null;
     }
 
+    public int GetCanvasCount()
+    {
+        return _canvasDict.Count;
+    }
+
     public void Clear()
     {
         _canvasDict.Clear();

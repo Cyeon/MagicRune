@@ -4,12 +4,11 @@ using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 using TMPro;
-using System.Data;
 using System;
 
 public class UIManager : MonoSingleton<UIManager>
 {
-    private Dictionary<Type, List<UnityEngine.Object>> _uiObject = new Dictionary<Type, List<UnityEngine.Object>>();
+    private Dictionary<Type, List<UnityEngine.Object>> _uiDict = new Dictionary<Type, List<UnityEngine.Object>>();
 
     [SerializeField] private Transform _canvas;
     public Keyword word;
@@ -104,11 +103,15 @@ public class UIManager : MonoSingleton<UIManager>
 
     private void Start()
     {
-        // Debug용 코드 삭제 해야함
-        Bind<RawImage>("Player BG Panel", CanvasManager.instance.GetCanvas("Main").gameObject);
+        // Start에 작성하셈 안그럼 동작순서 꼬여서 잘 안될 수 있음
 
-        Get<RawImage>("Player BG Panel").gameObject.SetActive(false);
+        // Debug용 코드
+        Bind<Image>("BackPanelOutLine", CanvasManager.instance.GetCanvas("BG").gameObject);
+
+        Get<Image>("BackPanelOutLine").gameObject.SetActive(false);
     }
+
+    #region Bind & Get
 
     /// <summary>
     /// UI 바인딩 함수
@@ -129,7 +132,7 @@ public class UIManager : MonoSingleton<UIManager>
                 Debug.LogWarning($"Failed to bind {names[i]}");
             }
         }
-        _uiObject.Add(typeof(T), objects);
+        _uiDict.Add(typeof(T), objects);
     }
 
     /// <summary>
@@ -147,13 +150,13 @@ public class UIManager : MonoSingleton<UIManager>
             Debug.LogWarning($"Failed to bind {name}");
         }
 
-        if (_uiObject.ContainsKey(typeof(T)) == false)
+        if (_uiDict.ContainsKey(typeof(T)) == false)
         {
-            _uiObject.Add(typeof(T), new List<UnityEngine.Object> { objects });
+            _uiDict.Add(typeof(T), new List<UnityEngine.Object> { objects });
         }
         else
         {
-            _uiObject[typeof(T)].Add(objects);
+            _uiDict[typeof(T)].Add(objects);
         }
 
     }
@@ -174,9 +177,9 @@ public class UIManager : MonoSingleton<UIManager>
 
         //return objects[index] as T;
 
-        if (_uiObject.ContainsKey(typeof(T)))
+        if (_uiDict.ContainsKey(typeof(T)))
         {
-            objects = new List<UnityEngine.Object>(_uiObject[typeof(T)]);
+            objects = new List<UnityEngine.Object>(_uiDict[typeof(T)]);
             return objects[index] as T;
         }
         else
@@ -195,9 +198,9 @@ public class UIManager : MonoSingleton<UIManager>
         //    return objects.Find(x => x.name == name) as T;
         //}
 
-        if (_uiObject.ContainsKey(typeof(T)))
+        if (_uiDict.ContainsKey(typeof(T)))
         {
-            objects = new List<UnityEngine.Object>(_uiObject[typeof(T)]);
+            objects = new List<UnityEngine.Object>(_uiDict[typeof(T)]);
             return objects.Find(x => x.name == name) as T;
         }
         else
@@ -205,6 +208,13 @@ public class UIManager : MonoSingleton<UIManager>
             return null;
         }
     }
+
+    public void Clear()
+    {
+        _uiDict.Clear();
+    }
+
+    #endregion
 
     public void OnDestroy()
     {
