@@ -63,6 +63,8 @@ public class Dial : MonoBehaviour
 
         for (int i = 0; i < DeckManager.Instance.Deck.Count; i++)
         {
+            // 한 라인에 들어갈 수 있는 최대 룬 개수 처리 해야함
+
             int index = Random.Range(1, 4);
             //GameObject g = Instantiate(tempCard, this.transform.GetChild(index - 1));
             RuneUI r = ResourceManager.Instance.Instantiate("Rune").GetComponent<RuneUI>();

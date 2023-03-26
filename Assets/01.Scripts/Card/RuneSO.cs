@@ -80,9 +80,16 @@ public class Condition
     [ConditionalField(nameof(ConditionType), false, ConditionType.HeathComparison, ConditionType.StatusComparison)]
     public bool IsEnemy = true;
 
-    public Condition()
+    public Condition(ConditionType conditionType = ConditionType.None, AttributeType attributeType = AttributeType.None,
+        StatusName statusType = StatusName.Null, ComparisonType comparisonType = ComparisonType.MoreThan,
+        float value = 0, bool isEnemy = true)
     {
-
+        ConditionType = conditionType;
+        AttributeType = attributeType;
+        StatusType = statusType;
+        ComparisonType = comparisonType;
+        Value = value;
+        IsEnemy = isEnemy;
     }
 }
 
@@ -110,7 +117,13 @@ public class Pair
         bool isEnemy = true, AttackType attackType = AttackType.Single,
         AttributeType attributeType = AttributeType.None, float effect = 0)
     {
-        
+        Condition = condition;
+        EffectType = effectType;
+        StatusType = statusType;
+        IsEnemy = isEnemy;
+        AttackType = attackType;
+        AttributeType = attributeType;
+        Effect = effect;
     }
 }
 
