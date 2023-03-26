@@ -55,7 +55,7 @@ public class PatternFuncList : MonoBehaviour
 
     public void AddShield()
     {
-        BattleManager.Instance.enemy.Shield += value;
+        BattleManager.Instance.enemy.AddShield(value);
     }
 
     public void AddIceStatus()
@@ -142,6 +142,6 @@ public class PatternFuncList : MonoBehaviour
 
     public void ShieldKeep()
     {
-        BattleManager.Instance.enemy.Shield += BattleManager.Instance.enemy.Shield;
+        BattleManager.Instance.enemy.AddShield(BattleManager.Instance.enemy.Shield);
     }
 }

@@ -119,6 +119,7 @@ public class UIManager : MonoSingleton<UIManager>
     /// <typeparam name="T">UI의 타입</typeparam>
     /// <param name="type">정의된 열거자</param>
     /// <param name="gameObject">찾을 캔버스</param>
+    [Obsolete]
     public void Bind<T>(Type type, GameObject gameObject = null) where T : UnityEngine.Object
     {
         string[] names = Enum.GetNames(type);
@@ -161,6 +162,7 @@ public class UIManager : MonoSingleton<UIManager>
 
     }
 
+    [Obsolete]
     public T Get<T>(int index) where T : UnityEngine.Object
     {
         List<UnityEngine.Object> objects = null;

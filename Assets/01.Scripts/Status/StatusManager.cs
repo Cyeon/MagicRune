@@ -84,36 +84,39 @@ public class StatusManager : MonoSingleton<StatusManager>
     // ?íƒœ?´ìƒ ì¶”ê?
     public void AddStatus(Unit unit, StatusName statusName, int value = 1)
     {
-        Status status = GetStatus(statusName);
-        if(status == null)
+        if (unit.IsDie == false)
         {
-            Debug.LogWarning(string.Format("{0} status not found.", statusName));
-            return;
-        }
-
-        Status newStatus = new Status(status);
-        newStatus.typeValue = value;
-        
-        List<Status> statusList = new List<Status>();
-        if(unit.unitStatusDic.TryGetValue(status.invokeTime, out statusList))
-        {
-            if (unit == BattleManager.Instance.enemy)
-                //UIManager.Instance.StatusPopup(newStatus, UIManager.Instance.enemyIcon.transform.position);
-                UIManager.Instance.StatusPopup(newStatus);
-
-            Status currentStauts = statusList.Where(e => e.statusName == status.statusName).FirstOrDefault();
-            if(currentStauts != null)
+            Status status = GetStatus(statusName);
+            if (status == null)
             {
-                currentStauts.typeValue += status.typeValue > 0 ? status.typeValue : value;
-                UIManager.Instance.ReloadStatusPanel(unit, currentStauts.statusName, currentStauts.typeValue);
+                Debug.LogWarning(string.Format("{0} status not found.", statusName));
+                return;
             }
-            else
-            {
-                newStatus.unit = unit;
-                unit.unitStatusDic[newStatus.invokeTime].Add(newStatus);
-                UIManager.Instance.AddStatus(unit, newStatus);
 
-                newStatus.addFunc?.Invoke();
+            Status newStatus = new Status(status);
+            newStatus.typeValue = value;
+
+            List<Status> statusList = new List<Status>();
+            if (unit.unitStatusDic.TryGetValue(status.invokeTime, out statusList))
+            {
+                if (unit == BattleManager.Instance.enemy)
+                    //UIManager.Instance.StatusPopup(newStatus, UIManager.Instance.enemyIcon.transform.position);
+                    UIManager.Instance.StatusPopup(newStatus);
+
+                Status currentStauts = statusList.Where(e => e.statusName == status.statusName).FirstOrDefault();
+                if (currentStauts != null)
+                {
+                    currentStauts.typeValue += status.typeValue > 0 ? status.typeValue : value;
+                    UIManager.Instance.ReloadStatusPanel(unit, currentStauts.statusName, currentStauts.typeValue);
+                }
+                else
+                {
+                    newStatus.unit = unit;
+                    unit.unitStatusDic[newStatus.invokeTime].Add(newStatus);
+                    UIManager.Instance.AddStatus(unit, newStatus);
+
+                    newStatus.addFunc?.Invoke();
+                }
             }
         }
     }
@@ -121,26 +124,32 @@ public class StatusManager : MonoSingleton<StatusManager>
     // ?íƒœ?´ìƒ ?œê±°
     public void RemStatus(Unit unit, Status status)
     {
-        List<Status> statusList = new List<Status>();
-        if(unit.unitStatusDic.TryGetValue(status.invokeTime, out statusList))
+        if (unit.IsDie == false)
         {
-            Status currentStauts = statusList.Where(e => e.statusName == status.statusName).FirstOrDefault();
-            if (currentStauts != null)
+            List<Status> statusList = new List<Status>();
+            if (unit.unitStatusDic.TryGetValue(status.invokeTime, out statusList))
             {
-                unit.unitStatusDic[status.invokeTime].Remove(status);
-                UIManager.Instance.RemoveStatusPanel(unit, status.statusName);
-            }
-            else
-            {
-                Debug.LogWarning(string.Format("{0} status is not found. Can't Remove do it.", status.statusName));
+                Status currentStauts = statusList.Where(e => e.statusName == status.statusName).FirstOrDefault();
+                if (currentStauts != null)
+                {
+                    unit.unitStatusDic[status.invokeTime].Remove(status);
+                    UIManager.Instance.RemoveStatusPanel(unit, status.statusName);
+                }
+                else
+                {
+                    Debug.LogWarning(string.Format("{0} status is not found. Can't Remove do it.", status.statusName));
+                }
             }
         }
     }
 
     public void RemStatus(Unit unit, StatusName statusName)
     {
-        Status status = GetStatus(statusName);
-        RemStatus(unit, status);
+        if (unit.IsDie == false)
+        {
+            Status status = GetStatus(statusName);
+            RemStatus(unit, status);
+        }
     }
 
     public void StatusUpdate(Unit unit)

@@ -79,6 +79,11 @@ public class Condition
 
     [ConditionalField(nameof(ConditionType), false, ConditionType.HeathComparison, ConditionType.StatusComparison)]
     public bool IsEnemy = true;
+
+    public Condition()
+    {
+
+    }
 }
 
 [Serializable]
@@ -97,8 +102,16 @@ public class Pair
     [ConditionalField(nameof(AttackType), false, AttackType.Double)]
     public AttributeType AttributeType;
 
-    [ResizableTextArea, Tooltip("카드 효과 텍스트")]
-    public string Effect;
+    [Tooltip("카드 효과 밸류")]
+    public float Effect;
+
+    public Pair(Condition condition, EffectType effectType = EffectType.Attack,
+        StatusName statusType = StatusName.Null,
+        bool isEnemy = true, AttackType attackType = AttackType.Single,
+        AttributeType attributeType = AttributeType.None, float effect = 0)
+    {
+        
+    }
 }
 
 /// <summary>

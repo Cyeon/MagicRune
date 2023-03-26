@@ -135,7 +135,7 @@ public class BattleManager : MonoSingleton<BattleManager>
 
                 if (player.Shield > 0)
                 {
-                    player.Shield = 0;
+                    player.ResetShield();
                     UIManager.Instance.UpdateHealthbar(true);
                 }
 

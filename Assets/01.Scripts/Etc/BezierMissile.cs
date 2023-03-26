@@ -158,7 +158,7 @@ public class BezierMissile : MonoBehaviour
             _endAction?.Invoke();
 
             // ¹º°¡ÇÏ°í
-            Destroy(this.gameObject);
+            ResourceManager.Instance.Destroy(this.gameObject);
         }
     }
 

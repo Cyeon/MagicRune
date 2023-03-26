@@ -17,6 +17,7 @@ public class Unit : MonoBehaviour
     [SerializeField] private float _health = 10f;
 
     private bool _isDie = false;
+    public bool IsDie => _isDie;
 
     public float HP
     {
@@ -39,7 +40,7 @@ public class Unit : MonoBehaviour
     public float Shield
     { 
         get => _shield; 
-        set
+        protected set
         {
             _shield = value;
             UIManager.Instance.UpdateShieldText(_isPlayer, _shield);
@@ -70,33 +71,36 @@ public class Unit : MonoBehaviour
     /// <param name="damage"></param>
     public void TakeDamage(float damage, bool isFixed = false, Status status = null)
     {
-        currentDmg = damage;
-        InvokeStatus(StatusInvokeTime.GetDamage);
-        currentDmg = Mathf.Floor(currentDmg);
-
-        if(Shield > 0 && isFixed == false)
+        if (_isDie == false)
         {
-            if (Shield - currentDmg >= 0)
-                Shield -= currentDmg;
-            else
+            currentDmg = damage;
+            InvokeStatus(StatusInvokeTime.GetDamage);
+            currentDmg = Mathf.Floor(currentDmg);
+
+            if (Shield > 0 && isFixed == false)
             {
-                currentDmg -= Shield;
-                Shield = 0;
-                HP -= currentDmg;
+                if (Shield - currentDmg >= 0)
+                    Shield -= currentDmg;
+                else
+                {
+                    currentDmg -= Shield;
+                    Shield = 0;
+                    HP -= currentDmg;
+                }
             }
-        }
-        else
-            HP -= currentDmg;
+            else
+                HP -= currentDmg;
 
-        OnTakeDamage?.Invoke(currentDmg);
-        OnTakeDamageFeedback?.Invoke();
+            OnTakeDamage?.Invoke(currentDmg);
+            OnTakeDamageFeedback?.Invoke();
 
-        UIManager.Instance.UpdateHealthbar(false);
-        UIManager.Instance.UpdateHealthbar(true);
+            UIManager.Instance.UpdateHealthbar(false);
+            UIManager.Instance.UpdateHealthbar(true);
 
-        if(_isPlayer == false)
-        {
-            UIManager.Instance.DamageUIPopup(currentDmg, UIManager.Instance.enemyIcon.transform.position, status);
+            if (_isPlayer == false)
+            {
+                UIManager.Instance.DamageUIPopup(currentDmg, UIManager.Instance.enemyIcon.transform.position, status);
+            }
         }
     }
 
@@ -138,18 +142,45 @@ public class Unit : MonoBehaviour
 
     public void AddHP(float value)
     {
-        _health += value;
-        UIManager.Instance.UpdateHealthbar(true);
+        if (_isDie == false)
+        {
+            _health += value;
+            UIManager.Instance.UpdateHealthbar(true);
+        }
     }
 
     public void AddHPPercent(float value)
     {
-        _health += value / 100 * _maxHealth;
+        if (_isDie == false)
+        {
+            _health += value / 100 * _maxHealth;
+        }
     }
 
     public void AddMaxHp(float amount)
     {
-        _maxHealth += amount;
+        if (_isDie == false)
+        {
+            _maxHealth += amount;
+        }
+    }
+
+    public void AddShield(float value)
+    {
+        if(_isDie == false)
+        {
+            Shield += value;
+        }
+    }
+
+    public float GetShield()
+    {
+        return _shield;
+    }
+
+    public void ResetShield()
+    {
+        Shield = 0;
     }
     
     protected virtual void Die()

@@ -26,10 +26,12 @@ public class RestUI : MonoBehaviour
         _restBtn.onClick.RemoveAllListeners();
         _restBtn.onClick.AddListener(() => StartCoroutine(RestCoroutine()));
 
-        _enhanceBtn.onClick.RemoveAllListeners();
+        //_enhanceBtn.onClick.RemoveAllListeners();
         _enhanceBtn.onClick.AddListener(() =>
         {
             Debug.Log("Enhance Complete");
+
+
             NextStage();
         });
     }

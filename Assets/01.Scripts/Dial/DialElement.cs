@@ -70,6 +70,7 @@ public class DialElement : MonoBehaviour
             }
         }
     }
+
     [SerializeField, Range(0f, 90f)]
     private float _selectOffset;
     private bool _isRotate = false;
@@ -172,8 +173,8 @@ public class DialElement : MonoBehaviour
         for(int i = 0; i < _selectCard.Rune.EffectList.Count; i++)
         {
             Pair pair = _selectCard.Rune.EffectList[i];
-            Unit target = pair.IsEnemy == true ? BattleManager.Instance.enemy : GameManager.Instance.player;
-            AttackEffectFunction(pair.EffectType, target, pair);
+            Unit target = pair.IsEnemy == true ? BattleManager.Instance.enemy : BattleManager.Instance.player;
+            AttackEffectFunction(pair.EffectType, target, pair)?.Invoke();
         }
     }
 
@@ -197,11 +198,11 @@ public class DialElement : MonoBehaviour
                 switch (e.AttackType)
                 {
                     case AttackType.Single:
-                        action = () => BattleManager.Instance.player.Attack(int.Parse(e.Effect));
+                        action = () => BattleManager.Instance.player.Attack(e.Effect);
                         break;
                     case AttackType.Double:
-                        //action = () => GameManager.Instance.player.Attack(int.Parse(e.Effect) * c);
-                        action = () => BattleManager.Instance.player.Attack(int.Parse(e.Effect));
+                        //action = () => GameManager.Instance.player.Attack(e.Effect * c);
+                        action = () => BattleManager.Instance.player.Attack(e.Effect);
                         break;
                 }
                 break;
@@ -209,11 +210,11 @@ public class DialElement : MonoBehaviour
                 switch (e.AttackType)
                 {
                     case AttackType.Single:
-                        action = () => BattleManager.Instance.player.Shield += int.Parse(e.Effect);
+                        action = () => BattleManager.Instance.player.AddShield(e.Effect);
                         break;
                     case AttackType.Double:
-                        //action = () => GameManager.Instance.player.Shield += int.Parse(e.Effect) * c;
-                        action = () => BattleManager.Instance.player.Shield += int.Parse(e.Effect);
+                        //action = () => GameManager.Instance.player.Shield += e.Effect * c;
+                        action = () => BattleManager.Instance.player.AddShield(e.Effect);
                         break;
                 }
                 break;
@@ -221,11 +222,11 @@ public class DialElement : MonoBehaviour
                 switch (e.AttackType)
                 {
                     case AttackType.Single:
-                        action = () => StatusManager.Instance.AddStatus(target, e.StatusType, int.Parse(e.Effect));
+                        action = () => StatusManager.Instance.AddStatus(target, e.StatusType, (int)e.Effect);
                         break;
                     case AttackType.Double:
-                        //action = () => StatusManager.Instance.AddStatus(target, e.StatusType, int.Parse(e.Effect) * c);
-                        action = () => StatusManager.Instance.AddStatus(target, e.StatusType, int.Parse(e.Effect));
+                        //action = () => StatusManager.Instance.AddStatus(target, e.StatusType, (int)e.Effect * c);
+                        action = () => StatusManager.Instance.AddStatus(target, e.StatusType, (int)e.Effect);
                         break;
                 }
                 break;
@@ -234,7 +235,7 @@ public class DialElement : MonoBehaviour
                 break;
             case EffectType.Draw:
                 // 지금은 일단 주석...
-                //action = () => _cardCollector.CardDraw(int.Parse(e.Effect));
+                //action = () => _cardCollector.CardDraw(e.Effect);
                 break;
             case EffectType.Etc:
                 action = null;
@@ -277,53 +278,56 @@ public class DialElement : MonoBehaviour
                     _fingerID = -1;
                     _isRotate = false;
 
-                    if (_isUseRotateOffset)
+                    if (_magicList.Count > 0)
                     {
-                        float oneDinstance = 360f / _magicList.Count;
-                        bool inBoolean = (_spriteRenderer.transform.eulerAngles.z % oneDinstance) <= _selectOffset;
-                        bool outBoolean = (oneDinstance - (_spriteRenderer.transform.eulerAngles.z % oneDinstance)) <= _selectOffset;
-                        if (inBoolean)
+                        if (_isUseRotateOffset)
                         {
-                            int index = (int)(_spriteRenderer.transform.eulerAngles.z / oneDinstance) % (_magicList.Count);
-                            if (_magicList[index].Rune.IsCoolTime == false)
+                            float oneDinstance = 360f / _magicList.Count;
+                            bool inBoolean = (_spriteRenderer.transform.eulerAngles.z % oneDinstance) <= _selectOffset;
+                            bool outBoolean = (oneDinstance - (_spriteRenderer.transform.eulerAngles.z % oneDinstance)) <= _selectOffset;
+                            if (inBoolean)
                             {
-                                // 돌리고 있을 때만
-                                DOTween.To(
-                                    () => transform.eulerAngles,
-                                    x => transform.eulerAngles = x,
-                                    new Vector3(0, 0, ((int)(transform.eulerAngles.z / oneDinstance)) * oneDinstance),
-                                    0.3f
-                                ).OnComplete(() => UIManager.Instance.CardDescPopup(_selectCard.Rune));
+                                int index = (int)(_spriteRenderer.transform.eulerAngles.z / oneDinstance) % (_magicList.Count);
+                                if (_magicList[index].Rune.IsCoolTime == false)
+                                {
+                                    // 돌리고 있을 때만
+                                    DOTween.To(
+                                        () => transform.eulerAngles,
+                                        x => transform.eulerAngles = x,
+                                        new Vector3(0, 0, ((int)(transform.eulerAngles.z / oneDinstance)) * oneDinstance),
+                                        0.3f
+                                    ).OnComplete(() => UIManager.Instance.CardDescPopup(_selectCard.Rune));
+                                }
                             }
-                        }
-                        else if (outBoolean)
-                        {
-                            int index = (int)(transform.eulerAngles.z / oneDinstance) % (_magicList.Count);
-                            index = (index + 1) % _magicList.Count;
-                            if (_magicList[index].Rune.IsCoolTime == false)
+                            else if (outBoolean)
                             {
-                                DOTween.To(
-                                    () => transform.eulerAngles,
-                                    x => transform.eulerAngles = x,
-                                    new Vector3(0, 0, ((int)(transform.eulerAngles.z / oneDinstance) + 1) * oneDinstance),
-                                    0.3f
-                                ).OnComplete(() => UIManager.Instance.CardDescPopup(_selectCard.Rune));
+                                int index = (int)(transform.eulerAngles.z / oneDinstance) % (_magicList.Count);
+                                index = (index + 1) % _magicList.Count;
+                                if (_magicList[index].Rune.IsCoolTime == false)
+                                {
+                                    DOTween.To(
+                                        () => transform.eulerAngles,
+                                        x => transform.eulerAngles = x,
+                                        new Vector3(0, 0, ((int)(transform.eulerAngles.z / oneDinstance) + 1) * oneDinstance),
+                                        0.3f
+                                    ).OnComplete(() => UIManager.Instance.CardDescPopup(_selectCard.Rune));
+                                }
                             }
-                        }
-                    }
-                    else
-                    {
-                        float oneDinstance = 360f / _magicList.Count;
-                        int index = (int)(transform.eulerAngles.z / oneDinstance) % (_magicList.Count);
-
-                        float distance = transform.eulerAngles.z % oneDinstance;
-                        if (distance >= oneDinstance / 2f)
-                        {
-                            transform.DORotate(new Vector3(0, 0, (index + 1) % _magicList.Count * oneDinstance), 0.3f, RotateMode.Fast).OnComplete(() => UIManager.Instance.CardDescPopup(_selectCard.Rune));
                         }
                         else
                         {
-                            transform.DORotate(new Vector3(0, 0, index * oneDinstance), 0.3f, RotateMode.Fast).OnComplete(() => UIManager.Instance.CardDescPopup(_selectCard.Rune));
+                            float oneDinstance = 360f / _magicList.Count;
+                            int index = (int)(transform.eulerAngles.z / oneDinstance) % (_magicList.Count);
+
+                            float distance = transform.eulerAngles.z % oneDinstance;
+                            if (distance >= oneDinstance / 2f)
+                            {
+                                transform.DORotate(new Vector3(0, 0, (index + 1) % _magicList.Count * oneDinstance), 0.3f, RotateMode.Fast).OnComplete(() => UIManager.Instance.CardDescPopup(_selectCard.Rune));
+                            }
+                            else
+                            {
+                                transform.DORotate(new Vector3(0, 0, index * oneDinstance), 0.3f, RotateMode.Fast).OnComplete(() => UIManager.Instance.CardDescPopup(_selectCard.Rune));
+                            }
                         }
                     }
                 }
