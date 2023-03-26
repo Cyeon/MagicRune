@@ -27,14 +27,6 @@ public class Dial : MonoBehaviour
     private Dictionary<EffectType, List<EffectObjectPair>> _effectDict = new Dictionary<EffectType, List<EffectObjectPair>>();
     private List<DialElement> _dialElementList;
 
-    #region Swipe Parameta
-    private Vector2 touchBeganPos;
-    private Vector2 touchEndedPos;
-    private Vector2 touchDif;
-    [SerializeField]
-    private float swipeSensitivity = 5;
-    #endregion
-
     private bool _isAttack;
 
     private void Awake()

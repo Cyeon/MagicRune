@@ -16,9 +16,6 @@ public class DialElement : MonoBehaviour
     private Dial _dial;
     private SpriteRenderer _spriteRenderer;
 
-    [SerializeField]
-    private float _dragDistance = 800;
-
     #region Swipe Parameta
     private Vector2 touchBeganPos;
     private Vector2 touchEndedPos;
@@ -29,8 +26,6 @@ public class DialElement : MonoBehaviour
 
     #region Drag Parameta
     private float _rotDamp = 3;
-    [SerializeField]
-    private float _touchDamp = 5f;
     private Vector3 _touchPos, _offset;
 
     [SerializeField]

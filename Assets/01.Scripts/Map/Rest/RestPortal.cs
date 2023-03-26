@@ -17,8 +17,6 @@ public enum EnhanceType
 public class RestPortal : Portal
 {
     #region Rest Parameta
-    [SerializeField, Range(0, 100), OverrideLabel("Health %")]
-    private int _healthPercent = 25;
     #endregion
 
     private Button _restBtn;

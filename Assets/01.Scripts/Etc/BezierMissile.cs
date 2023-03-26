@@ -152,12 +152,13 @@ public class BezierMissile : MonoBehaviour
             //CubicBezierCurve(m_points[0].z, m_points[1].z, m_points[2].z, m_points[3].z)
         );
 
+        // 도착한거임
         if((Vector2)_transform.position == m_points[3])
         {
-            // 도착한거임
+            // 핸동하고
             _endAction?.Invoke();
 
-            // 뭔가하고
+            // 풀링
             ResourceManager.Instance.Destroy(this.gameObject);
         }
     }
