@@ -32,7 +32,7 @@ public class Utill
         }
         else
         {
-            foreach (T componet in go.GetComponentsInChildren<T>())
+            foreach (T componet in go.GetComponentsInChildren<T>(true))
             {
                 if (string.IsNullOrEmpty(name) || componet.name == name)
                     return componet;

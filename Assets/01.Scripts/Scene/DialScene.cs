@@ -15,6 +15,7 @@ public class DialScene : BaseScene
     private Image _enemyPatternIcon;
     private TextMeshProUGUI _enemyPatternValueText;
 
+    [SerializeField]
     private GameObject _cardDescPanel;
     private TextMeshProUGUI _cardDescName;
     private Image _cardDescSkillIcon;
@@ -46,15 +47,14 @@ public class DialScene : BaseScene
         UIManager.Instance.Bind<Image>("NextPattern Image", CanvasManager.Instance.GetCanvas("Main").gameObject);
         UIManager.Instance.Bind<TextMeshProUGUI>("NextPattern ValueText", CanvasManager.Instance.GetCanvas("Main").gameObject);
 
-        UIManager.Instance.Bind<GameObject>("Dial_Desc_Area", CanvasManager.Instance.GetCanvas("Popup").gameObject);
         UIManager.Instance.Bind<TextMeshProUGUI>("Desc_Name_Text", CanvasManager.Instance.GetCanvas("Popup").gameObject);
         UIManager.Instance.Bind<Image>("Desc_Skill_Image", CanvasManager.Instance.GetCanvas("Popup").gameObject);
         UIManager.Instance.Bind<TextMeshProUGUI>("Desc_Description", CanvasManager.Instance.GetCanvas("Popup").gameObject);
 
-        UIManager.Instance.Bind<Slider>("P HealthBar", CanvasManager.Instance.GetCanvas("Main").gameObject);
-        UIManager.Instance.Bind<Slider>("P ShieldBar", CanvasManager.Instance.GetCanvas("Main").gameObject);
-        UIManager.Instance.Bind<TextMeshProUGUI>("P HealthText", CanvasManager.Instance.GetCanvas("Main").gameObject);
-        UIManager.Instance.Bind<Slider>("P HealthFeedbackBar", CanvasManager.Instance.GetCanvas("Main").gameObject);
+        UIManager.Instance.Bind<Slider>("E HealthBar", CanvasManager.Instance.GetCanvas("Main").gameObject);
+        UIManager.Instance.Bind<Slider>("E ShieldBar", CanvasManager.Instance.GetCanvas("Main").gameObject);
+        UIManager.Instance.Bind<TextMeshProUGUI>("E HealthText", CanvasManager.Instance.GetCanvas("Main").gameObject);
+        UIManager.Instance.Bind<Slider>("E HealthFeedbackBar", CanvasManager.Instance.GetCanvas("Main").gameObject);
         UIManager.Instance.Bind<TextMeshProUGUI>("E Shield Value", CanvasManager.Instance.GetCanvas("Main").gameObject);
 
         UIManager.Instance.Bind<Slider>("P HealthBar", CanvasManager.Instance.GetCanvas("Main").gameObject);
@@ -68,7 +68,6 @@ public class DialScene : BaseScene
         _enemyPatternIcon = UIManager.Instance.Get<Image>("NextPattern Image");
         _enemyPatternValueText = UIManager.Instance.Get<TextMeshProUGUI>("NextPattern ValueText");
 
-        _cardDescPanel = UIManager.Instance.Get<GameObject>("Dial_Desc_Area");
         _cardDescName = UIManager.Instance.Get<TextMeshProUGUI>("Desc_Name_Text");
         _cardDescSkillIcon = UIManager.Instance.Get<Image>("Desc_Skill_Image");
         _cardDescInfo = UIManager.Instance.Get<TextMeshProUGUI>("Desc_Description");

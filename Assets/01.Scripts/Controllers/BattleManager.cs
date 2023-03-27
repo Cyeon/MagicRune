@@ -31,13 +31,6 @@ public class BattleManager : MonoSingleton<BattleManager>
 
     private DialScene _dialScene;
 
-    private void Awake()
-    {
-        DOTween.Init(false, false, LogBehaviour.Default).SetCapacity(500, 50);
-
-        Application.targetFrameRate = 30;
-    }
-
     private void Start()
     {
         _dialScene = SceneManagerEX.instance.CurrentScene as DialScene;

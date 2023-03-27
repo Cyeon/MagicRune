@@ -26,6 +26,8 @@ public class Enemy : Unit
             _spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         _spriteRenderer.sprite = so.icon;
 
+        if (_dialScene == null)
+            _dialScene = SceneManagerEX.Instance.CurrentScene as DialScene;
         _dialScene?.HealthbarInit(false, _maxHealth);
     }
 
