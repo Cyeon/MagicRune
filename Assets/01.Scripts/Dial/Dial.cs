@@ -260,8 +260,8 @@ public class Dial : MonoBehaviour
 
                 BattleManager.Instance.PlayerTurnEnd();
                 _effectDict.Clear();
+                _isAttack = false;
             });
-            _isAttack = false;
         }
     }
 

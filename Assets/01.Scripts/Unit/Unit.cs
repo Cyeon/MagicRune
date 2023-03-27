@@ -79,8 +79,6 @@ public class Unit : MonoBehaviour
     /// <param name="damage"></param>
     public void TakeDamage(float damage, bool isFixed = false, Status status = null)
     {
-        if (_isDie == false)
-        {
             currentDmg = damage;
             InvokeStatus(StatusInvokeTime.GetDamage);
             currentDmg = Mathf.Floor(currentDmg);
@@ -112,7 +110,6 @@ public class Unit : MonoBehaviour
                     _dialScene.DamageUIPopup(currentDmg, _dialScene.EnemyIcon.transform.position, status);
                 }
             }
-        }
     }
 
     public bool IsHealthAmount(float amount, ComparisonType type)

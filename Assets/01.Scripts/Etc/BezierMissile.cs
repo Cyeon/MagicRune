@@ -156,7 +156,10 @@ public class BezierMissile : MonoBehaviour
         if((Vector2)_transform.position == m_points[3])
         {
             // 핸동하고
-            _endAction?.Invoke();
+            if(BattleManager.Instance.enemy.IsDie == false)
+            {
+                _endAction?.Invoke();
+            }
 
             // 풀링
             ResourceManager.Instance.Destroy(this.gameObject);
