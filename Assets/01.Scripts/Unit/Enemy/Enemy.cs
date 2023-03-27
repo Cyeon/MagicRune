@@ -15,7 +15,8 @@ public class Enemy : Unit
     private Sequence idleSequence = null;
 
     private SpriteRenderer _spriteRenderer;
-
+    
+    public Vector3 enemyScaleVec = Vector3.one;
 
     public void Init(EnemySO so)
     {
@@ -25,6 +26,9 @@ public class Enemy : Unit
         if (_spriteRenderer == null)
             _spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         _spriteRenderer.sprite = so.icon;
+
+        enemyScaleVec = enemyInfo.prefab.transform.localScale;
+        _spriteRenderer.transform.localScale = enemyScaleVec;
 
         UIManager.Instance.HealthbarInit(false, _maxHealth);
     }
@@ -47,8 +51,8 @@ public class Enemy : Unit
     public void Idle()
     {
         idleSequence = DOTween.Sequence();
-        idleSequence.Append(UIManager.Instance.enemyIcon.DOScaleY(1.1f, 0.5f));
-        idleSequence.Append(UIManager.Instance.enemyIcon.DOScaleY(1f, 0.5f));
+        idleSequence.Append(UIManager.Instance.enemyIcon.DOScaleY(enemyScaleVec.y + 0.1f, 0.5f));
+        idleSequence.Append(UIManager.Instance.enemyIcon.DOScaleY(enemyScaleVec.y, 0.5f));
         idleSequence.AppendInterval(0.3f);
         idleSequence.SetLoops(-1);
     }
