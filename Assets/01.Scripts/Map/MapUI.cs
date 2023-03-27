@@ -25,11 +25,8 @@ public class MapUI : MonoBehaviour
 
     private void Start()
     {
-        UIManager.Instance.Bind<Image>("StageImage", CanvasManager.Instance.GetCanvas("MapUI").gameObject);
-        UIManager.Instance.Bind<TextMeshProUGUI>("Main GoldBar Amount", CanvasManager.Instance.GetCanvas("MapUI").gameObject);
-        UIManager.Instance.Bind<TextMeshProUGUI>("Main HealthBar Amount", CanvasManager.Instance.GetCanvas("MapUI").gameObject);
-
-        StageList = UIManager.Instance.Get<Image>("StageImage").transform;
+        UIManager.Instance.Bind<TextMeshProUGUI>("Main Gold Amount", CanvasManager.Instance.GetCanvas("MapUI").gameObject);
+        UIManager.Instance.Bind<TextMeshProUGUI>("Main Health Amount", CanvasManager.Instance.GetCanvas("MapUI").gameObject);
 
         Transform trm = transform.Find("Portals");
         for(int i = 0; i < trm.childCount; ++i)
@@ -52,8 +49,8 @@ public class MapUI : MonoBehaviour
             _bossPortalEffects.Add(_portalParent.Find("BossPortal").GetChild(i));
         }
 
-        _goldText = UIManager.Instance.Get<TextMeshProUGUI>("Main GoldBar Amount");
-        _healthText = UIManager.Instance.Get<TextMeshProUGUI>("Main HealthBar Amount");
+        _goldText = UIManager.Instance.Get<TextMeshProUGUI>("Main Gold Amount");
+        _healthText = UIManager.Instance.Get<TextMeshProUGUI>("Main Health Amount");
     }
 
     private void OnEnable()
@@ -84,7 +81,7 @@ public class MapUI : MonoBehaviour
 
     public void InfoUIReload()
     {
-        _goldText.text = GameManager.Instance.Gold.ToString();
-        _healthText.text = GameManager.Instance.player.HP.ToString();
+        _goldText?.SetText(GameManager.Instance.Gold.ToString());
+        _healthText?.SetText(GameManager.Instance.player.HP.ToString());
     }
 }

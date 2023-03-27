@@ -6,7 +6,7 @@ public class Managers : MonoBehaviour
 {
     private void Awake()
     {
-        var obj = FindObjectsOfType<Managers>();
+        Managers[] obj = GetComponents<Managers>();
         if (obj.Length == 1)
         {
             DontDestroyOnLoad(gameObject);

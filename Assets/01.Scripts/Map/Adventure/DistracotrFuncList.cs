@@ -64,7 +64,7 @@ public class DistracotrFuncList : MonoBehaviour
     {
         GameManager.Instance.player.AddMaxHp(amount);
         //MapSceneUI.InfoUIReload();
-        MapSceneUI.InfoUIReload(); // GetComponent 너무 많다 뱐수로 뺴자
+        MapSceneUI.InfoUIReload();
         NextStage();
     }
 

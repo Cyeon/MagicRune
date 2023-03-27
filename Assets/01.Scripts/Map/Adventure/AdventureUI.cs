@@ -10,7 +10,8 @@ public class AdventureUI : MonoBehaviour
 {
     private Image _cg;
     private TextMeshProUGUI _titleText;
-        
+
+    [SerializeField]
     private GameObject _storyPanel;
     private TextMeshProUGUI _storyText;
 
@@ -22,15 +23,13 @@ public class AdventureUI : MonoBehaviour
     {
         UIManager.Instance.Bind<Image>("CG", CanvasManager.Instance.GetCanvas("Adventure").gameObject);
         UIManager.Instance.Bind<TextMeshProUGUI>("Title Text", CanvasManager.Instance.GetCanvas("Adventure").gameObject);
-        UIManager.Instance.Bind<GameObject>("Story", CanvasManager.Instance.GetCanvas("Adventure").gameObject);
-        UIManager.Instance.Bind<TextMeshProUGUI>("Story Text", CanvasManager.Instance.GetCanvas("Adventure").gameObject);
+        UIManager.Instance.Bind<TextMeshProUGUI>("StoryText", CanvasManager.Instance.GetCanvas("Adventure").gameObject);
         UIManager.Instance.Bind<Button>("Story Button", CanvasManager.Instance.GetCanvas("Adventure").gameObject);
 
         _cg = UIManager.Instance.Get<Image>("CG");
         _titleText = UIManager.Instance.Get<TextMeshProUGUI>("Title Text");
 
-        _storyPanel = UIManager.Instance.Get<GameObject>("Story");
-        _storyText = UIManager.Instance.Get<TextMeshProUGUI>("Story Text");
+        _storyText = UIManager.Instance.Get<TextMeshProUGUI>("StoryText");
         UIManager.Instance.Get<Button>("Story Button").onClick.AddListener(() => StoryClick());
 
         _distractorPanel = transform.Find("Distractor").gameObject;
