@@ -5,13 +5,16 @@ using UnityEngine;
 public class DeckManager : MonoSingleton<DeckManager>
 {
     public List<RuneSO> _defaultRune = new List<RuneSO>(); // 초기 기본 지급 룬 
+    
+    public const int FIRST_DIAL_DECK_MAX_COUNT = 6;
+
     [SerializeField]
     private List<Rune> _firstDialDeck = new List<Rune>(); // 사전에 설정해둔 다이얼 안쪽의 1번째 줄 덱.
+    public List<Rune> FirstDialDeck => _firstDialDeck;
+    
     [SerializeField]
     private List<Rune> _deck = new List<Rune>(); // 소지하고 있는 모든 룬 
-
     public List<Rune> Deck => _deck;
-    public List<Rune> FirstDialDeck => _firstDialDeck;
 
     private void Awake()
     {
