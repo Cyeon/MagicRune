@@ -15,7 +15,7 @@ public abstract class BaseScene : MonoBehaviour
 
     protected virtual void Init()
     {
-        //UIManager.Instance?.Clear(); // 임시 주석 근데 나중에 풀어야함 근데 그러려만 UIManager를 다 갈아 없어야 함
+        UIManager.Instance?.Clear();
         CanvasManager.Instance.SetCanvas();
     }
 

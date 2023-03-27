@@ -9,9 +9,16 @@ public class StatusManager : MonoSingleton<StatusManager>
     public List<Status> statusList = new List<Status>(); // 모든 ?�태?�상 목록
     private StatusFuncList _statusFuncList = null;
 
+    private DialScene _dialScene;
+
     private void Awake()
     {
         _statusFuncList = GetComponent<StatusFuncList>();
+    }
+
+    private void Start()
+    {
+        _dialScene = SceneManagerEX.instance.CurrentScene as DialScene;
     }
 
     // ?�태?�상 ?�과 발동
@@ -101,19 +108,19 @@ public class StatusManager : MonoSingleton<StatusManager>
             {
                 if (unit == BattleManager.Instance.enemy)
                     //UIManager.Instance.StatusPopup(newStatus, UIManager.Instance.enemyIcon.transform.position);
-                    UIManager.Instance.StatusPopup(newStatus);
+                    _dialScene?.StatusPopup(newStatus);
 
                 Status currentStauts = statusList.Where(e => e.statusName == status.statusName).FirstOrDefault();
                 if (currentStauts != null)
                 {
                     currentStauts.typeValue += status.typeValue > 0 ? status.typeValue : value;
-                    UIManager.Instance.ReloadStatusPanel(unit, currentStauts.statusName, currentStauts.typeValue);
+                    _dialScene?.ReloadStatusPanel(unit, currentStauts.statusName, currentStauts.typeValue);
                 }
                 else
                 {
                     newStatus.unit = unit;
                     unit.unitStatusDic[newStatus.invokeTime].Add(newStatus);
-                    UIManager.Instance.AddStatus(unit, newStatus);
+                    _dialScene?.AddStatus(unit, newStatus);
 
                     newStatus.addFunc?.Invoke();
                 }
@@ -133,7 +140,7 @@ public class StatusManager : MonoSingleton<StatusManager>
                 if (currentStauts != null)
                 {
                     unit.unitStatusDic[status.invokeTime].Remove(status);
-                    UIManager.Instance.RemoveStatusPanel(unit, status.statusName);
+                    _dialScene?.RemoveStatusPanel(unit, status.statusName);
                 }
                 else
                 {
@@ -178,7 +185,7 @@ public class StatusManager : MonoSingleton<StatusManager>
             {
                 if (x.Value[i].type == StatusType.Turn) x.Value[i].typeValue--;
 
-                UIManager.Instance.ReloadStatusPanel(unit, x.Value[i].statusName, x.Value[i].typeValue);
+                _dialScene?.ReloadStatusPanel(unit, x.Value[i].statusName, x.Value[i].typeValue);
                 if (x.Value[i].typeValue <= 0)
                 {
                     indexes.Add(i);

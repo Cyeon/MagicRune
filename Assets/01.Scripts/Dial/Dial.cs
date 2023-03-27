@@ -29,6 +29,8 @@ public class Dial : MonoBehaviour
 
     private bool _isAttack;
 
+    private DialScene _dialScene;
+
     private void Awake()
     {
         _magicDict = new Dictionary<int, List<RuneUI>>(3);
@@ -44,22 +46,7 @@ public class Dial : MonoBehaviour
 
     private void Start()
     {
-        // 맨 처음 룬 생성해 주는 거 
-        //// 그냥 3으로 해도되는데 그냥 이렇게 함
-        //for (int i = 1; i <= _deck.List.Count; i++)
-        //{
-        //    for (int j = 1; j <= _deck.List[i - 1].Count; j++)
-        //    {
-        //        GameObject g = Instantiate(tempCard, this.transform.GetChild(i - 1));
-        //        Rune c = g.GetComponent<Rune>();
-        //        c.Dial = this;
-        //        c.SetMagic(_deck.List[i - 1].List[j - 1]);
-        //        c.UpdateUI();
-        //        AddCard(c, 4 - i);
-        //    }
-        //}
-
-        //_deck.Clear();
+        _dialScene = SceneManagerEX.Instance.CurrentScene as DialScene;
 
         for (int i = 0; i < DeckManager.Instance.Deck.Count; i++)
         {
@@ -255,7 +242,7 @@ public class Dial : MonoBehaviour
                 _effectDict.Clear();
                 return;
             }
-            UIManager.Instance.CardDescDown();
+            _dialScene?.CardDescDown();
             BezierMissile b = ResourceManager.Instance.Instantiate("BezierMissile", this.transform.parent).GetComponent<BezierMissile>();
             b.SetEffect(g);
             b.SetTrailColor(EffectType.Attack);

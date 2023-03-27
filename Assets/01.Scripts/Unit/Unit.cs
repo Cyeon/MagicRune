@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class Unit : MonoBehaviour
 {
@@ -43,7 +44,7 @@ public class Unit : MonoBehaviour
         protected set
         {
             _shield = value;
-            UIManager.Instance.UpdateShieldText(_isPlayer, _shield);
+            _dialScene?.UpdateShieldText(_isPlayer, _shield);
         }
     }
 
@@ -58,13 +59,20 @@ public class Unit : MonoBehaviour
     [field:SerializeField] public UnityEvent OnTakeDamageFeedback {get;set;}
     [field: SerializeField] public Dictionary<StatusInvokeTime, List<Status>> unitStatusDic = new Dictionary<StatusInvokeTime, List<Status>>();
 
+    protected DialScene _dialScene;
+
     private void OnEnable() {
         unitStatusDic.Add(StatusInvokeTime.Start, new List<Status>());
         unitStatusDic.Add(StatusInvokeTime.Attack, new List<Status>());
         unitStatusDic.Add(StatusInvokeTime.GetDamage, new List<Status>());
         unitStatusDic.Add(StatusInvokeTime.End, new List<Status>());
     }
-    
+
+    private void Start()
+    {
+        _dialScene = SceneManagerEX.Instance.CurrentScene as DialScene;
+    }
+
     /// <summary>
     /// ������ �޴� �Լ�
     /// </summary>
@@ -94,12 +102,15 @@ public class Unit : MonoBehaviour
             OnTakeDamage?.Invoke(currentDmg);
             OnTakeDamageFeedback?.Invoke();
 
-            UIManager.Instance.UpdateHealthbar(false);
-            UIManager.Instance.UpdateHealthbar(true);
+            _dialScene?.UpdateHealthbar(false);
+            _dialScene?.UpdateHealthbar(true);
 
             if (_isPlayer == false)
             {
-                UIManager.Instance.DamageUIPopup(currentDmg, UIManager.Instance.enemyIcon.transform.position, status);
+                if (_dialScene != null)
+                {
+                    _dialScene.DamageUIPopup(currentDmg, _dialScene.EnemyIcon.transform.position, status);
+                }
             }
         }
     }
@@ -145,7 +156,7 @@ public class Unit : MonoBehaviour
         if (_isDie == false)
         {
             _health += value;
-            UIManager.Instance.UpdateHealthbar(true);
+            _dialScene?.UpdateHealthbar(true);
         }
     }
 

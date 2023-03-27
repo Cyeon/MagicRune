@@ -168,26 +168,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6a84f75dc8ee8f418a6400dc20f5b90, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _canvas: {fileID: 551268784}
-  word: {fileID: 32757505}
-  _enemyPatternIcon: {fileID: 970427238}
-  _enemyPatternValueText: {fileID: 1256963603}
-  _enemyShieldText: {fileID: 1116277975}
-  _enemySlideBar: {fileID: 1698161639}
-  enemyIcon: {fileID: 770939992}
-  _playerSlideBar: {fileID: 987290464}
-  _playerShieldText: {fileID: 1964991578}
-  _statusPrefab: {fileID: 7390222988243923077, guid: 297b846f4403b5d458e8e91ca8b70a96, type: 3}
-  _statusPopup: {fileID: 110993962940785906, guid: 1a2f414b7cde7644f9be7cecef5a8332, type: 3}
-  _statusTextPopup: {fileID: 6450481006195150324, guid: 30bb065e1f9ce314084ad17a2c81c291, type: 3}
-  _statusPlayerPanel: {fileID: 133344192}
-  _statusEnemyPanel: {fileID: 705863452}
-  _turnPanel: {fileID: 1354169188}
-  _cardDescPanel: {fileID: 2847235378748921028}
-  _statusDescPanel: {fileID: 1429253406}
-  cardAssistPanel: {fileID: 2448040518769343994, guid: c10195b8e58a1494a88d5bd9e59a7f13, type: 3}
-  _damagePopup: {fileID: 5936919601908214315, guid: 3de2c828ec5d1784fb5f0afd994f4ae6, type: 3}
-  _infoMessage: {fileID: 6188063278671750921, guid: 9ae759340fa35564db012299312d316d, type: 3}
 --- !u!114 &32757505
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -221,7 +201,7 @@ GameObject:
   - component: {fileID: 33765189}
   - component: {fileID: 33765188}
   m_Layer: 5
-  m_Name: BackPanel
+  m_Name: MagicCircle BP
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -296,7 +276,7 @@ GameObject:
   m_Component:
   - component: {fileID: 40841542}
   m_Layer: 5
-  m_Name: Reward
+  m_Name: BG Reward
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -620,7 +600,7 @@ GameObject:
   - component: {fileID: 100166610}
   - component: {fileID: 100166611}
   m_Layer: 5
-  m_Name: Reward
+  m_Name: Popup Reward
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -756,7 +736,7 @@ GameObject:
   - component: {fileID: 133344194}
   - component: {fileID: 133344193}
   m_Layer: 5
-  m_Name: StatusPanel
+  m_Name: P StatusPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -856,7 +836,7 @@ GameObject:
   - component: {fileID: 143894787}
   - component: {fileID: 143894786}
   m_Layer: 5
-  m_Name: HealthText
+  m_Name: E HealthText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1028,7 +1008,7 @@ GameObject:
   - component: {fileID: 322947054}
   - component: {fileID: 322947053}
   m_Layer: 5
-  m_Name: HealthText
+  m_Name: P HealthText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1052,7 +1032,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: -5}
-  m_SizeDelta: {x: 160, y: 30}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &322947053
 MonoBehaviour:
@@ -1713,7 +1693,7 @@ GameObject:
   - component: {fileID: 425263273}
   - component: {fileID: 425263272}
   m_Layer: 5
-  m_Name: SliderBackGround
+  m_Name: E Slider BG
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2343,7 +2323,7 @@ GameObject:
   - component: {fileID: 528680702}
   - component: {fileID: 528680701}
   m_Layer: 5
-  m_Name: Shield Image
+  m_Name: P Shield Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2522,7 +2502,7 @@ GameObject:
   - component: {fileID: 563771740}
   - component: {fileID: 563771739}
   m_Layer: 5
-  m_Name: BackPanelOutLine
+  m_Name: BP OutLine
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3061,7 +3041,7 @@ GameObject:
   - component: {fileID: 698102376}
   - component: {fileID: 698102375}
   m_Layer: 5
-  m_Name: Background
+  m_Name: E BG
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3138,7 +3118,7 @@ GameObject:
   - component: {fileID: 705863454}
   - component: {fileID: 705863453}
   m_Layer: 5
-  m_Name: StatusEnemyPanel
+  m_Name: E Status Panel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3237,7 +3217,7 @@ GameObject:
   - component: {fileID: 714394675}
   - component: {fileID: 714394676}
   m_Layer: 5
-  m_Name: ShieldBar
+  m_Name: P ShieldBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3439,7 +3419,7 @@ GameObject:
   - component: {fileID: 770939992}
   - component: {fileID: 770939993}
   m_Layer: 0
-  m_Name: Sprite
+  m_Name: Enemy Icon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4008,7 +3988,7 @@ GameObject:
   m_Component:
   - component: {fileID: 851050558}
   m_Layer: 5
-  m_Name: Shield
+  m_Name: P Shield
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4124,7 +4104,7 @@ GameObject:
   - component: {fileID: 970427239}
   - component: {fileID: 970427238}
   m_Layer: 5
-  m_Name: Image
+  m_Name: NextPattern Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4200,7 +4180,7 @@ GameObject:
   - component: {fileID: 976463461}
   - component: {fileID: 976463460}
   m_Layer: 5
-  m_Name: BackgroundBlur
+  m_Name: R BG Blur
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4375,7 +4355,7 @@ GameObject:
   - component: {fileID: 990215826}
   - component: {fileID: 990215825}
   m_Layer: 5
-  m_Name: BackGroundForest
+  m_Name: Forest BG
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5224,7 +5204,7 @@ GameObject:
   - component: {fileID: 1116277976}
   - component: {fileID: 1116277975}
   m_Layer: 5
-  m_Name: Shield Value
+  m_Name: E Shield Value
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5247,7 +5227,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.4532318, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 120, y: 120}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1116277975
@@ -5422,7 +5402,7 @@ GameObject:
   - component: {fileID: 1149303957}
   - component: {fileID: 1149303956}
   m_Layer: 5
-  m_Name: Background
+  m_Name: P BG
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5497,7 +5477,7 @@ GameObject:
   - component: {fileID: 1152113693}
   - component: {fileID: 1152113694}
   m_Layer: 5
-  m_Name: HealthFeedbackBar
+  m_Name: E HealthFeedbackBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5776,7 +5756,7 @@ GameObject:
   - component: {fileID: 1256963604}
   - component: {fileID: 1256963603}
   m_Layer: 5
-  m_Name: ValueText
+  m_Name: NextPattern ValueText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6496,11 +6476,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2596a148c83f9c048b00c25715983ed1, type: 3}
---- !u!1 &1429253406 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2643353346664848619, guid: 2596a148c83f9c048b00c25715983ed1, type: 3}
-  m_PrefabInstance: {fileID: 1429253405}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1429253408 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2643353346664848613, guid: 2596a148c83f9c048b00c25715983ed1, type: 3}
@@ -6517,7 +6492,7 @@ GameObject:
   - component: {fileID: 1475435477}
   - component: {fileID: 1475435478}
   m_Layer: 5
-  m_Name: ShieldBar
+  m_Name: E ShieldBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6902,6 +6877,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad2eae2edce06104dab0406c90cdb779, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _enemyIcon: {fileID: 770939993}
 --- !u!4 &1671816844
 Transform:
   m_ObjectHideFlags: 0
@@ -7600,7 +7576,7 @@ GameObject:
   - component: {fileID: 1878799034}
   - component: {fileID: 1878799033}
   m_Layer: 5
-  m_Name: Shield Image
+  m_Name: E Shield Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7714,7 +7690,7 @@ GameObject:
   - component: {fileID: 1936860721}
   - component: {fileID: 1936860722}
   m_Layer: 5
-  m_Name: HealthBar
+  m_Name: E HealthBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7804,7 +7780,7 @@ GameObject:
   - component: {fileID: 1950291656}
   - component: {fileID: 1950291657}
   m_Layer: 5
-  m_Name: HealthFeedbackBar
+  m_Name: P HealthFeedbackBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8352,7 +8328,7 @@ GameObject:
   - component: {fileID: 1964991579}
   - component: {fileID: 1964991578}
   m_Layer: 5
-  m_Name: Shield Value
+  m_Name: P Shield Value
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8375,7 +8351,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.4532318, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 120, y: 120}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1964991578
@@ -8487,7 +8463,7 @@ GameObject:
   - component: {fileID: 2017898801}
   - component: {fileID: 2017898800}
   m_Layer: 5
-  m_Name: SliderBackGround
+  m_Name: P Slider BG
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8562,7 +8538,7 @@ GameObject:
   - component: {fileID: 2069066552}
   - component: {fileID: 2069066553}
   m_Layer: 5
-  m_Name: HealthBar
+  m_Name: P HealthBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8651,7 +8627,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2088792970}
   m_Layer: 5
-  m_Name: Shield
+  m_Name: E Shield
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8780,11 +8756,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: eb4cb5148bf743e4bb8e3a2ac8f8a8b3, type: 3}
---- !u!1 &2847235378748921028 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3713790094285829774, guid: eb4cb5148bf743e4bb8e3a2ac8f8a8b3, type: 3}
-  m_PrefabInstance: {fileID: 1443791910484599370}
-  m_PrefabAsset: {fileID: 0}
 --- !u!224 &5072398005718708196
 RectTransform:
   m_ObjectHideFlags: 0

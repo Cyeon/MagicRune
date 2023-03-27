@@ -23,9 +23,13 @@ public class MapUI : MonoBehaviour
     public Sprite stageBossIcon;
     public Sprite stageEventIcon;
 
-    private void Awake()
+    private void Start()
     {
-        StageList = transform.Find("StageSlider/StageImage");
+        UIManager.Instance.Bind<Image>("StageImage", CanvasManager.Instance.GetCanvas("MapUI").gameObject);
+        UIManager.Instance.Bind<TextMeshProUGUI>("Main GoldBar Amount", CanvasManager.Instance.GetCanvas("MapUI").gameObject);
+        UIManager.Instance.Bind<TextMeshProUGUI>("Main HealthBar Amount", CanvasManager.Instance.GetCanvas("MapUI").gameObject);
+
+        StageList = UIManager.Instance.Get<Image>("StageImage").transform;
 
         Transform trm = transform.Find("Portals");
         for(int i = 0; i < trm.childCount; ++i)
@@ -48,8 +52,8 @@ public class MapUI : MonoBehaviour
             _bossPortalEffects.Add(_portalParent.Find("BossPortal").GetChild(i));
         }
 
-        _goldText = transform.Find("GoldBar").GetComponentInChildren<TextMeshProUGUI>();
-        _healthText = transform.Find("HealthBar").GetComponentInChildren<TextMeshProUGUI>();
+        _goldText = UIManager.Instance.Get<TextMeshProUGUI>("Main GoldBar Amount");
+        _healthText = UIManager.Instance.Get<TextMeshProUGUI>("Main HealthBar Amount");
     }
 
     private void OnEnable()

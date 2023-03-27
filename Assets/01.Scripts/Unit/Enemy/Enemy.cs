@@ -26,7 +26,7 @@ public class Enemy : Unit
             _spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         _spriteRenderer.sprite = so.icon;
 
-        UIManager.Instance.HealthbarInit(false, _maxHealth);
+        _dialScene?.HealthbarInit(false, _maxHealth);
     }
 
     public void TurnStart()
@@ -47,8 +47,8 @@ public class Enemy : Unit
     public void Idle()
     {
         idleSequence = DOTween.Sequence();
-        idleSequence.Append(UIManager.Instance.enemyIcon.DOScaleY(1.1f, 0.5f));
-        idleSequence.Append(UIManager.Instance.enemyIcon.DOScaleY(1f, 0.5f));
+        idleSequence.Append(_dialScene?.EnemyIcon.transform.DOScaleY(1.1f, 0.5f));
+        idleSequence.Append(_dialScene?.EnemyIcon.transform.DOScaleY(1f, 0.5f));
         idleSequence.AppendInterval(0.3f);
         idleSequence.SetLoops(-1);
     }
@@ -56,8 +56,11 @@ public class Enemy : Unit
     public void StopIdle()
     {
         idleSequence.Kill();
-        UIManager.Instance.enemyIcon.DORewind();
-        UIManager.Instance.enemyIcon.localScale = Vector3.one;
+        _dialScene?.EnemyIcon.transform.DORewind();
+        if (_dialScene != null)
+        {
+            _dialScene.EnemyIcon.transform.localScale = Vector3.one;
+        }
     }
 
     protected override void Die()

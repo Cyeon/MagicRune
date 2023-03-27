@@ -147,6 +147,7 @@ GameObject:
   - component: {fileID: 6918680819425280605}
   - component: {fileID: 8766060665489664730}
   - component: {fileID: 2696843583193529420}
+  - component: {fileID: 4634013434924170290}
   - component: {fileID: 2787774324996576291}
   m_Layer: 5
   m_Name: Status
@@ -226,9 +227,39 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13cff33a604bd0c4ba300fda5b1642b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  status:
+    statusName: 0
+    debugName: 
+    information: 
+    textColor: {r: 0, g: 0, b: 0, a: 0}
+    invokeTime: 0
+    type: 0
+    typeValue: 0
+    statusFunc:
+      m_PersistentCalls:
+        m_Calls: []
+    addFunc:
+      m_PersistentCalls:
+        m_Calls: []
+    icon: {fileID: 0}
+    color: {r: 0, g: 0, b: 0, a: 0}
+    unit: {fileID: 0}
   image: {fileID: 0}
   duration: {fileID: 0}
   statusName: 0
+--- !u!114 &4634013434924170290
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7390222988243923077}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1fb6d3b2c3d3fa04d9ffb5368660f72f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isUsing: 0
 --- !u!225 &2787774324996576291
 CanvasGroup:
   m_ObjectHideFlags: 0

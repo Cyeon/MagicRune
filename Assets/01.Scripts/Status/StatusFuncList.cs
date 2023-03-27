@@ -7,6 +7,13 @@ public class StatusFuncList : MonoBehaviour
     public Status status;
     public Unit unit;
 
+    private DialScene _dialScene;
+
+    private void Start()
+    {
+        _dialScene = SceneManagerEX.Instance.CurrentScene as DialScene;
+    }
+
     public void AddGetDamage(float dmg)
     {
         status.unit.currentDmg += dmg;
@@ -25,9 +32,9 @@ public class StatusFuncList : MonoBehaviour
     public void StackDmg()
     {
         unit.TakeDamage(status.typeValue, true, status);
-        UIManager.Instance.UpdateHealthbar(unit.IsPlayer);
+        _dialScene?.UpdateHealthbar(unit.IsPlayer);
         StatusManager.Instance.RemoveValue(unit, status, status.typeValue);
-        UIManager.Instance.ReloadStatusPanel(unit, status.statusName, status.typeValue);
+        _dialScene?.ReloadStatusPanel(unit, status.statusName, status.typeValue);
     }
 
     public void AddFire()
@@ -37,7 +44,7 @@ public class StatusFuncList : MonoBehaviour
         {
             BattleManager.Instance.attackUnit.TakeDamage(status.typeValue * 2);
             status.typeValue = 0;
-            UIManager.Instance.RemoveStatusPanel(status.unit, status.statusName);
+            _dialScene?.RemoveStatusPanel(status.unit, status.statusName);
         }
     }
 
@@ -45,6 +52,6 @@ public class StatusFuncList : MonoBehaviour
     {
         AddGetDamage(status.typeValue);
         status.typeValue = 0;
-        UIManager.Instance.ReloadStatusPanel(unit, status.statusName, status.typeValue);
+        _dialScene?.ReloadStatusPanel(unit, status.statusName, status.typeValue);
     }
 }

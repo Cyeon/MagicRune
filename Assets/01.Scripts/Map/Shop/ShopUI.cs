@@ -8,18 +8,19 @@ public class ShopUI : MonoBehaviour
     private TextMeshProUGUI _goldText;
     private Transform _storeShelf;
 
-    private void Awake()
+    private void Start()
     {
-        _goldText = transform.Find("GoldBar/Amount").GetComponent<TextMeshProUGUI>();
+        UIManager.Instance.Bind<TextMeshProUGUI>("Shop GoldBar Amount", CanvasManager.Instance.GetCanvas("Shop").gameObject);
+        _goldText = UIManager.Instance.Get<TextMeshProUGUI>("Shop GoldBar Amount");
         _storeShelf = transform.Find("StoreShelf");
 
-        GetComponent<Canvas>().enabled = false;
+        CanvasManager.Instance.GetCanvas("Shop").enabled = false;
     }
     
     public void Exit()
     {
         MapManager.Instance.NextStage();
-        gameObject.SetActive(false);
+        CanvasManager.Instance.GetCanvas("Shop").enabled = false;
     }
 
     public void Open()
@@ -28,13 +29,13 @@ public class ShopUI : MonoBehaviour
         _goldText.SetText(GameManager.Instance.Gold.ToString());
         for (int i = _storeShelf.transform.childCount - 1; i >= 0; --i)
         {
-            Destroy(_storeShelf.transform.GetChild(i).gameObject);
+            ResourceManager.Instance.Destroy(_storeShelf.transform.GetChild(i).gameObject);
         }
     }
 
     public void ShopItemProduct(ShopItemSO item)
     {
-        ShopItemPanelUI ui = Instantiate(item.panelPrefab, _storeShelf);
+        ShopItemPanelUI ui = ResourceManager.Instance.Instantiate(item.panelPrefab.name, _storeShelf).GetComponent<ShopItemPanelUI>();
         ui.Init(item);
         ui.userGold = _goldText;
     }
