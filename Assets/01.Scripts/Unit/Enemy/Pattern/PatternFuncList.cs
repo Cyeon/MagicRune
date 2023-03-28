@@ -80,7 +80,7 @@ public class PatternFuncList : MonoBehaviour
     {
         Sequence seq = DOTween.Sequence();
         seq.AppendCallback(() => StartCoroutine(_dialScene?.PatternIconAnimationCoroutine()));
-        seq.Append(_dialScene?.EnemyIcon.transform.DOShakePosition(0.6f, 0.5f, 15)).SetEase(Ease.Linear);
+        seq.Append(_dialScene?.EnemyIcon.transform.DOShakePosition(0.6f, 0.5f, 1)).SetEase(Ease.Linear);
         seq.Append(_dialScene?.EnemyIcon.transform.DOMoveY(-10f, 0.2f)).SetEase(Ease.Linear);
         seq.AppendCallback(() => DelayAttack());
         seq.Append(_dialScene?.EnemyIcon.transform.DOMoveY(5.82f, 0.2f)).SetEase(Ease.Linear);

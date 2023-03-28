@@ -34,6 +34,10 @@ public class DialScene : BaseScene
     private Slider hfSlider = null;
     private TextMeshProUGUI hText = null;
 
+    [SerializeField]
+    private RewardUI _rewardUI;
+    public RewardUI RewardUI => _rewardUI;
+
     protected override void Init()
     {
         base.Init();

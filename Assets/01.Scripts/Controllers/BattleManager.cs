@@ -27,7 +27,7 @@ public class BattleManager : MonoSingleton<BattleManager>
 
     public AudioClip turnChangeSound = null;
 
-    public UnityEvent OnEnemyDie;
+    //public UnityEvent OnEnemyDie;
 
     private DialScene _dialScene;
 
@@ -41,9 +41,13 @@ public class BattleManager : MonoSingleton<BattleManager>
     public void GameStart()
     {
         enemy = EnemyManager.Instance.SpawnEnemy(MapManager.Instance.selectEnemy);
+        enemy.OnDieEvent.RemoveAllListeners();
+        enemy.OnDieEvent.AddListener(() => { _dialScene?.RewardUI.VictoryPanelPopup(); });
         PatternManager.Instance.PatternInit(enemy.enemyInfo.patternList);
 
         player = GameManager.Instance.player; // �÷��̾� ���� �������� �����ؾ���
+        player.OnDieEvent.RemoveAllListeners();
+        player.OnDieEvent.AddListener(() => { _dialScene?.RewardUI.DefeatPanelPopup(); });
 
         _dialScene?.HealthbarInit(true, player.HP, player.MaxHealth);
 

@@ -62,6 +62,8 @@ public class Dial : MonoBehaviour
             r.DialElement = this.transform.GetChild(3 - index).GetComponent<DialElement>();
             r.SetRune(DeckManager.Instance.Deck[i]);
             r.UpdateUI();
+            r.Rune.SetCoolTime(0);
+            r.SetCoolTime();
             AddCard(r, index);
         }
 

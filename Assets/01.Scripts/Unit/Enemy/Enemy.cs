@@ -78,7 +78,8 @@ public class Enemy : Unit
         reward.gold = MapManager.Instance.CurrentChapter.Gold;
         reward.AddRewardList();
 
-        BattleManager.Instance.OnEnemyDie?.Invoke();
+        //BattleManager.Instance.OnEnemyDie?.Invoke();
+        OnDieEvent?.Invoke();
     }
 
     private void OnDestroy()

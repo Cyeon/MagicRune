@@ -64,6 +64,7 @@ public class Unit : MonoBehaviour
     [field:SerializeField] public UnityEvent OnTakeDamageFeedback {get;set;}
     [field: SerializeField] public Dictionary<StatusInvokeTime, List<Status>> unitStatusDic = new Dictionary<StatusInvokeTime, List<Status>>();
 
+    public UnityEvent OnDieEvent;
     protected DialScene _dialScene;
 
     private void OnEnable() {
