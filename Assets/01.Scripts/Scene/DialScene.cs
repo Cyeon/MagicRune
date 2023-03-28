@@ -55,9 +55,9 @@ public class DialScene : BaseScene
         UIManager.Instance.Bind<Image>("NextPattern Image", CanvasManager.Instance.GetCanvas("Main").gameObject);
         UIManager.Instance.Bind<TextMeshProUGUI>("NextPattern ValueText", CanvasManager.Instance.GetCanvas("Main").gameObject);
 
-        UIManager.Instance.Bind<TextMeshProUGUI>("Desc_Name_Text", CanvasManager.Instance.GetCanvas("Popup").gameObject);
-        UIManager.Instance.Bind<Image>("Desc_Skill_Image", CanvasManager.Instance.GetCanvas("Popup").gameObject);
-        UIManager.Instance.Bind<TextMeshProUGUI>("Desc_Description", CanvasManager.Instance.GetCanvas("Popup").gameObject);
+        UIManager.Instance.Bind<TextMeshProUGUI>("Skill_Name_Text", CanvasManager.Instance.GetCanvas("Popup").gameObject);
+        UIManager.Instance.Bind<Image>("Explain_Skill_Icon", CanvasManager.Instance.GetCanvas("Popup").gameObject);
+        UIManager.Instance.Bind<TextMeshProUGUI>("Explain_Text", CanvasManager.Instance.GetCanvas("Popup").gameObject);
 
         UIManager.Instance.Bind<Slider>("E HealthBar", CanvasManager.Instance.GetCanvas("Main").gameObject);
         UIManager.Instance.Bind<Slider>("E ShieldBar", CanvasManager.Instance.GetCanvas("Main").gameObject);
@@ -76,9 +76,9 @@ public class DialScene : BaseScene
         _enemyPatternIcon = UIManager.Instance.Get<Image>("NextPattern Image");
         _enemyPatternValueText = UIManager.Instance.Get<TextMeshProUGUI>("NextPattern ValueText");
 
-        _cardDescName = UIManager.Instance.Get<TextMeshProUGUI>("Desc_Name_Text");
-        _cardDescSkillIcon = UIManager.Instance.Get<Image>("Desc_Skill_Image");
-        _cardDescInfo = UIManager.Instance.Get<TextMeshProUGUI>("Desc_Description");
+        _cardDescName = UIManager.Instance.Get<TextMeshProUGUI>("Skill_Name_Text");
+        _cardDescSkillIcon = UIManager.Instance.Get<Image>("Explain_Skill_Icon");
+        _cardDescInfo = UIManager.Instance.Get<TextMeshProUGUI>("Explain_Text");
     }
 
     public void Turn(string text)
