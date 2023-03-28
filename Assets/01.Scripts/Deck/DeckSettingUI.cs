@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+
 public enum DeckType
 {
     FirstDialDeck,
@@ -11,9 +13,9 @@ public class DeckSettingUI : MonoBehaviour
 {
     private List<DeckRunePanel> _runePanelList = new List<DeckRunePanel>(35);
 
-    private Dictionary<DeckType, DeckRunePanel> _runeDeckTypeDict = new Dictionary<DeckType, DeckRunePanel>();
-
     private DeckFollowObject _followObject = null;
+
+    private GameObject _backgroundPanel = null;
 
     [SerializeField]
     private GameObject _runePanelPrefab = null;
@@ -21,6 +23,8 @@ public class DeckSettingUI : MonoBehaviour
     private Transform _ownDeckContentTransform = null;
     [SerializeField]
     private Transform _dialDeckContentTransform = null;
+    [SerializeField]
+    private Button exitButton = null;
 
     private DeckRunePanel _targetRune = null;
     public DeckRunePanel TargetRune => _targetRune;
@@ -35,24 +39,32 @@ public class DeckSettingUI : MonoBehaviour
             for (int i = 0; i < 30; i++)
             {
                 GameObject game = Instantiate(_runePanelPrefab, transform);
-                game.transform.SetParent(transform.GetChild(0));
+                game.transform.SetParent(transform);
                 DeckRunePanel runePanel = game.GetComponent<DeckRunePanel>();
                 _runePanelList.Add(runePanel);
-                runePanel.enabled = false;
+                //runePanel.enabled = false;
                 game.SetActive(false);
             }
         }
+        _backgroundPanel = transform.Find("BackgroundPanel").gameObject;
+        exitButton.onClick.AddListener(() => ReturnPanels());
+        exitButton.onClick.AddListener(() => _backgroundPanel.SetActive(false));
     }
     private void Start()
     {
-        SettingAllDeck();
-
         {
             GameObject game = Instantiate(_runePanelPrefab, transform);
             Destroy(game.GetComponent<DeckRunePanel>());
             _followObject = game.AddComponent<DeckFollowObject>();
+            _followObject.SetCanvasTrasform(GetComponent<RectTransform>());
             game.SetActive(false);
         }
+    }
+
+    public void ActiveUI()
+    {
+        SettingAllDeck();
+        _backgroundPanel.SetActive(true);
     }
 
     private void SettingAllDeck()
@@ -70,7 +82,8 @@ public class DeckSettingUI : MonoBehaviour
             if (runePanel == null)
             {
                 GameObject game = Instantiate(_runePanelPrefab, transform);
-                _runePanelList.Add(game.GetComponent<DeckRunePanel>());
+                runePanel = game.GetComponent<DeckRunePanel>();
+                _runePanelList.Add(runePanel);
             }
             runePanel.gameObject.SetActive(true);
             runePanel.Setting(rune);
@@ -89,7 +102,8 @@ public class DeckSettingUI : MonoBehaviour
             if (runePanel == null)
             {
                 GameObject game = Instantiate(_runePanelPrefab, transform);
-                _runePanelList.Add(game.GetComponent<DeckRunePanel>());
+                runePanel = game.GetComponent<DeckRunePanel>();
+                _runePanelList.Add(runePanel);
             }
 
             runePanel.gameObject.SetActive(true);
@@ -109,6 +123,7 @@ public class DeckSettingUI : MonoBehaviour
         List<DeckRunePanel> deckRunePanels = _runePanelList.FindAll(x => x.IsUse == true);
         foreach (DeckRunePanel item in deckRunePanels)
         {
+            item.transform.SetParent(this.transform);
             item.gameObject.SetActive(false);
         }
     }
@@ -116,8 +131,15 @@ public class DeckSettingUI : MonoBehaviour
     public void SetSelectRune(DeckRunePanel rune)
     {
         _selectRune = rune;
-        _followObject.SetImage(_selectRune.Rune.GetRune().RuneImage);
-        _followObject.gameObject.SetActive(true);
+        if (rune != null)
+        {
+            _followObject.SetImage(_selectRune.Rune.GetRune().RuneImage);
+            _followObject.gameObject.SetActive(true);
+        }
+        else
+        {
+            _followObject.gameObject.SetActive(false);
+        }
     }
 
     public void SetTargetRune(DeckRunePanel rune)
@@ -127,22 +149,29 @@ public class DeckSettingUI : MonoBehaviour
 
     public void Equip(DeckType type)
     {
-        switch (type)
+        if (type != SelectRune.NowDeck)
         {
-            case DeckType.FirstDialDeck:
-                if (DeckManager.Instance.FirstDialDeck.Count < DeckManager.FIRST_DIAL_DECK_MAX_COUNT)
-                {
-                    DeckManager.Instance.SetFirstDeck(SelectRune.Rune);
-                    DeckManager.Instance.RemoveRune(SelectRune.Rune);
-                }
-                break;
-            case DeckType.OwnDeck:
-                DeckManager.Instance.AddRune(SelectRune.Rune);
-                DeckManager.Instance.RemoveFirstDeck(SelectRune.Rune);
-                break;
-            case DeckType.Unknown:
-            default:
-                break;
+            switch (type)
+            {
+                case DeckType.FirstDialDeck:
+                    if (DeckManager.Instance.FirstDialDeck.Count < DeckManager.FIRST_DIAL_DECK_MAX_COUNT)
+                    {
+                        DeckManager.Instance.SetFirstDeck(SelectRune.Rune);
+                        DeckManager.Instance.RemoveRune(SelectRune.Rune);
+                        SelectRune.transform.SetParent(_dialDeckContentTransform);
+                        SelectRune.SetDeck(DeckType.FirstDialDeck);
+                    }
+                    break;
+                case DeckType.OwnDeck:
+                    DeckManager.Instance.AddRune(SelectRune.Rune);
+                    DeckManager.Instance.RemoveFirstDeck(SelectRune.Rune);
+                    SelectRune.transform.SetParent(_ownDeckContentTransform);
+                    SelectRune.SetDeck(DeckType.OwnDeck);
+                    break;
+                case DeckType.Unknown:
+                default:
+                    break;
+            }
         }
 
         SetSelectRune(null);

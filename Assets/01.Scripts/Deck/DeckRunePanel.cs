@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 /// <summary>
 /// 개별 룬에 붙는 스크립트
 /// </summary>
-public class DeckRunePanel : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IDropHandler, IBeginDragHandler
+public class DeckRunePanel : MonoBehaviour, IDropHandler, IEndDragHandler, IBeginDragHandler, IDragHandler
 {
     private DeckSettingUI _deckSettingUI = null;
     private Image _runeImage = null;
@@ -15,6 +15,7 @@ public class DeckRunePanel : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
 
     private DeckType _nowDeck = DeckType.Unknown;
     public DeckType NowDeck => _nowDeck;
+    [SerializeField]
     private bool _isUse = false; // 해당 판넬이 사용되고 있는가 
     public bool IsUse => _isUse;
 
@@ -32,6 +33,7 @@ public class DeckRunePanel : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
             }
         }
     }
+
     private void OnDisable()
     {
         _isUse = false;
@@ -53,12 +55,18 @@ public class DeckRunePanel : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         _nowDeck = type;
     }
 
-    public void OnPointerDown(PointerEventData eventData)
+    public void OnDrop(PointerEventData eventData)
+    {
+        _deckSettingUI.SetTargetRune(this);
+    }
+    public void OnDrag(PointerEventData eventData) { } // 이거 없으면 다른 DragHandler 작동 안 해서 지우면 안 됨
+
+    public void OnBeginDrag(PointerEventData eventData)
     {
         _deckSettingUI.SetSelectRune(this);
     }
 
-    public void OnPointerUp(PointerEventData eventData)
+    public void OnEndDrag(PointerEventData eventData)
     {
         if (_deckSettingUI.SelectRune != null && _deckSettingUI.TargetRune != null)
         {
@@ -66,15 +74,5 @@ public class DeckRunePanel : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         }
 
         _deckSettingUI.SetSelectRune(null);
-    }
-
-    public void OnDrop(PointerEventData eventData)
-    {
-        _deckSettingUI.SetTargetRune(this);
-    }
-
-    public void OnBeginDrag(PointerEventData eventData)
-    {
-        _deckSettingUI.SetSelectRune(this);
     }
 }
