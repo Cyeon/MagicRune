@@ -118,6 +118,13 @@ public class BattleManager : MonoSingleton<BattleManager>
 
                 SoundManager.Instance.PlaySound(turnChangeSound, SoundType.Effect);
 
+                // 적 싈드 없애기
+                //if (enemy.Shield > 0)
+                //{
+                //    enemy.ResetShield();
+                //    _dialScene?.UpdateHealthbar(false);
+                //}
+
                 //UIManager.Instance.Turn("Enemy Turn");
                 _dialScene?.Turn("Enemy Turn");
                 _gameTurn = GameTurn.PlayerWait;
