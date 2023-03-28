@@ -40,6 +40,12 @@ public class BezierMissile : MonoBehaviour
 
     public void Init(Transform _startTr, Transform _endTr, float _speed, float _newPointDistanceFromStartTr, float _newPointDistanceFromEndTr, Action action = null)
     {
+        m_timerCurrent = 0;
+        if(_effect != null)
+        {
+            ResourceManager.Instance.Destroy(_effect);
+            _effect = null;
+        }
         m_speed = _speed;
 
         // 끝에 도착할 시간을 랜덤으로 줌.
@@ -71,6 +77,11 @@ public class BezierMissile : MonoBehaviour
     public void Init(Vector2 _startTr, Vector2 _endTr, float _speed, float _newPointDistanceFromStartTr, float _newPointDistanceFromEndTr, Action action = null)
     {
         m_timerCurrent = 0f;
+        if (_effect != null)
+        {
+            ResourceManager.Instance.Destroy(_effect);
+            _effect = null;
+        }
 
         m_speed = _speed;
 
@@ -160,6 +171,7 @@ public class BezierMissile : MonoBehaviour
         if((Vector2)_transform.position == m_points[3])
         {
             ResourceManager.Instance.Destroy(_effect);
+            _effect = null;
 
             // 핸동하고
             if(BattleManager.Instance.enemy.IsDie == false)
