@@ -202,5 +202,6 @@ public class Unit : MonoBehaviour
     protected virtual void Die()
     {
         _isDie = true;
+        OnDieEvent?.Invoke();
     }
 }

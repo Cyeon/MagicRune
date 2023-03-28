@@ -71,6 +71,9 @@ public class DialScene : BaseScene
         UIManager.Instance.Bind<Slider>("P HealthFeedbackBar", CanvasManager.Instance.GetCanvas("Main").gameObject);
         UIManager.Instance.Bind<TextMeshProUGUI>("P Shield Value", CanvasManager.Instance.GetCanvas("Main").gameObject);
 
+        UIManager.Instance.Bind<Button>("Restart Btn", CanvasManager.Instance.GetCanvas("Popup").gameObject);
+        UIManager.Instance.Bind<Button>("Quit Btn", CanvasManager.Instance.GetCanvas("Popup").gameObject);
+
         #endregion
 
         _enemyPatternIcon = UIManager.Instance.Get<Image>("NextPattern Image");
@@ -79,6 +82,15 @@ public class DialScene : BaseScene
         _cardDescName = UIManager.Instance.Get<TextMeshProUGUI>("Skill_Name_Text");
         _cardDescSkillIcon = UIManager.Instance.Get<Image>("Explain_Skill_Icon");
         _cardDescInfo = UIManager.Instance.Get<TextMeshProUGUI>("Explain_Text");
+
+        UIManager.Instance.Get<Button>("Restart Btn").onClick.RemoveAllListeners();
+        UIManager.Instance.Get<Button>("Restart Btn").onClick.AddListener(() =>
+        {
+            SceneManagerEX.Instance.LoadScene(Define.Scene.MapScene);
+            //MapManager.Instance.ResetChapter();
+        });
+        UIManager.Instance.Get<Button>("Quit Btn").onClick.RemoveAllListeners();
+        UIManager.Instance.Get<Button>("Quit Btn").onClick.AddListener(() => GameManager.Instance.GameQuit());
     }
 
     public void Turn(string text)

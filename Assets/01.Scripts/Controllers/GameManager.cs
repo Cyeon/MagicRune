@@ -20,4 +20,13 @@ public class GameManager : MonoSingleton<GameManager>
     {
         _gold += amount;
     }
+
+    public void GameQuit()
+    {
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
+        Application.Quit();
+#endif
+    }
 }

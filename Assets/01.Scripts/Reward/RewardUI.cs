@@ -32,6 +32,6 @@ public class RewardUI : MonoBehaviour
     public void DefeatPanelPopup()
     {
         _backgroundBlur.SetActive(true);
-        _victoryPanel.SetActive(true);
+        _defeatPanel.SetActive(true);
     }
 }

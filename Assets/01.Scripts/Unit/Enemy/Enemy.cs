@@ -79,7 +79,7 @@ public class Enemy : Unit
         reward.AddRewardList();
 
         //BattleManager.Instance.OnEnemyDie?.Invoke();
-        OnDieEvent?.Invoke();
+        //OnDieEvent?.Invoke();
     }
 
     private void OnDestroy()
