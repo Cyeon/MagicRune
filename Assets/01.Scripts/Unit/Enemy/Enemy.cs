@@ -15,7 +15,8 @@ public class Enemy : Unit
     private Sequence idleSequence = null;
 
     private SpriteRenderer _spriteRenderer;
-
+    
+    public Vector3 enemyScaleVec = Vector3.one;
 
     public void Init(EnemySO so)
     {
@@ -29,6 +30,10 @@ public class Enemy : Unit
         if (_dialScene == null)
             _dialScene = SceneManagerEX.Instance.CurrentScene as DialScene;
         _dialScene?.HealthbarInit(false, _maxHealth);
+        
+        enemyScaleVec = enemyInfo.prefab.transform.localScale;
+        _spriteRenderer.transform.localScale = enemyScaleVec;
+
     }
 
     public void TurnStart()
@@ -49,8 +54,8 @@ public class Enemy : Unit
     public void Idle()
     {
         idleSequence = DOTween.Sequence();
-        idleSequence.Append(_dialScene?.EnemyIcon.transform.DOScaleY(1.1f, 0.5f));
-        idleSequence.Append(_dialScene?.EnemyIcon.transform.DOScaleY(1f, 0.5f));
+        idleSequence.Append(_dialScene?.EnemyIcon.transform.DOScaleY(enemyScaleVec.y + 0.1f, 0.5f));
+        idleSequence.Append(_dialScene?.EnemyIcon.transform.DOScaleY(enemyScaleVec.y, 0.5f));
         idleSequence.AppendInterval(0.3f);
         idleSequence.SetLoops(-1);
     }

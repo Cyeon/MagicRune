@@ -20,7 +20,8 @@ public class RewardUI : MonoBehaviour
 
         foreach(var reward in RewardManager.GetRewardList())
         {
-            RewardPanel panel = ResourceManager.Instance.Instantiate("Reward_Image").GetComponent<RewardPanel>();
+            RewardPanel panel = ResourceManager.Instance.Instantiate("Reward_Image", _rewardPanel.transform).GetComponent<RewardPanel>();
+            panel.transform.localScale = Vector3.one;
             panel.Init(reward);
         }
     }

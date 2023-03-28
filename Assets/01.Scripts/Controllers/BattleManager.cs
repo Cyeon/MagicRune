@@ -43,7 +43,7 @@ public class BattleManager : MonoSingleton<BattleManager>
         enemy = EnemyManager.Instance.SpawnEnemy(MapManager.Instance.selectEnemy);
         PatternManager.Instance.PatternInit(enemy.enemyInfo.patternList);
 
-        player = GameManager.Instance.player; // ÇÃ·¹ÀÌ¾î µ¿Àû »ý¼ºÀ¸·Î º¯°æÇØ¾ßÇÔ
+        player = GameManager.Instance.player; // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ø¾ï¿½ï¿½ï¿½
 
         _dialScene?.HealthbarInit(true, player.HP, player.MaxHealth);
 
@@ -168,7 +168,7 @@ public class BattleManager : MonoSingleton<BattleManager>
     public void NextStage()
     {
         RewardManager.ResetRewardList();
-        SceneManagerEX.instance.LoadScene("MapScene");
+        SceneManagerEX.Instance.LoadScene(Define.Scene.MapScene);
     }
 
 }
