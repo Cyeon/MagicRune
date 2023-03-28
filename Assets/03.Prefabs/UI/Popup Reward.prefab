@@ -254,7 +254,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _backgroundBlur: {fileID: 8337651339527017621}
   _victoryPanel: {fileID: 8337651337768452914}
-  _rewardPanel: {fileID: 8337651339043226634}
+  _victoryRewardPanel: {fileID: 8337651339043226634}
+  _defeatPanel: {fileID: 0}
 --- !u!1 &8337651338948296762
 GameObject:
   m_ObjectHideFlags: 0
@@ -365,7 +366,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 20}
+  m_AnchoredPosition: {x: 0, y: 65}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &8337651339043226632
