@@ -32,6 +32,11 @@ public class DialElement : MonoBehaviour
     private bool _isUseRotateOffset;
 
     [SerializeField]
+    private int _maxRuneCount = 8;
+
+    public bool IsFull => _runeList.Count == _maxRuneCount;
+
+    [SerializeField]
     private float _inDistance;
     [SerializeField]
     private float _outDistance;
@@ -39,7 +44,7 @@ public class DialElement : MonoBehaviour
 
     private int _fingerID = -1;
 
-    private List<RuneUI> _magicList;
+    private List<RuneUI> _runeList;
     private RuneUI _selectCard;
     public RuneUI SelectCard
     {
@@ -79,7 +84,7 @@ public class DialElement : MonoBehaviour
     {
         _dial = GetComponentInParent<Dial>();
         _spriteRenderer = transform.Find("LineVisualSprite").GetComponent<SpriteRenderer>();
-        _magicList = new List<RuneUI>();
+        _runeList = new List<RuneUI>();
         //_spriteRenderer.alphaHitTestMinimumThreshold = 0.04f;
     }
 
@@ -92,17 +97,17 @@ public class DialElement : MonoBehaviour
     {
         Swipe1();
 
-        if (_magicList.Count > 0)
+        if (_runeList.Count > 0)
         {
-            float oneDinstance = 360f / _magicList.Count;
+            float oneDinstance = 360f / _runeList.Count;
             bool inBoolean = (_spriteRenderer.transform.eulerAngles.z % oneDinstance) <= _selectOffset;
             bool outBoolean = (oneDinstance - (_spriteRenderer.transform.eulerAngles.z % oneDinstance)) <= _selectOffset;
             if (inBoolean)
             {
-                int index = (int)(_spriteRenderer.transform.eulerAngles.z / oneDinstance) % (_magicList.Count);
-                if (_magicList[index].Rune.IsCoolTime == false)
+                int index = (int)(_spriteRenderer.transform.eulerAngles.z / oneDinstance) % (_runeList.Count);
+                if (_runeList[index].Rune.IsCoolTime == false)
                 {
-                    SelectCard = _magicList[index];
+                    SelectCard = _runeList[index];
                     if (_isRotate == true)
                     {
                         if (_selectCard != null)
@@ -119,11 +124,11 @@ public class DialElement : MonoBehaviour
                 //index = (index - 1) % _cardList.Count;
                 //SelectCard = _cardList[index];
 
-                int index = (int)(_spriteRenderer.transform.eulerAngles.z / oneDinstance) % (_magicList.Count);
-                index = (index + 1) % _magicList.Count;
-                if (_magicList[index].Rune.IsCoolTime == false)
+                int index = (int)(_spriteRenderer.transform.eulerAngles.z / oneDinstance) % (_runeList.Count);
+                index = (index + 1) % _runeList.Count;
+                if (_runeList[index].Rune.IsCoolTime == false)
                 {
-                    SelectCard = _magicList[index];
+                    SelectCard = _runeList[index];
                     if (_isRotate == true)
                     {
                         if (_selectCard != null)
@@ -176,7 +181,7 @@ public class DialElement : MonoBehaviour
 
     public void SetCardList(List<RuneUI> list)
     {
-        _magicList = new List<RuneUI>(list);
+        _runeList = new List<RuneUI>(list);
     }
 
     public void Attack()
@@ -296,16 +301,16 @@ public class DialElement : MonoBehaviour
                     _fingerID = -1;
                     _isRotate = false;
 
-                    if (_magicList.Count > 0)
+                    if (_runeList.Count > 0)
                     {
                         if (_isUseRotateOffset)
                         {
-                            float oneDinstance = 360f / _magicList.Count;
+                            float oneDinstance = 360f / _runeList.Count;
                             bool inBoolean = (_spriteRenderer.transform.eulerAngles.z % oneDinstance) <= _selectOffset;
                             bool outBoolean = (oneDinstance - (_spriteRenderer.transform.eulerAngles.z % oneDinstance)) <= _selectOffset;
                             if (inBoolean)
                             {
-                                int index = (int)(_spriteRenderer.transform.eulerAngles.z / oneDinstance) % (_magicList.Count);
+                                int index = (int)(_spriteRenderer.transform.eulerAngles.z / oneDinstance) % (_runeList.Count);
                                 //if (_magicList[index].Rune.IsCoolTime == false)
                                 //{
                                     // 돌리고 있을 때만
@@ -322,8 +327,8 @@ public class DialElement : MonoBehaviour
                             }
                             else if (outBoolean)
                             {
-                                int index = (int)(transform.eulerAngles.z / oneDinstance) % (_magicList.Count);
-                                index = (index + 1) % _magicList.Count;
+                                int index = (int)(transform.eulerAngles.z / oneDinstance) % (_runeList.Count);
+                                index = (index + 1) % _runeList.Count;
                                 //if (_magicList[index].Rune.IsCoolTime == false)
                                 //{
                                     DOTween.To(
@@ -340,13 +345,13 @@ public class DialElement : MonoBehaviour
                         }
                         else
                         {
-                            float oneDinstance = 360f / _magicList.Count;
-                            int index = (int)(transform.eulerAngles.z / oneDinstance) % (_magicList.Count);
+                            float oneDinstance = 360f / _runeList.Count;
+                            int index = (int)(transform.eulerAngles.z / oneDinstance) % (_runeList.Count);
 
                             float distance = transform.eulerAngles.z % oneDinstance;
                             if (distance >= oneDinstance / 2f)
                             {
-                                transform.DORotate(new Vector3(0, 0, (index + 1) % _magicList.Count * oneDinstance), 0.3f, RotateMode.Fast)
+                                transform.DORotate(new Vector3(0, 0, (index + 1) % _runeList.Count * oneDinstance), 0.3f, RotateMode.Fast)
                                     .OnComplete(() =>
                                     {
                                         if (_selectCard != null) { _dialScene?.CardDescPopup(_selectCard.Rune); }

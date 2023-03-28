@@ -50,11 +50,16 @@ public class Dial : MonoBehaviour
     {
         _dialScene = SceneManagerEX.Instance.CurrentScene as DialScene;
 
+        List<int> indexList = new List<int> { 1, 2, 3 };
         for (int i = 0; i < DeckManager.Instance.Deck.Count; i++)
         {
-            // 한 라인에 들어갈 수 있는 최대 룬 개수 처리 해야함
+            if(indexList.Count <= 0)
+            {
+                // 들어갈 수 있는 데가 아무곳도 없으면 어카지?
+                break;
+            }
 
-            int index = Random.Range(1, 4);
+            int index = Random.Range(0, indexList.Count);
             //GameObject g = Instantiate(tempCard, this.transform.GetChild(index - 1));
             RuneUI r = ResourceManager.Instance.Instantiate("Rune").GetComponent<RuneUI>();
             r.transform.SetParent(this.transform.GetChild(3 - index).transform);
@@ -65,6 +70,12 @@ public class Dial : MonoBehaviour
             r.Rune.SetCoolTime(0);
             r.SetCoolTime();
             AddCard(r, index);
+
+            // 한 라인에 들어갈 수 있는 최대 룬 개수 처리 해야함. 이러면 되지 않았을 까?
+            if(this.transform.GetChild(3 - index).GetComponent<DialElement>().IsFull == true) // 이거 지금은 무조건 조건 만족 안함
+            {
+                indexList.RemoveAt(index);
+            }
         }
 
         for (int i = 0; i < 3; i++)
@@ -76,7 +87,7 @@ public class Dial : MonoBehaviour
             {
                 runeList.Add(_magicDict[3 - i][j]);
             }
-            d.SetCardList(runeList);
+            d.SetCardList(runeList); // 여기서 룬 리스트를 넣어주어서 그럼. 이 구조 수정 필요
             _dialElementList.Add(d);
         }
 
