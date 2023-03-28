@@ -44,6 +44,11 @@ public class Unit : MonoBehaviour
         protected set
         {
             _shield = value;
+
+            if(_dialScene == null)
+            {
+                _dialScene = SceneManagerEX.Instance.CurrentScene as DialScene;
+            }
             _dialScene?.UpdateShieldText(_isPlayer, _shield);
         }
     }

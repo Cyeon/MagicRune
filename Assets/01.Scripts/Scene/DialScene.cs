@@ -9,6 +9,10 @@ using UnityEngine.UI;
 public class DialScene : BaseScene
 {
     [SerializeField]
+    private Dial _dial;
+    public Dial Dial => _dial;
+
+    [SerializeField]
     private SpriteRenderer _enemyIcon;
     public SpriteRenderer EnemyIcon => _enemyIcon;
 

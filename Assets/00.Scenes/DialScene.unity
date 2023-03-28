@@ -5166,7 +5166,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1104106561}
-  - component: {fileID: 1104106562}
   m_Layer: 0
   m_Name: Manager
   m_TagString: Untagged
@@ -5194,18 +5193,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1104106562
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1104106560}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 962cf51da55200e40bd9f7d8888fbc72, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1116277973
 GameObject:
   m_ObjectHideFlags: 0
@@ -6890,6 +6877,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad2eae2edce06104dab0406c90cdb779, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _dial: {fileID: 6047878870979582954}
   _enemyIcon: {fileID: 770939993}
   _cardDescPanel: {fileID: 1443791910484599371}
 --- !u!4 &1671816844
@@ -9812,6 +9800,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d97cab570bc02de4f9f2a665ef076cc9, type: 3}
+--- !u!114 &6047878870979582954 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6047878870470961748, guid: d97cab570bc02de4f9f2a665ef076cc9, type: 3}
+  m_PrefabInstance: {fileID: 6047878870979582953}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 20f228e92357baf42af2febb8ef501bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &8821936185750046654 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7954677660298225140, guid: eb4cb5148bf743e4bb8e3a2ac8f8a8b3, type: 3}

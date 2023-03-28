@@ -105,7 +105,10 @@ public class DialElement : MonoBehaviour
                     SelectCard = _magicList[index];
                     if (_isRotate == true)
                     {
-                        _dialScene?.CardDescPopup(SelectCard.Rune);
+                        if (_selectCard != null)
+                        {
+                            _dialScene?.CardDescPopup(_selectCard.Rune);
+                        }
                     }
                 }
             }
@@ -123,7 +126,10 @@ public class DialElement : MonoBehaviour
                     SelectCard = _magicList[index];
                     if (_isRotate == true)
                     {
-                        _dialScene?.CardDescPopup(SelectCard.Rune);
+                        if (_selectCard != null)
+                        {
+                            _dialScene?.CardDescPopup(_selectCard.Rune);
+                        }
                     }
                 }
             }
@@ -175,7 +181,7 @@ public class DialElement : MonoBehaviour
 
     public void Attack()
     {
-        if (BattleManager.Instance.enemy.IsDie == false)
+        if (BattleManager.Instance.enemy.IsDie == false && _selectCard != null)
         {
             for (int i = 0; i < _selectCard.Rune.EffectList.Count; i++)
             {
@@ -183,6 +189,10 @@ public class DialElement : MonoBehaviour
                 Unit target = pair.IsEnemy == true ? BattleManager.Instance.enemy : BattleManager.Instance.player;
                 AttackEffectFunction(pair.EffectType, target, pair)?.Invoke();
             }
+
+            _selectCard.Rune.SetCoolTime(_selectCard.Rune.GetRune().CoolTime);
+            _selectCard.SetCoolTime();
+            //SelectCard = null;
         }
     }
 
@@ -296,30 +306,36 @@ public class DialElement : MonoBehaviour
                             if (inBoolean)
                             {
                                 int index = (int)(_spriteRenderer.transform.eulerAngles.z / oneDinstance) % (_magicList.Count);
-                                if (_magicList[index].Rune.IsCoolTime == false)
-                                {
+                                //if (_magicList[index].Rune.IsCoolTime == false)
+                                //{
                                     // 돌리고 있을 때만
                                     DOTween.To(
                                         () => transform.eulerAngles,
                                         x => transform.eulerAngles = x,
                                         new Vector3(0, 0, ((int)(transform.eulerAngles.z / oneDinstance)) * oneDinstance),
                                         0.3f
-                                    ).OnComplete(() => _dialScene?.CardDescPopup(_selectCard.Rune));
-                                }
+                                    ).OnComplete(() =>
+                                    {
+                                        if (_selectCard != null) { _dialScene?.CardDescPopup(_selectCard.Rune); }
+                                    });
+                                //}
                             }
                             else if (outBoolean)
                             {
                                 int index = (int)(transform.eulerAngles.z / oneDinstance) % (_magicList.Count);
                                 index = (index + 1) % _magicList.Count;
-                                if (_magicList[index].Rune.IsCoolTime == false)
-                                {
+                                //if (_magicList[index].Rune.IsCoolTime == false)
+                                //{
                                     DOTween.To(
                                         () => transform.eulerAngles,
                                         x => transform.eulerAngles = x,
                                         new Vector3(0, 0, ((int)(transform.eulerAngles.z / oneDinstance) + 1) * oneDinstance),
                                         0.3f
-                                    ).OnComplete(() => _dialScene?.CardDescPopup(_selectCard.Rune));
-                                }
+                                    ).OnComplete(() =>
+                                    {
+                                        if (_selectCard != null) { _dialScene?.CardDescPopup(_selectCard.Rune); }
+                                    });
+                                //}
                             }
                         }
                         else
@@ -331,12 +347,18 @@ public class DialElement : MonoBehaviour
                             if (distance >= oneDinstance / 2f)
                             {
                                 transform.DORotate(new Vector3(0, 0, (index + 1) % _magicList.Count * oneDinstance), 0.3f, RotateMode.Fast)
-                                    .OnComplete(() => _dialScene?.CardDescPopup(_selectCard.Rune));
+                                    .OnComplete(() =>
+                                    {
+                                        if (_selectCard != null) { _dialScene?.CardDescPopup(_selectCard.Rune); }
+                                    });
                             }
                             else
                             {
                                 transform.DORotate(new Vector3(0, 0, index * oneDinstance), 0.3f, RotateMode.Fast)
-                                    .OnComplete(() => _dialScene?.CardDescPopup(_selectCard.Rune));
+                                    .OnComplete(() =>
+                                    {
+                                        if (_selectCard != null) { _dialScene?.CardDescPopup(_selectCard.Rune); }
+                                    });
                             }
                         }
                     }

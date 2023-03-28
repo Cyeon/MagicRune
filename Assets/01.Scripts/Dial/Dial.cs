@@ -42,6 +42,8 @@ public class Dial : MonoBehaviour
 
         //_deck = DeckManager.Instance.Deck;
         //_selectedDeck = DeckManager.Instance.SelectedDeck;
+
+        _isAttack = false;
     }
 
     private void Start()
@@ -258,10 +260,15 @@ public class Dial : MonoBehaviour
                 //    AttackFunction((EffectType)i);
                 //}
 
-                BattleManager.Instance.PlayerTurnEnd();
+                for (int i = 0; i < 3; i++)
+                {
+                    _dialElementList[i].SelectCard = null;
+                }
+
                 _effectDict.Clear();
-                _isAttack = false;
+                BattleManager.Instance.PlayerTurnEnd();
             });
+            _isAttack = false;
         }
     }
 
@@ -346,27 +353,14 @@ public class Dial : MonoBehaviour
 
     public void AllMagicSetCoolTime()
     {
-        foreach(var d in _magicDict)
-        {
-            foreach(RuneUI m in d.Value)
-            {
-                if(m.Rune.GetCoolTime() > 0)
-                {
-                    m.Rune.SetCoolTime(m.Rune.GetCoolTime() - 1);
-                }
-            }
-        }
-    }
-
-    public void AllMagicSetCoolTime(int value)
-    {
         foreach (var d in _magicDict)
         {
             foreach (RuneUI m in d.Value)
             {
                 if (m.Rune.GetCoolTime() > 0)
                 {
-                    m.Rune.SetCoolTime(value);
+                    m.Rune.SetCoolTime(m.Rune.GetCoolTime() - 1);
+                    m.SetCoolTime();
                 }
             }
         }

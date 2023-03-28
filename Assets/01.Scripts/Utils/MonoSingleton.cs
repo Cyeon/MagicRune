@@ -31,13 +31,13 @@ public class MonoSingleton<T> : MonoBehaviour where T : MonoBehaviour
         }
     }
 
-    private void Awake()
-    {
-        if(instance != this)
-        {
-            Destroy(this);
-        }
-    }
+    //private void Awake()
+    //{
+    //    if(instance != this)
+    //    {
+    //        Destroy(this);
+    //    }
+    //}
 
     // private void OnDestroy()
     // {
