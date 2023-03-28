@@ -41,11 +41,12 @@ public class BezierMissile : MonoBehaviour
     public void Init(Transform _startTr, Transform _endTr, float _speed, float _newPointDistanceFromStartTr, float _newPointDistanceFromEndTr, Action action = null)
     {
         m_timerCurrent = 0;
-        if(_effect != null)
-        {
-            ResourceManager.Instance.Destroy(_effect);
-            _effect = null;
-        }
+        //if(_effect != null)
+        //{
+        //    ResourceManager.Instance.Destroy(_effect);
+        //    _effect = null;
+        //}
+
         m_speed = _speed;
 
         // ³¡¿¡ µµÂøÇÒ ½Ã°£À» ·£´ýÀ¸·Î ÁÜ.
@@ -77,11 +78,11 @@ public class BezierMissile : MonoBehaviour
     public void Init(Vector2 _startTr, Vector2 _endTr, float _speed, float _newPointDistanceFromStartTr, float _newPointDistanceFromEndTr, Action action = null)
     {
         m_timerCurrent = 0f;
-        if (_effect != null)
-        {
-            ResourceManager.Instance.Destroy(_effect);
-            _effect = null;
-        }
+        //if (_effect != null)
+        //{
+        //    ResourceManager.Instance.Destroy(_effect);
+        //    _effect = null;
+        //}
 
         m_speed = _speed;
 
@@ -143,10 +144,11 @@ public class BezierMissile : MonoBehaviour
     public void SetEffect(GameObject go)
     {
         _effect = ResourceManager.Instance.Instantiate($"Effects/" + go.name, this.transform);
-        _effect.transform.localScale *= 3f;
-        Vector3 pos = _effect.transform.position;
-        pos.z = 0;
-        _effect.transform.position = pos;
+        //_effect.transform.localScale *= 3f;
+        //Vector3 pos = _effect.transform.position;
+        //pos.z = 0;
+        //_effect.transform.position = pos;
+        _effect.transform.localPosition = Vector2.zero;
         //_effect.transform.DOScale(Vector3.one * 200f, 0.2f);
     }
 
