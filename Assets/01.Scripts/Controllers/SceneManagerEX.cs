@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -28,6 +29,7 @@ public class SceneManagerEX : MonoSingleton<SceneManagerEX>
 
     public void Clear()
     {
+        DOTween.KillAll();
         CurrentScene.Clear();
     }
 }

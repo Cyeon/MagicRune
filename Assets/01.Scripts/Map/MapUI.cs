@@ -51,12 +51,14 @@ public class MapUI : MonoBehaviour
 
         _goldText = UIManager.Instance.Get<TextMeshProUGUI>("Main Gold Amount");
         _healthText = UIManager.Instance.Get<TextMeshProUGUI>("Main Health Amount");
-    }
 
-    private void OnEnable()
-    {
         MapManager.Instance.NextStage();
     }
+
+    //private void OnEnable()
+    //{
+    //    MapManager.Instance.NextStage();
+    //}
 
     public void PortalEffectUp(StageType type)
     {

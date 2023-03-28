@@ -39,7 +39,7 @@ public class MapManager : MonoSingleton<MapManager>
         {
             if (_mapSceneUI == null)
             {
-                _mapSceneUI = CanvasManager.Instance.GetCanvas("MapUI").GetComponent<MapUI>();
+                _mapSceneUI = CanvasManager.Instance.GetCanvas("MapUI")?.GetComponent<MapUI>();
             }
             return _mapSceneUI;
         }
@@ -77,9 +77,11 @@ public class MapManager : MonoSingleton<MapManager>
 
     private void Start()
     {
+        _mapSceneUI = CanvasManager.instance.GetCanvas("MapUI").GetComponent<MapUI>();
+
         ChapterInit();
         PortalInit();
-        MapSceneUI.InfoUIReload();
+        MapSceneUI?.InfoUIReload();
         //CanvasManager.instance.GetCanvas("MapUI").GetComponent<MapUI>().InfoUIReload();
 
         RewardManager.ImageLoad();
