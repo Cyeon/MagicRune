@@ -77,7 +77,7 @@ public class MapManager : MonoSingleton<MapManager>
 
     private void Start()
     {
-        _mapSceneUI = CanvasManager.instance.GetCanvas("MapUI").GetComponent<MapUI>();
+        _mapSceneUI = CanvasManager.Instance.GetCanvas("MapUI").GetComponent<MapUI>();
 
         ChapterInit();
         PortalInit();
@@ -144,7 +144,7 @@ public class MapManager : MonoSingleton<MapManager>
 
     public void NextStage()
     {
-        if (GameManager.instance.player.IsDie == true) // 버그
+        if (GameManager.Instance.player.IsDie == true) // 버그
         {
             ResetChapter();
             // 플레이어 죽음 리셋
@@ -277,6 +277,7 @@ public class MapManager : MonoSingleton<MapManager>
     public void ResetChapter()
     {
         _chapter = 1;
-        ChapterInit();
+        //ChapterInit();
+        GameManager.Instance.player.ResetHealth();
     }
 }

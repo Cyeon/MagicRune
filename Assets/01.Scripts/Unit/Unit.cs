@@ -198,6 +198,12 @@ public class Unit : MonoBehaviour
     {
         Shield = 0;
     }
+
+    public void ResetHealth()
+    {
+        _isDie = false;
+        _health = _maxHealth;
+    }
     
     protected virtual void Die()
     {

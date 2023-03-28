@@ -5,7 +5,7 @@ public class MonoSingleton<T> : MonoBehaviour where T : MonoBehaviour
 {
     private static bool shuttingDown = false;
     private static object locker = new object();
-    protected static T instance = null;
+    private static T instance = null;
 
     public static T Instance
     {
