@@ -42,7 +42,14 @@ public class BattleManager : MonoSingleton<BattleManager>
     {
         enemy = EnemyManager.Instance.SpawnEnemy(MapManager.Instance.selectEnemy);
         enemy.OnDieEvent.RemoveAllListeners();
-        enemy.OnDieEvent.AddListener(() => { _dialScene?.RewardUI.VictoryPanelPopup(); });
+        enemy.OnDieEvent.AddListener(() =>
+        {
+            REGold reward = new REGold();
+            reward.gold = MapManager.Instance.CurrentChapter.Gold;
+            reward.AddRewardList();
+
+            _dialScene?.RewardUI.VictoryPanelPopup();
+        });
         PatternManager.Instance.PatternInit(enemy.enemyInfo.patternList);
 
         player = GameManager.Instance.player; // �÷��̾� ���� �������� �����ؾ���
