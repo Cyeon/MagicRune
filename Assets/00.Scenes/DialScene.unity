@@ -518,17 +518,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 8337651338936228133, guid: 7cadc68f4607afd4eb05ddb25ac89dfe, type: 3}
   m_PrefabInstance: {fileID: 8337651338890638071}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &100166611 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8337651338936228132, guid: 7cadc68f4607afd4eb05ddb25ac89dfe, type: 3}
-  m_PrefabInstance: {fileID: 8337651338890638071}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fb4ffb9a22531ce45a1392fe406d6706, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &102498517
 GameObject:
   m_ObjectHideFlags: 0
@@ -1961,6 +1950,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   <OnTakeDamageFeedback>k__BackingField:
+    m_PersistentCalls:
+      m_Calls: []
+  OnDieEvent:
     m_PersistentCalls:
       m_Calls: []
   enemyInfo: {fileID: 0}
@@ -4051,21 +4043,6 @@ MonoBehaviour:
   currentUnit: {fileID: 0}
   attackUnit: {fileID: 0}
   turnChangeSound: {fileID: 8300000, guid: a851004179da45a449b2eb238ac440c7, type: 3}
-  OnEnemyDie:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 100166611}
-        m_TargetAssemblyTypeName: RewardUI, Assembly-CSharp
-        m_MethodName: VictoryPanelPopup
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!1 &1083680269
 GameObject:
   m_ObjectHideFlags: 0
@@ -5884,6 +5861,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Explain_Panel
       objectReference: {fileID: 0}
+    - target: {fileID: 546537800879168970, guid: d3a525fa3e667bf4fbaaadcbe7a00107, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d3a525fa3e667bf4fbaaadcbe7a00107, type: 3}
 --- !u!1 &1448532958 stripped
@@ -6142,6 +6123,7 @@ MonoBehaviour:
   _dial: {fileID: 6047878870979582954}
   _enemyIcon: {fileID: 770939993}
   _cardDescPanel: {fileID: 1448532958}
+  _rewardUI: {fileID: 8337651338890638072}
 --- !u!4 &1671816844
 Transform:
   m_ObjectHideFlags: 0
@@ -8898,6 +8880,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 551268784}
     m_Modifications:
+    - target: {fileID: 8337651338936228132, guid: 7cadc68f4607afd4eb05ddb25ac89dfe, type: 3}
+      propertyPath: _victoryRewardPanel
+      value: 
+      objectReference: {fileID: 8337651338890638073}
     - target: {fileID: 8337651338936228133, guid: 7cadc68f4607afd4eb05ddb25ac89dfe, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -8986,9 +8972,29 @@ PrefabInstance:
       propertyPath: m_Name
       value: Popup Reward
       objectReference: {fileID: 0}
+    - target: {fileID: 8337651338936228134, guid: 7cadc68f4607afd4eb05ddb25ac89dfe, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8337651339308800796, guid: 7cadc68f4607afd4eb05ddb25ac89dfe, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1018659705}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7cadc68f4607afd4eb05ddb25ac89dfe, type: 3}
+--- !u!114 &8337651338890638072 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8337651338936228132, guid: 7cadc68f4607afd4eb05ddb25ac89dfe, type: 3}
+  m_PrefabInstance: {fileID: 8337651338890638071}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb4ffb9a22531ce45a1392fe406d6706, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &8337651338890638073 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8337651339043226634, guid: 7cadc68f4607afd4eb05ddb25ac89dfe, type: 3}
+  m_PrefabInstance: {fileID: 8337651338890638071}
+  m_PrefabAsset: {fileID: 0}
