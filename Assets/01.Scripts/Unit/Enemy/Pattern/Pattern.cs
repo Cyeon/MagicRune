@@ -5,26 +5,80 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 
-[System.Serializable]
-public class Pattern
+public class Pattern : MonoBehaviour
 {
-    public float value;
-    public PatternSO info;
+    public Sprite icon;
 
-    public void Start()
+    [Header("Actions")]
+    public List<PatternAction> startPattern;
+    public List<PatternAction> turnPattern;
+    public List<PatternAction> endPattern;
+
+    [Header("Transitions")]
+    public List<PatternTransition> transitions;
+
+    /// <summary>
+    /// 플레이어 턴에 무슨 행동할지 보여줄때 발동될 패턴 액션 실행
+    /// </summary>
+    public void StartAction()
     {
-        UIManager.Instance.ReloadPattern(info.icon, value > 0 ? value.ToString() : "");
-        PatternManager.Instance.funcList.value = value;
-        PatternManager.Instance.FuncInovke(info.startFunc);
+        UIManager.Instance.ReloadPattern(icon);
+
+        foreach(PatternAction action in startPattern)
+        {
+            action.TakeAction();
+        }
     }
 
-    public void Turn()
+    /// <summary>
+    /// 몬스터 턴이 시작될 때 발동될 패턴 액션 실행
+    /// </summary>
+    public void TurnAction()
     {
-        PatternManager.Instance.FuncInovke(info.turnFunc);
+        foreach (PatternAction action in turnPattern)
+        {
+            action.TakeAction();
+        }
     }
 
-    public void End()
+    /// <summary>
+    /// 몬스터 턴이 끝날 때 발동될 패턴 액션 실행
+    /// </summary>
+    public void EndAction()
     {
-        PatternManager.Instance.FuncInovke(info.endFunc);
+        foreach (PatternAction action in endPattern)
+        {
+            action.TakeAction();
+        }
+    }
+
+    public void NextPattern()
+    {
+        foreach (PatternTransition transition in transitions)
+        {
+            bool result = false;
+            foreach(PatternDecision decision in transition.decisions)
+            {
+                result = decision.MakeADecision();
+                if(!result)
+                {
+                    BattleManager.Instance.enemy.NextPattern();
+                    break;
+                }
+            }
+
+            if(result)
+            {
+                if(transition.positivePattern != null)
+                {
+                    BattleManager.Instance.enemy.ChangePattern(transition.positivePattern);
+                }
+            }
+            else
+            {
+                BattleManager.Instance.enemy.NextPattern();
+            }
+        }
+
     }
 }

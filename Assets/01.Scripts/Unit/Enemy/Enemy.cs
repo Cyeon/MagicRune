@@ -8,13 +8,18 @@ public class Enemy : Unit
 {
     public EnemySO enemyInfo;
     public float atkDamage;
-    public Pattern pattern;
 
     public AudioClip attackSound = null;
 
     private Sequence idleSequence = null;
 
     private SpriteRenderer _spriteRenderer;
+
+    [Header("Pattern")]
+    private Pattern _currentPattern;
+    public Pattern CurrentPattern => _currentPattern;
+    public List<Pattern> patternList = new List<Pattern>();
+    private int _index = 0;
 
 
     public void Init(EnemySO so)
@@ -29,9 +34,21 @@ public class Enemy : Unit
         UIManager.Instance.HealthbarInit(false, _maxHealth);
     }
 
+    public void ChangePattern(Pattern pattern)
+    {
+        _currentPattern = pattern;
+    }
+    
+    public void NextPattern()
+    {
+        _index++;
+        _currentPattern = patternList[_index];
+    }
+    
+
     public void TurnStart()
     {
-        pattern.Turn();
+        _currentPattern.TurnAction();
     }
 
     public void Attack()

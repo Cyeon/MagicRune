@@ -92,8 +92,8 @@ public class BattleManager : MonoSingleton<BattleManager>
         switch (_gameTurn)
         {
             case GameTurn.Unknown:
-                enemy.pattern = PatternManager.Instance.GetPattern();
-                enemy.pattern?.Start();
+                enemy.CurrentPattern?.NextPattern();
+                enemy.CurrentPattern?.StartAction();
                 EventManager<int>.TriggerEvent(Define.ON_START_PLAYER_TURN, 5);
                 EventManager.TriggerEvent(Define.ON_START_PLAYER_TURN);
                 EventManager<bool>.TriggerEvent(Define.ON_START_PLAYER_TURN, true);
@@ -123,9 +123,9 @@ public class BattleManager : MonoSingleton<BattleManager>
                 StatusManager.Instance.StatusTurnChange(player);
                 StatusManager.Instance.StatusTurnChange(enemy);
 
-                enemy.pattern?.End();
-                enemy.pattern = PatternManager.Instance.GetPattern();
-                enemy.pattern?.Start();
+                enemy.CurrentPattern?.EndAction();
+                enemy.CurrentPattern?.NextPattern();
+                enemy.CurrentPattern?.StartAction();
 
                 EventManager<int>.TriggerEvent(Define.ON_START_PLAYER_TURN, 5);
                 EventManager.TriggerEvent(Define.ON_START_PLAYER_TURN);
