@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Security.Cryptography;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.SceneManagement;
 
 public enum GameTurn
 {
@@ -30,15 +29,12 @@ public class BattleManager : MonoSingleton<BattleManager>
 
     public UnityEvent OnEnemyDie;
 
-    private void Awake()
-    {
-        DOTween.Init(false, false, LogBehaviour.Default).SetCapacity(500, 50);
-
-        Application.targetFrameRate = 30;
-    }
+    private DialScene _dialScene;
 
     private void Start()
     {
+        _dialScene = SceneManagerEX.instance.CurrentScene as DialScene;
+
         GameStart();
     }
 
@@ -47,9 +43,9 @@ public class BattleManager : MonoSingleton<BattleManager>
         enemy = EnemyManager.Instance.SpawnEnemy(MapManager.Instance.selectEnemy);
         PatternManager.Instance.PatternInit(enemy.enemyInfo.patternList);
 
-        player = GameManager.Instance.player;
+        player = GameManager.Instance.player; // �÷��̾� ���� �������� �����ؾ���
 
-        UIManager.instance.HealthbarInit(true, player.HP, player.MaxHealth);
+        _dialScene?.HealthbarInit(true, player.HP, player.MaxHealth);
 
         FeedbackManager.Instance.Init();
 
@@ -100,7 +96,8 @@ public class BattleManager : MonoSingleton<BattleManager>
 
                 //SoundManager.instance.PlaySound(turnChangeSound, SoundType.Effect);
 
-                UIManager.Instance.Turn("Player Turn");
+                //UIManager.Instance.Turn("Player Turn");
+                _dialScene?.Turn("Player Turn");
                 _gameTurn = GameTurn.MonsterWait;
                 break;
 
@@ -110,7 +107,8 @@ public class BattleManager : MonoSingleton<BattleManager>
 
                 SoundManager.Instance.PlaySound(turnChangeSound, SoundType.Effect);
 
-                UIManager.Instance.Turn("Enemy Turn");
+                //UIManager.Instance.Turn("Enemy Turn");
+                _dialScene?.Turn("Enemy Turn");
                 _gameTurn = GameTurn.PlayerWait;
                 break;
 
@@ -135,11 +133,13 @@ public class BattleManager : MonoSingleton<BattleManager>
 
                 if (player.Shield > 0)
                 {
-                    player.Shield = 0;
-                    UIManager.Instance.UpdateHealthbar(true);
+                    player.ResetShield();
+                    _dialScene?.UpdateHealthbar(true);
                 }
 
-                UIManager.Instance.Turn("Player Turn");
+                //UIManager.Instance.Turn("Player Turn");
+                _dialScene?.Turn("Player Turn");
+                _dialScene?.Dial?.AllMagicSetCoolTime();
                 _gameTurn = GameTurn.MonsterWait;
                 break;
 
@@ -152,6 +152,8 @@ public class BattleManager : MonoSingleton<BattleManager>
         if (_gameTurn == GameTurn.PlayerWait || _gameTurn == GameTurn.MonsterWait)
             currentUnit?.InvokeStatus(StatusInvokeTime.Start);
     }
+
+    
 
     public void PlayerTurnEnd()
     {

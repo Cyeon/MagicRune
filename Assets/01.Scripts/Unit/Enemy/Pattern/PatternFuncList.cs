@@ -32,6 +32,13 @@ public class PatternFuncList : MonoBehaviour
     public AudioClip shieldSound = null;
     public AudioClip beamSound = null;
 
+    private DialScene _dialScene;
+
+    private void Start()
+    {
+        _dialScene = SceneManagerEX.Instance.CurrentScene as DialScene;
+    }
+
     public void OnDestroy()
     {
         transform.DOKill();
@@ -55,7 +62,7 @@ public class PatternFuncList : MonoBehaviour
 
     public void AddShield()
     {
-        BattleManager.Instance.enemy.Shield += value;
+        BattleManager.Instance.enemy.AddShield(value);
     }
 
     public void AddIceStatus()
@@ -72,11 +79,11 @@ public class PatternFuncList : MonoBehaviour
     public void Attack()
     {
         Sequence seq = DOTween.Sequence();
-        seq.AppendCallback(() => StartCoroutine(UIManager.Instance.PatternIconAnimationCoroutine()));
-        seq.Append(UIManager.Instance.enemyIcon.DOShakePosition(0.6f, 0.5f, 15)).SetEase(Ease.Linear);
-        seq.Append(UIManager.Instance.enemyIcon.DOMoveY(-10f, 0.2f)).SetEase(Ease.Linear);
+        seq.AppendCallback(() => StartCoroutine(_dialScene?.PatternIconAnimationCoroutine()));
+        seq.Append(_dialScene?.EnemyIcon.transform.DOShakePosition(0.6f, 0.5f, 15)).SetEase(Ease.Linear);
+        seq.Append(_dialScene?.EnemyIcon.transform.DOMoveY(-10f, 0.2f)).SetEase(Ease.Linear);
         seq.AppendCallback(() => DelayAttack());
-        seq.Append(UIManager.Instance.enemyIcon.DOMoveY(5.82f, 0.2f)).SetEase(Ease.Linear);
+        seq.Append(_dialScene?.EnemyIcon.transform.DOMoveY(5.82f, 0.2f)).SetEase(Ease.Linear);
         seq.AppendInterval(0.1f);
         seq.AppendCallback(() => BattleManager.Instance.TurnChange());
     }
@@ -108,7 +115,7 @@ public class PatternFuncList : MonoBehaviour
     public void Beeeeem()
     {
         Sequence seq = DOTween.Sequence();
-        seq.Append(UIManager.Instance.enemyIcon.DOShakeRotation(2, 90, 5)).SetEase(Ease.Linear);
+        seq.Append(_dialScene?.EnemyIcon.transform.DOShakeRotation(2, 90, 5)).SetEase(Ease.Linear);
         SoundManager.Instance.PlaySound(beamSound, SoundType.Effect);
         seq.AppendCallback(() => BattleManager.Instance.player.TakeDamage(value));
         seq.AppendInterval(0.2f);
@@ -123,14 +130,14 @@ public class PatternFuncList : MonoBehaviour
     public void DrainAttack()
     {
         Sequence seq = DOTween.Sequence();
-        seq.AppendCallback(() => StartCoroutine(UIManager.Instance.PatternIconAnimationCoroutine()));
-        seq.Append(UIManager.Instance.enemyIcon.DOShakePosition(0.6f, 50, 5)).SetEase(Ease.Linear);
-        seq.Append(UIManager.Instance.enemyIcon.DOLocalMoveY(-1700f, 0.2f)).SetEase(Ease.Linear);
+        seq.AppendCallback(() => StartCoroutine(_dialScene?.PatternIconAnimationCoroutine()));
+        seq.Append(_dialScene?.EnemyIcon.transform.DOShakePosition(0.6f, 50, 5)).SetEase(Ease.Linear);
+        seq.Append(_dialScene?.EnemyIcon.transform.DOLocalMoveY(-1700f, 0.2f)).SetEase(Ease.Linear);
         seq.AppendCallback(() => DelayAttack());
-        seq.Append(UIManager.Instance.enemyIcon.DOLocalMoveY(130, 0.2f)).SetEase(Ease.Linear);
+        seq.Append(_dialScene?.EnemyIcon.transform.DOLocalMoveY(130, 0.2f)).SetEase(Ease.Linear);
         seq.AppendInterval(0.1f);
         seq.AppendCallback(() => BattleManager.Instance.enemy.AddHP(value));
-        seq.AppendCallback(() => UIManager.Instance.UpdateHealthbar(false));
+        seq.AppendCallback(() => _dialScene?.UpdateHealthbar(false));
         seq.AppendCallback(() => BattleManager.Instance.TurnChange());
     }
 
@@ -142,6 +149,6 @@ public class PatternFuncList : MonoBehaviour
 
     public void ShieldKeep()
     {
-        BattleManager.Instance.enemy.Shield += BattleManager.Instance.enemy.Shield;
+        BattleManager.Instance.enemy.AddShield(BattleManager.Instance.enemy.Shield);
     }
 }

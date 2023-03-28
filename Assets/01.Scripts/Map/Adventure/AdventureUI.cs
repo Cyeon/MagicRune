@@ -10,7 +10,8 @@ public class AdventureUI : MonoBehaviour
 {
     private Image _cg;
     private TextMeshProUGUI _titleText;
-        
+
+    [SerializeField]
     private GameObject _storyPanel;
     private TextMeshProUGUI _storyText;
 
@@ -18,18 +19,24 @@ public class AdventureUI : MonoBehaviour
     private Button[] _distractorButtons;
     private List<TextMeshProUGUI> _distractorText = new List<TextMeshProUGUI>();
 
-    private void Awake()
+    private void Start()
     {
-        _cg = transform.Find("CG").GetComponent<Image>();
-        _titleText = transform.Find("Title/Text").GetComponent<TextMeshProUGUI>();
+        UIManager.Instance.Bind<Image>("CG", CanvasManager.Instance.GetCanvas("Adventure").gameObject);
+        UIManager.Instance.Bind<TextMeshProUGUI>("Title Text", CanvasManager.Instance.GetCanvas("Adventure").gameObject);
+        UIManager.Instance.Bind<TextMeshProUGUI>("StoryText", CanvasManager.Instance.GetCanvas("Adventure").gameObject);
+        UIManager.Instance.Bind<Button>("Story Button", CanvasManager.Instance.GetCanvas("Adventure").gameObject);
 
-        _storyPanel = transform.Find("Story").gameObject;
-        _storyText = _storyPanel.transform.Find("StoryText").GetComponent<TextMeshProUGUI>();
-        _storyPanel.transform.Find("Button").GetComponent<Button>().onClick.AddListener(() => StoryClick());
+        _cg = UIManager.Instance.Get<Image>("CG");
+        _titleText = UIManager.Instance.Get<TextMeshProUGUI>("Title Text");
+
+        _storyText = UIManager.Instance.Get<TextMeshProUGUI>("StoryText");
+        UIManager.Instance.Get<Button>("Story Button").onClick.AddListener(() => StoryClick());
 
         _distractorPanel = transform.Find("Distractor").gameObject;
         _distractorButtons = _distractorPanel.GetComponentsInChildren<Button>(true);
         _distractorButtons.ForEach(x => _distractorText.Add(x.GetComponentInChildren<TextMeshProUGUI>(true)));
+
+        GetComponent<Canvas>().enabled = false;
     }
 
     private void StoryClick()

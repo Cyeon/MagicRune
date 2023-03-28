@@ -1,5 +1,6 @@
 using DG.Tweening;
 using MyBox;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Security.Cryptography;
@@ -15,9 +16,6 @@ public class DialElement : MonoBehaviour
     private Dial _dial;
     private SpriteRenderer _spriteRenderer;
 
-    [SerializeField]
-    private float _dragDistance = 800;
-
     #region Swipe Parameta
     private Vector2 touchBeganPos;
     private Vector2 touchEndedPos;
@@ -28,8 +26,6 @@ public class DialElement : MonoBehaviour
 
     #region Drag Parameta
     private float _rotDamp = 3;
-    [SerializeField]
-    private float _touchDamp = 5f;
     private Vector3 _touchPos, _offset;
 
     [SerializeField]
@@ -55,6 +51,7 @@ public class DialElement : MonoBehaviour
                 if(_selectCard != null)
                 {
                     _selectCard.SetActiveOutline(OutlineType.Default);
+                    _selectCard.RuneColor(new Color(0.26f, 0.26f, 0.26f, 1f));
                 }
                 _selectCard = value;
             }
@@ -63,22 +60,32 @@ public class DialElement : MonoBehaviour
                 if(_selectCard != null)
                 {
                     _selectCard.SetActiveOutline(OutlineType.Default);
+                    _selectCard.RuneColor(new Color(0.26f, 0.26f, 0.26f, 1f));
                 }
                 _selectCard = value;
                 _selectCard.SetActiveOutline(OutlineType.Cyan);
+                _selectCard.RuneColor(Color.white);
             }
         }
     }
+
     [SerializeField, Range(0f, 90f)]
     private float _selectOffset;
     private bool _isRotate = false;
 
+    DialScene _dialScene = null;
+
     private void Awake()
     {
         _dial = GetComponentInParent<Dial>();
-        _spriteRenderer = transform.Find("VisualSprite").GetComponent<SpriteRenderer>();
+        _spriteRenderer = transform.Find("LineVisualSprite").GetComponent<SpriteRenderer>();
         _magicList = new List<RuneUI>();
         //_spriteRenderer.alphaHitTestMinimumThreshold = 0.04f;
+    }
+
+    private void Start()
+    {
+        _dialScene = SceneManagerEX.Instance.CurrentScene as DialScene;
     }
 
     private void Update()
@@ -98,7 +105,10 @@ public class DialElement : MonoBehaviour
                     SelectCard = _magicList[index];
                     if (_isRotate == true)
                     {
-                        UIManager.Instance.CardDescPopup(SelectCard.Rune);
+                        if (_selectCard != null)
+                        {
+                            _dialScene?.CardDescPopup(_selectCard.Rune);
+                        }
                     }
                 }
             }
@@ -116,7 +126,10 @@ public class DialElement : MonoBehaviour
                     SelectCard = _magicList[index];
                     if (_isRotate == true)
                     {
-                        UIManager.Instance.CardDescPopup(SelectCard.Rune);
+                        if (_selectCard != null)
+                        {
+                            _dialScene?.CardDescPopup(_selectCard.Rune);
+                        }
                     }
                 }
             }
@@ -126,7 +139,7 @@ public class DialElement : MonoBehaviour
                 if (_isRotate == true)
                 {
                     Rune rune = SelectCard == null ? null : SelectCard.Rune;
-                    UIManager.Instance.CardDescPopup(rune);
+                    _dialScene?.CardDescPopup(rune);
                 }
             }
         }
@@ -166,6 +179,90 @@ public class DialElement : MonoBehaviour
         _magicList = new List<RuneUI>(list);
     }
 
+    public void Attack()
+    {
+        if (BattleManager.Instance.enemy.IsDie == false && _selectCard != null)
+        {
+            for (int i = 0; i < _selectCard.Rune.EffectList.Count; i++)
+            {
+                Pair pair = _selectCard.Rune.EffectList[i];
+                Unit target = pair.IsEnemy == true ? BattleManager.Instance.enemy : BattleManager.Instance.player;
+                AttackEffectFunction(pair.EffectType, target, pair)?.Invoke();
+            }
+
+            _selectCard.Rune.SetCoolTime(_selectCard.Rune.GetRune().CoolTime);
+            _selectCard.SetCoolTime();
+            //SelectCard = null;
+        }
+    }
+
+    public Action AttackEffectFunction(EffectType effectType, Unit target, Pair e)
+    {
+        Action action = null;
+        //int c = 0;
+        //for (int i = 0; i < _effectDict[RuneType.Assist].Count; i++)
+        //{
+        //    if (_runeTempDict[RuneType.Assist][i].Rune != null && _runeTempDict[RuneType.Assist][i].Rune.AssistRune.Attribute == e.AttributeType)
+        //    {
+        //        c++;
+        //    }
+        //}
+        //if (_runeTempDict[RuneType.Main][0].Rune != null && _runeTempDict[RuneType.Main][0].Rune.AssistRune.Attribute == e.AttributeType)
+        //    c++;
+
+        switch (effectType)
+        {
+            case EffectType.Attack:
+                switch (e.AttackType)
+                {
+                    case AttackType.Single:
+                        action = () => BattleManager.Instance.player.Attack(e.Effect);
+                        break;
+                    case AttackType.Double:
+                        //action = () => GameManager.Instance.player.Attack(e.Effect * c);
+                        action = () => BattleManager.Instance.player.Attack(e.Effect);
+                        break;
+                }
+                break;
+            case EffectType.Defence:
+                switch (e.AttackType)
+                {
+                    case AttackType.Single:
+                        action = () => BattleManager.Instance.player.AddShield(e.Effect);
+                        break;
+                    case AttackType.Double:
+                        //action = () => GameManager.Instance.player.Shield += e.Effect * c;
+                        action = () => BattleManager.Instance.player.AddShield(e.Effect);
+                        break;
+                }
+                break;
+            case EffectType.Status:
+                switch (e.AttackType)
+                {
+                    case AttackType.Single:
+                        action = () => StatusManager.Instance.AddStatus(target, e.StatusType, (int)e.Effect);
+                        break;
+                    case AttackType.Double:
+                        //action = () => StatusManager.Instance.AddStatus(target, e.StatusType, (int)e.Effect * c);
+                        action = () => StatusManager.Instance.AddStatus(target, e.StatusType, (int)e.Effect);
+                        break;
+                }
+                break;
+            case EffectType.Destroy:
+                action = () => StatusManager.Instance.RemStatus(target, e.StatusType);
+                break;
+            case EffectType.Draw:
+                // 지금은 일단 주석...
+                //action = () => _cardCollector.CardDraw(e.Effect);
+                break;
+            case EffectType.Etc:
+                action = null;
+                break;
+        }
+
+        return action;
+    }
+
     public void Swipe1()
     {
         if (Input.touchCount > 0)
@@ -199,53 +296,70 @@ public class DialElement : MonoBehaviour
                     _fingerID = -1;
                     _isRotate = false;
 
-                    if (_isUseRotateOffset)
+                    if (_magicList.Count > 0)
                     {
-                        float oneDinstance = 360f / _magicList.Count;
-                        bool inBoolean = (_spriteRenderer.transform.eulerAngles.z % oneDinstance) <= _selectOffset;
-                        bool outBoolean = (oneDinstance - (_spriteRenderer.transform.eulerAngles.z % oneDinstance)) <= _selectOffset;
-                        if (inBoolean)
+                        if (_isUseRotateOffset)
                         {
-                            int index = (int)(_spriteRenderer.transform.eulerAngles.z / oneDinstance) % (_magicList.Count);
-                            if (_magicList[index].Rune.IsCoolTime == false)
+                            float oneDinstance = 360f / _magicList.Count;
+                            bool inBoolean = (_spriteRenderer.transform.eulerAngles.z % oneDinstance) <= _selectOffset;
+                            bool outBoolean = (oneDinstance - (_spriteRenderer.transform.eulerAngles.z % oneDinstance)) <= _selectOffset;
+                            if (inBoolean)
                             {
-                                // 돌리고 있을 때만
-                                DOTween.To(
-                                    () => transform.eulerAngles,
-                                    x => transform.eulerAngles = x,
-                                    new Vector3(0, 0, ((int)(transform.eulerAngles.z / oneDinstance)) * oneDinstance),
-                                    0.3f
-                                );
+                                int index = (int)(_spriteRenderer.transform.eulerAngles.z / oneDinstance) % (_magicList.Count);
+                                //if (_magicList[index].Rune.IsCoolTime == false)
+                                //{
+                                    // 돌리고 있을 때만
+                                    DOTween.To(
+                                        () => transform.eulerAngles,
+                                        x => transform.eulerAngles = x,
+                                        new Vector3(0, 0, ((int)(transform.eulerAngles.z / oneDinstance)) * oneDinstance),
+                                        0.3f
+                                    ).OnComplete(() =>
+                                    {
+                                        if (_selectCard != null) { _dialScene?.CardDescPopup(_selectCard.Rune); }
+                                    });
+                                //}
                             }
-                        }
-                        else if (outBoolean)
-                        {
-                            int index = (int)(transform.eulerAngles.z / oneDinstance) % (_magicList.Count);
-                            index = (index + 1) % _magicList.Count;
-                            if (_magicList[index].Rune.IsCoolTime == false)
+                            else if (outBoolean)
                             {
-                                DOTween.To(
-                                    () => transform.eulerAngles,
-                                    x => transform.eulerAngles = x,
-                                    new Vector3(0, 0, ((int)(transform.eulerAngles.z / oneDinstance) + 1) * oneDinstance),
-                                    0.3f
-                                );
+                                int index = (int)(transform.eulerAngles.z / oneDinstance) % (_magicList.Count);
+                                index = (index + 1) % _magicList.Count;
+                                //if (_magicList[index].Rune.IsCoolTime == false)
+                                //{
+                                    DOTween.To(
+                                        () => transform.eulerAngles,
+                                        x => transform.eulerAngles = x,
+                                        new Vector3(0, 0, ((int)(transform.eulerAngles.z / oneDinstance) + 1) * oneDinstance),
+                                        0.3f
+                                    ).OnComplete(() =>
+                                    {
+                                        if (_selectCard != null) { _dialScene?.CardDescPopup(_selectCard.Rune); }
+                                    });
+                                //}
                             }
-                        }
-                    }
-                    else
-                    {
-                        float oneDinstance = 360f / _magicList.Count;
-                        int index = (int)(transform.eulerAngles.z / oneDinstance) % (_magicList.Count);
-
-                        float distance = transform.eulerAngles.z % oneDinstance;
-                        if (distance >= oneDinstance / 2f)
-                        {
-                            transform.DORotate(new Vector3(0, 0, (index + 1) % _magicList.Count * oneDinstance), 0.3f, RotateMode.Fast);
                         }
                         else
                         {
-                            transform.DORotate(new Vector3(0, 0, index * oneDinstance), 0.3f, RotateMode.Fast);
+                            float oneDinstance = 360f / _magicList.Count;
+                            int index = (int)(transform.eulerAngles.z / oneDinstance) % (_magicList.Count);
+
+                            float distance = transform.eulerAngles.z % oneDinstance;
+                            if (distance >= oneDinstance / 2f)
+                            {
+                                transform.DORotate(new Vector3(0, 0, (index + 1) % _magicList.Count * oneDinstance), 0.3f, RotateMode.Fast)
+                                    .OnComplete(() =>
+                                    {
+                                        if (_selectCard != null) { _dialScene?.CardDescPopup(_selectCard.Rune); }
+                                    });
+                            }
+                            else
+                            {
+                                transform.DORotate(new Vector3(0, 0, index * oneDinstance), 0.3f, RotateMode.Fast)
+                                    .OnComplete(() =>
+                                    {
+                                        if (_selectCard != null) { _dialScene?.CardDescPopup(_selectCard.Rune); }
+                                    });
+                            }
                         }
                     }
                 }

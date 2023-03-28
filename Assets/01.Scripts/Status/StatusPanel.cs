@@ -12,11 +12,18 @@ public class StatusPanel : MonoBehaviour, IPointerClickHandler
     public TextMeshProUGUI duration;
     public StatusName statusName;
 
+    private DialScene _dialScene;
+
+    private void Start()
+    {
+        _dialScene = SceneManagerEX.Instance.CurrentScene as DialScene;
+    }
+
     public void OnPointerClick(PointerEventData eventData)
     {
         Touch touch = Input.GetTouch(0);
         Vector3 pos = Camera.main.ScreenToWorldPoint(touch.position);
-        UIManager.Instance.StatusDescPopup(status, pos);
+        _dialScene?.StatusDescPopup(status, pos);
     }
 
     private void OnEnable()

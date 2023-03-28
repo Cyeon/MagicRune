@@ -10,11 +10,13 @@ public class SceneManagerEX : MonoSingleton<SceneManagerEX>
 
     public void LoadScene(Define.Scene type)
     {
+        Clear();
         SceneManager.LoadScene(GetSceneName(type));
     }
 
     public void LoadScene(string name)
     {
+        Clear();
         SceneManager.LoadScene(name);
     }
 

@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class DeckManager : MonoSingleton<DeckManager>
 {
-    //[SerializeField]
-    public List<RuneSO> _defaultRune = new List<RuneSO>(); // 초기 기본 지급 룬 
+    [SerializeField]
+    private List<RuneSO> _defaultRune = new List<RuneSO>(); // 초기 기본 지급 룬 
     [SerializeField]
     private List<Rune> _selectedDeck = new List<Rune>(); // 사전에 설정해둔 다이얼 안쪽의 1번째 줄 덱.
     [SerializeField]
