@@ -63,6 +63,7 @@ public class RuneUI : MonoBehaviour
             SetActiveOutline(OutlineType.Default);
             _coolTimeText.SetText(_rune.GetCoolTime().ToString());
             _coolTimeText.gameObject.SetActive(true);
+            RuneColor(new Color(0.26f, 0.26f, 0.26f, 1f));
         }
         else
         {
