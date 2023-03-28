@@ -113,7 +113,7 @@ public class Unit : MonoBehaviour
             {
                 if (_dialScene != null)
                 {
-                    _dialScene.DamageUIPopup(currentDmg, _dialScene.EnemyIcon.transform.position, status);
+                    _dialScene.DamageUIPopup(currentDmg, Define.MainCam.WorldToScreenPoint(_dialScene.EnemyIcon.transform.position), status);
                 }
             }
     }
