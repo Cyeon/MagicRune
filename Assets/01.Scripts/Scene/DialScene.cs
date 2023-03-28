@@ -83,12 +83,12 @@ public class DialScene : BaseScene
         _cardDescSkillIcon = UIManager.Instance.Get<Image>("Explain_Skill_Icon");
         _cardDescInfo = UIManager.Instance.Get<TextMeshProUGUI>("Explain_Text");
 
-        UIManager.Instance.Get<Button>("Restart Btn").onClick.RemoveAllListeners();
-        UIManager.Instance.Get<Button>("Restart Btn").onClick.AddListener(() =>
-        {
-            SceneManagerEX.Instance.LoadScene(Define.Scene.MapScene);
-            //MapManager.Instance.ResetChapter();
-        });
+        //UIManager.Instance.Get<Button>("Restart Btn").onClick.RemoveAllListeners();
+        //UIManager.Instance.Get<Button>("Restart Btn").onClick.AddListener(() =>
+        //{
+        //    SceneManagerEX.Instance.LoadScene(Define.Scene.MapScene);
+        //    //MapManager.Instance.ResetChapter();
+        //});
         UIManager.Instance.Get<Button>("Quit Btn").onClick.RemoveAllListeners();
         UIManager.Instance.Get<Button>("Quit Btn").onClick.AddListener(() => GameManager.Instance.GameQuit());
     }

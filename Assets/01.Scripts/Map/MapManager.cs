@@ -277,7 +277,7 @@ public class MapManager : MonoSingleton<MapManager>
     public void ResetChapter()
     {
         _chapter = 1;
-        //ChapterInit();
+        ChapterInit();
         GameManager.Instance.player.ResetHealth();
     }
 }

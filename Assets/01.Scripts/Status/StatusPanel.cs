@@ -21,8 +21,7 @@ public class StatusPanel : MonoBehaviour, IPointerClickHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        Touch touch = Input.GetTouch(0);
-        Vector3 pos = Camera.main.ScreenToWorldPoint(touch.position);
+        Vector3 pos = Define.MainCam.ScreenToWorldPoint(eventData.position);
         _dialScene?.StatusDescPopup(status, pos);
     }
 
