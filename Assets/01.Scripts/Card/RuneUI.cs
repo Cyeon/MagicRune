@@ -32,6 +32,7 @@ public class RuneUI : MonoBehaviour
     private void Start()
     {
         _coolTimeText.gameObject.SetActive(false);
+        RuneColor(new Color(0.26f, 0.26f, 0.26f, 1f));
     }
 
     public void SetActiveOutline(OutlineType type)
@@ -49,18 +50,23 @@ public class RuneUI : MonoBehaviour
         _runeImage.sprite = _rune.GetRune().RuneImage;
     }
 
+    public void RuneColor(Color color)
+    {
+        _runeImage.color = color;
+    }
+
     public void SetCoolTime()
     {
         if (_rune.GetCoolTime() > 0)
         {
-            _runeImage.color = Color.gray;
+            //_runeImage.color = Color.gray;
             SetActiveOutline(OutlineType.Default);
             _coolTimeText.SetText(_rune.GetCoolTime().ToString());
             _coolTimeText.gameObject.SetActive(true);
         }
         else
         {
-            _runeImage.color = Color.white;
+            //_runeImage.color = Color.white;
             _coolTimeText.gameObject.SetActive(false);
         }
     }

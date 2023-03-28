@@ -51,6 +51,7 @@ public class DialElement : MonoBehaviour
                 if(_selectCard != null)
                 {
                     _selectCard.SetActiveOutline(OutlineType.Default);
+                    _selectCard.RuneColor(new Color(0.26f, 0.26f, 0.26f, 1f));
                 }
                 _selectCard = value;
             }
@@ -59,9 +60,11 @@ public class DialElement : MonoBehaviour
                 if(_selectCard != null)
                 {
                     _selectCard.SetActiveOutline(OutlineType.Default);
+                    _selectCard.RuneColor(new Color(0.26f, 0.26f, 0.26f, 1f));
                 }
                 _selectCard = value;
                 _selectCard.SetActiveOutline(OutlineType.Cyan);
+                _selectCard.RuneColor(Color.white);
             }
         }
     }
@@ -172,11 +175,14 @@ public class DialElement : MonoBehaviour
 
     public void Attack()
     {
-        for(int i = 0; i < _selectCard.Rune.EffectList.Count; i++)
+        if (BattleManager.Instance.enemy.IsDie == false)
         {
-            Pair pair = _selectCard.Rune.EffectList[i];
-            Unit target = pair.IsEnemy == true ? BattleManager.Instance.enemy : BattleManager.Instance.player;
-            AttackEffectFunction(pair.EffectType, target, pair)?.Invoke();
+            for (int i = 0; i < _selectCard.Rune.EffectList.Count; i++)
+            {
+                Pair pair = _selectCard.Rune.EffectList[i];
+                Unit target = pair.IsEnemy == true ? BattleManager.Instance.enemy : BattleManager.Instance.player;
+                AttackEffectFunction(pair.EffectType, target, pair)?.Invoke();
+            }
         }
     }
 

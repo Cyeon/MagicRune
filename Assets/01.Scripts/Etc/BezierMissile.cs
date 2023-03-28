@@ -30,6 +30,8 @@ public class BezierMissile : MonoBehaviour
 
     private TrailRenderer _trail;
 
+    GameObject _effect;
+
     private void Awake()
     {
         _transform = GetComponent<Transform>();
@@ -68,6 +70,8 @@ public class BezierMissile : MonoBehaviour
 
     public void Init(Vector2 _startTr, Vector2 _endTr, float _speed, float _newPointDistanceFromStartTr, float _newPointDistanceFromEndTr, Action action = null)
     {
+        m_timerCurrent = 0f;
+
         m_speed = _speed;
 
         // 끝에 도착할 시간을 랜덤으로 줌.
@@ -127,12 +131,12 @@ public class BezierMissile : MonoBehaviour
 
     public void SetEffect(GameObject go)
     {
-        GameObject g = Instantiate(go, this.transform);
-        g.transform.localScale *= 3f;
-        Vector3 pos = g.transform.position;
+        _effect = ResourceManager.Instance.Instantiate($"Effects/" + go.name, this.transform);
+        _effect.transform.localScale *= 3f;
+        Vector3 pos = _effect.transform.position;
         pos.z = 0;
-        g.transform.position = pos;
-        //g.transform.DOScale(Vector3.one * 200f, 0.2f);
+        _effect.transform.position = pos;
+        //_effect.transform.DOScale(Vector3.one * 200f, 0.2f);
     }
 
     void Update()
@@ -155,12 +159,15 @@ public class BezierMissile : MonoBehaviour
         // 도착한거임
         if((Vector2)_transform.position == m_points[3])
         {
+            ResourceManager.Instance.Destroy(_effect);
+
             // 핸동하고
             if(BattleManager.Instance.enemy.IsDie == false)
             {
                 _endAction?.Invoke();
             }
 
+            m_timerCurrent = 0;
             // 풀링
             ResourceManager.Instance.Destroy(this.gameObject);
         }

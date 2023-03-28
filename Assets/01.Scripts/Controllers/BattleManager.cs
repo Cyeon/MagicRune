@@ -43,7 +43,7 @@ public class BattleManager : MonoSingleton<BattleManager>
         enemy = EnemyManager.Instance.SpawnEnemy(MapManager.Instance.selectEnemy);
         PatternManager.Instance.PatternInit(enemy.enemyInfo.patternList);
 
-        player = GameManager.Instance.player;
+        player = GameManager.Instance.player; // 플레이어 동적 생성으로 변경해야함
 
         _dialScene?.HealthbarInit(true, player.HP, player.MaxHealth);
 

@@ -127,6 +127,8 @@ public class Unit : MonoBehaviour
 
     public void InvokeStatus(StatusInvokeTime time)
     {
+        if (IsDie == true) return;
+
         List<Status> status;
 
         if(unitStatusDic.TryGetValue(time, out status))

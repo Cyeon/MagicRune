@@ -45,7 +45,8 @@ public class PoolManager : MonoSingleton<PoolManager>
 
             poolable.Reset();
             poolable.gameObject.SetActive(false);
-            poolable.transform.parent = Root;
+            //poolable.transform.parent = Root;
+            poolable.transform.SetParent(Root, false);
             poolable.isUsing = false;
 
             _poolStack.Push(poolable);
@@ -69,10 +70,12 @@ public class PoolManager : MonoSingleton<PoolManager>
             // DontDestroyLoad «ÿ¡¶
             if(parent == null)
             {
-                poolable.transform.parent = SceneManagerEX.Instance.CurrentScene.transform;
+                //poolable.transform.parent = SceneManagerEX.Instance.CurrentScene.transform;
+                poolable.transform.SetParent(SceneManagerEX.Instance.CurrentScene.transform);
             }
 
-            poolable.transform.parent = parent;
+            //poolable.transform.parent = parent;
+            poolable.transform.SetParent(parent);
             poolable.isUsing = true;
 
             return poolable;

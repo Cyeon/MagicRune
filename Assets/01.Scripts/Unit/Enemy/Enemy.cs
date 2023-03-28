@@ -78,6 +78,7 @@ public class Enemy : Unit
 
     private void OnDestroy()
     {
-        DOTween.KillAll();
+        //DOTween.KillAll();
+        transform.DOKill();
     }
 }
