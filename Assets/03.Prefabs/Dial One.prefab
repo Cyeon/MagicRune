@@ -81,7 +81,7 @@ SpriteRenderer:
   m_Size: {x: 10.24, y: 10.24}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &831276757
@@ -165,7 +165,7 @@ SpriteRenderer:
   m_Size: {x: 10.24, y: 10.24}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &1966863273
@@ -249,7 +249,7 @@ SpriteRenderer:
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &2426353922960405747
@@ -466,9 +466,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c85a560f068d314aab87c136007a26e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _dragDistance: 800
   swipeSensitivity: 5
-  _touchDamp: 5
   _isUseRotateOffset: 0
   _inDistance: 1.1
   _outDistance: 2.3
@@ -527,7 +525,6 @@ MonoBehaviour:
   tempCard: {fileID: 8165298467326144068, guid: d80daf2e6dc89fc4b9c1606735cfa39a, type: 3}
   _bezierMissile: {fileID: 1426304098941858083, guid: 9dd93f28a2b7477439d08440675ea353, type: 3}
   _enemyPos: {fileID: 0}
-  swipeSensitivity: 5
 --- !u!1 &6047878870784061144
 GameObject:
   m_ObjectHideFlags: 0
@@ -742,9 +739,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c85a560f068d314aab87c136007a26e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _dragDistance: 800
   swipeSensitivity: 5
-  _touchDamp: 7
   _isUseRotateOffset: 0
   _inDistance: 2.3
   _outDistance: 3.5
@@ -896,9 +891,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c85a560f068d314aab87c136007a26e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _dragDistance: 800
   swipeSensitivity: 5
-  _touchDamp: 10
   _isUseRotateOffset: 0
   _inDistance: 3.5
   _outDistance: 4.6
@@ -981,7 +974,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 10.24, y: 10.24}
+  m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1

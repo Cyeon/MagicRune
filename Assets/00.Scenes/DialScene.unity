@@ -1948,6 +1948,7 @@ MonoBehaviour:
     value: 0
     info: {fileID: 0}
   attackSound: {fileID: 0}
+  enemyScaleVec: {x: 1, y: 1, z: 1}
 --- !u!114 &514474097
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5253,8 +5254,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 0
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 0ef0097e011ca2743baf4abb3becfa83, type: 2}
-  m_sharedMaterial: {fileID: 2100000, guid: c4a2ba51503a72146a4d475a8bb0490c, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -5805,8 +5806,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 5
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 0ef0097e011ca2743baf4abb3becfa83, type: 2}
-  m_sharedMaterial: {fileID: 2100000, guid: c4a2ba51503a72146a4d475a8bb0490c, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -6008,8 +6009,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\uD134 \uC885\uB8CC"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 0ef0097e011ca2743baf4abb3becfa83, type: 2}
-  m_sharedMaterial: {fileID: 2100000, guid: 8a19f8804e870bf4b9fa4561ed65c175, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -8378,8 +8379,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 0
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 0ef0097e011ca2743baf4abb3becfa83, type: 2}
-  m_sharedMaterial: {fileID: 2100000, guid: c4a2ba51503a72146a4d475a8bb0490c, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -9670,6 +9671,54 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 725660128, guid: d97cab570bc02de4f9f2a665ef076cc9, type: 3}
+      propertyPath: m_Size.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 725660128, guid: d97cab570bc02de4f9f2a665ef076cc9, type: 3}
+      propertyPath: m_Size.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 725660128, guid: d97cab570bc02de4f9f2a665ef076cc9, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 0110b41868926e541821ca5d1f0d8d8c, type: 3}
+    - target: {fileID: 725660128, guid: d97cab570bc02de4f9f2a665ef076cc9, type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 831276759, guid: d97cab570bc02de4f9f2a665ef076cc9, type: 3}
+      propertyPath: m_Size.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 831276759, guid: d97cab570bc02de4f9f2a665ef076cc9, type: 3}
+      propertyPath: m_Size.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 831276759, guid: d97cab570bc02de4f9f2a665ef076cc9, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: a127d66a8e61d1a4d86968fe6c9b72ec, type: 3}
+    - target: {fileID: 831276759, guid: d97cab570bc02de4f9f2a665ef076cc9, type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1966863275, guid: d97cab570bc02de4f9f2a665ef076cc9, type: 3}
+      propertyPath: m_Size.x
+      value: 10.24
+      objectReference: {fileID: 0}
+    - target: {fileID: 1966863275, guid: d97cab570bc02de4f9f2a665ef076cc9, type: 3}
+      propertyPath: m_Size.y
+      value: 10.24
+      objectReference: {fileID: 0}
+    - target: {fileID: 1966863275, guid: d97cab570bc02de4f9f2a665ef076cc9, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 9f270e4be6ecee042941b8322772b2e4, type: 3}
+    - target: {fileID: 1966863275, guid: d97cab570bc02de4f9f2a665ef076cc9, type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 299225324799502131, guid: d97cab570bc02de4f9f2a665ef076cc9, type: 3}
       propertyPath: m_Size.x
       value: 0.68
@@ -9709,6 +9758,14 @@ PrefabInstance:
     - target: {fileID: 2540267238550916144, guid: d97cab570bc02de4f9f2a665ef076cc9, type: 3}
       propertyPath: m_Color.r
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4048946619835483058, guid: d97cab570bc02de4f9f2a665ef076cc9, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 11.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4048946619835483058, guid: d97cab570bc02de4f9f2a665ef076cc9, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 11.5
       objectReference: {fileID: 0}
     - target: {fileID: 4298104196072643750, guid: d97cab570bc02de4f9f2a665ef076cc9, type: 3}
       propertyPath: m_LocalScale.y
@@ -9797,6 +9854,14 @@ PrefabInstance:
     - target: {fileID: 6738287192194539990, guid: d97cab570bc02de4f9f2a665ef076cc9, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7988665054815852223, guid: d97cab570bc02de4f9f2a665ef076cc9, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 10.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7988665054815852223, guid: d97cab570bc02de4f9f2a665ef076cc9, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 10.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d97cab570bc02de4f9f2a665ef076cc9, type: 3}
