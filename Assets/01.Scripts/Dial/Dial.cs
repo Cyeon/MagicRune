@@ -18,6 +18,7 @@ public class Dial : MonoBehaviour
     private int _maxRuneCount = 3;
     [SerializeField, Range(90f, 360f)]
     private float _runeAngle = 180f;
+    public float RuneAngle => _runeAngle;
     [SerializeField]
     private float _startAngle = 180;
 
