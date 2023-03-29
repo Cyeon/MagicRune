@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class DeckManager : MonoSingleton<DeckManager>
 {
@@ -57,5 +58,38 @@ public class DeckManager : MonoSingleton<DeckManager>
         Rune tempRune = _deck[fIndex];
         _deck[fIndex] = _deck[sIndex];
         _deck[sIndex] = tempRune;
+    }
+
+    public void UsingDeckSort()
+    {
+        List<Rune> usingRune = new List<Rune>();
+        List<Rune> notUsingRune = new List<Rune>();
+
+        usingRune = _deck.Where(x => x.IsCoolTime == false).ToList();
+        notUsingRune = _deck.Where(x => x.IsCoolTime == true).ToList();
+
+        _deck.Clear();
+        for(int i = 0; i < usingRune.Count; i++)
+        {
+            _deck.Add(usingRune[i]);
+        }
+        for (int i = 0; i < notUsingRune.Count; i++)
+        {
+            _deck.Add(notUsingRune[i]);
+        }
+    }
+
+    public int GetUsingRuneCount()
+    {
+        int count = 0;
+        for(int i = 0; i < _deck.Count; i++)
+        {
+            if (_deck[i].IsCoolTime == false)
+            {
+                count++;
+            }
+        }
+
+        return count;
     }
 }

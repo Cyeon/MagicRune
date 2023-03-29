@@ -26,7 +26,7 @@ public class Dial : MonoBehaviour
     [SerializeField]
     private Transform _enemyPos;
 
-    private Dictionary<int, List<RuneUI>> _magicDict;
+    private Dictionary<int, List<RuneUI>> _runeDict;
     private Dictionary<EffectType, List<EffectObjectPair>> _effectDict = new Dictionary<EffectType, List<EffectObjectPair>>();
     private List<DialElement> _dialElementList;
 
@@ -36,10 +36,10 @@ public class Dial : MonoBehaviour
 
     private void Awake()
     {
-        _magicDict = new Dictionary<int, List<RuneUI>>(3);
+        _runeDict = new Dictionary<int, List<RuneUI>>(3);
         for (int i = 1; i <= 3; i++)
         {
-            _magicDict.Add(i, new List<RuneUI>());
+            _runeDict.Add(i, new List<RuneUI>());
         }
         _dialElementList = new List<DialElement>();
 
@@ -53,7 +53,7 @@ public class Dial : MonoBehaviour
     {
         _dialScene = SceneManagerEX.Instance.CurrentScene as DialScene;
 
-        for(int i = 0; i < 3; i++)
+        for (int i = 0; i < 3; i++)
         {
             DialElement d = this.transform.GetChild(i).GetComponent<DialElement>();
 
@@ -89,30 +89,7 @@ public class Dial : MonoBehaviour
         //    }
         //}
 
-        int maxRuneCount = DeckManager.Instance.Deck.Count;
-        for(int i = 0; i < _maxRuneCount * 3; i++)
-        {
-            if(maxRuneCount <= 0)
-            {
-                break;
-            }
-
-            int runeIndex = Random.Range(0, maxRuneCount);
-            RuneUI r = ResourceManager.Instance.Instantiate("Rune").GetComponent<RuneUI>();
-            r.transform.SetParent(_dialElementList[2 - (i % 3)].transform);
-            r.Dial = this;
-            r.DialElement = _dialElementList[2 - (i % 3)];
-            _dialElementList[2 - (i % 3)].AddRuneList(r);
-            r.SetRune(DeckManager.Instance.Deck[runeIndex]);
-            r.UpdateUI();
-            r.Rune.SetCoolTime(0);
-            r.SetCoolTime();
-            AddCard(r, (i % 3) + 1);
-            // 덱 스왑
-            DeckManager.Instance.RuneSpawn(runeIndex, maxRuneCount - 1);
-
-            maxRuneCount--;
-        }
+        SettingDialRune(true);
 
         //for (int i = 0; i < 3; i++)
         //{
@@ -127,7 +104,7 @@ public class Dial : MonoBehaviour
         //    _dialElementList.Add(d);
         //}
 
-        
+
 
         //for(int i = 0; i < DeckManager.Instance.Deck.Count; i++) //룬 개수 적어서 임시로 한 번 더 돌렸음 
         //{
@@ -141,14 +118,74 @@ public class Dial : MonoBehaviour
         //    _deck.Add(r);
         //}
 
-        
+
+    }
+
+    public void SettingDialRune(bool isReset)
+    {
+        foreach (KeyValuePair<int, List<RuneUI>> runeList in _runeDict)
+        {
+            foreach(RuneUI rune in runeList.Value)
+            {
+                if(rune != null)
+                {
+                    ResourceManager.Instance.Destroy(rune.gameObject);
+                }
+            }
+        }
+        _runeDict.Clear();
+
+        for(int i = 0; i < _dialElementList.Count; i++)
+        {
+            _dialElementList[i].ResetRuneList();
+        }
+
+        DeckManager.Instance.UsingDeckSort();
+        int maxRuneCount = DeckManager.Instance.GetUsingRuneCount();
+        for (int i = 0; i < _maxRuneCount * 3; i++)
+        {
+            if (maxRuneCount <= 0)
+            {
+                break;
+            }
+
+            // 쓸 수 있는 룬만 가져오게
+
+            int runeIndex = Random.Range(0, maxRuneCount);
+
+
+            RuneUI r = ResourceManager.Instance.Instantiate("Rune").GetComponent<RuneUI>();
+            r.transform.SetParent(_dialElementList[2 - (i % 3)].transform);
+            r.transform.localScale = new Vector3(0.1f, 0.1f);
+            r.Dial = this;
+            r.DialElement = _dialElementList[2 - (i % 3)];
+            _dialElementList[2 - (i % 3)].AddRuneList(r);
+            r.SetRune(DeckManager.Instance.Deck[runeIndex]);
+            r.UpdateUI();
+            if (isReset == true)
+            {
+                r.Rune.SetCoolTime(0);
+            }
+            r.SetCoolTime();
+            AddCard(r, (i % 3) + 1);
+            DeckManager.Instance.RuneSpawn(runeIndex, maxRuneCount - 1);
+
+            maxRuneCount--;
+        }
     }
 
     public void AddCard(RuneUI card, int tier)
     {
         if (card != null)
         {
-            _magicDict[tier].Add(card);
+            if (_runeDict.ContainsKey(tier))
+            {
+                _runeDict[tier].Add(card);
+            }
+            else
+            {
+                _runeDict.Add(tier, new List<RuneUI> { card });
+            }
 
             CardSort();
         }
@@ -156,91 +193,91 @@ public class Dial : MonoBehaviour
 
     private void CardSort()
     {
-        if (_magicDict.ContainsKey(3))
+        if (_runeDict.ContainsKey(3))
         {
-            float angle = -2 * Mathf.PI / _magicDict[3].Count;
+            float angle = -2 * Mathf.PI / _runeDict[3].Count;
 
-            for (int i = 0; i < _magicDict[3].Count; i++)
+            for (int i = 0; i < _runeDict[3].Count; i++)
             {
                 float height = Mathf.Sin(angle * i + (90 * Mathf.Deg2Rad)) * 4; // 470
                 float width = Mathf.Cos(angle * i + (90 * Mathf.Deg2Rad)) * 4; // 450
-                _magicDict[3][i].transform.position = new Vector3(width + this.transform.position.x, height + this.transform.position.y, 0);
+                _runeDict[3][i].transform.position = new Vector3(width + this.transform.position.x, height + this.transform.position.y, 0);
 
                 Vector2 direction = new Vector2(
-                    _magicDict[3][i].transform.position.x - transform.position.x,
-                    _magicDict[3][i].transform.position.y - transform.position.y
+                    _runeDict[3][i].transform.position.x - transform.position.x,
+                    _runeDict[3][i].transform.position.y - transform.position.y
                 );
 
                 float ang = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
                 Quaternion angleAxis = Quaternion.AngleAxis(ang - 90f, Vector3.forward);
-                _magicDict[3][i].transform.rotation = angleAxis;
+                _runeDict[3][i].transform.rotation = angleAxis;
             }
         }
-        if (_magicDict.ContainsKey(2))
+        if (_runeDict.ContainsKey(2))
         {
-            float angle = -2 * Mathf.PI / _magicDict[2].Count;
+            float angle = -2 * Mathf.PI / _runeDict[2].Count;
 
-            for (int i = 0; i < _magicDict[2].Count; i++)
+            for (int i = 0; i < _runeDict[2].Count; i++)
             {
                 float height = Mathf.Sin(angle * i + (90 * Mathf.Deg2Rad)) * 2.9f; // 470
                 float width = Mathf.Cos(angle * i + (90 * Mathf.Deg2Rad)) * 2.9f; // 450
-                _magicDict[2][i].transform.position = new Vector3(width + this.transform.position.x, height + this.transform.position.y, 0);
+                _runeDict[2][i].transform.position = new Vector3(width + this.transform.position.x, height + this.transform.position.y, 0);
                 //_magicDict[2][i].transform.localScale = new Vector3(0.0133f, 0.0133f, 1);
 
                 Vector2 direction = new Vector2(
-                    _magicDict[2][i].transform.position.x - transform.position.x,
-                    _magicDict[2][i].transform.position.y - transform.position.y
+                    _runeDict[2][i].transform.position.x - transform.position.x,
+                    _runeDict[2][i].transform.position.y - transform.position.y
                 );
 
                 float ang = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
                 Quaternion angleAxis = Quaternion.AngleAxis(ang - 90f, Vector3.forward);
-                _magicDict[2][i].transform.rotation = angleAxis;
+                _runeDict[2][i].transform.rotation = angleAxis;
             }
         }
-        if (_magicDict.ContainsKey(1))
+        if (_runeDict.ContainsKey(1))
         {
-            float angle = -2 * Mathf.PI / _magicDict[1].Count;
+            float angle = -2 * Mathf.PI / _runeDict[1].Count;
 
-            for (int i = 0; i < _magicDict[1].Count; i++)
+            for (int i = 0; i < _runeDict[1].Count; i++)
             {
                 float height = Mathf.Sin(angle * i + (90 * Mathf.Deg2Rad)) * 1.7f; // 470
                 float width = Mathf.Cos(angle * i + (90 * Mathf.Deg2Rad)) * 1.7f; // 450
-                _magicDict[1][i].transform.position = new Vector3(width + this.transform.position.x, height + this.transform.position.y, 0);
+                _runeDict[1][i].transform.position = new Vector3(width + this.transform.position.x, height + this.transform.position.y, 0);
                 //_magicDict[1][i].transform.localScale = new Vector3(0.02f, 0.02f, 1);
 
                 Vector2 direction = new Vector2(
-                    _magicDict[1][i].transform.position.x - transform.position.x,
-                    _magicDict[1][i].transform.position.y - transform.position.y
+                    _runeDict[1][i].transform.position.x - transform.position.x,
+                    _runeDict[1][i].transform.position.y - transform.position.y
                 );
 
                 float ang = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
                 Quaternion angleAxis = Quaternion.AngleAxis(ang - 90f, Vector3.forward);
-                _magicDict[1][i].transform.rotation = angleAxis;
+                _runeDict[1][i].transform.rotation = angleAxis;
             }
         }
     }
 
     public void AllMagicActive(bool value)
     {
-        if (_magicDict.ContainsKey(1))
+        if (_runeDict.ContainsKey(1))
         {
-            for (int i = 0; i < _magicDict[1].Count; i++)
+            for (int i = 0; i < _runeDict[1].Count; i++)
             {
-                _magicDict[1][i].gameObject.SetActive(false);
+                _runeDict[1][i].gameObject.SetActive(false);
             }
         }
-        if (_magicDict.ContainsKey(2))
+        if (_runeDict.ContainsKey(2))
         {
-            for (int i = 0; i < _magicDict[2].Count; i++)
+            for (int i = 0; i < _runeDict[2].Count; i++)
             {
-                _magicDict[2][i].gameObject.SetActive(false);
+                _runeDict[2][i].gameObject.SetActive(false);
             }
         }
-        if (_magicDict.ContainsKey(3))
+        if (_runeDict.ContainsKey(3))
         {
-            for (int i = 0; i < _magicDict[3].Count; i++)
+            for (int i = 0; i < _runeDict[3].Count; i++)
             {
-                _magicDict[3][i].gameObject.SetActive(false);
+                _runeDict[3][i].gameObject.SetActive(false);
             }
         }
     }
@@ -402,7 +439,7 @@ public class Dial : MonoBehaviour
 
     public void AllMagicSetCoolTime()
     {
-        foreach (var d in _magicDict)
+        foreach (var d in _runeDict)
         {
             foreach (RuneUI m in d.Value)
             {

@@ -184,6 +184,11 @@ public class DialElement : MonoBehaviour
         _runeList = new List<RuneUI>(list);
     }
 
+    public void ResetRuneList()
+    {
+        _runeList.Clear();
+    }
+
     public void Attack()
     {
         if (BattleManager.Instance.enemy.IsDie == false && _selectCard != null)
