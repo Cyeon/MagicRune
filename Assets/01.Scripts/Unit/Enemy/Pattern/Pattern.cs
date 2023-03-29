@@ -7,14 +7,15 @@ using UnityEngine.Events;
 
 public class Pattern : MonoBehaviour
 {
+    public string patternName;
     public Sprite icon;
 
-    [Header("Actions")]
+    [Header("[ Actions ]")]
     public List<PatternAction> startPattern;
     public List<PatternAction> turnPattern;
     public List<PatternAction> endPattern;
 
-    [Header("Transitions")]
+    [Header("[ Transition ]")]
     public List<PatternTransition> transitions;
 
     /// <summary>

@@ -20,6 +20,7 @@ public class ShopUI : MonoBehaviour
         gameObject.SetActive(false);
     }
 
+
     public void Open()
     {
         gameObject.SetActive(true);

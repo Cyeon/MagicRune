@@ -44,7 +44,7 @@ public class BattleManager : MonoSingleton<BattleManager>
 
     public void GameStart()
     {
-        enemy = ResourceManager.Instance.Instantiate(MapManager.Instance.selectEnemy.name).GetComponent<Enemy>();
+        enemy = ResourceManager.Instance.Instantiate("Enemy/"+MapManager.Instance.selectEnemy.name).GetComponent<Enemy>();
         enemy.Init();
 
         player = GameManager.Instance.player;

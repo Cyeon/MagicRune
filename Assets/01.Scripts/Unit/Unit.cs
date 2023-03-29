@@ -58,10 +58,10 @@ public class Unit : MonoBehaviour
     [field: SerializeField] public Dictionary<StatusInvokeTime, List<Status>> unitStatusDic = new Dictionary<StatusInvokeTime, List<Status>>();
 
     private void OnEnable() {
-        unitStatusDic.Add(StatusInvokeTime.Start, new List<Status>());
-        unitStatusDic.Add(StatusInvokeTime.Attack, new List<Status>());
-        unitStatusDic.Add(StatusInvokeTime.GetDamage, new List<Status>());
-        unitStatusDic.Add(StatusInvokeTime.End, new List<Status>());
+        //unitStatusDic.Add(StatusInvokeTime.Start, new List<Status>());
+        //unitStatusDic.Add(StatusInvokeTime.Attack, new List<Status>());
+        //unitStatusDic.Add(StatusInvokeTime.GetDamage, new List<Status>());
+        //unitStatusDic.Add(StatusInvokeTime.End, new List<Status>());
     }
     
     /// <summary>

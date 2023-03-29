@@ -10,24 +10,33 @@ public class Enemy : Unit
     public AudioClip attackSound = null;
     private Sequence idleSequence = null;
     public bool isEnter = false;
-    public Sprite sprite;
+    private Sprite _icon;
+    public Sprite Icon 
+    { 
+        get
+        {
+            if(_icon == null)
+            {
+                _icon = transform.Find("Sprite").GetComponent<SpriteRenderer>().sprite;
+            }
+            return _icon;
+        }
+    }
 
     public PatternManager patternM;
 
-    private void Awake()
-    {
-        sprite = GetComponentInChildren<Image>().sprite;
-    }
-
     public void Init()
     {
+        patternM = GetComponentInChildren<PatternManager>();    
+
         transform.localPosition = new Vector3(0, 6, 0);
         UIManager.Instance.HealthbarInit(false, _maxHealth);
         patternM.currentPattern = patternM.patternList[0];
     }
 
-    public void Attack()
+    public void Attack(int damage)
     {
+        currentDmg = damage;
         InvokeStatus(StatusInvokeTime.Attack);
 
         BattleManager.Instance.player.TakeDamage(currentDmg);

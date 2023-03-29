@@ -11,6 +11,11 @@ public class PatternManager : MonoBehaviour
     public void NextPattern()
     {
         _index++;
+        if(_index ==  patternList.Count)
+        {
+            _index = 0;
+        }
+
         currentPattern = patternList[_index];
     }
 

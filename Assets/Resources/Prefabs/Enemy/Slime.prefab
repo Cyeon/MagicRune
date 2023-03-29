@@ -60,8 +60,7 @@ MonoBehaviour:
       m_Calls: []
   attackSound: {fileID: 0}
   isEnter: 0
-  sprite: {fileID: 0}
-  patternList: []
+  patternM: {fileID: 0}
 --- !u!114 &5573710045181229655
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -243,6 +242,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1303912707091337696}
   - component: {fileID: 8285289795806985120}
+  - component: {fileID: 2783546606579734046}
   m_Layer: 0
   m_Name: Attack
   m_TagString: Untagged
@@ -277,11 +277,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2192153269515d74695b667fe90c4d36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  icon: {fileID: 0}
+  patternName: Attack
+  icon: {fileID: 21300000, guid: f8f165314f3065e46b32ad7a27340b2b, type: 3}
   startPattern: []
-  turnPattern: []
+  turnPattern:
+  - {fileID: 2783546606579734046}
   endPattern: []
   transitions: []
+--- !u!114 &2783546606579734046
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7050939463909324118}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db7864d3a61bcc14a99708ff1475ef25, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 10
 --- !u!1 &7782914569266652075
 GameObject:
   m_ObjectHideFlags: 0
@@ -327,3 +342,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a37b36df0be0d84fb669c14b5902035, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentPattern: {fileID: 0}
+  patternList:
+  - {fileID: 8285289795806985120}

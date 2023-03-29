@@ -216,7 +216,7 @@ public class MapManager : MonoSingleton<MapManager>
             case StageType.Boss:
                 AttackPortal atkPortal = portal as AttackPortal;
                 atkPortal.enemy = type == StageType.Attack ? GetAttackEnemy() : _currentChapter.boss;
-                atkPortal.icon = atkPortal.enemy.sprite;
+                atkPortal.icon = atkPortal.enemy.Icon;
                 atkPortal.portalName = atkPortal.enemy.name;
                 atkPortal.isUse = true;
                 return atkPortal;
