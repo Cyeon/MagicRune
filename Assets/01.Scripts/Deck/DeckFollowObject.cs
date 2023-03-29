@@ -9,13 +9,13 @@ using UnityEngine.UI;
 public class DeckFollowObject : MonoBehaviour
 {
     private Image _runeImage = null;
-    private RectTransform rectTransform = null;
-    private RectTransform canvasTransform = null;
+    private RectTransform _rectTransform = null;
+    private RectTransform _canvasTransform = null;
 
     private void Awake()
     {
         gameObject.name = "FollowObject";
-        rectTransform = GetComponent<RectTransform>();
+        _rectTransform = GetComponent<RectTransform>();
         Image[] images = GetComponentsInChildren<Image>();
         foreach (Image item in images)
         {
@@ -27,22 +27,26 @@ public class DeckFollowObject : MonoBehaviour
             }
         }
     }
-
     private void Update()
     {
-        rectTransform.anchoredPosition = GetCanvasPosition(Input.mousePosition);
+        FollowMouse();
     }
 
     public void SetCanvasTrasform(RectTransform transform)
     {
-        canvasTransform = transform;
+        _canvasTransform = transform;
+    }
+
+    public void FollowMouse()
+    {
+        _rectTransform.anchoredPosition = GetCanvasPosition(Input.mousePosition);
     }
 
     private Vector2 GetCanvasPosition(Vector2 mousePosition)
     {
         Vector2 viewportPosition = Camera.main.ScreenToViewportPoint(mousePosition);
-        return new Vector2((viewportPosition.x * canvasTransform.sizeDelta.x) - (canvasTransform.sizeDelta.x * 0.5f),
-            (viewportPosition.y * canvasTransform.sizeDelta.y) - (canvasTransform.sizeDelta.y * 0.5f));
+        return new Vector2((viewportPosition.x * _canvasTransform.sizeDelta.x) - (_canvasTransform.sizeDelta.x * 0.5f),
+            (viewportPosition.y * _canvasTransform.sizeDelta.y) - (_canvasTransform.sizeDelta.y * 0.5f));
     }
 
     public void SetImage(Sprite sprite)

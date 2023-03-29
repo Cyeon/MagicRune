@@ -52,6 +52,8 @@ public class DeckSettingUI : MonoBehaviour
     }
     private void Start()
     {
+        //SettingAllDeck();
+        //ReturnPanels();
         {
             GameObject game = Instantiate(_runePanelPrefab, transform);
             Destroy(game.GetComponent<DeckRunePanel>());
@@ -86,9 +88,9 @@ public class DeckSettingUI : MonoBehaviour
                 _runePanelList.Add(runePanel);
             }
             runePanel.gameObject.SetActive(true);
-            runePanel.Setting(rune);
-            runePanel.SetDeck(DeckType.OwnDeck);
             runePanel.transform.SetParent(_ownDeckContentTransform);
+            runePanel.SetDeck(DeckType.OwnDeck);
+            runePanel.Setting(rune);
         }
     }
 
@@ -107,20 +109,20 @@ public class DeckSettingUI : MonoBehaviour
             }
 
             runePanel.gameObject.SetActive(true);
-            runePanel.Setting(rune);
-            runePanel.SetDeck(DeckType.FirstDialDeck);
             runePanel.transform.SetParent(_dialDeckContentTransform);
+            runePanel.SetDeck(DeckType.FirstDialDeck);
+            runePanel.Setting(rune);
         }
     }
 
     private DeckRunePanel GetEmptyPanel()
     {
-        return _runePanelList.Find(x => x.IsUse == false);
+        return _runePanelList.Find(x => x.IsUse == false && x.gameObject.activeSelf == false);
     }
 
     private void ReturnPanels()
     {
-        List<DeckRunePanel> deckRunePanels = _runePanelList.FindAll(x => x.IsUse == true);
+        List<DeckRunePanel> deckRunePanels = _runePanelList.FindAll(x => x.gameObject.activeSelf == true);
         foreach (DeckRunePanel item in deckRunePanels)
         {
             item.transform.SetParent(this.transform);
@@ -134,6 +136,7 @@ public class DeckSettingUI : MonoBehaviour
         if (rune != null)
         {
             _followObject.SetImage(_selectRune.Rune.GetRune().RuneImage);
+            _followObject.FollowMouse();
             _followObject.gameObject.SetActive(true);
         }
         else
