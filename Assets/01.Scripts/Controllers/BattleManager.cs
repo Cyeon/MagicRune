@@ -46,7 +46,6 @@ public class BattleManager : MonoSingleton<BattleManager>
     {
         enemy = ResourceManager.Instance.Instantiate(MapManager.Instance.selectEnemy.name).GetComponent<Enemy>();
         enemy.Init();
-        enemy.ChangePattern(enemy.patternList[0]);
 
         player = GameManager.Instance.player;
 
@@ -72,7 +71,7 @@ public class BattleManager : MonoSingleton<BattleManager>
         _gameTurn = GameTurn.Monster;
         currentUnit = enemy;
         attackUnit = player;
-        enemy.TurnStart();
+        enemy.patternM.TurnAction();
     }
 
     # region Debug
@@ -93,7 +92,7 @@ public class BattleManager : MonoSingleton<BattleManager>
         switch (_gameTurn)
         {
             case GameTurn.Unknown:
-                enemy.CurrentPattern?.StartAction();
+                enemy.patternM.StartAction();
                 EventManager<int>.TriggerEvent(Define.ON_START_PLAYER_TURN, 5);
                 EventManager.TriggerEvent(Define.ON_START_PLAYER_TURN);
                 EventManager<bool>.TriggerEvent(Define.ON_START_PLAYER_TURN, true);
@@ -123,9 +122,9 @@ public class BattleManager : MonoSingleton<BattleManager>
                 StatusManager.Instance.StatusTurnChange(player);
                 StatusManager.Instance.StatusTurnChange(enemy);
 
-                enemy.CurrentPattern?.EndAction();
-                enemy.CurrentPattern?.NextPattern();
-                enemy.CurrentPattern?.StartAction();
+                enemy.patternM.EndAction();
+                enemy.patternM.NextPattern();
+                enemy.patternM.StartAction();
 
                 EventManager<int>.TriggerEvent(Define.ON_START_PLAYER_TURN, 5);
                 EventManager.TriggerEvent(Define.ON_START_PLAYER_TURN);

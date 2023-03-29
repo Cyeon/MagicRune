@@ -12,11 +12,7 @@ public class Enemy : Unit
     public bool isEnter = false;
     public Sprite sprite;
 
-    [Header("Pattern")]
-    private Pattern _currentPattern;
-    public Pattern CurrentPattern => _currentPattern;
-    public List<Pattern> patternList = new List<Pattern>();
-    private int _index = 0;
+    public PatternManager patternM;
 
     private void Awake()
     {
@@ -27,24 +23,7 @@ public class Enemy : Unit
     {
         transform.localPosition = new Vector3(0, 6, 0);
         UIManager.Instance.HealthbarInit(false, _maxHealth);
-        ChangePattern(patternList[0]);
-    }
-
-    public void ChangePattern(Pattern pattern)
-    {
-        _currentPattern = pattern;
-    }
-    
-    public void NextPattern()
-    {
-        _index++;
-        _currentPattern = patternList[_index];
-    }
-    
-
-    public void TurnStart()
-    {
-        _currentPattern.TurnAction();
+        patternM.currentPattern = patternM.patternList[0];
     }
 
     public void Attack()

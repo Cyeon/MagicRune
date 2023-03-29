@@ -62,7 +62,7 @@ public class Pattern : MonoBehaviour
                 result = decision.MakeADecision();
                 if(!result)
                 {
-                    BattleManager.Instance.enemy.NextPattern();
+                    BattleManager.Instance.enemy.patternM.NextPattern();
                     break;
                 }
             }
@@ -71,12 +71,12 @@ public class Pattern : MonoBehaviour
             {
                 if(transition.positivePattern != null)
                 {
-                    BattleManager.Instance.enemy.ChangePattern(transition.positivePattern);
+                    BattleManager.Instance.enemy.patternM.currentPattern = transition.positivePattern;
                 }
             }
             else
             {
-                BattleManager.Instance.enemy.NextPattern();
+                BattleManager.Instance.enemy.patternM.NextPattern();
             }
         }
 
