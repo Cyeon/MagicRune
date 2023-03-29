@@ -32,11 +32,6 @@ public class DialElement : MonoBehaviour
     private bool _isUseRotateOffset;
 
     [SerializeField]
-    private int _maxRuneCount = 8;
-
-    public bool IsFull => _runeList.Count == _maxRuneCount;
-
-    [SerializeField]
     private float _inDistance;
     [SerializeField]
     private float _outDistance;
@@ -179,7 +174,12 @@ public class DialElement : MonoBehaviour
         }
     }
 
-    public void SetCardList(List<RuneUI> list)
+    public void AddRuneList(RuneUI rune)
+    {
+        _runeList.Add(rune);
+    }
+
+    public void SetRuneList(List<RuneUI> list)
     {
         _runeList = new List<RuneUI>(list);
     }

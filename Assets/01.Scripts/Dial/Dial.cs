@@ -15,6 +15,9 @@ public class Dial : MonoBehaviour
     //[SerializeField]
     //private List<Rune> _deck; // 소지하고 있는 모든 룬 
     [SerializeField]
+    private int _maxRuneCount = 3;
+
+    [SerializeField]
     private List<Rune> _selectedDeck = null; // 사전에 설정해둔 다이얼 안쪽의 1번째 줄 덱. 
     [SerializeField]
     private GameObject tempCard;
@@ -50,46 +53,79 @@ public class Dial : MonoBehaviour
     {
         _dialScene = SceneManagerEX.Instance.CurrentScene as DialScene;
 
-        List<int> indexList = new List<int> { 1, 2, 3 };
-        for (int i = 0; i < DeckManager.Instance.Deck.Count; i++)
-        {
-            if(indexList.Count <= 0)
-            {
-                // 들어갈 수 있는 데가 아무곳도 없으면 어카지?
-                break;
-            }
-
-            int index = Random.Range(0, indexList.Count);
-            //GameObject g = Instantiate(tempCard, this.transform.GetChild(index - 1));
-            RuneUI r = ResourceManager.Instance.Instantiate("Rune").GetComponent<RuneUI>();
-            r.transform.SetParent(this.transform.GetChild(3 - index).transform);
-            r.Dial = this;
-            r.DialElement = this.transform.GetChild(3 - index).GetComponent<DialElement>();
-            r.SetRune(DeckManager.Instance.Deck[i]);
-            r.UpdateUI();
-            r.Rune.SetCoolTime(0);
-            r.SetCoolTime();
-            AddCard(r, index);
-
-            // 한 라인에 들어갈 수 있는 최대 룬 개수 처리 해야함. 이러면 되지 않았을 까?
-            if(this.transform.GetChild(3 - index).GetComponent<DialElement>().IsFull == true) // 이거 지금은 무조건 조건 만족 안함
-            {
-                indexList.RemoveAt(index);
-            }
-        }
-
-        for (int i = 0; i < 3; i++)
+        for(int i = 0; i < 3; i++)
         {
             DialElement d = this.transform.GetChild(i).GetComponent<DialElement>();
 
-            List<RuneUI> runeList = new List<RuneUI>();
-            for (int j = 0; j < _magicDict[3 - i].Count; j++)
-            {
-                runeList.Add(_magicDict[3 - i][j]);
-            }
-            d.SetCardList(runeList); // 여기서 룬 리스트를 넣어주어서 그럼. 이 구조 수정 필요
             _dialElementList.Add(d);
         }
+
+        //List<int> indexList = new List<int> { 1, 2, 3 };
+        //for (int i = 0; i < DeckManager.Instance.Deck.Count; i++)
+        //{
+        //    if(indexList.Count <= 0)
+        //    {
+        //        // 들어갈 수 있는 데가 아무곳도 없으면 어카지?
+        //        break;
+        //    }
+
+        //    //int index = Random.Range(1, 4);
+        //    int index = Random.Range(0, indexList.Count);
+        //    //GameObject g = Instantiate(tempCard, this.transform.GetChild(index - 1));
+        //    RuneUI r = ResourceManager.Instance.Instantiate("Rune").GetComponent<RuneUI>();
+        //    r.transform.SetParent(this.transform.GetChild(3 - index).transform);
+        //    r.Dial = this;
+        //    r.DialElement = _dialElementList[3 - indexList[index]];
+        //    r.SetRune(DeckManager.Instance.Deck[i]);
+        //    r.UpdateUI();
+        //    r.Rune.SetCoolTime(0);
+        //    r.SetCoolTime();
+        //    AddCard(r, indexList[index]);
+
+        //    // 한 라인에 들어갈 수 있는 최대 룬 개수 처리 해야함. 이러면 되지 않았을 까?
+        //    if(this.transform.GetChild(3 - index).childCount >= ) // 이거 지금은 무조건 조건 만족 안함
+        //    {
+        //        indexList.RemoveAt(index);
+        //    }
+        //}
+
+        int maxRuneCount = DeckManager.Instance.Deck.Count;
+        for(int i = 0; i < _maxRuneCount * 3; i++)
+        {
+            if(maxRuneCount <= 0)
+            {
+                break;
+            }
+
+            int runeIndex = Random.Range(0, maxRuneCount);
+            RuneUI r = ResourceManager.Instance.Instantiate("Rune").GetComponent<RuneUI>();
+            r.transform.SetParent(_dialElementList[2 - (i % 3)].transform);
+            r.Dial = this;
+            r.DialElement = _dialElementList[2 - (i % 3)];
+            _dialElementList[2 - (i % 3)].AddRuneList(r);
+            r.SetRune(DeckManager.Instance.Deck[runeIndex]);
+            r.UpdateUI();
+            r.Rune.SetCoolTime(0);
+            r.SetCoolTime();
+            AddCard(r, (i % 3) + 1);
+            // 덱 스왑
+            DeckManager.Instance.RuneSpawn(runeIndex, maxRuneCount - 1);
+
+            maxRuneCount--;
+        }
+
+        //for (int i = 0; i < 3; i++)
+        //{
+        //    DialElement d = this.transform.GetChild(i).GetComponent<DialElement>();
+
+        //    List<RuneUI> runeList = new List<RuneUI>();
+        //    for (int j = 0; j < _magicDict[3 - i].Count; j++)
+        //    {
+        //        runeList.Add(_magicDict[3 - i][j]);
+        //    }
+        //    d.SetCardList(runeList); // 여기서 룬 리스트를 넣어주어서 그럼. 이 구조 수정 필요
+        //    _dialElementList.Add(d);
+        //}
 
         
 

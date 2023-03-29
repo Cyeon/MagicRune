@@ -51,4 +51,11 @@ public class DeckManager : MonoSingleton<DeckManager>
     {
         _firstDialDeck.Remove(rune);
     }
+
+    public void RuneSpawn(int fIndex, int sIndex)
+    {
+        Rune tempRune = _deck[fIndex];
+        _deck[fIndex] = _deck[sIndex];
+        _deck[sIndex] = tempRune;
+    }
 }
