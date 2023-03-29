@@ -21,11 +21,11 @@ public class ShopUI : MonoBehaviour
     {
         MapManager.Instance.NextStage();
         CanvasManager.Instance.GetCanvas("Shop").enabled = false;
+        CanvasManager.Instance.GetCanvas("MapUI").enabled = true;
     }
 
     public void Open()
     {
-        gameObject.SetActive(true);
         _goldText.SetText(GameManager.Instance.Gold.ToString());
         for (int i = _storeShelf.transform.childCount - 1; i >= 0; --i)
         {

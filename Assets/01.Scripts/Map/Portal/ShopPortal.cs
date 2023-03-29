@@ -9,7 +9,10 @@ public class ShopPortal : Portal
 
     public override void Execute()
     {
-        if(_shopUI == null)
+        CanvasManager.Instance.GetCanvas("MapUI").enabled = false;
+        CanvasManager.Instance.GetCanvas("Shop").enabled = true;
+
+        if (_shopUI == null)
             _shopUI = CanvasManager.Instance.GetCanvas("Shop").GetComponent<ShopUI>();
 
         _shopUI.Open();
