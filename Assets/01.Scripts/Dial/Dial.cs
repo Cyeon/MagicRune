@@ -16,6 +16,10 @@ public class Dial : MonoBehaviour
     //private List<Rune> _deck; // 소지하고 있는 모든 룬 
     [SerializeField]
     private int _maxRuneCount = 3;
+    [SerializeField, Range(90f, 360f)]
+    private float _runeAngle = 180f;
+    [SerializeField]
+    private float _startAngle = 180;
 
     [SerializeField]
     private List<Rune> _selectedDeck = null; // 사전에 설정해둔 다이얼 안쪽의 1번째 줄 덱. 
@@ -60,65 +64,7 @@ public class Dial : MonoBehaviour
             _dialElementList.Add(d);
         }
 
-        //List<int> indexList = new List<int> { 1, 2, 3 };
-        //for (int i = 0; i < DeckManager.Instance.Deck.Count; i++)
-        //{
-        //    if(indexList.Count <= 0)
-        //    {
-        //        // 들어갈 수 있는 데가 아무곳도 없으면 어카지?
-        //        break;
-        //    }
-
-        //    //int index = Random.Range(1, 4);
-        //    int index = Random.Range(0, indexList.Count);
-        //    //GameObject g = Instantiate(tempCard, this.transform.GetChild(index - 1));
-        //    RuneUI r = ResourceManager.Instance.Instantiate("Rune").GetComponent<RuneUI>();
-        //    r.transform.SetParent(this.transform.GetChild(3 - index).transform);
-        //    r.Dial = this;
-        //    r.DialElement = _dialElementList[3 - indexList[index]];
-        //    r.SetRune(DeckManager.Instance.Deck[i]);
-        //    r.UpdateUI();
-        //    r.Rune.SetCoolTime(0);
-        //    r.SetCoolTime();
-        //    AddCard(r, indexList[index]);
-
-        //    // 한 라인에 들어갈 수 있는 최대 룬 개수 처리 해야함. 이러면 되지 않았을 까?
-        //    if(this.transform.GetChild(3 - index).childCount >= ) // 이거 지금은 무조건 조건 만족 안함
-        //    {
-        //        indexList.RemoveAt(index);
-        //    }
-        //}
-
-        SettingDialRune(true);
-
-        //for (int i = 0; i < 3; i++)
-        //{
-        //    DialElement d = this.transform.GetChild(i).GetComponent<DialElement>();
-
-        //    List<RuneUI> runeList = new List<RuneUI>();
-        //    for (int j = 0; j < _magicDict[3 - i].Count; j++)
-        //    {
-        //        runeList.Add(_magicDict[3 - i][j]);
-        //    }
-        //    d.SetCardList(runeList); // 여기서 룬 리스트를 넣어주어서 그럼. 이 구조 수정 필요
-        //    _dialElementList.Add(d);
-        //}
-
-
-
-        //for(int i = 0; i < DeckManager.Instance.Deck.Count; i++) //룬 개수 적어서 임시로 한 번 더 돌렸음 
-        //{
-        //    int index = Random.Range(1, 4);
-        //    GameObject g = Instantiate(tempCard, this.transform.GetChild(index - 1));
-        //    Rune r = g.GetComponent<Rune>();
-        //    r.Dial = this;
-        //    r.SetMagic(DeckManager.Instance._defaultRune[i]);
-        //    r.UpdateUI();
-        //    AddCard(r, index);
-        //    _deck.Add(r);
-        //}
-
-
+        SettingDialRune(true);  
     }
 
     public void SettingDialRune(bool isReset)
@@ -138,6 +84,7 @@ public class Dial : MonoBehaviour
         for(int i = 0; i < _dialElementList.Count; i++)
         {
             _dialElementList[i].ResetRuneList();
+            _dialElementList[i].SelectCard = null;
         }
 
         DeckManager.Instance.UsingDeckSort();
@@ -149,10 +96,7 @@ public class Dial : MonoBehaviour
                 break;
             }
 
-            // 쓸 수 있는 룬만 가져오게
-
             int runeIndex = Random.Range(0, maxRuneCount);
-
 
             RuneUI r = ResourceManager.Instance.Instantiate("Rune").GetComponent<RuneUI>();
             r.transform.SetParent(_dialElementList[2 - (i % 3)].transform);
@@ -195,12 +139,12 @@ public class Dial : MonoBehaviour
     {
         if (_runeDict.ContainsKey(3))
         {
-            float angle = -2 * Mathf.PI / _runeDict[3].Count;
+            float angle = -1 * _runeAngle / _runeDict[3].Count;
 
             for (int i = 0; i < _runeDict[3].Count; i++)
             {
-                float height = Mathf.Sin(angle * i + (90 * Mathf.Deg2Rad)) * 4; // 470
-                float width = Mathf.Cos(angle * i + (90 * Mathf.Deg2Rad)) * 4; // 450
+                float height = Mathf.Sin(angle * Mathf.Deg2Rad * i + (_startAngle * Mathf.Deg2Rad) + angle / 2f * Mathf.Deg2Rad) * 4;
+                float width = Mathf.Cos(angle * Mathf.Deg2Rad * i + (_startAngle * Mathf.Deg2Rad) + angle / 2f * Mathf.Deg2Rad) * 4;
                 _runeDict[3][i].transform.position = new Vector3(width + this.transform.position.x, height + this.transform.position.y, 0);
 
                 Vector2 direction = new Vector2(
@@ -215,12 +159,12 @@ public class Dial : MonoBehaviour
         }
         if (_runeDict.ContainsKey(2))
         {
-            float angle = -2 * Mathf.PI / _runeDict[2].Count;
+            float angle = -1 * _runeAngle / _runeDict[2].Count;
 
             for (int i = 0; i < _runeDict[2].Count; i++)
             {
-                float height = Mathf.Sin(angle * i + (90 * Mathf.Deg2Rad)) * 2.9f; // 470
-                float width = Mathf.Cos(angle * i + (90 * Mathf.Deg2Rad)) * 2.9f; // 450
+                float height = Mathf.Sin(angle * Mathf.Deg2Rad * i + (_startAngle * Mathf.Deg2Rad) + angle / 2f * Mathf.Deg2Rad) * 2.9f; // 470
+                float width = Mathf.Cos(angle * Mathf.Deg2Rad * i + (_startAngle * Mathf.Deg2Rad) + angle / 2f * Mathf.Deg2Rad) * 2.9f; // 450
                 _runeDict[2][i].transform.position = new Vector3(width + this.transform.position.x, height + this.transform.position.y, 0);
                 //_magicDict[2][i].transform.localScale = new Vector3(0.0133f, 0.0133f, 1);
 
@@ -236,12 +180,12 @@ public class Dial : MonoBehaviour
         }
         if (_runeDict.ContainsKey(1))
         {
-            float angle = -2 * Mathf.PI / _runeDict[1].Count;
+            float angle = -1 * _runeAngle / _runeDict[1].Count;
 
             for (int i = 0; i < _runeDict[1].Count; i++)
             {
-                float height = Mathf.Sin(angle * i + (90 * Mathf.Deg2Rad)) * 1.7f; // 470
-                float width = Mathf.Cos(angle * i + (90 * Mathf.Deg2Rad)) * 1.7f; // 450
+                float height = Mathf.Sin(angle * Mathf.Deg2Rad * i + (_startAngle * Mathf.Deg2Rad) + angle / 2f * Mathf.Deg2Rad) * 1.7f; // 470
+                float width = Mathf.Cos(angle * Mathf.Deg2Rad * i + (_startAngle * Mathf.Deg2Rad) + angle / 2f * Mathf.Deg2Rad) * 1.7f; // 450
                 _runeDict[1][i].transform.position = new Vector3(width + this.transform.position.x, height + this.transform.position.y, 0);
                 //_magicDict[1][i].transform.localScale = new Vector3(0.02f, 0.02f, 1);
 
