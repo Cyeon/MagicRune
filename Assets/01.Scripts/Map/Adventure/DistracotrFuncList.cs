@@ -2,12 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum DistractorFunc
-{
-    NextStage,
-    Healing
-}
-
 public enum IncreaseMode
 {
     Amount,

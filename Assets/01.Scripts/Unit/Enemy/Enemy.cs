@@ -66,7 +66,7 @@ public class Enemy : Unit
         _dialScene?.EnemyIcon.transform.DORewind();
         if (_dialScene != null)
         {
-            _dialScene.EnemyIcon.transform.localScale = Vector3.one;
+            _dialScene.EnemyIcon.transform.localScale = enemyScaleVec;
         }
     }
 
