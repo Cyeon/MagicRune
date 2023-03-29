@@ -3,17 +3,14 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Enemy : Unit
 {
-    public EnemySO enemyInfo;
-    public float atkDamage;
-
     public AudioClip attackSound = null;
-
     private Sequence idleSequence = null;
-
-    private SpriteRenderer _spriteRenderer;
+    public bool isEnter = false;
+    public Sprite sprite;
 
     [Header("Pattern")]
     private Pattern _currentPattern;
@@ -21,17 +18,16 @@ public class Enemy : Unit
     public List<Pattern> patternList = new List<Pattern>();
     private int _index = 0;
 
-
-    public void Init(EnemySO so)
+    private void Awake()
     {
-        enemyInfo = so;
-        _maxHealth = enemyInfo.health;
-        HP = enemyInfo.health;
-        if (_spriteRenderer == null)
-            _spriteRenderer = GetComponentInChildren<SpriteRenderer>();
-        _spriteRenderer.sprite = so.icon;
+        sprite = GetComponentInChildren<Image>().sprite;
+    }
 
+    public void Init()
+    {
+        transform.localPosition = new Vector3(0, 6, 0);
         UIManager.Instance.HealthbarInit(false, _maxHealth);
+        ChangePattern(patternList[0]);
     }
 
     public void ChangePattern(Pattern pattern)
@@ -53,8 +49,6 @@ public class Enemy : Unit
 
     public void Attack()
     {
-        currentDmg = atkDamage;
-
         InvokeStatus(StatusInvokeTime.Attack);
 
         BattleManager.Instance.player.TakeDamage(currentDmg);

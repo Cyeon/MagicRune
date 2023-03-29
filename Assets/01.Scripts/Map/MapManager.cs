@@ -27,7 +27,7 @@ public class MapManager : MonoSingleton<MapManager>
     public Portal selectPortal;
 
     [Header("Attack")]
-    public EnemySO selectEnemy;
+    public Enemy selectEnemy;
     public AttackMapListSO attackMap;
 
     private bool _isFirst = true;
@@ -216,8 +216,8 @@ public class MapManager : MonoSingleton<MapManager>
             case StageType.Boss:
                 AttackPortal atkPortal = portal as AttackPortal;
                 atkPortal.enemy = type == StageType.Attack ? GetAttackEnemy() : _currentChapter.boss;
-                atkPortal.icon = atkPortal.enemy.icon;
-                atkPortal.portalName = atkPortal.enemy.enemyName;
+                atkPortal.icon = atkPortal.enemy.sprite;
+                atkPortal.portalName = atkPortal.enemy.name;
                 atkPortal.isUse = true;
                 return atkPortal;
 
@@ -230,16 +230,16 @@ public class MapManager : MonoSingleton<MapManager>
         return null;
     }
 
-    private EnemySO GetAttackEnemy()
+    private Enemy GetAttackEnemy()
     {
-        List<EnemySO> enemyList = new List<EnemySO>();
+        List<Enemy> enemyList = new List<Enemy>();
         for (int i = 0; i < attackMap.map.Count; ++i)
         {
             if (attackMap.map[i].MinFloor <= Floor + 1 && attackMap.map[i].MaxFloor >= Floor + 1)
             {
                 foreach (var enemy in attackMap.map[i].enemyList)
                 {
-                    if (!enemy.IsEnter) enemyList.Add(enemy);
+                    if (!enemy.isEnter) enemyList.Add(enemy);
                 }
             }
         }
@@ -249,7 +249,7 @@ public class MapManager : MonoSingleton<MapManager>
         {
             return attackMap.map[0].enemyList[0];
         }
-        enemyList[idx].IsEnter = true;
+        enemyList[idx].isEnter = true;
         return enemyList[idx];
     }
 }

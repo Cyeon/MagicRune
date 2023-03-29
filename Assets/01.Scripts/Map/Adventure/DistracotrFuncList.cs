@@ -60,7 +60,7 @@ public class DistracotrFuncList : MonoBehaviour
         MapSceneUI.InfoUIReload();
         NextStage();
     }
-    public void BattleEnemy(EnemySO enemy)
+    public void BattleEnemy(Enemy enemy)
     {
         MapManager.Instance.selectEnemy = enemy;
         SceneManager.LoadScene("DialScene");

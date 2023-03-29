@@ -44,8 +44,9 @@ public class BattleManager : MonoSingleton<BattleManager>
 
     public void GameStart()
     {
-        enemy = EnemyManager.Instance.SpawnEnemy(MapManager.Instance.selectEnemy);
-        PatternManager.Instance.PatternInit(enemy.enemyInfo.patternList);
+        enemy = ResourceManager.Instance.Instantiate(MapManager.Instance.selectEnemy.name).GetComponent<Enemy>();
+        enemy.Init();
+        enemy.ChangePattern(enemy.patternList[0]);
 
         player = GameManager.Instance.player;
 
@@ -92,7 +93,6 @@ public class BattleManager : MonoSingleton<BattleManager>
         switch (_gameTurn)
         {
             case GameTurn.Unknown:
-                enemy.CurrentPattern?.NextPattern();
                 enemy.CurrentPattern?.StartAction();
                 EventManager<int>.TriggerEvent(Define.ON_START_PLAYER_TURN, 5);
                 EventManager.TriggerEvent(Define.ON_START_PLAYER_TURN);

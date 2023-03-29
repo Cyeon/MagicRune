@@ -1697,7 +1697,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 514474094}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 5.82, z: 0}
+  m_LocalPosition: {x: 0, y: 6, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1717,7 +1717,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb6fc7c86da139e429a4f9ab546877a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxHealth: 0
+  _maxHealth: 100
   _health: 10
   _shield: 0
   currentDmg: 0
@@ -1729,10 +1729,8 @@ MonoBehaviour:
       m_Calls: []
   enemyInfo: {fileID: 0}
   atkDamage: 0
-  pattern:
-    value: 0
-    info: {fileID: 0}
   attackSound: {fileID: 0}
+  patternList: []
 --- !u!114 &514474097
 MonoBehaviour:
   m_ObjectHideFlags: 0
