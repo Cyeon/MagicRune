@@ -11,20 +11,20 @@ public enum DeckType
 }
 public class DeckSettingUI : MonoBehaviour
 {
-    private List<DeckRunePanel> _runePanelList = new List<DeckRunePanel>(35);
+    private List<DeckRunePanel> _runePanelList = new List<DeckRunePanel>(35); // 개별 룬 UI 오브젝트에 붙어있는 스크립트 
 
-    private DeckFollowObject _followObject = null;
+    private DeckFollowObject _followObject = null; // 마우스 따라다니는 오브젝트 
 
-    private GameObject _backgroundPanel = null;
+    private GameObject _backgroundPanel = null; // 반투명 검은색 Panel
 
     [SerializeField]
-    private GameObject _runePanelPrefab = null;
+    private GameObject _runePanelPrefab = null; // Deck_Rune Prefab 넣어주면 됨  
     [SerializeField]
-    private Transform _ownDeckContentTransform = null;
+    private Transform _ownDeckContentTransform = null; // OwnRunePanel 밑의 Content 넣어주기 
     [SerializeField]
-    private Transform _dialDeckContentTransform = null;
+    private Transform _dialDeckContentTransform = null; // FirstDialRunePanel 밑의 Content
     [SerializeField]
-    private Button exitButton = null;
+    private Button exitButton = null; // Button이란 네임의 X 버튼 넣어주기 
 
     private DeckRunePanel _targetRune = null;
     public DeckRunePanel TargetRune => _targetRune;
@@ -34,7 +34,7 @@ public class DeckSettingUI : MonoBehaviour
 
     private void Awake()
     {
-        if (_runePanelPrefab != null)
+        if (_runePanelPrefab != null) // 오브젝트들 미리 생성 
         {
             for (int i = 0; i < 30; i++)
             {
@@ -47,13 +47,13 @@ public class DeckSettingUI : MonoBehaviour
             }
         }
         _backgroundPanel = transform.Find("BackgroundPanel").gameObject;
+
         exitButton.onClick.AddListener(() => ReturnPanels());
         exitButton.onClick.AddListener(() => _backgroundPanel.SetActive(false));
     }
     private void Start()
     {
-        //SettingAllDeck();
-        //ReturnPanels();
+        // 마우스 커서 따라다닐 오브젝트 생성 
         {
             GameObject game = Instantiate(_runePanelPrefab, transform);
             Destroy(game.GetComponent<DeckRunePanel>());
@@ -63,6 +63,9 @@ public class DeckSettingUI : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 덱 UI 켜주는 버튼 등에서 실행시켜주면 됨 
+    /// </summary>
     public void ActiveUI()
     {
         SettingAllDeck();
@@ -75,6 +78,9 @@ public class DeckSettingUI : MonoBehaviour
         SetDialDeck();
     }
 
+    /// <summary>
+    /// 소유하고 있는 룬들을 불러와서 UI에 띄워줌
+    /// </summary>
     private void SetOwnDeck()
     {
         foreach (Rune rune in DeckManager.Instance.Deck)
@@ -94,6 +100,9 @@ public class DeckSettingUI : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// FirstDialDeck에 있는 룬들을 UI에 띄워줌
+    /// </summary>
     private void SetDialDeck()
     {
         foreach (Rune rune in DeckManager.Instance.FirstDialDeck)
@@ -115,11 +124,19 @@ public class DeckSettingUI : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 미리 생성해둔 개별 RunePanel 불러옴
+    /// </summary>
+    /// <returns>사용 중이지 않은 Panel 리턴</returns>
     private DeckRunePanel GetEmptyPanel()
     {
         return _runePanelList.Find(x => x.IsUse == false && x.gameObject.activeSelf == false);
     }
 
+    /// <summary>
+    /// 룬 Panel 되돌리는 함수
+    /// UI 닫을 때 꼭 해줘야함 
+    /// </summary>
     private void ReturnPanels()
     {
         List<DeckRunePanel> deckRunePanels = _runePanelList.FindAll(x => x.gameObject.activeSelf == true);
@@ -150,6 +167,10 @@ public class DeckSettingUI : MonoBehaviour
         _targetRune = rune;
     }
 
+    /// <summary>
+    /// 룬을 Panel에 가져다 뒀을 때 
+    /// </summary>
+    /// <param name="type"></param>
     public void Equip(DeckType type)
     {
         if (type != SelectRune.NowDeck)
@@ -181,6 +202,9 @@ public class DeckSettingUI : MonoBehaviour
         SetTargetRune(null);
     }
 
+    /// <summary>
+    /// 룬 끼리 교체할 때
+    /// </summary>
     public void Switch()
     {
         Rune tempRune = _selectRune.Rune;

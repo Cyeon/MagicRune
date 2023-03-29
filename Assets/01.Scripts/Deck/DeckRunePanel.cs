@@ -34,6 +34,9 @@ public class DeckRunePanel : MonoBehaviour, IDropHandler, IEndDragHandler, IBegi
         }
     }
 
+    /// <summary>
+    /// 오브젝트 꺼질 때 초기화 해주는 내용 담겨있음 
+    /// </summary>
     private void OnDisable()
     {
         _isUse = false;
