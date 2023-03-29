@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class Unit : MonoBehaviour
 {
@@ -17,6 +18,7 @@ public class Unit : MonoBehaviour
     [SerializeField] private float _health = 10f;
 
     private bool _isDie = false;
+    public bool IsDie => _isDie;
 
     public float HP
     {
@@ -39,10 +41,15 @@ public class Unit : MonoBehaviour
     public float Shield
     { 
         get => _shield; 
-        set
+        protected set
         {
             _shield = value;
-            UIManager.Instance.UpdateShieldText(_isPlayer, _shield);
+
+            if(_dialScene == null)
+            {
+                _dialScene = SceneManagerEX.Instance.CurrentScene as DialScene;
+            }
+            _dialScene?.UpdateShieldText(_isPlayer, _shield);
         }
     }
 
@@ -57,47 +64,58 @@ public class Unit : MonoBehaviour
     [field:SerializeField] public UnityEvent OnTakeDamageFeedback {get;set;}
     [field: SerializeField] public Dictionary<StatusInvokeTime, List<Status>> unitStatusDic = new Dictionary<StatusInvokeTime, List<Status>>();
 
+    public UnityEvent OnDieEvent;
+    protected DialScene _dialScene;
+
     private void OnEnable() {
         unitStatusDic.Add(StatusInvokeTime.Start, new List<Status>());
         unitStatusDic.Add(StatusInvokeTime.Attack, new List<Status>());
         unitStatusDic.Add(StatusInvokeTime.GetDamage, new List<Status>());
         unitStatusDic.Add(StatusInvokeTime.End, new List<Status>());
     }
-    
+
+    private void Start()
+    {
+        _dialScene = SceneManagerEX.Instance.CurrentScene as DialScene;
+    }
+
     /// <summary>
     /// ������ �޴� �Լ�
     /// </summary>
     /// <param name="damage"></param>
     public void TakeDamage(float damage, bool isFixed = false, Status status = null)
     {
-        currentDmg = damage;
-        InvokeStatus(StatusInvokeTime.GetDamage);
-        currentDmg = Mathf.Floor(currentDmg);
+            currentDmg = damage;
+            InvokeStatus(StatusInvokeTime.GetDamage);
+            currentDmg = Mathf.Floor(currentDmg);
 
-        if(Shield > 0 && isFixed == false)
-        {
-            if (Shield - currentDmg >= 0)
-                Shield -= currentDmg;
-            else
+            if (Shield > 0 && isFixed == false)
             {
-                currentDmg -= Shield;
-                Shield = 0;
-                HP -= currentDmg;
+                if (Shield - currentDmg >= 0)
+                    Shield -= currentDmg;
+                else
+                {
+                    currentDmg -= Shield;
+                    Shield = 0;
+                    HP -= currentDmg;
+                }
             }
-        }
-        else
-            HP -= currentDmg;
+            else
+                HP -= currentDmg;
 
-        OnTakeDamage?.Invoke(currentDmg);
-        OnTakeDamageFeedback?.Invoke();
+            OnTakeDamage?.Invoke(currentDmg);
+            OnTakeDamageFeedback?.Invoke();
 
-        UIManager.Instance.UpdateHealthbar(false);
-        UIManager.Instance.UpdateHealthbar(true);
+            _dialScene?.UpdateHealthbar(false);
+            _dialScene?.UpdateHealthbar(true);
 
-        if(_isPlayer == false)
-        {
-            UIManager.Instance.DamageUIPopup(currentDmg, UIManager.Instance.enemyIcon.transform.position, status);
-        }
+            if (_isPlayer == false)
+            {
+                if (_dialScene != null)
+                {
+                    _dialScene.DamageUIPopup(currentDmg, _dialScene.EnemyIcon.transform.position, status);
+                }
+            }
     }
 
     public bool IsHealthAmount(float amount, ComparisonType type)
@@ -115,6 +133,8 @@ public class Unit : MonoBehaviour
 
     public void InvokeStatus(StatusInvokeTime time)
     {
+        if (IsDie == true) return;
+
         List<Status> status;
 
         if(unitStatusDic.TryGetValue(time, out status))
@@ -138,18 +158,45 @@ public class Unit : MonoBehaviour
 
     public void AddHP(float value)
     {
-        _health += value;
-        UIManager.Instance.UpdateHealthbar(true);
+        if (_isDie == false)
+        {
+            _health += value;
+            _dialScene?.UpdateHealthbar(true);
+        }
     }
 
     public void AddHPPercent(float value)
     {
-        _health += value / 100 * _maxHealth;
+        if (_isDie == false)
+        {
+            _health += value / 100 * _maxHealth;
+        }
     }
 
     public void AddMaxHp(float amount)
     {
-        _maxHealth += amount;
+        if (_isDie == false)
+        {
+            _maxHealth += amount;
+        }
+    }
+
+    public void AddShield(float value)
+    {
+        if(_isDie == false)
+        {
+            Shield += value;
+        }
+    }
+
+    public float GetShield()
+    {
+        return _shield;
+    }
+
+    public void ResetShield()
+    {
+        Shield = 0;
     }
     
     protected virtual void Die()

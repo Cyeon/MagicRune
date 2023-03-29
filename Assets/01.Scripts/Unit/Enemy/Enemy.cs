@@ -15,7 +15,8 @@ public class Enemy : Unit
     private Sequence idleSequence = null;
 
     private SpriteRenderer _spriteRenderer;
-
+    
+    public Vector3 enemyScaleVec = Vector3.one;
 
     public void Init(EnemySO so)
     {
@@ -26,7 +27,13 @@ public class Enemy : Unit
             _spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         _spriteRenderer.sprite = so.icon;
 
-        UIManager.Instance.HealthbarInit(false, _maxHealth);
+        if (_dialScene == null)
+            _dialScene = SceneManagerEX.Instance.CurrentScene as DialScene;
+        _dialScene?.HealthbarInit(false, _maxHealth);
+        
+        enemyScaleVec = enemyInfo.prefab.transform.localScale;
+        _spriteRenderer.transform.localScale = enemyScaleVec;
+
     }
 
     public void TurnStart()
@@ -47,8 +54,8 @@ public class Enemy : Unit
     public void Idle()
     {
         idleSequence = DOTween.Sequence();
-        idleSequence.Append(UIManager.Instance.enemyIcon.DOScaleY(1.1f, 0.5f));
-        idleSequence.Append(UIManager.Instance.enemyIcon.DOScaleY(1f, 0.5f));
+        idleSequence.Append(_dialScene?.EnemyIcon.transform.DOScaleY(enemyScaleVec.y + 0.1f, 0.5f));
+        idleSequence.Append(_dialScene?.EnemyIcon.transform.DOScaleY(enemyScaleVec.y, 0.5f));
         idleSequence.AppendInterval(0.3f);
         idleSequence.SetLoops(-1);
     }
@@ -56,8 +63,11 @@ public class Enemy : Unit
     public void StopIdle()
     {
         idleSequence.Kill();
-        UIManager.Instance.enemyIcon.DORewind();
-        UIManager.Instance.enemyIcon.localScale = Vector3.one;
+        _dialScene?.EnemyIcon.transform.DORewind();
+        if (_dialScene != null)
+        {
+            _dialScene.EnemyIcon.transform.localScale = enemyScaleVec;
+        }
     }
 
     protected override void Die()
@@ -68,11 +78,13 @@ public class Enemy : Unit
         reward.gold = MapManager.Instance.CurrentChapter.Gold;
         reward.AddRewardList();
 
-        BattleManager.Instance.OnEnemyDie.Invoke();
+        //BattleManager.Instance.OnEnemyDie?.Invoke();
+        OnDieEvent?.Invoke();
     }
 
     private void OnDestroy()
     {
-        DOTween.KillAll();
+        //DOTween.KillAll();
+        transform.DOKill();
     }
 }

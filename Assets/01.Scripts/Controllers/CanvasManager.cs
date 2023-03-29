@@ -27,6 +27,57 @@ public class CanvasManager : MonoSingleton<CanvasManager>
         }
     }
 
+    public void SetCanvas(string name)
+    {
+        GameObject canvas = GameObject.Find(name);
+        if (canvas == null)
+        {
+            canvas = GameObject.Find(name + "Canvas");
+
+            if (canvas == null)
+            {
+                canvas = GameObject.Find(name + " Canvas");
+                if (canvas == null)
+                {
+                    return;
+                }
+                else
+                {
+                    if (_canvasDict.ContainsKey(name) == false)
+                    {
+                        _canvasDict.Add(canvas.name, canvas.GetComponent<Canvas>());
+                    }
+                    else
+                    {
+                        _canvasDict[canvas.name] = canvas.GetComponent<Canvas>();
+                    }
+                }
+            }
+            else
+            {
+                if (_canvasDict.ContainsKey(name) == false)
+                {
+                    _canvasDict.Add(canvas.name, canvas.GetComponent<Canvas>());
+                }
+                else
+                {
+                    _canvasDict[canvas.name] = canvas.GetComponent<Canvas>();
+                }
+            }
+        }
+        else
+        {
+            if (_canvasDict.ContainsKey(name) == false)
+            {
+                _canvasDict.Add(canvas.name, canvas.GetComponent<Canvas>());
+            }
+            else
+            {
+                _canvasDict[canvas.name] = canvas.GetComponent<Canvas>();
+            }
+        }
+    }
+
     public Canvas[] GetCanvasArray()
     {
         Canvas[] canvasArray = FindObjectsOfType<Canvas>(true);
@@ -43,12 +94,19 @@ public class CanvasManager : MonoSingleton<CanvasManager>
 
     public Canvas GetCanvas(string name)
     {
+        if(_canvasDict.Count == 0)
+        {
+            SetCanvas();
+        }
+
         if (_canvasDict.ContainsKey(name))
         {
             return _canvasDict[name];
         }
         else
         {
+            //SetCanvas(name);
+
             string canvasName = name + " Canvas";
             if (_canvasDict.ContainsKey(canvasName))
             {
@@ -65,6 +123,11 @@ public class CanvasManager : MonoSingleton<CanvasManager>
         }
 
         return null;
+    }
+
+    public int GetCanvasCount()
+    {
+        return _canvasDict.Count;
     }
 
     public void Clear()

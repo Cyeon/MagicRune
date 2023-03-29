@@ -24,18 +24,12 @@ public class Dial : MonoBehaviour
     private Transform _enemyPos;
 
     private Dictionary<int, List<RuneUI>> _magicDict;
-    private Dictionary<EffectType, List<EffectObjectPair>> _effectDict;
+    private Dictionary<EffectType, List<EffectObjectPair>> _effectDict = new Dictionary<EffectType, List<EffectObjectPair>>();
     private List<DialElement> _dialElementList;
 
-    #region Swipe Parameta
-    private Vector2 touchBeganPos;
-    private Vector2 touchEndedPos;
-    private Vector2 touchDif;
-    [SerializeField]
-    private float swipeSensitivity = 5;
-    #endregion
-
     private bool _isAttack;
+
+    private DialScene _dialScene;
 
     private void Awake()
     {
@@ -48,29 +42,18 @@ public class Dial : MonoBehaviour
 
         //_deck = DeckManager.Instance.Deck;
         //_selectedDeck = DeckManager.Instance.SelectedDeck;
+
+        _isAttack = false;
     }
 
     private void Start()
     {
-        // 맨 처음 룬 생성해 주는 거 
-        //// 그냥 3으로 해도되는데 그냥 이렇게 함
-        //for (int i = 1; i <= _deck.List.Count; i++)
-        //{
-        //    for (int j = 1; j <= _deck.List[i - 1].Count; j++)
-        //    {
-        //        GameObject g = Instantiate(tempCard, this.transform.GetChild(i - 1));
-        //        Rune c = g.GetComponent<Rune>();
-        //        c.Dial = this;
-        //        c.SetMagic(_deck.List[i - 1].List[j - 1]);
-        //        c.UpdateUI();
-        //        AddCard(c, 4 - i);
-        //    }
-        //}
-
-        //_deck.Clear();
+        _dialScene = SceneManagerEX.Instance.CurrentScene as DialScene;
 
         for (int i = 0; i < DeckManager.Instance.Deck.Count; i++)
         {
+            // 한 라인에 들어갈 수 있는 최대 룬 개수 처리 해야함
+
             int index = Random.Range(1, 4);
             //GameObject g = Instantiate(tempCard, this.transform.GetChild(index - 1));
             RuneUI r = ResourceManager.Instance.Instantiate("Rune").GetComponent<RuneUI>();
@@ -79,6 +62,8 @@ public class Dial : MonoBehaviour
             r.DialElement = this.transform.GetChild(3 - index).GetComponent<DialElement>();
             r.SetRune(DeckManager.Instance.Deck[i]);
             r.UpdateUI();
+            r.Rune.SetCoolTime(0);
+            r.SetCoolTime();
             AddCard(r, index);
         }
 
@@ -219,24 +204,24 @@ public class Dial : MonoBehaviour
         if (BattleManager.Instance.GameTurn == GameTurn.Player)
         {
             _isAttack = true;
-            _effectDict = new Dictionary<EffectType, List<EffectObjectPair>>();
-            foreach (DialElement d in _dialElementList)
-            {
-                if (d.SelectCard != null && d.SelectCard.Rune.IsCoolTime == false)
-                {
-                    foreach (Pair p in d.SelectCard.Rune.GetRune().MainRune.EffectDescription)
-                    {
-                        if (_effectDict.ContainsKey(p.EffectType))
-                        {
-                            _effectDict[p.EffectType].Add(new EffectObjectPair(p, d.SelectCard.Rune.GetRune().RuneEffect));
-                        }
-                        else
-                        {
-                            _effectDict.Add(p.EffectType, new List<EffectObjectPair> { new EffectObjectPair(p, d.SelectCard.Rune.GetRune().RuneEffect) });
-                        }
-                    }
-                }
-            }
+            //_effectDict = new Dictionary<EffectType, List<EffectObjectPair>>();
+            //foreach (DialElement d in _dialElementList)
+            //{
+            //    if (d.SelectCard != null && d.SelectCard.Rune.IsCoolTime == false)
+            //    {
+            //        foreach (Pair p in d.SelectCard.Rune.GetRune().MainRune.EffectDescription)
+            //        {
+            //            if (_effectDict.ContainsKey(p.EffectType))
+            //            {
+            //                _effectDict[p.EffectType].Add(new EffectObjectPair(p, d.SelectCard.Rune.GetRune().RuneEffect));
+            //            }
+            //            else
+            //            {
+            //                _effectDict.Add(p.EffectType, new List<EffectObjectPair> { new EffectObjectPair(p, d.SelectCard.Rune.GetRune().RuneEffect) });
+            //            }
+            //        }
+            //    }
+            //}
 
 
             GameObject g = null;
@@ -252,7 +237,7 @@ public class Dial : MonoBehaviour
             {
                 if (_dialElementList[i].SelectCard != null && _dialElementList[i].SelectCard.Rune.IsCoolTime == false)
                 {
-                    _dialElementList[i].SelectCard.Rune.GetRune();
+                    _dialElementList[i].SelectCard.Rune.GetRune(); // ...? 뭐하는 코드지?
                 }
             }
 
@@ -261,19 +246,29 @@ public class Dial : MonoBehaviour
                 _effectDict.Clear();
                 return;
             }
-            UIManager.Instance.CardDescDown();
-            BezierMissile b = Instantiate(_bezierMissile, this.transform.parent);
+            _dialScene?.CardDescDown();
+            BezierMissile b = ResourceManager.Instance.Instantiate("BezierMissile", this.transform.parent).GetComponent<BezierMissile>();
             b.SetEffect(g);
             b.SetTrailColor(EffectType.Attack);
             b.Init(this.transform, _enemyPos, 1.5f, 0, 0, () =>
             {
-                for (int i = 0; i < (int)EffectType.Etc; i++)
+                for(int i = 0; i < 3; i++)
                 {
-                    AttackFunction((EffectType)i);
+                    _dialElementList[i].Attack();
                 }
 
-                BattleManager.Instance.PlayerTurnEnd();
+                //for (int i = 0; i < (int)EffectType.Etc; i++)
+                //{
+                //    AttackFunction((EffectType)i);
+                //}
+
+                for (int i = 0; i < 3; i++)
+                {
+                    _dialElementList[i].SelectCard = null;
+                }
+
                 _effectDict.Clear();
+                BattleManager.Instance.PlayerTurnEnd();
             });
             _isAttack = false;
         }
@@ -311,11 +306,11 @@ public class Dial : MonoBehaviour
                 switch (e.AttackType)
                 {
                     case AttackType.Single:
-                        action = () => BattleManager.Instance.player.Attack(int.Parse(e.Effect));
+                        action = () => BattleManager.Instance.player.Attack(e.Effect);
                         break;
                     case AttackType.Double:
-                        //action = () => GameManager.Instance.player.Attack(int.Parse(e.Effect) * c);
-                        action = () => BattleManager.Instance.player.Attack(int.Parse(e.Effect));
+                        //action = () => GameManager.Instance.player.Attack(e.Effect * c);
+                        action = () => BattleManager.Instance.player.Attack(e.Effect);
                         break;
                 }
                 break;
@@ -323,11 +318,11 @@ public class Dial : MonoBehaviour
                 switch (e.AttackType)
                 {
                     case AttackType.Single:
-                        action = () => BattleManager.Instance.player.Shield += int.Parse(e.Effect);
+                        action = () => BattleManager.Instance.player.AddShield(e.Effect);
                         break;
                     case AttackType.Double:
-                        //action = () => GameManager.Instance.player.Shield += int.Parse(e.Effect) * c;
-                        action = () => BattleManager.Instance.player.Shield += int.Parse(e.Effect);
+                        //action = () => GameManager.Instance.player.Shield += e.Effect * c;
+                        action = () => BattleManager.Instance.player.AddShield(e.Effect);
                         break;
                 }
                 break;
@@ -335,11 +330,11 @@ public class Dial : MonoBehaviour
                 switch (e.AttackType)
                 {
                     case AttackType.Single:
-                        action = () => StatusManager.Instance.AddStatus(target, e.StatusType, int.Parse(e.Effect));
+                        action = () => StatusManager.Instance.AddStatus(target, e.StatusType, (int)e.Effect);
                         break;
                     case AttackType.Double:
-                        //action = () => StatusManager.Instance.AddStatus(target, e.StatusType, int.Parse(e.Effect) * c);
-                        action = () => StatusManager.Instance.AddStatus(target, e.StatusType, int.Parse(e.Effect));
+                        //action = () => StatusManager.Instance.AddStatus(target, e.StatusType, (int)e.Effect * c);
+                        action = () => StatusManager.Instance.AddStatus(target, e.StatusType, (int)e.Effect);
                         break;
                 }
                 break;
@@ -348,7 +343,7 @@ public class Dial : MonoBehaviour
                 break;
             case EffectType.Draw:
                 // 지금은 일단 주석...
-                //action = () => _cardCollector.CardDraw(int.Parse(e.Effect));
+                //action = () => _cardCollector.CardDraw((int)e.Effect);
                 break;
             case EffectType.Etc:
                 action = null;
@@ -360,27 +355,14 @@ public class Dial : MonoBehaviour
 
     public void AllMagicSetCoolTime()
     {
-        foreach(var d in _magicDict)
-        {
-            foreach(RuneUI m in d.Value)
-            {
-                if(m.Rune.GetCoolTime() > 0)
-                {
-                    m.Rune.SetCoolTime(m.Rune.GetCoolTime() - 1);
-                }
-            }
-        }
-    }
-
-    public void AllMagicSetCoolTime(int value)
-    {
         foreach (var d in _magicDict)
         {
             foreach (RuneUI m in d.Value)
             {
                 if (m.Rune.GetCoolTime() > 0)
                 {
-                    m.Rune.SetCoolTime(value);
+                    m.Rune.SetCoolTime(m.Rune.GetCoolTime() - 1);
+                    m.SetCoolTime();
                 }
             }
         }

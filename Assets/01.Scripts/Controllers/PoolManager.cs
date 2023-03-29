@@ -16,7 +16,7 @@ public class PoolManager : MonoSingleton<PoolManager>
         public void Init(GameObject original, int count = 5)
         {
             Original = original;
-            Root = new GameObject().transform;
+            Root = new GameObject().transform; // 이미 있으면 안되게
             Root.name = $"{original.name}_Root";
 
             for(int i = 0; i < count; ++i)
@@ -45,7 +45,8 @@ public class PoolManager : MonoSingleton<PoolManager>
 
             poolable.Reset();
             poolable.gameObject.SetActive(false);
-            poolable.transform.parent = Root;
+            //poolable.transform.parent = Root;
+            poolable.transform.SetParent(Root, false);
             poolable.isUsing = false;
 
             _poolStack.Push(poolable);
@@ -69,10 +70,12 @@ public class PoolManager : MonoSingleton<PoolManager>
             // DontDestroyLoad 해제
             if(parent == null)
             {
-                poolable.transform.parent = SceneManagerEX.Instance.CurrentScene.transform;
+                //poolable.transform.parent = SceneManagerEX.Instance.CurrentScene.transform;
+                poolable.transform.SetParent(SceneManagerEX.Instance.CurrentScene.transform);
             }
 
-            poolable.transform.parent = parent;
+            //poolable.transform.parent = parent;
+            poolable.transform.SetParent(parent);
             poolable.isUsing = true;
 
             return poolable;

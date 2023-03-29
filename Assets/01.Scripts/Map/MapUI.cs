@@ -22,13 +22,11 @@ public class MapUI : MonoBehaviour
     public Sprite stageAtkIcon;
     public Sprite stageBossIcon;
     public Sprite stageEventIcon;
-    public Sprite stageRestIcon;
 
-    public AdventureUI adventureUI;
-
-    private void Awake()
+    private void Start()
     {
-        StageList = transform.Find("StageSlider/StageImage");
+        UIManager.Instance.Bind<TextMeshProUGUI>("Main Gold Amount", CanvasManager.Instance.GetCanvas("MapUI").gameObject);
+        UIManager.Instance.Bind<TextMeshProUGUI>("Main Health Amount", CanvasManager.Instance.GetCanvas("MapUI").gameObject);
 
         Transform trm = transform.Find("Portals");
         for(int i = 0; i < trm.childCount; ++i)
@@ -51,14 +49,16 @@ public class MapUI : MonoBehaviour
             _bossPortalEffects.Add(_portalParent.Find("BossPortal").GetChild(i));
         }
 
-        _goldText = transform.Find("GoldBar").GetComponentInChildren<TextMeshProUGUI>();
-        _healthText = transform.Find("HealthBar").GetComponentInChildren<TextMeshProUGUI>();
-    }
+        _goldText = UIManager.Instance.Get<TextMeshProUGUI>("Main Gold Amount");
+        _healthText = UIManager.Instance.Get<TextMeshProUGUI>("Main Health Amount");
 
-    private void OnEnable()
-    {
         MapManager.Instance.NextStage();
     }
+
+    //private void OnEnable()
+    //{
+    //    MapManager.Instance.NextStage();
+    //}
 
     public void PortalEffectUp(StageType type)
     {
@@ -83,7 +83,7 @@ public class MapUI : MonoBehaviour
 
     public void InfoUIReload()
     {
-        _goldText.text = GameManager.Instance.Gold.ToString();
-        _healthText.text = GameManager.Instance.player.HP.ToString();
+        _goldText?.SetText(GameManager.Instance.Gold.ToString());
+        _healthText?.SetText(GameManager.Instance.player.HP.ToString());
     }
 }

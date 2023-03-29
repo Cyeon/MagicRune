@@ -1,8 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
-using static MapDefine;
 
 public enum IncreaseMode
 {
@@ -12,6 +10,19 @@ public enum IncreaseMode
 }
 public class DistracotrFuncList : MonoBehaviour
 {
+    private MapUI _mapSceneUI;
+    public MapUI MapSceneUI
+    {
+        get
+        {
+            if (_mapSceneUI == null)
+            {
+                _mapSceneUI = CanvasManager.Instance.GetCanvas("MapUI").GetComponent<MapUI>();
+            }
+            return _mapSceneUI;
+        }
+    }
+
     private IncreaseMode increaseMode = IncreaseMode.Unknown;
 
     /// <summary>
@@ -27,7 +38,8 @@ public class DistracotrFuncList : MonoBehaviour
     public void NextStage()
     {
         MapManager.Instance.NextStage();
-        MapSceneUI.adventureUI.gameObject.SetActive(false);
+        CanvasManager.Instance.GetCanvas("Adventure").enabled = false;
+        //MapSceneUI.adventureUI.gameObject.SetActive(false);
     }
 
     public void AddHp(int amount)
@@ -37,6 +49,7 @@ public class DistracotrFuncList : MonoBehaviour
         else if (increaseMode == IncreaseMode.Percent)
             GameManager.Instance.player.AddHPPercent(amount);
 
+        //MapSceneUI.InfoUIReload();
         MapSceneUI.InfoUIReload();
         NextStage();
     }
@@ -44,6 +57,7 @@ public class DistracotrFuncList : MonoBehaviour
     public void AddMaxHp(int amount)
     {
         GameManager.Instance.player.AddMaxHp(amount);
+        //MapSceneUI.InfoUIReload();
         MapSceneUI.InfoUIReload();
         NextStage();
     }
@@ -51,12 +65,13 @@ public class DistracotrFuncList : MonoBehaviour
     public void AddGold(int amount)
     {
         GameManager.Instance.AddGold(amount);
+        //MapSceneUI.InfoUIReload();
         MapSceneUI.InfoUIReload();
         NextStage();
     }
     public void BattleEnemy(EnemySO enemy)
     {
         MapManager.Instance.selectEnemy = enemy;
-        SceneManager.LoadScene("DialScene");
+        SceneManagerEX.Instance.LoadScene("DialScene");
     }
 }

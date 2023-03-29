@@ -15,13 +15,11 @@ public class RewardPanel : MonoBehaviour
         _icon.sprite = reward.icon;
         _desc.SetText(reward.desc);
 
-        _button.onClick.AddListener(() => reward.GiveReward());
-        _button.onClick.AddListener(() => gameObject.SetActive(false));
-
-        
+        _button.onClick.AddListener(() => reward.GiveReward());                                       
+        _button.onClick.AddListener(() => ResourceManager.Instance.Destroy(gameObject));
     }
 
-    public void OnPool()
+    public void OnEnable()
     {
         _button = GetComponent<Button>();
         _icon = transform.Find("Icon").GetComponent<Image>();

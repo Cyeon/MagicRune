@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static MapDefine;
 
 public class AdventurePortal : Portal
 {
@@ -10,8 +9,8 @@ public class AdventurePortal : Portal
 
     public override void Execute()
     {
-        MapSceneUI.adventureUI.gameObject.SetActive(true);
-        MapSceneUI.adventureUI.Init(GetAdventure(), this);
+        CanvasManager.Instance.GetCanvas("MapUI").enabled = true;
+        CanvasManager.Instance.GetCanvas("Adventure").GetComponent<AdventureUI>().Init(GetAdventure(), this);
     }
 
     public override void Init()
