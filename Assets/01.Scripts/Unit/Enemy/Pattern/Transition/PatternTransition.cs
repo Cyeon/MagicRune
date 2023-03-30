@@ -7,5 +7,4 @@ public class PatternTransition : MonoBehaviour
     public List<PatternDecision> decisions;
 
     public Pattern positivePattern;
-    public Pattern nagativePattern;
 }
