@@ -94,12 +94,12 @@ public class DialElement : MonoBehaviour
 
         if (_runeList.Count > 0)
         {
-            float oneDinstance = _dial.RuneAngle / _runeList.Count;
-            bool inBoolean = (_spriteRenderer.transform.eulerAngles.z % oneDinstance) <= _selectOffset;
-            bool outBoolean = (oneDinstance - (_spriteRenderer.transform.eulerAngles.z % oneDinstance)) <= _selectOffset;
+            float oneDinstance = _dial.RuneAngle / _runeList.Count; // 60
+            bool inBoolean = (transform.eulerAngles.z % oneDinstance) <= _selectOffset;
+            bool outBoolean = (oneDinstance - (transform.eulerAngles.z % oneDinstance)) <= _selectOffset;
             if (inBoolean)
             {
-                int index = (int)(_spriteRenderer.transform.eulerAngles.z / oneDinstance) % (_runeList.Count);
+                int index = (int)(transform.eulerAngles.z / oneDinstance) % (_runeList.Count);
                 index = (index + 1) % _runeList.Count;
                 if (_runeList[index].Rune.IsCoolTime == false)
                 {
@@ -120,8 +120,8 @@ public class DialElement : MonoBehaviour
                 //index = (index - 1) % _cardList.Count;
                 //SelectCard = _cardList[index];
 
-                int index = (int)(_spriteRenderer.transform.eulerAngles.z / oneDinstance) % (_runeList.Count);
-                index = (index + 1) % _runeList.Count;
+                int index = (int)(transform.eulerAngles.z / oneDinstance) % (_runeList.Count);
+                index = (index + 2) % _runeList.Count;
                 if (_runeList[index].Rune.IsCoolTime == false)
                 {
                     SelectCard = _runeList[index];
@@ -312,11 +312,11 @@ public class DialElement : MonoBehaviour
                         if (_isUseRotateOffset)
                         {
                             float oneDinstance = _dial.RuneAngle / (_runeList.Count);
-                            bool inBoolean = (_spriteRenderer.transform.eulerAngles.z % oneDinstance) <= _selectOffset;
-                            bool outBoolean = (/*oneDinstance - */(_spriteRenderer.transform.eulerAngles.z % oneDinstance)) <= _selectOffset;
+                            bool inBoolean = (transform.eulerAngles.z % oneDinstance) <= _selectOffset;
+                            bool outBoolean = (/*oneDinstance - */(transform.eulerAngles.z % oneDinstance)) <= _selectOffset;
                             if (inBoolean)
                             {
-                                int index = (int)(_spriteRenderer.transform.eulerAngles.z / oneDinstance) % (_runeList.Count);
+                                int index = (int)(transform.eulerAngles.z / oneDinstance) % (_runeList.Count);
                                 //if (_magicList[index].Rune.IsCoolTime == false)
                                 //{
                                     DOTween.To(
