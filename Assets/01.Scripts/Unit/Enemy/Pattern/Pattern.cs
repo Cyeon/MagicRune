@@ -9,6 +9,7 @@ public class Pattern : MonoBehaviour
 {
     public string patternName;
     public Sprite icon;
+    public string desc ="";
 
     [Header("[ Actions ]")]
     public List<PatternAction> startPattern;
@@ -23,7 +24,7 @@ public class Pattern : MonoBehaviour
     /// </summary>
     public void StartAction()
     {
-        UIManager.Instance.ReloadPattern(icon);
+        UIManager.Instance.ReloadPattern(icon, desc);
 
         foreach(PatternAction action in startPattern)
         {
