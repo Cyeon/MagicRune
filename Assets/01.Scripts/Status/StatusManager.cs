@@ -160,8 +160,8 @@ public class StatusManager : MonoSingleton<StatusManager>
                 Status currentStauts = statusList.Where(e => e.statusName == status.statusName).FirstOrDefault();
                 if (currentStauts != null)
                 {
-                    Mathf.Clamp(status.typeValue -= count, 0, status.typeValue);
-                    //unit.unitStatusDic[status.invokeTime].Remove(status); // 줄이고
+                    status.typeValue = Mathf.Clamp(status.typeValue - count, 0, status.typeValue);
+                    //unit.unitStatusDic[status.invokeTime].Remove(status); // 줄이고      
                     //_dialScene?.RemoveStatusPanel(unit, status.statusName); // 만약 0이하라면 지우기 // 아니면 업데이트
                 }
                 else
@@ -169,6 +169,15 @@ public class StatusManager : MonoSingleton<StatusManager>
                     Debug.LogWarning(string.Format("{0} status is not found. Can't Remove do it.", status.statusName));
                 }
             }
+        }
+    }
+
+    public void CountRemStatus(Unit unit, StatusName statusName, int count)
+    {
+        if (unit.IsDie == false)
+        {
+            Status status = GetStatus(statusName);
+            CountRemStatus(unit, status, count);
         }
     }
 

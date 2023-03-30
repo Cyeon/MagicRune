@@ -188,15 +188,17 @@ public class DialElement : MonoBehaviour
                 switch (condition.ComparisonType)
                 {
                     case ComparisonType.MoreThan:
-
+                        if (!(StatusManager.Instance.GetUnitStatusValue(BattleManager.Instance.player, condition.StatusType) >= condition.Value))
+                            return false;
                         break;
                     case ComparisonType.LessThan:
-
+                        if (!(StatusManager.Instance.GetUnitStatusValue(BattleManager.Instance.player, condition.StatusType) <= condition.Value))
+                            return false;
                         break;
                 }
                 break;
         }
-        return false;
+        return true;
     }
 
     public void Attack()
@@ -275,7 +277,15 @@ public class DialElement : MonoBehaviour
                 }
                 break;
             case EffectType.DestroyStatus:
-                action = () => StatusManager.Instance.AllRemStatus(target, e.StatusType);
+                switch (e.CountType)
+                {
+                    case CountType.Count:
+                        action = () => StatusManager.Instance.CountRemStatus(target, e.StatusType, (int)e.Effect);
+                        break;
+                    case CountType.All:
+                        action = () => StatusManager.Instance.AllRemStatus(target, e.StatusType);
+                        break;
+                }
                 break;
             case EffectType.Draw:
                 // 지금은 일단 주석...
