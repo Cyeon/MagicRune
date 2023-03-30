@@ -313,10 +313,11 @@ public class DialElement : MonoBehaviour
                         {
                             float oneDinstance = _dial.RuneAngle / (_runeList.Count);
                             bool inBoolean = (transform.eulerAngles.z % oneDinstance) <= _selectOffset;
-                            bool outBoolean = (/*oneDinstance - */(transform.eulerAngles.z % oneDinstance)) <= _selectOffset;
+                            bool outBoolean = (oneDinstance - (transform.eulerAngles.z % oneDinstance)) <= _selectOffset;
                             if (inBoolean)
                             {
                                 int index = (int)(transform.eulerAngles.z / oneDinstance) % (_runeList.Count);
+                                index = (index) % _runeList.Count; // 추가한거
                                 //if (_magicList[index].Rune.IsCoolTime == false)
                                 //{
                                     DOTween.To(
