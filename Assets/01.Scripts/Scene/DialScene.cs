@@ -401,6 +401,6 @@ public class DialScene : BaseScene
 
     public override void Clear()
     {
-        
+        // ·é Å¬¸®¾î
     }
 }

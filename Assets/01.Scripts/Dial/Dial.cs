@@ -65,7 +65,7 @@ public class Dial : MonoBehaviour
             _dialElementList.Add(d);
         }
 
-        SettingDialRune(true);  
+        SettingDialRune(true);
     }
 
     public void SettingDialRune(bool isReset)
@@ -113,7 +113,7 @@ public class Dial : MonoBehaviour
             }
             r.SetCoolTime();
             AddCard(r, (i % 3) + 1);
-            DeckManager.Instance.RuneSpawn(runeIndex, maxRuneCount - 1);
+            DeckManager.Instance.RuneSwap(runeIndex, maxRuneCount - 1);
 
             maxRuneCount--;
         }
@@ -392,15 +392,23 @@ public class Dial : MonoBehaviour
 
     public void AllMagicSetCoolTime()
     {
-        foreach (var d in _runeDict)
+        //foreach (var d in _runeDict)
+        //{
+        //    foreach (RuneUI m in d.Value)
+        //    {
+        //        if (m.Rune.GetCoolTime() > 0)
+        //        {
+        //            m.Rune.SetCoolTime(m.Rune.GetCoolTime() - 1);
+        //            m.SetCoolTime();
+        //        }
+        //    }
+        //}
+
+        for(int i = 0; i < DeckManager.Instance.Deck.Count; i++)
         {
-            foreach (RuneUI m in d.Value)
+            if (DeckManager.Instance.Deck[i].GetCoolTime() > 0)
             {
-                if (m.Rune.GetCoolTime() > 0)
-                {
-                    m.Rune.SetCoolTime(m.Rune.GetCoolTime() - 1);
-                    m.SetCoolTime();
-                }
+                DeckManager.Instance.Deck[i].SetCoolTime(DeckManager.Instance.Deck[i].GetCoolTime() - 1);
             }
         }
     }
