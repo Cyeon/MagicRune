@@ -128,7 +128,7 @@ public class BezierMissile : MonoBehaviour
                 _trail.startColor = _statusColor;
                 _trail.endColor = _statusColor;
                 break;
-            case EffectType.Destroy:
+            case EffectType.DestroyStatus:
                 _trail.startColor = _attackColor;
                 _trail.endColor = _attackColor;
                 break;

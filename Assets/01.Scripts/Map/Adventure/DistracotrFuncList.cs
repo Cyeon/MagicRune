@@ -39,6 +39,7 @@ public class DistracotrFuncList : MonoBehaviour
     {
         MapManager.Instance.NextStage();
         CanvasManager.Instance.GetCanvas("Adventure").enabled = false;
+        CanvasManager.Instance.GetCanvas("MapUI").enabled = true;
         //MapSceneUI.adventureUI.gameObject.SetActive(false);
     }
 
