@@ -5,7 +5,6 @@ using System.Security.Cryptography;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Rendering;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class Unit : MonoBehaviour
@@ -39,13 +38,13 @@ public class Unit : MonoBehaviour
 
     [SerializeField] private float _shield = 0f;
     public float Shield
-    { 
-        get => _shield; 
+    {
+        get => _shield;
         protected set
         {
             _shield = value;
 
-            if(_dialScene == null)
+            if (_dialScene == null)
             {
                 _dialScene = SceneManagerEX.Instance.CurrentScene as DialScene;
             }
@@ -59,15 +58,16 @@ public class Unit : MonoBehaviour
 
     #endregion
 
-    [field:SerializeField] public UnityEvent<float> OnTakeDamage {get;set;}
+    [field: SerializeField] public UnityEvent<float> OnTakeDamage { get; set; }
 
-    [field:SerializeField] public UnityEvent OnTakeDamageFeedback {get;set;}
+    [field: SerializeField] public UnityEvent OnTakeDamageFeedback { get; set; }
     [field: SerializeField] public Dictionary<StatusInvokeTime, List<Status>> unitStatusDic = new Dictionary<StatusInvokeTime, List<Status>>();
 
     public UnityEvent OnDieEvent;
     protected DialScene _dialScene;
 
-    private void OnEnable() {
+    private void OnEnable()
+    {
         unitStatusDic.Add(StatusInvokeTime.Start, new List<Status>());
         unitStatusDic.Add(StatusInvokeTime.Attack, new List<Status>());
         unitStatusDic.Add(StatusInvokeTime.GetDamage, new List<Status>());
@@ -85,37 +85,41 @@ public class Unit : MonoBehaviour
     /// <param name="damage"></param>
     public void TakeDamage(float damage, bool isFixed = false, Status status = null)
     {
-            currentDmg = damage;
-            InvokeStatus(StatusInvokeTime.GetDamage);
-            currentDmg = Mathf.Floor(currentDmg);
+        currentDmg = damage;
+        InvokeStatus(StatusInvokeTime.GetDamage);
+        currentDmg = Mathf.Floor(currentDmg);
 
-            if (Shield > 0 && isFixed == false)
-            {
-                if (Shield - currentDmg >= 0)
-                    Shield -= currentDmg;
-                else
-                {
-                    currentDmg -= Shield;
-                    Shield = 0;
-                    HP -= currentDmg;
-                }
-            }
+        if (Shield > 0 && isFixed == false)
+        {
+            if (Shield - currentDmg >= 0)
+                Shield -= currentDmg;
             else
-                HP -= currentDmg;
-
-            OnTakeDamage?.Invoke(currentDmg);
-            OnTakeDamageFeedback?.Invoke();
-
-            _dialScene?.UpdateHealthbar(false);
-            _dialScene?.UpdateHealthbar(true);
-
-            if (_isPlayer == false)
             {
-                if (_dialScene != null)
-                {
-                    _dialScene.DamageUIPopup(currentDmg, _dialScene.EnemyIcon.transform.position, status);
-                }
+                currentDmg -= Shield;
+                Shield = 0;
+                HP -= currentDmg;
             }
+        }
+        else
+            HP -= currentDmg;
+
+        OnTakeDamage?.Invoke(currentDmg);
+        OnTakeDamageFeedback?.Invoke();
+
+        if (_dialScene == null)
+        {
+            _dialScene = SceneManagerEX.Instance.CurrentScene as DialScene;
+        }
+        _dialScene?.UpdateHealthbar(false);
+        _dialScene?.UpdateHealthbar(true);
+
+        if (_isPlayer == false)
+        {
+            if (_dialScene != null)
+            {
+                _dialScene.DamageUIPopup(currentDmg, Define.MainCam.WorldToScreenPoint(_dialScene.EnemyIcon.transform.position), status);
+            }
+        }
     }
 
     public bool IsHealthAmount(float amount, ComparisonType type)
@@ -137,9 +141,9 @@ public class Unit : MonoBehaviour
 
         List<Status> status;
 
-        if(unitStatusDic.TryGetValue(time, out status))
+        if (unitStatusDic.TryGetValue(time, out status))
         {
-            if(status.Count > 0)
+            if (status.Count > 0)
             {
                 StatusManager.Instance.StatusFuncInvoke(status, this);
             }
@@ -161,6 +165,10 @@ public class Unit : MonoBehaviour
         if (_isDie == false)
         {
             _health += value;
+            if(_dialScene == null)
+            {
+                _dialScene = SceneManagerEX.Instance.CurrentScene as DialScene;
+            }
             _dialScene?.UpdateHealthbar(true);
         }
     }
@@ -183,7 +191,7 @@ public class Unit : MonoBehaviour
 
     public void AddShield(float value)
     {
-        if(_isDie == false)
+        if (_isDie == false)
         {
             Shield += value;
         }
@@ -198,9 +206,16 @@ public class Unit : MonoBehaviour
     {
         Shield = 0;
     }
-    
+
+    public void ResetHealth()
+    {
+        _isDie = false;
+        _health = _maxHealth;
+    }
+
     protected virtual void Die()
     {
         _isDie = true;
+        OnDieEvent?.Invoke();
     }
 }

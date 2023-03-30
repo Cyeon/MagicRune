@@ -74,12 +74,8 @@ public class Enemy : Unit
     {
         base.Die();
 
-        REGold reward = new REGold();
-        reward.gold = MapManager.Instance.CurrentChapter.Gold;
-        reward.AddRewardList();
-
         //BattleManager.Instance.OnEnemyDie?.Invoke();
-        OnDieEvent?.Invoke();
+        //OnDieEvent?.Invoke();
     }
 
     private void OnDestroy()

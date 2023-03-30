@@ -28,7 +28,7 @@ public enum EffectType
     Status,
     Defence, // 방어하는거 예) 5방어
     Attack, // 공격하는거 예) 5데미지
-    Destroy,
+    DestroyStatus,
     Draw,
     Etc, // 기타 효과 예) 1장 드로우, 화상효과 부여 등...
 }
@@ -52,6 +52,7 @@ public enum AttackType
 {
     Single,
     Double,
+    Defence,
 }
 
 public enum RuneRarity
@@ -60,6 +61,12 @@ public enum RuneRarity
     Rare,
     Epic,
     Legendary,
+}
+
+public enum CountType
+{ 
+    Count,
+    All
 }
 
 [Serializable]
@@ -100,22 +107,26 @@ public class Pair
     public Condition Condition;
     [Tooltip("효과 간단 속성?")]
     public EffectType EffectType;
-    [Tooltip("상태이상 속성, EffectType == Status면 사용"), ConditionalField(nameof(EffectType), false, EffectType.Status, EffectType.Destroy)]
+    [Tooltip("상태이상 속성, EffectType == Status면 사용"), ConditionalField(nameof(EffectType), false, EffectType.Status, EffectType.DestroyStatus)]
     public StatusName StatusType;
-    [Tooltip("true면 적, false면 나한태 씀"), ConditionalField(nameof(EffectType), false, EffectType.Attack, EffectType.Status, EffectType.Destroy)]
+    [Tooltip("true면 적, false면 나한태 씀"), ConditionalField(nameof(EffectType), false, EffectType.Attack, EffectType.Status, EffectType.DestroyStatus)]
     public bool IsEnemy = true;
-    [ConditionalField(nameof(EffectType), true, EffectType.Destroy, EffectType.Draw)]
+    [ConditionalField(nameof(EffectType), true, EffectType.DestroyStatus, EffectType.Draw)]
     public AttackType AttackType;
     [ConditionalField(nameof(AttackType), false, AttackType.Double)]
     public AttributeType AttributeType;
 
+    [ConditionalField(nameof(EffectType), false, EffectType.DestroyStatus)]
+    public CountType CountType;
+
+    [ConditionalField(nameof(CountType), true, CountType.All)]
     [Tooltip("카드 효과 밸류")]
     public float Effect;
 
     public Pair(Condition condition, EffectType effectType = EffectType.Attack,
         StatusName statusType = StatusName.Null,
         bool isEnemy = true, AttackType attackType = AttackType.Single,
-        AttributeType attributeType = AttributeType.None, float effect = 0)
+        AttributeType attributeType = AttributeType.None, CountType countType = CountType.Count, float effect = 0)
     {
         Condition = condition;
         EffectType = effectType;
@@ -123,6 +134,7 @@ public class Pair
         IsEnemy = isEnemy;
         AttackType = attackType;
         AttributeType = attributeType;
+        CountType = countType;
         Effect = effect;
     }
 }

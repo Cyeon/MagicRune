@@ -18,7 +18,7 @@ public class StatusManager : MonoSingleton<StatusManager>
 
     private void Start()
     {
-        _dialScene = SceneManagerEX.instance.CurrentScene as DialScene;
+        _dialScene = SceneManagerEX.Instance.CurrentScene as DialScene;
     }
 
     // ?곹깭?댁긽 ?④낵 諛쒕룞
@@ -128,8 +128,8 @@ public class StatusManager : MonoSingleton<StatusManager>
         }
     }
 
-    // ?곹깭?댁긽 ?쒓굅
-    public void RemStatus(Unit unit, Status status)
+    // 상태이상 삭제
+    public void AllRemStatus(Unit unit, Status status)
     {
         if (unit.IsDie == false)
         {
@@ -150,12 +150,43 @@ public class StatusManager : MonoSingleton<StatusManager>
         }
     }
 
-    public void RemStatus(Unit unit, StatusName statusName)
+    public void CountRemStatus(Unit unit, Status status, int count)
+    {
+        if (unit.IsDie == false)
+        {
+            List<Status> statusList = new List<Status>();
+            if (unit.unitStatusDic.TryGetValue(status.invokeTime, out statusList))
+            {
+                Status currentStauts = statusList.Where(e => e.statusName == status.statusName).FirstOrDefault();
+                if (currentStauts != null)
+                {
+                    status.typeValue = Mathf.Clamp(status.typeValue - count, 0, status.typeValue);
+                    //unit.unitStatusDic[status.invokeTime].Remove(status); // 줄이고      
+                    //_dialScene?.RemoveStatusPanel(unit, status.statusName); // 만약 0이하라면 지우기 // 아니면 업데이트
+                }
+                else
+                {
+                    Debug.LogWarning(string.Format("{0} status is not found. Can't Remove do it.", status.statusName));
+                }
+            }
+        }
+    }
+
+    public void CountRemStatus(Unit unit, StatusName statusName, int count)
     {
         if (unit.IsDie == false)
         {
             Status status = GetStatus(statusName);
-            RemStatus(unit, status);
+            CountRemStatus(unit, status, count);
+        }
+    }
+
+    public void AllRemStatus(Unit unit, StatusName statusName)
+    {
+        if (unit.IsDie == false)
+        {
+            Status status = GetStatus(statusName);
+            AllRemStatus(unit, status);
         }
     }
 
@@ -172,7 +203,7 @@ public class StatusManager : MonoSingleton<StatusManager>
                 }
             }
 
-            indexes.ForEach(e => RemStatus(unit, x.Value[e]));
+            indexes.ForEach(e => AllRemStatus(unit, x.Value[e]));
         }
     }
 
@@ -192,7 +223,7 @@ public class StatusManager : MonoSingleton<StatusManager>
                 }
             }
 
-            indexes.ForEach(e => RemStatus(unit, x.Value[e]));
+            indexes.ForEach(e => AllRemStatus(unit, x.Value[e]));
         }
     }
 
