@@ -8,7 +8,7 @@ using UnityEngine.UI;
 
 public class AdventureUI : MonoBehaviour
 {
-    private Image _cg;
+    private Image _adventureImage;
     private TextMeshProUGUI _titleText;
 
     [SerializeField]
@@ -21,16 +21,16 @@ public class AdventureUI : MonoBehaviour
 
     private void Start()
     {
-        UIManager.Instance.Bind<Image>("CG", CanvasManager.Instance.GetCanvas("Adventure").gameObject);
-        UIManager.Instance.Bind<TextMeshProUGUI>("Title Text", CanvasManager.Instance.GetCanvas("Adventure").gameObject);
-        UIManager.Instance.Bind<TextMeshProUGUI>("StoryText", CanvasManager.Instance.GetCanvas("Adventure").gameObject);
-        UIManager.Instance.Bind<Button>("Story Button", CanvasManager.Instance.GetCanvas("Adventure").gameObject);
+        UIManager.Instance.Bind<Image>("Adventure_Image", CanvasManager.Instance.GetCanvas("Adventure").gameObject);
+        UIManager.Instance.Bind<TextMeshProUGUI>("AdventureTitle_Text", CanvasManager.Instance.GetCanvas("Adventure").gameObject);
+        UIManager.Instance.Bind<TextMeshProUGUI>("Story_Text", CanvasManager.Instance.GetCanvas("Adventure").gameObject);
+        UIManager.Instance.Bind<Button>("Story_Button", CanvasManager.Instance.GetCanvas("Adventure").gameObject);
 
-        _cg = UIManager.Instance.Get<Image>("CG");
-        _titleText = UIManager.Instance.Get<TextMeshProUGUI>("Title Text");
+        _adventureImage = UIManager.Instance.Get<Image>("Adventure_Image");
+        _titleText = UIManager.Instance.Get<TextMeshProUGUI>("AdventureTitle_Text");
 
-        _storyText = UIManager.Instance.Get<TextMeshProUGUI>("StoryText");
-        UIManager.Instance.Get<Button>("Story Button").onClick.AddListener(() => StoryClick());
+        _storyText = UIManager.Instance.Get<TextMeshProUGUI>("Story_Text");
+        UIManager.Instance.Get<Button>("Story_Button").onClick.AddListener(() => StoryClick());
 
         _distractorPanel = transform.Find("Distractor").gameObject;
         _distractorButtons = _distractorPanel.GetComponentsInChildren<Button>(true);
@@ -53,7 +53,7 @@ public class AdventureUI : MonoBehaviour
         _distractorPanel.SetActive(false);
 
         _titleText.text = info.adventureName;
-        _cg.sprite = info.image;
+        _adventureImage.sprite = info.image;
 
         _storyText.text = info.message;
 

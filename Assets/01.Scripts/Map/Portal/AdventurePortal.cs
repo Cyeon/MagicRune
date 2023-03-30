@@ -9,7 +9,6 @@ public class AdventurePortal : Portal
 
     public override void Execute()
     {
-        CanvasManager.Instance.GetCanvas("MapUI").enabled = false;
         CanvasManager.Instance.GetCanvas("Adventure").enabled = true;
         CanvasManager.Instance.GetCanvas("Adventure").GetComponent<AdventureUI>().Init(GetAdventure(), this);
     }
