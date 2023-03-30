@@ -121,7 +121,7 @@ public class DialElement : MonoBehaviour
                 //SelectCard = _cardList[index];
 
                 int index = (int)(_spriteRenderer.transform.eulerAngles.z / oneDinstance) % (_runeList.Count);
-                //index = (index + 1) % _runeList.Count;
+                index = (index) % (_runeList.Count - 1);
                 if (_runeList[index].Rune.IsCoolTime == false)
                 {
                     SelectCard = _runeList[index];
@@ -359,14 +359,14 @@ public class DialElement : MonoBehaviour
                             }
                             else if (outBoolean)
                             {
-                                int index = (int)(transform.eulerAngles.z / oneDinstance) % (_runeList.Count);
+                                int index = ((int)(transform.eulerAngles.z / oneDinstance) + 1) % (_runeList.Count);
                                 index = (index + 1) % _runeList.Count;
                                 //if (_magicList[index].Rune.IsCoolTime == false)
                                 //{
                                 DOTween.To(
                                     () => transform.eulerAngles,
                                     x => transform.eulerAngles = x,
-                                    new Vector3(0, 0, ((int)(transform.eulerAngles.z / oneDinstance) + 1) * oneDinstance),
+                                    new Vector3(0, 0, ((int)(transform.eulerAngles.z / oneDinstance)) * oneDinstance + _dial.StartAngle),
                                     0.3f
                                 ).OnComplete(() =>
                                 {
@@ -383,7 +383,7 @@ public class DialElement : MonoBehaviour
                             float distance = transform.eulerAngles.z % oneDinstance;
                             if (distance >= oneDinstance / 2f)
                             {
-                                transform.DORotate(new Vector3(0, 0, (index + 1) % _runeList.Count * oneDinstance), 0.3f, RotateMode.Fast)
+                                transform.DORotate(new Vector3(0, 0, ((index + 1) % _runeList.Count * oneDinstance) >= 120 ? ((index + 1) % _runeList.Count * oneDinstance) + 180 : (index + 1) % _runeList.Count * oneDinstance), 0.3f, RotateMode.Fast)
                                     .OnComplete(() =>
                                     {
                                         if (_selectCard != null) { _dialScene?.CardDescPopup(_selectCard.Rune); }

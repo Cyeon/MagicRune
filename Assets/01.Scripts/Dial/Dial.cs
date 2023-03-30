@@ -21,6 +21,7 @@ public class Dial : MonoBehaviour
     public float RuneAngle => _runeAngle;
     [SerializeField, Range(0f, 360f)]
     private float _startAngle = 180;
+    public float StartAngle => _startAngle;
 
     [SerializeField]
     private List<Rune> _selectedDeck = null; // 사전에 설정해둔 다이얼 안쪽의 1번째 줄 덱. 
@@ -65,6 +66,12 @@ public class Dial : MonoBehaviour
         }
 
         SettingDialRune(true);
+    }
+
+    private void Update()
+    {
+        if (_dialElementList[0] != null)
+            Debug.Log(_dialElementList[0].transform.eulerAngles.z);
     }
 
     public void SettingDialRune(bool isReset)
