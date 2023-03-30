@@ -100,7 +100,7 @@ public class DialElement : MonoBehaviour
             if (inBoolean)
             {
                 int index = (int)(transform.eulerAngles.z / oneDinstance) % (_runeList.Count);
-                index = (index + 1) % _runeList.Count;
+                //index = (index + 1) % _runeList.Count;
                 if (_runeList[index].Rune.IsCoolTime == false)
                 {
                     SelectCard = _runeList[index];
@@ -121,7 +121,7 @@ public class DialElement : MonoBehaviour
                 //SelectCard = _cardList[index];
 
                 int index = (int)(transform.eulerAngles.z / oneDinstance) % (_runeList.Count);
-                index = (index + 2) % _runeList.Count;
+                index = (index + 1) % _runeList.Count;
                 if (_runeList[index].Rune.IsCoolTime == false)
                 {
                     SelectCard = _runeList[index];
