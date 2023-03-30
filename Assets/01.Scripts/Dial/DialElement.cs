@@ -383,17 +383,19 @@ public class DialElement : MonoBehaviour
                             float distance = transform.eulerAngles.z % oneDinstance;
                             if (distance >= oneDinstance / 2f)
                             {
-                                transform.DORotate(new Vector3(0, 0, ((index + 1) % _runeList.Count * oneDinstance) >= 120 ? ((index + 1) % _runeList.Count * oneDinstance) + 180 : (index + 1) % _runeList.Count * oneDinstance), 0.3f, RotateMode.Fast)
+                                transform.DORotate(new Vector3(0, 0, ((index + 1) % _runeList.Count * oneDinstance) >= 120 ? ((index + 1) % _runeList.Count * oneDinstance) + 360f - oneDinstance * _runeList.Count : (index + 1) % _runeList.Count * oneDinstance), 0.3f, RotateMode.Fast)
                                     .OnComplete(() =>
                                     {
+                                        SelectCard = _runeList[index];
                                         if (_selectCard != null) { _dialScene?.CardDescPopup(_selectCard.Rune); }
                                     });
                             }
                             else
                             {
-                                transform.DORotate(new Vector3(0, 0, ((index) * oneDinstance) >= 120 ? ((index) * oneDinstance) + 180 : ((index) * oneDinstance)), 0.3f, RotateMode.Fast)
+                                transform.DORotate(new Vector3(0, 0, ((index) * oneDinstance) >= 120 ? ((index) * oneDinstance) + 360f - oneDinstance * _runeList.Count : ((index) * oneDinstance)), 0.3f, RotateMode.Fast)
                                     .OnComplete(() =>
                                     {
+                                        SelectCard = _runeList[index]; // 뭔가 재대로 원하는 애가 안들어가는 듯 정보창 갱신이 느리다?
                                         if (_selectCard != null) { _dialScene?.CardDescPopup(_selectCard.Rune); }
                                     });
                             }
