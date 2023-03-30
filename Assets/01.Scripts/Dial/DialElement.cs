@@ -92,7 +92,7 @@ public class DialElement : MonoBehaviour
     {
         Swipe1();
 
-        if (_runeList.Count > 0)
+        if (_runeList.Count > 0 && BattleManager.Instance.IsPlayerTurn())
         {
             float oneDinstance = 360f / _runeList.Count;
             bool inBoolean = (_spriteRenderer.transform.eulerAngles.z % oneDinstance) <= _selectOffset;
@@ -144,7 +144,7 @@ public class DialElement : MonoBehaviour
             }
         }
 
-        if (_isRotate)
+        if (_isRotate && BattleManager.Instance.IsPlayerTurn())
         {
             _offset = ((Vector3)Input.GetTouch(_fingerID).position - _touchPos);
 
@@ -332,7 +332,7 @@ public class DialElement : MonoBehaviour
                     _fingerID = -1;
                     _isRotate = false;
 
-                    if (_runeList.Count > 0)
+                    if (_runeList.Count > 0 && BattleManager.Instance.IsPlayerTurn())
                     {
                         if (_isUseRotateOffset)
                         {

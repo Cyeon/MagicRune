@@ -81,6 +81,11 @@ public class BattleManager : MonoSingleton<BattleManager>
         enemy.TurnStart();
     }
 
+    public bool IsPlayerTurn()
+    {
+        return _gameTurn == GameTurn.Player;
+    }
+
     # region Debug
 
     public void TurnChange()
