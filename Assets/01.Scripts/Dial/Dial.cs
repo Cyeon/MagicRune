@@ -19,17 +19,16 @@ public class Dial : MonoBehaviour
     [SerializeField, Range(90f, 360f)]
     private float _runeAngle = 180f;
     public float RuneAngle => _runeAngle;
-    [SerializeField]
+    [SerializeField, Range(0f, 360f)]
     private float _startAngle = 180;
 
     [SerializeField]
     private List<Rune> _selectedDeck = null; // 사전에 설정해둔 다이얼 안쪽의 1번째 줄 덱. 
     [SerializeField]
-    private GameObject tempCard;
-    [SerializeField]
-    private BezierMissile _bezierMissile;
-    [SerializeField]
     private Transform _enemyPos;
+
+    [SerializeField]
+    private float[] _lineDistanceArray = new float[3];
 
     private Dictionary<int, List<RuneUI>> _runeDict;
     private Dictionary<EffectType, List<EffectObjectPair>> _effectDict = new Dictionary<EffectType, List<EffectObjectPair>>();
@@ -72,9 +71,9 @@ public class Dial : MonoBehaviour
     {
         foreach (KeyValuePair<int, List<RuneUI>> runeList in _runeDict)
         {
-            foreach(RuneUI rune in runeList.Value)
+            foreach (RuneUI rune in runeList.Value)
             {
-                if(rune != null)
+                if (rune != null)
                 {
                     ResourceManager.Instance.Destroy(rune.gameObject);
                 }
@@ -82,7 +81,7 @@ public class Dial : MonoBehaviour
         }
         _runeDict.Clear();
 
-        for(int i = 0; i < _dialElementList.Count; i++)
+        for (int i = 0; i < _dialElementList.Count; i++)
         {
             _dialElementList[i].ResetRuneList();
             _dialElementList[i].SelectCard = null;
@@ -138,67 +137,42 @@ public class Dial : MonoBehaviour
 
     private void CardSort()
     {
-        if (_runeDict.ContainsKey(3))
+        for(int i = 1; i <= 3; i++)
         {
-            float angle = -2 * Mathf.PI / _runeDict[3].Count;
-
-            for (int i = 0; i < _runeDict[3].Count; i++)
-            {
-                float height = Mathf.Sin(angle * i + (90 * Mathf.Deg2Rad)) * 4; // 470
-                float width = Mathf.Cos(angle * i + (90 * Mathf.Deg2Rad)) * 4; // 450
-                _runeDict[3][i].transform.position = new Vector3(width + this.transform.position.x, height + this.transform.position.y, 0);
-
-                Vector2 direction = new Vector2(
-                    _runeDict[3][i].transform.position.x - transform.position.x,
-                    _runeDict[3][i].transform.position.y - transform.position.y
-                );
-
-                float ang = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-                Quaternion angleAxis = Quaternion.AngleAxis(ang - 90f, Vector3.forward);
-                _runeDict[3][i].transform.rotation = angleAxis;
-            }
+            LineCardSort(i);
         }
-        if (_runeDict.ContainsKey(2))
+    }
+
+    private void LineCardSort(int line)
+    {
+        if (_runeDict.ContainsKey(line))
         {
-            float angle = -2 * Mathf.PI / _runeDict[2].Count;
+            float angle = -1 * _runeAngle / _runeDict[line].Count * Mathf.Deg2Rad;
 
-            for (int i = 0; i < _runeDict[2].Count; i++)
+            for (int i = 0; i < _runeDict[line].Count; i++)
             {
-                float height = Mathf.Sin(angle * i + (90 * Mathf.Deg2Rad)) * 2.9f; // 470
-                float width = Mathf.Cos(angle * i + (90 * Mathf.Deg2Rad)) * 2.9f; // 450
-                _runeDict[2][i].transform.position = new Vector3(width + this.transform.position.x, height + this.transform.position.y, 0);
-                //_magicDict[2][i].transform.localScale = new Vector3(0.0133f, 0.0133f, 1);
-
-                Vector2 direction = new Vector2(
-                    _runeDict[2][i].transform.position.x - transform.position.x,
-                    _runeDict[2][i].transform.position.y - transform.position.y
-                );
-
-                float ang = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-                Quaternion angleAxis = Quaternion.AngleAxis(ang - 90f, Vector3.forward);
-                _runeDict[2][i].transform.rotation = angleAxis;
-            }
-        }
-        if (_runeDict.ContainsKey(1))
-        {
-            float angle = -2 * Mathf.PI / _runeDict[1].Count;
-
-            for (int i = 0; i < _runeDict[1].Count; i++)
-            {
-                float height = Mathf.Sin(angle * i + (90 * Mathf.Deg2Rad)) * 1.7f; // 470
-                float width = Mathf.Cos(angle * i + (90 * Mathf.Deg2Rad)) * 1.7f; // 450
-                _runeDict[1][i].transform.position = new Vector3(width + this.transform.position.x, height + this.transform.position.y, 0);
+                float height = Mathf.Sin(angle * i + (90 * Mathf.Deg2Rad)) * _lineDistanceArray[3 - line];
+                float width = Mathf.Cos(angle * i + (90 * Mathf.Deg2Rad)) * _lineDistanceArray[3 - line];
+                _runeDict[line][i].transform.position = new Vector3(width + this.transform.position.x, height + this.transform.position.y, 0);
                 //_magicDict[1][i].transform.localScale = new Vector3(0.02f, 0.02f, 1);
 
                 Vector2 direction = new Vector2(
-                    _runeDict[1][i].transform.position.x - transform.position.x,
-                    _runeDict[1][i].transform.position.y - transform.position.y
+                    _runeDict[line][i].transform.position.x - transform.position.x,
+                    _runeDict[line][i].transform.position.y - transform.position.y
                 );
 
                 float ang = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
                 Quaternion angleAxis = Quaternion.AngleAxis(ang - 90f, Vector3.forward);
-                _runeDict[1][i].transform.rotation = angleAxis;
+                _runeDict[line][i].transform.rotation = angleAxis;
             }
+        }
+    }
+
+    public void ResetDial()
+    {
+        for(int i = 0; i < _dialElementList.Count; i++)
+        {
+            _dialElementList[i].transform.eulerAngles = Vector3.zero;
         }
     }
 
@@ -281,7 +255,7 @@ public class Dial : MonoBehaviour
             b.SetTrailColor(EffectType.Attack);
             b.Init(this.transform, _enemyPos, 1.5f, 0, 0, () =>
             {
-                for(int i = 0; i < 3; i++)
+                for (int i = 0; i < 3; i++)
                 {
                     _dialElementList[i].Attack();
                 }
@@ -404,7 +378,7 @@ public class Dial : MonoBehaviour
         //    }
         //}
 
-        for(int i = 0; i < DeckManager.Instance.Deck.Count; i++)
+        for (int i = 0; i < DeckManager.Instance.Deck.Count; i++)
         {
             if (DeckManager.Instance.Deck[i].GetCoolTime() > 0)
             {
