@@ -18,7 +18,7 @@ public class StatusManager : MonoSingleton<StatusManager>
 
     private void Start()
     {
-        _dialScene = SceneManagerEX.instance.CurrentScene as DialScene;
+        _dialScene = SceneManagerEX.Instance.CurrentScene as DialScene;
     }
 
     // ?íƒœ?´ìƒ ?¨ê³¼ ë°œë™

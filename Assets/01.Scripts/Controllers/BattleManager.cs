@@ -33,7 +33,7 @@ public class BattleManager : MonoSingleton<BattleManager>
 
     private void Start()
     {
-        _dialScene = SceneManagerEX.instance.CurrentScene as DialScene;
+        _dialScene = SceneManagerEX.Instance.CurrentScene as DialScene;
 
         GameStart();
     }
@@ -42,7 +42,14 @@ public class BattleManager : MonoSingleton<BattleManager>
     {
         enemy = EnemyManager.Instance.SpawnEnemy(MapManager.Instance.selectEnemy);
         enemy.OnDieEvent.RemoveAllListeners();
-        enemy.OnDieEvent.AddListener(() => { _dialScene?.RewardUI.VictoryPanelPopup(); });
+        enemy.OnDieEvent.AddListener(() =>
+        {
+            REGold reward = new REGold();
+            reward.gold = MapManager.Instance.CurrentChapter.Gold;
+            reward.AddRewardList();
+
+            _dialScene?.RewardUI.VictoryPanelPopup();
+        });
         PatternManager.Instance.PatternInit(enemy.enemyInfo.patternList);
 
         player = GameManager.Instance.player; // �÷��̾� ���� �������� �����ؾ���
@@ -114,7 +121,7 @@ public class BattleManager : MonoSingleton<BattleManager>
                 if (enemy.Shield > 0)
                 {
                     enemy.ResetShield();
-                    _dialScene?.UpdateHealthbar(true);
+                    _dialScene?.UpdateHealthbar(false);
                 }
 
                 //UIManager.Instance.Turn("Enemy Turn");
@@ -139,7 +146,7 @@ public class BattleManager : MonoSingleton<BattleManager>
                 EventManager.TriggerEvent(Define.ON_START_PLAYER_TURN);
                 EventManager<bool>.TriggerEvent(Define.ON_START_PLAYER_TURN, true);
 
-                SoundManager.instance.PlaySound(turnChangeSound, SoundType.Effect);
+                SoundManager.Instance.PlaySound(turnChangeSound, SoundType.Effect);
 
                 if (player.Shield > 0)
                 {
@@ -150,6 +157,7 @@ public class BattleManager : MonoSingleton<BattleManager>
                 //UIManager.Instance.Turn("Player Turn");
                 _dialScene?.Turn("Player Turn");
                 _dialScene?.Dial?.AllMagicSetCoolTime();
+                _dialScene?.Dial?.SettingDialRune(false);
                 _gameTurn = GameTurn.MonsterWait;
                 break;
 
