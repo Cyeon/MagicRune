@@ -150,5 +150,6 @@ public class PatternFuncList : MonoBehaviour
     public void ShieldKeep()
     {
         BattleManager.Instance.enemy.AddShield(BattleManager.Instance.enemy.Shield);
+        BattleManager.Instance.TurnChange();
     }
 }

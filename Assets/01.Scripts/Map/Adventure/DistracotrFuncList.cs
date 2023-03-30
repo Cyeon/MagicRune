@@ -2,12 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum DistractorFunc
-{
-    NextStage,
-    Healing
-}
-
 public enum IncreaseMode
 {
     Amount,
@@ -45,6 +39,7 @@ public class DistracotrFuncList : MonoBehaviour
     {
         MapManager.Instance.NextStage();
         CanvasManager.Instance.GetCanvas("Adventure").enabled = false;
+        CanvasManager.Instance.GetCanvas("MapUI").enabled = true;
         //MapSceneUI.adventureUI.gameObject.SetActive(false);
     }
 
