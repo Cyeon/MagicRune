@@ -207,7 +207,7 @@ public class DialElement : MonoBehaviour
                 }
                 break;
         }
-        return false;
+        return true; // 디버그용으로 true로 바꿈.
     }
 
     public void Attack()
@@ -343,7 +343,7 @@ public class DialElement : MonoBehaviour
                             if (inBoolean)
                             {
                                 int index = (int)(transform.eulerAngles.z / oneDinstance) % (_runeList.Count);
-                                index = (index) % _runeList.Count; // 추가한거
+                                //index = (index) % _runeList.Count; // 추가한거
                                 //if (_magicList[index].Rune.IsCoolTime == false)
                                 //{
                                     DOTween.To(
@@ -360,7 +360,7 @@ public class DialElement : MonoBehaviour
                             else if (outBoolean)
                             {
                                 int index = (int)(transform.eulerAngles.z / oneDinstance) % (_runeList.Count);
-                                index = (index + 1) % _runeList.Count;
+                                //index = (index + 1) % _runeList.Count;
                                 //if (_magicList[index].Rune.IsCoolTime == false)
                                 //{
                                     DOTween.To(
