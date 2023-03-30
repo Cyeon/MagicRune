@@ -391,7 +391,7 @@ public class DialElement : MonoBehaviour
                             }
                             else
                             {
-                                transform.DORotate(new Vector3(0, 0, index * oneDinstance), 0.3f, RotateMode.Fast)
+                                transform.DORotate(new Vector3(0, 0, ((index) * oneDinstance) >= 120 ? ((index) * oneDinstance) + 180 : ((index) * oneDinstance)), 0.3f, RotateMode.Fast)
                                     .OnComplete(() =>
                                     {
                                         if (_selectCard != null) { _dialScene?.CardDescPopup(_selectCard.Rune); }
