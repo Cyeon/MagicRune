@@ -140,12 +140,12 @@ public class Dial : MonoBehaviour
     {
         if (_runeDict.ContainsKey(3))
         {
-            float angle = -1 * _runeAngle / _runeDict[3].Count;
+            float angle = -2 * Mathf.PI / _runeDict[3].Count;
 
             for (int i = 0; i < _runeDict[3].Count; i++)
             {
-                float height = Mathf.Sin(angle * Mathf.Deg2Rad * i + (_startAngle * Mathf.Deg2Rad)/* + angle / 2f * Mathf.Deg2Rad*/) * 4;
-                float width = Mathf.Cos(angle * Mathf.Deg2Rad * i + (_startAngle * Mathf.Deg2Rad)/* + angle / 2f * Mathf.Deg2Rad*/) * 4;
+                float height = Mathf.Sin(angle * i + (90 * Mathf.Deg2Rad)) * 4; // 470
+                float width = Mathf.Cos(angle * i + (90 * Mathf.Deg2Rad)) * 4; // 450
                 _runeDict[3][i].transform.position = new Vector3(width + this.transform.position.x, height + this.transform.position.y, 0);
 
                 Vector2 direction = new Vector2(
@@ -160,12 +160,12 @@ public class Dial : MonoBehaviour
         }
         if (_runeDict.ContainsKey(2))
         {
-            float angle = -1 * _runeAngle / _runeDict[2].Count;
+            float angle = -2 * Mathf.PI / _runeDict[2].Count;
 
             for (int i = 0; i < _runeDict[2].Count; i++)
             {
-                float height = Mathf.Sin(angle * Mathf.Deg2Rad * i + (_startAngle * Mathf.Deg2Rad)/* + angle / 2f * Mathf.Deg2Rad*/) * 2.9f; // 470
-                float width = Mathf.Cos(angle * Mathf.Deg2Rad * i + (_startAngle * Mathf.Deg2Rad)/* + angle / 2f * Mathf.Deg2Rad*/) * 2.9f; // 450
+                float height = Mathf.Sin(angle * i + (90 * Mathf.Deg2Rad)) * 2.9f; // 470
+                float width = Mathf.Cos(angle * i + (90 * Mathf.Deg2Rad)) * 2.9f; // 450
                 _runeDict[2][i].transform.position = new Vector3(width + this.transform.position.x, height + this.transform.position.y, 0);
                 //_magicDict[2][i].transform.localScale = new Vector3(0.0133f, 0.0133f, 1);
 
@@ -181,12 +181,12 @@ public class Dial : MonoBehaviour
         }
         if (_runeDict.ContainsKey(1))
         {
-            float angle = -1 * _runeAngle / _runeDict[1].Count;
+            float angle = -2 * Mathf.PI / _runeDict[1].Count;
 
             for (int i = 0; i < _runeDict[1].Count; i++)
             {
-                float height = Mathf.Sin(angle * Mathf.Deg2Rad * i + (_startAngle * Mathf.Deg2Rad)/* + angle / 2f * Mathf.Deg2Rad*/) * 1.7f; // 470
-                float width = Mathf.Cos(angle * Mathf.Deg2Rad * i + (_startAngle * Mathf.Deg2Rad)/* + angle / 2f * Mathf.Deg2Rad*/) * 1.7f; // 450
+                float height = Mathf.Sin(angle * i + (90 * Mathf.Deg2Rad)) * 1.7f; // 470
+                float width = Mathf.Cos(angle * i + (90 * Mathf.Deg2Rad)) * 1.7f; // 450
                 _runeDict[1][i].transform.position = new Vector3(width + this.transform.position.x, height + this.transform.position.y, 0);
                 //_magicDict[1][i].transform.localScale = new Vector3(0.02f, 0.02f, 1);
 
