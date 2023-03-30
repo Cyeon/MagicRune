@@ -222,6 +222,9 @@ public class DialElement : MonoBehaviour
                         //action = () => GameManager.Instance.player.Attack(e.Effect * c);
                         action = () => BattleManager.Instance.player.Attack(e.Effect);
                         break;
+                    case AttackType.Defence:
+                        action = () => BattleManager.Instance.player.Attack(BattleManager.Instance.player.Shield);
+                        break;
                 }
                 break;
             case EffectType.Defence:
@@ -248,8 +251,8 @@ public class DialElement : MonoBehaviour
                         break;
                 }
                 break;
-            case EffectType.Destroy:
-                action = () => StatusManager.Instance.RemStatus(target, e.StatusType);
+            case EffectType.DestroyStatus:
+                action = () => StatusManager.Instance.AllRemStatus(target, e.StatusType);
                 break;
             case EffectType.Draw:
                 // 지금은 일단 주석...

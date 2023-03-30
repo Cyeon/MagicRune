@@ -25,7 +25,8 @@ public enum StatusName
     Weak,
     Fire,
     Ice,
-    Wound,
+    Hurt,
+    Charge,
     COUNT
 }
 
