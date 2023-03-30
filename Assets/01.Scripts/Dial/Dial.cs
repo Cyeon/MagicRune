@@ -151,8 +151,10 @@ public class Dial : MonoBehaviour
 
             for (int i = 0; i < _runeDict[line].Count; i++)
             {
-                float height = Mathf.Sin(angle * i + (90 * Mathf.Deg2Rad)) * _lineDistanceArray[3 - line];
-                float width = Mathf.Cos(angle * i + (90 * Mathf.Deg2Rad)) * _lineDistanceArray[3 - line];
+                float radianValue = angle * i + (_startAngle * Mathf.Deg2Rad);
+
+                float height = Mathf.Sin(radianValue) * _lineDistanceArray[3 - line];
+                float width = Mathf.Cos(radianValue) * _lineDistanceArray[3 - line];
                 _runeDict[line][i].transform.position = new Vector3(width + this.transform.position.x, height + this.transform.position.y, 0);
                 //_magicDict[1][i].transform.localScale = new Vector3(0.02f, 0.02f, 1);
 

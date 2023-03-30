@@ -94,12 +94,13 @@ public class DialElement : MonoBehaviour
 
         if (_runeList.Count > 0 && BattleManager.Instance.IsPlayerTurn())
         {
-            float oneDinstance = 360f / _runeList.Count;
+            float oneDinstance = _dial.RuneAngle / _runeList.Count;
             bool inBoolean = (_spriteRenderer.transform.eulerAngles.z % oneDinstance) <= _selectOffset;
             bool outBoolean = (oneDinstance - (_spriteRenderer.transform.eulerAngles.z % oneDinstance)) <= _selectOffset;
             if (inBoolean)
             {
                 int index = (int)(_spriteRenderer.transform.eulerAngles.z / oneDinstance) % (_runeList.Count);
+                index = (index + 1) % _runeList.Count; // Ãß°¡ÇÔ
                 if (_runeList[index].Rune.IsCoolTime == false)
                 {
                     SelectCard = _runeList[index];
@@ -120,7 +121,7 @@ public class DialElement : MonoBehaviour
                 //SelectCard = _cardList[index];
 
                 int index = (int)(_spriteRenderer.transform.eulerAngles.z / oneDinstance) % (_runeList.Count);
-                index = (index + 1) % _runeList.Count;
+                //index = (index + 1) % _runeList.Count;
                 if (_runeList[index].Rune.IsCoolTime == false)
                 {
                     SelectCard = _runeList[index];
@@ -336,7 +337,7 @@ public class DialElement : MonoBehaviour
                     {
                         if (_isUseRotateOffset)
                         {
-                            float oneDinstance = 360f / _runeList.Count;
+                            float oneDinstance = _dial.RuneAngle / _runeList.Count;
                             bool inBoolean = (_spriteRenderer.transform.eulerAngles.z % oneDinstance) <= _selectOffset;
                             bool outBoolean = (oneDinstance - (_spriteRenderer.transform.eulerAngles.z % oneDinstance)) <= _selectOffset;
                             if (inBoolean)
@@ -376,7 +377,7 @@ public class DialElement : MonoBehaviour
                         }
                         else
                         {
-                            float oneDinstance = 360f / _runeList.Count;
+                            float oneDinstance = _dial.RuneAngle / _runeList.Count;
                             int index = (int)(transform.eulerAngles.z / oneDinstance) % (_runeList.Count);
 
                             float distance = transform.eulerAngles.z % oneDinstance;
