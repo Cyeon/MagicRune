@@ -179,6 +179,26 @@ public class DialElement : MonoBehaviour
         _magicList = new List<RuneUI>(list);
     }
 
+    public bool CheckCondition(Condition condition)
+    {
+        ConditionType conditionType = condition.ConditionType;
+        switch(conditionType)
+        {
+            case ConditionType.StatusComparison:
+                switch (condition.ComparisonType)
+                {
+                    case ComparisonType.MoreThan:
+
+                        break;
+                    case ComparisonType.LessThan:
+
+                        break;
+                }
+                break;
+        }
+        return false;
+    }
+
     public void Attack()
     {
         if (BattleManager.Instance.enemy.IsDie == false && _selectCard != null)
@@ -187,7 +207,10 @@ public class DialElement : MonoBehaviour
             {
                 Pair pair = _selectCard.Rune.EffectList[i];
                 Unit target = pair.IsEnemy == true ? BattleManager.Instance.enemy : BattleManager.Instance.player;
-                AttackEffectFunction(pair.EffectType, target, pair)?.Invoke();
+                if (CheckCondition(_selectCard.Rune.EffectList[i].Condition))
+                {
+                    AttackEffectFunction(pair.EffectType, target, pair)?.Invoke();
+                }
             }
 
             _selectCard.Rune.SetCoolTime(_selectCard.Rune.GetRune().CoolTime);
