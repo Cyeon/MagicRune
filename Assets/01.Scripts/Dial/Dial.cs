@@ -68,12 +68,6 @@ public class Dial : MonoBehaviour
         SettingDialRune(true);
     }
 
-    private void Update()
-    {
-        if (_dialElementList[0] != null)
-            Debug.Log(_dialElementList[0].transform.eulerAngles.z);
-    }
-
     public void SettingDialRune(bool isReset)
     {
         foreach (KeyValuePair<int, List<RuneUI>> runeList in _runeDict)

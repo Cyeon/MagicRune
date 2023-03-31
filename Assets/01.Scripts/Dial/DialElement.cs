@@ -94,53 +94,56 @@ public class DialElement : MonoBehaviour
 
         if (_runeList.Count > 0 && BattleManager.Instance.IsPlayerTurn())
         {
-            float oneDinstance = _dial.RuneAngle / _runeList.Count;
-            bool inBoolean = (_spriteRenderer.transform.eulerAngles.z % oneDinstance) <= _selectOffset;
-            bool outBoolean = (oneDinstance - (_spriteRenderer.transform.eulerAngles.z % oneDinstance)) <= _selectOffset;
-            if (inBoolean)
+            if (transform.eulerAngles.z >= _dial.RuneAngle / 2 || transform.eulerAngles.z <= 360f - _dial.RuneAngle / 2)
             {
-                int index = (int)(_spriteRenderer.transform.eulerAngles.z / oneDinstance) % (_runeList.Count);
-                index = (index + 1) % _runeList.Count; // 추가함
-                if (_runeList[index].Rune.IsCoolTime == false)
+                float oneDinstance = _dial.RuneAngle / _runeList.Count;
+                bool inBoolean = (_spriteRenderer.transform.eulerAngles.z % oneDinstance) <= _selectOffset;
+                bool outBoolean = (oneDinstance - (_spriteRenderer.transform.eulerAngles.z % oneDinstance)) <= _selectOffset;
+                if (inBoolean)
                 {
-                    SelectCard = _runeList[index];
-                    if (_isRotate == true)
+                    int index = (int)(_spriteRenderer.transform.eulerAngles.z / oneDinstance) % (_runeList.Count);
+                    index = (index + 1) % _runeList.Count; // 추가함
+                    if (_runeList[index].Rune.IsCoolTime == false)
                     {
-                        if (_selectCard != null)
+                        SelectCard = _runeList[index];
+                        if (_isRotate == true)
                         {
-                            _dialScene?.CardDescPopup(_selectCard.Rune);
+                            if (_selectCard != null)
+                            {
+                                _dialScene?.CardDescPopup(_selectCard.Rune);
+                            }
                         }
                     }
                 }
-            }
-            else if (outBoolean)
-            {
-                //int index = (int)(oneDinstance - (_image.transform.eulerAngles.z / oneDinstance)) % (_cardList.Count);
-                //Debug.Log(index);
-                //index = (index - 1) % _cardList.Count;
-                //SelectCard = _cardList[index];
+                else if (outBoolean)
+                {
+                    //int index = (int)(oneDinstance - (_image.transform.eulerAngles.z / oneDinstance)) % (_cardList.Count);
+                    //Debug.Log(index);
+                    //index = (index - 1) % _cardList.Count;
+                    //SelectCard = _cardList[index];
 
-                int index = (int)(_spriteRenderer.transform.eulerAngles.z / oneDinstance) % (_runeList.Count);
-                index = (index) % (_runeList.Count - 1);
-                if (_runeList[index].Rune.IsCoolTime == false)
-                {
-                    SelectCard = _runeList[index];
-                    if (_isRotate == true)
+                    int index = (int)(_spriteRenderer.transform.eulerAngles.z / oneDinstance) % (_runeList.Count);
+                    index = (index - 1 < 0 ? _runeList.Count - 1 : index - 1) % (_runeList.Count);
+                    if (_runeList[index].Rune.IsCoolTime == false)
                     {
-                        if (_selectCard != null)
+                        SelectCard = _runeList[index];
+                        if (_isRotate == true)
                         {
-                            _dialScene?.CardDescPopup(_selectCard.Rune);
+                            if (_selectCard != null)
+                            {
+                                _dialScene?.CardDescPopup(_selectCard.Rune);
+                            }
                         }
                     }
                 }
-            }
-            else
-            {
-                SelectCard = null;
-                if (_isRotate == true)
+                else
                 {
-                    Rune rune = SelectCard == null ? null : SelectCard.Rune;
-                    _dialScene?.CardDescPopup(rune);
+                    SelectCard = null;
+                    if (_isRotate == true)
+                    {
+                        Rune rune = SelectCard == null ? null : SelectCard.Rune;
+                        _dialScene?.CardDescPopup(rune);
+                    }
                 }
             }
         }
@@ -386,7 +389,7 @@ public class DialElement : MonoBehaviour
                                 transform.DORotate(new Vector3(0, 0, ((index + 1) % _runeList.Count * oneDinstance) >= 120 ? ((index + 1) % _runeList.Count * oneDinstance) + 360f - oneDinstance * _runeList.Count : (index + 1) % _runeList.Count * oneDinstance), 0.3f, RotateMode.Fast)
                                     .OnComplete(() =>
                                     {
-                                        SelectCard = _runeList[index];
+                                        //SelectCard = _runeList[index];
                                         if (_selectCard != null) { _dialScene?.CardDescPopup(_selectCard.Rune); }
                                     });
                             }
@@ -395,7 +398,7 @@ public class DialElement : MonoBehaviour
                                 transform.DORotate(new Vector3(0, 0, ((index) * oneDinstance) >= 120 ? ((index) * oneDinstance) + 360f - oneDinstance * _runeList.Count : ((index) * oneDinstance)), 0.3f, RotateMode.Fast)
                                     .OnComplete(() =>
                                     {
-                                        SelectCard = _runeList[index]; // 뭔가 재대로 원하는 애가 안들어가는 듯 정보창 갱신이 느리다?
+                                        //SelectCard = _runeList[index]; // 뭔가 재대로 원하는 애가 안들어가는 듯 정보창 갱신이 느리다?
                                         if (_selectCard != null) { _dialScene?.CardDescPopup(_selectCard.Rune); }
                                     });
                             }
