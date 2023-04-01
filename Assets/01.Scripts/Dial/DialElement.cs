@@ -1,15 +1,8 @@
 using DG.Tweening;
 using MyBox;
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Security.Cryptography;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.UI;
-using UnityEngine.UIElements;
-using Image = UnityEngine.UI.Image;
 
 public class DialElement : MonoBehaviour
 {
@@ -94,14 +87,15 @@ public class DialElement : MonoBehaviour
 
         if (_runeList.Count > 0 && BattleManager.Instance.IsPlayerTurn())
         {
-            if (transform.eulerAngles.z >= _dial.RuneAngle / 2 || transform.eulerAngles.z <= 360f - _dial.RuneAngle / 2)
+            // UI 풀링하면서 이 부분 뺴야함
+            if (transform.eulerAngles.z <= _dial.RuneAngle / 2 || transform.eulerAngles.z >= (360f - _dial.RuneAngle / 2))
             {
                 float oneDinstance = _dial.RuneAngle / _runeList.Count;
-                bool inBoolean = (_spriteRenderer.transform.eulerAngles.z % oneDinstance) <= _selectOffset;
-                bool outBoolean = (oneDinstance - (_spriteRenderer.transform.eulerAngles.z % oneDinstance)) <= _selectOffset;
+                bool inBoolean = (transform.eulerAngles.z % oneDinstance) <= _selectOffset;
+                bool outBoolean = (oneDinstance - (transform.eulerAngles.z % oneDinstance)) <= _selectOffset;
                 if (inBoolean)
                 {
-                    int index = (int)(_spriteRenderer.transform.eulerAngles.z / oneDinstance) % (_runeList.Count);
+                    int index = (int)(transform.eulerAngles.z / oneDinstance) % (_runeList.Count);
                     index = (index + 1) % _runeList.Count; // 추가함
                     if (_runeList[index].Rune.IsCoolTime == false)
                     {
@@ -122,8 +116,9 @@ public class DialElement : MonoBehaviour
                     //index = (index - 1) % _cardList.Count;
                     //SelectCard = _cardList[index];
 
-                    int index = (int)(_spriteRenderer.transform.eulerAngles.z / oneDinstance) % (_runeList.Count);
+                    int index = (int)(transform.eulerAngles.z / oneDinstance) % (_runeList.Count);
                     index = (index - 1 < 0 ? _runeList.Count - 1 : index - 1) % (_runeList.Count);
+
                     if (_runeList[index].Rune.IsCoolTime == false)
                     {
                         SelectCard = _runeList[index];
@@ -338,69 +333,75 @@ public class DialElement : MonoBehaviour
 
                     if (_runeList.Count > 0 && BattleManager.Instance.IsPlayerTurn())
                     {
-                        if (_isUseRotateOffset)
+                        // UI 풀링하면서 이부분 뺴야함
+                        if (transform.eulerAngles.z <= _dial.RuneAngle / 2 || transform.eulerAngles.z >= (360f - _dial.RuneAngle / 2))
                         {
-                            float oneDinstance = _dial.RuneAngle / _runeList.Count;
-                            bool inBoolean = (_spriteRenderer.transform.eulerAngles.z % oneDinstance) <= _selectOffset;
-                            bool outBoolean = (oneDinstance - (_spriteRenderer.transform.eulerAngles.z % oneDinstance)) <= _selectOffset;
-                            if (inBoolean)
+                            if (_isUseRotateOffset)
                             {
-                                int index = (int)(_spriteRenderer.transform.eulerAngles.z / oneDinstance) % (_runeList.Count);
-                                //if (_magicList[index].Rune.IsCoolTime == false)
-                                //{
-                                // 돌리고 있을 때만
-                                DOTween.To(
-                                    () => transform.eulerAngles,
-                                    x => transform.eulerAngles = x,
-                                    new Vector3(0, 0, ((int)(transform.eulerAngles.z / oneDinstance)) * oneDinstance),
-                                    0.3f
-                                ).OnComplete(() =>
+                                float oneDinstance = _dial.RuneAngle / _runeList.Count;
+                                bool inBoolean = (transform.eulerAngles.z % oneDinstance) <= _selectOffset;
+                                bool outBoolean = (oneDinstance - (transform.eulerAngles.z % oneDinstance)) <= _selectOffset;
+                                if (inBoolean)
                                 {
-                                    if (_selectCard != null) { _dialScene?.CardDescPopup(_selectCard.Rune); }
-                                });
-                                //}
-                            }
-                            else if (outBoolean)
-                            {
-                                int index = ((int)(transform.eulerAngles.z / oneDinstance) + 1) % (_runeList.Count);
-                                index = (index + 1) % _runeList.Count;
-                                //if (_magicList[index].Rune.IsCoolTime == false)
-                                //{
-                                DOTween.To(
-                                    () => transform.eulerAngles,
-                                    x => transform.eulerAngles = x,
-                                    new Vector3(0, 0, ((int)(transform.eulerAngles.z / oneDinstance)) * oneDinstance + _dial.StartAngle),
-                                    0.3f
-                                ).OnComplete(() =>
-                                {
-                                    if (_selectCard != null) { _dialScene?.CardDescPopup(_selectCard.Rune); }
-                                });
-                                //}
-                            }
-                        }
-                        else
-                        {
-                            float oneDinstance = _dial.RuneAngle / _runeList.Count;
-                            int index = (int)(transform.eulerAngles.z / oneDinstance) % (_runeList.Count);
-
-                            float distance = transform.eulerAngles.z % oneDinstance;
-                            if (distance >= oneDinstance / 2f)
-                            {
-                                transform.DORotate(new Vector3(0, 0, ((index + 1) % _runeList.Count * oneDinstance) >= 120 ? ((index + 1) % _runeList.Count * oneDinstance) + 360f - oneDinstance * _runeList.Count : (index + 1) % _runeList.Count * oneDinstance), 0.3f, RotateMode.Fast)
-                                    .OnComplete(() =>
+                                    int index = (int)(transform.eulerAngles.z / oneDinstance) % (_runeList.Count);
+                                    index = Mathf.Clamp(index, 0, _runeList.Count - 1);
+                                    //if (_magicList[index].Rune.IsCoolTime == false)
+                                    //{
+                                    // 돌리고 있을 때만
+                                    DOTween.To(
+                                        () => transform.eulerAngles,
+                                        x => transform.eulerAngles = x,
+                                        new Vector3(0, 0, ((int)(transform.eulerAngles.z / oneDinstance)) * oneDinstance),
+                                        0.3f
+                                    ).OnComplete(() =>
                                     {
-                                        //SelectCard = _runeList[index];
                                         if (_selectCard != null) { _dialScene?.CardDescPopup(_selectCard.Rune); }
                                     });
+                                    //}
+                                }
+                                else if (outBoolean)
+                                {
+                                    int index = ((int)(transform.eulerAngles.z / oneDinstance) + 1) % (_runeList.Count);
+                                    index = (index + 1) % _runeList.Count;
+                                    index = Mathf.Clamp(index + 1, 0, _runeList.Count - 1);
+                                    //if (_magicList[index].Rune.IsCoolTime == false)
+                                    //{
+                                    DOTween.To(
+                                        () => transform.eulerAngles,
+                                        x => transform.eulerAngles = x,
+                                        new Vector3(0, 0, ((int)(transform.eulerAngles.z / oneDinstance)) * oneDinstance + _dial.StartAngle),
+                                        0.3f
+                                    ).OnComplete(() =>
+                                    {
+                                        if (_selectCard != null) { _dialScene?.CardDescPopup(_selectCard.Rune); }
+                                    });
+                                    //}
+                                }
                             }
                             else
                             {
-                                transform.DORotate(new Vector3(0, 0, ((index) * oneDinstance) >= 120 ? ((index) * oneDinstance) + 360f - oneDinstance * _runeList.Count : ((index) * oneDinstance)), 0.3f, RotateMode.Fast)
-                                    .OnComplete(() =>
-                                    {
-                                        //SelectCard = _runeList[index]; // 뭔가 재대로 원하는 애가 안들어가는 듯 정보창 갱신이 느리다?
-                                        if (_selectCard != null) { _dialScene?.CardDescPopup(_selectCard.Rune); }
-                                    });
+                                float oneDinstance = _dial.RuneAngle / _runeList.Count;
+                                int index = (int)(transform.eulerAngles.z / oneDinstance) % (_runeList.Count);
+
+                                float distance = transform.eulerAngles.z % oneDinstance;
+                                if (distance >= oneDinstance / 2f)
+                                {
+                                    transform.DORotate(new Vector3(0, 0, ((index + 1) % _runeList.Count * oneDinstance) >= 120 ? ((index + 1) % _runeList.Count * oneDinstance) + 360f - oneDinstance * _runeList.Count : (index + 1) % _runeList.Count * oneDinstance), 0.3f, RotateMode.Fast)
+                                        .OnComplete(() =>
+                                        {
+                                            //SelectCard = _runeList[index];
+                                            if (_selectCard != null) { _dialScene?.CardDescPopup(_selectCard.Rune); }
+                                        });
+                                }
+                                else
+                                {
+                                    transform.DORotate(new Vector3(0, 0, ((index) * oneDinstance) >= 120 ? ((index) * oneDinstance) + 360f - oneDinstance * _runeList.Count : ((index) * oneDinstance)), 0.3f, RotateMode.Fast)
+                                        .OnComplete(() =>
+                                        {
+                                            //SelectCard = _runeList[index]; // 뭔가 재대로 원하는 애가 안들어가는 듯 정보창 갱신이 느리다?
+                                            if (_selectCard != null) { _dialScene?.CardDescPopup(_selectCard.Rune); }
+                                        });
+                                }
                             }
                         }
                     }
