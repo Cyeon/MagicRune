@@ -26,6 +26,8 @@ public enum StatusName
     Fire,
     Ice,
     Wound,
+    Example,
+    Ventilation,
     COUNT
 }
 

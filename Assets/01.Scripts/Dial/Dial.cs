@@ -344,7 +344,7 @@ public class Dial : MonoBehaviour
                 }
                 break;
             case EffectType.Destroy:
-                action = () => StatusManager.Instance.RemStatus(target, e.StatusType);
+                action = () => StatusManager.Instance.DeleteStatus(target, e.StatusType);
                 break;
             case EffectType.Draw:
                 // 지금은 일단 주석...

@@ -26,7 +26,7 @@ public class Pattern : MonoBehaviour
     {
         UIManager.Instance.ReloadPattern(icon, desc);
 
-        foreach(PatternAction action in startPattern)
+        foreach (PatternAction action in startPattern)
         {
             action.TakeAction();
         }

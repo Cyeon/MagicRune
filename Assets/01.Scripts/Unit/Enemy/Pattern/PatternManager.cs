@@ -8,6 +8,14 @@ public class PatternManager : MonoBehaviour
     public List<Pattern> patternList = new List<Pattern>();
     private int _index = 0;
 
+    private void Awake()
+    {
+        foreach(var pattern in transform.GetComponentsInChildren<Pattern>())
+        {
+            patternList.Add(pattern);
+        }
+    }
+
     public void NextPattern()
     {
         _index++;

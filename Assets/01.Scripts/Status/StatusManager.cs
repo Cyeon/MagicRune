@@ -104,7 +104,7 @@ public class StatusManager : MonoSingleton<StatusManager>
             Status currentStauts = statusList.Where(e => e.statusName == status.statusName).FirstOrDefault();
             if(currentStauts != null)
             {
-                currentStauts.typeValue += status.typeValue > 0 ? status.typeValue : value;
+                currentStauts.typeValue += value;
                 UIManager.Instance.ReloadStatusPanel(unit, currentStauts.statusName, currentStauts.typeValue);
             }
             else
@@ -118,8 +118,32 @@ public class StatusManager : MonoSingleton<StatusManager>
         }
     }
 
+    public void RemStatus(Unit unit, StatusName statusName, int value = 1)
+    {
+        Status status = GetStatus(statusName);
+        if (status == null)
+        {
+            Debug.LogWarning(string.Format("{0} status not found.", statusName));
+            return;
+        }
+
+        Status newStatus = new Status(status);
+        newStatus.typeValue = value;
+
+        List<Status> statusList = new List<Status>();
+        if (unit.unitStatusDic.TryGetValue(status.invokeTime, out statusList))
+        {
+            Status currentStauts = statusList.Where(e => e.statusName == status.statusName).FirstOrDefault();
+            if (currentStauts != null)
+            {
+                currentStauts.typeValue -= value;
+                UIManager.Instance.ReloadStatusPanel(unit, currentStauts.statusName, currentStauts.typeValue);
+            }
+        }
+    }
+
     // ?ÅÌÉú?¥ÏÉÅ ?úÍ±∞
-    public void RemStatus(Unit unit, Status status)
+    public void DeleteStatus(Unit unit, Status status)
     {
         List<Status> statusList = new List<Status>();
         if(unit.unitStatusDic.TryGetValue(status.invokeTime, out statusList))
@@ -137,10 +161,10 @@ public class StatusManager : MonoSingleton<StatusManager>
         }
     }
 
-    public void RemStatus(Unit unit, StatusName statusName)
+    public void DeleteStatus(Unit unit, StatusName statusName)
     {
         Status status = GetStatus(statusName);
-        RemStatus(unit, status);
+        DeleteStatus(unit, status);
     }
 
     public void StatusUpdate(Unit unit)
@@ -156,7 +180,7 @@ public class StatusManager : MonoSingleton<StatusManager>
                 }
             }
 
-            indexes.ForEach(e => RemStatus(unit, x.Value[e]));
+            indexes.ForEach(e => DeleteStatus(unit, x.Value[e]));
         }
     }
 
@@ -176,7 +200,7 @@ public class StatusManager : MonoSingleton<StatusManager>
                 }
             }
 
-            indexes.ForEach(e => RemStatus(unit, x.Value[e]));
+            indexes.ForEach(e => DeleteStatus(unit, x.Value[e]));
         }
     }
 
