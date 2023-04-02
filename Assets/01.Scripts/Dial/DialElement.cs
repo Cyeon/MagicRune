@@ -177,31 +177,21 @@ public class DialElement : MonoBehaviour
             _touchPos = Input.GetTouch(_fingerID).position;
         }
 
+        // 만드는 중
         //float oneDistance = _dial.RuneAngle;
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < _runeList.Count; i++)
         {
-            if (transform.eulerAngles.z > (_dial.RuneAngle / 2 + transform.eulerAngles.z + _runePoolOffset))
+            // 마법진보다 아래에 가면
+            if (_runeList[i].transform.position.y + _runePoolOffset < transform.position.y)
             {
-                // 오른쪽에 추가
-                RuneUI rune = _runeList[0];
-                _runeList.RemoveAt(0);
-                _runeList.Add(rune);
+                if (_runeList[i].transform.position.x > 0) // 왼쪽
+                {
+                    //RuneUI 
+                }
+                else // 오른쭉
+                {
 
-                // Sort
-                //_dial.LineCardSort(_lineID);
-                Debug.Log("왼쪽 넘음");
-            }
-            else if (transform.eulerAngles.z < (360f - (_dial.RuneAngle / 2 + transform.eulerAngles.z + _runePoolOffset)))
-            {
-                // 왼쪽에 추가
-                int index = _runeList.Count - 1;
-                RuneUI rune = _runeList[index];
-                _runeList.RemoveAt(index);
-                _runeList.Add(rune);
-
-                // Sort
-                //_dial.LineCardSort(_lineID);
-                Debug.Log("오른쪽 넘음");
+                }
             }
         }
     }
