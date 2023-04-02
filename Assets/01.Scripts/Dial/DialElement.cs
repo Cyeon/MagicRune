@@ -92,7 +92,7 @@ public class DialElement : MonoBehaviour
 
         if (_runeList.Count > 0 && BattleManager.Instance.IsPlayerTurn())
         {
-            // UI Ç®¸µÇÏ¸é¼­ ÀÌ ºÎºÐ •û¾ßÇÔ
+            // UI Ç®ï¿½ï¿½ï¿½Ï¸é¼­ ï¿½ï¿½ ï¿½Îºï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
             //if (transform.eulerAngles.z <= _dial.RuneAngle / 2 || transform.eulerAngles.z >= (360f - _dial.RuneAngle / 2))
             //{
                 float oneDinstance = _dial.RuneAngle / _runeList.Count;
@@ -101,7 +101,7 @@ public class DialElement : MonoBehaviour
                 if (inBoolean)
                 {
                     int index = (int)(transform.eulerAngles.z / oneDinstance) % (_runeList.Count);
-                    index = (index + 1) % _runeList.Count; // Ãß°¡ÇÔ
+                    index = (index + 1) % _runeList.Count; // ï¿½ß°ï¿½ï¿½ï¿½
                     if (_runeList[index].Rune.IsCoolTime == false)
                     {
                         SelectCard = _runeList[index];
@@ -177,18 +177,18 @@ public class DialElement : MonoBehaviour
             _touchPos = Input.GetTouch(_fingerID).position;
         }
 
-        // ¸¸µå´Â Áß
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
         //float oneDistance = _dial.RuneAngle;
         for (int i = 0; i < _runeList.Count; i++)
         {
-            // ¸¶¹ýÁøº¸´Ù ¾Æ·¡¿¡ °¡¸é
+            // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Æ·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             if (_runeList[i].transform.position.y + _runePoolOffset < transform.position.y)
             {
-                if (_runeList[i].transform.position.x > 0) // ¿ÞÂÊ
+                if (_runeList[i].transform.position.x > 0) // ï¿½ï¿½ï¿½ï¿½
                 {
                     //RuneUI 
                 }
-                else // ¿À¸¥Âß
+                else // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
                 {
 
                 }
@@ -225,15 +225,17 @@ public class DialElement : MonoBehaviour
                 switch (condition.ComparisonType)
                 {
                     case ComparisonType.MoreThan:
-
+                        if (!(StatusManager.Instance.GetUnitStatusValue(BattleManager.Instance.player, condition.StatusType) >= condition.Value))
+                            return false;
                         break;
                     case ComparisonType.LessThan:
-
+                        if (!(StatusManager.Instance.GetUnitStatusValue(BattleManager.Instance.player, condition.StatusType) <= condition.Value))
+                            return false;
                         break;
                 }
                 break;
         }
-        return true; // µð¹ö±×¿ëÀ¸·Î true·Î ¹Ù²Þ.
+        return true;
     }
 
     public void Attack()
@@ -312,10 +314,18 @@ public class DialElement : MonoBehaviour
                 }
                 break;
             case EffectType.DestroyStatus:
-                action = () => StatusManager.Instance.AllRemStatus(target, e.StatusType);
+                switch (e.CountType)
+                {
+                    case CountType.Count:
+                        action = () => StatusManager.Instance.CountRemStatus(target, e.StatusType, (int)e.Effect);
+                        break;
+                    case CountType.All:
+                        action = () => StatusManager.Instance.AllRemStatus(target, e.StatusType);
+                        break;
+                }
                 break;
             case EffectType.Draw:
-                // Áö±ÝÀº ÀÏ´Ü ÁÖ¼®...
+                // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ï´ï¿½ ï¿½Ö¼ï¿½...
                 //action = () => _cardCollector.CardDraw(e.Effect);
                 break;
             case EffectType.Etc:
@@ -374,7 +384,7 @@ public class DialElement : MonoBehaviour
                                     index = Mathf.Clamp(index, 0, _runeList.Count - 1);
                                     //if (_magicList[index].Rune.IsCoolTime == false)
                                     //{
-                                    // µ¹¸®°í ÀÖÀ» ¶§¸¸
+                                    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
                                     DOTween.To(
                                         () => transform.eulerAngles,
                                         x => transform.eulerAngles = x,
@@ -425,7 +435,7 @@ public class DialElement : MonoBehaviour
                                     transform.DORotate(new Vector3(0, 0, ((index) * oneDinstance) >= 120 ? ((index) * oneDinstance) + 360f - oneDinstance * _runeList.Count : ((index) * oneDinstance)), 0.3f, RotateMode.Fast)
                                         .OnComplete(() =>
                                         {
-                                            //SelectCard = _runeList[index]; // ¹º°¡ Àç´ë·Î ¿øÇÏ´Â ¾Ö°¡ ¾Èµé¾î°¡´Â µí Á¤º¸Ã¢ °»½ÅÀÌ ´À¸®´Ù?
+                                            //SelectCard = _runeList[index]; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½Ö°ï¿½ ï¿½Èµï¿½î°¡ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ã¢ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½?
                                             if (_selectCard != null) { _dialScene?.CardDescPopup(_selectCard.Rune); }
                                         });
                                 }
