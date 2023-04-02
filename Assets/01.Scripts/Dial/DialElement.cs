@@ -182,15 +182,34 @@ public class DialElement : MonoBehaviour
         for (int i = 0; i < _runeList.Count; i++)
         {
             // ���������� �Ʒ��� ����
-            if (_runeList[i].transform.position.y + _runePoolOffset < transform.position.y)
+            if (_runeList[i].transform.TransformPoint(_runeList[i].transform.localPosition).y + _runePoolOffset < transform.TransformPoint(transform.localPosition).y)
             {
-                if (_runeList[i].transform.position.x > 0) // ����
+                if (_runeList[i].transform.TransformPoint(_runeList[i].transform.localPosition).x > 0) // 오른쪽
                 {
-                    //RuneUI 
-                }
-                else // ������
-                {
+                    Debug.Log("오른쪽");
+                    int index = _runeList.Count - 1;
+                    RuneUI rune = _runeList[index];
 
+                    float angle = -1 * _dial.RuneAngle / _runeList.Count * Mathf.Deg2Rad;
+                    float radianValue = angle * (index + 1);
+
+                    float height = Mathf.Sin(radianValue) * _dial.LineDistanceArray[3 - _lineID];
+                    float width = Mathf.Cos(radianValue) * _dial.LineDistanceArray[3 - _lineID];
+                    _runeList[index].transform.position = new Vector3(width + this.transform.position.x, height + this.transform.position.y, 0);
+                    //_magicDict[1][i].transform.localScale = new Vector3(0.02f, 0.02f, 1);
+
+                    Vector2 direction = new Vector2(
+                        _runeList[index].transform.position.x - transform.position.x,
+                        _runeList[index].transform.position.y - transform.position.y
+                    );
+
+                    float ang = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+                    Quaternion angleAxis = Quaternion.AngleAxis(ang - 90f, Vector3.forward);
+                    _runeList[index].transform.rotation = angleAxis;
+                }
+                else // 읜쪽
+                {
+                    Debug.Log("왼쪽");
                 }
             }
         }
