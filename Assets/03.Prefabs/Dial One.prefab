@@ -522,12 +522,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _maxRuneCount: 3
-  _runeAngle: 360
-  _startAngle: 90
+  _runeAngle: 180
+  _startAngle: 150
   _selectedDeck: []
-  tempCard: {fileID: 8165298467326144068, guid: d80daf2e6dc89fc4b9c1606735cfa39a, type: 3}
-  _bezierMissile: {fileID: 1426304098941858083, guid: 9dd93f28a2b7477439d08440675ea353, type: 3}
   _enemyPos: {fileID: 0}
+  _lineDistanceArray:
+  - 4
+  - 2.9
+  - 1.7
 --- !u!1 &6047878870784061144
 GameObject:
   m_ObjectHideFlags: 0
@@ -553,8 +555,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6047878870784061144}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.34, z: 0}
-  m_LocalScale: {x: 1.5, y: 10, z: 1}
+  m_LocalPosition: {x: 0, y: 1.9038, z: 0}
+  m_LocalScale: {x: 1.5, y: 5.5119996, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6738287192194539990}

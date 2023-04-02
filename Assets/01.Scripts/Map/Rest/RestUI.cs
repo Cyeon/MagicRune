@@ -24,11 +24,16 @@ public class RestUI : MonoBehaviour
         GetComponent<Canvas>().enabled = false;
 
         _restBtn.onClick.RemoveAllListeners();
-        _restBtn.onClick.AddListener(() => StartCoroutine(RestCoroutine()));
+        _restBtn.onClick.AddListener(() =>
+        {
+            _enhanceBtn.onClick.RemoveAllListeners();
+            StartCoroutine(RestCoroutine());
+        });
 
         //_enhanceBtn.onClick.RemoveAllListeners();
         _enhanceBtn.onClick.AddListener(() =>
         {
+            _restBtn.onClick.RemoveAllListeners();
             Debug.Log("Enhance Complete");
 
 

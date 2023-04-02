@@ -16,13 +16,6 @@ public enum EnhanceType
 
 public class RestPortal : Portal
 {
-    #region Rest Parameta
-    #endregion
-
-    private Button _restBtn;
-    private Button _enhanceBtn;
-
-    [SerializeField]
     private RestUI _restUI;
 
     public override void Init()
@@ -32,6 +25,8 @@ public class RestPortal : Portal
 
     public override void Execute()
     {
+        _restUI = CanvasManager.Instance.GetCanvas("Rest").GetComponent<RestUI>();
+
         CanvasManager.Instance.GetCanvas("MapUI").enabled = false;
         CanvasManager.Instance.GetCanvas("Rest").enabled = true;
         _restUI.PortalStartAnimation();

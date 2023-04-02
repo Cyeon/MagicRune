@@ -81,6 +81,11 @@ public class BattleManager : MonoSingleton<BattleManager>
         enemy.TurnStart();
     }
 
+    public bool IsPlayerTurn()
+    {
+        return _gameTurn == GameTurn.Player;
+    }
+
     # region Debug
 
     public void TurnChange()
@@ -156,6 +161,7 @@ public class BattleManager : MonoSingleton<BattleManager>
 
                 //UIManager.Instance.Turn("Player Turn");
                 _dialScene?.Turn("Player Turn");
+                _dialScene?.Dial?.ResetDial();
                 _dialScene?.Dial?.AllMagicSetCoolTime();
                 _dialScene?.Dial?.SettingDialRune(false);
                 _gameTurn = GameTurn.MonsterWait;

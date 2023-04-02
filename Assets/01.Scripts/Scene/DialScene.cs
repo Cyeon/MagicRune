@@ -24,6 +24,7 @@ public class DialScene : BaseScene
     private TextMeshProUGUI _cardDescName;
     private Image _cardDescSkillIcon;
     private TextMeshProUGUI _cardDescInfo;
+    private TextMeshProUGUI _cardDescCoolTime;
 
     private GameObject _statusDescPanel;
     private TextMeshPro _statusDescName;
@@ -58,6 +59,7 @@ public class DialScene : BaseScene
         UIManager.Instance.Bind<TextMeshProUGUI>("Skill_Name_Text", CanvasManager.Instance.GetCanvas("Popup").gameObject);
         UIManager.Instance.Bind<Image>("Explain_Skill_Icon", CanvasManager.Instance.GetCanvas("Popup").gameObject);
         UIManager.Instance.Bind<TextMeshProUGUI>("Explain_Text", CanvasManager.Instance.GetCanvas("Popup").gameObject);
+        UIManager.Instance.Bind<TextMeshProUGUI>("CoolTime_Text", CanvasManager.Instance.GetCanvas("Popup").gameObject);
 
         UIManager.Instance.Bind<Slider>("E HealthBar", CanvasManager.Instance.GetCanvas("Main").gameObject);
         UIManager.Instance.Bind<Slider>("E ShieldBar", CanvasManager.Instance.GetCanvas("Main").gameObject);
@@ -82,6 +84,7 @@ public class DialScene : BaseScene
         _cardDescName = UIManager.Instance.Get<TextMeshProUGUI>("Skill_Name_Text");
         _cardDescSkillIcon = UIManager.Instance.Get<Image>("Explain_Skill_Icon");
         _cardDescInfo = UIManager.Instance.Get<TextMeshProUGUI>("Explain_Text");
+        _cardDescCoolTime = UIManager.Instance.Get<TextMeshProUGUI>("CoolTime_Text");
 
         //UIManager.Instance.Get<Button>("Restart Btn").onClick.RemoveAllListeners();
         //UIManager.Instance.Get<Button>("Restart Btn").onClick.AddListener(() =>
@@ -269,9 +272,10 @@ public class DialScene : BaseScene
         {
             RuneSO magic = rune.GetRune();
 
-            _cardDescName.text = magic.Name;
+            _cardDescName.SetText(magic.Name);
             _cardDescSkillIcon.sprite = magic.RuneImage;
-            _cardDescInfo.text = magic.MainRune.CardDescription;
+            _cardDescInfo.SetText(magic.MainRune.CardDescription);
+            _cardDescCoolTime.SetText(magic.CoolTime.ToString());
             _cardDescPanel.SetActive(true);
         }
     }
@@ -401,6 +405,6 @@ public class DialScene : BaseScene
 
     public override void Clear()
     {
-        
+        // ·é Å¬¸®¾î
     }
 }
