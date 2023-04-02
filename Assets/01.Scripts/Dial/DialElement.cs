@@ -30,7 +30,12 @@ public class DialElement : MonoBehaviour
     private float _outDistance;
     #endregion
 
+    [SerializeField]
+    private float _runePoolOffset = 5f;
+
     private int _fingerID = -1;
+
+    private int _lineID = -1;
 
     private List<RuneUI> _runeList;
     private RuneUI _selectCard;
@@ -88,8 +93,8 @@ public class DialElement : MonoBehaviour
         if (_runeList.Count > 0 && BattleManager.Instance.IsPlayerTurn())
         {
             // UI 풀링하면서 이 부분 뺴야함
-            if (transform.eulerAngles.z <= _dial.RuneAngle / 2 || transform.eulerAngles.z >= (360f - _dial.RuneAngle / 2))
-            {
+            //if (transform.eulerAngles.z <= _dial.RuneAngle / 2 || transform.eulerAngles.z >= (360f - _dial.RuneAngle / 2))
+            //{
                 float oneDinstance = _dial.RuneAngle / _runeList.Count;
                 bool inBoolean = (transform.eulerAngles.z % oneDinstance) <= _selectOffset;
                 bool outBoolean = (oneDinstance - (transform.eulerAngles.z % oneDinstance)) <= _selectOffset;
@@ -140,7 +145,7 @@ public class DialElement : MonoBehaviour
                         _dialScene?.CardDescPopup(rune);
                     }
                 }
-            }
+            //}
         }
 
         if (_isRotate && BattleManager.Instance.IsPlayerTurn())
@@ -171,6 +176,39 @@ public class DialElement : MonoBehaviour
             transform.rotation = Quaternion.Euler(rot);
             _touchPos = Input.GetTouch(_fingerID).position;
         }
+
+        //float oneDistance = _dial.RuneAngle;
+        for (int i = 0; i < 3; i++)
+        {
+            if (transform.eulerAngles.z > (_dial.RuneAngle / 2 + transform.eulerAngles.z + _runePoolOffset))
+            {
+                // 오른쪽에 추가
+                RuneUI rune = _runeList[0];
+                _runeList.RemoveAt(0);
+                _runeList.Add(rune);
+
+                // Sort
+                //_dial.LineCardSort(_lineID);
+                Debug.Log("왼쪽 넘음");
+            }
+            else if (transform.eulerAngles.z < (360f - (_dial.RuneAngle / 2 + transform.eulerAngles.z + _runePoolOffset)))
+            {
+                // 왼쪽에 추가
+                int index = _runeList.Count - 1;
+                RuneUI rune = _runeList[index];
+                _runeList.RemoveAt(index);
+                _runeList.Add(rune);
+
+                // Sort
+                //_dial.LineCardSort(_lineID);
+                Debug.Log("오른쪽 넘음");
+            }
+        }
+    }
+
+    public void SetLineID(int id)
+    {
+        _lineID = id;
     }
 
     public void AddRuneList(RuneUI rune)
@@ -333,9 +371,8 @@ public class DialElement : MonoBehaviour
 
                     if (_runeList.Count > 0 && BattleManager.Instance.IsPlayerTurn())
                     {
-                        // UI 풀링하면서 이부분 뺴야함
-                        if (transform.eulerAngles.z <= _dial.RuneAngle / 2 || transform.eulerAngles.z >= (360f - _dial.RuneAngle / 2))
-                        {
+                        //if (transform.eulerAngles.z <= _dial.RuneAngle / 2 + transform.eulerAngles.z || transform.eulerAngles.z >= (360f - _dial.RuneAngle / 2))
+                        //{
                             if (_isUseRotateOffset)
                             {
                                 float oneDinstance = _dial.RuneAngle / _runeList.Count;
@@ -403,7 +440,7 @@ public class DialElement : MonoBehaviour
                                         });
                                 }
                             }
-                        }
+                        //}
                     }
                 }
             }

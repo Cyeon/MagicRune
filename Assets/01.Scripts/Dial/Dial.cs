@@ -61,6 +61,7 @@ public class Dial : MonoBehaviour
         for (int i = 0; i < 3; i++)
         {
             DialElement d = this.transform.GetChild(i).GetComponent<DialElement>();
+            d.SetLineID(3 - i);
 
             _dialElementList.Add(d);
         }
@@ -144,7 +145,7 @@ public class Dial : MonoBehaviour
         }
     }
 
-    private void LineCardSort(int line)
+    public void LineCardSort(int line)
     {
         if (_runeDict.ContainsKey(line))
         {
