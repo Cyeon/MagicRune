@@ -31,6 +31,7 @@ public class Unit : MonoBehaviour
                 _health = _maxHealth;
             }
 
+            UIManager.Instance.UpdateHealthbar(_isPlayer);
             if (_health <= 0) Die();
         }
     }
@@ -57,11 +58,11 @@ public class Unit : MonoBehaviour
     [field:SerializeField] public UnityEvent OnTakeDamageFeedback {get;set;}
     [field: SerializeField] public Dictionary<StatusInvokeTime, List<Status>> unitStatusDic = new Dictionary<StatusInvokeTime, List<Status>>();
 
-    private void OnEnable() {
-        //unitStatusDic.Add(StatusInvokeTime.Start, new List<Status>());
-        //unitStatusDic.Add(StatusInvokeTime.Attack, new List<Status>());
-        //unitStatusDic.Add(StatusInvokeTime.GetDamage, new List<Status>());
-        //unitStatusDic.Add(StatusInvokeTime.End, new List<Status>());
+    private void Awake() {
+        unitStatusDic.Add(StatusInvokeTime.Start, new List<Status>());
+        unitStatusDic.Add(StatusInvokeTime.Attack, new List<Status>());
+        unitStatusDic.Add(StatusInvokeTime.GetDamage, new List<Status>());
+        unitStatusDic.Add(StatusInvokeTime.End, new List<Status>());
     }
     
     /// <summary>
@@ -90,9 +91,6 @@ public class Unit : MonoBehaviour
 
         OnTakeDamage?.Invoke(currentDmg);
         OnTakeDamageFeedback?.Invoke();
-
-        UIManager.Instance.UpdateHealthbar(false);
-        UIManager.Instance.UpdateHealthbar(true);
 
         if(_isPlayer == false)
         {

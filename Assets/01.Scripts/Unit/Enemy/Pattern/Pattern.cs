@@ -11,6 +11,7 @@ public class Pattern : MonoBehaviour
     public string patternName;
     public Sprite icon;
     public string desc ="";
+    public bool isIncluding = true;
 
     [Header("[ Actions ]")]
     public List<PatternAction> startPattern;

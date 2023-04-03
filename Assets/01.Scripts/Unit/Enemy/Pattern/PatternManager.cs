@@ -12,7 +12,8 @@ public class PatternManager : MonoBehaviour
     {
         foreach(var pattern in transform.GetComponentsInChildren<Pattern>())
         {
-            patternList.Add(pattern);
+            if(pattern.isIncluding)
+                patternList.Add(pattern);
         }
     }
 
