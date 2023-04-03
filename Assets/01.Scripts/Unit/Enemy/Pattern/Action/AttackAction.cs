@@ -40,6 +40,6 @@ public class AttackAction : PatternAction
             yield return new WaitForSeconds(0.2f);
         }
 
-        BattleManager.Instance.TurnChange();
+        BattleManager.Instance.enemy.patternM.currentPattern.NextAction();
     }
 }

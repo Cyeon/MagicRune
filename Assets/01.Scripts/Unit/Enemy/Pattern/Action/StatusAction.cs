@@ -10,7 +10,11 @@ public class StatusAction : PatternAction
 
     public override void TakeAction()
     {
-        StatusManager.Instance.AddStatus(isSelf ? BattleManager.Instance.enemy : BattleManager.Instance.player, status, value);
-        BattleManager.Instance.TurnChange();
+        if(value < 0)
+            StatusManager.Instance.RemStatus(isSelf ? BattleManager.Instance.enemy : BattleManager.Instance.player, status, value);
+        else
+            StatusManager.Instance.AddStatus(isSelf ? BattleManager.Instance.enemy : BattleManager.Instance.player, status, value);
+
+        BattleManager.Instance.enemy.patternM.currentPattern.NextAction();
     }
 }

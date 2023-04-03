@@ -1,6 +1,7 @@
 using NaughtyAttributes;
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
@@ -19,6 +20,10 @@ public class Pattern : MonoBehaviour
     [Header("[ Transition ]")]
     public List<PatternTransition> transitions;
 
+    private int _patternIndex = 0;
+    private enum patternInvokeTime { start, turn, end};
+    private patternInvokeTime _patternTime = patternInvokeTime.start;
+
     /// <summary>
     /// 플레이어 턴에 무슨 행동할지 보여줄때 발동될 패턴 액션 실행
     /// </summary>
@@ -26,9 +31,11 @@ public class Pattern : MonoBehaviour
     {
         UIManager.Instance.ReloadPattern(icon, desc);
 
-        foreach (PatternAction action in startPattern)
+        _patternIndex = 0;
+        _patternTime = patternInvokeTime.start;
+        if(startPattern.Count > _patternIndex)
         {
-            action.TakeAction();
+            startPattern[_patternIndex].TakeAction();
         }
     }
 
@@ -37,9 +44,11 @@ public class Pattern : MonoBehaviour
     /// </summary>
     public void TurnAction()
     {
-        foreach (PatternAction action in turnPattern)
+        _patternIndex = 0;
+        _patternTime = patternInvokeTime.turn;
+        if (turnPattern.Count > _patternIndex)
         {
-            action.TakeAction();
+            turnPattern[_patternIndex].TakeAction();
         }
     }
 
@@ -48,10 +57,41 @@ public class Pattern : MonoBehaviour
     /// </summary>
     public void EndAction()
     {
-        foreach (PatternAction action in endPattern)
+        _patternIndex = 0;
+        _patternTime = patternInvokeTime.end;
+        if (endPattern.Count > _patternIndex)
         {
-            action.TakeAction();
+            endPattern[_patternIndex].TakeAction();
         }
+    }
+
+    public void NextAction()
+    {
+        _patternIndex++;
+
+        List<PatternAction> actions = new List<PatternAction>();
+        switch (_patternTime)
+        {
+            case patternInvokeTime.start:
+                actions = startPattern;
+                break;
+
+            case patternInvokeTime.turn:
+                actions = turnPattern;
+                break;
+
+            case patternInvokeTime.end:
+                actions = endPattern;
+                break;
+        }
+
+        if(actions.Count <= _patternIndex)
+        {
+            BattleManager.Instance.TurnChange();
+            return;
+        }
+
+        actions[_patternIndex].TakeAction();
     }
 
     public void NextPattern()
