@@ -291,9 +291,10 @@ public class Dial : MonoBehaviour
             b.SetTrailColor(EffectType.Attack);
             b.Init(this.transform, _enemyPos, 1.5f, 0, 0, () =>
             {
-                for (int i = 0; i < 3; i++)
+                for (int i = _dialElementList.Count - 1; i >= 0; i--)
                 {
                     _dialElementList[i].Attack();
+                    Debug.Log(i);
                 }
 
                 //for (int i = 0; i < (int)EffectType.Etc; i++)
