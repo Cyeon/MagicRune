@@ -123,7 +123,7 @@ public class BattleManager : MonoSingleton<BattleManager>
                 StatusManager.Instance.StatusTurnChange(enemy);
 
                 enemy.patternM.EndAction();
-                enemy.patternM.currentPattern.NextPattern();
+                enemy.patternM.CurrentPattern.NextPattern();
                 enemy.patternM.StartAction();
 
                 EventManager<int>.TriggerEvent(Define.ON_START_PLAYER_TURN, 5);

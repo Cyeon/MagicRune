@@ -12,6 +12,6 @@ public class Icicle : Enemy
         {
             SpriteRenderer.sprite = _awakingIcon;
         }
-        patternM.currentPattern.NextPattern();
+        patternM.CurrentPattern.NextPattern();
     }
 }

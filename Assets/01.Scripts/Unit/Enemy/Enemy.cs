@@ -32,7 +32,7 @@ public class Enemy : Unit
         transform.localPosition = new Vector3(0, 6, 0);
         UIManager.Instance.enemyIcon = transform;
         UIManager.Instance.HealthbarInit(false, _maxHealth);
-        patternM.currentPattern = patternM.patternList[0];
+        patternM.ChangePattern(patternM.patternList[0]);
     }
 
     public void Attack(int damage)

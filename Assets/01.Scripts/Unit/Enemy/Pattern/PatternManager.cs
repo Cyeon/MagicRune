@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class PatternManager : MonoBehaviour
 {
-    public Pattern currentPattern;
+    private Pattern _currentPattern;
+    public Pattern CurrentPattern => _currentPattern;
     public List<Pattern> patternList = new List<Pattern>();
     private int _index = 0;
 
@@ -17,6 +18,12 @@ public class PatternManager : MonoBehaviour
         }
     }
 
+    public void ChangePattern(Pattern pattern)
+    {
+        _currentPattern = pattern;
+        UIManager.Instance.ReloadPattern(_currentPattern.icon, _currentPattern.desc);
+    }
+
     public void NextPattern()
     {
         _index++;
@@ -25,21 +32,21 @@ public class PatternManager : MonoBehaviour
             _index = 0;
         }
 
-        currentPattern = patternList[_index];
+        ChangePattern(patternList[_index]);
     }
 
     public void TurnAction()
     {
-        currentPattern.TurnAction();
+        _currentPattern.TurnAction();
     }
 
     public void StartAction()
     {
-        currentPattern.StartAction();
+        _currentPattern.StartAction();
     }
 
     public void EndAction()
     {
-        currentPattern.EndAction();
+        _currentPattern.EndAction();
     }
 }

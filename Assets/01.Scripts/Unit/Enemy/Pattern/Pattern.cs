@@ -30,8 +30,6 @@ public class Pattern : MonoBehaviour
     /// </summary>
     public void StartAction()
     {
-        UIManager.Instance.ReloadPattern(icon, desc);
-
         _patternIndex = 0;
         _patternTime = patternInvokeTime.start;
         if(startPattern.Count > _patternIndex)
@@ -114,7 +112,8 @@ public class Pattern : MonoBehaviour
             {
                 if(transition.positivePattern != null)
                 {
-                    BattleManager.Instance.enemy.patternM.currentPattern = transition.positivePattern;
+                    BattleManager.Instance.enemy.patternM.ChangePattern(transition.positivePattern);
+
                 }
             }
             else
@@ -122,6 +121,5 @@ public class Pattern : MonoBehaviour
                 BattleManager.Instance.enemy.patternM.NextPattern();
             }
         }
-
     }
 }
