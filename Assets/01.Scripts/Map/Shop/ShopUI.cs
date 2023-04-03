@@ -16,7 +16,7 @@ public class ShopUI : MonoBehaviour
 
         CanvasManager.Instance.GetCanvas("Shop").enabled = false;
     }
-    
+
     public void Exit()
     {
         MapManager.Instance.NextStage();
@@ -35,11 +35,8 @@ public class ShopUI : MonoBehaviour
 
     public void ShopItemProduct(ShopItemSO item)
     {
-        for (int i = 0; i < 3; i++)
-        {
-            ShopItemPanelUI ui = ResourceManager.Instance.Instantiate(item.panelPrefab.name, _storeShelf).GetComponent<ShopItemPanelUI>();
-            ui.Init(item);
-            ui.userGold = _goldText;
-        }
+        ShopItemPanelUI ui = ResourceManager.Instance.Instantiate(item.panelPrefab.name, _storeShelf).GetComponent<ShopItemPanelUI>();
+        ui.Init(item);
+        ui.userGold = _goldText;
     }
 }

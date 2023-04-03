@@ -4,11 +4,19 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+public class ShopItem<T>
+{
+    public int Gold;
+    public T Item;
+}
+
 public class ShopItemPanelUI : MonoBehaviour
 {
-    public Image icon;
-    public TextMeshProUGUI goldText;
-    public ShopItemSO item;
+    private Image icon;
+    private TextMeshProUGUI goldText;
+    private ShopItemSO item;
+
+    // 저거 말고 다른 정보를 갇고 있는 클래스(SO 말고)를 만들어 알잘딱
     public TextMeshProUGUI userGold;
 
     public void Init(ShopItemSO item)
@@ -23,7 +31,7 @@ public class ShopItemPanelUI : MonoBehaviour
         if(item.CheckAvailability())
         {
             item.Buy();
-            userGold.text = GameManager.Instance.Gold.ToString();
+            userGold.SetText(GameManager.Instance.Gold.ToString());
             gameObject.SetActive(false);
         }
     }
