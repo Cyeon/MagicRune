@@ -10,16 +10,16 @@ public class Enemy : Unit
     public AudioClip attackSound = null;
     private Sequence idleSequence = null;
     public bool isEnter = false;
-    private Sprite _icon;
-    public Sprite Icon 
+    private SpriteRenderer _spriteRenderer;
+    public SpriteRenderer SpriteRenderer
     { 
         get
         {
-            if(_icon == null)
+            if(_spriteRenderer == null)
             {
-                _icon = transform.Find("Sprite").GetComponent<SpriteRenderer>().sprite;
+                _spriteRenderer = transform.Find("Sprite").GetComponent<SpriteRenderer>();
             }
-            return _icon;
+            return _spriteRenderer;
         }
     }
 
@@ -30,6 +30,7 @@ public class Enemy : Unit
         patternM = GetComponentInChildren<PatternManager>();    
 
         transform.localPosition = new Vector3(0, 6, 0);
+        UIManager.Instance.enemyIcon = transform;
         UIManager.Instance.HealthbarInit(false, _maxHealth);
         patternM.currentPattern = patternM.patternList[0];
     }

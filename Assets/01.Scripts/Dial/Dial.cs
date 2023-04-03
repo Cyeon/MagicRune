@@ -95,8 +95,6 @@ public class Dial : MonoBehaviour
             _dialElementList.Add(d);
         }
 
-        
-
         //for(int i = 0; i < DeckManager.Instance.Deck.Count; i++) //룬 개수 적어서 임시로 한 번 더 돌렸음 
         //{
         //    int index = Random.Range(1, 4);
@@ -265,7 +263,7 @@ public class Dial : MonoBehaviour
             BezierMissile b = Instantiate(_bezierMissile, this.transform.parent);
             b.SetEffect(g);
             b.SetTrailColor(EffectType.Attack);
-            b.Init(this.transform, _enemyPos, 1.5f, 0, 0, () =>
+            b.Init(this.transform, BattleManager.Instance.enemy.transform, 1.5f, 0, 0, () =>
             {
                 for (int i = 0; i < (int)EffectType.Etc; i++)
                 {
