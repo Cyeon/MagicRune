@@ -116,13 +116,9 @@ public class DialElement : MonoBehaviour
                 }
                 else if (outBoolean)
                 {
-                    //int index = (int)(oneDinstance - (_image.transform.eulerAngles.z / oneDinstance)) % (_cardList.Count);
-                    //Debug.Log(index);
-                    //index = (index - 1) % _cardList.Count;
-                    //SelectCard = _cardList[index];
-
                     int index = (int)(transform.eulerAngles.z / oneDinstance) % (_runeList.Count);
-                    index = (index - 1 < 0 ? _runeList.Count - 1 : index - 1) % (_runeList.Count);
+                    //index = (index - 1 < 0 ? _runeList.Count - 1 : index - 1) % (_runeList.Count);
+                    index = (index + 2) % (_runeList.Count);
 
                     if (_runeList[index].Rune.IsCoolTime == false)
                     {
