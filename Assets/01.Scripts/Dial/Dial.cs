@@ -24,6 +24,9 @@ public class Dial : MonoBehaviour
     public float StartAngle => _startAngle;
 
     [SerializeField]
+    private int _copyCount = 2;
+
+    [SerializeField]
     private List<Rune> _selectedDeck = null; // 사전에 설정해둔 다이얼 안쪽의 1번째 줄 덱. 
     [SerializeField]
     private Transform _enemyPos;
@@ -118,6 +121,32 @@ public class Dial : MonoBehaviour
             DeckManager.Instance.RuneSwap(runeIndex, maxRuneCount - 1);
 
             maxRuneCount--;
+        }
+
+        for(int i = 1; i <= 3; i++)
+        {
+            int count = _runeDict[i].Count;
+            for (int k = 0; k < _copyCount; k++)
+            {
+                for (int j = 0; j < count; j++)
+                {
+                    RuneUI r = ResourceManager.Instance.Instantiate("Rune").GetComponent<RuneUI>();
+                    r.transform.SetParent(_runeDict[i][j].DialElement.transform);
+                    r.transform.localScale = new Vector3(0.1f, 0.1f);
+                    r.Dial = this;
+                    r.DialElement = _runeDict[i][j].DialElement;
+                    _runeDict[i][j].DialElement.AddRuneList(r);
+                    r.SetRune(_runeDict[i][j].Rune);
+                    r.UpdateUI();
+
+                    //if (isReset == true)
+                    //{
+                    //    r.Rune.SetCoolTime(0);
+                    //}
+                    r.SetCoolTime();
+                    AddCard(r, i);
+                }
+            }
         }
 
         CardSort();
