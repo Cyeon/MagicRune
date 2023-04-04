@@ -13,7 +13,7 @@ using Random = UnityEngine.Random;
 public class Dial : MonoBehaviour
 {
     //[SerializeField]
-    //private List<Rune> _deck; // �����ϰ� �ִ� ��� �� 
+    //private List<Rune> _deck; // �����ϰ� �ִ� ���?�� 
     [SerializeField]
     private int _maxRuneCount = 3;
     [SerializeField, Range(90f, 360f)]
@@ -38,6 +38,7 @@ public class Dial : MonoBehaviour
     private Dictionary<int, List<RuneUI>> _runeDict;
     private Dictionary<EffectType, List<EffectObjectPair>> _effectDict = new Dictionary<EffectType, List<EffectObjectPair>>();
     private List<DialElement> _dialElementList;
+    public List<DialElement> DialElementList => _dialElementList;
 
     private bool _isAttack;
 

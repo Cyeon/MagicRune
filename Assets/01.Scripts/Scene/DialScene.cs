@@ -21,10 +21,7 @@ public class DialScene : BaseScene
 
     [SerializeField]
     private GameObject _cardDescPanel;
-    private TextMeshProUGUI _cardDescName;
-    private Image _cardDescSkillIcon;
-    private TextMeshProUGUI _cardDescInfo;
-    private TextMeshProUGUI _cardDescCoolTime;
+    private List<ExplainPanel> _cardDescList;
 
     private GameObject _statusDescPanel;
     private TextMeshPro _statusDescName;
@@ -56,11 +53,6 @@ public class DialScene : BaseScene
         UIManager.Instance.Bind<Image>("NextPattern Image", CanvasManager.Instance.GetCanvas("Main").gameObject);
         UIManager.Instance.Bind<TextMeshProUGUI>("NextPattern ValueText", CanvasManager.Instance.GetCanvas("Main").gameObject);
 
-        UIManager.Instance.Bind<TextMeshProUGUI>("Skill_Name_Text", CanvasManager.Instance.GetCanvas("Popup").gameObject);
-        UIManager.Instance.Bind<Image>("Explain_Skill_Icon", CanvasManager.Instance.GetCanvas("Popup").gameObject);
-        UIManager.Instance.Bind<TextMeshProUGUI>("Explain_Text", CanvasManager.Instance.GetCanvas("Popup").gameObject);
-        UIManager.Instance.Bind<TextMeshProUGUI>("CoolTime_Text", CanvasManager.Instance.GetCanvas("Popup").gameObject);
-
         UIManager.Instance.Bind<Slider>("E HealthBar", CanvasManager.Instance.GetCanvas("Main").gameObject);
         UIManager.Instance.Bind<Slider>("E ShieldBar", CanvasManager.Instance.GetCanvas("Main").gameObject);
         UIManager.Instance.Bind<TextMeshProUGUI>("E HealthText", CanvasManager.Instance.GetCanvas("Main").gameObject);
@@ -81,11 +73,6 @@ public class DialScene : BaseScene
         _enemyPatternIcon = UIManager.Instance.Get<Image>("NextPattern Image");
         _enemyPatternValueText = UIManager.Instance.Get<TextMeshProUGUI>("NextPattern ValueText");
 
-        _cardDescName = UIManager.Instance.Get<TextMeshProUGUI>("Skill_Name_Text");
-        _cardDescSkillIcon = UIManager.Instance.Get<Image>("Explain_Skill_Icon");
-        _cardDescInfo = UIManager.Instance.Get<TextMeshProUGUI>("Explain_Text");
-        _cardDescCoolTime = UIManager.Instance.Get<TextMeshProUGUI>("CoolTime_Text");
-
         //UIManager.Instance.Get<Button>("Restart Btn").onClick.RemoveAllListeners();
         //UIManager.Instance.Get<Button>("Restart Btn").onClick.AddListener(() =>
         //{
@@ -94,6 +81,8 @@ public class DialScene : BaseScene
         //});
         UIManager.Instance.Get<Button>("Quit Btn").onClick.RemoveAllListeners();
         UIManager.Instance.Get<Button>("Quit Btn").onClick.AddListener(() => GameManager.Instance.GameQuit());
+
+        _cardDescPanel.GetComponentsInChildren<ExplainPanel>(true, _cardDescList);
     }
 
     public void Turn(string text)
@@ -275,10 +264,10 @@ public class DialScene : BaseScene
         {
             RuneSO magic = rune.GetRune();
 
-            _cardDescName.SetText(magic.Name);
-            _cardDescSkillIcon.sprite = magic.RuneImage;
-            _cardDescInfo.SetText(magic.MainRune.CardDescription);
-            _cardDescCoolTime.SetText(magic.CoolTime.ToString());
+            for(int i = 0; i < _dial.DialElementList.Count; i++)
+            {
+                _cardDescList[i].SetUI(_dial.DialElementList[i].SelectCard.Rune);
+            }
             _cardDescPanel.SetActive(true);
         }
     }
