@@ -63,6 +63,8 @@ public class AdventureUI : MonoBehaviour
             _distractorButtons[i].onClick.RemoveAllListeners();
             int index = i;
             _distractorButtons[i].onClick.AddListener(() => info.distractors[index].function.Invoke());
+            if (info.distractors[index].isNextStage)
+                _distractorButtons[i].onClick.AddListener(() => DistracotrFuncList.NextStage());
             _distractorButtons[i].gameObject.SetActive(true);
         }
     }
