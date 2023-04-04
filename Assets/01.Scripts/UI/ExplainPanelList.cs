@@ -89,13 +89,17 @@ public class ExplainPanelList : MonoBehaviour
         if (count <= 0)
             return;
 
-        float distance = Screen.width / (count + 1);
 
+        float spareDistance = Screen.width - (400 * count);
+        float distance = spareDistance / (count + 1);
+
+        int nt = 1;
         for (int i = 0; i < numberList.Count; i++)
         {
             if(_explaingPanelArray[numberList[i]].gameObject.activeSelf == true)
             {
-                _explaingPanelArray[numberList[i]].transform.localPosition = new Vector3(distance * (i + 1), _explaingPanelArray[numberList[i]].transform.localPosition.y, 0);
+                _explaingPanelArray[numberList[i]].transform.localPosition = new Vector3((distance * (i + 1) + 200 * (nt)), _explaingPanelArray[numberList[i]].transform.localPosition.y, 0);
+                nt += 2;
             }
         }
     }
