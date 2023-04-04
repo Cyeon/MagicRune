@@ -298,7 +298,7 @@ public class DialElement : MonoBehaviour
 
             _selectCard.Rune.SetCoolTime(_selectCard.Rune.GetRune().CoolTime);
             _selectCard.SetCoolTime();
-            //SelectCard = null;
+            SelectCard = null;
         }
     }
 

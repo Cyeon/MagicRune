@@ -285,32 +285,58 @@ public class Dial : MonoBehaviour
                 _effectDict.Clear();
                 return;
             }
-            _dialScene?.CardDescDown();
-            BezierMissile b = ResourceManager.Instance.Instantiate("BezierMissile", this.transform.parent).GetComponent<BezierMissile>();
-            b.SetEffect(g);
-            b.SetTrailColor(EffectType.Attack);
-            b.Init(this.transform, _enemyPos, 1.5f, 0, 0, () =>
-            {
-                for (int i = _dialElementList.Count - 1; i >= 0; i--)
-                {
-                    _dialElementList[i].Attack();
-                    Debug.Log(i);
-                }
+            //_dialScene?.CardDescDown();
+            //BezierMissile b = ResourceManager.Instance.Instantiate("BezierMissile", this.transform.parent).GetComponent<BezierMissile>();
+            //b.SetEffect(g);
+            //b.SetTrailColor(EffectType.Attack);
+            //b.Init(this.transform, _enemyPos, 1.5f, 0, 0, () =>
+            //{
+            //    for (int i = _dialElementList.Count - 1; i >= 0; i--)
+            //    {
+            //        _dialElementList[i].Attack();
+            //        Debug.Log(i);
+            //    }
 
-                //for (int i = 0; i < (int)EffectType.Etc; i++)
-                //{
-                //    AttackFunction((EffectType)i);
-                //}
+            //    //for (int i = 0; i < (int)EffectType.Etc; i++)
+            //    //{
+            //    //    AttackFunction((EffectType)i);
+            //    //}
 
-                for (int i = 0; i < 3; i++)
-                {
-                    _dialElementList[i].SelectCard = null;
-                }
+            //    for (int i = 0; i < 3; i++)
+            //    {
+            //        _dialElementList[i].SelectCard = null;
+            //    }
 
-                _effectDict.Clear();
-                BattleManager.Instance.PlayerTurnEnd();
-            });
+            //    _effectDict.Clear();
+            //    BattleManager.Instance.PlayerTurnEnd();
+            //});
+
+            StartCoroutine(AttackCoroutine());
+
+            _effectDict.Clear();
+            BattleManager.Instance.PlayerTurnEnd();
             _isAttack = false;
+        }
+    }
+
+    private IEnumerator AttackCoroutine()
+    {
+        for (int i = _dialElementList.Count - 1; i >= 0; i--)
+        {
+            if (_dialElementList[i].SelectCard != null)
+            {
+                int index = i;
+                BezierMissile b = ResourceManager.Instance.Instantiate("BezierMissile", this.transform.parent).GetComponent<BezierMissile>();
+                b.SetEffect(_dialElementList[i].SelectCard.Rune.GetRune().RuneEffect);
+                b.SetTrailColor(EffectType.Attack);
+                b.Init(_dialElementList[i].SelectCard.transform, _enemyPos, 1.5f, 5, 5, () =>
+                {
+                    _dialElementList[index].Attack();
+
+                    //_dialElementList[i] = null;
+                });
+                yield return new WaitForSeconds(0.1f);
+            }
         }
     }
 
