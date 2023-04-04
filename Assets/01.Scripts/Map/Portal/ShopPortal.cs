@@ -30,7 +30,7 @@ public class ShopPortal : Portal
         for(int i = 0; i < 3; i++)
         {
             int randomIndex = Random.Range(0, numberList.Count);
-            _shopUI.ShopItemProduct(shopItemList[randomIndex]);
+            _shopUI.ShopItemProduct(shopItemList[numberList[randomIndex]]);
             numberList.RemoveAt(randomIndex);
         }
     }
