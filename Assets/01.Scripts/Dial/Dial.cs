@@ -24,12 +24,16 @@ public class Dial : MonoBehaviour
     public float StartAngle => _startAngle;
 
     [SerializeField]
+    private int _copyCount = 2;
+
+    [SerializeField]
     private List<Rune> _selectedDeck = null; // 사전에 설정해둔 다이얼 안쪽의 1번째 줄 덱. 
     [SerializeField]
     private Transform _enemyPos;
 
     [SerializeField]
     private float[] _lineDistanceArray = new float[3];
+    public float[] LineDistanceArray => _lineDistanceArray;
 
     private Dictionary<int, List<RuneUI>> _runeDict;
     private Dictionary<EffectType, List<EffectObjectPair>> _effectDict = new Dictionary<EffectType, List<EffectObjectPair>>();
@@ -118,6 +122,34 @@ public class Dial : MonoBehaviour
 
             maxRuneCount--;
         }
+
+        for(int i = 1; i <= 3; i++)
+        {
+            int count = _runeDict[i].Count;
+            for (int k = 0; k < _copyCount; k++)
+            {
+                for (int j = 0; j < count; j++)
+                {
+                    RuneUI r = ResourceManager.Instance.Instantiate("Rune").GetComponent<RuneUI>();
+                    r.transform.SetParent(_runeDict[i][j].DialElement.transform);
+                    r.transform.localScale = new Vector3(0.1f, 0.1f);
+                    r.Dial = this;
+                    r.DialElement = _runeDict[i][j].DialElement;
+                    _runeDict[i][j].DialElement.AddRuneList(r);
+                    r.SetRune(_runeDict[i][j].Rune);
+                    r.UpdateUI();
+
+                    //if (isReset == true)
+                    //{
+                    //    r.Rune.SetCoolTime(0);
+                    //}
+                    r.SetCoolTime();
+                    AddCard(r, i);
+                }
+            }
+        }
+
+        CardSort();
     }
 
     public void AddCard(RuneUI card, int tier)
@@ -259,9 +291,10 @@ public class Dial : MonoBehaviour
             b.SetTrailColor(EffectType.Attack);
             b.Init(this.transform, _enemyPos, 1.5f, 0, 0, () =>
             {
-                for (int i = 0; i < 3; i++)
+                for (int i = _dialElementList.Count - 1; i >= 0; i--)
                 {
                     _dialElementList[i].Attack();
+                    Debug.Log(i);
                 }
 
                 //for (int i = 0; i < (int)EffectType.Etc; i++)

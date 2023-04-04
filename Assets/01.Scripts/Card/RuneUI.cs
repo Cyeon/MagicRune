@@ -38,6 +38,11 @@ public class RuneUI : MonoBehaviour
         _xImage.gameObject.SetActive(false);
     }
 
+    //private void OnBecameInvisible()
+    //{
+    //    DialElement.MoveRune(0, false); // 이 함수를 부르는 것 맞는 거 같은데 일단 여기서는 아님
+    //}
+
     public void SetActiveOutline(OutlineType type)
     {
         //_magicImage.material = _outlineMaterialArray[(int)type];

@@ -84,6 +84,8 @@ public class DialElement : MonoBehaviour
     private void Start()
     {
         _dialScene = SceneManagerEX.Instance.CurrentScene as DialScene;
+
+        transform.rotation = Quaternion.Euler(Vector3.zero);
     }
 
     private void Update()
@@ -101,7 +103,7 @@ public class DialElement : MonoBehaviour
                 if (inBoolean)
                 {
                     int index = (int)(transform.eulerAngles.z / oneDinstance) % (_runeList.Count);
-                    index = (index + 1) % _runeList.Count; // �߰���
+                    //index = (index + 1) % _runeList.Count; // �߰���
                     if (_runeList[index].Rune.IsCoolTime == false)
                     {
                         SelectCard = _runeList[index];
@@ -116,13 +118,9 @@ public class DialElement : MonoBehaviour
                 }
                 else if (outBoolean)
                 {
-                    //int index = (int)(oneDinstance - (_image.transform.eulerAngles.z / oneDinstance)) % (_cardList.Count);
-                    //Debug.Log(index);
-                    //index = (index - 1) % _cardList.Count;
-                    //SelectCard = _cardList[index];
-
                     int index = (int)(transform.eulerAngles.z / oneDinstance) % (_runeList.Count);
-                    index = (index - 1 < 0 ? _runeList.Count - 1 : index - 1) % (_runeList.Count);
+                    //index = (index - 1 < 0 ? _runeList.Count - 1 : index - 1) % (_runeList.Count);
+                    index = (index + 1) % (_runeList.Count);
 
                     if (_runeList[index].Rune.IsCoolTime == false)
                     {
@@ -177,28 +175,74 @@ public class DialElement : MonoBehaviour
             _touchPos = Input.GetTouch(_fingerID).position;
         }
 
-        // ����� ��
-        //float oneDistance = _dial.RuneAngle;
-        for (int i = 0; i < _runeList.Count; i++)
-        {
-            // ���������� �Ʒ��� ����
-            if (_runeList[i].transform.position.y + _runePoolOffset < transform.position.y)
-            {
-                if (_runeList[i].transform.position.x > 0) // ����
-                {
-                    //RuneUI 
-                }
-                else // ������
-                {
 
-                }
+    }
+
+    [Obsolete]
+    public void MoveRune(int index, bool isLeft = true)
+    {
+        if(isLeft == true)
+        {
+            RuneUI rune = _runeList[index];
+
+            float radianValue = 0f;
+            if(index - 1 < 0)
+            {
+                radianValue = (_dial.RuneAngle / _runeList.Count) * (index - 1) + (_dial.StartAngle * Mathf.Deg2Rad);
             }
+            else
+            {
+                radianValue = (_dial.RuneAngle - (_dial.RuneAngle / _runeList.Count)) + (_dial.StartAngle * Mathf.Deg2Rad);
+            }
+
+            float height = Mathf.Sin(radianValue) * _dial.LineDistanceArray[3 - _lineID];
+            float width = Mathf.Cos(radianValue) * _dial.LineDistanceArray[3 - _lineID];
+            _runeList[index].transform.position = new Vector3(width + this.transform.position.x, height + this.transform.position.y, 0);
+
+            Vector2 direction = new Vector2(
+                _runeList[index].transform.position.x - transform.position.x,
+                _runeList[index].transform.position.y - transform.position.y
+            );
+
+            float ang = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+            Quaternion angleAxis = Quaternion.AngleAxis(ang - 90f, Vector3.forward);
+            _runeList[index].transform.rotation = angleAxis;
+
+            _runeList.RemoveAt(index);
+            _runeList.Insert(0, rune);
+        }
+        else
+        {
+            RuneUI rune = _runeList[index];
+
+            float radianValue = (_dial.RuneAngle / _runeList.Count) * (index + 1) + (_dial.StartAngle * Mathf.Deg2Rad);
+
+            float height = Mathf.Sin(radianValue) * _dial.LineDistanceArray[3 - _lineID];
+            float width = Mathf.Cos(radianValue) * _dial.LineDistanceArray[3 - _lineID];
+            _runeList[index].transform.position = new Vector3(width + this.transform.position.x, height + this.transform.position.y, 0);
+
+            Vector2 direction = new Vector2(
+                _runeList[index].transform.position.x - transform.position.x,
+                _runeList[index].transform.position.y - transform.position.y
+            );
+
+            float ang = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+            Quaternion angleAxis = Quaternion.AngleAxis(ang - 90f, Vector3.forward);
+            _runeList[index].transform.rotation = angleAxis;
+
+            _runeList.RemoveAt(index);
+            _runeList.Add(rune);
         }
     }
 
     public void SetLineID(int id)
     {
         _lineID = id;
+    }
+
+    public int GetLineID()
+    {
+        return _lineID;
     }
 
     public void AddRuneList(RuneUI rune)
@@ -381,7 +425,7 @@ public class DialElement : MonoBehaviour
                                 if (inBoolean)
                                 {
                                     int index = (int)(transform.eulerAngles.z / oneDinstance) % (_runeList.Count);
-                                    index = Mathf.Clamp(index, 0, _runeList.Count - 1);
+                                    //index = Mathf.Clamp(index, 0, _runeList.Count - 1);
                                     //if (_magicList[index].Rune.IsCoolTime == false)
                                     //{
                                     // ������ ���� ����
@@ -400,7 +444,7 @@ public class DialElement : MonoBehaviour
                                 {
                                     int index = ((int)(transform.eulerAngles.z / oneDinstance) + 1) % (_runeList.Count);
                                     index = (index + 1) % _runeList.Count;
-                                    index = Mathf.Clamp(index + 1, 0, _runeList.Count - 1);
+                                    //index = Mathf.Clamp(index + 1, 0, _runeList.Count - 1);
                                     //if (_magicList[index].Rune.IsCoolTime == false)
                                     //{
                                     DOTween.To(
@@ -423,7 +467,9 @@ public class DialElement : MonoBehaviour
                                 float distance = transform.eulerAngles.z % oneDinstance;
                                 if (distance >= oneDinstance / 2f)
                                 {
-                                    transform.DORotate(new Vector3(0, 0, ((index + 1) % _runeList.Count * oneDinstance) >= 120 ? ((index + 1) % _runeList.Count * oneDinstance) + 360f - oneDinstance * _runeList.Count : (index + 1) % _runeList.Count * oneDinstance), 0.3f, RotateMode.Fast)
+                                    transform.DORotate(new Vector3(0, 0, ((index + 1) % _runeList.Count * oneDinstance)/* >= 120 ?
+                                        ((index + 1) % _runeList.Count * oneDinstance) + 360f - oneDinstance * _runeList.Count :
+                                        (index + 1) % _runeList.Count * oneDinstance*/), 0.3f, RotateMode.Fast)
                                         .OnComplete(() =>
                                         {
                                             //SelectCard = _runeList[index];
@@ -432,10 +478,12 @@ public class DialElement : MonoBehaviour
                                 }
                                 else
                                 {
-                                    transform.DORotate(new Vector3(0, 0, ((index) * oneDinstance) >= 120 ? ((index) * oneDinstance) + 360f - oneDinstance * _runeList.Count : ((index) * oneDinstance)), 0.3f, RotateMode.Fast)
+                                    transform.DORotate(new Vector3(0, 0, ((index) * oneDinstance)/* >= 120 ?
+                                        ((index) * oneDinstance) + 360f - oneDinstance * _runeList.Count :
+                                        ((index) * oneDinstance)*/), 0.3f, RotateMode.Fast)
                                         .OnComplete(() =>
                                         {
-                                            //SelectCard = _runeList[index]; // ���� ���� ���ϴ� �ְ� �ȵ��� �� ����â ������ ������?
+                                            //SelectCard = _runeList[index]; // ���� ���� ���ϴ� �ְ� �ȵ���?�� ����â ������ ������?
                                             if (_selectCard != null) { _dialScene?.CardDescPopup(_selectCard.Rune); }
                                         });
                                 }

@@ -164,7 +164,7 @@ public class Unit : MonoBehaviour
     {
         if (_isDie == false)
         {
-            _health += value;
+            HP += value;
             if(_dialScene == null)
             {
                 _dialScene = SceneManagerEX.Instance.CurrentScene as DialScene;
@@ -177,7 +177,7 @@ public class Unit : MonoBehaviour
     {
         if (_isDie == false)
         {
-            _health += value / 100 * _maxHealth;
+            HP += value / 100 * _maxHealth;
         }
     }
 
