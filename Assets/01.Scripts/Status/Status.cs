@@ -29,7 +29,7 @@ public enum StatusName
     Recharging,
     Coldness, // 냉기
     Chilliness, // 한기
-    SwordWing,
+    BladeOfKnife,
     COUNT
 }
 

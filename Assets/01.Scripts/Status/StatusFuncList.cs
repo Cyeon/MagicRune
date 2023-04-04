@@ -67,8 +67,6 @@ public class StatusFuncList : MonoBehaviour
 
     public void FreezeFiveCilliness()
     {
-        Debug.Log(unit + ", " + status.statusName);
-
         if(StatusManager.Instance.GetUnitStatusValue(unit, status.statusName) >= 5)
         {
             StatusManager.Instance.AllRemStatus(unit, status);
