@@ -17,7 +17,10 @@ public class MapManager : MonoSingleton<MapManager>
 
     [Header("Stage")]
     public List<Stage> stageList = new List<Stage>();
- [SerializeField]   private int Stage => Floor - ((this.Chapter - 1) * 9);
+    [SerializeField]
+    private GameObject _stageArrow;
+
+    [SerializeField]   private int Stage => Floor - ((this.Chapter - 1) * 9);
 
     private int _floor = 0;
     public int Floor => _floor;
@@ -192,6 +195,8 @@ public class MapManager : MonoSingleton<MapManager>
         }
 
         MapSceneUI.StageList.transform.DOLocalMoveX(Stage * -300f, 0);
+        _stageArrow.transform.SetParent(MapSceneUI.StageList.GetChild(Stage + 1));
+        _stageArrow.transform.localPosition = new Vector2(0, _stageArrow.transform.localPosition.y);
         stageList[Stage].ChangeResource(Color.white, selectPortal.icon);
         _floor += 1;
 
