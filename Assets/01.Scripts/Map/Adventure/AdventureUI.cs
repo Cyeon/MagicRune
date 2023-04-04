@@ -36,7 +36,6 @@ public class AdventureUI : MonoBehaviour
     {
         _storyPanel.SetActive(false);
         _distractorPanel.SetActive(true);
-
     }
 
     public void Init(AdventureSO info, AdventurePortal portal)

@@ -58,11 +58,13 @@ public class Unit : MonoBehaviour
     [field:SerializeField] public UnityEvent OnTakeDamageFeedback {get;set;}
     [field: SerializeField] public Dictionary<StatusInvokeTime, List<Status>> unitStatusDic = new Dictionary<StatusInvokeTime, List<Status>>();
 
-    private void Awake() {
+    private void Start() {
         unitStatusDic.Add(StatusInvokeTime.Start, new List<Status>());
         unitStatusDic.Add(StatusInvokeTime.Attack, new List<Status>());
         unitStatusDic.Add(StatusInvokeTime.GetDamage, new List<Status>());
         unitStatusDic.Add(StatusInvokeTime.End, new List<Status>());
+
+        Debug.Log("세팅완료");
     }
     
     /// <summary>

@@ -101,11 +101,7 @@ public class Pattern : MonoBehaviour
             foreach(PatternDecision decision in transition.decisions)
             {
                 result = decision.MakeADecision();
-                if(!result)
-                {
-                    BattleManager.Instance.enemy.patternM.NextPattern();
-                    break;
-                }
+                if (!result) break;
             }
 
             if(result)

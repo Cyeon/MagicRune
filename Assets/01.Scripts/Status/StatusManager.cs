@@ -106,6 +106,8 @@ public class StatusManager : MonoSingleton<StatusManager>
             {
                 currentStauts.typeValue += value;
                 UIManager.Instance.ReloadStatusPanel(unit, currentStauts.statusName, currentStauts.typeValue);
+
+                currentStauts.addFunc?.Invoke();
             }
             else
             {
@@ -116,29 +118,9 @@ public class StatusManager : MonoSingleton<StatusManager>
                 newStatus.addFunc?.Invoke();
             }
         }
-    }
-
-    public void RemStatus(Unit unit, StatusName statusName, int value = 1)
-    {
-        Status status = GetStatus(statusName);
-        if (status == null)
+        else
         {
-            Debug.LogWarning(string.Format("{0} status not found.", statusName));
-            return;
-        }
-
-        Status newStatus = new Status(status);
-        newStatus.typeValue = value;
-
-        List<Status> statusList = new List<Status>();
-        if (unit.unitStatusDic.TryGetValue(status.invokeTime, out statusList))
-        {
-            Status currentStauts = statusList.Where(e => e.statusName == status.statusName).FirstOrDefault();
-            if (currentStauts != null)
-            {
-                currentStauts.typeValue -= value;
-                UIManager.Instance.ReloadStatusPanel(unit, currentStauts.statusName, currentStauts.typeValue);
-            }
+            Debug.LogError("딕셔너리 리스트를 찾을 수 없어요~~");
         }
     }
 
@@ -206,6 +188,13 @@ public class StatusManager : MonoSingleton<StatusManager>
 
     public void RemoveValue(Unit unit, Status status, int value)
     {
-        unit.unitStatusDic[status.invokeTime].Where(e => e.statusName == status.statusName).FirstOrDefault().typeValue -= value;
+        Status s = unit.unitStatusDic[status.invokeTime].Where(e => e.statusName == status.statusName).FirstOrDefault();
+        s.typeValue -= value;
+        UIManager.Instance.ReloadStatusPanel(unit, s.statusName, s.typeValue);
+    }
+
+    public void RemoveValue(Unit unit, StatusName status, int value)
+    {
+        RemoveValue(unit, GetStatus(status), value);
     }
 }

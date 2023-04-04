@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 860882359064019169}
   - component: {fileID: 4700046235551772768}
   m_Layer: 0
-  m_Name: 1/3Ventilation
+  m_Name: 1/3Chilliness
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -68,9 +68,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a9a84362b976a746a341572651e7aa7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  status: 1
+  status: 6
   value: 0
-  isSelf: 1
+  isSelf: 0
 --- !u!1 &823226524300793655
 GameObject:
   m_ObjectHideFlags: 0
@@ -407,7 +407,7 @@ GameObject:
   - component: {fileID: 7755410516876316994}
   - component: {fileID: 1809498253935644684}
   m_Layer: 0
-  m_Name: 15Status (2)
+  m_Name: 15S_Coldness
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -463,7 +463,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76e453d0137dffa4c86b004096088636, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  status: 1
+  status: 5
   value: 15
   isSelf: 1
 --- !u!1 &2721772889018443016
@@ -478,7 +478,7 @@ GameObject:
   - component: {fileID: 2205618849007346413}
   - component: {fileID: 3514941667763058418}
   m_Layer: 0
-  m_Name: 1/3Ventilation
+  m_Name: 1/3Chilliness
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -533,9 +533,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a9a84362b976a746a341572651e7aa7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  status: 1
+  status: 6
   value: 0
-  isSelf: 1
+  isSelf: 0
 --- !u!1 &3602241635372196194
 GameObject:
   m_ObjectHideFlags: 0
@@ -734,7 +734,7 @@ GameObject:
   - component: {fileID: 1869751726943888103}
   - component: {fileID: 5519867942528748203}
   m_Layer: 0
-  m_Name: 1/3S_Ice (1)
+  m_Name: 1/3S_Ice
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -912,7 +912,7 @@ GameObject:
   - component: {fileID: 617264163283403633}
   - component: {fileID: 3026747227498007773}
   m_Layer: 0
-  m_Name: 15Status
+  m_Name: 15Coldness
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -967,7 +967,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76e453d0137dffa4c86b004096088636, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  status: 1
+  status: 5
   value: 15
   isSelf: 1
 --- !u!1 &5354008970952817920
@@ -1501,7 +1501,7 @@ GameObject:
   - component: {fileID: 6338896713528731521}
   - component: {fileID: 8591750359446765821}
   m_Layer: 0
-  m_Name: 15Status
+  m_Name: 15Coldness
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1557,7 +1557,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76e453d0137dffa4c86b004096088636, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  status: 1
+  status: 5
   value: 15
   isSelf: 1
 --- !u!1 &6249683449756998265
@@ -1742,7 +1742,7 @@ GameObject:
   - component: {fileID: 1678526021660161395}
   - component: {fileID: 5834282535196477624}
   m_Layer: 0
-  m_Name: 15Status (1)
+  m_Name: 15Coldness
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1798,7 +1798,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76e453d0137dffa4c86b004096088636, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  status: 1
+  status: 5
   value: 15
   isSelf: 1
 --- !u!1 &7050939463909324118
@@ -2128,7 +2128,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a37b36df0be0d84fb669c14b5902035, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentPattern: {fileID: 0}
   patternList: []
 --- !u!1 &7800114122709574605
 GameObject:

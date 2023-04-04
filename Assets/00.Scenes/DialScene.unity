@@ -723,7 +723,7 @@ MonoBehaviour:
     m_Right: 0
     m_Top: 0
     m_Bottom: 0
-  m_ChildAlignment: 6
+  m_ChildAlignment: 3
   m_StartCorner: 0
   m_StartAxis: 0
   m_CellSize: {x: 100, y: 100}
@@ -2507,8 +2507,9 @@ MonoBehaviour:
     color: {r: 1, g: 0, b: 0.12290478, a: 1}
     unit: {fileID: 0}
   - statusName: 5
-    debugName: 
-    information: 
+    debugName: "\uB0C9\uAE30\uC751\uCD95"
+    information: "\uB370\uBBF8\uC9C0\uB97C \uBC1B\uC73C\uBA74 \uC2A4\uD0DD\uC774
+      \uAC10\uC18C\uD569\uB2C8\uB2E4."
     textColor: {r: 1, g: 0, b: 0, a: 1}
     invokeTime: 2
     type: 0
@@ -2518,7 +2519,7 @@ MonoBehaviour:
         m_Calls:
         - m_Target: {fileID: 594343483}
           m_TargetAssemblyTypeName: StatusFuncList, Assembly-CSharp
-          m_MethodName: WoundGetDmg
+          m_MethodName: RemoveStack
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -2531,8 +2532,49 @@ MonoBehaviour:
     addFunc:
       m_PersistentCalls:
         m_Calls: []
-    icon: {fileID: 21300000, guid: 96f80772093699c40a49f6a87154882f, type: 3}
-    color: {r: 1, g: 0, b: 0.12290478, a: 1}
+    icon: {fileID: 21300000, guid: 172214c52cc42b34aa01270cb44f1f40, type: 3}
+    color: {r: 1, g: 1, b: 1, a: 1}
+    unit: {fileID: 0}
+  - statusName: 6
+    debugName: "\uD55C\uAE30"
+    information: "\uACF5\uACA9\uB825 25% \uAC10\uC18C, 5\uC2A4\uD0DD \uC911\uCCA9\uC2DC
+      \uBE59\uACB0\uBD80\uC5EC"
+    textColor: {r: 1, g: 0, b: 0, a: 1}
+    invokeTime: 1
+    type: 0
+    typeValue: 0
+    statusFunc:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 594343483}
+          m_TargetAssemblyTypeName: StatusFuncList, Assembly-CSharp
+          m_MethodName: RemAtkDamagePercent
+          m_Mode: 4
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 25
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    addFunc:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 594343483}
+          m_TargetAssemblyTypeName: StatusFuncList, Assembly-CSharp
+          m_MethodName: FreezeFiveCilliness
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    icon: {fileID: 21300000, guid: 36a5f5515c7b69e4782bb5ce4a382342, type: 3}
+    color: {r: 1, g: 1, b: 1, a: 1}
     unit: {fileID: 0}
 --- !u!1 &620435534
 GameObject:

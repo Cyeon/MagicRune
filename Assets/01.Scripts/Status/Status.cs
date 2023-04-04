@@ -26,8 +26,8 @@ public enum StatusName
     Fire,
     Ice,
     Wound,
-    Example,
-    Ventilation,
+    Coldness, // ³Ã±â
+    Chilliness, // ÇÑ±â
     COUNT
 }
 

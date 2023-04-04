@@ -11,7 +11,7 @@ public class StatusAction : PatternAction
     public override void TakeAction()
     {
         if(value < 0)
-            StatusManager.Instance.RemStatus(isSelf ? BattleManager.Instance.enemy : BattleManager.Instance.player, status, value);
+            StatusManager.Instance.RemoveValue(isSelf ? BattleManager.Instance.enemy : BattleManager.Instance.player, status, value);
         else
             StatusManager.Instance.AddStatus(isSelf ? BattleManager.Instance.enemy : BattleManager.Instance.player, status, value);
 
