@@ -29,7 +29,7 @@ public class StatusFuncList : MonoBehaviour
         status.unit.currentDmg -= status.unit.currentDmg * (percent * 0.01f);
     }
 
-    public void RemoveSwordWingStack()
+    public void RemoveStatusOneStack()
     {
         StatusManager.Instance.CountRemStatus(unit, status, 1);
     }
@@ -74,5 +74,10 @@ public class StatusFuncList : MonoBehaviour
             StatusManager.Instance.AllRemStatus(unit, status);
             StatusManager.Instance.AddStatus(unit, StatusName.Ice);
         }
+    }
+
+    public void TurnChange()
+    {
+        BattleManager.Instance.TurnChange();
     }
 }

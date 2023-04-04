@@ -2340,11 +2340,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   statusList:
-  - statusName: 1
-    debugName: "\uC57D\uC1C4"
-    information: 
-    textColor: {r: 0, g: 0, b: 0, a: 0}
-    invokeTime: 2
+  - statusName: 3
+    debugName: "\uBE59\uACB0"
+    information: "\uBE59\uACB0\uC124\uBA85"
+    textColor: {r: 0.44716978, g: 0.98286563, b: 1, a: 1}
+    invokeTime: 0
     type: 1
     typeValue: 0
     isTurnRemove: 0
@@ -2353,37 +2353,8 @@ MonoBehaviour:
         m_Calls:
         - m_Target: {fileID: 594343483}
           m_TargetAssemblyTypeName: StatusFuncList, Assembly-CSharp
-          m_MethodName: AddGetDamage
-          m_Mode: 4
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 5
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-    addFunc:
-      m_PersistentCalls:
-        m_Calls: []
-    icon: {fileID: 21300000, guid: 16a86a7f581fc4dfb953e0df8ad3ecac, type: 3}
-    color: {r: 0.3490566, g: 0.3490566, b: 0.3490566, a: 1}
-    unit: {fileID: 0}
-  - statusName: 3
-    debugName: "\uBE59\uACB0"
-    information: "\uBE59\uACB0\uC124\uBA85"
-    textColor: {r: 0.44716978, g: 0.98286563, b: 1, a: 1}
-    invokeTime: 1
-    type: 1
-    typeValue: 2
-    isTurnRemove: 0
-    statusFunc:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 594343483}
-          m_TargetAssemblyTypeName: StatusFuncList, Assembly-CSharp
-          m_MethodName: RemAtkDamagePercent
-          m_Mode: 4
+          m_MethodName: TurnChange
+          m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -2405,7 +2376,7 @@ MonoBehaviour:
     invokeTime: 3
     type: 0
     typeValue: 0
-    isTurnRemove: 0
+    isTurnRemove: 1
     statusFunc:
       m_PersistentCalls:
         m_Calls:
@@ -2528,7 +2499,7 @@ MonoBehaviour:
         m_Calls:
         - m_Target: {fileID: 594343483}
           m_TargetAssemblyTypeName: StatusFuncList, Assembly-CSharp
-          m_MethodName: RemoveSwordWingStack
+          m_MethodName: RemoveStatusOneStack
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
