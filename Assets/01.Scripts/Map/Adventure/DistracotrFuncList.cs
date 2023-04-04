@@ -64,7 +64,7 @@ public class DistracotrFuncList : MonoBehaviour
         GameManager.Instance.AddGold(amount);
         MapSceneUI.InfoUIReload();
     }
-    public void BattleEnemy(EnemySO enemy)
+    public void BattleEnemy(Enemy enemy)
     {
         MapManager.Instance.selectEnemy = enemy;
         SceneManagerEX.Instance.LoadScene("DialScene");
