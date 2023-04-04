@@ -40,7 +40,10 @@ public class BattleManager : MonoSingleton<BattleManager>
 
     public void GameStart()
     {
-        enemy = EnemyManager.Instance.SpawnEnemy(MapManager.Instance.selectEnemy);
+        enemy = ResourceManager.Instance.Instantiate("Enemy/"+MapManager.Instance.selectEnemy.name).GetComponent<Enemy>();
+        enemy.Init();
+        enemy.PatternManager.ChangePattern(enemy.PatternManager.patternList[0]);
+
         enemy.OnDieEvent.RemoveAllListeners();
         enemy.OnDieEvent.AddListener(() =>
         {
@@ -50,9 +53,10 @@ public class BattleManager : MonoSingleton<BattleManager>
 
             _dialScene?.RewardUI.VictoryPanelPopup();
         });
-        PatternManager.Instance.PatternInit(enemy.enemyInfo.patternList);
 
-        player = GameManager.Instance.player; // �÷��̾� ���� �������� �����ؾ���
+        player = GameManager.Instance.player;
+        player.SliderInit();
+
         player.OnDieEvent.RemoveAllListeners();
         player.OnDieEvent.AddListener(() => { _dialScene?.RewardUI.DefeatPanelPopup(); });
 
@@ -78,7 +82,7 @@ public class BattleManager : MonoSingleton<BattleManager>
         _gameTurn = GameTurn.Monster;
         currentUnit = enemy;
         attackUnit = player;
-        enemy.TurnStart();
+        enemy.PatternManager.TurnAction();
     }
 
     public bool IsPlayerTurn()
@@ -104,8 +108,7 @@ public class BattleManager : MonoSingleton<BattleManager>
         switch (_gameTurn)
         {
             case GameTurn.Unknown:
-                enemy.pattern = PatternManager.Instance.GetPattern();
-                enemy.pattern?.Start();
+                enemy.PatternManager.StartAction();
                 EventManager<int>.TriggerEvent(Define.ON_START_PLAYER_TURN, 5);
                 EventManager.TriggerEvent(Define.ON_START_PLAYER_TURN);
                 EventManager<bool>.TriggerEvent(Define.ON_START_PLAYER_TURN, true);
@@ -143,9 +146,9 @@ public class BattleManager : MonoSingleton<BattleManager>
                 StatusManager.Instance.StatusTurnChange(player);
                 StatusManager.Instance.StatusTurnChange(enemy);
 
-                enemy.pattern?.End();
-                enemy.pattern = PatternManager.Instance.GetPattern();
-                enemy.pattern?.Start();
+                enemy.PatternManager.EndAction();
+                enemy.PatternManager.CurrentPattern.NextPattern();
+                enemy.PatternManager.StartAction();
 
                 EventManager<int>.TriggerEvent(Define.ON_START_PLAYER_TURN, 5);
                 EventManager.TriggerEvent(Define.ON_START_PLAYER_TURN);
@@ -162,6 +165,7 @@ public class BattleManager : MonoSingleton<BattleManager>
                 //UIManager.Instance.Turn("Player Turn");
                 _dialScene?.Turn("Player Turn");
                 _dialScene?.Dial?.ResetDial();
+                _dialScene?.Dial?.AllMagicCircleGlow(false);
                 _dialScene?.Dial?.AllMagicSetCoolTime();
                 _dialScene?.Dial?.SettingDialRune(false);
                 _gameTurn = GameTurn.MonsterWait;

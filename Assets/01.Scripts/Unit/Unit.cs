@@ -1,7 +1,9 @@
+using DG.Tweening;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Security.Cryptography;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Rendering;
@@ -12,13 +14,13 @@ public class Unit : MonoBehaviour
     protected bool _isPlayer = false;
     public bool IsPlayer => _isPlayer;
 
-    [SerializeField] protected float _maxHealth;
-    public float MaxHealth => _maxHealth;
-    [SerializeField] private float _health = 10f;
-
     private bool _isDie = false;
     public bool IsDie => _isDie;
 
+    [SerializeField] protected float _maxHealth;
+    public float MaxHealth => _maxHealth;
+
+    [SerializeField] private float _health = 10f;
     public float HP
     {
         get => _health;
@@ -32,6 +34,7 @@ public class Unit : MonoBehaviour
                 _health = _maxHealth;
             }
 
+            _dialScene?.UpdateHealthbar(IsPlayer);
             if (_health <= 0) Die();
         }
     }
@@ -52,6 +55,11 @@ public class Unit : MonoBehaviour
         }
     }
 
+    protected Slider _healthSlider;
+    protected Slider _shieldSlider;
+    protected Slider _healthFeedbackSlider;
+    protected TextMeshProUGUI _healthText;
+
     #region  ?�태?�상 관??변??
 
     public float currentDmg = 0;
@@ -66,16 +74,11 @@ public class Unit : MonoBehaviour
     public UnityEvent OnDieEvent;
     protected DialScene _dialScene;
 
-    private void OnEnable()
-    {
+    private void Start() {
         unitStatusDic.Add(StatusInvokeTime.Start, new List<Status>());
         unitStatusDic.Add(StatusInvokeTime.Attack, new List<Status>());
         unitStatusDic.Add(StatusInvokeTime.GetDamage, new List<Status>());
         unitStatusDic.Add(StatusInvokeTime.End, new List<Status>());
-    }
-
-    private void Start()
-    {
         _dialScene = SceneManagerEX.Instance.CurrentScene as DialScene;
     }
 
@@ -110,8 +113,6 @@ public class Unit : MonoBehaviour
         {
             _dialScene = SceneManagerEX.Instance.CurrentScene as DialScene;
         }
-        _dialScene?.UpdateHealthbar(false);
-        _dialScene?.UpdateHealthbar(true);
 
         if (_isPlayer == false)
         {

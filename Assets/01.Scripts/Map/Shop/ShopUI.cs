@@ -24,6 +24,7 @@ public class ShopUI : MonoBehaviour
         CanvasManager.Instance.GetCanvas("MapUI").enabled = true;
     }
 
+
     public void Open()
     {
         _goldText.SetText(GameManager.Instance.Gold.ToString());

@@ -17,7 +17,10 @@ public class MapManager : MonoSingleton<MapManager>
 
     [Header("Stage")]
     public List<Stage> stageList = new List<Stage>();
- [SerializeField]   private int Stage => Floor - ((this.Chapter - 1) * 9);
+    [SerializeField]
+    private GameObject _stageArrow;
+
+    [SerializeField]   private int Stage => Floor - ((this.Chapter - 1) * 9);
 
     private int _floor = 0;
     public int Floor => _floor;
@@ -27,7 +30,7 @@ public class MapManager : MonoSingleton<MapManager>
     public Portal selectPortal;
 
     [Header("Attack")]
-    public EnemySO selectEnemy;
+    public Enemy selectEnemy;
     public AttackMapListSO attackMap;
 
     private bool _isFirst = true;
@@ -192,6 +195,8 @@ public class MapManager : MonoSingleton<MapManager>
         }
 
         MapSceneUI.StageList.transform.DOLocalMoveX(Stage * -300f, 0);
+        _stageArrow.transform.SetParent(MapSceneUI.StageList.GetChild(Stage + 1));
+        _stageArrow.transform.localPosition = new Vector2(0, _stageArrow.transform.localPosition.y);
         stageList[Stage].ChangeResource(Color.white, selectPortal.icon);
         _floor += 1;
 
@@ -237,8 +242,8 @@ public class MapManager : MonoSingleton<MapManager>
             case StageType.Boss:
                 AttackPortal atkPortal = portal as AttackPortal;
                 atkPortal.enemy = type == StageType.Attack ? GetAttackEnemy() : _currentChapter.boss;
-                atkPortal.icon = atkPortal.enemy.icon;
-                atkPortal.portalName = atkPortal.enemy.enemyName;
+                atkPortal.icon = atkPortal.enemy.SpriteRenderer.sprite;
+                atkPortal.portalName = atkPortal.enemy.name;
                 atkPortal.isUse = true;
                 return atkPortal;
 
@@ -251,16 +256,16 @@ public class MapManager : MonoSingleton<MapManager>
         return null;
     }
 
-    private EnemySO GetAttackEnemy()
+    private Enemy GetAttackEnemy()
     {
-        List<EnemySO> enemyList = new List<EnemySO>();
+        List<Enemy> enemyList = new List<Enemy>();
         for (int i = 0; i < attackMap.map.Count; ++i)
         {
             if (attackMap.map[i].MinFloor <= Floor + 1 && attackMap.map[i].MaxFloor >= Floor + 1)
             {
                 foreach (var enemy in attackMap.map[i].enemyList)
                 {
-                    if (!enemy.IsEnter) enemyList.Add(enemy);
+                    if (!enemy.isEnter) enemyList.Add(enemy);
                 }
             }
         }
@@ -270,7 +275,7 @@ public class MapManager : MonoSingleton<MapManager>
         {
             return attackMap.map[0].enemyList[0];
         }
-        enemyList[idx].IsEnter = true;
+        enemyList[idx].isEnter = true;
         return enemyList[idx];
     }
 
