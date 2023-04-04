@@ -11,7 +11,13 @@ public enum ShopItemType
 public class ShopItemSO : ScriptableObject
 {
     public string itemName;
+
+    // 임시로. 나중에 구조 갈아 엎으면 삭제할 예정
+    public int MinGold;
+    public int MaxGold;
+
     public int gold;
+
     public Sprite icon;
     public ShopItemType itemType = ShopItemType.Rune;
     public ShopItemPanelUI panelPrefab;
@@ -24,6 +30,11 @@ public class ShopItemSO : ScriptableObject
     {
         if (gold > GameManager.Instance.Gold) return false;
         return true;
+    }
+
+    private void OnValidate()
+    {
+        gold = Random.Range(MinGold, MaxGold + 1);
     }
 
     /// <summary>

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class RuneManager : MonoBehaviour
 {
-    // 뭔가 룬 전체를 갖고 있는 리스트? 뭐가가 있어야 함
+    // 나중에 싹 다 구조 갈아 엎어야 함
 
     private AllRuneListSO _runeList;
 

@@ -4,10 +4,13 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ShopItem<T>
+public class ShopItem
 {
     public int Gold;
-    public T Item;
+    public ShopItemType Type;
+
+    // 지금은 이렇게 하고 나중에는 룬이나 유물 같은 애들에 부모 클래스를 정의해서 관리하는 식으로
+    public RuneSO Item;
 }
 
 public class ShopItemPanelUI : MonoBehaviour
@@ -15,8 +18,6 @@ public class ShopItemPanelUI : MonoBehaviour
     private Image icon;
     private TextMeshProUGUI goldText;
     private ShopItemSO item;
-
-    // 저거 말고 다른 정보를 갇고 있는 클래스(SO 말고)를 만들어 알잘딱
     public TextMeshProUGUI userGold;
 
     public void Init(ShopItemSO item)
@@ -27,10 +28,13 @@ public class ShopItemPanelUI : MonoBehaviour
     }
 
     public void Buy()
-    {   
-        if(item.CheckAvailability())
+    {
+        if (item.CheckAvailability())
         {
             item.Buy();
+
+            RuneItem rune = item as RuneItem;
+            DeckManager.Instance.AddRune(new Rune(rune.rune));
             userGold.SetText(GameManager.Instance.Gold.ToString());
             gameObject.SetActive(false);
         }
