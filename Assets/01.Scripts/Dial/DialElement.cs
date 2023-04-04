@@ -7,7 +7,12 @@ using UnityEngine;
 public class DialElement : MonoBehaviour
 {
     private Dial _dial;
-    private SpriteRenderer _spriteRenderer;
+    private SpriteRenderer _lineSpriteRenderer;
+    private SpriteRenderer _textSpriteRenderer;
+    [SerializeField]
+    private Sprite _textSprite;
+    [SerializeField]
+    private Sprite _glowTextSprite;
 
     #region Swipe Parameta
     private Vector2 touchBeganPos;
@@ -71,12 +76,28 @@ public class DialElement : MonoBehaviour
     private float _selectOffset;
     private bool _isRotate = false;
 
+    public bool IsGlow
+    {
+        set
+        {
+            if(value == true)
+            {
+                _textSpriteRenderer.sprite = _glowTextSprite;
+            }
+            else
+            {
+                _textSpriteRenderer.sprite = _textSprite;
+            }
+        }
+    }
+
     DialScene _dialScene = null;
 
     private void Awake()
     {
         _dial = GetComponentInParent<Dial>();
-        _spriteRenderer = transform.Find("LineVisualSprite").GetComponent<SpriteRenderer>();
+        _lineSpriteRenderer = transform.Find("LineVisualSprite").GetComponent<SpriteRenderer>();
+        _textSpriteRenderer = transform.Find("TextVisualSprite").GetComponent<SpriteRenderer>();
         _runeList = new List<RuneUI>();
         //_spriteRenderer.alphaHitTestMinimumThreshold = 0.04f;
     }
@@ -86,6 +107,7 @@ public class DialElement : MonoBehaviour
         _dialScene = SceneManagerEX.Instance.CurrentScene as DialScene;
 
         transform.rotation = Quaternion.Euler(Vector3.zero);
+        IsGlow = false;
     }
 
     private void Update()

@@ -162,6 +162,7 @@ public class BattleManager : MonoSingleton<BattleManager>
                 //UIManager.Instance.Turn("Player Turn");
                 _dialScene?.Turn("Player Turn");
                 _dialScene?.Dial?.ResetDial();
+                _dialScene?.Dial?.AllMagicCircleGlow(false);
                 _dialScene?.Dial?.AllMagicSetCoolTime();
                 _dialScene?.Dial?.SettingDialRune(false);
                 _gameTurn = GameTurn.MonsterWait;

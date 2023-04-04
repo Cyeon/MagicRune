@@ -321,15 +321,39 @@ public class Dial : MonoBehaviour
 
     private IEnumerator AttackCoroutine()
     {
+        _dialScene?.CardDescDown();
         for (int i = _dialElementList.Count - 1; i >= 0; i--)
         {
             if (_dialElementList[i].SelectCard != null)
             {
                 int index = i;
+                _dialElementList[i].IsGlow = true;
                 BezierMissile b = ResourceManager.Instance.Instantiate("BezierMissile", this.transform.parent).GetComponent<BezierMissile>();
                 b.SetEffect(_dialElementList[i].SelectCard.Rune.GetRune().RuneEffect);
-                b.SetTrailColor(EffectType.Attack);
-                b.Init(_dialElementList[i].SelectCard.transform, _enemyPos, 1.5f, 5, 5, () =>
+                switch (_dialElementList[i].SelectCard.Rune.GetRune().MainRune.Attribute)
+                {
+                    case AttributeType.None:
+                        break;
+                    case AttributeType.NonAttribute:
+                        b.SetTrailColor(Color.gray);
+                        break;
+                    case AttributeType.Fire:
+                        b.SetTrailColor(Color.red);
+                        break;
+                    case AttributeType.Ice:
+                        b.SetTrailColor(Color.cyan);
+                        break;
+                    case AttributeType.Wind:
+                        b.SetTrailColor(new Color(0, 1, 0));
+                        break;
+                    case AttributeType.Ground:
+                        b.SetTrailColor(new Color(0.53f, 0.27f, 0));
+                        break;
+                    case AttributeType.Electric:
+                        b.SetTrailColor(Color.yellow);
+                        break;
+                }
+                b.Init(_dialElementList[i].SelectCard.transform, _enemyPos, 1.5f, 7, 7, () =>
                 {
                     _dialElementList[index].Attack();
 
@@ -337,6 +361,14 @@ public class Dial : MonoBehaviour
                 });
                 yield return new WaitForSeconds(0.1f);
             }
+        }
+    }
+
+    public void AllMagicCircleGlow(bool value)
+    {
+        for(int i = 0; i < _dialElementList.Count; i++)
+        {
+            _dialElementList[i].IsGlow = value;
         }
     }
 

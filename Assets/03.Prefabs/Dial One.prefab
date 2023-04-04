@@ -466,10 +466,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c85a560f068d314aab87c136007a26e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _textSprite: {fileID: 21300000, guid: a127d66a8e61d1a4d86968fe6c9b72ec, type: 3}
+  _glowTextSprite: {fileID: 21300000, guid: ab1da1e92fb404144ae1fb9761f07748, type: 3}
   swipeSensitivity: 5
   _isUseRotateOffset: 0
   _inDistance: 1.1
   _outDistance: 2.3
+  _runePoolOffset: 5
   _selectOffset: 25
 --- !u!1 &6047878870470961746
 GameObject:
@@ -522,8 +525,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _maxRuneCount: 3
-  _runeAngle: 180
-  _startAngle: 150
+  _runeAngle: 360
+  _startAngle: 90
+  _copyCount: 1
   _selectedDeck: []
   _enemyPos: {fileID: 0}
   _lineDistanceArray:
@@ -744,10 +748,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c85a560f068d314aab87c136007a26e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _textSprite: {fileID: 21300000, guid: 0110b41868926e541821ca5d1f0d8d8c, type: 3}
+  _glowTextSprite: {fileID: 21300000, guid: bdf082a07152a4d4b9ae185a7308eefd, type: 3}
   swipeSensitivity: 5
   _isUseRotateOffset: 0
   _inDistance: 2.3
   _outDistance: 3.5
+  _runePoolOffset: 5
   _selectOffset: 20
 --- !u!1 &6047878871482624859
 GameObject:
@@ -896,10 +903,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c85a560f068d314aab87c136007a26e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _textSprite: {fileID: 21300000, guid: 9f270e4be6ecee042941b8322772b2e4, type: 3}
+  _glowTextSprite: {fileID: 21300000, guid: a31e7aefab088104fae102c86c58a888, type: 3}
   swipeSensitivity: 5
   _isUseRotateOffset: 0
   _inDistance: 3.5
   _outDistance: 4.6
+  _runePoolOffset: 5
   _selectOffset: 14
 --- !u!1 &7724710143757413910
 GameObject:

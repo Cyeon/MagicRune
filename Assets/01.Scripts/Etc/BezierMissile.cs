@@ -2,6 +2,7 @@ using DG.Tweening;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -139,6 +140,12 @@ public class BezierMissile : MonoBehaviour
             case EffectType.Etc:
                 break;
         }
+    }
+
+    public void SetTrailColor(Color color)
+    {
+        _trail.startColor = color;
+        _trail.endColor = color;
     }
 
     public void SetEffect(GameObject go)
