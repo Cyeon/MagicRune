@@ -3,8 +3,10 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
+using Sequence = DG.Tweening.Sequence;
 
 public class DialScene : BaseScene
 {
@@ -21,7 +23,7 @@ public class DialScene : BaseScene
 
     [SerializeField]
     private GameObject _cardDescPanel;
-    private List<ExplainPanel> _cardDescList;
+    private ExplainPanelList _cardDescPanelList;
 
     private GameObject _statusDescPanel;
     private TextMeshPro _statusDescName;
@@ -82,7 +84,7 @@ public class DialScene : BaseScene
         UIManager.Instance.Get<Button>("Quit Btn").onClick.RemoveAllListeners();
         UIManager.Instance.Get<Button>("Quit Btn").onClick.AddListener(() => GameManager.Instance.GameQuit());
 
-        _cardDescPanel.GetComponentsInChildren<ExplainPanel>(true, _cardDescList);
+        _cardDescPanelList = _cardDescPanel.GetComponent<ExplainPanelList>();
     }
 
     public void Turn(string text)
@@ -254,21 +256,24 @@ public class DialScene : BaseScene
 
     #region Description
 
-    public void CardDescPopup(Rune rune)
+    public void CardDescPopup()
     {
-        if (rune == null)
+        _cardDescPanel.SetActive(true);
+        if (_cardDescPanelList == null)
         {
-            _cardDescPanel.SetActive(false);
+            _cardDescPanelList = _cardDescPanel.GetComponent<ExplainPanelList>();
         }
-        else
-        {
-            RuneSO magic = rune.GetRune();
 
-            for(int i = 0; i < _dial.DialElementList.Count; i++)
+        for (int i = 0; i < _dial.DialElementList.Count; i++)
+        {
+            if (_dial.DialElementList[i].SelectCard != null)
             {
-                _cardDescList[i].SetUI(_dial.DialElementList[i].SelectCard.Rune);
+                _cardDescPanelList.OpenPanel(i, _dial.DialElementList[i].SelectCard.Rune);
             }
-            _cardDescPanel.SetActive(true);
+            else
+            {
+                _cardDescPanelList.ClosePanel(i);
+            }
         }
     }
 
