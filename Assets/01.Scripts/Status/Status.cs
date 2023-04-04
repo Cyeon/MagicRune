@@ -68,6 +68,7 @@ public class Status
 
         this.invokeTime = status.invokeTime;
         this.typeValue = status.typeValue;
+        this.isTurnRemove = status.isTurnRemove;
 
         this.unit = status.unit;
 

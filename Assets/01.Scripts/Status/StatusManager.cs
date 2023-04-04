@@ -24,13 +24,13 @@ public class StatusManager : MonoSingleton<StatusManager>
     // ?�태?�상 ?�과 발동
     public void StatusFuncInvoke(List<Status> status, Unit unit)
     {
-        foreach(var funStatus in status)
+        _statusFuncList.unit = unit;
+        for(int i = 0; i < status.Count; ++i)
         {
-            _statusFuncList.status = funStatus;
-            _statusFuncList.unit = unit;
-            if (funStatus.typeValue > 0)
+            if (status[i] != null)
             {
-                funStatus.statusFunc?.Invoke();
+                _statusFuncList.status = status[i];
+                if (status[i].typeValue > 0) status[i].statusFunc?.Invoke();
             }
         }
 
@@ -217,7 +217,7 @@ public class StatusManager : MonoSingleton<StatusManager>
                 if (x.Value[i].type == StatusType.Turn)
                 {
                     if (x.Value[i].isTurnRemove)
-                        x.Value[i].typeValue--;
+                        CountRemStatus(unit, x.Value[i], 1);
                 }
 
                 _dialScene?.ReloadStatusPanel(unit, x.Value[i].statusName, x.Value[i].typeValue);
