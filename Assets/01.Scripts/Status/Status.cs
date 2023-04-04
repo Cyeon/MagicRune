@@ -25,8 +25,10 @@ public enum StatusName
     Weak,
     Fire,
     Ice,
-    Hurt,
-    Charge,
+    Wound,
+    Recharging,
+    Coldness, // ëƒ‰ê¸°
+    Chilliness, // í•œê¸°
     COUNT
 }
 
@@ -49,7 +51,7 @@ public class Status
     public UnityEvent addFunc;
 
     [Header("Resource")]
-    [ShowAssetPreview(32, 32), Tooltip("ÀÌ¹ÌÁö")]
+    [ShowAssetPreview(32, 32), Tooltip("ï¿½Ì¹ï¿½ï¿½ï¿½")]
     public Sprite icon;
     public Color color = Color.white;
 

@@ -13,7 +13,7 @@ using Random = UnityEngine.Random;
 public class Dial : MonoBehaviour
 {
     //[SerializeField]
-    //private List<Rune> _deck; // ¼ÒÁöÇÏ°í ÀÖ´Â ¸ğµç ·é 
+    //private List<Rune> _deck; // ï¿½ï¿½ï¿½ï¿½ï¿½Ï°ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ 
     [SerializeField]
     private int _maxRuneCount = 3;
     [SerializeField, Range(90f, 360f)]
@@ -27,7 +27,7 @@ public class Dial : MonoBehaviour
     private int _copyCount = 2;
 
     [SerializeField]
-    private List<Rune> _selectedDeck = null; // »çÀü¿¡ ¼³Á¤ÇØµĞ ´ÙÀÌ¾ó ¾ÈÂÊÀÇ 1¹øÂ° ÁÙ µ¦. 
+    private List<Rune> _selectedDeck = null; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Øµï¿½ ï¿½ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 1ï¿½ï¿½Â° ï¿½ï¿½ ï¿½ï¿½. 
     [SerializeField]
     private Transform _enemyPos;
 
@@ -276,7 +276,7 @@ public class Dial : MonoBehaviour
             {
                 if (_dialElementList[i].SelectCard != null && _dialElementList[i].SelectCard.Rune.IsCoolTime == false)
                 {
-                    _dialElementList[i].SelectCard.Rune.GetRune(); // ...? ¹¹ÇÏ´Â ÄÚµåÁö?
+                    _dialElementList[i].SelectCard.Rune.GetRune(); // ...? ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½Úµï¿½ï¿½ï¿½?
                 }
             }
 
@@ -448,7 +448,7 @@ public class Dial : MonoBehaviour
                 }
                 break;
             case EffectType.Draw:
-                // Áö±İÀº ÀÏ´Ü ÁÖ¼®...
+                // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ï´ï¿½ ï¿½Ö¼ï¿½...
                 //action = () => _cardCollector.CardDraw((int)e.Effect);
                 break;
             case EffectType.Etc:

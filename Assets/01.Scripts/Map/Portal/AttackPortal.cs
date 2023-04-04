@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class AttackPortal : Portal
 {
-    public EnemySO enemy;
+    public Enemy enemy;
 
     public override void Execute()
     {

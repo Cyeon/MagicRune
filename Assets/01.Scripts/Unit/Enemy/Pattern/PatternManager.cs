@@ -1,41 +1,56 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
-public class PatternManager : MonoSingleton<PatternManager>
+public class PatternManager : MonoBehaviour
 {
-    public List<Pattern> patterns = new List<Pattern>();
+    private Pattern _currentPattern;
+    public Pattern CurrentPattern => _currentPattern;
+    public List<Pattern> patternList = new List<Pattern>();
+    private int _index = 0;
 
-    public PatternFuncList funcList;
-
-    private int _patternIndex = 0;
+    private DialScene _disalScene;
 
     private void Awake()
     {
-        funcList = GetComponent<PatternFuncList>();
-    }
+        _disalScene = SceneManagerEX.Instance.CurrentScene as DialScene;
 
-    public void PatternInit(List<Pattern> patterns)
-    {
-        this.patterns = patterns;
-        _patternIndex = 0;
-    }
-
-    public Pattern GetPattern()
-    {
-        if (_patternIndex >=  patterns.Count)
+        foreach (var pattern in transform.GetComponentsInChildren<Pattern>())
         {
-            _patternIndex = 0;
+            if(pattern.isIncluding)
+                patternList.Add(pattern);
         }
-        return patterns[_patternIndex++];
     }
 
-    public void FuncInovke(List<PatternFuncEnum> funcList)
+    public void ChangePattern(Pattern pattern)
     {
-        foreach(var name in funcList)
+        _currentPattern = pattern;
+        _disalScene?.ReloadPattern(_currentPattern.icon, _currentPattern.desc);
+    }
+
+    public void NextPattern()
+    {
+        _index++;
+        if(_index ==  patternList.Count)
         {
-            this.funcList.FuncInvoke(name);
+            _index = 0;
         }
+
+        ChangePattern(patternList[_index]);
+    }
+
+    public void TurnAction()
+    {
+        _currentPattern.TurnAction();
+    }
+
+    public void StartAction()
+    {
+        _currentPattern.StartAction();
+    }
+
+    public void EndAction()
+    {
+        _currentPattern.EndAction();
     }
 }
