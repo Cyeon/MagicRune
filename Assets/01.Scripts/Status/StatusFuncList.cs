@@ -29,6 +29,11 @@ public class StatusFuncList : MonoBehaviour
         status.unit.currentDmg -= status.unit.currentDmg * (percent * 0.01f);
     }
 
+    public void RemoveSwordWingStack()
+    {
+        StatusManager.Instance.CountRemStatus(unit, status, 1);
+    }
+
     public void StackDmg()
     {
         unit.TakeDamage(status.typeValue, true, status);
