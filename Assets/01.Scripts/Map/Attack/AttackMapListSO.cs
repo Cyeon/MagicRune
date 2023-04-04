@@ -19,13 +19,13 @@ public class AttackMapInfo
     [SerializeField] private Floor _maxFloor;
     public int MaxFloor => (_maxFloor.chapter - 1) * 10 + _maxFloor.stage;
 
-    public List<EnemySO> enemyList = new List<EnemySO>();
+    public List<Enemy> enemyList = new List<Enemy>();
 
     public void Reset()
     {
         foreach(var enemy in enemyList)
         {
-            enemy.IsEnter = false;
+            enemy.isEnter = false;
         }
     }
 }

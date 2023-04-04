@@ -32,6 +32,7 @@ public class Unit : MonoBehaviour
                 _health = _maxHealth;
             }
 
+            UIManager.Instance.UpdateHealthbar(_isPlayer);
             if (_health <= 0) Die();
         }
     }
@@ -66,8 +67,7 @@ public class Unit : MonoBehaviour
     public UnityEvent OnDieEvent;
     protected DialScene _dialScene;
 
-    private void OnEnable()
-    {
+    private void Start() {
         unitStatusDic.Add(StatusInvokeTime.Start, new List<Status>());
         unitStatusDic.Add(StatusInvokeTime.Attack, new List<Status>());
         unitStatusDic.Add(StatusInvokeTime.GetDamage, new List<Status>());

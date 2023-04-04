@@ -54,4 +54,18 @@ public class StatusFuncList : MonoBehaviour
         status.typeValue = 0;
         _dialScene?.ReloadStatusPanel(unit, status.statusName, status.typeValue);
     }
+
+    public void RemoveStack()
+    {
+        StatusManager.Instance.RemoveValue(unit, status, Mathf.FloorToInt(unit.currentDmg));
+    }
+
+    public void FreezeFiveCilliness()
+    {
+        if(StatusManager.Instance.GetUnitStatusValue(unit, status.statusName) >= 5)
+        {
+            StatusManager.Instance.RemoveValue(unit, status, status.typeValue);
+            StatusManager.Instance.AddStatus(unit, StatusName.Ice);
+        }
+    }
 }

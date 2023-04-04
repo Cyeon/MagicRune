@@ -40,7 +40,8 @@ public class BattleManager : MonoSingleton<BattleManager>
 
     public void GameStart()
     {
-        enemy = EnemyManager.Instance.SpawnEnemy(MapManager.Instance.selectEnemy);
+        enemy = ResourceManager.Instance.Instantiate("Enemy/"+MapManager.Instance.selectEnemy.name).GetComponent<Enemy>();
+        enemy.Init();
         enemy.OnDieEvent.RemoveAllListeners();
         enemy.OnDieEvent.AddListener(() =>
         {
@@ -78,7 +79,7 @@ public class BattleManager : MonoSingleton<BattleManager>
         _gameTurn = GameTurn.Monster;
         currentUnit = enemy;
         attackUnit = player;
-        enemy.TurnStart();
+        enemy.patternM.TurnAction();
     }
 
     public bool IsPlayerTurn()
@@ -104,8 +105,7 @@ public class BattleManager : MonoSingleton<BattleManager>
         switch (_gameTurn)
         {
             case GameTurn.Unknown:
-                enemy.pattern = PatternManager.Instance.GetPattern();
-                enemy.pattern?.Start();
+                enemy.patternM.StartAction();
                 EventManager<int>.TriggerEvent(Define.ON_START_PLAYER_TURN, 5);
                 EventManager.TriggerEvent(Define.ON_START_PLAYER_TURN);
                 EventManager<bool>.TriggerEvent(Define.ON_START_PLAYER_TURN, true);
@@ -143,9 +143,9 @@ public class BattleManager : MonoSingleton<BattleManager>
                 StatusManager.Instance.StatusTurnChange(player);
                 StatusManager.Instance.StatusTurnChange(enemy);
 
-                enemy.pattern?.End();
-                enemy.pattern = PatternManager.Instance.GetPattern();
-                enemy.pattern?.Start();
+                enemy.patternM.EndAction();
+                enemy.patternM.CurrentPattern.NextPattern();
+                enemy.patternM.StartAction();
 
                 EventManager<int>.TriggerEvent(Define.ON_START_PLAYER_TURN, 5);
                 EventManager.TriggerEvent(Define.ON_START_PLAYER_TURN);
