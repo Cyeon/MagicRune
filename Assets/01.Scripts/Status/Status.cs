@@ -29,6 +29,7 @@ public enum StatusName
     Recharging,
     Coldness, // 냉기
     Chilliness, // 한기
+    SwordWing,
     COUNT
 }
 
@@ -45,6 +46,7 @@ public class Status
     public  StatusInvokeTime invokeTime = StatusInvokeTime.Start;
     public StatusType type = StatusType.Stack;
     public int typeValue = 0;
+    public bool isTurnRemove = false;
 
     [Header("Function")]
     public UnityEvent statusFunc;

@@ -32,7 +32,7 @@ Transform:
   m_Children:
   - {fileID: 3718288103743233923}
   m_Father: {fileID: 6746730936627094621}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &860882359064019169
 MonoBehaviour:
@@ -150,7 +150,7 @@ Transform:
   m_Children:
   - {fileID: 3725375916225673906}
   m_Father: {fileID: 6746730936627094621}
-  m_RootOrder: 12
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &5951429274219739178
 MonoBehaviour:
@@ -186,8 +186,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76e453d0137dffa4c86b004096088636, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  status: 1
-  value: 15
+  status: 8
+  value: 6
   isSelf: 1
 --- !u!1 &1301941659799030368
 GameObject:
@@ -282,7 +282,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   patternName: Defence
-  icon: {fileID: 21300000, guid: a28c2afe1020a2c48ad8e49fda3af0dc, type: 3}
+  icon: {fileID: 21300000, guid: a73a585ed1e79044cb3db5b656893459, type: 3}
   desc: 10
   isIncluding: 1
   startPattern: []
@@ -332,6 +332,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1603237751731941524}
   - {fileID: 600193707254411139}
   - {fileID: 4928897748889312016}
   - {fileID: 7276820782549076158}
@@ -344,7 +345,6 @@ Transform:
   - {fileID: 7515329393678898594}
   - {fileID: 5852216410164774442}
   - {fileID: 7725125297768230981}
-  - {fileID: 1603237751731941524}
   m_Father: {fileID: 5511206043625457246}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -427,7 +427,7 @@ Transform:
   m_Children:
   - {fileID: 2958172908144097739}
   m_Father: {fileID: 6746730936627094621}
-  m_RootOrder: 10
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &7755410516876316994
 MonoBehaviour:
@@ -568,7 +568,7 @@ Transform:
   m_Children:
   - {fileID: 8190827224932016091}
   m_Father: {fileID: 6746730936627094621}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &4220489753888696144
 MonoBehaviour:
@@ -652,7 +652,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   patternName: Attack
-  icon: {fileID: 21300000, guid: f8f165314f3065e46b32ad7a27340b2b, type: 3}
+  icon: {fileID: 21300000, guid: 0ba7bc4db41d35e4099b792db367a0fa, type: 3}
   desc: 20
   isIncluding: 1
   startPattern: []
@@ -754,7 +754,7 @@ Transform:
   m_Children:
   - {fileID: 2621873586163984727}
   m_Father: {fileID: 6746730936627094621}
-  m_RootOrder: 11
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1869751726943888103
 MonoBehaviour:
@@ -1049,7 +1049,7 @@ Transform:
   m_Children:
   - {fileID: 6708762615336007157}
   m_Father: {fileID: 6746730936627094621}
-  m_RootOrder: 9
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &5960585763898280690
 MonoBehaviour:
@@ -1348,9 +1348,8 @@ GameObject:
   - component: {fileID: 7276820782549076158}
   - component: {fileID: 2329088985742432904}
   - component: {fileID: 9195269081768210840}
-  - component: {fileID: 8632972706084476061}
   m_Layer: 0
-  m_Name: ATK(4*3)+(S_SwordWing(-3))
+  m_Name: ATK(4*3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1370,7 +1369,7 @@ Transform:
   m_Children:
   - {fileID: 3148210176342971065}
   m_Father: {fileID: 6746730936627094621}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2329088985742432904
 MonoBehaviour:
@@ -1385,13 +1384,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   patternName: Awaking Attack
-  icon: {fileID: 21300000, guid: f8f165314f3065e46b32ad7a27340b2b, type: 3}
+  icon: {fileID: 21300000, guid: 0ba7bc4db41d35e4099b792db367a0fa, type: 3}
   desc: 4x3
   isIncluding: 0
   startPattern: []
   turnPattern:
   - {fileID: 9195269081768210840}
-  - {fileID: 8632972706084476061}
   endPattern: []
   transitions:
   - {fileID: 8195379038956166800}
@@ -1409,21 +1407,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 4
   count: 3
---- !u!114 &8632972706084476061
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5693252183620803438}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 76e453d0137dffa4c86b004096088636, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  status: 1
-  value: -3
-  isSelf: 1
 --- !u!1 &5740158030184717741
 GameObject:
   m_ObjectHideFlags: 0
@@ -1456,7 +1439,7 @@ Transform:
   m_Children:
   - {fileID: 5194390087423214700}
   m_Father: {fileID: 6746730936627094621}
-  m_RootOrder: 8
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2473883603957405845
 MonoBehaviour:
@@ -1525,7 +1508,7 @@ Transform:
   m_Children:
   - {fileID: 4151489855575658209}
   m_Father: {fileID: 6746730936627094621}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6338896713528731521
 MonoBehaviour:
@@ -1658,9 +1641,8 @@ GameObject:
   - component: {fileID: 6230951060538624788}
   - component: {fileID: 2134985754711645660}
   - component: {fileID: 7400668718091412500}
-  - component: {fileID: 64264582788352049}
   m_Layer: 0
-  m_Name: ATK(4*3)+(S_SwordWing(-3))
+  m_Name: ATK(4*3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1680,7 +1662,7 @@ Transform:
   m_Children:
   - {fileID: 2901254146889562879}
   m_Father: {fileID: 6746730936627094621}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2134985754711645660
 MonoBehaviour:
@@ -1701,7 +1683,6 @@ MonoBehaviour:
   startPattern: []
   turnPattern:
   - {fileID: 7400668718091412500}
-  - {fileID: 64264582788352049}
   endPattern: []
   transitions:
   - {fileID: 6463633093141302021}
@@ -1719,21 +1700,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 4
   count: 3
---- !u!114 &64264582788352049
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6447060505849067699}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 76e453d0137dffa4c86b004096088636, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  status: 1
-  value: -3
-  isSelf: 1
 --- !u!1 &6942736179853635563
 GameObject:
   m_ObjectHideFlags: 0
@@ -1766,7 +1732,7 @@ Transform:
   m_Children:
   - {fileID: 2481466401531301750}
   m_Father: {fileID: 6746730936627094621}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1678526021660161395
 MonoBehaviour:
@@ -1851,7 +1817,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   patternName: Attack
-  icon: {fileID: 21300000, guid: f8f165314f3065e46b32ad7a27340b2b, type: 3}
+  icon: {fileID: 21300000, guid: 0ba7bc4db41d35e4099b792db367a0fa, type: 3}
   desc: 5x2
   isIncluding: 1
   startPattern: []
@@ -2047,7 +2013,7 @@ Transform:
   m_Children:
   - {fileID: 4671080219323187317}
   m_Father: {fileID: 6746730936627094621}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &8290066194911172134
 MonoBehaviour:
@@ -2062,7 +2028,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   patternName: Debuffer Three to One Ventilation
-  icon: {fileID: 21300000, guid: 5d4d2d0a46ba52c42aa4a6afe34331fe, type: 3}
+  icon: {fileID: 21300000, guid: 52e5fb28f6903cd4f9e807e9d1c856ef, type: 3}
   desc: 
   isIncluding: 0
   startPattern: []
@@ -2165,7 +2131,7 @@ Transform:
   m_Children:
   - {fileID: 2277899528763446653}
   m_Father: {fileID: 6746730936627094621}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &4721610234163025483
 MonoBehaviour:

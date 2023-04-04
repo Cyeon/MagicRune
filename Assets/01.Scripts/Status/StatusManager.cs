@@ -220,7 +220,11 @@ public class StatusManager : MonoSingleton<StatusManager>
             List<int> indexes = new List<int>();
             for(int i = 0; i < x.Value.Count; i++)
             {
-                if (x.Value[i].type == StatusType.Turn) x.Value[i].typeValue--;
+                if (x.Value[i].type == StatusType.Turn)
+                {
+                    if (x.Value[i].isTurnRemove)
+                        x.Value[i].typeValue--;
+                }
 
                 _dialScene?.ReloadStatusPanel(unit, x.Value[i].statusName, x.Value[i].typeValue);
                 if (x.Value[i].typeValue <= 0)

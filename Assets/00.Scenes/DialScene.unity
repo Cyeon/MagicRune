@@ -2316,6 +2316,7 @@ MonoBehaviour:
     invokeTime: 0
     type: 0
     typeValue: 0
+    isTurnRemove: 0
     statusFunc:
       m_PersistentCalls:
         m_Calls: []
@@ -2346,6 +2347,7 @@ MonoBehaviour:
     invokeTime: 2
     type: 1
     typeValue: 0
+    isTurnRemove: 0
     statusFunc:
       m_PersistentCalls:
         m_Calls:
@@ -2374,6 +2376,7 @@ MonoBehaviour:
     invokeTime: 1
     type: 1
     typeValue: 2
+    isTurnRemove: 0
     statusFunc:
       m_PersistentCalls:
         m_Calls:
@@ -2402,6 +2405,7 @@ MonoBehaviour:
     invokeTime: 3
     type: 0
     typeValue: 0
+    isTurnRemove: 0
     statusFunc:
       m_PersistentCalls:
         m_Calls:
@@ -2442,6 +2446,7 @@ MonoBehaviour:
     invokeTime: 2
     type: 0
     typeValue: 0
+    isTurnRemove: 0
     statusFunc:
       m_PersistentCalls:
         m_Calls:
@@ -2470,6 +2475,7 @@ MonoBehaviour:
     invokeTime: 1
     type: 0
     typeValue: 0
+    isTurnRemove: 0
     statusFunc:
       m_PersistentCalls:
         m_Calls: []
@@ -2486,6 +2492,7 @@ MonoBehaviour:
     invokeTime: 2
     type: 0
     typeValue: 0
+    isTurnRemove: 0
     statusFunc:
       m_PersistentCalls:
         m_Calls:
@@ -2515,6 +2522,7 @@ MonoBehaviour:
     invokeTime: 1
     type: 0
     typeValue: 0
+    isTurnRemove: 0
     statusFunc:
       m_PersistentCalls:
         m_Calls:
@@ -2545,6 +2553,36 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+    icon: {fileID: 21300000, guid: 890186f66def00b44bef117039f24101, type: 3}
+    color: {r: 0.45490196, g: 0.9372549, b: 0.8235294, a: 1}
+    unit: {fileID: 0}
+  - statusName: 8
+    debugName: "\uCE7C\uB0A0"
+    information: "\uB54C\uB9B4\uB54C \uB370\uBBF8\uC9C0 2\uCD94\uAC00, 1\uC2A4\uD0DD\uC529
+      \uAC10\uC18C"
+    textColor: {r: 0.45490196, g: 0.9372549, b: 0.8235294, a: 1}
+    invokeTime: 1
+    type: 0
+    typeValue: 0
+    isTurnRemove: 0
+    statusFunc:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 594343483}
+          m_TargetAssemblyTypeName: StatusFuncList, Assembly-CSharp
+          m_MethodName: RemAtkDamagePercent
+          m_Mode: 4
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 25
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    addFunc:
+      m_PersistentCalls:
+        m_Calls: []
     icon: {fileID: 21300000, guid: 890186f66def00b44bef117039f24101, type: 3}
     color: {r: 0.45490196, g: 0.9372549, b: 0.8235294, a: 1}
     unit: {fileID: 0}
