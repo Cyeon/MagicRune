@@ -29,19 +29,20 @@ public class Enemy : Unit
     private PatternManager _patternManager;
     public PatternManager PatternManager => _patternManager;
 
-    public void Init()
+    public virtual void Init()
     {
-        _patternManager = GetComponentInChildren<PatternManager>();    
-
+        if(_patternManager == null)
+            _patternManager = GetComponentInChildren<PatternManager>();
         if (_dialScene == null)
             _dialScene = SceneManagerEX.Instance.CurrentScene as DialScene;
-        _dialScene?.HealthbarInit(false, _maxHealth);
+
+        HP = MaxHealth;
+        _dialScene?.HealthbarInit(false, MaxHealth);
 
         enemyScaleVec = SpriteRenderer.transform.localScale;
         _dialScene?.EnemyIconSetting(SpriteRenderer);
-
         transform.localPosition = new Vector3(0, 6, 0);
-        _dialScene?.HealthbarInit(_isPlayer, HP, MaxHealth);
+
         PatternManager.ChangePattern(PatternManager.patternList[0]);
     }
 
@@ -76,7 +77,7 @@ public class Enemy : Unit
     protected override void Die()
     {
         base.Die();
-
+        PoolManager.Instance.Push(transform.GetComponent<Poolable>());
         //BattleManager.Instance.OnEnemyDie?.Invoke();
         //OnDieEvent?.Invoke();
     }

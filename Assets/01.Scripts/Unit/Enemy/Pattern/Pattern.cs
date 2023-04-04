@@ -117,7 +117,6 @@ public class Pattern : MonoBehaviour
                 if(transition.positivePattern != null)
                 {
                     BattleManager.Instance.enemy.PatternManager.ChangePattern(transition.positivePattern);
-
                 }
             }
             else

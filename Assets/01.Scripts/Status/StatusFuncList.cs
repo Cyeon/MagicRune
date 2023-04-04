@@ -33,7 +33,7 @@ public class StatusFuncList : MonoBehaviour
     {
         unit.TakeDamage(status.typeValue, true, status);
         _dialScene?.UpdateHealthbar(unit.IsPlayer);
-        StatusManager.Instance.AllRemStatus(unit, status);
+        StatusManager.Instance.CountRemStatus(unit, status, 0);
         _dialScene?.ReloadStatusPanel(unit, status.statusName, status.typeValue);
     }
 

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Icicle : Enemy
 {
+    [SerializeField] private Sprite _originalIcon;
     [SerializeField] private Sprite _awakingIcon;
 
     public void Awaking()
@@ -13,5 +14,11 @@ public class Icicle : Enemy
             SpriteRenderer.sprite = _awakingIcon;
         }
         PatternManager.CurrentPattern.NextPattern();
+    }
+
+    public override void Init()
+    {
+        SpriteRenderer.sprite = _originalIcon;
+        base.Init();
     }
 }

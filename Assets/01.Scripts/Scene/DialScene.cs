@@ -236,6 +236,9 @@ public class DialScene : BaseScene
     #region Pattern
     public void ReloadPattern(Sprite sprite, string value = "")
     {
+        if(_enemyPatternIcon == null)
+            _enemyPatternIcon = UIManager.Instance.Get<Image>("NextPattern Image");
+
         _enemyPatternIcon.sprite = sprite;
         _enemyPatternValueText.text = value;
     }
