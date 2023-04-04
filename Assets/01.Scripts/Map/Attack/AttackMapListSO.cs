@@ -6,7 +6,7 @@ using UnityEngine;
 public class Floor
 {
     public int chapter;
-    [Range(1, 10)]
+    [Range(1, 9)]
     public int stage;
 }
 

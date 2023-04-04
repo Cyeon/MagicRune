@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 860882359064019169}
   - component: {fileID: 4700046235551772768}
   m_Layer: 0
-  m_Name: 1/3Chilliness
+  m_Name: S_Chilliness(Coldness(1/3))
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -130,7 +130,7 @@ GameObject:
   - component: {fileID: 5951429274219739178}
   - component: {fileID: 8875649631337026929}
   m_Layer: 0
-  m_Name: 8S_SwordWing
+  m_Name: S_SwordWing(8)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -248,7 +248,7 @@ GameObject:
   - component: {fileID: 3771404605129974576}
   - component: {fileID: 4926756217628868189}
   m_Layer: 0
-  m_Name: 10Shield
+  m_Name: DEF(10)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -281,7 +281,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2192153269515d74695b667fe90c4d36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  patternName: Shield
+  patternName: Defence
   icon: {fileID: 21300000, guid: a28c2afe1020a2c48ad8e49fda3af0dc, type: 3}
   desc: 10
   isIncluding: 1
@@ -407,7 +407,7 @@ GameObject:
   - component: {fileID: 7755410516876316994}
   - component: {fileID: 1809498253935644684}
   m_Layer: 0
-  m_Name: 15S_Coldness
+  m_Name: S_Coldness(15)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -478,7 +478,7 @@ GameObject:
   - component: {fileID: 2205618849007346413}
   - component: {fileID: 3514941667763058418}
   m_Layer: 0
-  m_Name: 1/3Chilliness
+  m_Name: S_Chilliness(Coldness(1/3))
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -548,7 +548,7 @@ GameObject:
   - component: {fileID: 4220489753888696144}
   - component: {fileID: 8706212320668936135}
   m_Layer: 0
-  m_Name: 2x3Attack
+  m_Name: ATK(2*3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -618,7 +618,7 @@ GameObject:
   - component: {fileID: 4460411492087688655}
   - component: {fileID: 7374541503580105421}
   m_Layer: 0
-  m_Name: 20Attack
+  m_Name: ATK(20)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -734,7 +734,7 @@ GameObject:
   - component: {fileID: 1869751726943888103}
   - component: {fileID: 5519867942528748203}
   m_Layer: 0
-  m_Name: 1/3S_Ice
+  m_Name: S_Ice(Coldness(1/3))
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -912,7 +912,7 @@ GameObject:
   - component: {fileID: 617264163283403633}
   - component: {fileID: 3026747227498007773}
   m_Layer: 0
-  m_Name: 15Coldness
+  m_Name: S_Coldness(15)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -945,7 +945,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2192153269515d74695b667fe90c4d36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  patternName: Give Status
+  patternName: Add Coldness Status
   icon: {fileID: 21300000, guid: 4e8be5fd17ef3694cb37817fa4345ebc, type: 3}
   desc: 15
   isIncluding: 1
@@ -1029,7 +1029,7 @@ GameObject:
   - component: {fileID: 5960585763898280690}
   - component: {fileID: 4654309185862817150}
   m_Layer: 0
-  m_Name: 2x3Attack (1)
+  m_Name: ATK(2*3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1350,7 +1350,7 @@ GameObject:
   - component: {fileID: 9195269081768210840}
   - component: {fileID: 8632972706084476061}
   m_Layer: 0
-  m_Name: 4x3Attack/-3SwordWing
+  m_Name: ATK(4*3)+(S_SwordWing(-3))
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1436,7 +1436,7 @@ GameObject:
   - component: {fileID: 2473883603957405845}
   - component: {fileID: 5502617461779474394}
   m_Layer: 0
-  m_Name: 5Shield (1)
+  m_Name: DEF(5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1505,7 +1505,7 @@ GameObject:
   - component: {fileID: 6338896713528731521}
   - component: {fileID: 8591750359446765821}
   m_Layer: 0
-  m_Name: 15Coldness
+  m_Name: S_Coldness(15)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1660,7 +1660,7 @@ GameObject:
   - component: {fileID: 7400668718091412500}
   - component: {fileID: 64264582788352049}
   m_Layer: 0
-  m_Name: 4x3Attack/-3SwordWing (1)
+  m_Name: ATK(4*3)+(S_SwordWing(-3))
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1746,7 +1746,7 @@ GameObject:
   - component: {fileID: 1678526021660161395}
   - component: {fileID: 5834282535196477624}
   m_Layer: 0
-  m_Name: 15Coldness
+  m_Name: S_Coldness(15)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1817,7 +1817,7 @@ GameObject:
   - component: {fileID: 8285289795806985120}
   - component: {fileID: 2783546606579734046}
   m_Layer: 0
-  m_Name: 5x2Attack
+  m_Name: ATK(5*2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2027,7 +2027,7 @@ GameObject:
   - component: {fileID: 8290066194911172134}
   - component: {fileID: 7746664901297579348}
   m_Layer: 0
-  m_Name: 1/3Ice
+  m_Name: S_Ice(Coldness(1/3))
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2145,7 +2145,7 @@ GameObject:
   - component: {fileID: 4721610234163025483}
   - component: {fileID: 1854751409944048775}
   m_Layer: 0
-  m_Name: 5Shield
+  m_Name: DEF(5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
