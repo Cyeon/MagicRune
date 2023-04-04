@@ -35,7 +35,7 @@ public class DistracotrFuncList : MonoBehaviour
         increaseMode = (IncreaseMode)num;
     }
 
-    public void NextStage()
+    public static void NextStage()
     {
         MapManager.Instance.NextStage();
         CanvasManager.Instance.GetCanvas("Adventure").enabled = false;
@@ -50,25 +50,19 @@ public class DistracotrFuncList : MonoBehaviour
         else if (increaseMode == IncreaseMode.Percent)
             GameManager.Instance.player.AddHPPercent(amount);
 
-        //MapSceneUI.InfoUIReload();
         MapSceneUI.InfoUIReload();
-        NextStage();
     }
 
     public void AddMaxHp(int amount)
     {
         GameManager.Instance.player.AddMaxHp(amount);
-        //MapSceneUI.InfoUIReload();
         MapSceneUI.InfoUIReload();
-        NextStage();
     }
 
     public void AddGold(int amount)
     {
         GameManager.Instance.AddGold(amount);
-        //MapSceneUI.InfoUIReload();
         MapSceneUI.InfoUIReload();
-        NextStage();
     }
     public void BattleEnemy(EnemySO enemy)
     {
