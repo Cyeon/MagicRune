@@ -42,7 +42,7 @@ public class ShopItemPanelUI : MonoBehaviour
 
     public void Awake()
     {
-        icon = transform.Find("Icon").GetComponent<Image>();
+        icon = transform.Find("Button/Icon").GetComponent<Image>();
         goldText = transform.GetComponentInChildren<TextMeshProUGUI>();
     }
 }
