@@ -33,7 +33,7 @@ public class StatusFuncList : MonoBehaviour
     {
         unit.TakeDamage(status.typeValue, true, status);
         _dialScene?.UpdateHealthbar(unit.IsPlayer);
-        StatusManager.Instance.RemoveValue(unit, status, status.typeValue);
+        StatusManager.Instance.AllRemStatus(unit, status);
         _dialScene?.ReloadStatusPanel(unit, status.statusName, status.typeValue);
     }
 
@@ -57,14 +57,16 @@ public class StatusFuncList : MonoBehaviour
 
     public void RemoveStack()
     {
-        StatusManager.Instance.RemoveValue(unit, status, Mathf.FloorToInt(unit.currentDmg));
+        StatusManager.Instance.CountRemStatus(unit, status, Mathf.FloorToInt(unit.currentDmg));
     }
 
     public void FreezeFiveCilliness()
     {
+        Debug.Log(unit + ", " + status.statusName);
+
         if(StatusManager.Instance.GetUnitStatusValue(unit, status.statusName) >= 5)
         {
-            StatusManager.Instance.RemoveValue(unit, status, status.typeValue);
+            StatusManager.Instance.AllRemStatus(unit, status);
             StatusManager.Instance.AddStatus(unit, StatusName.Ice);
         }
     }

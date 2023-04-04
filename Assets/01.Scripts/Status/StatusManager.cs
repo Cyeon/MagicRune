@@ -59,6 +59,7 @@ public class StatusManager : MonoSingleton<StatusManager>
             return statusList.Where(e => e.statusName == status.statusName).FirstOrDefault();
         }
 
+        Debug.LogError("NotFound");
         return null;
     }
 
@@ -110,12 +111,15 @@ public class StatusManager : MonoSingleton<StatusManager>
                     //UIManager.Instance.StatusPopup(newStatus, UIManager.Instance.enemyIcon.transform.position);
                     _dialScene?.StatusPopup(newStatus);
 
+                _statusFuncList.unit = unit;
+
                 Status currentStauts = statusList.Where(e => e.statusName == status.statusName).FirstOrDefault();
                 if (currentStauts != null)
                 {
                     currentStauts.typeValue += status.typeValue > 0 ? status.typeValue : value;
                     _dialScene?.ReloadStatusPanel(unit, currentStauts.statusName, currentStauts.typeValue);
 
+                    _statusFuncList.status = currentStauts;
                     currentStauts.addFunc?.Invoke();
                 }
                 else
@@ -124,13 +128,10 @@ public class StatusManager : MonoSingleton<StatusManager>
                     unit.unitStatusDic[newStatus.invokeTime].Add(newStatus);
                     _dialScene?.AddStatus(unit, newStatus);
 
+                    _statusFuncList.status = newStatus;
                     newStatus.addFunc?.Invoke();
                 }
             }
-        }
-        else
-        {
-            Debug.LogError("��ųʸ� ����Ʈ�� ã�� �� �����~~");
         }
     }
 
@@ -167,7 +168,7 @@ public class StatusManager : MonoSingleton<StatusManager>
                 if (currentStauts != null)
                 {
                     status.typeValue = Mathf.Clamp(status.typeValue - count, 0, status.typeValue);
-                    UIManager.Instance.ReloadStatusPanel(unit, status.statusName, status.typeValue);
+                    _dialScene?.ReloadStatusPanel(unit, status.statusName, status.typeValue);
                 }
                 else
                 {
@@ -234,6 +235,6 @@ public class StatusManager : MonoSingleton<StatusManager>
 
     public void RemoveValue(Unit unit, StatusName status, int value)
     {
-        RemoveValue(unit, GetStatus(status), value);
+        CountRemStatus(unit, GetStatus(status), value);
     }
 }

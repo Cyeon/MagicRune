@@ -31,10 +31,6 @@ public class Pattern : MonoBehaviour
     public void Start()
     {
         _dialScene = SceneManagerEX.Instance.CurrentScene as DialScene;
-
-        _dialScene?.ReloadPattern(info.icon, value > 0 ? value.ToString() : "");
-        PatternManager.Instance.funcList.value = value;
-        PatternManager.Instance.FuncInovke(info.startFunc);
     }
 
     /// <summary>
@@ -120,13 +116,13 @@ public class Pattern : MonoBehaviour
             {
                 if(transition.positivePattern != null)
                 {
-                    BattleManager.Instance.enemy.patternM.ChangePattern(transition.positivePattern);
+                    BattleManager.Instance.enemy.PatternManager.ChangePattern(transition.positivePattern);
 
                 }
             }
             else
             {
-                BattleManager.Instance.enemy.patternM.NextPattern();
+                BattleManager.Instance.enemy.PatternManager.NextPattern();
             }
         }
     }

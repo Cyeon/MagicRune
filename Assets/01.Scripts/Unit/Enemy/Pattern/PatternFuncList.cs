@@ -51,13 +51,13 @@ public class PatternFuncList : MonoBehaviour
 
     public void AddAtkDmg()
     {
-        BattleManager.Instance.enemy.atkDamage += value;
+        BattleManager.Instance.enemy.currentDmg += value;
         _addDmg = value;
     }
 
     public void RemAtkDmg()
     {
-        BattleManager.Instance.enemy.atkDamage -= _addDmg;
+        BattleManager.Instance.enemy.currentDmg -= _addDmg;
     }
 
     public void AddShield()
@@ -90,7 +90,7 @@ public class PatternFuncList : MonoBehaviour
 
     private void DelayAttack()
     {
-        BattleManager.Instance.enemy.Attack();
+        //BattleManager.Instance.enemy.Attack();
     }
 
     public void ShieldUse()

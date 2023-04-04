@@ -68,7 +68,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a9a84362b976a746a341572651e7aa7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  status: 6
+  status: 7
   value: 0
   isSelf: 0
 --- !u!1 &823226524300793655
@@ -463,7 +463,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76e453d0137dffa4c86b004096088636, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  status: 5
+  status: 6
   value: 15
   isSelf: 1
 --- !u!1 &2721772889018443016
@@ -533,7 +533,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a9a84362b976a746a341572651e7aa7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  status: 6
+  status: 7
   value: 0
   isSelf: 0
 --- !u!1 &3602241635372196194
@@ -967,7 +967,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76e453d0137dffa4c86b004096088636, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  status: 5
+  status: 6
   value: 15
   isSelf: 1
 --- !u!1 &5354008970952817920
@@ -1158,9 +1158,12 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  OnDieEvent:
+    m_PersistentCalls:
+      m_Calls: []
   attackSound: {fileID: 0}
   isEnter: 0
-  patternM: {fileID: 0}
+  enemyScaleVec: {x: 1, y: 1, z: 1}
   _awakingIcon: {fileID: 21300000, guid: 1abc27c56f381c6449f0d37410c5f409, type: 3}
 --- !u!114 &5573710045181229655
 MonoBehaviour:
@@ -1557,7 +1560,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76e453d0137dffa4c86b004096088636, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  status: 5
+  status: 6
   value: 15
   isSelf: 1
 --- !u!1 &6249683449756998265
@@ -1798,7 +1801,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76e453d0137dffa4c86b004096088636, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  status: 5
+  status: 6
   value: 15
   isSelf: 1
 --- !u!1 &7050939463909324118

@@ -26,6 +26,7 @@ public enum StatusName
     Fire,
     Ice,
     Wound,
+    Recharging,
     Coldness, // 냉기
     Chilliness, // 한기
     COUNT

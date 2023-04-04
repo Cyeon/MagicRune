@@ -9,9 +9,13 @@ public class PatternManager : MonoBehaviour
     public List<Pattern> patternList = new List<Pattern>();
     private int _index = 0;
 
+    private DialScene _disalScene;
+
     private void Awake()
     {
-        foreach(var pattern in transform.GetComponentsInChildren<Pattern>())
+        _disalScene = SceneManagerEX.Instance.CurrentScene as DialScene;
+
+        foreach (var pattern in transform.GetComponentsInChildren<Pattern>())
         {
             if(pattern.isIncluding)
                 patternList.Add(pattern);
@@ -21,7 +25,7 @@ public class PatternManager : MonoBehaviour
     public void ChangePattern(Pattern pattern)
     {
         _currentPattern = pattern;
-        UIManager.Instance.ReloadPattern(_currentPattern.icon, _currentPattern.desc);
+        _disalScene?.ReloadPattern(_currentPattern.icon, _currentPattern.desc);
     }
 
     public void NextPattern()

@@ -15,6 +15,6 @@ public class StatusAction : PatternAction
         else
             StatusManager.Instance.AddStatus(isSelf ? BattleManager.Instance.enemy : BattleManager.Instance.player, status, value);
 
-        BattleManager.Instance.enemy.patternM.CurrentPattern.NextAction();
+        BattleManager.Instance.enemy.PatternManager.CurrentPattern.NextAction();
     }
 }

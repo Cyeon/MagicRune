@@ -407,4 +407,9 @@ public class DialScene : BaseScene
     {
         // ·é Å¬¸®¾î
     }
+
+    public void EnemyIconSetting(SpriteRenderer renderer)
+    {
+        _enemyIcon = renderer;
+    }
 }
