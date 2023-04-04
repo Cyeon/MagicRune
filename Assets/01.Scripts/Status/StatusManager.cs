@@ -167,8 +167,8 @@ public class StatusManager : MonoSingleton<StatusManager>
                 Status currentStauts = statusList.Where(e => e.statusName == status.statusName).FirstOrDefault();
                 if (currentStauts != null)
                 {
-                    status.typeValue = Mathf.Clamp(status.typeValue - count, 0, status.typeValue);
-                    _dialScene?.ReloadStatusPanel(unit, status.statusName, status.typeValue);
+                    currentStauts.typeValue -= count;
+                    _dialScene?.ReloadStatusPanel(unit, currentStauts.statusName, currentStauts.typeValue);
                 }
                 else
                 {

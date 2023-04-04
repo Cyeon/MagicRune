@@ -28,8 +28,6 @@ public class Dial : MonoBehaviour
 
     [SerializeField]
     private List<Rune> _selectedDeck = null; // ������ �����ص� ���̾� ������ 1��° �� ��. 
-    [SerializeField]
-    private Transform _enemyPos;
 
     [SerializeField]
     private float[] _lineDistanceArray = new float[3];
@@ -353,7 +351,7 @@ public class Dial : MonoBehaviour
                         b.SetTrailColor(Color.yellow);
                         break;
                 }
-                b.Init(_dialElementList[i].SelectCard.transform, _enemyPos, 1.5f, 7, 7, () =>
+                b.Init(_dialElementList[i].SelectCard.transform, BattleManager.Instance.enemy.transform, 1.5f, 7, 7, () =>
                 {
                     _dialElementList[index].Attack();
 
