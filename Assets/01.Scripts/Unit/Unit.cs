@@ -34,7 +34,11 @@ public class Unit : MonoBehaviour
                 _health = _maxHealth;
             }
 
-            _dialScene?.UpdateHealthbar(IsPlayer);
+            if(SceneManagerEX.Instance.CurrentScene == _dialScene)
+            {
+                _dialScene?.UpdateHealthbar(IsPlayer);
+            }
+
             if (_health <= 0) Die();
         }
     }
