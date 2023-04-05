@@ -26,6 +26,7 @@ public class DialScene : BaseScene
     private TextMeshProUGUI _cardDescInfo;
     private TextMeshProUGUI _cardDescCoolTime;
 
+    [SerializeField]
     private GameObject _statusDescPanel;
     private TextMeshPro _statusDescName;
     private TextMeshPro _statusDescInfo;
@@ -76,6 +77,9 @@ public class DialScene : BaseScene
         UIManager.Instance.Bind<Button>("Restart Btn", CanvasManager.Instance.GetCanvas("Popup").gameObject);
         UIManager.Instance.Bind<Button>("Quit Btn", CanvasManager.Instance.GetCanvas("Popup").gameObject);
 
+        UIManager.Instance.Bind<TextMeshPro>("Status_Name_Text", CanvasManager.Instance.GetCanvas("Popup").gameObject);
+        UIManager.Instance.Bind<TextMeshPro>("Status_Infomation_Text", CanvasManager.Instance.GetCanvas("Popup").gameObject);
+
         #endregion
 
         _enemyPatternIcon = UIManager.Instance.Get<Image>("NextPattern Image");
@@ -85,6 +89,9 @@ public class DialScene : BaseScene
         _cardDescSkillIcon = UIManager.Instance.Get<Image>("Explain_Skill_Icon");
         _cardDescInfo = UIManager.Instance.Get<TextMeshProUGUI>("Explain_Text");
         _cardDescCoolTime = UIManager.Instance.Get<TextMeshProUGUI>("CoolTime_Text");
+
+        _statusDescName = UIManager.Instance.Get<TextMeshPro>("Status_Name_Text");
+        _statusDescInfo = UIManager.Instance.Get<TextMeshPro>("Status_Infomation_Text");
 
         //UIManager.Instance.Get<Button>("Restart Btn").onClick.RemoveAllListeners();
         //UIManager.Instance.Get<Button>("Restart Btn").onClick.AddListener(() =>
@@ -236,6 +243,9 @@ public class DialScene : BaseScene
     #region Pattern
     public void ReloadPattern(Sprite sprite, string value = "")
     {
+        if(_enemyPatternIcon == null)
+            _enemyPatternIcon = UIManager.Instance.Get<Image>("NextPattern Image");
+
         _enemyPatternIcon.sprite = sprite;
         _enemyPatternValueText.text = value;
     }
@@ -299,6 +309,11 @@ public class DialScene : BaseScene
 
         _statusDescName.text = status.debugName;
         _statusDescInfo.text = status.information;
+    }
+
+    public void StatusDescDown()
+    {
+        _statusDescPanel.SetActive(false);
     }
 
     #endregion
@@ -406,5 +421,10 @@ public class DialScene : BaseScene
     public override void Clear()
     {
         // ·é Å¬¸®¾î
+    }
+
+    public void EnemyIconSetting(SpriteRenderer renderer)
+    {
+        _enemyIcon = renderer;
     }
 }

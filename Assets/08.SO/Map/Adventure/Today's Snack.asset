@@ -13,12 +13,13 @@ MonoBehaviour:
   m_Name: Today's Snack
   m_EditorClassIdentifier: 
   adventureName: "\uC624\uB298\uC758 \uAC04\uC2DD"
-  image: {fileID: 0}
+  image: {fileID: 21300000, guid: b07ac9d59fd9cf04692ae050841699d3, type: 3}
   message: "\uC624\uB298\uC758 \uAC04\uC2DD\uC740 \uCE74\uC57C \uC0CC\uB4DC\uC704\uCE58,
     \uCFE0\uC564\uD06C \uC6B0\uC720 \uC785\uB2C8\uB2E4."
   distractors:
   - text: "[\uCE74\uC57C \uC0CC\uB4DC\uC704\uCE58] \uCD5C\uB300 \uCCB4\uB825\uC774
       5 \uC99D\uAC00\uD569\uB2C8\uB2E4."
+    isNextStage: 1
     function:
       m_PersistentCalls:
         m_Calls:
@@ -48,6 +49,7 @@ MonoBehaviour:
           m_CallState: 2
   - text: "[\uCFE0\uC564\uD06C \uC6B0\uC720] \uCD5C\uB300 \uCCB4\uB825\uC758 20%\uB9CC\uD07C
       \uD68C\uBCF5\uD569\uB2C8\uB2E4."
+    isNextStage: 1
     function:
       m_PersistentCalls:
         m_Calls:

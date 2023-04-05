@@ -13,7 +13,7 @@ using Random = UnityEngine.Random;
 public class Dial : MonoBehaviour
 {
     //[SerializeField]
-    //private List<Rune> _deck; // ¼ÒÁöÇÏ°í ÀÖ´Â ¸ðµç ·é 
+    //private List<Rune> _deck; // ï¿½ï¿½ï¿½ï¿½ï¿½Ï°ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ 
     [SerializeField]
     private int _maxRuneCount = 3;
     [SerializeField, Range(90f, 360f)]
@@ -27,9 +27,7 @@ public class Dial : MonoBehaviour
     private int _copyCount = 2;
 
     [SerializeField]
-    private List<Rune> _selectedDeck = null; // »çÀü¿¡ ¼³Á¤ÇØµÐ ´ÙÀÌ¾ó ¾ÈÂÊÀÇ 1¹øÂ° ÁÙ µ¦. 
-    [SerializeField]
-    private Transform _enemyPos;
+    private List<Rune> _selectedDeck = null; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Øµï¿½ ï¿½ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 1ï¿½ï¿½Â° ï¿½ï¿½ ï¿½ï¿½. 
 
     [SerializeField]
     private float[] _lineDistanceArray = new float[3];
@@ -276,7 +274,7 @@ public class Dial : MonoBehaviour
             {
                 if (_dialElementList[i].SelectCard != null && _dialElementList[i].SelectCard.Rune.IsCoolTime == false)
                 {
-                    _dialElementList[i].SelectCard.Rune.GetRune(); // ...? ¹¹ÇÏ´Â ÄÚµåÁö?
+                    _dialElementList[i].SelectCard.Rune.GetRune(); // ...? ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½Úµï¿½ï¿½ï¿½?
                 }
             }
 
@@ -285,32 +283,90 @@ public class Dial : MonoBehaviour
                 _effectDict.Clear();
                 return;
             }
-            _dialScene?.CardDescDown();
-            BezierMissile b = ResourceManager.Instance.Instantiate("BezierMissile", this.transform.parent).GetComponent<BezierMissile>();
-            b.SetEffect(g);
-            b.SetTrailColor(EffectType.Attack);
-            b.Init(this.transform, _enemyPos, 1.5f, 0, 0, () =>
-            {
-                for (int i = _dialElementList.Count - 1; i >= 0; i--)
-                {
-                    _dialElementList[i].Attack();
-                    Debug.Log(i);
-                }
+            //_dialScene?.CardDescDown();
+            //BezierMissile b = ResourceManager.Instance.Instantiate("BezierMissile", this.transform.parent).GetComponent<BezierMissile>();
+            //b.SetEffect(g);
+            //b.SetTrailColor(EffectType.Attack);
+            //b.Init(this.transform, _enemyPos, 1.5f, 0, 0, () =>
+            //{
+            //    for (int i = _dialElementList.Count - 1; i >= 0; i--)
+            //    {
+            //        _dialElementList[i].Attack();
+            //        Debug.Log(i);
+            //    }
 
-                //for (int i = 0; i < (int)EffectType.Etc; i++)
-                //{
-                //    AttackFunction((EffectType)i);
-                //}
+            //    //for (int i = 0; i < (int)EffectType.Etc; i++)
+            //    //{
+            //    //    AttackFunction((EffectType)i);
+            //    //}
 
-                for (int i = 0; i < 3; i++)
-                {
-                    _dialElementList[i].SelectCard = null;
-                }
+            //    for (int i = 0; i < 3; i++)
+            //    {
+            //        _dialElementList[i].SelectCard = null;
+            //    }
 
-                _effectDict.Clear();
-                BattleManager.Instance.PlayerTurnEnd();
-            });
+            //    _effectDict.Clear();
+            //    BattleManager.Instance.PlayerTurnEnd();
+            //});
+
+            StartCoroutine(AttackCoroutine());
+
+            _effectDict.Clear();
+            BattleManager.Instance.PlayerTurnEnd();
             _isAttack = false;
+        }
+    }
+
+    private IEnumerator AttackCoroutine()
+    {
+        _dialScene?.CardDescDown();
+        for (int i = _dialElementList.Count - 1; i >= 0; i--)
+        {
+            if (_dialElementList[i].SelectCard != null)
+            {
+                int index = i;
+                _dialElementList[i].IsGlow = true;
+                BezierMissile b = ResourceManager.Instance.Instantiate("BezierMissile", this.transform.parent).GetComponent<BezierMissile>();
+                b.SetEffect(_dialElementList[i].SelectCard.Rune.GetRune().RuneEffect);
+                switch (_dialElementList[i].SelectCard.Rune.GetRune().MainRune.Attribute)
+                {
+                    case AttributeType.None:
+                        break;
+                    case AttributeType.NonAttribute:
+                        b.SetTrailColor(Color.gray);
+                        break;
+                    case AttributeType.Fire:
+                        b.SetTrailColor(Color.red);
+                        break;
+                    case AttributeType.Ice:
+                        b.SetTrailColor(Color.cyan);
+                        break;
+                    case AttributeType.Wind:
+                        b.SetTrailColor(new Color(0, 1, 0));
+                        break;
+                    case AttributeType.Ground:
+                        b.SetTrailColor(new Color(0.53f, 0.27f, 0));
+                        break;
+                    case AttributeType.Electric:
+                        b.SetTrailColor(Color.yellow);
+                        break;
+                }
+                b.Init(_dialElementList[i].SelectCard.transform, BattleManager.Instance.enemy.transform, 1.5f, 7, 7, () =>
+                {
+                    _dialElementList[index].Attack();
+
+                    //_dialElementList[i] = null;
+                });
+                yield return new WaitForSeconds(0.1f);
+            }
+        }
+    }
+
+    public void AllMagicCircleGlow(bool value)
+    {
+        for(int i = 0; i < _dialElementList.Count; i++)
+        {
+            _dialElementList[i].IsGlow = value;
         }
     }
 
@@ -390,7 +446,7 @@ public class Dial : MonoBehaviour
                 }
                 break;
             case EffectType.Draw:
-                // Áö±ÝÀº ÀÏ´Ü ÁÖ¼®...
+                // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ï´ï¿½ ï¿½Ö¼ï¿½...
                 //action = () => _cardCollector.CardDraw((int)e.Effect);
                 break;
             case EffectType.Etc:

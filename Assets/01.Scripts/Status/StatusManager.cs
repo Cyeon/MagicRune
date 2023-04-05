@@ -6,7 +6,7 @@ using System.Security.Cryptography.X509Certificates;
 
 public class StatusManager : MonoSingleton<StatusManager>
 {
-    public List<Status> statusList = new List<Status>(); // ëª¨ë“  ?íƒœ?´ìƒ ëª©ë¡
+    public List<Status> statusList = new List<Status>(); // ëª¨ë“  ?ï¿½íƒœ?ï¿½ìƒ ëª©ë¡
     private StatusFuncList _statusFuncList = null;
 
     private DialScene _dialScene;
@@ -21,23 +21,23 @@ public class StatusManager : MonoSingleton<StatusManager>
         _dialScene = SceneManagerEX.Instance.CurrentScene as DialScene;
     }
 
-    // ?íƒœ?´ìƒ ?¨ê³¼ ë°œë™
+    // ?ï¿½íƒœ?ï¿½ìƒ ?ï¿½ê³¼ ë°œë™
     public void StatusFuncInvoke(List<Status> status, Unit unit)
     {
-        foreach(var funStatus in status)
+        _statusFuncList.unit = unit;
+        for(int i = 0; i < status.Count; ++i)
         {
-            _statusFuncList.status = funStatus;
-            _statusFuncList.unit = unit;
-            if (funStatus.typeValue > 0)
+            if (status[i] != null)
             {
-                funStatus.statusFunc?.Invoke();
+                _statusFuncList.status = status[i];
+                if (status[i].typeValue > 0) status[i].statusFunc?.Invoke();
             }
         }
 
         StatusUpdate(unit);
     }
 
-    // ?íƒœ?´ìƒ ëª©ë¡?ì„œ ê°€?¸ì˜¤ê¸?
+    // ?ï¿½íƒœ?ï¿½ìƒ ëª©ë¡?ï¿½ì„œ ê°€?ï¿½ì˜¤ï¿½?
     private Status GetStatus(StatusName name)
     {
         return statusList.Where(e => e.statusName == name).FirstOrDefault();
@@ -59,6 +59,7 @@ public class StatusManager : MonoSingleton<StatusManager>
             return statusList.Where(e => e.statusName == status.statusName).FirstOrDefault();
         }
 
+        Debug.LogError("NotFound");
         return null;
     }
 
@@ -88,7 +89,7 @@ public class StatusManager : MonoSingleton<StatusManager>
         return statusList;
     }
 
-    // ?íƒœ?´ìƒ ì¶”ê?
+    // ?ï¿½íƒœ?ï¿½ìƒ ì¶”ï¿½?
     public void AddStatus(Unit unit, StatusName statusName, int value = 1)
     {
         if (unit.IsDie == false)
@@ -110,11 +111,16 @@ public class StatusManager : MonoSingleton<StatusManager>
                     //UIManager.Instance.StatusPopup(newStatus, UIManager.Instance.enemyIcon.transform.position);
                     _dialScene?.StatusPopup(newStatus);
 
+                _statusFuncList.unit = unit;
+
                 Status currentStauts = statusList.Where(e => e.statusName == status.statusName).FirstOrDefault();
                 if (currentStauts != null)
                 {
                     currentStauts.typeValue += status.typeValue > 0 ? status.typeValue : value;
                     _dialScene?.ReloadStatusPanel(unit, currentStauts.statusName, currentStauts.typeValue);
+
+                    _statusFuncList.status = currentStauts;
+                    currentStauts.addFunc?.Invoke();
                 }
                 else
                 {
@@ -122,30 +128,28 @@ public class StatusManager : MonoSingleton<StatusManager>
                     unit.unitStatusDic[newStatus.invokeTime].Add(newStatus);
                     _dialScene?.AddStatus(unit, newStatus);
 
+                    _statusFuncList.status = newStatus;
                     newStatus.addFunc?.Invoke();
                 }
             }
         }
     }
 
-    // »óÅÂÀÌ»ó »èÁ¦
+    // ï¿½ï¿½ï¿½ï¿½ï¿½Ì»ï¿½ ï¿½ï¿½ï¿½ï¿½
     public void AllRemStatus(Unit unit, Status status)
     {
         if (unit.IsDie == false)
         {
-            List<Status> statusList = new List<Status>();
-            if (unit.unitStatusDic.TryGetValue(status.invokeTime, out statusList))
+            Status currentStauts = GetUnitHaveStauts(unit, status.statusName);
+
+            if (currentStauts != null)
             {
-                Status currentStauts = statusList.Where(e => e.statusName == status.statusName).FirstOrDefault();
-                if (currentStauts != null)
-                {
-                    unit.unitStatusDic[status.invokeTime].Remove(status);
-                    _dialScene?.RemoveStatusPanel(unit, status.statusName);
-                }
-                else
-                {
-                    Debug.LogWarning(string.Format("{0} status is not found. Can't Remove do it.", status.statusName));
-                }
+                unit.unitStatusDic[status.invokeTime].Remove(status);
+                _dialScene?.RemoveStatusPanel(unit, status.statusName);
+            }
+            else
+            {
+                Debug.LogWarning(string.Format("{0} status is not found. Can't Remove do it.", status.statusName));
             }
         }
     }
@@ -154,20 +158,16 @@ public class StatusManager : MonoSingleton<StatusManager>
     {
         if (unit.IsDie == false)
         {
-            List<Status> statusList = new List<Status>();
-            if (unit.unitStatusDic.TryGetValue(status.invokeTime, out statusList))
+            Status currentStauts = GetUnitHaveStauts(unit, status.statusName);
+
+            if (currentStauts != null)
             {
-                Status currentStauts = statusList.Where(e => e.statusName == status.statusName).FirstOrDefault();
-                if (currentStauts != null)
-                {
-                    status.typeValue = Mathf.Clamp(status.typeValue - count, 0, status.typeValue);
-                    //unit.unitStatusDic[status.invokeTime].Remove(status); // ÁÙÀÌ°í      
-                    //_dialScene?.RemoveStatusPanel(unit, status.statusName); // ¸¸¾à 0ÀÌÇÏ¶ó¸é Áö¿ì±â // ¾Æ´Ï¸é ¾÷µ¥ÀÌÆ®
-                }
-                else
-                {
-                    Debug.LogWarning(string.Format("{0} status is not found. Can't Remove do it.", status.statusName));
-                }
+                currentStauts.typeValue -= count;
+                _dialScene?.ReloadStatusPanel(unit, currentStauts.statusName, currentStauts.typeValue);
+            }
+            else
+            {
+                Debug.LogWarning(string.Format("{0} status is not found. Can't Remove do it.", status.statusName));
             }
         }
     }
@@ -214,7 +214,11 @@ public class StatusManager : MonoSingleton<StatusManager>
             List<int> indexes = new List<int>();
             for(int i = 0; i < x.Value.Count; i++)
             {
-                if (x.Value[i].type == StatusType.Turn) x.Value[i].typeValue--;
+                if (x.Value[i].type == StatusType.Turn)
+                {
+                    if (x.Value[i].isTurnRemove)
+                        CountRemStatus(unit, x.Value[i], 1);
+                }
 
                 _dialScene?.ReloadStatusPanel(unit, x.Value[i].statusName, x.Value[i].typeValue);
                 if (x.Value[i].typeValue <= 0)
@@ -227,8 +231,8 @@ public class StatusManager : MonoSingleton<StatusManager>
         }
     }
 
-    public void RemoveValue(Unit unit, Status status, int value)
+    public void RemoveValue(Unit unit, StatusName status, int value)
     {
-        unit.unitStatusDic[status.invokeTime].Where(e => e.statusName == status.statusName).FirstOrDefault().typeValue -= value;
+        CountRemStatus(unit, GetStatus(status), value);
     }
 }

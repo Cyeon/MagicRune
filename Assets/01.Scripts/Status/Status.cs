@@ -25,8 +25,11 @@ public enum StatusName
     Weak,
     Fire,
     Ice,
-    Hurt,
-    Charge,
+    Wound,
+    Recharging,
+    Coldness, // ëƒ‰ê¸°
+    Chilliness, // í•œê¸°
+    BladeOfKnife,
     COUNT
 }
 
@@ -43,13 +46,14 @@ public class Status
     public  StatusInvokeTime invokeTime = StatusInvokeTime.Start;
     public StatusType type = StatusType.Stack;
     public int typeValue = 0;
+    public bool isTurnRemove = false;
 
     [Header("Function")]
     public UnityEvent statusFunc;
     public UnityEvent addFunc;
 
     [Header("Resource")]
-    [ShowAssetPreview(32, 32), Tooltip("ÀÌ¹ÌÁö")]
+    [ShowAssetPreview(32, 32), Tooltip("ï¿½Ì¹ï¿½ï¿½ï¿½")]
     public Sprite icon;
     public Color color = Color.white;
 
@@ -64,6 +68,7 @@ public class Status
 
         this.invokeTime = status.invokeTime;
         this.typeValue = status.typeValue;
+        this.isTurnRemove = status.isTurnRemove;
 
         this.unit = status.unit;
 
