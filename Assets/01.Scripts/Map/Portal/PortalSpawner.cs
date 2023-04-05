@@ -6,7 +6,8 @@ using UnityEngine;
 public class PortalSpawner : MonoBehaviour
 {
     [Header("Portal Prefab")]
-    [SerializeField] private Portal _attackPortal;
+    [SerializeField] private AttackPortal _attackPortal;
+    [SerializeField] private AttackPortal _bossPortal;
     [SerializeField] private List<Portal> _eventPortals = new List<Portal>();
     private List<Portal> _spawnPortals = new List<Portal>();
     private Portal _selectPortal;
@@ -22,13 +23,12 @@ public class PortalSpawner : MonoBehaviour
         switch(type)
         {
             case StageType.Attack:
-                AttackPortal atkPortal = _attackPortal as AttackPortal;
-                int count = Mathf.Clamp(atkPortal.GetAttackEnemyCount(), 1, 4);
+                int count = Mathf.Clamp(_attackPortal.GetAttackEnemyCount(), 1, 4);
 
                 for(int i = 0; i < count; i++)
                 {
-                    Enemy enemy = atkPortal.GetAttackEnemy();
-                    atkPortal = PoolManager.Instance.Pop(_attackPortal.gameObject, transform).GetComponent<AttackPortal>();
+                    Enemy enemy = _attackPortal.GetAttackEnemy();
+                    AttackPortal atkPortal = PoolManager.Instance.Pop(_attackPortal.gameObject, transform).GetComponent<AttackPortal>();
 
                     switch(count)
                     {
@@ -58,7 +58,7 @@ public class PortalSpawner : MonoBehaviour
 
     public void ResetPortal()
     {
-        _spawnPortals.ForEach(x => x.PortalEffectingSizeControl(Vector2.zero, 0));
+        _spawnPortals.ForEach(x => x.PortalReset());
         _spawnPortals.ForEach(x => PoolManager.Instance.Push(x.GetComponent<Poolable>()));
         _spawnPortals.Clear();
     }
@@ -71,5 +71,24 @@ public class PortalSpawner : MonoBehaviour
     public void SelectPortal(Portal portal)
     {
         _selectPortal = portal;
+
+        if(portal is AttackPortal)
+        {
+            AttackPortal atk;
+            foreach (var atkPortal in  _spawnPortals)
+            {
+                atk = atkPortal as AttackPortal;
+                atk.PortalEnemy.isEnter = false;
+            }
+
+            atk = portal as AttackPortal;
+            atk.PortalEnemy.isEnter = true;
+        }
+
+    }
+
+    public void ResetEnemyEnter()
+    {
+        _attackPortal.attackMap.map.ForEach(x => x.Reset());
     }
 }

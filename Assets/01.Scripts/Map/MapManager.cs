@@ -47,11 +47,14 @@ public class MapManager : MonoSingleton<MapManager>
 
     private MapScene _mapScene;
 
-    private void Start()
+    private void Awake()
     {
         _mapSceneUI = CanvasManager.Instance.GetCanvas("MapUI").GetComponent<MapUI>();
         _portalSpawner = GetComponentInChildren<PortalSpawner>();
+    }
 
+    private void Start()
+    {
         ChapterInit();
         _portalSpawner.SpawnPortal(stageList[Stage].type);
         MapSceneUI?.InfoUIReload();
@@ -97,6 +100,7 @@ public class MapManager : MonoSingleton<MapManager>
         if (_isFirst)
         {
             _isFirst = false;
+            _portalSpawner.ResetEnemyEnter();
             return;
         }
 

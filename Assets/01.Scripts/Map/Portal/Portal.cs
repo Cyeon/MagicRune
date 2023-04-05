@@ -28,8 +28,7 @@ public class Portal : MonoBehaviour, IPointerClickHandler
             _effecting.Add(transform.Find("Effect").GetChild(i));
         }
 
-        PortalEffectingSizeControl(Vector2.zero, 0);
-        transform.localScale = Vector2.zero;
+        PortalReset();
     }
 
     /// <summary>
@@ -67,8 +66,8 @@ public class Portal : MonoBehaviour, IPointerClickHandler
         if (currentClickNum == 1)
         {
             if (_isEffecting) return;
-            Execute();
             MapManager.Instance.PortalSpawner.SelectPortal(this);
+            Execute();
         }
     }
 
@@ -82,5 +81,11 @@ public class Portal : MonoBehaviour, IPointerClickHandler
     public Sprite GetSprite()
     {
         return _spriteRenderer.sprite;
+    }
+
+    public void PortalReset()
+    {
+        PortalEffectingSizeControl(Vector2.zero, 0);
+        transform.localScale = Vector2.zero;
     }
 }

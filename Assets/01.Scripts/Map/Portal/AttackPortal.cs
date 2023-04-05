@@ -6,6 +6,7 @@ using UnityEngine;
 public class AttackPortal : Portal
 {
     private Enemy _portalEnemy;
+    public Enemy PortalEnemy => _portalEnemy;
     public AttackMapListSO attackMap;
 
     public override void Execute()
@@ -33,7 +34,7 @@ public class AttackPortal : Portal
         {
             return attackMap.defaultEnemy;
         }
-
+        enemyList[idx].isEnter = true;
         return enemyList[idx];
     }
 
@@ -51,11 +52,15 @@ public class AttackPortal : Portal
             {
                 foreach (var enemy in attackMap.map[i].enemyList)
                 {
-                    if (!enemy.isEnter) enemyList.Add(enemy);
+                    if (!enemy.isEnter)
+                    {
+                        enemyList.Add(enemy);
+                    }
                 }
             }
         }
 
         return enemyList;
     }
+
 }
