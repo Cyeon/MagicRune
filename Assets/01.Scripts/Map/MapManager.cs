@@ -17,8 +17,6 @@ public class MapManager : MonoSingleton<MapManager>
 
     [Header("Stage")]
     public List<Stage> stageList = new List<Stage>();
-    [SerializeField]
-    private GameObject _stageArrow;
 
     [SerializeField]   private int Stage => Floor - ((this.Chapter - 1) * 9);
 
@@ -47,6 +45,8 @@ public class MapManager : MonoSingleton<MapManager>
             return _mapSceneUI;
         }
     }
+
+    private MapScene _mapScene;
 
     private void Awake()
     {
@@ -195,8 +195,16 @@ public class MapManager : MonoSingleton<MapManager>
         }
 
         MapSceneUI.StageList.transform.DOLocalMoveX(Stage * -300f, 0);
-        _stageArrow.transform.SetParent(MapSceneUI.StageList.GetChild(Stage + 1));
-        _stageArrow.transform.localPosition = new Vector2(0, _stageArrow.transform.localPosition.y);
+        if(_mapScene == null)
+        {
+            _mapScene = SceneManagerEX.Instance.CurrentScene as MapScene;
+        }
+
+        if (_mapScene != null)
+        {
+            _mapScene?.ArrowImage.transform.SetParent(MapSceneUI.StageList.GetChild(Stage + 1));
+            _mapScene.ArrowImage.transform.localPosition = new Vector3(0, _mapScene.ArrowImage.transform.localPosition.y, 0);
+        }
         stageList[Stage].ChangeResource(Color.white, selectPortal.icon);
         _floor += 1;
 
