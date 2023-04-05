@@ -17,6 +17,11 @@ public class ExplainPanel : MonoBehaviour
 
     private void Start()
     {
+        Setting();
+    }
+
+    private void Setting()
+    {
         _nameText = transform.Find("Skill_Name_Text").GetComponent<TextMeshProUGUI>();
         _runeImage = transform.Find("Explain_Skill_Icon").GetComponent<Image>();
         _coolTimeText = transform.Find("CoolTime_Icon/CoolTime_Text").GetComponent<TextMeshProUGUI>();
@@ -25,6 +30,11 @@ public class ExplainPanel : MonoBehaviour
 
     public void SetUI(Rune rune)
     {
+        if(_nameText == null || _runeImage == null || _coolTimeText == null || _descText)
+        {
+            Setting();
+        }
+
         _nameText.SetText(rune.GetRune().Name);
         _runeImage.sprite = rune.GetRune().RuneImage;
         _coolTimeText.SetText(rune.GetCoolTime().ToString());
