@@ -2388,8 +2388,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   status:
-    statusName: 0
     debugName: 
+    statusName: 0
     information: 
     textColor: {r: 0, g: 0, b: 0, a: 0}
     invokeTime: 0
@@ -2419,9 +2419,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   statusList:
-  - statusName: 3
-    debugName: "\uBE59\uACB0"
-    information: "\uBE59\uACB0\uC124\uBA85"
+  - debugName: "\uBE59\uACB0"
+    statusName: 3
+    information: "\uBE59\uACB0\uC758 \uC218\uCE58\uB9CC\uD07C \uD134\uC744 \uC27D\uB2C8\uB2E4."
     textColor: {r: 0.44716978, g: 0.98286563, b: 1, a: 1}
     invokeTime: 0
     type: 1
@@ -2448,9 +2448,10 @@ MonoBehaviour:
     icon: {fileID: 21300000, guid: 4414dc58daed3944c85665d4c76296e1, type: 3}
     color: {r: 0.2679245, g: 0.88512623, b: 1, a: 1}
     unit: {fileID: 0}
-  - statusName: 2
-    debugName: "\uD654\uC5FC"
-    information: "\uD654\uC5FC\uC124\uBA85"
+  - debugName: "\uD654\uC0C1"
+    statusName: 2
+    information: "\uD654\uC0C1 \uC218\uCE58\uB9CC\uD07C \uD53C\uD574\uB97C \uC8FC\uACE0
+      \uD134 \uC885\uB8CC\uC2DC \uD654\uC0C1 \uC218\uCE58\uAC00 1 \uC904\uC5B4\uB4ED\uB2C8\uB2E4."
     textColor: {r: 1, g: 0.3622641, b: 0.3622641, a: 1}
     invokeTime: 3
     type: 0
@@ -2489,38 +2490,9 @@ MonoBehaviour:
     icon: {fileID: 21300000, guid: 7b4de38f1f488c342af446425cf2ccbd, type: 3}
     color: {r: 1, g: 0.29622638, b: 0.3843256, a: 1}
     unit: {fileID: 0}
-  - statusName: 4
-    debugName: "\uC0C1\uCC98"
-    information: 
-    textColor: {r: 1, g: 0, b: 0, a: 1}
-    invokeTime: 2
-    type: 0
-    typeValue: 0
-    isTurnRemove: 0
-    statusFunc:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 594343483}
-          m_TargetAssemblyTypeName: StatusFuncList, Assembly-CSharp
-          m_MethodName: WoundGetDmg
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-    addFunc:
-      m_PersistentCalls:
-        m_Calls: []
-    icon: {fileID: 21300000, guid: f364a55c2abe3a7468bf63388f2e606a, type: 3}
-    color: {r: 1, g: 0, b: 0.12290478, a: 1}
-    unit: {fileID: 0}
-  - statusName: 5
-    debugName: "\uCDA9\uC804"
-    information: 
+  - debugName: "\uCDA9\uC804"
+    statusName: 5
+    information: "\uCDA9\uC804 \uC911\uC785\uB2C8\uB2E4. "
     textColor: {r: 0.9882353, g: 1, b: 0.3372549, a: 1}
     invokeTime: 1
     type: 0
@@ -2535,9 +2507,9 @@ MonoBehaviour:
     icon: {fileID: 21300000, guid: fd4489fff7614ed4d9de3e70e9bec7cf, type: 3}
     color: {r: 0.9882353, g: 1, b: 0.3372549, a: 1}
     unit: {fileID: 0}
-  - statusName: 6
-    debugName: "\uB0C9\uAE30\uC751\uCD95"
-    information: 
+  - debugName: "\uB0C9\uAE30\uC751\uCD95"
+    statusName: 6
+    information: "\uB0C9\uAE30\uAC00 \uC751\uCD95\uB41C \uC0C1\uD0DC\uC785\uB2C8\uB2E4. "
     textColor: {r: 0.45490196, g: 0.9372549, b: 0.8235294, a: 1}
     invokeTime: 2
     type: 0
@@ -2564,10 +2536,10 @@ MonoBehaviour:
     icon: {fileID: 21300000, guid: 890186f66def00b44bef117039f24101, type: 3}
     color: {r: 0.4537647, g: 0.9339623, b: 0.820306, a: 1}
     unit: {fileID: 0}
-  - statusName: 8
-    debugName: "\uCE7C\uB0A0"
-    information: "\uB54C\uB9B4\uB54C \uB370\uBBF8\uC9C0 2\uCD94\uAC00, 1\uC2A4\uD0DD\uC529
-      \uAC10\uC18C"
+  - debugName: "\uCE7C\uB0A0"
+    statusName: 8
+    information: "\uACF5\uACA9 \uC2DC 2 \uB300\uBBF8\uC9C0\uB97C \uCD94\uAC00\uD569\uB2C8\uB2E4.
+      \uD134 \uC885\uB8CC \uD6C4 \uCE7C\uB0A0 \uC218\uCE58\uAC00 1 \uC904\uC5B4\uB4ED\uB2C8\uB2E4."
     textColor: {r: 0.3820755, g: 1, b: 0.85431045, a: 1}
     invokeTime: 1
     type: 0
@@ -2606,10 +2578,10 @@ MonoBehaviour:
     icon: {fileID: 21300000, guid: 14e249f917459b4469fef5e512dadcae, type: 3}
     color: {r: 1, g: 1, b: 1, a: 1}
     unit: {fileID: 0}
-  - statusName: 7
-    debugName: "\uD55C\uAE30"
-    information: "25% \uACF5\uACA9\uB825 \uAC10\uC18C, 5\uC2A4\uD0DD \uC911\uCCA9\uC2DC
-      \uBE59\uACB0 \uBD80\uC5EC"
+  - debugName: "\uD55C\uAE30"
+    statusName: 7
+    information: "\uACF5\uACA9\uB825\uC774 25% \uAC10\uC18C\uB429\uB2C8\uB2E4. 5\uC2A4\uD0DD
+      \uC911\uCCA9\uC2DC \uBE59\uACB0\uC774 \uBD80\uC5EC\uB429\uB2C8\uB2E4."
     textColor: {r: 0.45490196, g: 0.9372549, b: 0.8235294, a: 1}
     invokeTime: 1
     type: 0
