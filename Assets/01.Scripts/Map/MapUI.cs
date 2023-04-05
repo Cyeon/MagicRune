@@ -84,6 +84,6 @@ public class MapUI : MonoBehaviour
     public void InfoUIReload()
     {
         _goldText?.SetText(GameManager.Instance.Gold.ToString());
-        _healthText?.SetText(GameManager.Instance.player.HP.ToString()+"/"+GameManager.Instance.player.MaxHealth.ToString());
+        _healthText?.SetText(GameManager.Instance.player.HP.ToString()+" / "+GameManager.Instance.player.MaxHealth.ToString());
     }
 }

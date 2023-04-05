@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: No Pain, No Gain
   m_EditorClassIdentifier: 
   adventureName: "\uACE0\uD1B5 \uC5C6\uC778 \uC5BB\uB294 \uAC83\uB3C4 \uC5C6\uB2E4"
-  image: {fileID: 0}
+  image: {fileID: 21300000, guid: 914e5d4ed91a3eb488d46ef82af72aea, type: 3}
   message: "\uC9C0\uB098\uAC00\uB358 \uC911 \uAC00\uC2DC \uB364\uBD88\uC774 \uC6B0\uAC70\uC9C4
     \uACF3\uC744 \uBC1C\uACAC\uD588\uC2B5\uB2C8\uB2E4. \uBC18\uC9DD\uC774\uB294 \uAC83\uC774
     \uBCF4\uC5EC \uC790\uC138\uD788 \uBCF4\uB2C8, \uB364\uBD88 \uBC11\uC5D0 \uC788\uB294
@@ -21,6 +21,7 @@ MonoBehaviour:
   distractors:
   - text: "[\uC0B4\uD3B4\uBCF8\uB2E4] \uAE08\uD654 30\uAC1C\uB97C \uC5BB\uACE0, 
       \uCCB4\uB825\uC744 5 \uC783\uC2B5\uB2C8\uB2E4."
+    isNextStage: 1
     function:
       m_PersistentCalls:
         m_Calls:
@@ -61,6 +62,7 @@ MonoBehaviour:
             m_BoolArgument: 0
           m_CallState: 2
   - text: "[\uB5A0\uB098\uAE30]"
+    isNextStage: 1
     function:
       m_PersistentCalls:
         m_Calls: []

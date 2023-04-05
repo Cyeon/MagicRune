@@ -13,13 +13,14 @@ MonoBehaviour:
   m_Name: Shine Light
   m_EditorClassIdentifier: 
   adventureName: "\uBC1D\uC740 \uBE5B"
-  image: {fileID: 21300000, guid: b38f47129cd86574fbabf7e06ead49c0, type: 3}
+  image: {fileID: 21300000, guid: cb8d897ee7b592a4ea91444793c93470, type: 3}
   message: "\uB2F9\uC2E0\uC740 \uBC29 \uD55C\uAC00\uC6B4\uB370\uC5D0\uC11C \uC77C\uB801\uC774\uB294
     \uBE5B\uC758 \uB369\uC5B4\uB9AC \uB97C \uBC1C\uACAC\uD588\uC2B5\uB2C8\uB2E4.\n\uB530\uB73B\uD55C
     \uBE5B\uACFC \uD669\uD640\uD55C \uBB38\uC591\uC774 \uB2F9\uC2E0\uC744 \uD5A5\uD574
     \uC190\uC9D3\uD569\uB2C8\uB2E4."
   distractors:
   - text: "[\uB4E4\uC5B4\uAC04\uB2E4] \uCCB4\uB825\uC744 10 \uD68C\uBCF5\uD569\uB2C8\uB2E4."
+    isNextStage: 1
     function:
       m_PersistentCalls:
         m_Calls:
@@ -48,6 +49,7 @@ MonoBehaviour:
             m_BoolArgument: 0
           m_CallState: 2
   - text: "[\uB5A0\uB098\uAE30]"
+    isNextStage: 1
     function:
       m_PersistentCalls:
         m_Calls: []

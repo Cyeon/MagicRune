@@ -29,6 +29,11 @@ public class StatusFuncList : MonoBehaviour
         status.unit.currentDmg -= status.unit.currentDmg * (percent * 0.01f);
     }
 
+    public void RemoveStatusOneStack()
+    {
+        StatusManager.Instance.CountRemStatus(unit, status, 1);
+    }
+
     public void StackDmg()
     {
         unit.TakeDamage(status.typeValue, true, status);
@@ -62,12 +67,15 @@ public class StatusFuncList : MonoBehaviour
 
     public void FreezeFiveCilliness()
     {
-        Debug.Log(unit + ", " + status.statusName);
-
         if(StatusManager.Instance.GetUnitStatusValue(unit, status.statusName) >= 5)
         {
             StatusManager.Instance.AllRemStatus(unit, status);
             StatusManager.Instance.AddStatus(unit, StatusName.Ice);
         }
+    }
+
+    public void TurnChange()
+    {
+        BattleManager.Instance.TurnChange();
     }
 }

@@ -74,6 +74,7 @@ public class BattleManager : MonoSingleton<BattleManager>
         _gameTurn = GameTurn.Player;
         currentUnit = player;
         attackUnit = enemy;
+        player.InvokeStatus(StatusInvokeTime.Start);
     }
 
     public void OnMonsterTurn()
@@ -82,7 +83,12 @@ public class BattleManager : MonoSingleton<BattleManager>
         _gameTurn = GameTurn.Monster;
         currentUnit = enemy;
         attackUnit = player;
-        enemy.PatternManager.TurnAction();
+        enemy?.InvokeStatus(StatusInvokeTime.Start);
+
+        if(_gameTurn == GameTurn.Monster)
+        {
+            enemy.PatternManager.TurnAction();
+        }
     }
 
     public bool IsPlayerTurn()
@@ -176,9 +182,6 @@ public class BattleManager : MonoSingleton<BattleManager>
                 OnPlayerTurn();
                 break;
         }
-
-        if (_gameTurn == GameTurn.PlayerWait || _gameTurn == GameTurn.MonsterWait)
-            currentUnit?.InvokeStatus(StatusInvokeTime.Start);
     }
 
     

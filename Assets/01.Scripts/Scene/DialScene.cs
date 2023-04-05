@@ -25,6 +25,7 @@ public class DialScene : BaseScene
     private GameObject _cardDescPanel;
     private ExplainPanelList _cardDescPanelList;
 
+    [SerializeField]
     private GameObject _statusDescPanel;
     private TextMeshPro _statusDescName;
     private TextMeshPro _statusDescInfo;
@@ -70,10 +71,16 @@ public class DialScene : BaseScene
         UIManager.Instance.Bind<Button>("Restart Btn", CanvasManager.Instance.GetCanvas("Popup").gameObject);
         UIManager.Instance.Bind<Button>("Quit Btn", CanvasManager.Instance.GetCanvas("Popup").gameObject);
 
+        UIManager.Instance.Bind<TextMeshPro>("Status_Name_Text", CanvasManager.Instance.GetCanvas("Popup").gameObject);
+        UIManager.Instance.Bind<TextMeshPro>("Status_Infomation_Text", CanvasManager.Instance.GetCanvas("Popup").gameObject);
+
         #endregion
 
         _enemyPatternIcon = UIManager.Instance.Get<Image>("NextPattern Image");
         _enemyPatternValueText = UIManager.Instance.Get<TextMeshProUGUI>("NextPattern ValueText");
+
+        _statusDescName = UIManager.Instance.Get<TextMeshPro>("Status_Name_Text");
+        _statusDescInfo = UIManager.Instance.Get<TextMeshPro>("Status_Infomation_Text");
 
         //UIManager.Instance.Get<Button>("Restart Btn").onClick.RemoveAllListeners();
         //UIManager.Instance.Get<Button>("Restart Btn").onClick.AddListener(() =>
@@ -298,6 +305,11 @@ public class DialScene : BaseScene
         _statusDescInfo.text = status.information;
     }
 
+    public void StatusDescDown()
+    {
+        _statusDescPanel.SetActive(false);
+    }
+
     #endregion
 
     #region Health Bar
@@ -402,7 +414,7 @@ public class DialScene : BaseScene
 
     public override void Clear()
     {
-        // ·é Å¬¸®¾î
+        // ï¿½ï¿½ Å¬ï¿½ï¿½ï¿½ï¿½
     }
 
     public void EnemyIconSetting(SpriteRenderer renderer)

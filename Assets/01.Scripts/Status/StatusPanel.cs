@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using TMPro;
 using UnityEngine.EventSystems;
 
-public class StatusPanel : MonoBehaviour, IPointerClickHandler
+public class StatusPanel : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
     public Status status;
     public Image image;
@@ -13,21 +13,28 @@ public class StatusPanel : MonoBehaviour, IPointerClickHandler
     public StatusName statusName;
 
     private DialScene _dialScene;
+    private bool _isPopuped = false;
 
     private void Start()
     {
         _dialScene = SceneManagerEX.Instance.CurrentScene as DialScene;
     }
 
-    public void OnPointerClick(PointerEventData eventData)
-    {
-        Vector3 pos = Define.MainCam.ScreenToWorldPoint(eventData.position);
-        _dialScene?.StatusDescPopup(status, pos);
-    }
-
     private void OnEnable()
     {
         image = GetComponent<Image>();
         duration = GetComponentInChildren<TextMeshProUGUI>();
+    }
+
+    public void OnPointerDown(PointerEventData eventData)
+    {
+        Vector3 pos = Define.MainCam.ScreenToWorldPoint(eventData.position);
+        _dialScene?.StatusDescPopup(status, pos);
+        _isPopuped = true;
+    }
+
+    public void OnPointerUp(PointerEventData eventData)
+    {
+        _dialScene?.StatusDescDown();
     }
 }
