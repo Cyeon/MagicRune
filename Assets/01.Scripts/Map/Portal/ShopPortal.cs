@@ -33,6 +33,7 @@ public class ShopPortal : Portal
             _shopUI.ShopItemProduct(shopItemList[numberList[randomIndex]]);
             numberList.RemoveAt(randomIndex);
         }
+        base.Execute();
     }
 
     public override void Init(Vector2 pos)

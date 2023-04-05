@@ -23,12 +23,12 @@ public class PortalSpawner : MonoBehaviour
         {
             case StageType.Attack:
                 AttackPortal atkPortal = _attackPortal as AttackPortal;
-                int count = Mathf.Clamp(atkPortal.GetAttackEnemyCount(), 1, 3);
+                int count = Mathf.Clamp(atkPortal.GetAttackEnemyCount(), 1, 4);
 
                 for(int i = 0; i < count; i++)
                 {
                     Enemy enemy = atkPortal.GetAttackEnemy();
-                    atkPortal = PoolManager.Instance.Pop(enemy.gameObject, transform).GetComponent<AttackPortal>();
+                    atkPortal = PoolManager.Instance.Pop(_attackPortal.gameObject, transform).GetComponent<AttackPortal>();
 
                     switch(count)
                     {
@@ -58,6 +58,7 @@ public class PortalSpawner : MonoBehaviour
 
     public void ResetPortal()
     {
+        _spawnPortals.ForEach(x => x.PortalEffectingSizeControl(Vector2.zero, 0));
         _spawnPortals.ForEach(x => PoolManager.Instance.Push(x.GetComponent<Poolable>()));
         _spawnPortals.Clear();
     }
@@ -65,5 +66,10 @@ public class PortalSpawner : MonoBehaviour
     public Portal GetEventPortal()
     {
         return _eventPortals.GetRandom();
+    }
+
+    public void SelectPortal(Portal portal)
+    {
+        _selectPortal = portal;
     }
 }

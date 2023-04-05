@@ -25,6 +25,7 @@ public class MapManager : MonoSingleton<MapManager>
 
     [Header("Portal")]
     private PortalSpawner _portalSpawner;
+    public PortalSpawner PortalSpawner => _portalSpawner;
 
     [Header("Attack")]
     public Enemy selectEnemy;
@@ -49,6 +50,7 @@ public class MapManager : MonoSingleton<MapManager>
     private void Start()
     {
         _mapSceneUI = CanvasManager.Instance.GetCanvas("MapUI").GetComponent<MapUI>();
+        _portalSpawner = GetComponentInChildren<PortalSpawner>();
 
         ChapterInit();
         _portalSpawner.SpawnPortal(stageList[Stage].type);
@@ -99,7 +101,6 @@ public class MapManager : MonoSingleton<MapManager>
         }
 
         #region 초기화 부분
-        _portalSpawner.ResetPortal();
         for (int i = 0; i < stageList.Count; ++i)
         {
             MapSceneUI.stages[i].sprite = stageList[i].icon;
@@ -124,7 +125,7 @@ public class MapManager : MonoSingleton<MapManager>
             _mapScene?.ArrowImage.transform.SetParent(MapSceneUI.StageList.GetChild(Stage + 1));
             _mapScene.ArrowImage.transform.localPosition = new Vector3(0, _mapScene.ArrowImage.transform.localPosition.y, 0);
         }
-        stageList[Stage].ChangeResource(Color.white, _portalSpawner.SelectedPortal.icon);
+        stageList[Stage].ChangeResource(Color.white, _portalSpawner.SelectedPortal.GetSprite());
         _floor += 1;
 
         Sequence seq = DOTween.Sequence();

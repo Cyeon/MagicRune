@@ -11,11 +11,7 @@ public class AdventurePortal : Portal
     {
         CanvasManager.Instance.GetCanvas("Adventure").enabled = true;
         CanvasManager.Instance.GetCanvas("Adventure").GetComponent<AdventureUI>().Init(GetAdventure(), this);
-    }
-
-    public override void Init(Vector2 pos)
-    {
-
+        base.Execute();
     }
 
     private AdventureSO GetAdventure()

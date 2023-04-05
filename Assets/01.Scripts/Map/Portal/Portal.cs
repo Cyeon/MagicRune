@@ -8,8 +8,6 @@ using UnityEngine.UI;
 
 public class Portal : MonoBehaviour, IPointerClickHandler
 {
-    public string portalName;
-    public Sprite icon;
     [SerializeField] private float _effectingTime = 1f;
     private bool _isEffecting = false;
     
@@ -51,10 +49,10 @@ public class Portal : MonoBehaviour, IPointerClickHandler
     /// </summary>
     public virtual void Execute()
     {
-
+        MapManager.Instance.PortalSpawner.ResetPortal();
     }
 
-    private void PortalEffectingSizeControl(Vector2 size, float time)
+    public void PortalEffectingSizeControl(Vector2 size, float time)
     {
         foreach(var effect in _effecting)
         {
@@ -70,6 +68,7 @@ public class Portal : MonoBehaviour, IPointerClickHandler
         {
             if (_isEffecting) return;
             Execute();
+            MapManager.Instance.PortalSpawner.SelectPortal(this);
         }
     }
 
@@ -78,5 +77,10 @@ public class Portal : MonoBehaviour, IPointerClickHandler
         _isEffecting = true;
         yield return new WaitForSeconds(_effectingTime);
         _isEffecting = false;
+    }
+
+    public Sprite GetSprite()
+    {
+        return _spriteRenderer.sprite;
     }
 }

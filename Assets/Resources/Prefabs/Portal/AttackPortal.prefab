@@ -5103,6 +5103,7 @@ GameObject:
   - component: {fileID: 4927484299919479207}
   - component: {fileID: 4927484299919479204}
   - component: {fileID: 4927484299919479205}
+  - component: {fileID: -6047680604418673018}
   m_Layer: 5
   m_Name: AttackPortal
   m_TagString: Untagged
@@ -5171,10 +5172,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b88f3014d3e4132488ee37f8f608b836, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  portalName: 
-  icon: {fileID: 0}
   _effectingTime: 1
   attackMap: {fileID: 11400000, guid: 7f4a092bbdbcf704fb44cc2f6615a64d, type: 2}
+--- !u!114 &-6047680604418673018
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4927484299919479197}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1fb6d3b2c3d3fa04d9ffb5368660f72f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isUsing: 0
 --- !u!1 &4927484300014488534
 GameObject:
   m_ObjectHideFlags: 0
@@ -19749,7 +19761,7 @@ RectTransform:
   m_GameObject: {fileID: 4927484301419289326}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2.3523, y: 2.3523, z: 2.3523}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4927484299919479207}
@@ -19801,7 +19813,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: e48b549775f0e9a4fabfd66c6c0d1143, type: 3}
+  m_Sprite: {fileID: 21300000, guid: e156c98307fa53343a25823fb4cc79a3, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
