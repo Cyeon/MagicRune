@@ -23,7 +23,7 @@ public class AttackPortal : Portal
         Init(pos);
     }
 
-    private Enemy GetAttackEnemy()
+    public Enemy GetAttackEnemy()
     {
         List<Enemy> enemyList = GetAttackEnemyList();
 
@@ -36,7 +36,7 @@ public class AttackPortal : Portal
         return enemyList[idx];
     }
 
-    private int GetAttackEnemyCount()
+    public int GetAttackEnemyCount()
     {
         return GetAttackEnemyList().Count;
     }

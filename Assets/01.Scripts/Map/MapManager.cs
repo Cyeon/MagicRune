@@ -99,6 +99,7 @@ public class MapManager : MonoSingleton<MapManager>
         }
 
         #region 초기화 부분
+        _portalSpawner.ResetPortal();
         for (int i = 0; i < stageList.Count; ++i)
         {
             MapSceneUI.stages[i].sprite = stageList[i].icon;
