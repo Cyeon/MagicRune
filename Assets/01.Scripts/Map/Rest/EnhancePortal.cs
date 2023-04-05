@@ -9,7 +9,7 @@ public class EnhancePortal : Portal
         
     }
 
-    public override void Init()
+    public override void Init(Vector2 pos)
     {
         
     }

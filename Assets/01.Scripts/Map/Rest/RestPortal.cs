@@ -18,7 +18,7 @@ public class RestPortal : Portal
 {
     private RestUI _restUI;
 
-    public override void Init()
+    public override void Init(Vector2 pos)
     {
 
     }

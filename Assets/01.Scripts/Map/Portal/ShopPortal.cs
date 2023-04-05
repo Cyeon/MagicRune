@@ -35,8 +35,9 @@ public class ShopPortal : Portal
         }
     }
 
-    public override void Init()
+    public override void Init(Vector2 pos)
     {
         _shopUI = CanvasManager.Instance.GetCanvas("Shop").GetComponent<ShopUI>();
+        base.Init(pos);
     }
 }

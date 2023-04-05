@@ -13,7 +13,7 @@ public class AdventurePortal : Portal
         CanvasManager.Instance.GetCanvas("Adventure").GetComponent<AdventureUI>().Init(GetAdventure(), this);
     }
 
-    public override void Init()
+    public override void Init(Vector2 pos)
     {
 
     }

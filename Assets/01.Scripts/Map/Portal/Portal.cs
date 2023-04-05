@@ -1,22 +1,82 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public abstract class Portal : MonoBehaviour
+public class Portal : MonoBehaviour, IPointerClickHandler
 {
     public string portalName;
     public Sprite icon;
-    public bool isUse = false;
+    [SerializeField] private float _effectingTime = 1f;
+    private bool _isEffecting = false;
+    
+    private Vector3 _portalEffectScale = Vector3.one;
+    protected SpriteRenderer _spriteRenderer;
+    protected TextMeshPro _titleText;
+
+    private List<Transform> _effecting = new List<Transform>();
+
+    private void Awake()
+    {
+        _portalEffectScale = transform.Find("Effect").Find("Effect1").localScale;
+        _spriteRenderer = transform.Find("Icon").GetComponent<SpriteRenderer>();
+        _titleText = transform.Find("TitleText").GetComponent<TextMeshPro>();
+
+        for(int i = 0; i < transform.Find("Effect").childCount; ++i)
+        {
+            _effecting.Add(transform.Find("Effect").GetChild(i));
+        }
+
+        PortalEffectingSizeControl(Vector2.zero, 0);
+        transform.localScale = Vector2.zero;
+    }
 
     /// <summary>
-    /// 포탈이 맨처음 생성될 때
+    /// 포탈이 생성될 때
     /// </summary>
-    public abstract void Init();
+    public virtual void Init(Vector2 pos)
+    {
+        transform.position = pos;
+
+        PortalEffectingSizeControl(_portalEffectScale, _effectingTime);
+        transform.DOScale(1f, _effectingTime);
+        StartCoroutine(Effecting());
+    }
 
     /// <summary>
     /// 포탈을 눌렀을 때
     /// </summary>
-    public abstract void Execute();
+    public virtual void Execute()
+    {
+
+    }
+
+    private void PortalEffectingSizeControl(Vector2 size, float time)
+    {
+        foreach(var effect in _effecting)
+        {
+            effect.DOScale(size, time);
+        }
+    }
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        int currentClickNum = eventData.clickCount;
+
+        if (currentClickNum == 1)
+        {
+            if (_isEffecting) return;
+            Execute();
+        }
+    }
+
+    public IEnumerator Effecting()
+    {
+        _isEffecting = true;
+        yield return new WaitForSeconds(_effectingTime);
+        _isEffecting = false;
+    }
 }
