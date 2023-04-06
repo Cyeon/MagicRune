@@ -79,11 +79,18 @@ public class Unit : MonoBehaviour
     protected DialScene _dialScene;
 
     private void Start() {
+        ResetStatus();
+        _dialScene = SceneManagerEX.Instance.CurrentScene as DialScene;
+    }
+
+    public void ResetStatus()
+    {
+        unitStatusDic.Clear();
+
         unitStatusDic.Add(StatusInvokeTime.Start, new List<Status>());
         unitStatusDic.Add(StatusInvokeTime.Attack, new List<Status>());
         unitStatusDic.Add(StatusInvokeTime.GetDamage, new List<Status>());
         unitStatusDic.Add(StatusInvokeTime.End, new List<Status>());
-        _dialScene = SceneManagerEX.Instance.CurrentScene as DialScene;
     }
 
     /// <summary>
