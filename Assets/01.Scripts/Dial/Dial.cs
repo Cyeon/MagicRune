@@ -27,7 +27,7 @@ public class Dial : MonoBehaviour
     private int _copyCount = 2;
 
     [SerializeField]
-    private List<Rune> _selectedDeck = null; // ������ �����ص� ���̾� ������ 1��° �� ��. 
+    private List<Rune> _selectedDeck = null;
 
     [SerializeField]
     private float[] _lineDistanceArray = new float[3];

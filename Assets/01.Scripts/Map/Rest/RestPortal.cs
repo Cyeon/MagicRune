@@ -18,11 +18,6 @@ public class RestPortal : Portal
 {
     private RestUI _restUI;
 
-    public override void Init()
-    {
-
-    }
-
     public override void Execute()
     {
         _restUI = CanvasManager.Instance.GetCanvas("Rest").GetComponent<RestUI>();
@@ -30,5 +25,6 @@ public class RestPortal : Portal
         CanvasManager.Instance.GetCanvas("MapUI").enabled = false;
         CanvasManager.Instance.GetCanvas("Rest").enabled = true;
         _restUI.PortalStartAnimation();
+        base.Execute();
     }
 }
