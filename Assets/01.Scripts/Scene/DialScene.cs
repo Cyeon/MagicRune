@@ -305,11 +305,6 @@ public class DialScene : BaseScene
         _statusDescInfo.text = status.information;
     }
 
-    public void StatusDescDown()
-    {
-        _statusDescPanel.SetActive(false);
-    }
-
     #endregion
 
     #region Health Bar
