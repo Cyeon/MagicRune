@@ -55,6 +55,7 @@ public class BattleManager : MonoSingleton<BattleManager>
         });
 
         player = GameManager.Instance.player;
+        player.ResetStatus();
         player.SliderInit();
 
         player.OnDieEvent.RemoveAllListeners();

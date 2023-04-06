@@ -35,6 +35,6 @@ public class StatusPanel : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
     public void OnPointerUp(PointerEventData eventData)
     {
-        _dialScene?.StatusDescDown();
+        _dialScene?.StatusDescPopup(null, Vector3.zero, false);
     }
 }
