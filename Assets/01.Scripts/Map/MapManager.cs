@@ -134,7 +134,8 @@ public class MapManager : MonoSingleton<MapManager>
 
         Sequence seq = DOTween.Sequence();
         seq.AppendInterval(0.5f);
-        seq.Append(MapSceneUI.StageList.transform.DOLocalMoveX(Stage * -300f, 1f));
+        if (Stage < MapSceneUI.StageList.childCount - 2)
+            seq.Append(MapSceneUI.StageList.transform.DOLocalMoveX(Stage * -300f, 1f));
         seq.Append(MapSceneUI.stages[Stage].DOColor(Color.white, 0.5f));
         seq.AppendCallback(() =>
         {
