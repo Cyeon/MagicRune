@@ -123,6 +123,36 @@ public class Dial : MonoBehaviour
             maxRuneCount--;
         }
 
+        List<int> numberList = new List<int>();
+        for(int i = 0; i < DeckManager.Instance.FirstDialDeck.Count; i++)
+        {
+            numberList.Add(i);
+        }
+
+        if (DeckManager.Instance.FirstDialDeck != null || DeckManager.Instance.FirstDialDeck.Count > 0)
+        {
+            for (int i = 0; i < 3; i++)
+            {
+                int randomIndex = Random.Range(0, numberList.Count);
+                RuneUI r = ResourceManager.Instance.Instantiate("Rune").GetComponent<RuneUI>();
+                r.transform.SetParent(_dialElementList[2].transform);
+                r.transform.localScale = new Vector3(0.1f, 0.1f);
+                r.Dial = this;
+                r.DialElement = _dialElementList[2];
+                _dialElementList[2].AddRuneList(r);
+                r.SetRune(DeckManager.Instance.FirstDialDeck[randomIndex]);
+                r.UpdateUI();
+                if (isReset == true)
+                {
+                    r.Rune.SetCoolTime(0);
+                }
+                r.SetCoolTime();
+                AddCard(r, 1);
+
+                numberList.RemoveAt(randomIndex);
+            }
+        }
+
         for(int i = 1; i <= 3; i++)
         {
             if (_runeDict.ContainsKey(i))
