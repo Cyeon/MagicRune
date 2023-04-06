@@ -89,8 +89,8 @@ public class ExplainPanelList : MonoBehaviour
         if (count <= 0)
             return;
 
-
-        float spareDistance = Screen.width - (400 * count);
+        float cardWidth = 400;
+        float spareDistance = Screen.width - (cardWidth * count);
         float distance = spareDistance / (count + 1);
 
         int nt = 1;
@@ -98,7 +98,7 @@ public class ExplainPanelList : MonoBehaviour
         {
             if(_explaingPanelArray[numberList[i]].gameObject.activeSelf == true)
             {
-                _explaingPanelArray[numberList[i]].transform.localPosition = new Vector3((distance * (i + 1) + 200 * (nt)), _explaingPanelArray[numberList[i]].transform.localPosition.y, 0);
+                _explaingPanelArray[numberList[i]].transform.localPosition = new Vector3((distance * (i + 1) + cardWidth / 2 * (nt)), _explaingPanelArray[numberList[i]].transform.localPosition.y, 0);
                 nt += 2;
             }
         }
