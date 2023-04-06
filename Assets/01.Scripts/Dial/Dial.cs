@@ -94,7 +94,7 @@ public class Dial : MonoBehaviour
 
         DeckManager.Instance.UsingDeckSort();
         int maxRuneCount = DeckManager.Instance.GetUsingRuneCount();
-        for (int i = 0; i < _maxRuneCount * 3; i++)
+        for (int i = 0; i < _maxRuneCount * 2; i++)
         {
             if (maxRuneCount <= 0)
             {
@@ -104,11 +104,12 @@ public class Dial : MonoBehaviour
             int runeIndex = Random.Range(0, maxRuneCount);
 
             RuneUI r = ResourceManager.Instance.Instantiate("Rune").GetComponent<RuneUI>();
-            r.transform.SetParent(_dialElementList[2 - (i % 3)].transform);
+            int index = 1 - (i % 2);
+            r.transform.SetParent(_dialElementList[index].transform);
             r.transform.localScale = new Vector3(0.1f, 0.1f);
             r.Dial = this;
-            r.DialElement = _dialElementList[2 - (i % 3)];
-            _dialElementList[2 - (i % 3)].AddRuneList(r);
+            r.DialElement = _dialElementList[index];
+            _dialElementList[index].AddRuneList(r);
             r.SetRune(DeckManager.Instance.Deck[runeIndex]);
             r.UpdateUI();
             if (isReset == true)
@@ -116,7 +117,7 @@ public class Dial : MonoBehaviour
                 r.Rune.SetCoolTime(0);
             }
             r.SetCoolTime();
-            AddCard(r, (i % 3) + 1);
+            AddCard(r, 3 - index);
             DeckManager.Instance.RuneSwap(runeIndex, maxRuneCount - 1);
 
             maxRuneCount--;
@@ -124,26 +125,29 @@ public class Dial : MonoBehaviour
 
         for(int i = 1; i <= 3; i++)
         {
-            int count = _runeDict[i].Count;
-            for (int k = 0; k < _copyCount; k++)
+            if (_runeDict.ContainsKey(i))
             {
-                for (int j = 0; j < count; j++)
+                int count = _runeDict[i].Count;
+                for (int k = 0; k < _copyCount; k++)
                 {
-                    RuneUI r = ResourceManager.Instance.Instantiate("Rune").GetComponent<RuneUI>();
-                    r.transform.SetParent(_runeDict[i][j].DialElement.transform);
-                    r.transform.localScale = new Vector3(0.1f, 0.1f);
-                    r.Dial = this;
-                    r.DialElement = _runeDict[i][j].DialElement;
-                    _runeDict[i][j].DialElement.AddRuneList(r);
-                    r.SetRune(_runeDict[i][j].Rune);
-                    r.UpdateUI();
+                    for (int j = 0; j < count; j++)
+                    {
+                        RuneUI r = ResourceManager.Instance.Instantiate("Rune").GetComponent<RuneUI>();
+                        r.transform.SetParent(_runeDict[i][j].DialElement.transform);
+                        r.transform.localScale = new Vector3(0.1f, 0.1f);
+                        r.Dial = this;
+                        r.DialElement = _runeDict[i][j].DialElement;
+                        _runeDict[i][j].DialElement.AddRuneList(r);
+                        r.SetRune(_runeDict[i][j].Rune);
+                        r.UpdateUI();
 
-                    //if (isReset == true)
-                    //{
-                    //    r.Rune.SetCoolTime(0);
-                    //}
-                    r.SetCoolTime();
-                    AddCard(r, i);
+                        //if (isReset == true)
+                        //{
+                        //    r.Rune.SetCoolTime(0);
+                        //}
+                        r.SetCoolTime();
+                        AddCard(r, i);
+                    }
                 }
             }
         }
