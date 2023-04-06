@@ -33,14 +33,6 @@ public class AttackMapInfo
 [CreateAssetMenu(menuName = "Map/Attack/Attack Map List")]
 public class AttackMapListSO : ScriptableObject
 {
+    public Enemy defaultEnemy;
     public List<AttackMapInfo> map;
-
-    public void EnterReset()
-    {
-        foreach(var m in map)
-        {
-            m.Reset();
-        }
-        Debug.Log("¸®¼Â");
-    }
 }
