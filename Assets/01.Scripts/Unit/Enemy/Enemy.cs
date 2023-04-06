@@ -8,6 +8,7 @@ using UnityEngine.UI;
 
 public class Enemy : Unit
 {
+    public string enemyName;
     public AudioClip attackSound = null;
     private Sequence idleSequence = null;
     public bool isEnter = false;

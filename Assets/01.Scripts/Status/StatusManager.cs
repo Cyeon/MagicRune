@@ -216,6 +216,10 @@ public class StatusManager : MonoSingleton<StatusManager>
             {
                 if (x.Value[i].type == StatusType.Turn)
                 {
+                    CountRemStatus(unit, x.Value[i], 1);
+                }
+                else if (x.Value[i].type == StatusType.Stack)
+                {
                     if (x.Value[i].isTurnRemove)
                         CountRemStatus(unit, x.Value[i], 1);
                 }

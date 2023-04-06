@@ -36,9 +36,9 @@ public enum StatusName
 [System.Serializable]
 public class Status
 {
+    public string debugName = "";
     [Header("Information")]
     public StatusName statusName = StatusName.Null;
-    public string debugName = "";
     public string information = "";
     public Color textColor = Color.white;
 

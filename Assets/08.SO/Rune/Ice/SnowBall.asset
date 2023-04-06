@@ -18,7 +18,7 @@ MonoBehaviour:
   CoolTime: 2
   Rarity: 0
   MainRune:
-    CardDescription: "5 \uB300\uBBF8\uC9C0\uB97C \uC900\uB2E4. 2 \uBE59\uACB0\uC744
+    CardDescription: "5 \uB300\uBBF8\uC9C0\uB97C \uC900\uB2E4. 2 \uD55C\uAE30\uB97C
       \uBD80\uC5EC\uD55C\uB2E4."
     EffectDescription:
     - Condition:
@@ -33,6 +33,7 @@ MonoBehaviour:
       IsEnemy: 1
       AttackType: 0
       AttributeType: 0
+      CountType: 0
       Effect: 5
     - Condition:
         ConditionType: 0
@@ -42,10 +43,11 @@ MonoBehaviour:
         Value: 0
         IsEnemy: 0
       EffectType: 0
-      StatusType: 3
+      StatusType: 7
       IsEnemy: 1
       AttackType: 0
       AttributeType: 0
+      CountType: 0
       Effect: 2
     Attribute: 3
   keywordList: 

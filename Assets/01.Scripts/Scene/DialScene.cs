@@ -3,8 +3,10 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
+using Sequence = DG.Tweening.Sequence;
 
 public class DialScene : BaseScene
 {
@@ -21,10 +23,7 @@ public class DialScene : BaseScene
 
     [SerializeField]
     private GameObject _cardDescPanel;
-    private TextMeshProUGUI _cardDescName;
-    private Image _cardDescSkillIcon;
-    private TextMeshProUGUI _cardDescInfo;
-    private TextMeshProUGUI _cardDescCoolTime;
+    private ExplainPanelList _cardDescPanelList;
 
     [SerializeField]
     private GameObject _statusDescPanel;
@@ -57,11 +56,6 @@ public class DialScene : BaseScene
         UIManager.Instance.Bind<Image>("NextPattern Image", CanvasManager.Instance.GetCanvas("Main").gameObject);
         UIManager.Instance.Bind<TextMeshProUGUI>("NextPattern ValueText", CanvasManager.Instance.GetCanvas("Main").gameObject);
 
-        UIManager.Instance.Bind<TextMeshProUGUI>("Skill_Name_Text", CanvasManager.Instance.GetCanvas("Popup").gameObject);
-        UIManager.Instance.Bind<Image>("Explain_Skill_Icon", CanvasManager.Instance.GetCanvas("Popup").gameObject);
-        UIManager.Instance.Bind<TextMeshProUGUI>("Explain_Text", CanvasManager.Instance.GetCanvas("Popup").gameObject);
-        UIManager.Instance.Bind<TextMeshProUGUI>("CoolTime_Text", CanvasManager.Instance.GetCanvas("Popup").gameObject);
-
         UIManager.Instance.Bind<Slider>("E HealthBar", CanvasManager.Instance.GetCanvas("Main").gameObject);
         UIManager.Instance.Bind<Slider>("E ShieldBar", CanvasManager.Instance.GetCanvas("Main").gameObject);
         UIManager.Instance.Bind<TextMeshProUGUI>("E HealthText", CanvasManager.Instance.GetCanvas("Main").gameObject);
@@ -85,11 +79,6 @@ public class DialScene : BaseScene
         _enemyPatternIcon = UIManager.Instance.Get<Image>("NextPattern Image");
         _enemyPatternValueText = UIManager.Instance.Get<TextMeshProUGUI>("NextPattern ValueText");
 
-        _cardDescName = UIManager.Instance.Get<TextMeshProUGUI>("Skill_Name_Text");
-        _cardDescSkillIcon = UIManager.Instance.Get<Image>("Explain_Skill_Icon");
-        _cardDescInfo = UIManager.Instance.Get<TextMeshProUGUI>("Explain_Text");
-        _cardDescCoolTime = UIManager.Instance.Get<TextMeshProUGUI>("CoolTime_Text");
-
         _statusDescName = UIManager.Instance.Get<TextMeshPro>("Status_Name_Text");
         _statusDescInfo = UIManager.Instance.Get<TextMeshPro>("Status_Infomation_Text");
 
@@ -101,6 +90,8 @@ public class DialScene : BaseScene
         //});
         UIManager.Instance.Get<Button>("Quit Btn").onClick.RemoveAllListeners();
         UIManager.Instance.Get<Button>("Quit Btn").onClick.AddListener(() => GameManager.Instance.GameQuit());
+
+        _cardDescPanelList = _cardDescPanel.GetComponent<ExplainPanelList>();
     }
 
     public void Turn(string text)
@@ -272,21 +263,24 @@ public class DialScene : BaseScene
 
     #region Description
 
-    public void CardDescPopup(Rune rune)
+    public void CardDescPopup()
     {
-        if (rune == null)
+        _cardDescPanel.SetActive(true);
+        if (_cardDescPanelList == null)
         {
-            _cardDescPanel.SetActive(false);
+            _cardDescPanelList = _cardDescPanel.GetComponent<ExplainPanelList>();
         }
-        else
-        {
-            RuneSO magic = rune.GetRune();
 
-            _cardDescName.SetText(magic.Name);
-            _cardDescSkillIcon.sprite = magic.RuneImage;
-            _cardDescInfo.SetText(magic.MainRune.CardDescription);
-            _cardDescCoolTime.SetText(magic.CoolTime.ToString());
-            _cardDescPanel.SetActive(true);
+        for (int i = 0; i < _dial.DialElementList.Count; i++)
+        {
+            if (_dial.DialElementList[i].SelectCard != null)
+            {
+                _cardDescPanelList.OpenPanel(i, _dial.DialElementList[i].SelectCard.Rune);
+            }
+            else
+            {
+                _cardDescPanelList.ClosePanel(i);
+            }
         }
     }
 
@@ -309,11 +303,6 @@ public class DialScene : BaseScene
 
         _statusDescName.text = status.debugName;
         _statusDescInfo.text = status.information;
-    }
-
-    public void StatusDescDown()
-    {
-        _statusDescPanel.SetActive(false);
     }
 
     #endregion
@@ -420,7 +409,7 @@ public class DialScene : BaseScene
 
     public override void Clear()
     {
-        // ·é Å¬¸®¾î
+        // ï¿½ï¿½ Å¬ï¿½ï¿½ï¿½ï¿½
     }
 
     public void EnemyIconSetting(SpriteRenderer renderer)

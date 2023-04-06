@@ -24,12 +24,11 @@ public class MapManager : MonoSingleton<MapManager>
     public int Floor => _floor;
 
     [Header("Portal")]
-    public Dictionary<StageType, List<Portal>> stageOfPortalDic = new Dictionary<StageType, List<Portal>>();
-    public Portal selectPortal;
+    private PortalSpawner _portalSpawner;
+    public PortalSpawner PortalSpawner => _portalSpawner;
 
     [Header("Attack")]
     public Enemy selectEnemy;
-    public AttackMapListSO attackMap;
 
     private bool _isFirst = true;
 
@@ -50,40 +49,14 @@ public class MapManager : MonoSingleton<MapManager>
 
     private void Awake()
     {
-        stageOfPortalDic.Add(StageType.Attack, new List<Portal>());
-        stageOfPortalDic.Add(StageType.Boss, new List<Portal>());
-        stageOfPortalDic.Add(StageType.Event, new List<Portal>());
-        //stageOfPortalDic.Add(StageType.Rest, new List<Portal>());
-
-        Transform atkTrm = transform.Find("Attack");
-        for (int i = 0; i < atkTrm.childCount; ++i)
-        {
-            stageOfPortalDic[StageType.Attack].Add(atkTrm.GetChild(i).GetComponent<Portal>());
-        }
-
-        stageOfPortalDic[StageType.Boss].Add(atkTrm.GetChild(1).GetComponent<Portal>());
-
-        atkTrm = transform.Find("Event");
-        for (int i = 0; i < atkTrm.childCount; ++i)
-        {
-            if (atkTrm.GetChild(i).gameObject.activeSelf == false) continue;
-            stageOfPortalDic[StageType.Event].Add(atkTrm.GetChild(i).GetComponent<Portal>());
-        }
-
-        //atkTrm = transform.Find("Rest");
-        //for (int i = 0; i < atkTrm.childCount; ++i)
-        //{
-        //    if (atkTrm.GetChild(i).gameObject.activeSelf == false) continue;
-        //    stageOfPortalDic[StageType.Rest].Add(atkTrm.GetChild(i).GetComponent<Portal>());
-        //}
+        _mapSceneUI = CanvasManager.Instance.GetCanvas("MapUI").GetComponent<MapUI>();
+        _portalSpawner = GetComponentInChildren<PortalSpawner>();
     }
 
     private void Start()
     {
-        _mapSceneUI = CanvasManager.Instance.GetCanvas("MapUI").GetComponent<MapUI>();
-
         ChapterInit();
-        PortalInit();
+        _portalSpawner.SpawnPortal(stageList[Stage].type);
         MapSceneUI?.InfoUIReload();
         //CanvasManager.instance.GetCanvas("MapUI").GetComponent<MapUI>().InfoUIReload();
 
@@ -114,37 +87,6 @@ public class MapManager : MonoSingleton<MapManager>
         stageList[0].ChangeResource(Color.white);
     }
 
-    private void PortalInit()
-    {
-        MapSceneUI.PortalEffectUp(stageList[Stage].type);
-
-        float time = 1.2f;
-
-        if (stageList[Stage].type == StageType.Attack)
-        {
-            foreach(var portal in MapSceneUI.portals)
-            {
-                StartCoroutine(portal.Effecting(time));
-                portal.Init(SpawnPortal(stageList[Stage].type));
-                portal.transform.DOScale(1f, 0.8f);
-            }
-        }
-        //else if (stageList[Stage].type == StageType.Rest)
-        //{
-        //    MapSceneUI.portals[0].Init(SpawnPortal(stageList[Stage].type));
-        //    MapSceneUI.portals[0].transform.DOScale(2f, 1f);
-
-        //    MapSceneUI.portals[2].Init(SpawnPortal(stageList[Stage].type));
-        //    MapSceneUI.portals[2].transform.DOScale(2f, 1f);
-        //}
-        else
-        {
-            StartCoroutine(MapSceneUI.portals[1].Effecting(1.8f));
-            MapSceneUI.portals[1].Init(SpawnPortal(stageList[Stage].type));
-            MapSceneUI.portals[1].transform.DOScale(2f, 1f);
-        }
-    }
-
     public void NextStage()
     {
         if (GameManager.Instance.player.IsDie == true) // 버그
@@ -158,29 +100,11 @@ public class MapManager : MonoSingleton<MapManager>
         if (_isFirst)
         {
             _isFirst = false;
+            _portalSpawner.ResetEnemyEnter();
             return;
         }
 
         #region 초기화 부분
-        if (stageList[Stage].type != StageType.Event)
-        {
-            DOTween.KillAll();
-
-            foreach (var portal in stageOfPortalDic)
-            {
-                if (portal.Value.Count > 0)
-                    portal.Value.ForEach(e =>
-                    {
-                        if (e != null)
-                            e.isUse = false;
-                    });
-            }
-        }
-        else
-        {
-            MapSceneUI.ResetPortal(stageList[Stage].type);
-        }
-
         for (int i = 0; i < stageList.Count; ++i)
         {
             MapSceneUI.stages[i].sprite = stageList[i].icon;
@@ -205,17 +129,18 @@ public class MapManager : MonoSingleton<MapManager>
             _mapScene?.ArrowImage.transform.SetParent(MapSceneUI.StageList.GetChild(Stage + 1));
             _mapScene.ArrowImage.transform.localPosition = new Vector3(0, _mapScene.ArrowImage.transform.localPosition.y, 0);
         }
-        stageList[Stage].ChangeResource(Color.white, selectPortal.icon);
+        stageList[Stage].ChangeResource(Color.white, _portalSpawner.SelectedPortal.GetSprite());
         _floor += 1;
 
         Sequence seq = DOTween.Sequence();
         seq.AppendInterval(0.5f);
-        seq.Append(MapSceneUI.StageList.transform.DOLocalMoveX(Stage * -300f, 1f));
+        if (Stage < MapSceneUI.StageList.childCount - 2)
+            seq.Append(MapSceneUI.StageList.transform.DOLocalMoveX(Stage * -300f, 1f));
         seq.Append(MapSceneUI.stages[Stage].DOColor(Color.white, 0.5f));
         seq.AppendCallback(() =>
         {
             stageList[Stage].color = Color.white;
-            PortalInit();
+            _portalSpawner.SpawnPortal(stageList[Stage].type);
         });
     }
 
@@ -227,64 +152,7 @@ public class MapManager : MonoSingleton<MapManager>
         }
 
         ChapterInit();
-        PortalInit();
-    }
-
-    private Portal SpawnPortal(StageType type)
-    {
-        List<Portal> pList = stageOfPortalDic[type].Where(e => e.isUse == false).ToList();
-        if(pList.Count == 0)
-        {
-            Debug.LogError("Not Found Portal Object");
-            return null;
-        }
-
-        Portal portal = null;
-
-        int cnt = pList.Count;
-        portal = pList[Random.Range(0, cnt)];
-        switch (type)
-
-        {
-            case StageType.Attack:
-            case StageType.Boss:
-                AttackPortal atkPortal = portal as AttackPortal;
-                atkPortal.enemy = type == StageType.Attack ? GetAttackEnemy() : _currentChapter.boss;
-                atkPortal.icon = atkPortal.enemy.SpriteRenderer.sprite;
-                atkPortal.portalName = atkPortal.enemy.name;
-                atkPortal.isUse = true;
-                return atkPortal;
-
-            //case StageType.Rest:
-            //    return portal;
-            case StageType.Event:
-                return portal;
-        }
-
-        return null;
-    }
-
-    private Enemy GetAttackEnemy()
-    {
-        List<Enemy> enemyList = new List<Enemy>();
-        for (int i = 0; i < attackMap.map.Count; ++i)
-        {
-            if (attackMap.map[i].MinFloor <= Floor + 1 && attackMap.map[i].MaxFloor >= Floor + 1)
-            {
-                foreach (var enemy in attackMap.map[i].enemyList)
-                {
-                    if (!enemy.isEnter) enemyList.Add(enemy);
-                }
-            }
-        }
-
-        int idx = Random.Range(0, enemyList.Count);
-        if (enemyList.Count == 0)
-        {
-            return attackMap.map[0].enemyList[0];
-        }
-        enemyList[idx].isEnter = true;
-        return enemyList[idx];
+        _portalSpawner.SpawnPortal(stageList[Stage].type);
     }
 
     public void ResetChapter()

@@ -42,17 +42,6 @@ public class StatusFuncList : MonoBehaviour
         _dialScene?.ReloadStatusPanel(unit, status.statusName, status.typeValue);
     }
 
-    public void AddFire()
-    {
-        Status status = StatusManager.Instance.GetUnitHaveStauts(BattleManager.Instance.attackUnit, StatusName.Ice);
-        if (status != null)
-        {
-            BattleManager.Instance.attackUnit.TakeDamage(status.typeValue * 2);
-            status.typeValue = 0;
-            _dialScene?.RemoveStatusPanel(status.unit, status.statusName);
-        }
-    }
-
     public void WoundGetDmg()
     {
         AddGetDamage(status.typeValue);
