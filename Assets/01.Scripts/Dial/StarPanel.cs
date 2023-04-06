@@ -11,6 +11,8 @@ public class StarPanel : MonoBehaviour
     [SerializeField]
     private Dial _dial;
 
+    private DialScene _dialScene;
+
     #region Swipe Parameta
     private Vector2 touchBeganPos;
     private Vector2 touchEndedPos;
@@ -28,6 +30,8 @@ public class StarPanel : MonoBehaviour
     {
         _spriteRenderer = GetComponent<SpriteRenderer>();
         //_image.alphaHitTestMinimumThreshold = 0.1f;
+
+        _dialScene = SceneManagerEX.Instance.CurrentScene as DialScene;
     }
 
     private void Update()
@@ -84,6 +88,10 @@ public class StarPanel : MonoBehaviour
                 else
                 {
                     //Debug.Log("touch");
+                    if (Vector2.Distance(transform.position, Define.MainCam.ScreenToWorldPoint(touchEndedPos)) <= _outDistance)
+                    {
+                        _dialScene?.AllCardDescPopup();
+                    }
                 }
             }
         }

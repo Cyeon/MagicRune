@@ -175,6 +175,7 @@ public class BattleManager : MonoSingleton<BattleManager>
                 _dialScene?.Dial?.AllMagicCircleGlow(false);
                 _dialScene?.Dial?.AllMagicSetCoolTime();
                 _dialScene?.Dial?.SettingDialRune(false);
+                _dialScene?.AllCardDescPopup();
                 _gameTurn = GameTurn.MonsterWait;
                 break;
 
