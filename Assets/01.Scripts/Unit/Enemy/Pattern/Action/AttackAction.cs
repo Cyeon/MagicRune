@@ -39,7 +39,6 @@ public class AttackAction : PatternAction
             BattleManager.Instance.enemy.Attack(damage);
             yield return new WaitForSeconds(0.2f);
         }
-
-        BattleManager.Instance.enemy.PatternManager.CurrentPattern.NextAction();
+        base.TakeAction();
     }
 }

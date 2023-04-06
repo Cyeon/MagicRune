@@ -2,7 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class PatternAction : MonoBehaviour
+public  class PatternAction : MonoBehaviour
 {
-    public abstract void TakeAction();
+    public virtual void TakeAction()
+    {
+        BattleManager.Instance.enemy.PatternManager.CurrentPattern.NextAction();
+    }
 }
