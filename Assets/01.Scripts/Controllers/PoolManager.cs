@@ -19,7 +19,7 @@ public class PoolManager : MonoSingleton<PoolManager>
             Root = new GameObject().transform; // 이미 있으면 안되게
             Root.name = $"{original.name}_Root";
 
-            for(int i = 0; i < count; ++i)
+            for (int i = 0; i < count; ++i)
             {
                 // 생성
                 Push(Create());
@@ -32,7 +32,7 @@ public class PoolManager : MonoSingleton<PoolManager>
             go.name = Original.name;
 
             Poolable component = go.GetComponent<Poolable>();
-            if(component == null)
+            if (component == null)
             {
                 component = go.AddComponent<Poolable>();
             }
@@ -56,7 +56,7 @@ public class PoolManager : MonoSingleton<PoolManager>
         {
             Poolable poolable;
 
-            if(_poolStack.Count > 0)
+            if (_poolStack.Count > 0)
             {
                 poolable = _poolStack.Pop();
             }
@@ -68,7 +68,7 @@ public class PoolManager : MonoSingleton<PoolManager>
             poolable.gameObject.SetActive(true);
 
             // DontDestroyLoad 해제
-            if(parent == null)
+            if (parent == null)
             {
                 //poolable.transform.parent = SceneManagerEX.Instance.CurrentScene.transform;
                 poolable.transform.SetParent(SceneManagerEX.Instance.CurrentScene.transform);
@@ -93,8 +93,13 @@ public class PoolManager : MonoSingleton<PoolManager>
 
     public void Init()
     {
-        if(_root == null)
+        if (_root == null)
         {
+            if (GameObject.Find("@Pool_Root") != null)
+            {
+                _root = GameObject.Find("@Pool_Root").transform;
+                return;
+            }
             _root = new GameObject { name = "@Pool_Root" }.transform;
             Object.DontDestroyOnLoad(_root);
         }
@@ -112,7 +117,7 @@ public class PoolManager : MonoSingleton<PoolManager>
     public void Push(Poolable poolable)
     {
         string name = poolable.gameObject.name;
-        if(_pool.ContainsKey(name) == false)
+        if (_pool.ContainsKey(name) == false)
         {
             GameObject.Destroy(poolable.gameObject);
             return;
@@ -146,7 +151,7 @@ public class PoolManager : MonoSingleton<PoolManager>
 
     public void Clear()
     {
-        foreach(Transform child in _root)
+        foreach (Transform child in _root)
         {
             GameObject.Destroy(child.gameObject);
         }
