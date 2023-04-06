@@ -129,7 +129,7 @@ public class Dial : MonoBehaviour
             numberList.Add(i);
         }
 
-        if (DeckManager.Instance.FirstDialDeck != null || DeckManager.Instance.FirstDialDeck.Count > 0)
+        if (DeckManager.Instance.FirstDialDeck != null && DeckManager.Instance.FirstDialDeck.Count > 0)
         {
             for (int i = 0; i < 3; i++)
             {
@@ -150,6 +150,38 @@ public class Dial : MonoBehaviour
                 AddCard(r, 1);
 
                 numberList.RemoveAt(randomIndex);
+            }
+        }
+        else
+        {
+            DeckManager.Instance.UsingDeckSort();
+            maxRuneCount = DeckManager.Instance.GetUsingRuneCount();
+            for (int i = 0; i < _maxRuneCount; i++)
+            {
+                if (maxRuneCount <= 0)
+                {
+                    break;
+                }
+
+                int runeIndex = Random.Range(0, maxRuneCount);
+
+                RuneUI r = ResourceManager.Instance.Instantiate("Rune").GetComponent<RuneUI>();
+                r.transform.SetParent(_dialElementList[2].transform);
+                r.transform.localScale = new Vector3(0.1f, 0.1f);
+                r.Dial = this;
+                r.DialElement = _dialElementList[2];
+                _dialElementList[2].AddRuneList(r);
+                r.SetRune(DeckManager.Instance.Deck[runeIndex]);
+                r.UpdateUI();
+                if (isReset == true)
+                {
+                    r.Rune.SetCoolTime(0);
+                }
+                r.SetCoolTime();
+                AddCard(r, 1);
+                DeckManager.Instance.RuneSwap(runeIndex, maxRuneCount - 1);
+
+                maxRuneCount--;
             }
         }
 
