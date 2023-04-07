@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public enum SoundType
 {
@@ -16,6 +17,11 @@ public class SoundManager
     [SerializeField] private AudioSource _bgm;
 
     private AudioSource _audioSource = null;
+
+    public void Init()
+    {
+        _audioSource.outputAudioMixerGroup = Managers.Resource.Load<AudioMixerGroup>("adf");
+    }
 
     /// <summary>
     /// 사운드 플레이 함수
