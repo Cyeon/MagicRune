@@ -78,7 +78,7 @@ public class Enemy : Unit
     protected override void Die()
     {
         base.Die();
-        PoolManager.Instance.Push(transform.GetComponent<Poolable>());
+        ResourceManager.Instance.Destroy(gameObject);
         //BattleManager.Instance.OnEnemyDie?.Invoke();
         //OnDieEvent?.Invoke();
     }
