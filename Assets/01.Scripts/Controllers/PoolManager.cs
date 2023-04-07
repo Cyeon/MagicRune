@@ -16,7 +16,7 @@ public class PoolManager
         public void Init(GameObject original, int count = 5)
         {
             Original = original;
-            Root = new GameObject().transform; // 이미 있으면 안되게
+            Root = new GameObject().transform;
             Root.name = $"{original.name}_Root";
 
             for (int i = 0; i < count; ++i)
