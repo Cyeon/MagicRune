@@ -9,11 +9,11 @@ public class ShopPortal : Portal
 
     public override void Execute()
     {
-        CanvasManager.Instance.GetCanvas("MapUI").enabled = false;
-        CanvasManager.Instance.GetCanvas("Shop").enabled = true;
+        Managers.Canvas.GetCanvas("MapUI").enabled = false;
+        Managers.Canvas.GetCanvas("Shop").enabled = true;
 
         if (_shopUI == null)
-            _shopUI = CanvasManager.Instance.GetCanvas("Shop").GetComponent<ShopUI>();
+            _shopUI = Managers.Canvas.GetCanvas("Shop").GetComponent<ShopUI>();
 
         _shopUI.Open();
         //foreach(ShopItemSO item in shopItemList)
@@ -38,7 +38,7 @@ public class ShopPortal : Portal
 
     public override void Init(Vector2 pos)
     {
-        _shopUI = CanvasManager.Instance.GetCanvas("Shop").GetComponent<ShopUI>();
+        _shopUI = Managers.Canvas.GetCanvas("Shop").GetComponent<ShopUI>();
         base.Init(pos);
     }
 }

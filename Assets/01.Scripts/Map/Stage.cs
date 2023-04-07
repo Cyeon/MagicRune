@@ -22,7 +22,7 @@ public class Stage
         {
             if (_mapSceneUI == null)
             {
-                _mapSceneUI = CanvasManager.Instance.GetCanvas("MapUI").GetComponent<MapUI>();
+                _mapSceneUI = Managers.Canvas.GetCanvas("MapUI").GetComponent<MapUI>();
             }
             return _mapSceneUI;
         }

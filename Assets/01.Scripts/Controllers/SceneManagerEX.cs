@@ -5,19 +5,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class SceneManagerEX : MonoSingleton<SceneManagerEX>
+public class SceneManagerEX
 {
     public BaseScene CurrentScene { get { return GameObject.FindObjectOfType<BaseScene>(true); } }
 
     public void LoadScene(Define.Scene type)
     {
-        Clear();
+        Managers.Clear();
         SceneManager.LoadScene(GetSceneName(type));
     }
 
     public void LoadScene(string name)
     {
-        Clear();
+        Managers.Clear();
         SceneManager.LoadScene(name);
     }
 

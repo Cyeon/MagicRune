@@ -18,7 +18,7 @@ public class StatusManager : MonoSingleton<StatusManager>
 
     private void Start()
     {
-        _dialScene = SceneManagerEX.Instance.CurrentScene as DialScene;
+        _dialScene = Managers.Scene.CurrentScene as DialScene;
     }
 
     // ?�태?�상 ?�과 발동
@@ -37,7 +37,7 @@ public class StatusManager : MonoSingleton<StatusManager>
         StatusUpdate(unit);
     }
 
-    // ?�태?�상 목록?�서 가?�오�?
+    // ?�태?�상 목록?�서 가?�오�?
     private Status GetStatus(StatusName name)
     {
         return statusList.Where(e => e.statusName == name).FirstOrDefault();

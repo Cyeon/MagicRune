@@ -36,9 +36,9 @@ public class Unit : MonoBehaviour
 
             if (_dialScene == null)
             {
-                _dialScene = SceneManagerEX.Instance.CurrentScene as DialScene;
+                _dialScene = Managers.Scene.CurrentScene as DialScene;
             }
-            if (SceneManagerEX.Instance.CurrentScene == _dialScene)
+            if (Managers.Scene.CurrentScene == _dialScene)
             {
                 _dialScene?.UpdateHealthbar(IsPlayer);
             }
@@ -57,7 +57,7 @@ public class Unit : MonoBehaviour
 
             if (_dialScene == null)
             {
-                _dialScene = SceneManagerEX.Instance.CurrentScene as DialScene;
+                _dialScene = Managers.Scene.CurrentScene as DialScene;
             }
             _dialScene?.UpdateShieldText(_isPlayer, _shield);
         }
@@ -84,7 +84,7 @@ public class Unit : MonoBehaviour
 
     private void Start() {
         ResetStatus();
-        _dialScene = SceneManagerEX.Instance.CurrentScene as DialScene;
+        _dialScene = Managers.Scene.CurrentScene as DialScene;
     }
 
     public void ResetStatus()
@@ -126,7 +126,7 @@ public class Unit : MonoBehaviour
 
         if (_dialScene == null)
         {
-            _dialScene = SceneManagerEX.Instance.CurrentScene as DialScene;
+            _dialScene = Managers.Scene.CurrentScene as DialScene;
         }
 
         if (_isPlayer == false)
@@ -183,7 +183,7 @@ public class Unit : MonoBehaviour
             HP += value;
             if(_dialScene == null)
             {
-                _dialScene = SceneManagerEX.Instance.CurrentScene as DialScene;
+                _dialScene = Managers.Scene.CurrentScene as DialScene;
             }
             _dialScene?.UpdateHealthbar(IsPlayer);
         }

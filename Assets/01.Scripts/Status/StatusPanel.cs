@@ -17,7 +17,7 @@ public class StatusPanel : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
     private void Start()
     {
-        _dialScene = SceneManagerEX.Instance.CurrentScene as DialScene;
+        _dialScene = Managers.Scene.CurrentScene as DialScene;
     }
 
     private void OnEnable()

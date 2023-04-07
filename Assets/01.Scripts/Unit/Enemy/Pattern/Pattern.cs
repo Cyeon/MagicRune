@@ -30,7 +30,7 @@ public class Pattern : MonoBehaviour
     
     public void Start()
     {
-        _dialScene = SceneManagerEX.Instance.CurrentScene as DialScene;
+        _dialScene = Managers.Scene.CurrentScene as DialScene;
     }
 
     /// <summary>

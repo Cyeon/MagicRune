@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class PoolManager : MonoSingleton<PoolManager>
+public class PoolManager
 {
     #region POOL
     class Pool
@@ -71,7 +71,7 @@ public class PoolManager : MonoSingleton<PoolManager>
             if (parent == null)
             {
                 //poolable.transform.parent = SceneManagerEX.Instance.CurrentScene.transform;
-                poolable.transform.SetParent(SceneManagerEX.Instance.CurrentScene.transform);
+                poolable.transform.SetParent(Managers.Scene.CurrentScene.transform);
             }
 
             //poolable.transform.parent = parent;
@@ -85,11 +85,6 @@ public class PoolManager : MonoSingleton<PoolManager>
 
     Dictionary<string, Pool> _pool = new Dictionary<string, Pool>();
     Transform _root;
-
-    private void Awake()
-    {
-        Init();
-    }
 
     public void Init()
     {

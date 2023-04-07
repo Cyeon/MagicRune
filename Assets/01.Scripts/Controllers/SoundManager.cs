@@ -9,7 +9,7 @@ public enum SoundType
     Effect
 }
 
-public class SoundManager : MonoSingleton<SoundManager>
+public class SoundManager
 {
     [SerializeField] private AudioSource _master;
     [SerializeField] private AudioSource _effect;

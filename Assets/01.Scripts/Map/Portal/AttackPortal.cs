@@ -13,7 +13,7 @@ public class AttackPortal : Portal
     {
         MapManager.Instance.selectEnemy = _portalEnemy;
         _portalEnemy.isEnter = true;
-        SceneManagerEX.Instance.LoadScene("DialScene");
+        Managers.Scene.LoadScene("DialScene");
         base.Execute();
     }
 

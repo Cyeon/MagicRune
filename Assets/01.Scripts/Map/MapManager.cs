@@ -39,7 +39,7 @@ public class MapManager : MonoSingleton<MapManager>
         {
             if (_mapSceneUI == null)
             {
-                _mapSceneUI = CanvasManager.Instance.GetCanvas("MapUI")?.GetComponent<MapUI>();
+                _mapSceneUI = Managers.Canvas.GetCanvas("MapUI")?.GetComponent<MapUI>();
             }
             return _mapSceneUI;
         }
@@ -49,7 +49,7 @@ public class MapManager : MonoSingleton<MapManager>
 
     private void Awake()
     {
-        _mapSceneUI = CanvasManager.Instance.GetCanvas("MapUI").GetComponent<MapUI>();
+        _mapSceneUI = Managers.Canvas.GetCanvas("MapUI").GetComponent<MapUI>();
         _portalSpawner = GetComponentInChildren<PortalSpawner>();
     }
 
@@ -58,7 +58,7 @@ public class MapManager : MonoSingleton<MapManager>
         ChapterInit();
         _portalSpawner.SpawnPortal(stageList[Stage].type);
         MapSceneUI?.InfoUIReload();
-        //CanvasManager.instance.GetCanvas("MapUI").GetComponent<MapUI>().InfoUIReload();
+        //Managers.Canvas.GetCanvas("MapUI").GetComponent<MapUI>().InfoUIReload();
 
         RewardManager.ImageLoad();
     } 
@@ -121,7 +121,7 @@ public class MapManager : MonoSingleton<MapManager>
         MapSceneUI.StageList.transform.DOLocalMoveX(Stage * -300f, 0);
         if(_mapScene == null)
         {
-            _mapScene = SceneManagerEX.Instance.CurrentScene as MapScene;
+            _mapScene = Managers.Scene.CurrentScene as MapScene;
         }
 
         if (_mapScene != null)

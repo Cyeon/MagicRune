@@ -12,7 +12,7 @@ public class AttackAction : PatternAction
 
     private void Start()
     {
-        _dialScene = SceneManagerEX.Instance.CurrentScene as DialScene;
+        _dialScene = Managers.Scene.CurrentScene as DialScene;
     }
 
     public override void TakeAction()

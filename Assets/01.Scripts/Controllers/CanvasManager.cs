@@ -3,16 +3,19 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-public class CanvasManager : MonoSingleton<CanvasManager>
+public class CanvasManager
 {
     [SerializeField]
     private bool _isOnlyParentObject; // 자식 캔버스느 거리고 싶을 때
 
     private Dictionary<string, Canvas> _canvasDict = new Dictionary<string, Canvas>();
 
-    private void Awake()
+    public void Init(bool isOnlyParentObject)
     {
+        _isOnlyParentObject = isOnlyParentObject;
+
         SetCanvas();
     }
 
@@ -80,15 +83,27 @@ public class CanvasManager : MonoSingleton<CanvasManager>
 
     public Canvas[] GetCanvasArray()
     {
-        Canvas[] canvasArray = FindObjectsOfType<Canvas>(true);
+        Scene currentScene = SceneManager.GetActiveScene();
+
+        GameObject[] objectArray = currentScene.GetRootGameObjects();
+        Canvas[] canvasArray = objectArray.Where(x => x.GetType() == typeof(Canvas)).Select(x => x.GetComponent<Canvas>()).ToArray();
 
         if (_isOnlyParentObject)
         {
             Canvas[] parentCanvasArray = canvasArray.Where(x => x.transform.parent == null).ToArray();
 
+            foreach(var c in parentCanvasArray)
+            {
+                Debug.Log(c.name);
+            }
+
             return parentCanvasArray;
         }
 
+        foreach (var c in canvasArray)
+        {
+            Debug.Log(c.name);
+        }
         return canvasArray;
     }
 

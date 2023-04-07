@@ -21,16 +21,16 @@ public class AdventureUI : MonoBehaviour
 
     private void Start()
     {
-        UIManager.Instance.Bind<Image>("Adventure_Image", CanvasManager.Instance.GetCanvas("Adventure").gameObject);
-        UIManager.Instance.Bind<TextMeshProUGUI>("AdventureTitle_Text", CanvasManager.Instance.GetCanvas("Adventure").gameObject);
-        UIManager.Instance.Bind<TextMeshProUGUI>("Story_Text", CanvasManager.Instance.GetCanvas("Adventure").gameObject);
-        UIManager.Instance.Bind<Button>("Story_Button", CanvasManager.Instance.GetCanvas("Adventure").gameObject);
+        Managers.UI.Bind<Image>("Adventure_Image", Managers.Canvas.GetCanvas("Adventure").gameObject);
+        Managers.UI.Bind<TextMeshProUGUI>("AdventureTitle_Text", Managers.Canvas.GetCanvas("Adventure").gameObject);
+        Managers.UI.Bind<TextMeshProUGUI>("Story_Text", Managers.Canvas.GetCanvas("Adventure").gameObject);
+        Managers.UI.Bind<Button>("Story_Button", Managers.Canvas.GetCanvas("Adventure").gameObject);
 
-        _adventureImage = UIManager.Instance.Get<Image>("Adventure_Image");
-        _titleText = UIManager.Instance.Get<TextMeshProUGUI>("AdventureTitle_Text");
+        _adventureImage = Managers.UI.Get<Image>("Adventure_Image");
+        _titleText = Managers.UI.Get<TextMeshProUGUI>("AdventureTitle_Text");
 
-        _storyText = UIManager.Instance.Get<TextMeshProUGUI>("Story_Text");
-        UIManager.Instance.Get<Button>("Story_Button").onClick.AddListener(() => StoryClick());
+        _storyText = Managers.UI.Get<TextMeshProUGUI>("Story_Text");
+        Managers.UI.Get<Button>("Story_Button").onClick.AddListener(() => StoryClick());
 
         _distractorPanel = transform.Find("Distractor").gameObject;
         _distractorButtons = _distractorPanel.GetComponentsInChildren<Button>(true);

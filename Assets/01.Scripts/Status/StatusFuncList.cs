@@ -11,7 +11,7 @@ public class StatusFuncList : MonoBehaviour
 
     private void Start()
     {
-        _dialScene = SceneManagerEX.Instance.CurrentScene as DialScene;
+        _dialScene = Managers.Scene.CurrentScene as DialScene;
     }
 
     public void AddGetDamage(float dmg)

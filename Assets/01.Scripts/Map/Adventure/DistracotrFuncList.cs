@@ -17,7 +17,7 @@ public class DistracotrFuncList : MonoBehaviour
         {
             if (_mapSceneUI == null)
             {
-                _mapSceneUI = CanvasManager.Instance.GetCanvas("MapUI").GetComponent<MapUI>();
+                _mapSceneUI = Managers.Canvas.GetCanvas("MapUI").GetComponent<MapUI>();
             }
             return _mapSceneUI;
         }
@@ -38,8 +38,8 @@ public class DistracotrFuncList : MonoBehaviour
     public static void NextStage()
     {
         MapManager.Instance.NextStage();
-        CanvasManager.Instance.GetCanvas("Adventure").enabled = false;
-        CanvasManager.Instance.GetCanvas("MapUI").enabled = true;
+        Managers.Canvas.GetCanvas("Adventure").enabled = false;
+        Managers.Canvas.GetCanvas("MapUI").enabled = true;
         //MapSceneUI.adventureUI.gameObject.SetActive(false);
     }
 
@@ -67,6 +67,6 @@ public class DistracotrFuncList : MonoBehaviour
     public void BattleEnemy(Enemy enemy)
     {
         MapManager.Instance.selectEnemy = enemy;
-        SceneManagerEX.Instance.LoadScene("DialScene");
+        Managers.Scene.LoadScene(Define.Scene.DialScene);
     }
 }

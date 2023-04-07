@@ -104,7 +104,7 @@ public class DialElement : MonoBehaviour
 
     private void Start()
     {
-        _dialScene = SceneManagerEX.Instance.CurrentScene as DialScene;
+        _dialScene = Managers.Scene.CurrentScene as DialScene;
 
         transform.rotation = Quaternion.Euler(Vector3.zero);
         IsGlow = false;

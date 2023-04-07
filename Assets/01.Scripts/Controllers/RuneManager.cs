@@ -10,7 +10,7 @@ public class RuneManager : MonoBehaviour
 
     private void Awake()
     {
-        _runeList = ResourceManager.Instance.Load<AllRuneListSO>("SO/" + typeof(AllRuneListSO).Name);
+        _runeList = Managers.Resource.Load<AllRuneListSO>("SO/" + typeof(AllRuneListSO).Name);
     }
 
     public Rune GetRandomRuneOfRarity(RuneRarity rarity, List<RuneSO> ignoreRuneList = null)

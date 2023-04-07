@@ -20,16 +20,16 @@ public class MapUI : MonoBehaviour
 
     private void Start()
     {
-        UIManager.Instance.Bind<TextMeshProUGUI>("Main Gold Amount", CanvasManager.Instance.GetCanvas("MapUI").gameObject);
-        UIManager.Instance.Bind<TextMeshProUGUI>("Main Health Amount", CanvasManager.Instance.GetCanvas("MapUI").gameObject);
+        Managers.UI.Bind<TextMeshProUGUI>("Main Gold Amount", Managers.Canvas.GetCanvas("MapUI").gameObject);
+        Managers.UI.Bind<TextMeshProUGUI>("Main Health Amount", Managers.Canvas.GetCanvas("MapUI").gameObject);
 
         for (int i = 0; i < StageList.childCount; ++i)
         {
             stages.Add(StageList.GetChild(i).GetComponent<Image>());
         }
 
-        _goldText = UIManager.Instance.Get<TextMeshProUGUI>("Main Gold Amount");
-        _healthText = UIManager.Instance.Get<TextMeshProUGUI>("Main Health Amount");
+        _goldText = Managers.UI.Get<TextMeshProUGUI>("Main Gold Amount");
+        _healthText = Managers.UI.Get<TextMeshProUGUI>("Main Health Amount");
 
         MapManager.Instance.NextStage();
     }

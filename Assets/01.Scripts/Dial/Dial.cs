@@ -59,7 +59,7 @@ public class Dial : MonoBehaviour
 
     private void Start()
     {
-        _dialScene = SceneManagerEX.Instance.CurrentScene as DialScene;
+        _dialScene = Managers.Scene.CurrentScene as DialScene;
 
         for (int i = 0; i < 3; i++)
         {
@@ -80,7 +80,7 @@ public class Dial : MonoBehaviour
             {
                 if (rune != null)
                 {
-                    ResourceManager.Instance.Destroy(rune.gameObject);
+                    Managers.Resource.Destroy(rune.gameObject);
                 }
             }
         }
@@ -103,7 +103,7 @@ public class Dial : MonoBehaviour
 
             int runeIndex = Random.Range(0, maxRuneCount);
 
-            RuneUI r = ResourceManager.Instance.Instantiate("Rune").GetComponent<RuneUI>();
+            RuneUI r = Managers.Resource.Instantiate("Rune").GetComponent<RuneUI>();
             int index = 1 - (i % 2);
             r.transform.SetParent(_dialElementList[index].transform);
             r.transform.localScale = new Vector3(0.1f, 0.1f);
@@ -134,7 +134,7 @@ public class Dial : MonoBehaviour
             for (int i = 0; i < 3; i++)
             {
                 int randomIndex = Random.Range(0, numberList.Count);
-                RuneUI r = ResourceManager.Instance.Instantiate("Rune").GetComponent<RuneUI>();
+                RuneUI r = Managers.Resource.Instantiate("Rune").GetComponent<RuneUI>();
                 r.transform.SetParent(_dialElementList[2].transform);
                 r.transform.localScale = new Vector3(0.1f, 0.1f);
                 r.Dial = this;
@@ -165,7 +165,7 @@ public class Dial : MonoBehaviour
 
                 int runeIndex = Random.Range(0, maxRuneCount);
 
-                RuneUI r = ResourceManager.Instance.Instantiate("Rune").GetComponent<RuneUI>();
+                RuneUI r = Managers.Resource.Instantiate("Rune").GetComponent<RuneUI>();
                 r.transform.SetParent(_dialElementList[2].transform);
                 r.transform.localScale = new Vector3(0.1f, 0.1f);
                 r.Dial = this;
@@ -194,7 +194,7 @@ public class Dial : MonoBehaviour
                 {
                     for (int j = 0; j < count; j++)
                     {
-                        RuneUI r = ResourceManager.Instance.Instantiate("Rune").GetComponent<RuneUI>();
+                        RuneUI r = Managers.Resource.Instantiate("Rune").GetComponent<RuneUI>();
                         r.transform.SetParent(_runeDict[i][j].DialElement.transform);
                         r.transform.localScale = new Vector3(0.1f, 0.1f);
                         r.Dial = this;
@@ -393,7 +393,7 @@ public class Dial : MonoBehaviour
             {
                 int index = i;
                 _dialElementList[i].IsGlow = true;
-                BezierMissile b = ResourceManager.Instance.Instantiate("BezierMissile", this.transform.parent).GetComponent<BezierMissile>();
+                BezierMissile b = Managers.Resource.Instantiate("BezierMissile", this.transform.parent).GetComponent<BezierMissile>();
                 b.SetEffect(_dialElementList[i].SelectCard.Rune.GetRune().RuneEffect);
                 switch (_dialElementList[i].SelectCard.Rune.GetRune().MainRune.Attribute)
                 {

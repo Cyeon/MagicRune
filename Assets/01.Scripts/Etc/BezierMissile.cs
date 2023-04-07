@@ -150,7 +150,7 @@ public class BezierMissile : MonoBehaviour
 
     public void SetEffect(GameObject go)
     {
-        _effect = ResourceManager.Instance.Instantiate($"Effects/" + go.name, this.transform);
+        _effect = Managers.Resource.Instantiate($"Effects/" + go.name, this.transform);
         //_effect.transform.localScale *= 3f;
         //Vector3 pos = _effect.transform.position;
         //pos.z = 0;
@@ -179,7 +179,7 @@ public class BezierMissile : MonoBehaviour
         // 도착한거임
         if((Vector2)_transform.position == m_points[3])
         {
-            ResourceManager.Instance.Destroy(_effect);
+            Managers.Resource.Destroy(_effect);
             _effect = null;
 
             // 핸동하고
@@ -190,7 +190,7 @@ public class BezierMissile : MonoBehaviour
 
             m_timerCurrent = 0;
             // 풀링
-            ResourceManager.Instance.Destroy(this.gameObject);
+            Managers.Resource.Destroy(this.gameObject);
         }
     }
 

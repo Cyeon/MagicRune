@@ -14,9 +14,9 @@ public class MapScene : BaseScene
 
         SceneType = Define.Scene.MapScene;
 
-        UIManager.Instance.Bind<Image>("Stage Arrow", CanvasManager.Instance.GetCanvas("MapUI").gameObject);
+        Managers.UI.Bind<Image>("Stage Arrow", Managers.Canvas.GetCanvas("MapUI").gameObject);
 
-        _arrowImage = UIManager.Instance.Get<Image>("Stage Arrow");
+        _arrowImage = Managers.UI.Get<Image>("Stage Arrow");
     }
 
     public override void Clear()
