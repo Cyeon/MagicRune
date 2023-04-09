@@ -48,6 +48,8 @@ public class SoundManager
                 _audioSource.Play();
                 break;
             case SoundType.Effect:
+                SoundPool sound = Managers.Resource.Instantiate("Sound/" + clip.name).GetComponent<SoundPool>();
+                sound.Init(clip, pitch);
                 break;
         }
     }
