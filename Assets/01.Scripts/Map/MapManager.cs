@@ -7,16 +7,16 @@ using static MapDefine;
 
 public class MapManager : MonoSingleton<MapManager>
 {
-    [Header("Chapter")]
-    public List<Chapter> chapterList = new List<Chapter>();
+    //[Header("Chapter")]
+    private List<Chapter> chapterList = new List<Chapter>();
 
     private int _chapter = 1;
     public int Chapter => _chapter;
     private Chapter _currentChapter = null;
     public Chapter CurrentChapter => _currentChapter;
 
-    [Header("Stage")]
-    public List<Stage> stageList = new List<Stage>();
+    //[Header("Stage")]
+    private List<Stage> stageList = new List<Stage>();
 
     [SerializeField]   private int Stage => Floor - ((this.Chapter - 1) * 9);
 
@@ -50,6 +50,8 @@ public class MapManager : MonoSingleton<MapManager>
     private void Awake()
     {
         _mapSceneUI = Managers.Canvas.GetCanvas("MapUI").GetComponent<MapUI>();
+        chapterList = new List<Chapter>(Managers.Resource.Load<ChapterListSO>("SO/" + typeof(ChapterListSO).Name).chapterList);
+
         _portalSpawner = GetComponentInChildren<PortalSpawner>();
 
         if(_portalSpawner == null)
