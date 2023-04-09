@@ -5,6 +5,7 @@ using UnityEngine;
 public class SoundPool : MonoBehaviour
 {
     private AudioSource _audioSource;
+    public AudioSource AudioSource => _audioSource;
 
     private void Start()
     {
@@ -27,6 +28,7 @@ public class SoundPool : MonoBehaviour
     private IEnumerator PoolCoroutine(float delay)
     {
         yield return new WaitForSeconds(delay);
+        Managers.Sound.RemoveEffectSoundSource(_audioSource);
         Managers.Resource.Destroy(this.gameObject);
     }
 }

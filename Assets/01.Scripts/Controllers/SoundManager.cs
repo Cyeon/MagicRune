@@ -15,7 +15,7 @@ public class SoundManager
 
     private Dictionary<string, AudioClip> _audioClipDict = new Dictionary<string, AudioClip>();
 
-    // 풀링되고 있는 모든 effect 오디오소스를 갇고 있는 리스트
+    private List<AudioSource> _effectSoundList;
 
     public void Init()
     {
@@ -38,6 +38,11 @@ public class SoundManager
     /// <param name="isLoop">반복 여부</param>
     public void PlaySound(AudioClip clip, SoundType type, bool isLoop = false, float pitch = 1.0f)
     {
+        if(_audioClipDict.ContainsKey(clip.name) == false)
+        {
+            _audioClipDict.Add(clip.name, clip);
+        }
+
         switch(type)
         {
             case SoundType.Bgm:
@@ -50,15 +55,30 @@ public class SoundManager
             case SoundType.Effect:
                 SoundPool sound = Managers.Resource.Instantiate("Sound/" + clip.name).GetComponent<SoundPool>();
                 sound.Init(clip, pitch);
+                _effectSoundList.Add(sound.AudioSource);
                 break;
         }
     }
 
     public void PlaySound(string path, SoundType type, bool isLoop = false, float pitch = 1.0f)
     {
-        AudioClip clip = Managers.Resource.Load<AudioClip>("Sound/" + path);
+        AudioClip clip;
+        if (_audioClipDict.ContainsKey(path))
+        {
+            clip = _audioClipDict[path];
+        }
+        else
+        {
+            clip = Managers.Resource.Load<AudioClip>("Sound/" + path);
+            _audioClipDict.Add(clip.name, clip);
+        }
 
         PlaySound(clip, type, isLoop, pitch);
+    }
+
+    public void RemoveEffectSoundSource(AudioSource source)
+    {
+        _effectSoundList.Remove(source);
     }
 
     /// <summary>
@@ -72,8 +92,25 @@ public class SoundManager
                 _audioSource.Stop();
                 break;
             case SoundType.Effect:
-                // 위에서 말한 리스트 풀링 후 클리어
+                foreach(AudioSource source in _effectSoundList)
+                {
+                    source.Stop();
+                    Managers.Resource.Destroy(source.gameObject);
+                }
+                _effectSoundList.Clear();
                 break;
         }
+    }
+
+    public void StopAllSound()
+    {
+        _audioSource.Stop();
+
+        foreach (AudioSource source in _effectSoundList)
+        {
+            source.Stop();
+            Managers.Resource.Destroy(source.gameObject);
+        }
+        _effectSoundList.Clear();
     }
 }
