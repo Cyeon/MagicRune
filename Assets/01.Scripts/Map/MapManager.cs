@@ -51,10 +51,17 @@ public class MapManager : MonoSingleton<MapManager>
     {
         _mapSceneUI = Managers.Canvas.GetCanvas("MapUI").GetComponent<MapUI>();
         _portalSpawner = GetComponentInChildren<PortalSpawner>();
+
+        if(_portalSpawner == null)
+        {
+            PortalSpawner portalSpawner = Managers.Resource.Instantiate("PortalSpawner", this.transform).GetComponent<PortalSpawner>();
+            _portalSpawner = portalSpawner;
+        }
     }
 
     private void Start()
     {
+
         ChapterInit();
         _portalSpawner.SpawnPortal(stageList[Stage].type);
         MapSceneUI?.InfoUIReload();

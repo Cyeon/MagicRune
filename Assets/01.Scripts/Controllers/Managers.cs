@@ -1,18 +1,21 @@
+using DG.Tweening;
 using MyBox;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using static UnityEditor.ShaderGraph.Internal.KeywordDependentCollection;
 
 public class Managers : MonoBehaviour
 {
+    #region Instance
     private static Managers _instance;
     private static Managers Instance { get { Init(); return _instance; } }
+    #endregion
 
     #region CORE
     private UIManager _ui = new UIManager();
     private PoolManager _pool = new PoolManager();
+    private RuneManager _rune = new RuneManager();
     private SoundManager _sound = new SoundManager();
     private CanvasManager _canvas = new CanvasManager();
     private SceneManagerEX _scene = new SceneManagerEX();
@@ -20,14 +23,20 @@ public class Managers : MonoBehaviour
 
     public static UIManager UI {  get { return Instance._ui; } }
     public static PoolManager Pool { get { return Instance._pool; } }
+    public static RuneManager Rune { get { return Instance._rune; } }
     public static SoundManager Sound { get { return Instance._sound; } }
     public static CanvasManager Canvas { get { return Instance._canvas; } }
     public static SceneManagerEX Scene { get { return Instance._scene; } }
     public static ResourceManager Resource { get { return Instance._resource; } }
     #endregion
 
+    private bool _preparedToQuit = false;
+
     private void Awake()
     {
+        Application.targetFrameRate = 30;
+        DOTween.Init(false, false, LogBehaviour.Default).SetCapacity(500, 50);
+
         Init();
     }
 
@@ -35,10 +44,10 @@ public class Managers : MonoBehaviour
     {
         if (_instance == null)
         {
-            GameObject go = GameObject.Find("@Managers");
+            GameObject go = GameObject.Find("Managers");
             if (go == null)
             {
-                go = new GameObject { name = "@Managers" };
+                go = new GameObject { name = "Managers" };
                 go.AddComponent<Managers>();
             }
             DontDestroyOnLoad(go);
@@ -48,6 +57,43 @@ public class Managers : MonoBehaviour
             _instance._pool.Init();
             _instance._canvas.Init(true);
         }
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (_preparedToQuit == false)
+            {
+                AndroidToast.Instance.ShowToastMessage("뒤로가기 버튼을 한 번 더 누르시면 종료합니다.");
+                PreparedToQuit();
+            }
+            else
+            {
+                GameQuit();
+            }
+        }
+    }
+
+    private void PreparedToQuit()
+    {
+        StartCoroutine(PreparedToQuitCoroutine());
+    }
+
+    private IEnumerator PreparedToQuitCoroutine()
+    {
+        _preparedToQuit = true;
+        yield return new WaitForSecondsRealtime(2.5f);
+        _preparedToQuit = false;
+    }
+
+    public static void GameQuit()
+    {
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
+        Application.Quit();
+#endif
     }
 
     public static void Clear()

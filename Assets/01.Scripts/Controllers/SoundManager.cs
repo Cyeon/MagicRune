@@ -22,6 +22,8 @@ public class SoundManager
         if(_audioSource == null)
         {
             _audioSource = new GameObject { name = "BGM" }.AddComponent<AudioSource>();
+            _audioSource.loop = true;
+            _audioSource.playOnAwake = false;
             //audioSource.outputAudioMixerGroup // 연결해주어야함
 
             Object.DontDestroyOnLoad(_audioSource);

@@ -5,7 +5,7 @@ using System.Linq;
 
 public class DeckManager : MonoSingleton<DeckManager>
 {
-    public List<RuneSO> _defaultRune = new List<RuneSO>(); // 초기 기본 지급 룬 
+    public List<RuneSO> _defaultRune = new List<RuneSO>(20); // 초기 기본 지급 룬 
 
     public const int FIRST_DIAL_DECK_MAX_COUNT = 6; // 첫번째 다이얼 덱 최대 개수
 
@@ -21,10 +21,18 @@ public class DeckManager : MonoSingleton<DeckManager>
     {
         if (_deck.Count == 0) // 덱이 비어있을 경우 설정해둔 초기 덱을 넣어줌 
         {
-            for (int i = 0; i < _defaultRune.Count; i++)
+            if(_defaultRune.Count <= 0)
             {
-                Rune rune = new Rune(_defaultRune[i]);
-                AddRune(rune);
+                _defaultRune = new List<RuneSO>(Managers.Resource.Load<AllRuneListSO>("SO/DefaultRuneListSO").RuneList);
+            }
+
+            if (_defaultRune.Count >= 0)
+            {
+                for (int i = 0; i < _defaultRune.Count; i++)
+                {
+                    Rune rune = new Rune(_defaultRune[i]);
+                    AddRune(rune);
+                }
             }
         }
     }

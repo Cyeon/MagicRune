@@ -9,6 +9,8 @@ public abstract class BaseScene : MonoBehaviour
 
     private void Awake()
     {
+        Managers.Canvas.SetCanvas();
+
         Init();
     }
 

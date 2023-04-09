@@ -86,23 +86,13 @@ public class CanvasManager
         Scene currentScene = SceneManager.GetActiveScene();
 
         GameObject[] objectArray = currentScene.GetRootGameObjects();
-        Canvas[] canvasArray = objectArray.Where(x => x.GetType() == typeof(Canvas)).Select(x => x.GetComponent<Canvas>()).ToArray();
+        Canvas[] canvasArray = objectArray.Where(x => x.GetComponent<Canvas>() != null).Select(x => x.GetComponent<Canvas>()).ToArray();
 
         if (_isOnlyParentObject)
         {
             Canvas[] parentCanvasArray = canvasArray.Where(x => x.transform.parent == null).ToArray();
 
-            foreach(var c in parentCanvasArray)
-            {
-                Debug.Log(c.name);
-            }
-
             return parentCanvasArray;
-        }
-
-        foreach (var c in canvasArray)
-        {
-            Debug.Log(c.name);
         }
         return canvasArray;
     }

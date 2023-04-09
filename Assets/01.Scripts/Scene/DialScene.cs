@@ -89,7 +89,7 @@ public class DialScene : BaseScene
         //    //MapManager.Instance.ResetChapter();
         //});
         Managers.UI.Get<Button>("Quit Btn").onClick.RemoveAllListeners();
-        Managers.UI.Get<Button>("Quit Btn").onClick.AddListener(() => GameManager.Instance.GameQuit());
+        Managers.UI.Get<Button>("Quit Btn").onClick.AddListener(() => Managers.GameQuit());
 
         _cardDescPanelList = _cardDescPanel.GetComponent<ExplainPanelList>();
     }
