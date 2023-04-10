@@ -27,7 +27,7 @@ public class ShopUI : MonoBehaviour
 
     public void Open()
     {
-        _goldText.SetText(GameManager.Instance.Gold.ToString());
+        _goldText.SetText(Managers.Gold.Gold.ToString());
         for (int i = _storeShelf.transform.childCount - 1; i >= 0; --i)
         {
             Managers.Resource.Destroy(_storeShelf.transform.GetChild(i).gameObject);

@@ -15,6 +15,6 @@ public class REGold : Reward
 
     public override void GiveReward()
     {
-        GameManager.Instance.Gold += gold;
+        Managers.Gold.AddGold(gold);
     }
 }

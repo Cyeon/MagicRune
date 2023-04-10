@@ -61,7 +61,7 @@ public class DistracotrFuncList : MonoBehaviour
 
     public void AddGold(int amount)
     {
-        GameManager.Instance.AddGold(amount);
+        Managers.Gold.AddGold(amount);
         MapSceneUI.InfoUIReload();
     }
     public void BattleEnemy(Enemy enemy)
