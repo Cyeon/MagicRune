@@ -133,7 +133,7 @@ public class DialElement : MonoBehaviour
                         {
                             if (_selectCard != null)
                             {
-                                _dialScene?.CardDescPopup();
+                                _dialScene?.CardDescPopup(_selectCard.Rune);
                             }
                         }
                     }
@@ -151,7 +151,7 @@ public class DialElement : MonoBehaviour
                         {
                             if (_selectCard != null)
                             {
-                                _dialScene?.CardDescPopup();
+                                _dialScene?.CardDescPopup(_selectCard.Rune);
                             }
                         }
                     }
@@ -162,7 +162,7 @@ public class DialElement : MonoBehaviour
                     if (_isRotate == true)
                     {
                         Rune rune = SelectCard == null ? null : SelectCard.Rune;
-                        _dialScene?.CardDescPopup();
+                        _dialScene?.CardDescPopup(rune);
                     }
                 }
             //}
@@ -458,7 +458,7 @@ public class DialElement : MonoBehaviour
                                         0.3f
                                     ).OnComplete(() =>
                                     {
-                                        if (_selectCard != null) { _dialScene?.CardDescPopup(); }
+                                        if (_selectCard != null) { _dialScene?.CardDescPopup(_selectCard.Rune); }
                                     });
                                     //}
                                 }
@@ -476,7 +476,7 @@ public class DialElement : MonoBehaviour
                                         0.3f
                                     ).OnComplete(() =>
                                     {
-                                        if (_selectCard != null) { _dialScene?.CardDescPopup(); }
+                                        if (_selectCard != null) { _dialScene?.CardDescPopup(_selectCard.Rune); }
                                     });
                                     //}
                                 }
@@ -495,7 +495,7 @@ public class DialElement : MonoBehaviour
                                         .OnComplete(() =>
                                         {
                                             //SelectCard = _runeList[index];
-                                            if (_selectCard != null) { _dialScene?.CardDescPopup(); }
+                                            if (_selectCard != null) { _dialScene?.CardDescPopup(_selectCard.Rune); }
                                         });
                                 }
                                 else
@@ -506,7 +506,7 @@ public class DialElement : MonoBehaviour
                                         .OnComplete(() =>
                                         {
                                             //SelectCard = _runeList[index]; // ���� ���� ���ϴ� �ְ� �ȵ���?�� ����â ������ ������?
-                                            if (_selectCard != null) { _dialScene?.CardDescPopup(); }
+                                            if (_selectCard != null) { _dialScene?.CardDescPopup(_selectCard.Rune); }
                                         });
                                 }
                             }

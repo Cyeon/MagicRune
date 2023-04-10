@@ -263,7 +263,27 @@ public class DialScene : BaseScene
 
     #region Description
 
-    public void CardDescPopup()
+    public void CardDescPopup(Rune rune)
+    {
+        if(rune == null)
+        {
+            CardDescDown();
+        }
+        else
+        {
+            _cardDescPanel.SetActive(true);
+            if (_cardDescPanelList == null)
+            {
+                _cardDescPanelList = _cardDescPanel.GetComponent<ExplainPanelList>();
+            }
+
+            _cardDescPanelList.OpenPanel(0, rune);
+            _cardDescPanelList.ClosePanel(1);
+            _cardDescPanelList.ClosePanel(2);
+        }
+    }
+
+    public void AllCardDescPopup()
     {
         _cardDescPanel.SetActive(true);
         if (_cardDescPanelList == null)
