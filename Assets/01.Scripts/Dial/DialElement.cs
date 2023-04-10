@@ -291,13 +291,15 @@ public class DialElement : MonoBehaviour
                 switch (condition.ComparisonType)
                 {
                     case ComparisonType.MoreThan:
-                        if (!(StatusManager.Instance.GetUnitStatusValue(BattleManager.Instance.player, condition.StatusType) >= condition.Value))
-                            return false;
+                        if (!(BattleManager.Instance.player.StatusManager.GetStatus(condition.StatusType).TypeValue >= condition.Value))
+                                return false;
                         break;
+
                     case ComparisonType.LessThan:
-                        if (!(StatusManager.Instance.GetUnitStatusValue(BattleManager.Instance.player, condition.StatusType) <= condition.Value))
+                        if (!(BattleManager.Instance.player.StatusManager.GetStatus(condition.StatusType).TypeValue <= condition.Value))
                             return false;
                         break;
+
                 }
                 break;
         }
@@ -371,11 +373,11 @@ public class DialElement : MonoBehaviour
                 switch (e.AttackType)
                 {
                     case AttackType.Single:
-                        action = () => StatusManager.Instance.AddStatus(target, e.StatusType, (int)e.Effect);
+                        action = () => target.StatusManager.AddStatus(e.StatusType, (int)e.Effect);
                         break;
                     case AttackType.Double:
                         //action = () => StatusManager.Instance.AddStatus(target, e.StatusType, (int)e.Effect * c);
-                        action = () => StatusManager.Instance.AddStatus(target, e.StatusType, (int)e.Effect);
+                        action = () => target.StatusManager.AddStatus(e.StatusType, (int)e.Effect);
                         break;
                 }
                 break;
@@ -383,10 +385,10 @@ public class DialElement : MonoBehaviour
                 switch (e.CountType)
                 {
                     case CountType.Count:
-                        action = () => StatusManager.Instance.CountRemStatus(target, e.StatusType, (int)e.Effect);
+                        action = () => target.StatusManager.RemoveStatus(e.StatusType, (int)e.Effect);
                         break;
                     case CountType.All:
-                        action = () => StatusManager.Instance.AllRemStatus(target, e.StatusType);
+                        action = () => target.StatusManager.DeleteStatus(e.StatusType);
                         break;
                 }
                 break;

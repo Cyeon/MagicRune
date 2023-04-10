@@ -73,7 +73,7 @@ public class PatternFuncList : MonoBehaviour
     private void AddStatus(StatusName statusName)
     {
         float v = value > 0 ? value : 1;
-        StatusManager.Instance.AddStatus(BattleManager.Instance.player, statusName, (int)v);
+        BattleManager.Instance.player.StatusManager.AddStatus(statusName, (int)v);
     }
 
     public void Attack()

@@ -77,24 +77,22 @@ public class Unit : MonoBehaviour
     [field: SerializeField] public UnityEvent<float> OnTakeDamage { get; set; }
 
     [field: SerializeField] public UnityEvent OnTakeDamageFeedback { get; set; }
-    [field: SerializeField] public Dictionary<StatusInvokeTime, List<Status>> unitStatusDic = new Dictionary<StatusInvokeTime, List<Status>>();
+    //[field: SerializeField] public Dictionary<StatusInvokeTime, List<Status>> unitStatusDic = new Dictionary<StatusInvokeTime, List<Status>>();
 
     public UnityEvent OnDieEvent;
     protected DialScene _dialScene;
 
+    [Header("Status")]
+    public Transform statusTrm;
+    private StatusManager _statusManager;
+    public StatusManager StatusManager => _statusManager;
+
     private void Start() {
-        ResetStatus();
         _dialScene = SceneManagerEX.Instance.CurrentScene as DialScene;
-    }
+        _statusManager = new StatusManager(this, _dialScene);
+        _statusManager.Reset();
 
-    public void ResetStatus()
-    {
-        unitStatusDic.Clear();
-
-        unitStatusDic.Add(StatusInvokeTime.Start, new List<Status>());
-        unitStatusDic.Add(StatusInvokeTime.Attack, new List<Status>());
-        unitStatusDic.Add(StatusInvokeTime.GetDamage, new List<Status>());
-        unitStatusDic.Add(StatusInvokeTime.End, new List<Status>());
+        statusTrm = transform.Find("Status");
     }
 
     /// <summary>
@@ -104,7 +102,7 @@ public class Unit : MonoBehaviour
     public void TakeDamage(float damage, bool isFixed = false, Status status = null)
     {
         currentDmg = damage;
-        InvokeStatus(StatusInvokeTime.GetDamage);
+        _statusManager.OnGetDamage();
         currentDmg = Mathf.Floor(currentDmg);
 
         if (Shield > 0 && isFixed == false)
@@ -151,20 +149,20 @@ public class Unit : MonoBehaviour
         return false;
     }
 
-    public void InvokeStatus(StatusInvokeTime time)
-    {
-        if (IsDie == true) return;
+    //public void InvokeStatus(StatusInvokeTime time)
+    //{
+    //    if (IsDie == true) return;
 
-        List<Status> status;
+    //    List<Status> status;
 
-        if (unitStatusDic.TryGetValue(time, out status))
-        {
-            if (status.Count > 0)
-            {
-                StatusManager.Instance.StatusFuncInvoke(status, this);
-            }
-        }
-    }
+    //    if (unitStatusDic.TryGetValue(time, out status))
+    //    {
+    //        if (status.Count > 0)
+    //        {
+    //            StatusManager.Instance.StatusFuncInvoke(status, this);
+    //        }
+    //    }
+    //}
 
     public float GetMaxHP()
     {
