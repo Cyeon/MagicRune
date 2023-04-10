@@ -92,6 +92,8 @@ public class DialScene : BaseScene
         Managers.UI.Get<Button>("Quit Btn").onClick.AddListener(() => Managers.GameQuit());
 
         _cardDescPanelList = _cardDescPanel.GetComponent<ExplainPanelList>();
+
+        Managers.Sound.PlaySound("BGM/DialSceneBGM", SoundType.Bgm, true, 1.0f);
     }
 
     public void Turn(string text)

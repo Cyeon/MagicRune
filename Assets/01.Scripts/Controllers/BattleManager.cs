@@ -48,7 +48,6 @@ public class BattleManager : MonoSingleton<BattleManager>
         enemy.OnDieEvent.AddListener(() =>
         {
             REGold reward = new REGold();
-            // 애가 맵매니저를 참조함. 애기말고 딴대도 함. 그냉 맵매니저를 매니저스가 관리하게 바꾸는게 좋을 거 같음
             reward.gold = Managers.Map.CurrentChapter.Gold;
             reward.AddRewardList();
 

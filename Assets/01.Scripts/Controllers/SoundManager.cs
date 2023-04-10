@@ -15,7 +15,7 @@ public class SoundManager
 
     private Dictionary<string, AudioClip> _audioClipDict = new Dictionary<string, AudioClip>();
 
-    private List<AudioSource> _effectSoundList;
+    private List<AudioSource> _effectSoundList = new List<AudioSource>(5);
 
     private AudioMixer _mixer;
 
@@ -63,7 +63,7 @@ public class SoundManager
                 _audioSource.Play();
                 break;
             case SoundType.Effect:
-                SoundPool sound = Managers.Resource.Instantiate("Sound/" + clip.name).GetComponent<SoundPool>();
+                SoundPool sound = Managers.Resource.Instantiate("Sound/SoundPool").GetComponent<SoundPool>();
                 sound.Init(clip, pitch);
                 _effectSoundList.Add(sound.AudioSource);
                 break;

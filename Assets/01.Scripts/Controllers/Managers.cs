@@ -131,5 +131,6 @@ public class Managers : MonoBehaviour
         Scene.Clear();
         Pool.Clear();
         Canvas.Clear();
+        Sound.StopAllSound();
     }
 }
