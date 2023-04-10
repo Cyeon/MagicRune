@@ -8,6 +8,11 @@ public class BaseRune // 일단 모노비헤이비어 뺴고 생각하자.
 {
     protected BaseCardSO _baseCardSO;
 
+    public virtual void Init()
+    {
+        _baseCardSO = Managers.Resource.Load<BaseCardSO>("SO/Rune/" + typeof(BaseCardSO).Name + "SO");
+    }
+
     public virtual bool AbilityCondition()
     {
         bool isHaveGold = Managers.Gold.Gold >= 5;
@@ -26,8 +31,17 @@ public class BaseRune // 일단 모노비헤이비어 뺴고 생각하자.
 
             Managers.StatModifier.GetStatModifierValue(ref value);
 
-            Managers.GetPlayer().Attack(value);
+            Managers.GetPlayer().Attack(value < 0 ? 0 : value);
             Managers.Gold.AddGold(-1 * 5);
         }
+    }
+
+    public float GetAbliltiValaue(EffectType type)
+    {
+        float value = _baseCardSO.AbilityList.Where(x => x.EffectType == type).Select(x => x.Value).First();
+
+        Managers.StatModifier.GetStatModifierValue(ref value);
+
+        return value;
     }
 }
