@@ -99,13 +99,13 @@ public class Unit : MonoBehaviour
     /// ������ �޴� �Լ�
     /// </summary>
     /// <param name="damage"></param>
-    public void TakeDamage(float damage, bool isFixed = false, Status status = null)
+    public void TakeDamage(float damage, bool isTrueDamage = false, Status status = null)
     {
         currentDmg = damage;
         _statusManager.OnGetDamage();
         currentDmg = Mathf.Floor(currentDmg);
 
-        if (Shield > 0 && isFixed == false)
+        if (Shield > 0 && isTrueDamage == false)
         {
             if (Shield - currentDmg >= 0)
                 Shield -= currentDmg;
@@ -179,11 +179,14 @@ public class Unit : MonoBehaviour
         if (_isDie == false)
         {
             HP += value;
-            if(_dialScene == null)
-            {
-                _dialScene = SceneManagerEX.Instance.CurrentScene as DialScene;
-            }
-            _dialScene?.UpdateHealthbar(IsPlayer);
+        }
+    }
+
+    public void RemTrueHP(float value)
+    {
+        if(_isDie == false)
+        {
+            HP -= value;
         }
     }
 

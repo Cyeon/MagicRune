@@ -39,6 +39,7 @@ public class StatusManager
         {
             status = ResourceManager.Instance.Instantiate("Status/Status_" + statusName, _unit.statusTrm).GetComponent<Status>();
             status.AddValue(count);
+            status.unit = _unit;
             _dialScene.AddStatus(_unit, status);
         }
 

@@ -4,5 +4,14 @@ using UnityEngine;
 
 public abstract class StatusEvent : MonoBehaviour
 {
+    protected Unit _unit;
+    protected Status _status;
+
+    private void Awake()
+    {
+        _unit = transform.parent.parent.GetComponent<Unit>();
+        _status = GetComponent<Status>();
+    }
+
     public abstract void Invoke();
 }

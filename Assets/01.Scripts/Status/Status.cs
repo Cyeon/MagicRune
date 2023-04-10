@@ -50,6 +50,8 @@ public class Status : MonoBehaviour
     [ShowAssetPreview(32, 32)] public Sprite icon;
     public Color color = Color.white;
 
+    [HideInInspector] public Unit unit;
+
     public void AddValue(int count)
     {
         _typeValue += count;
