@@ -11,9 +11,9 @@ public class AttackPortal : Portal
 
     public override void Execute()
     {
-        MapManager.Instance.selectEnemy = _portalEnemy;
+        Managers.Map.SelectEnemy = _portalEnemy;
         _portalEnemy.isEnter = true;
-        Managers.Scene.LoadScene("DialScene");
+        Managers.Scene.LoadScene(Define.Scene.DialScene);
         base.Execute();
     }
 
@@ -48,7 +48,7 @@ public class AttackPortal : Portal
         List<Enemy> enemyList = new List<Enemy>();
         for (int i = 0; i < attackMap.map.Count; ++i)
         {
-            if (attackMap.map[i].MinFloor <= MapManager.Instance.Floor + 1 && attackMap.map[i].MaxFloor >= MapManager.Instance.Floor + 1)
+            if (attackMap.map[i].MinFloor <= Managers.Map.Floor + 1 && attackMap.map[i].MaxFloor >= Managers.Map.Floor + 1)
             {
                 foreach (var enemy in attackMap.map[i].enemyList)
                 {

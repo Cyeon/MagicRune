@@ -19,7 +19,7 @@ public class ShopUI : MonoBehaviour
 
     public void Exit()
     {
-        MapManager.Instance.NextStage();
+        Managers.Map.NextStage();
         Managers.Canvas.GetCanvas("Shop").enabled = false;
         Managers.Canvas.GetCanvas("MapUI").enabled = true;
     }

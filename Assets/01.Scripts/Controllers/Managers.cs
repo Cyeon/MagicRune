@@ -14,6 +14,7 @@ public class Managers : MonoBehaviour
 
     #region CORE
     private UIManager _ui = new UIManager();
+    private MapManager _map = new MapManager();
     private PoolManager _pool = new PoolManager();
     private RuneManager _rune = new RuneManager();
     private SoundManager _sound = new SoundManager();
@@ -22,6 +23,7 @@ public class Managers : MonoBehaviour
     private ResourceManager _resource = new ResourceManager();
 
     public static UIManager UI {  get { return Instance._ui; } }
+    public static MapManager Map { get { return Instance._map; } }
     public static PoolManager Pool { get { return Instance._pool; } }
     public static RuneManager Rune { get { return Instance._rune; } }
     public static SoundManager Sound { get { return Instance._sound; } }
@@ -56,6 +58,7 @@ public class Managers : MonoBehaviour
             _instance._sound.Init();
             _instance._pool.Init();
             _instance._canvas.Init(true);
+            _instance._map.Init();
         }
     }
 

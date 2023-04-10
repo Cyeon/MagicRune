@@ -56,7 +56,7 @@ public class PortalSpawner : MonoBehaviour
 
             case StageType.Boss:
                 AttackPortal bossPortal = Managers.Resource.Instantiate("Portal/" + _bossPortal.name, transform).GetComponent<AttackPortal>();
-                bossPortal.Init(_onePortalPosition, MapManager.Instance.CurrentChapter.boss);
+                bossPortal.Init(_onePortalPosition, Managers.Map.CurrentChapter.boss);
                 _spawnPortals.Add(bossPortal);
                 break;
         }

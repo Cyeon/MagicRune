@@ -74,6 +74,6 @@ public class RestUI : MonoBehaviour
         _enhanceBtn.gameObject.SetActive(false);
         Managers.Canvas.GetCanvas(this.name).enabled = false;
         Managers.Canvas.GetCanvas("MapUI").enabled = true;
-        MapManager.Instance.NextStage();
+        Managers.Map.NextStage();
     }
 }

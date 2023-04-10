@@ -49,7 +49,7 @@ public class Stage
 
     public void ChangeResource(Color color, Sprite sprite = null)
     {
-        if (_image == null) _image = MapSceneUI.stages[_index];
+        if (_image == null) _image = MapSceneUI.Stages[_index];
 
         if (color != null)
         {

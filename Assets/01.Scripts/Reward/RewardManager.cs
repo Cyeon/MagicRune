@@ -14,7 +14,7 @@ public class RewardManager
 
     public static void ImageLoad()
     {
-        rewardSprites.Add(RewardType.Gold, Resources.Load<Sprite>("Coin_Icon"));
+        rewardSprites.Add(RewardType.Gold, Managers.Resource.Load<Sprite>("Coin_Icon"));
     }
 
     public static Sprite GetRewardIcon(RewardType type)

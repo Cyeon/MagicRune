@@ -48,7 +48,7 @@ public class Portal : MonoBehaviour, IPointerClickHandler
     /// </summary>
     public virtual void Execute()
     {
-        MapManager.Instance.PortalSpawner.ResetPortal();
+        Managers.Map.PortalSpawner.ResetPortal();
     }
 
     public void PortalEffectingSizeControl(Vector2 size, float time)
@@ -66,7 +66,7 @@ public class Portal : MonoBehaviour, IPointerClickHandler
         if (currentClickNum == 1)
         {
             if (_isEffecting) return;
-            MapManager.Instance.PortalSpawner.SelectPortal(this);
+            Managers.Map.PortalSpawner.SelectPortal(this);
             Execute();
         }
     }

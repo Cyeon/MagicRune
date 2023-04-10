@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using DG.Tweening;
-using static MapDefine;
 
-public class MapManager : MonoSingleton<MapManager>
+public class MapManager
 {
     //[Header("Chapter")]
     private List<Chapter> chapterList = new List<Chapter>();
@@ -23,12 +22,13 @@ public class MapManager : MonoSingleton<MapManager>
     private int _floor = 0;
     public int Floor => _floor;
 
-    [Header("Portal")]
+    //[Header("Portal")]
     private PortalSpawner _portalSpawner;
     public PortalSpawner PortalSpawner => _portalSpawner;
 
-    [Header("Attack")]
-    public Enemy selectEnemy;
+    //[Header("Attack")]
+    private Enemy selectEnemy;
+    public Enemy SelectEnemy { get => selectEnemy; set => selectEnemy = value; }
 
     private bool _isFirst = true;
 
@@ -47,22 +47,16 @@ public class MapManager : MonoSingleton<MapManager>
 
     private MapScene _mapScene;
 
-    private void Awake()
+    public void Init()
     {
         _mapSceneUI = Managers.Canvas.GetCanvas("MapUI").GetComponent<MapUI>();
         chapterList = new List<Chapter>(Managers.Resource.Load<ChapterListSO>("SO/" + typeof(ChapterListSO).Name).chapterList);
 
-        _portalSpawner = GetComponentInChildren<PortalSpawner>();
-
-        if(_portalSpawner == null)
+        if (_portalSpawner == null)
         {
-            PortalSpawner portalSpawner = Managers.Resource.Instantiate("PortalSpawner", this.transform).GetComponent<PortalSpawner>();
+            PortalSpawner portalSpawner = Managers.Resource.Instantiate(typeof(PortalSpawner).Name ).GetComponent<PortalSpawner>();
             _portalSpawner = portalSpawner;
         }
-    }
-
-    private void Start()
-    {
 
         ChapterInit();
         _portalSpawner.SpawnPortal(stageList[Stage].type);
@@ -70,7 +64,7 @@ public class MapManager : MonoSingleton<MapManager>
         //Managers.Canvas.GetCanvas("MapUI").GetComponent<MapUI>().InfoUIReload();
 
         RewardManager.ImageLoad();
-    } 
+    }
 
     private void ChapterInit()
     {
@@ -83,14 +77,14 @@ public class MapManager : MonoSingleton<MapManager>
             Stage stage = new Stage();
             int random = Random.Range(1, 100);
 
-            stage.Init(random <= chance ? StageType.Event : StageType.Attack, MapSceneUI.stages[idx], idx);
+            stage.Init(random <= chance ? StageType.Event : StageType.Attack, MapSceneUI.Stages[idx], idx);
             stageList.Add(stage);
 
             idx++;
         }
 
         Stage bossStage = new Stage();
-        bossStage.Init(StageType.Boss, MapSceneUI.stages[9], 9);
+        bossStage.Init(StageType.Boss, MapSceneUI.Stages[9], 9);
         stageList.Add(bossStage);
 
         stageList[0].ChangeResource(Color.white);
@@ -116,8 +110,8 @@ public class MapManager : MonoSingleton<MapManager>
         #region 초기화 부분
         for (int i = 0; i < stageList.Count; ++i)
         {
-            MapSceneUI.stages[i].sprite = stageList[i].icon;
-            MapSceneUI.stages[i].color = stageList[i].color;
+            MapSceneUI.Stages[i].sprite = stageList[i].icon;
+            MapSceneUI.Stages[i].color = stageList[i].color;
         }
         #endregion
 
@@ -145,7 +139,7 @@ public class MapManager : MonoSingleton<MapManager>
         seq.AppendInterval(0.5f);
         if (Stage < MapSceneUI.StageList.childCount - 2)
             seq.Append(MapSceneUI.StageList.transform.DOLocalMoveX(Stage * -300f, 1f));
-        seq.Append(MapSceneUI.stages[Stage].DOColor(Color.white, 0.5f));
+        seq.Append(MapSceneUI.Stages[Stage].DOColor(Color.white, 0.5f));
         seq.AppendCallback(() =>
         {
             stageList[Stage].color = Color.white;

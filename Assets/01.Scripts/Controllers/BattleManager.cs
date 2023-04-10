@@ -40,7 +40,7 @@ public class BattleManager : MonoSingleton<BattleManager>
 
     public void GameStart()
     {
-        enemy = Managers.Resource.Instantiate("Enemy/" + MapManager.Instance.selectEnemy.name).GetComponent<Enemy>();
+        enemy = Managers.Resource.Instantiate("Enemy/" + Managers.Map.SelectEnemy.name).GetComponent<Enemy>();
         enemy.Init();
         enemy.PatternManager.ChangePattern(enemy.PatternManager.patternList[0]);
 
@@ -49,7 +49,7 @@ public class BattleManager : MonoSingleton<BattleManager>
         {
             REGold reward = new REGold();
             // 애가 맵매니저를 참조함. 애기말고 딴대도 함. 그냉 맵매니저를 매니저스가 관리하게 바꾸는게 좋을 거 같음
-            reward.gold = MapManager.Instance.CurrentChapter.Gold;
+            reward.gold = Managers.Map.CurrentChapter.Gold;
             reward.AddRewardList();
 
             _dialScene?.RewardUI.VictoryPanelPopup();

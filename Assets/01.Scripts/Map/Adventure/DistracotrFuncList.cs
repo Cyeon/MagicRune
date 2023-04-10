@@ -37,7 +37,7 @@ public class DistracotrFuncList : MonoBehaviour
 
     public static void NextStage()
     {
-        MapManager.Instance.NextStage();
+        Managers.Map.NextStage();
         Managers.Canvas.GetCanvas("Adventure").enabled = false;
         Managers.Canvas.GetCanvas("MapUI").enabled = true;
         //MapSceneUI.adventureUI.gameObject.SetActive(false);
@@ -66,7 +66,7 @@ public class DistracotrFuncList : MonoBehaviour
     }
     public void BattleEnemy(Enemy enemy)
     {
-        MapManager.Instance.selectEnemy = enemy;
+        Managers.Map.SelectEnemy = enemy;
         Managers.Scene.LoadScene(Define.Scene.DialScene);
     }
 }
