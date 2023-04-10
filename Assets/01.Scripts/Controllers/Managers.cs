@@ -25,6 +25,7 @@ public class Managers : MonoBehaviour
     private CanvasManager _canvas = new CanvasManager();
     private SceneManagerEX _scene = new SceneManagerEX();
     private ResourceManager _resource = new ResourceManager();
+    private StatModifierManager _statModifier = new StatModifierManager();
 
     public static UIManager UI {  get { return Instance._ui; } }
     public static MapManager Map { get { return Instance._map; } }
@@ -38,6 +39,7 @@ public class Managers : MonoBehaviour
     public static CanvasManager Canvas { get { return Instance._canvas; } }
     public static SceneManagerEX Scene { get { return Instance._scene; } }
     public static ResourceManager Resource { get { return Instance._resource; } }
+    public static StatModifierManager StatModifier { get { return Instance._statModifier; } }
     #endregion
 
     private bool _preparedToQuit = false;
@@ -70,6 +72,7 @@ public class Managers : MonoBehaviour
             _instance._canvas.Init(true);
             _instance._map.Init();
             _instance._deck.Init();
+            _instance._statModifier.Init();
 
             if(_player == null)
             {
@@ -132,5 +135,6 @@ public class Managers : MonoBehaviour
         Pool.Clear();
         Canvas.Clear();
         Sound.StopAllSound();
+        StatModifier.Clear();
     }
 }
