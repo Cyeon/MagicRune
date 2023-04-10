@@ -92,7 +92,7 @@ public class MapManager
 
     public void NextStage()
     {
-        if (GameManager.Instance.player.IsDie == true) // 버그
+        if (Managers.GetPlayer().IsDie == true) // 버그
         {
             ResetChapter();
             // 플레이어 죽음 리셋
@@ -162,6 +162,6 @@ public class MapManager
     {
         _chapter = 1;
         ChapterInit();
-        GameManager.Instance.player.ResetHealth();
+        Managers.GetPlayer().ResetHealth();
     }
 }

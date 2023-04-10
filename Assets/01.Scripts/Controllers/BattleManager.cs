@@ -55,7 +55,7 @@ public class BattleManager : MonoSingleton<BattleManager>
             _dialScene?.RewardUI.VictoryPanelPopup();
         });
 
-        player = GameManager.Instance.player;
+        player = Managers.GetPlayer();
         player.ResetStatus();
         player.SliderInit();
 

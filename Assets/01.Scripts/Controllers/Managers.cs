@@ -16,6 +16,7 @@ public class Managers : MonoBehaviour
     private UIManager _ui = new UIManager();
     private MapManager _map = new MapManager();
     private PoolManager _pool = new PoolManager();
+    private DeckManager _deck = new DeckManager();
     private RuneManager _rune = new RuneManager();
     private GoldManager _gold = new GoldManager();
     private SoundManager _sound = new SoundManager();
@@ -26,6 +27,7 @@ public class Managers : MonoBehaviour
     public static UIManager UI {  get { return Instance._ui; } }
     public static MapManager Map { get { return Instance._map; } }
     public static PoolManager Pool { get { return Instance._pool; } }
+    public static DeckManager Deck { get { return Instance._deck; } }
     public static RuneManager Rune { get { return Instance._rune; } }
     public static GoldManager Gold { get { return Instance._gold; } }
     public static SoundManager Sound { get { return Instance._sound; } }
@@ -35,6 +37,8 @@ public class Managers : MonoBehaviour
     #endregion
 
     private bool _preparedToQuit = false;
+
+    private static Player _player;
 
     private void Awake()
     {
@@ -61,10 +65,21 @@ public class Managers : MonoBehaviour
             _instance._pool.Init();
             _instance._canvas.Init(true);
             _instance._map.Init();
+            _instance._deck.Init();
+
+            if(_player == null)
+            {
+                _player = FindObjectOfType<Player>();
+            }
         }
     }
 
     private void Update()
+    {
+        BackButtonAction();
+    }
+
+    private void BackButtonAction()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
@@ -99,6 +114,11 @@ public class Managers : MonoBehaviour
 #else
         Application.Quit();
 #endif
+    }
+
+    public static Player GetPlayer()
+    {
+        return _player;
     }
 
     public static void Clear()

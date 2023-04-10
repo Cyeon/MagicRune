@@ -17,6 +17,8 @@ public class SoundManager
 
     private List<AudioSource> _effectSoundList;
 
+    private AudioMixer _mixer;
+
     public void Init()
     {
         if(_audioSource == null)
@@ -24,7 +26,13 @@ public class SoundManager
             _audioSource = new GameObject { name = "BGM" }.AddComponent<AudioSource>();
             _audioSource.loop = true;
             _audioSource.playOnAwake = false;
-            //audioSource.outputAudioMixerGroup // 연결해주어야함
+
+            if(_mixer == null)
+            {
+                _mixer = Managers.Resource.Load<AudioMixer>("Main");
+            }
+
+            _audioSource.outputAudioMixerGroup = _mixer.FindMatchingGroups("Bgm")[0];
 
             Object.DontDestroyOnLoad(_audioSource);
         }

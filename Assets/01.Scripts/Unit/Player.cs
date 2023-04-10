@@ -13,15 +13,7 @@ public class Player : Unit
     {
         _isPlayer = true;
 
-        var obj = FindObjectsOfType<Managers>();
-        if (obj.Length == 1)
-        {
-            DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
+        DontDestroyOnLoad(gameObject);
     }
 
     public void SliderInit()

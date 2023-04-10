@@ -92,8 +92,8 @@ public class Dial : MonoBehaviour
             _dialElementList[i].SelectCard = null;
         }
 
-        DeckManager.Instance.UsingDeckSort();
-        int maxRuneCount = DeckManager.Instance.GetUsingRuneCount();
+        Managers.Deck.UsingDeckSort();
+        int maxRuneCount = Managers.Deck.GetUsingRuneCount();
         for (int i = 0; i < _maxRuneCount * 2; i++)
         {
             if (maxRuneCount <= 0)
@@ -110,7 +110,7 @@ public class Dial : MonoBehaviour
             r.Dial = this;
             r.DialElement = _dialElementList[index];
             _dialElementList[index].AddRuneList(r);
-            r.SetRune(DeckManager.Instance.Deck[runeIndex]);
+            r.SetRune(Managers.Deck.Deck[runeIndex]);
             r.UpdateUI();
             if (isReset == true)
             {
@@ -118,18 +118,18 @@ public class Dial : MonoBehaviour
             }
             r.SetCoolTime();
             AddCard(r, 3 - index);
-            DeckManager.Instance.RuneSwap(runeIndex, maxRuneCount - 1);
+            Managers.Deck.RuneSwap(runeIndex, maxRuneCount - 1);
 
             maxRuneCount--;
         }
 
         List<int> numberList = new List<int>();
-        for(int i = 0; i < DeckManager.Instance.FirstDialDeck.Count; i++)
+        for(int i = 0; i < Managers.Deck.FirstDialDeck.Count; i++)
         {
             numberList.Add(i);
         }
 
-        if (DeckManager.Instance.FirstDialDeck != null && DeckManager.Instance.FirstDialDeck.Count > 0)
+        if (Managers.Deck.FirstDialDeck != null && Managers.Deck.FirstDialDeck.Count > 0)
         {
             for (int i = 0; i < 3; i++)
             {
@@ -140,7 +140,7 @@ public class Dial : MonoBehaviour
                 r.Dial = this;
                 r.DialElement = _dialElementList[2];
                 _dialElementList[2].AddRuneList(r);
-                r.SetRune(DeckManager.Instance.FirstDialDeck[randomIndex]);
+                r.SetRune(Managers.Deck.FirstDialDeck[randomIndex]);
                 r.UpdateUI();
                 if (isReset == true)
                 {
@@ -154,8 +154,8 @@ public class Dial : MonoBehaviour
         }
         else
         {
-            DeckManager.Instance.UsingDeckSort();
-            maxRuneCount = DeckManager.Instance.GetUsingRuneCount();
+            Managers.Deck.UsingDeckSort();
+            maxRuneCount = Managers.Deck.GetUsingRuneCount();
             for (int i = 0; i < _maxRuneCount; i++)
             {
                 if (maxRuneCount <= 0)
@@ -171,7 +171,7 @@ public class Dial : MonoBehaviour
                 r.Dial = this;
                 r.DialElement = _dialElementList[2];
                 _dialElementList[2].AddRuneList(r);
-                r.SetRune(DeckManager.Instance.Deck[runeIndex]);
+                r.SetRune(Managers.Deck.Deck[runeIndex]);
                 r.UpdateUI();
                 if (isReset == true)
                 {
@@ -179,7 +179,7 @@ public class Dial : MonoBehaviour
                 }
                 r.SetCoolTime();
                 AddCard(r, 1);
-                DeckManager.Instance.RuneSwap(runeIndex, maxRuneCount - 1);
+                Managers.Deck.RuneSwap(runeIndex, maxRuneCount - 1);
 
                 maxRuneCount--;
             }
@@ -443,7 +443,7 @@ public class Dial : MonoBehaviour
         {
             foreach (var e in _effectDict[effectType])
             {
-                Unit target = e.pair.IsEnemy == true ? BattleManager.Instance.enemy : GameManager.Instance.player;
+                Unit target = e.pair.IsEnemy == true ? BattleManager.Instance.enemy : Managers.GetPlayer();
                 AttackEffectFunction(effectType, target, e.pair)?.Invoke();
             }
         }
@@ -538,11 +538,11 @@ public class Dial : MonoBehaviour
         //    }
         //}
 
-        for (int i = 0; i < DeckManager.Instance.Deck.Count; i++)
+        for (int i = 0; i < Managers.Deck.Deck.Count; i++)
         {
-            if (DeckManager.Instance.Deck[i].GetCoolTime() > 0)
+            if (Managers.Deck.Deck[i].GetCoolTime() > 0)
             {
-                DeckManager.Instance.Deck[i].SetCoolTime(DeckManager.Instance.Deck[i].GetCoolTime() - 1);
+                Managers.Deck.Deck[i].SetCoolTime(Managers.Deck.Deck[i].GetCoolTime() - 1);
             }
         }
     }

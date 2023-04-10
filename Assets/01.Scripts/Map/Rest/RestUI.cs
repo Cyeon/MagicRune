@@ -60,7 +60,7 @@ public class RestUI : MonoBehaviour
 
     private IEnumerator RestCoroutine()
     {
-        GameManager.Instance.player.AddHPPercent(_healthPercent);
+        Managers.GetPlayer().AddHPPercent(_healthPercent);
         _healthParticle.SetActive(true);
 
         yield return new WaitForSeconds(1.5f);
