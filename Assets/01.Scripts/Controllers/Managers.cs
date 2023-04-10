@@ -19,6 +19,7 @@ public class Managers : MonoBehaviour
     private DeckManager _deck = new DeckManager();
     private RuneManager _rune = new RuneManager();
     private GoldManager _gold = new GoldManager();
+    private GameManager _game = new GameManager();
     private SoundManager _sound = new SoundManager();
     private CanvasManager _canvas = new CanvasManager();
     private SceneManagerEX _scene = new SceneManagerEX();
@@ -30,6 +31,7 @@ public class Managers : MonoBehaviour
     public static DeckManager Deck { get { return Instance._deck; } }
     public static RuneManager Rune { get { return Instance._rune; } }
     public static GoldManager Gold { get { return Instance._gold; } }
+    public static GameManager Game { get { return Instance._game; } }
     public static SoundManager Sound { get { return Instance._sound; } }
     public static CanvasManager Canvas { get { return Instance._canvas; } }
     public static SceneManagerEX Scene { get { return Instance._scene; } }
