@@ -1,3 +1,4 @@
+using MyBox;
 using NaughtyAttributes;
 using System.Collections;
 using System.Collections.Generic;
@@ -37,6 +38,7 @@ public class Status : MonoBehaviour
     public StatusType type = StatusType.Stack;
     private int _typeValue = 0;
     public int TypeValue => _typeValue;
+    [ConditionalField(nameof(type), false, StatusType.Stack)]
     public bool isTurnRemove = false;
 
     [Header("Function")]
