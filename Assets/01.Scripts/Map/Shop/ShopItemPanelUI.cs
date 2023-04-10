@@ -34,8 +34,8 @@ public class ShopItemPanelUI : MonoBehaviour
             item.Buy();
 
             RuneItem rune = item as RuneItem;
-            DeckManager.Instance.AddRune(new Rune(rune.rune));
-            userGold.SetText(GameManager.Instance.Gold.ToString());
+            Managers.Deck.AddRune(new Rune(rune.rune));
+            userGold.SetText(Managers.Gold.Gold.ToString());
             gameObject.SetActive(false);
         }
     }

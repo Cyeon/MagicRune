@@ -17,7 +17,7 @@ public class DistracotrFuncList : MonoBehaviour
         {
             if (_mapSceneUI == null)
             {
-                _mapSceneUI = CanvasManager.Instance.GetCanvas("MapUI").GetComponent<MapUI>();
+                _mapSceneUI = Managers.Canvas.GetCanvas("MapUI").GetComponent<MapUI>();
             }
             return _mapSceneUI;
         }
@@ -37,36 +37,36 @@ public class DistracotrFuncList : MonoBehaviour
 
     public static void NextStage()
     {
-        MapManager.Instance.NextStage();
-        CanvasManager.Instance.GetCanvas("Adventure").enabled = false;
-        CanvasManager.Instance.GetCanvas("MapUI").enabled = true;
+        Managers.Map.NextStage();
+        Managers.Canvas.GetCanvas("Adventure").enabled = false;
+        Managers.Canvas.GetCanvas("MapUI").enabled = true;
         //MapSceneUI.adventureUI.gameObject.SetActive(false);
     }
 
     public void AddHp(int amount)
     {
         if (increaseMode == IncreaseMode.Amount)
-            GameManager.Instance.player.AddHP(amount);
+            Managers.GetPlayer().AddHP(amount);
         else if (increaseMode == IncreaseMode.Percent)
-            GameManager.Instance.player.AddHPPercent(amount);
+            Managers.GetPlayer().AddHPPercent(amount);
 
         MapSceneUI.InfoUIReload();
     }
 
     public void AddMaxHp(int amount)
     {
-        GameManager.Instance.player.AddMaxHp(amount);
+        Managers.GetPlayer().AddMaxHp(amount);
         MapSceneUI.InfoUIReload();
     }
 
     public void AddGold(int amount)
     {
-        GameManager.Instance.AddGold(amount);
+        Managers.Gold.AddGold(amount);
         MapSceneUI.InfoUIReload();
     }
     public void BattleEnemy(Enemy enemy)
     {
-        MapManager.Instance.selectEnemy = enemy;
-        SceneManagerEX.Instance.LoadScene("DialScene");
+        Managers.Map.SelectEnemy = enemy;
+        Managers.Scene.LoadScene(Define.Scene.DialScene);
     }
 }

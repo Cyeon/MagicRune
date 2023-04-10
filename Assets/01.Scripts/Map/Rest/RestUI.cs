@@ -60,7 +60,7 @@ public class RestUI : MonoBehaviour
 
     private IEnumerator RestCoroutine()
     {
-        GameManager.Instance.player.AddHPPercent(_healthPercent);
+        Managers.GetPlayer().AddHPPercent(_healthPercent);
         _healthParticle.SetActive(true);
 
         yield return new WaitForSeconds(1.5f);
@@ -72,8 +72,8 @@ public class RestUI : MonoBehaviour
     {
         _restBtn.gameObject.SetActive(false);
         _enhanceBtn.gameObject.SetActive(false);
-        CanvasManager.Instance.GetCanvas(this.name).enabled = false;
-        CanvasManager.Instance.GetCanvas("MapUI").enabled = true;
-        MapManager.Instance.NextStage();
+        Managers.Canvas.GetCanvas(this.name).enabled = false;
+        Managers.Canvas.GetCanvas("MapUI").enabled = true;
+        Managers.Map.NextStage();
     }
 }

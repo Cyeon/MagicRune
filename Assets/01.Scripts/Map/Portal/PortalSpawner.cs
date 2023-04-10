@@ -28,7 +28,7 @@ public class PortalSpawner : MonoBehaviour
                 for(int i = 0; i < count; i++)
                 {
                     Enemy enemy = _attackPortal.GetAttackEnemy();
-                    AttackPortal atkPortal = ResourceManager.Instance.Instantiate("Portal/" + _attackPortal.name, transform).GetComponent<AttackPortal>();
+                    AttackPortal atkPortal = Managers.Resource.Instantiate("Portal/" + _attackPortal.name, transform).GetComponent<AttackPortal>();
 
                     switch(count)
                     {
@@ -49,14 +49,14 @@ public class PortalSpawner : MonoBehaviour
                 break;
 
             case StageType.Event:
-                Portal portal = ResourceManager.Instance.Instantiate("Portal/" + GetEventPortal().name, transform).GetComponent<Portal>();
+                Portal portal = Managers.Resource.Instantiate("Portal/" + GetEventPortal().name, transform).GetComponent<Portal>();
                 portal.Init(_onePortalPosition);
                 _spawnPortals.Add(portal);
                 break;
 
             case StageType.Boss:
-                AttackPortal bossPortal = ResourceManager.Instance.Instantiate("Portal/" + _bossPortal.name, transform).GetComponent<AttackPortal>();
-                bossPortal.Init(_onePortalPosition, MapManager.Instance.CurrentChapter.boss);
+                AttackPortal bossPortal = Managers.Resource.Instantiate("Portal/" + _bossPortal.name, transform).GetComponent<AttackPortal>();
+                bossPortal.Init(_onePortalPosition, Managers.Map.CurrentChapter.boss);
                 _spawnPortals.Add(bossPortal);
                 break;
         }
@@ -65,7 +65,7 @@ public class PortalSpawner : MonoBehaviour
     public void ResetPortal()
     {
         _spawnPortals.ForEach(x => x.PortalReset());
-        _spawnPortals.ForEach(x => ResourceManager.Instance.Destroy(x.gameObject));
+        _spawnPortals.ForEach(x => Managers.Resource.Destroy(x.gameObject));
         _spawnPortals.Clear();
     }
 

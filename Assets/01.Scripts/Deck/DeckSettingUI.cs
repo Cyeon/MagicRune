@@ -83,7 +83,7 @@ public class DeckSettingUI : MonoBehaviour
     /// </summary>
     private void SetOwnDeck()
     {
-        foreach (Rune rune in DeckManager.Instance.Deck)
+        foreach (Rune rune in Managers.Deck.Deck)
         {
             DeckRunePanel runePanel = GetEmptyPanel();
             if (runePanel.enabled == false) { runePanel.enabled = true; }
@@ -105,7 +105,7 @@ public class DeckSettingUI : MonoBehaviour
     /// </summary>
     private void SetDialDeck()
     {
-        foreach (Rune rune in DeckManager.Instance.FirstDialDeck)
+        foreach (Rune rune in Managers.Deck.FirstDialDeck)
         {
             DeckRunePanel runePanel = GetEmptyPanel();
             if (runePanel.enabled == false) { runePanel.enabled = true; }
@@ -178,17 +178,17 @@ public class DeckSettingUI : MonoBehaviour
             switch (type)
             {
                 case DeckType.FirstDialDeck:
-                    if (DeckManager.Instance.FirstDialDeck.Count < DeckManager.FIRST_DIAL_DECK_MAX_COUNT)
+                    if (Managers.Deck.FirstDialDeck.Count < DeckManager.FIRST_DIAL_DECK_MAX_COUNT)
                     {
-                        DeckManager.Instance.SetFirstDeck(SelectRune.Rune);
-                        DeckManager.Instance.RemoveRune(SelectRune.Rune);
+                        Managers.Deck.SetFirstDeck(SelectRune.Rune);
+                        Managers.Deck.RemoveRune(SelectRune.Rune);
                         SelectRune.transform.SetParent(_dialDeckContentTransform);
                         SelectRune.SetDeck(DeckType.FirstDialDeck);
                     }
                     break;
                 case DeckType.OwnDeck:
-                    DeckManager.Instance.AddRune(SelectRune.Rune);
-                    DeckManager.Instance.RemoveFirstDeck(SelectRune.Rune);
+                    Managers.Deck.AddRune(SelectRune.Rune);
+                    Managers.Deck.RemoveFirstDeck(SelectRune.Rune);
                     SelectRune.transform.SetParent(_ownDeckContentTransform);
                     SelectRune.SetDeck(DeckType.OwnDeck);
                     break;
@@ -213,19 +213,19 @@ public class DeckSettingUI : MonoBehaviour
         {
             if (_selectRune.NowDeck == DeckType.OwnDeck)
             {
-                DeckManager.Instance.RemoveFirstDeck(_targetRune.Rune);
-                DeckManager.Instance.RemoveRune(_selectRune.Rune);
+                Managers.Deck.RemoveFirstDeck(_targetRune.Rune);
+                Managers.Deck.RemoveRune(_selectRune.Rune);
 
-                DeckManager.Instance.SetFirstDeck(_selectRune.Rune);
-                DeckManager.Instance.AddRune(_targetRune.Rune);
+                Managers.Deck.SetFirstDeck(_selectRune.Rune);
+                Managers.Deck.AddRune(_targetRune.Rune);
             }
             else if (_selectRune.NowDeck == DeckType.FirstDialDeck)
             {
-                DeckManager.Instance.RemoveFirstDeck(_selectRune.Rune);
-                DeckManager.Instance.RemoveRune(_targetRune.Rune);
+                Managers.Deck.RemoveFirstDeck(_selectRune.Rune);
+                Managers.Deck.RemoveRune(_targetRune.Rune);
 
-                DeckManager.Instance.SetFirstDeck(_targetRune.Rune);
-                DeckManager.Instance.AddRune(_selectRune.Rune);
+                Managers.Deck.SetFirstDeck(_targetRune.Rune);
+                Managers.Deck.AddRune(_selectRune.Rune);
             }
         }
 

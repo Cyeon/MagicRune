@@ -36,7 +36,7 @@ public class PatternFuncList : MonoBehaviour
 
     private void Start()
     {
-        _dialScene = SceneManagerEX.Instance.CurrentScene as DialScene;
+        _dialScene = Managers.Scene.CurrentScene as DialScene;
     }
 
     public void OnDestroy()
@@ -116,7 +116,7 @@ public class PatternFuncList : MonoBehaviour
     {
         Sequence seq = DOTween.Sequence();
         seq.Append(_dialScene?.EnemyIcon.transform.DOShakeRotation(2, 90, 5)).SetEase(Ease.Linear);
-        SoundManager.Instance.PlaySound(beamSound, SoundType.Effect);
+        Managers.Sound.PlaySound(beamSound, SoundType.Effect);
         seq.AppendCallback(() => BattleManager.Instance.player.TakeDamage(value));
         seq.AppendInterval(0.2f);
         seq.AppendCallback(() => BattleManager.Instance.TurnChange());

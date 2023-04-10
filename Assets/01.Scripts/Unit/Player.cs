@@ -13,28 +13,20 @@ public class Player : Unit
     {
         _isPlayer = true;
 
-        var obj = FindObjectsOfType<Managers>();
-        if (obj.Length == 1)
-        {
-            DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
+        DontDestroyOnLoad(gameObject);
     }
 
     public void SliderInit()
     {
-        UIManager.Instance.Bind<Slider>("P HealthFeedbackBar", CanvasManager.Instance.GetCanvas("Main").gameObject);
-        UIManager.Instance.Bind<Slider>("P ShieldBar", CanvasManager.Instance.GetCanvas("Main").gameObject);
-        UIManager.Instance.Bind<Slider>("P HealthBar", CanvasManager.Instance.GetCanvas("Main").gameObject);
-        UIManager.Instance.Bind<TextMeshProUGUI>("P HealthText", CanvasManager.Instance.GetCanvas("Main").gameObject);
+        Managers.UI.Bind<Slider>("P HealthFeedbackBar", Managers.Canvas.GetCanvas("Main").gameObject);
+        Managers.UI.Bind<Slider>("P ShieldBar", Managers.Canvas.GetCanvas("Main").gameObject);
+        Managers.UI.Bind<Slider>("P HealthBar", Managers.Canvas.GetCanvas("Main").gameObject);
+        Managers.UI.Bind<TextMeshProUGUI>("P HealthText", Managers.Canvas.GetCanvas("Main").gameObject);
 
-        _healthFeedbackSlider = UIManager.Instance.Get<Slider>("P HealthFeedbackBar");
-        _shieldSlider = UIManager.Instance.Get<Slider>("P ShieldBar");
-        _healthSlider = UIManager.Instance.Get<Slider>("P HealthBar");
-        _healthText = UIManager.Instance.Get<TextMeshProUGUI>("P HealthText");
+        _healthFeedbackSlider = Managers.UI.Get<Slider>("P HealthFeedbackBar");
+        _shieldSlider = Managers.UI.Get<Slider>("P ShieldBar");
+        _healthSlider = Managers.UI.Get<Slider>("P HealthBar");
+        _healthText = Managers.UI.Get<TextMeshProUGUI>("P HealthText");
     }
 
     public void Attack(float dmg)
@@ -44,7 +36,7 @@ public class Player : Unit
         InvokeStatus(StatusInvokeTime.Attack);
 
         BattleManager.Instance.enemy.TakeDamage(currentDmg);
-        SoundManager.Instance.PlaySound(attackSound, SoundType.Effect);
+        Managers.Sound.PlaySound(attackSound, SoundType.Effect);
 
     }
 }

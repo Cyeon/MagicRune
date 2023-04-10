@@ -20,10 +20,10 @@ public class RestPortal : Portal
 
     public override void Execute()
     {
-        _restUI = CanvasManager.Instance.GetCanvas("Rest").GetComponent<RestUI>();
+        _restUI = Managers.Canvas.GetCanvas("Rest").GetComponent<RestUI>();
 
-        CanvasManager.Instance.GetCanvas("MapUI").enabled = false;
-        CanvasManager.Instance.GetCanvas("Rest").enabled = true;
+        Managers.Canvas.GetCanvas("MapUI").enabled = false;
+        Managers.Canvas.GetCanvas("Rest").enabled = true;
         _restUI.PortalStartAnimation();
         base.Execute();
     }

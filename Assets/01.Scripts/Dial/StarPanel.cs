@@ -31,7 +31,7 @@ public class StarPanel : MonoBehaviour
         _spriteRenderer = GetComponent<SpriteRenderer>();
         //_image.alphaHitTestMinimumThreshold = 0.1f;
 
-        _dialScene = SceneManagerEX.Instance.CurrentScene as DialScene;
+        _dialScene = Managers.Scene.CurrentScene as DialScene;
     }
 
     private void Update()

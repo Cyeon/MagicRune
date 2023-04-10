@@ -13,7 +13,7 @@ public class PatternManager : MonoBehaviour
 
     private void Awake()
     {
-        _disalScene = SceneManagerEX.Instance.CurrentScene as DialScene;
+        _disalScene = Managers.Scene.CurrentScene as DialScene;
 
         foreach (var pattern in transform.GetComponentsInChildren<Pattern>())
         {

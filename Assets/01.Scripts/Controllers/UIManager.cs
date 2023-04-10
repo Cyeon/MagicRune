@@ -6,7 +6,7 @@ using DG.Tweening;
 using TMPro;
 using System;
 
-public class UIManager : MonoSingleton<UIManager>
+public class UIManager
 {
     private Dictionary<Type, List<UnityEngine.Object>> _uiDict = new Dictionary<Type, List<UnityEngine.Object>>();
 
@@ -93,12 +93,6 @@ public class UIManager : MonoSingleton<UIManager>
     {
         List<UnityEngine.Object> objects = null;
 
-        //objects = _ui
-        //if (_uiObject.TryGetValue(typeof(T), out objects) == true)
-        //{
-        //    return objects.Find(x => x.name == name) as T;
-        //}
-
         if (_uiDict.ContainsKey(typeof(T)))
         {
             objects = new List<UnityEngine.Object>(_uiDict[typeof(T)]);
@@ -116,9 +110,4 @@ public class UIManager : MonoSingleton<UIManager>
     }
 
     #endregion
-
-    public void OnDestroy()
-    {
-        transform.DOKill();
-    }
 }

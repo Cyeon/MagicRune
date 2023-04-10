@@ -47,40 +47,40 @@ public class DialScene : BaseScene
 
         #region UI Bind
 
-        UIManager.Instance.Bind<Image>("TurnBackground", CanvasManager.Instance.GetCanvas("Popup").gameObject);
-        UIManager.Instance.Bind<TextMeshProUGUI>("TurnText", CanvasManager.Instance.GetCanvas("Popup").gameObject);
+        Managers.UI.Bind<Image>("TurnBackground", Managers.Canvas.GetCanvas("Popup").gameObject);
+        Managers.UI.Bind<TextMeshProUGUI>("TurnText", Managers.Canvas.GetCanvas("Popup").gameObject);
+            
+        Managers.UI.Bind<Image>("P StatusPanel", Managers.Canvas.GetCanvas("Main").gameObject);
+        Managers.UI.Bind<Image>("E StatusPanel", Managers.Canvas.GetCanvas("Main").gameObject);
 
-        UIManager.Instance.Bind<Image>("P StatusPanel", CanvasManager.Instance.GetCanvas("Main").gameObject);
-        UIManager.Instance.Bind<Image>("E StatusPanel", CanvasManager.Instance.GetCanvas("Main").gameObject);
+        Managers.UI.Bind<Image>("NextPattern Image", Managers.Canvas.GetCanvas("Main").gameObject);
+        Managers.UI.Bind<TextMeshProUGUI>("NextPattern ValueText", Managers.Canvas.GetCanvas("Main").gameObject);
 
-        UIManager.Instance.Bind<Image>("NextPattern Image", CanvasManager.Instance.GetCanvas("Main").gameObject);
-        UIManager.Instance.Bind<TextMeshProUGUI>("NextPattern ValueText", CanvasManager.Instance.GetCanvas("Main").gameObject);
+        Managers.UI.Bind<Slider>("E HealthBar", Managers.Canvas.GetCanvas("Main").gameObject);
+        Managers.UI.Bind<Slider>("E ShieldBar", Managers.Canvas.GetCanvas("Main").gameObject);
+        Managers.UI.Bind<TextMeshProUGUI>("E HealthText", Managers.Canvas.GetCanvas("Main").gameObject);
+        Managers.UI.Bind<Slider>("E HealthFeedbackBar", Managers.Canvas.GetCanvas("Main").gameObject);
+        Managers.UI.Bind<TextMeshProUGUI>("E Shield Value", Managers.Canvas.GetCanvas("Main").gameObject);
 
-        UIManager.Instance.Bind<Slider>("E HealthBar", CanvasManager.Instance.GetCanvas("Main").gameObject);
-        UIManager.Instance.Bind<Slider>("E ShieldBar", CanvasManager.Instance.GetCanvas("Main").gameObject);
-        UIManager.Instance.Bind<TextMeshProUGUI>("E HealthText", CanvasManager.Instance.GetCanvas("Main").gameObject);
-        UIManager.Instance.Bind<Slider>("E HealthFeedbackBar", CanvasManager.Instance.GetCanvas("Main").gameObject);
-        UIManager.Instance.Bind<TextMeshProUGUI>("E Shield Value", CanvasManager.Instance.GetCanvas("Main").gameObject);
+        Managers.UI.Bind<Slider>("P HealthBar", Managers.Canvas.GetCanvas("Main").gameObject);
+        Managers.UI .Bind<Slider>("P ShieldBar", Managers.Canvas.GetCanvas("Main").gameObject);
+        Managers.UI.Bind<TextMeshProUGUI>("P HealthText", Managers.Canvas.GetCanvas("Main").gameObject);
+        Managers.UI.Bind<Slider>("P HealthFeedbackBar", Managers.Canvas.GetCanvas("Main").gameObject);
+        Managers.UI.Bind<TextMeshProUGUI>("P Shield Value", Managers.Canvas.GetCanvas("Main").gameObject);
 
-        UIManager.Instance.Bind<Slider>("P HealthBar", CanvasManager.Instance.GetCanvas("Main").gameObject);
-        UIManager.Instance.Bind<Slider>("P ShieldBar", CanvasManager.Instance.GetCanvas("Main").gameObject);
-        UIManager.Instance.Bind<TextMeshProUGUI>("P HealthText", CanvasManager.Instance.GetCanvas("Main").gameObject);
-        UIManager.Instance.Bind<Slider>("P HealthFeedbackBar", CanvasManager.Instance.GetCanvas("Main").gameObject);
-        UIManager.Instance.Bind<TextMeshProUGUI>("P Shield Value", CanvasManager.Instance.GetCanvas("Main").gameObject);
+        Managers.UI.Bind<Button>("Restart Btn", Managers.Canvas.GetCanvas("Popup").gameObject);
+        Managers.UI.Bind<Button>("Quit Btn", Managers.Canvas.GetCanvas("Popup").gameObject);
 
-        UIManager.Instance.Bind<Button>("Restart Btn", CanvasManager.Instance.GetCanvas("Popup").gameObject);
-        UIManager.Instance.Bind<Button>("Quit Btn", CanvasManager.Instance.GetCanvas("Popup").gameObject);
-
-        UIManager.Instance.Bind<TextMeshPro>("Status_Name_Text", CanvasManager.Instance.GetCanvas("Popup").gameObject);
-        UIManager.Instance.Bind<TextMeshPro>("Status_Infomation_Text", CanvasManager.Instance.GetCanvas("Popup").gameObject);
+        Managers.UI.Bind<TextMeshPro>("Status_Name_Text", Managers.Canvas.GetCanvas("Popup").gameObject);
+        Managers.UI.Bind<TextMeshPro>("Status_Infomation_Text", Managers.Canvas.GetCanvas("Popup").gameObject);
 
         #endregion
 
-        _enemyPatternIcon = UIManager.Instance.Get<Image>("NextPattern Image");
-        _enemyPatternValueText = UIManager.Instance.Get<TextMeshProUGUI>("NextPattern ValueText");
+        _enemyPatternIcon = Managers.UI.Get<Image>("NextPattern Image");
+        _enemyPatternValueText = Managers.UI.Get<TextMeshProUGUI>("NextPattern ValueText");
 
-        _statusDescName = UIManager.Instance.Get<TextMeshPro>("Status_Name_Text");
-        _statusDescInfo = UIManager.Instance.Get<TextMeshPro>("Status_Infomation_Text");
+        _statusDescName = Managers.UI.Get<TextMeshPro>("Status_Name_Text");
+        _statusDescInfo = Managers.UI.Get<TextMeshPro>("Status_Infomation_Text");
 
         //UIManager.Instance.Get<Button>("Restart Btn").onClick.RemoveAllListeners();
         //UIManager.Instance.Get<Button>("Restart Btn").onClick.AddListener(() =>
@@ -88,16 +88,18 @@ public class DialScene : BaseScene
         //    SceneManagerEX.Instance.LoadScene(Define.Scene.MapScene);
         //    //MapManager.Instance.ResetChapter();
         //});
-        UIManager.Instance.Get<Button>("Quit Btn").onClick.RemoveAllListeners();
-        UIManager.Instance.Get<Button>("Quit Btn").onClick.AddListener(() => GameManager.Instance.GameQuit());
+        Managers.UI.Get<Button>("Quit Btn").onClick.RemoveAllListeners();
+        Managers.UI.Get<Button>("Quit Btn").onClick.AddListener(() => Managers.GameQuit());
 
         _cardDescPanelList = _cardDescPanel.GetComponent<ExplainPanelList>();
+
+        Managers.Sound.PlaySound("BGM/DialSceneBGM", SoundType.Bgm, true, 1.0f);
     }
 
     public void Turn(string text)
     {
-        Image turnBG = UIManager.Instance.Get<Image>("TurnBackground");
-        TextMeshProUGUI turnText = UIManager.Instance.Get<TextMeshProUGUI>("TurnText");
+        Image turnBG = Managers.UI.Get<Image>("TurnBackground");
+        TextMeshProUGUI turnText = Managers.UI.Get<TextMeshProUGUI>("TurnText");
 
         turnBG.gameObject.SetActive(true);
         turnText.SetText(text);
@@ -117,7 +119,7 @@ public class DialScene : BaseScene
     public StatusPanel GetStatusPanel(Status status, Transform parent, bool isPopup = false)
     {
         //StatusPanel statusPanel = Instantiate(isPopup ? _statusPopup : _statusPrefab).GetComponent<StatusPanel>();
-        StatusPanel statusPanel = ResourceManager.Instance.Instantiate("Status").GetComponent<StatusPanel>();
+        StatusPanel statusPanel = Managers.Resource.Instantiate("Status").GetComponent<StatusPanel>();
         statusPanel.status = status;
 
         statusPanel.image.sprite = status.icon;
@@ -133,14 +135,14 @@ public class DialScene : BaseScene
     public void AddStatus(Unit unit, Status status)
     {
         Transform trm = unit == BattleManager.Instance.player ?
-            UIManager.Instance.Get<Image>("P StatusPanel").transform : UIManager.Instance.Get<Image>("E StatusPanel").transform;
+            Managers.UI.Get<Image>("P StatusPanel").transform : Managers.UI.Get<Image>("E StatusPanel").transform;
         GetStatusPanel(status, trm);
     }
 
     public GameObject GetStatusPanelStatusObj(Unit unit, StatusName name)
     {
         Transform trm = unit == BattleManager.Instance.player ?
-            UIManager.Instance.Get<Image>("P StatusPanel").transform : UIManager.Instance.Get<Image>("E StatusPanel").transform;
+            Managers.UI.Get<Image>("P StatusPanel").transform : Managers.UI.Get<Image>("E StatusPanel").transform;
 
         GameObject obj = null;
         for (int i = 0; i < trm.childCount; i++)
@@ -179,7 +181,7 @@ public class DialScene : BaseScene
             return;
         }
 
-        ResourceManager.Instance.Destroy(obj);
+        Managers.Resource.Destroy(obj);
     }
 
     #endregion
@@ -187,13 +189,13 @@ public class DialScene : BaseScene
     #region Popup
     public void DamageUIPopup(float amount, Vector3 pos, Status status = null)
     {
-        DamagePopup popup = ResourceManager.Instance.Instantiate("DamagePopup", CanvasManager.Instance.GetCanvas("Popup").transform).GetComponent<DamagePopup>();
+        DamagePopup popup = Managers.Resource.Instantiate("DamagePopup", Managers.Canvas.GetCanvas("Popup").transform).GetComponent<DamagePopup>();
         popup.Setup(amount, pos, status);
     }
 
     public void StatusPopup(Status status)
     {
-        GameObject obj = ResourceManager.Instance.Instantiate("StatusPopup", _enemyIcon.transform);
+        GameObject obj = Managers.Resource.Instantiate("StatusPopup", _enemyIcon.transform);
         Image img = obj.GetComponent<Image>();
         img.sprite = status.icon;
         obj.transform.localScale = Vector3.one * 8f;
@@ -203,10 +205,10 @@ public class DialScene : BaseScene
         seq.Join(img.DOFade(0, 0.7f).SetEase(Ease.InQuart));
         seq.AppendCallback(() =>
         {
-            ResourceManager.Instance.Destroy(obj);
+            Managers.Resource.Destroy(obj);
         });
 
-        GameObject textPopup = ResourceManager.Instance.Instantiate("StatusTextPopup", _enemyIcon.transform);
+        GameObject textPopup = Managers.Resource.Instantiate("StatusTextPopup", _enemyIcon.transform);
         TextMeshProUGUI text = textPopup.GetComponent<TextMeshProUGUI>();
         text.text = status.debugName;
         textPopup.transform.localPosition = new Vector3(0, 300, 0);
@@ -218,13 +220,13 @@ public class DialScene : BaseScene
         seq1.Join(text.DOFade(0, 0.5f).SetEase(Ease.InQuart));
         seq1.AppendCallback(() =>
         {
-            ResourceManager.Instance.Destroy(textPopup);
+            Managers.Resource.Destroy(textPopup);
         });
     }
 
     public void InfoMessagePopup(string message, Vector3 pos)
     {
-        InfoMessage popup = ResourceManager.Instance.Instantiate("InfoMessage", CanvasManager.Instance.GetCanvas("Popup").transform).GetComponent<InfoMessage>();
+        InfoMessage popup = Managers.Resource.Instantiate("InfoMessage", Managers.Canvas.GetCanvas("Popup").transform).GetComponent<InfoMessage>();
         pos.z = 0;
         pos.y += 1;
         popup.Setup(message, pos);
@@ -235,7 +237,7 @@ public class DialScene : BaseScene
     public void ReloadPattern(Sprite sprite, string value = "")
     {
         if(_enemyPatternIcon == null)
-            _enemyPatternIcon = UIManager.Instance.Get<Image>("NextPattern Image");
+            _enemyPatternIcon = Managers.UI.Get<Image>("NextPattern Image");
 
         _enemyPatternIcon.sprite = sprite;
         _enemyPatternValueText.text = value;
@@ -333,17 +335,17 @@ public class DialScene : BaseScene
     {
         if (isPlayer)
         {
-            hSlider = UIManager.Instance.Get<Slider>("P HealthBar");
-            sSlider = UIManager.Instance.Get<Slider>("P ShieldBar");
-            hText = UIManager.Instance.Get<TextMeshProUGUI>("P HealthText");
-            hfSlider = UIManager.Instance.Get<Slider>("P HealthFeedbackBar");
+            hSlider = Managers.UI.Get<Slider>("P HealthBar");
+            sSlider = Managers.UI.Get<Slider>("P ShieldBar");
+            hText = Managers.UI.Get<TextMeshProUGUI>("P HealthText");
+            hfSlider = Managers.UI.Get<Slider>("P HealthFeedbackBar");
         }
         else
         {
-            hSlider = UIManager.Instance.Get<Slider>("E HealthBar");
-            sSlider = UIManager.Instance.Get<Slider>("E ShieldBar");
-            hText = UIManager.Instance.Get<TextMeshProUGUI>("E HealthText");
-            hfSlider = UIManager.Instance.Get<Slider>("E HealthFeedbackBar");
+            hSlider = Managers.UI.Get<Slider>("E HealthBar");
+            sSlider = Managers.UI.Get<Slider>("E ShieldBar");
+            hText = Managers.UI.Get<TextMeshProUGUI>("E HealthText");
+            hfSlider = Managers.UI.Get<Slider>("E HealthFeedbackBar");
         }
     }
 
@@ -405,7 +407,7 @@ public class DialScene : BaseScene
     {
         if (isPlayer)
         {
-            TextMeshProUGUI playerShieldText = UIManager.Instance.Get<TextMeshProUGUI>("P Shield Value");
+            TextMeshProUGUI playerShieldText = Managers.UI.Get<TextMeshProUGUI>("P Shield Value");
 
             playerShieldText.SetText(shield.ToString());
 
@@ -415,7 +417,7 @@ public class DialScene : BaseScene
         }
         else
         {
-            TextMeshProUGUI enemyShieldText = UIManager.Instance.Get<TextMeshProUGUI>("E Shield Value");
+            TextMeshProUGUI enemyShieldText = Managers.UI.Get<TextMeshProUGUI>("E Shield Value");
 
             enemyShieldText.SetText(shield.ToString());
 

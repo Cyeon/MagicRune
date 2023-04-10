@@ -22,7 +22,7 @@ public class Stage
         {
             if (_mapSceneUI == null)
             {
-                _mapSceneUI = CanvasManager.Instance.GetCanvas("MapUI").GetComponent<MapUI>();
+                _mapSceneUI = Managers.Canvas.GetCanvas("MapUI").GetComponent<MapUI>();
             }
             return _mapSceneUI;
         }
@@ -49,7 +49,7 @@ public class Stage
 
     public void ChangeResource(Color color, Sprite sprite = null)
     {
-        if (_image == null) _image = MapSceneUI.stages[_index];
+        if (_image == null) _image = MapSceneUI.Stages[_index];
 
         if (color != null)
         {

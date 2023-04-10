@@ -35,7 +35,7 @@ public class Enemy : Unit
         if(_patternManager == null)
             _patternManager = GetComponentInChildren<PatternManager>();
         if (_dialScene == null)
-            _dialScene = SceneManagerEX.Instance.CurrentScene as DialScene;
+            _dialScene = Managers.Scene.CurrentScene as DialScene;
 
         HP = MaxHealth;
         _dialScene?.HealthbarInit(false, MaxHealth);
@@ -53,7 +53,7 @@ public class Enemy : Unit
         InvokeStatus(StatusInvokeTime.Attack);
 
         BattleManager.Instance.player.TakeDamage(currentDmg);
-        SoundManager.Instance.PlaySound(attackSound, SoundType.Effect);
+        Managers.Sound.PlaySound(attackSound, SoundType.Effect);
     }
 
     public void Idle()
@@ -78,7 +78,7 @@ public class Enemy : Unit
     protected override void Die()
     {
         base.Die();
-        ResourceManager.Instance.Destroy(gameObject);
+        Managers.Resource.Destroy(gameObject);
         //BattleManager.Instance.OnEnemyDie?.Invoke();
         //OnDieEvent?.Invoke();
     }

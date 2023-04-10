@@ -28,7 +28,7 @@ public class ShopItemSO : ScriptableObject
     /// <returns></returns>
     public bool CheckAvailability()
     {
-        if (gold > GameManager.Instance.Gold) return false;
+        if (gold > Managers.Gold.Gold) return false;
         return true;
     }
 
@@ -42,7 +42,7 @@ public class ShopItemSO : ScriptableObject
     /// </summary>
     public void Buy()
     {
-        GameManager.Instance.Gold -= gold;
+        Managers.Gold.AddGold(-gold);
         Execute();
     }
 

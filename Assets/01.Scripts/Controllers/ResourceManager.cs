@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ResourceManager : MonoSingleton<ResourceManager>
+public class ResourceManager
 {
     public T Load<T>(string path) where T : Object
     {
@@ -15,7 +15,7 @@ public class ResourceManager : MonoSingleton<ResourceManager>
                 name = name.Substring(index + 1);
             }
 
-            GameObject go = PoolManager.Instance.GetOriginal(name);
+            GameObject go = Managers.Pool.GetOriginal(name);
             if(go != null)
             {
                 return go as T;
@@ -36,7 +36,7 @@ public class ResourceManager : MonoSingleton<ResourceManager>
 
         if(original.GetComponent<Poolable>() != null)
         {
-            return PoolManager.Instance.Pop(original, parent).gameObject;
+            return Managers.Pool.Pop(original, parent).gameObject;
         }
 
         GameObject go = Object.Instantiate(original, parent);
@@ -52,7 +52,7 @@ public class ResourceManager : MonoSingleton<ResourceManager>
         Poolable poolable = go.GetComponent<Poolable>();
         if(poolable != null)
         {
-            PoolManager.Instance.Push(poolable);
+            Managers.Pool.Push(poolable);
             return;
 
         }

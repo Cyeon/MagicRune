@@ -2,15 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RuneManager : MonoBehaviour
+public class RuneManager
 {
-    // 나중에 싹 다 구조 갈아 엎어야 함
-
     private AllRuneListSO _runeList;
 
-    private void Awake()
+    public void Init()
     {
-        _runeList = ResourceManager.Instance.Load<AllRuneListSO>("SO/" + typeof(AllRuneListSO).Name);
+        _runeList = Managers.Resource.Load<AllRuneListSO>("SO/" + typeof(AllRuneListSO).Name);
     }
 
     public Rune GetRandomRuneOfRarity(RuneRarity rarity, List<RuneSO> ignoreRuneList = null)

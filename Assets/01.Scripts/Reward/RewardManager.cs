@@ -12,25 +12,25 @@ public class RewardManager
     private static List<Reward> _rewards = new List<Reward>();
     public static Dictionary<RewardType, Sprite> rewardSprites = new Dictionary<RewardType, Sprite>();
 
-    public static void ImageLoad()
+    public void ImageLoad()
     {
-        rewardSprites.Add(RewardType.Gold, Resources.Load<Sprite>("Coin_Icon"));
+        rewardSprites.Add(RewardType.Gold, Managers.Resource.Load<Sprite>("Coin_Icon"));
     }
 
-    public static Sprite GetRewardIcon(RewardType type)
+    public Sprite GetRewardIcon(RewardType type)
     {
         return rewardSprites[type];
     }
 
-    public static void ResetRewardList()
+    public void ResetRewardList()
     {
         _rewards.Clear();
     }
 
-    public static void AddRewardList(Reward reward)
+    public void AddRewardList(Reward reward)
     {
         _rewards.Add(reward);
     }
 
-    public static List<Reward> GetRewardList() { return _rewards; }
+    public List<Reward> GetRewardList() { return _rewards; }
 }

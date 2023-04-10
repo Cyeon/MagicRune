@@ -33,14 +33,14 @@ public class BattleManager : MonoSingleton<BattleManager>
 
     private void Start()
     {
-        _dialScene = SceneManagerEX.Instance.CurrentScene as DialScene;
+        _dialScene = Managers.Scene.CurrentScene as DialScene;
 
         GameStart();
     }
 
     public void GameStart()
     {
-        enemy = ResourceManager.Instance.Instantiate("Enemy/"+MapManager.Instance.selectEnemy.name).GetComponent<Enemy>();
+        enemy = Managers.Resource.Instantiate("Enemy/" + Managers.Map.SelectEnemy.name).GetComponent<Enemy>();
         enemy.Init();
         enemy.PatternManager.ChangePattern(enemy.PatternManager.patternList[0]);
 
@@ -48,13 +48,13 @@ public class BattleManager : MonoSingleton<BattleManager>
         enemy.OnDieEvent.AddListener(() =>
         {
             REGold reward = new REGold();
-            reward.gold = MapManager.Instance.CurrentChapter.Gold;
+            reward.gold = Managers.Map.CurrentChapter.Gold;
             reward.AddRewardList();
 
             _dialScene?.RewardUI.VictoryPanelPopup();
         });
 
-        player = GameManager.Instance.player;
+        player = Managers.GetPlayer();
         player.ResetStatus();
         player.SliderInit();
 
@@ -131,7 +131,7 @@ public class BattleManager : MonoSingleton<BattleManager>
 
                 EventManager<bool>.TriggerEvent(Define.ON_START_MONSTER_TURN, false);
 
-                SoundManager.Instance.PlaySound(turnChangeSound, SoundType.Effect);
+                Managers.Sound.PlaySound(turnChangeSound, SoundType.Effect);
 
                 if (enemy.Shield > 0)
                 {
@@ -161,7 +161,7 @@ public class BattleManager : MonoSingleton<BattleManager>
                 EventManager.TriggerEvent(Define.ON_START_PLAYER_TURN);
                 EventManager<bool>.TriggerEvent(Define.ON_START_PLAYER_TURN, true);
 
-                SoundManager.Instance.PlaySound(turnChangeSound, SoundType.Effect);
+                Managers.Sound.PlaySound(turnChangeSound, SoundType.Effect);
 
                 if (player.Shield > 0)
                 {
@@ -200,8 +200,8 @@ public class BattleManager : MonoSingleton<BattleManager>
 
     public void NextStage()
     {
-        RewardManager.ResetRewardList();
-        SceneManagerEX.Instance.LoadScene(Define.Scene.MapScene);
+        Managers.Reward.ResetRewardList();
+        Managers.Scene.LoadScene(Define.Scene.MapScene);
     }
 
 }

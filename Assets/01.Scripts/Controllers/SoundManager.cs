@@ -1,50 +1,95 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public enum SoundType
 {
-    Master,
     Bgm,
     Effect
 }
 
-public class SoundManager : MonoSingleton<SoundManager>
+public class SoundManager
 {
-    [SerializeField] private AudioSource _master;
-    [SerializeField] private AudioSource _effect;
-    [SerializeField] private AudioSource _bgm;
-
     private AudioSource _audioSource = null;
+
+    private Dictionary<string, AudioClip> _audioClipDict = new Dictionary<string, AudioClip>();
+
+    private List<AudioSource> _effectSoundList = new List<AudioSource>(5);
+
+    private AudioMixer _mixer;
+
+    public void Init()
+    {
+        if(_audioSource == null)
+        {
+            _audioSource = new GameObject { name = "BGM" }.AddComponent<AudioSource>();
+            _audioSource.loop = true;
+            _audioSource.playOnAwake = false;
+
+            if(_mixer == null)
+            {
+                _mixer = Managers.Resource.Load<AudioMixer>("Main");
+            }
+
+            _audioSource.outputAudioMixerGroup = _mixer.FindMatchingGroups("Bgm")[0];
+
+            Object.DontDestroyOnLoad(_audioSource);
+        }
+
+        // Effect Audio Source 앤 풀링
+        // BGM Audio Source 동적 생성
+    }
 
     /// <summary>
     /// 사운드 플레이 함수
     /// </summary>
     /// <param name="clip">오디오 클립</param>
     /// <param name="isLoop">반복 여부</param>
-    public void PlaySound(AudioClip clip, SoundType type, bool isLoop = false)
+    public void PlaySound(AudioClip clip, SoundType type, bool isLoop = false, float pitch = 1.0f)
     {
-        switch(type)
+        if(_audioClipDict.ContainsKey(clip.name) == false)
         {
-            case SoundType.Master:
-                _audioSource = _master;
-                break;
-
-            case SoundType.Bgm:
-                _audioSource = _bgm;
-                break;
-
-            case SoundType.Effect:
-                _audioSource = _effect;
-                break;
+            _audioClipDict.Add(clip.name, clip);
         }
 
-        _audioSource.Stop();
-        _audioSource.clip = clip;
-        _audioSource.loop = isLoop;
-        _audioSource.Play();
+        switch(type)
+        {
+            case SoundType.Bgm:
+                _audioSource.Stop();
+                _audioSource.clip = clip;
+                _audioSource.pitch = pitch;
+                _audioSource.loop = isLoop;
+                _audioSource.Play();
+                break;
+            case SoundType.Effect:
+                SoundPool sound = Managers.Resource.Instantiate("Sound/SoundPool").GetComponent<SoundPool>();
+                sound.Init(clip, pitch);
+                _effectSoundList.Add(sound.AudioSource);
+                break;
+        }
     }
 
+    public void PlaySound(string path, SoundType type, bool isLoop = false, float pitch = 1.0f)
+    {
+        AudioClip clip;
+        if (_audioClipDict.ContainsKey(path))
+        {
+            clip = _audioClipDict[path];
+        }
+        else
+        {
+            clip = Managers.Resource.Load<AudioClip>("Sound/" + path);
+            _audioClipDict.Add(clip.name, clip);
+        }
+
+        PlaySound(clip, type, isLoop, pitch);
+    }
+
+    public void RemoveEffectSoundSource(AudioSource source)
+    {
+        _effectSoundList.Remove(source);
+    }
 
     /// <summary>
     /// 사운드 정지 함수
@@ -53,19 +98,29 @@ public class SoundManager : MonoSingleton<SoundManager>
     {
         switch (type)
         {
-            case SoundType.Master:
-                _audioSource = _master;
-                break;
-
             case SoundType.Bgm:
-                _audioSource = _bgm;
+                _audioSource.Stop();
                 break;
-
             case SoundType.Effect:
-                _audioSource = _effect;
+                foreach(AudioSource source in _effectSoundList)
+                {
+                    source.Stop();
+                    Managers.Resource.Destroy(source.gameObject);
+                }
+                _effectSoundList.Clear();
                 break;
         }
+    }
 
+    public void StopAllSound()
+    {
         _audioSource.Stop();
+
+        foreach (AudioSource source in _effectSoundList)
+        {
+            source.Stop();
+            Managers.Resource.Destroy(source.gameObject);
+        }
+        _effectSoundList.Clear();
     }
 }

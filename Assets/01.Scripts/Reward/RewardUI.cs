@@ -21,9 +21,9 @@ public class RewardUI : MonoBehaviour
         _backgroundBlur.SetActive(true);
         _victoryPanel.SetActive(true);
 
-        foreach(var reward in RewardManager.GetRewardList())
+        foreach(var reward in Managers.Reward.GetRewardList())
         {
-            RewardPanel panel = ResourceManager.Instance.Instantiate("Reward_Image", _victoryRewardPanel.transform).GetComponent<RewardPanel>();
+            RewardPanel panel = Managers.Resource.Instantiate("Reward_Image", _victoryRewardPanel.transform).GetComponent<RewardPanel>();
             panel.transform.localScale = Vector3.one;
             panel.Init(reward);
         }

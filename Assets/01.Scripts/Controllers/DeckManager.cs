@@ -3,28 +3,35 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
-public class DeckManager : MonoSingleton<DeckManager>
+public class DeckManager
 {
-    public List<RuneSO> _defaultRune = new List<RuneSO>(); // 초기 기본 지급 룬 
+    private List<RuneSO> _defaultRune = new List<RuneSO>(20); // 초기 기본 지급 룬
+    public List<RuneSO> DefaultRune => _defaultRune;
 
     public const int FIRST_DIAL_DECK_MAX_COUNT = 6; // 첫번째 다이얼 덱 최대 개수
 
-    [SerializeField]
     private List<Rune> _firstDialDeck = new List<Rune>(); // 사전에 설정해둔 다이얼 안쪽의 1번째 줄 덱.
     public List<Rune> FirstDialDeck => _firstDialDeck;
 
-    [SerializeField]
-    private List<Rune> _deck = new List<Rune>(); // 소지하고 있는 모든 룬 
+    private List<Rune> _deck = new List<Rune>(); // 소지하고 있는 모든 룬
     public List<Rune> Deck => _deck;
 
-    private void Awake()
+    public void Init()
     {
         if (_deck.Count == 0) // 덱이 비어있을 경우 설정해둔 초기 덱을 넣어줌 
         {
-            for (int i = 0; i < _defaultRune.Count; i++)
+            if(_defaultRune.Count <= 0)
             {
-                Rune rune = new Rune(_defaultRune[i]);
-                AddRune(rune);
+                _defaultRune = new List<RuneSO>(Managers.Resource.Load<AllRuneListSO>("SO/DefaultRuneListSO").RuneList);
+            }
+
+            if (_defaultRune.Count >= 0)
+            {
+                for (int i = 0; i < _defaultRune.Count; i++)
+                {
+                    Rune rune = new Rune(_defaultRune[i]);
+                    AddRune(rune);
+                }
             }
         }
     }

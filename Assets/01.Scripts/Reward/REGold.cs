@@ -8,13 +8,13 @@ public class REGold : Reward
 
     public override void AddRewardList()
     {
-        icon = RewardManager.GetRewardIcon(RewardType.Gold);
+        icon = Managers.Reward.GetRewardIcon(RewardType.Gold);
         desc = string.Format("{0} °ñµå", gold);
-        RewardManager.AddRewardList(this);
+        Managers.Reward.AddRewardList(this);
     }
 
     public override void GiveReward()
     {
-        GameManager.Instance.Gold += gold;
+        Managers.Gold.AddGold(gold);
     }
 }
