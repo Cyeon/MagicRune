@@ -63,7 +63,7 @@ public class MapManager
         MapSceneUI?.InfoUIReload();
         //Managers.Canvas.GetCanvas("MapUI").GetComponent<MapUI>().InfoUIReload();
 
-        RewardManager.ImageLoad();
+        Managers.Reward.ImageLoad();
     }
 
     private void ChapterInit()
