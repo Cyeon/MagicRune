@@ -22,7 +22,7 @@ public class DamagePopup : MonoBehaviour
         if(status != null)
         {
             _textMesh.color = status.textColor;
-            _textMesh.SetText(string.Format("{0} {1}", status.debugName, damageAmount));
+            _textMesh.SetText(string.Format("{0} {1}", status.debugName, damageAmount.ToString()));
         }
 
         Sequence seq = DOTween.Sequence();
