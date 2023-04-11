@@ -6,4 +6,6 @@ using UnityEngine;
 public class AllRuneListSO : ScriptableObject
 {
     public List<RuneSO> RuneList;
+
+    public List<BaseRune> BaseRuneList;
 }

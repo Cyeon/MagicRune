@@ -3,14 +3,22 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using MyBox;
+using System;
 
-public class BaseRune // 일단 모노비헤이비어 뺴고 생각하자.
+[Serializable]
+public class BaseRune : MonoBehaviour
 {
-    protected BaseCardSO _baseCardSO;
+    [SerializeField]
+    protected BaseRuneSO _baseCardSO;
+
+    private void Start()
+    {
+        Init();
+    }
 
     public virtual void Init()
     {
-        _baseCardSO = Managers.Resource.Load<BaseCardSO>("SO/Rune/" + typeof(BaseCardSO).Name + "SO");
+        _baseCardSO = Managers.Resource.Load<BaseRuneSO>("SO/Rune/" + typeof(BaseRuneSO).Name);
     }
 
     public virtual bool AbilityCondition()
@@ -27,21 +35,24 @@ public class BaseRune // 일단 모노비헤이비어 뺴고 생각하자.
         // 5골드 이상일때 5골드를 소비하고 공격을 하는 경우
         if(AbilityCondition())
         {
-            float value = _baseCardSO.AbilityList.Where(x => x.EffectType == EffectType.Attack).Select(x => x.Value).First();
+            float value = GetAbliltiValaue(EffectType.Attack);
 
-            Managers.StatModifier.GetStatModifierValue(ref value);
-
-            Managers.GetPlayer().Attack(value < 0 ? 0 : value);
+            Managers.GetPlayer().Attack(value == int.MinValue ? 0 : value);
             Managers.Gold.AddGold(-1 * 5);
         }
     }
 
     public float GetAbliltiValaue(EffectType type)
     {
-        float value = _baseCardSO.AbilityList.Where(x => x.EffectType == type).Select(x => x.Value).First();
+        float? value = _baseCardSO.AbilityList.Where(x => x.EffectType == type).Select(x => x.Value).FirstOrDefault();
 
-        Managers.StatModifier.GetStatModifierValue(ref value);
+        if (value.HasValue)
+        {
+            Managers.StatModifier.GetStatModifierValue(ref value);
 
-        return value;
+            return value.Value;
+        }
+
+        return int.MinValue;
     }
 }

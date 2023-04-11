@@ -33,10 +33,17 @@ public class StatModifierManager
 
     public void SubtractStat(StatModifierType type, float value)
     {
-        _statModifierDict[type] -= value;
+        if(value == int.MinValue)
+        {
+            _statModifierDict[type] = int.MinValue;
+        }
+        else
+        {
+            _statModifierDict[type] -= value;
+        }
     }
 
-    public void GetStatModifierValue(ref float value)
+    public void GetStatModifierValue(ref float? value)
     {
         foreach (var stat in _statModifierDict)
         {

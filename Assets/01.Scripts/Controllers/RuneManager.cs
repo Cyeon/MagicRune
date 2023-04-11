@@ -6,6 +6,8 @@ public class RuneManager
 {
     private AllRuneListSO _runeList;
 
+    private List<BaseRune> _runeHandler = new List<BaseRune>();
+
     public void Init()
     {
         _runeList = Managers.Resource.Load<AllRuneListSO>("SO/" + typeof(AllRuneListSO).Name);
