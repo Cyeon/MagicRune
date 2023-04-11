@@ -57,13 +57,18 @@ public class Status : MonoBehaviour
     public void AddValue(int count)
     {
         _typeValue += count;
+        unit.StatusManager.DialScene.ReloadStatusPanel(unit, this);
     }
 
     public void RemoveValue(int count)
     {
         _typeValue = Mathf.Clamp(_typeValue - count, 0, _typeValue);
-    }
+        if(_typeValue <= 0) 
+        { 
+            unit.StatusManager.DeleteStatus(this);
+            return;
+        }
 
-    #region 공용 이벤트 함수
-    #endregion
+        unit.StatusManager.DialScene.ReloadStatusPanel(unit, this);
+    }
 }

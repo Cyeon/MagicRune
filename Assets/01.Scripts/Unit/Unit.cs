@@ -82,6 +82,8 @@ public class Unit : MonoBehaviour
     public UnityEvent OnDieEvent;
     protected DialScene _dialScene;
 
+    public bool isTurnSkip = false;
+
     [Header("Status")]
     public Transform statusTrm;
     private StatusManager _statusManager;

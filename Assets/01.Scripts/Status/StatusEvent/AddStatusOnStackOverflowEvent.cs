@@ -18,7 +18,7 @@ public class AddStatusOnStackOverflowEvent : StatusEvent
     {
         if(_unit.StatusManager.GetStatus(_conditionStatus)?.TypeValue >= _conditionCount)
         {
-            _unit.StatusManager.DeleteStatus(_conditionStatus);
+            _unit.StatusManager.RemoveStatus(_conditionStatus, _conditionCount);
             _unit.StatusManager.AddStatus(_addStatus, 1);
         }
     }

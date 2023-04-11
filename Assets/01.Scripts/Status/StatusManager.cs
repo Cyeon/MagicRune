@@ -49,8 +49,8 @@ public class StatusManager
         else
         {
             status = Managers.Resource.Instantiate("Status/Status_" + statusName, _unit.statusTrm).GetComponent<Status>();
-            status.AddValue(count);
             status.unit = _unit;
+            status.AddValue(count);
             DialScene.AddStatus(_unit, status);
             _statusList.Add(status);
         }
@@ -71,13 +71,6 @@ public class StatusManager
 
         Status status = GetStatus(statusName);
         status.RemoveValue(count);
-        if(status.TypeValue <= 0)
-        {
-            DeleteStatus(status);
-            return;
-        }
-
-        DialScene.ReloadStatusPanel(_unit, status);
     }
 
     public void DeleteStatus(Status status)
@@ -191,7 +184,6 @@ public class StatusManager
                 }
 
                 _statusList[i].RemoveValue(1);
-                DialScene.ReloadStatusPanel(_unit, _statusList[i]);
             }
         }
     }

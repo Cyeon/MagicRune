@@ -6,6 +6,7 @@ public class RestEvent : StatusEvent
 {
     public override void Invoke()
     {
+        _unit.isTurnSkip = true;
         StartCoroutine(TurnChange());
     }
 
