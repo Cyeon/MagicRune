@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using MyBox;
 
 public class DeckManager
 {
@@ -61,9 +62,7 @@ public class DeckManager
 
     public void RuneSwap(int fIndex, int sIndex)
     {
-        BaseRune tempRune = _deck[fIndex];
-        _deck[fIndex] = _deck[sIndex];
-        _deck[sIndex] = tempRune;
+        _deck.SwapInPlace(fIndex, sIndex);
     }
 
     public void UsingDeckSort()
