@@ -1,3 +1,4 @@
+using NaughtyAttributes;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -14,7 +15,8 @@ public class AbilityValue
 public class BaseRuneSO : ScriptableObject
 {
     public string RuneName;
-    public Sprite RuneImage;
+    [ShowAssetPreview(32, 32)]
+    public Sprite RuneSprite;
     public string RuneDescription; // 필요한가..?
     public AttributeType AttributeType;
     public GameObject RuneEffect;

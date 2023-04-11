@@ -8,6 +8,7 @@ using System;
 [Serializable]
 public class BaseRune : MonoBehaviour
 {
+    #region Rune Stat Parameta
     [SerializeField]
     protected BaseRuneSO _baseRuneSO;
     public BaseRuneSO BaseRuneSO => _baseRuneSO;
@@ -16,6 +17,21 @@ public class BaseRune : MonoBehaviour
     public int CoolTIme => _coolTime;
 
     public bool IsCoolTime => _coolTime > 0;
+    #endregion
+
+    #region UI Parameta
+    private SpriteRenderer _spriteRenderer;
+    #endregion
+
+    private void Start()
+    {
+        _spriteRenderer = transform.Find("Sprite").GetComponent<SpriteRenderer>();
+
+        if(_baseRuneSO != null)
+        {
+            _spriteRenderer.sprite = _baseRuneSO.RuneSprite;
+        }
+    }
 
     public void SetCoolTime()
     {

@@ -152,7 +152,7 @@ public class DeckSettingUI : MonoBehaviour
         _selectRune = rune;
         if (rune != null)
         {
-            _followObject.SetImage(_selectRune.Rune.BaseRuneSO.RuneImage);
+            _followObject.SetImage(_selectRune.Rune.BaseRuneSO.RuneSprite);
             _followObject.FollowMouse();
             _followObject.gameObject.SetActive(true);
         }

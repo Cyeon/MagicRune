@@ -42,9 +42,9 @@ public class DialElement : MonoBehaviour
 
     private int _lineID = -1;
 
-    private List<RuneUI> _runeList;
-    private RuneUI _selectCard;
-    public RuneUI SelectCard
+    private List<BaseRune> _runeList;
+    private BaseRune _selectCard;
+    public BaseRune SelectCard
     {
         get => _selectCard;
         set
@@ -53,8 +53,8 @@ public class DialElement : MonoBehaviour
             {
                 if (_selectCard != null)
                 {
-                    _selectCard.SetActiveOutline(OutlineType.Default);
-                    _selectCard.RuneColor(new Color(0.26f, 0.26f, 0.26f, 1f));
+                    //_selectCard.SetActiveOutline(OutlineType.Default);
+                    //_selectCard.RuneColor(new Color(0.26f, 0.26f, 0.26f, 1f));
                 }
                 _selectCard = value;
             }
@@ -62,12 +62,12 @@ public class DialElement : MonoBehaviour
             {
                 if (_selectCard != null)
                 {
-                    _selectCard.SetActiveOutline(OutlineType.Default);
-                    _selectCard.RuneColor(new Color(0.26f, 0.26f, 0.26f, 1f));
+                    //_selectCard.SetActiveOutline(OutlineType.Default);
+                    //_selectCard.RuneColor(new Color(0.26f, 0.26f, 0.26f, 1f));
                 }
                 _selectCard = value;
-                _selectCard.SetActiveOutline(OutlineType.Cyan);
-                _selectCard.RuneColor(Color.white);
+                //_selectCard.SetActiveOutline(OutlineType.Cyan);
+                //_selectCard.RuneColor(Color.white);
             }
         }
     }
@@ -98,7 +98,7 @@ public class DialElement : MonoBehaviour
         _dial = GetComponentInParent<Dial>();
         _lineSpriteRenderer = transform.Find("LineVisualSprite").GetComponent<SpriteRenderer>();
         _textSpriteRenderer = transform.Find("TextVisualSprite").GetComponent<SpriteRenderer>();
-        _runeList = new List<RuneUI>();
+        _runeList = new List<BaseRune>();
         //_spriteRenderer.alphaHitTestMinimumThreshold = 0.04f;
     }
 
@@ -126,14 +126,14 @@ public class DialElement : MonoBehaviour
                 {
                     int index = (int)(transform.eulerAngles.z / oneDinstance) % (_runeList.Count);
                     //index = (index + 1) % _runeList.Count; // �߰���
-                    if (_runeList[index].Rune.IsCoolTime == false)
+                    if (_runeList[index].IsCoolTime == false)
                     {
                         SelectCard = _runeList[index];
                         if (_isRotate == true)
                         {
                             if (_selectCard != null)
                             {
-                                _dialScene?.CardDescPopup(_selectCard.Rune);
+                                _dialScene?.CardDescPopup(_selectCard);
                             }
                         }
                     }
@@ -144,14 +144,14 @@ public class DialElement : MonoBehaviour
                     //index = (index - 1 < 0 ? _runeList.Count - 1 : index - 1) % (_runeList.Count);
                     index = (index + 1) % (_runeList.Count);
 
-                    if (_runeList[index].Rune.IsCoolTime == false)
+                    if (_runeList[index].IsCoolTime == false)
                     {
                         SelectCard = _runeList[index];
                         if (_isRotate == true)
                         {
                             if (_selectCard != null)
                             {
-                                _dialScene?.CardDescPopup(_selectCard.Rune);
+                                _dialScene?.CardDescPopup(_selectCard);
                             }
                         }
                     }
@@ -161,7 +161,7 @@ public class DialElement : MonoBehaviour
                     SelectCard = null;
                     if (_isRotate == true)
                     {
-                        BaseRune rune = SelectCard == null ? null : SelectCard.Rune;
+                    BaseRune rune = SelectCard == null ? null : SelectCard;
                         _dialScene?.CardDescPopup(rune);
                     }
                 }
@@ -205,7 +205,7 @@ public class DialElement : MonoBehaviour
     {
         if(isLeft == true)
         {
-            RuneUI rune = _runeList[index];
+            BaseRune rune = _runeList[index];
 
             float radianValue = 0f;
             if(index - 1 < 0)
@@ -235,7 +235,7 @@ public class DialElement : MonoBehaviour
         }
         else
         {
-            RuneUI rune = _runeList[index];
+            BaseRune rune = _runeList[index];
 
             float radianValue = (_dial.RuneAngle / _runeList.Count) * (index + 1) + (_dial.StartAngle * Mathf.Deg2Rad);
 
@@ -267,14 +267,14 @@ public class DialElement : MonoBehaviour
         return _lineID;
     }
 
-    public void AddRuneList(RuneUI rune)
+    public void AddRuneList(BaseRune rune)
     {
         _runeList.Add(rune);
     }
 
-    public void SetRuneList(List<RuneUI> list)
+    public void SetRuneList(List<BaseRune> list)
     {
-        _runeList = new List<RuneUI>(list);
+        _runeList = new List<BaseRune>(list);
     }
 
     public void ResetRuneList()
@@ -282,131 +282,18 @@ public class DialElement : MonoBehaviour
         _runeList.Clear();
     }
 
-    [Obsolete]
-    public bool CheckCondition(Condition condition)
-    {
-        ConditionType conditionType = condition.ConditionType;
-        switch (conditionType)
-        {
-            case ConditionType.StatusComparison:
-                switch (condition.ComparisonType)
-                {
-                    case ComparisonType.MoreThan:
-                        if (!(StatusManager.Instance.GetUnitStatusValue(BattleManager.Instance.player, condition.StatusType) >= condition.Value))
-                            return false;
-                        break;
-                    case ComparisonType.LessThan:
-                        if (!(StatusManager.Instance.GetUnitStatusValue(BattleManager.Instance.player, condition.StatusType) <= condition.Value))
-                            return false;
-                        break;
-                }
-                break;
-        }
-        return true;
-    }
-
     public void Attack()
     {
         if (BattleManager.Instance.enemy.IsDie == false && _selectCard != null)
         {
-            //for (int i = 0; i < _selectCard.Rune.EffectList.Count; i++)
-            //{
-            //    Pair pair = _selectCard.Rune.EffectList[i];
-            //    Unit target = pair.IsEnemy == true ? BattleManager.Instance.enemy : BattleManager.Instance.player;
-            //    if (CheckCondition(_selectCard.Rune.EffectList[i].Condition))
-            //    {
-            //        AttackEffectFunction(pair.EffectType, target, pair)?.Invoke();
-            //    }
-            //}
-
-            if (SelectCard.Rune.AbilityCondition())
+            if (SelectCard.AbilityCondition())
             {
-                SelectCard.Rune.AbilityAction();
+                SelectCard.AbilityAction();
             }
 
-            _selectCard.Rune.SetCoolTime();
             _selectCard.SetCoolTime();
             SelectCard = null;
         }
-    }
-
-    [Obsolete]
-    public Action AttackEffectFunction(EffectType effectType, Unit target, Pair e)
-    {
-        Action action = null;
-        //int c = 0;
-        //for (int i = 0; i < _effectDict[RuneType.Assist].Count; i++)
-        //{
-        //    if (_runeTempDict[RuneType.Assist][i].Rune != null && _runeTempDict[RuneType.Assist][i].Rune.AssistRune.Attribute == e.AttributeType)
-        //    {
-        //        c++;
-        //    }
-        //}
-        //if (_runeTempDict[RuneType.Main][0].Rune != null && _runeTempDict[RuneType.Main][0].Rune.AssistRune.Attribute == e.AttributeType)
-        //    c++;
-
-        switch (effectType)
-        {
-            case EffectType.Attack:
-                switch (e.AttackType)
-                {
-                    case AttackType.Single:
-                        action = () => BattleManager.Instance.player.Attack(e.Effect);
-                        break;
-                    case AttackType.Double:
-                        //action = () => GameManager.Instance.player.Attack(e.Effect * c);
-                        action = () => BattleManager.Instance.player.Attack(e.Effect);
-                        break;
-                    case AttackType.Defence:
-                        action = () => BattleManager.Instance.player.Attack(BattleManager.Instance.player.Shield);
-                        break;
-                }
-                break;
-            case EffectType.Defence:
-                switch (e.AttackType)
-                {
-                    case AttackType.Single:
-                        action = () => BattleManager.Instance.player.AddShield(e.Effect);
-                        break;
-                    case AttackType.Double:
-                        //action = () => GameManager.Instance.player.Shield += e.Effect * c;
-                        action = () => BattleManager.Instance.player.AddShield(e.Effect);
-                        break;
-                }
-                break;
-            case EffectType.Status:
-                switch (e.AttackType)
-                {
-                    case AttackType.Single:
-                        action = () => StatusManager.Instance.AddStatus(target, e.StatusType, (int)e.Effect);
-                        break;
-                    case AttackType.Double:
-                        //action = () => StatusManager.Instance.AddStatus(target, e.StatusType, (int)e.Effect * c);
-                        action = () => StatusManager.Instance.AddStatus(target, e.StatusType, (int)e.Effect);
-                        break;
-                }
-                break;
-            case EffectType.DestroyStatus:
-                switch (e.CountType)
-                {
-                    case CountType.Count:
-                        action = () => StatusManager.Instance.CountRemStatus(target, e.StatusType, (int)e.Effect);
-                        break;
-                    case CountType.All:
-                        action = () => StatusManager.Instance.AllRemStatus(target, e.StatusType);
-                        break;
-                }
-                break;
-            case EffectType.Draw:
-                // ������ �ϴ� �ּ�...
-                //action = () => _cardCollector.CardDraw(e.Effect);
-                break;
-            case EffectType.Etc:
-                action = null;
-                break;
-        }
-
-        return action;
     }
 
     public void Swipe1()
@@ -465,7 +352,7 @@ public class DialElement : MonoBehaviour
                                         0.3f
                                     ).OnComplete(() =>
                                     {
-                                        if (_selectCard != null) { _dialScene?.CardDescPopup(_selectCard.Rune); }
+                                        if (_selectCard != null) { _dialScene?.CardDescPopup(_selectCard); }
                                     });
                                     //}
                                 }
@@ -483,7 +370,7 @@ public class DialElement : MonoBehaviour
                                         0.3f
                                     ).OnComplete(() =>
                                     {
-                                        if (_selectCard != null) { _dialScene?.CardDescPopup(_selectCard.Rune); }
+                                        if (_selectCard != null) { _dialScene?.CardDescPopup(_selectCard); }
                                     });
                                     //}
                                 }
@@ -502,7 +389,7 @@ public class DialElement : MonoBehaviour
                                         .OnComplete(() =>
                                         {
                                             //SelectCard = _runeList[index];
-                                            if (_selectCard != null) { _dialScene?.CardDescPopup(_selectCard.Rune); }
+                                            if (_selectCard != null) { _dialScene?.CardDescPopup(_selectCard); }
                                         });
                                 }
                                 else
@@ -513,7 +400,7 @@ public class DialElement : MonoBehaviour
                                         .OnComplete(() =>
                                         {
                                             //SelectCard = _runeList[index]; // ���� ���� ���ϴ� �ְ� �ȵ���?�� ����â ������ ������?
-                                            if (_selectCard != null) { _dialScene?.CardDescPopup(_selectCard.Rune); }
+                                            if (_selectCard != null) { _dialScene?.CardDescPopup(_selectCard); }
                                         });
                                 }
                             }

@@ -55,7 +55,7 @@ public class RuneUI : MonoBehaviour
 
     public void UpdateUI()
     {
-        _runeImage.sprite = _rune.BaseRuneSO.RuneImage;
+        _runeImage.sprite = _rune.BaseRuneSO.RuneSprite;
     }
 
     public void RuneColor(Color color)

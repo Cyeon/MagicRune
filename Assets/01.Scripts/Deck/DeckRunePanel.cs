@@ -49,7 +49,7 @@ public class DeckRunePanel : MonoBehaviour, IDropHandler, IEndDragHandler, IBegi
     {
         _rune = rune;
         _isUse = true;
-        _runeImage.sprite = _rune.BaseRuneSO.RuneImage;
+        _runeImage.sprite = _rune.BaseRuneSO.RuneSprite;
     }
 
 

@@ -36,7 +36,7 @@ public class ExplainPanel : MonoBehaviour
         }
 
         _nameText.SetText(rune.BaseRuneSO.RuneName);
-        _runeImage.sprite = rune.BaseRuneSO.RuneImage;
+        _runeImage.sprite = rune.BaseRuneSO.RuneSprite;
         _coolTimeText.SetText(rune.BaseRuneSO.CoolTime.ToString());
         _descText.SetText(rune.BaseRuneSO.RuneDescription);
     }
