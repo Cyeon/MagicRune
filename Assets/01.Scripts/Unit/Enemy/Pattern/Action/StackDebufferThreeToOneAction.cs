@@ -6,8 +6,8 @@ public class StackDebufferThreeToOneAction : StatusAction
 {
     public override void TakeAction()
     {
-        value = Mathf.RoundToInt(StatusManager.Instance.GetUnitStatusValue(BattleManager.Instance.enemy, StatusName.Coldness) * 0.3f);
-        StatusManager.Instance.AllRemStatus(BattleManager.Instance.enemy, StatusName.Coldness);
+        value = Mathf.RoundToInt(BattleManager.Instance.enemy.StatusManager.GetStatus(StatusName.Coldness).TypeValue * 0.3f);
+        BattleManager.Instance.enemy.StatusManager.DeleteStatus(StatusName.Coldness);
         base.TakeAction();
     }
 }

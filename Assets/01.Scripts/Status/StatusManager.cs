@@ -2,248 +2,208 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
+using Mono.Cecil;
 
-public class StatusManager : MonoSingleton<StatusManager>
+public class StatusManager
 {
-    public List<Status> statusList = new List<Status>(); // 모든 ?�태?�상 목록
-    private StatusFuncList _statusFuncList = null;
-
+    private List<Status> _statusList = new List<Status>();
     private DialScene _dialScene;
-
-    private void Awake()
+    public DialScene DialScene
     {
-        _statusFuncList = GetComponent<StatusFuncList>();
-    }
-
-    private void Start()
-    {
-        _dialScene = Managers.Scene.CurrentScene as DialScene;
-    }
-
-    // ?�태?�상 ?�과 발동
-    public void StatusFuncInvoke(List<Status> status, Unit unit)
-    {
-        _statusFuncList.unit = unit;
-        for(int i = 0; i < status.Count; ++i)
+        get
         {
-            if (status[i] != null)
+            if(_dialScene == null)
             {
-                _statusFuncList.status = status[i];
-                if (status[i].typeValue > 0) status[i].statusFunc?.Invoke();
+                _dialScene = SceneManagerEX.Instance.CurrentScene as DialScene;
             }
-        }
-
-        StatusUpdate(unit);
-    }
-
-    // ?�태?�상 목록?�서 가?�오�?
-    private Status GetStatus(StatusName name)
-    {
-        return statusList.Where(e => e.statusName == name).FirstOrDefault();
-    }
-
-    public bool IsHaveStatus(Unit unit, StatusName name)
-    {
-        Status status = GetUnitHaveStauts(unit, name);
-        return status != null;
-    }
-
-    public Status GetUnitHaveStauts(Unit unit, StatusName name)
-    {
-        Status status = GetStatus(name);
-
-        List<Status> statusList = new List<Status>();
-        if (unit.unitStatusDic.TryGetValue(status.invokeTime, out statusList))
-        {
-            return statusList.Where(e => e.statusName == status.statusName).FirstOrDefault();
-        }
-
-        Debug.LogError("NotFound");
-        return null;
-    }
-
-    public float GetUnitStatusValue(Unit unit, StatusName name)
-    {
-        Status status = GetUnitHaveStauts(unit, name);
-        if (status != null)
-        {
-            return status.typeValue;
-        }
-        else
-        {
-            //Debug.LogError(string.Format("{0} is not have {1} status.", unit, name));
-            return 0;
+            return _dialScene;
         }
     }
+    private Unit _unit;
 
-    public List<StatusName> GetUnitStateList(Unit unit)
+
+    public StatusManager(Unit unit, DialScene dialScene)
     {
-        List<StatusName> statusList = null;
-        for(int i = 0; i < (int)StatusName.COUNT; i++)
-        {
-            if (IsHaveStatus(unit, (StatusName)i)) {
-                statusList.Add((StatusName)i);
-            }
-        }
-        return statusList;
+        _unit = unit;
+        _dialScene = dialScene;
     }
 
-    // ?�태?�상 추�?
-    public void AddStatus(Unit unit, StatusName statusName, int value = 1)
+    public void AddStatus(StatusName statusName, int count)
     {
-        if (unit.IsDie == false)
+        if (_unit.IsDie) return;
+
+        Status status;
+        if (IsHaveStatus(statusName))
         {
-            Status status = GetStatus(statusName);
+            status = GetStatus(statusName);
+
             if (status == null)
             {
-                Debug.LogWarning(string.Format("{0} status not found.", statusName));
+                Debug.LogWarning(status + "Not Found.");
                 return;
             }
 
-            Status newStatus = new Status(status);
-            newStatus.typeValue = value;
-
-            List<Status> statusList = new List<Status>();
-            if (unit.unitStatusDic.TryGetValue(status.invokeTime, out statusList))
-            {
-                if (unit == BattleManager.Instance.enemy)
-                    //UIManager.Instance.StatusPopup(newStatus, UIManager.Instance.enemyIcon.transform.position);
-                    _dialScene?.StatusPopup(newStatus);
-
-                _statusFuncList.unit = unit;
-
-                Status currentStauts = statusList.Where(e => e.statusName == status.statusName).FirstOrDefault();
-                if (currentStauts != null)
-                {
-                    currentStauts.typeValue += status.typeValue > 0 ? status.typeValue : value;
-                    _dialScene?.ReloadStatusPanel(unit, currentStauts.statusName, currentStauts.typeValue);
-
-                    _statusFuncList.status = currentStauts;
-                    currentStauts.addFunc?.Invoke();
-                }
-                else
-                {
-                    newStatus.unit = unit;
-                    unit.unitStatusDic[newStatus.invokeTime].Add(newStatus);
-                    _dialScene?.AddStatus(unit, newStatus);
-
-                    _statusFuncList.status = newStatus;
-                    newStatus.addFunc?.Invoke();
-                }
-            }
+            status.AddValue(count);
+            DialScene.ReloadStatusPanel(_unit, status);
         }
-    }
-
-    // �����̻� ����
-    public void AllRemStatus(Unit unit, Status status)
-    {
-        if (unit.IsDie == false)
+        else
         {
-            Status currentStauts = GetUnitHaveStauts(unit, status.statusName);
-
-            if (currentStauts != null)
-            {
-                unit.unitStatusDic[status.invokeTime].Remove(status);
-                _dialScene?.RemoveStatusPanel(unit, status.statusName);
-            }
-            else
-            {
-                Debug.LogWarning(string.Format("{0} status is not found. Can't Remove do it.", status.statusName));
-            }
+            status = ResourceManager.Instance.Instantiate("Status/Status_" + statusName, _unit.statusTrm).GetComponent<Status>();
+            status.AddValue(count);
+            status.unit = _unit;
+            DialScene.AddStatus(_unit, status);
+            _statusList.Add(status);
         }
+
+        if(status.OnAddStatus.Count > 0)
+            status.OnAddStatus.ForEach(x => x.Invoke());
     }
 
-    public void CountRemStatus(Unit unit, Status status, int count)
+    public void RemoveStatus(StatusName statusName, int count)
     {
-        if (unit.IsDie == false)
+        if (_unit.IsDie) return;
+
+        if (!IsHaveStatus(statusName))
         {
-            Status currentStauts = GetUnitHaveStauts(unit, status.statusName);
-
-            if (currentStauts != null)
-            {
-                currentStauts.typeValue -= count;
-                _dialScene?.ReloadStatusPanel(unit, currentStauts.statusName, currentStauts.typeValue);
-            }
-            else
-            {
-                Debug.LogWarning(string.Format("{0} status is not found. Can't Remove do it.", status.statusName));
-            }
+            Debug.LogWarning(_unit + "is not have " + statusName);
+            return;
         }
-    }
 
-    public void CountRemStatus(Unit unit, StatusName statusName, int count)
-    {
-        if (unit.IsDie == false)
+        Status status = GetStatus(statusName);
+        status.RemoveValue(count);
+        if(status.TypeValue <= 0)
         {
-            Status status = GetStatus(statusName);
-            CountRemStatus(unit, status, count);
+            DeleteStatus(status);
+            return;
         }
+
+        DialScene.ReloadStatusPanel(_unit, status);
     }
 
-    public void AllRemStatus(Unit unit, StatusName statusName)
+    public void DeleteStatus(Status status)
     {
-        if (unit.IsDie == false)
-        {
-            Status status = GetStatus(statusName);
-            AllRemStatus(unit, status);
-        }
-    }
+        _statusList.Remove(status);
+        DialScene.RemoveStatusPanel(_unit, status.statusName);
 
-    public void StatusUpdate(Unit unit)
-    {
-        foreach (var x in unit.unitStatusDic)
+        for(int i = 0; i < _unit.statusTrm.childCount; ++i)
         {
-            List<int> indexes = new List<int>();
-            for (int i = 0; i < x.Value.Count; i++)
+            if (_unit.statusTrm.GetChild(i).name == "Status_" + status.statusName)
             {
-                if (x.Value[i].typeValue <= 0)
-                {
-                    indexes.Add(i);
-                }
-            }
-
-            indexes.ForEach(e => AllRemStatus(unit, x.Value[e]));
-            for(int i = 0; i < indexes.Count; ++i)
-            {
-                if (x.Value[indexes[i]] != null)
-                {
-                    AllRemStatus(unit, x.Value[indexes[i]]);
-                }
+                ResourceManager.Instance.Destroy(_unit.statusTrm.GetChild(i).gameObject);
             }
         }
     }
 
-    public void StatusTurnChange(Unit unit)
+    public void DeleteStatus(StatusName statusName)
     {
-        foreach(var x in unit.unitStatusDic)
+        DeleteStatus(GetStatus(statusName));
+    }
+
+    private bool IsHaveStatus(StatusName status)
+    {
+        for(int i = 0; i < _statusList.Count; ++i)
         {
-            List<int> indexes = new List<int>();
-            for(int i = 0; i < x.Value.Count; i++)
+            if (_statusList[i].statusName == status)
             {
-                if (x.Value[i].type == StatusType.Turn)
-                {
-                    CountRemStatus(unit, x.Value[i], 1);
-                }
-                else if (x.Value[i].type == StatusType.Stack)
-                {
-                    if (x.Value[i].isTurnRemove)
-                        CountRemStatus(unit, x.Value[i], 1);
-                }
-
-                _dialScene?.ReloadStatusPanel(unit, x.Value[i].statusName, x.Value[i].typeValue);
-                if (x.Value[i].typeValue <= 0)
-                {
-                    indexes.Add(i);
-                }
+                return true;
             }
+        }
 
-            indexes.ForEach(e => AllRemStatus(unit, x.Value[e]));
+        return false;
+    }
+
+    public Status GetStatus(StatusName status)
+    {
+        for(int i = 0; i <_statusList.Count; ++i)
+        {
+            if (_statusList[i].statusName == status)
+            {
+                return _statusList[i];
+            }
+        }
+
+        return null;
+    }
+
+    public void OnTurnStart()
+    {
+        if (_unit.IsDie) return;
+
+        for(int i = 0; i < _statusList.Count; ++i)
+        {
+            if (_statusList[i] != null && _statusList[i].OnTurnStart.Count > 0)
+            {
+                _statusList[i].OnTurnStart.ForEach(x => x.Invoke());
+            }
         }
     }
 
-    public void RemoveValue(Unit unit, StatusName status, int value)
+    public void OnAttack()
     {
-        CountRemStatus(unit, GetStatus(status), value);
+        if (_unit.IsDie) return;
+
+        for (int i = 0; i < _statusList.Count; ++i)
+        {
+            if (_statusList[i] != null && _statusList[i].OnAttack.Count > 0)
+            {
+                _statusList[i].OnAttack.ForEach(x => x.Invoke());
+            }
+        }
+    }
+
+    public void OnGetDamage()
+    {
+        if (_unit.IsDie) return;
+
+        for (int i = 0; i < _statusList.Count; ++i)
+        {
+            if (_statusList[i] != null && _statusList[i].OnGetDamage.Count > 0)
+            {
+                _statusList[i].OnGetDamage.ForEach(x => x.Invoke());
+            }
+        }
+    }
+
+    public void OnTurnEnd()
+    {
+        if (_unit.IsDie) return;
+
+        for (int i = 0; i < _statusList.Count; ++i)
+        {
+            if (_statusList[i] != null && _statusList[i].OnTurnEnd.Count > 0)
+            {
+                _statusList[i].OnTurnEnd.ForEach(x => x.Invoke());
+            }
+        }
+    }
+
+    public void TurnChange()
+    {
+        if (_unit.IsDie) return;
+
+        for(int i = 0; i < _statusList.Count; ++i)
+        {
+            if (_statusList[i] != null)
+            {
+                if (_statusList[i].type == StatusType.Stack)
+                {
+                    if (_statusList[i].isTurnRemove == false) continue;
+                }
+
+                _statusList[i].RemoveValue(1);
+                DialScene.ReloadStatusPanel(_unit, _statusList[i]);
+            }
+        }
+    }
+
+    public void Reset()
+    {
+        _statusList.Clear();
+        _dialScene?.ClearStatusPanel(_unit);
+
+        for(int i = _unit.statusTrm.childCount - 1; i >= 0; --i)
+        {
+            ResourceManager.Instance.Destroy(_unit.statusTrm.GetChild(i).gameObject);
+        }
     }
 }

@@ -496,11 +496,11 @@ public class Dial : MonoBehaviour
                 switch (e.AttackType)
                 {
                     case AttackType.Single:
-                        action = () => StatusManager.Instance.AddStatus(target, e.StatusType, (int)e.Effect);
+                        action = () => target.StatusManager.AddStatus(e.StatusType, (int)e.Effect);
                         break;
                     case AttackType.Double:
                         //action = () => StatusManager.Instance.AddStatus(target, e.StatusType, (int)e.Effect * c);
-                        action = () => StatusManager.Instance.AddStatus(target, e.StatusType, (int)e.Effect);
+                        action = () => target.StatusManager.AddStatus(e.StatusType, (int)e.Effect);
                         break;
                 }
                 break;
@@ -508,7 +508,7 @@ public class Dial : MonoBehaviour
                 switch (e.CountType)
                 {
                     case CountType.All:
-                        action = () => StatusManager.Instance.AllRemStatus(target, e.StatusType);
+                        action = () => target.StatusManager.DeleteStatus(e.StatusType);
                         break;
                 }
                 break;

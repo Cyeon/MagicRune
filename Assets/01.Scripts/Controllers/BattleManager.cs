@@ -55,7 +55,7 @@ public class BattleManager : MonoSingleton<BattleManager>
         });
 
         player = Managers.GetPlayer();
-        player.ResetStatus();
+        player.StatusManager.Reset();
         player.SliderInit();
 
         player.OnDieEvent.RemoveAllListeners();
@@ -75,7 +75,7 @@ public class BattleManager : MonoSingleton<BattleManager>
         _gameTurn = GameTurn.Player;
         currentUnit = player;
         attackUnit = enemy;
-        player.InvokeStatus(StatusInvokeTime.Start);
+        player.StatusManager.OnTurnStart();
     }
 
     public void OnMonsterTurn()
@@ -84,7 +84,7 @@ public class BattleManager : MonoSingleton<BattleManager>
         _gameTurn = GameTurn.Monster;
         currentUnit = enemy;
         attackUnit = player;
-        enemy?.InvokeStatus(StatusInvokeTime.Start);
+        enemy?.StatusManager.OnTurnStart();
 
         if(_gameTurn == GameTurn.Monster)
         {
@@ -105,11 +105,8 @@ public class BattleManager : MonoSingleton<BattleManager>
 
         if (_gameTurn == GameTurn.Player || _gameTurn == GameTurn.Monster)
         {
-            player?.InvokeStatus(StatusInvokeTime.End);
-            enemy?.InvokeStatus(StatusInvokeTime.End);
-
-            StatusManager.Instance.StatusUpdate(player);
-            StatusManager.Instance.StatusUpdate(enemy);
+            player?.StatusManager.OnTurnEnd();
+            enemy?.StatusManager.OnTurnEnd();
         }
 
         switch (_gameTurn)
@@ -150,8 +147,8 @@ public class BattleManager : MonoSingleton<BattleManager>
                 break;
 
             case GameTurn.Monster:
-                StatusManager.Instance.StatusTurnChange(player);
-                StatusManager.Instance.StatusTurnChange(enemy);
+                player.StatusManager.TurnChange();
+                enemy.StatusManager.TurnChange();
 
                 enemy.PatternManager.EndAction();
                 enemy.PatternManager.CurrentPattern.NextPattern();
