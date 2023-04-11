@@ -112,17 +112,16 @@ public class Pattern : MonoBehaviour
                 if (!result) break;
             }
 
-            if(result)
+            if (result)
             {
-                if(transition.positivePattern != null)
+                if (transition.positivePattern != null)
                 {
                     BattleManager.Instance.enemy.PatternManager.ChangePattern(transition.positivePattern);
+                    return;
                 }
             }
-            else
-            {
-                BattleManager.Instance.enemy.PatternManager.NextPattern();
-            }
         }
+
+        BattleManager.Instance.enemy.PatternManager.NextPattern();
     }
 }

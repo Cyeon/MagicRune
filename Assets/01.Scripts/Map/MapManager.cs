@@ -60,6 +60,7 @@ public class MapManager
         }
 
         ChapterInit();
+        _portalSpawner.ResetEnemyEnter();
         _portalSpawner.SpawnPortal(stageList[Stage].type);
         MapSceneUI?.InfoUIReload();
         //Managers.Canvas.GetCanvas("MapUI").GetComponent<MapUI>().InfoUIReload();
