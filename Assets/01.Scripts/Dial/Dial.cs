@@ -379,7 +379,6 @@ public class Dial : MonoBehaviour
             StartCoroutine(AttackCoroutine());
 
             _effectDict.Clear();
-            BattleManager.Instance.PlayerTurnEnd();
             _isAttack = false;
         }
     }
@@ -424,6 +423,8 @@ public class Dial : MonoBehaviour
 
                     //_dialElementList[i] = null;
                 });
+
+                BattleManager.Instance.missileCount += 1;
                 yield return new WaitForSeconds(0.1f);
             }
         }

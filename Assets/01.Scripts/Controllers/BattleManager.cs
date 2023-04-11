@@ -31,6 +31,8 @@ public class BattleManager : MonoSingleton<BattleManager>
 
     private DialScene _dialScene;
 
+    public int missileCount = 0;
+
     private void Start()
     {
         _dialScene = Managers.Scene.CurrentScene as DialScene;
@@ -75,6 +77,8 @@ public class BattleManager : MonoSingleton<BattleManager>
         _gameTurn = GameTurn.Player;
         currentUnit = player;
         attackUnit = enemy;
+
+        enemy.PatternManager.StartAction();
         player.StatusManager.OnTurnStart();
     }
 
@@ -124,13 +128,13 @@ public class BattleManager : MonoSingleton<BattleManager>
 
                 Managers.Sound.PlaySound(turnChangeSound, SoundType.Effect);
 
+                player?.StatusManager.OnTurnEnd();
+
                 if (enemy.Shield > 0)
                 {
                     enemy.ResetShield();
                     _dialScene?.UpdateHealthbar(false);
                 }
-
-                player?.StatusManager.OnTurnEnd();
 
                 _dialScene?.Turn("Enemy Turn");
                 _gameTurn = GameTurn.PlayerWait;
@@ -143,13 +147,12 @@ public class BattleManager : MonoSingleton<BattleManager>
 
             case GameTurn.Monster:
                 enemy?.StatusManager.OnTurnEnd();
+                enemy.PatternManager.EndAction();
 
                 player.StatusManager.TurnChange();
                 enemy.StatusManager.TurnChange();
 
-                enemy.PatternManager.EndAction();
                 enemy.PatternManager.CurrentPattern.NextPattern();
-                enemy.PatternManager.StartAction();
 
                 EventManager<int>.TriggerEvent(Define.ON_START_PLAYER_TURN, 5);
                 EventManager.TriggerEvent(Define.ON_START_PLAYER_TURN);
@@ -181,9 +184,19 @@ public class BattleManager : MonoSingleton<BattleManager>
 
     
 
+    public void MissileAttackEnd()
+    {
+        missileCount--;
+        if (_gameTurn == GameTurn.Player && missileCount <= 0)
+        {
+            missileCount = 0;
+            TurnChange();
+        }
+    }
+
     public void PlayerTurnEnd()
     {
-        if (_gameTurn == GameTurn.Player)
+        if(_gameTurn == GameTurn.Player)
         {
             TurnChange();
         }

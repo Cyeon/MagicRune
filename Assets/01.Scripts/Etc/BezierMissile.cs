@@ -190,6 +190,7 @@ public class BezierMissile : MonoBehaviour
 
             m_timerCurrent = 0;
             // Ç®¸µ
+            BattleManager.Instance.MissileAttackEnd();
             Managers.Resource.Destroy(this.gameObject);
         }
     }
