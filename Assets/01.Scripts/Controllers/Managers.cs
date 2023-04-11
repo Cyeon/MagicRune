@@ -25,6 +25,7 @@ public class Managers : MonoBehaviour
     private CanvasManager _canvas = new CanvasManager();
     private SceneManagerEX _scene = new SceneManagerEX();
     private ResourceManager _resource = new ResourceManager();
+    private RelicManager _relic = new RelicManager();
 
     public static UIManager UI {  get { return Instance._ui; } }
     public static MapManager Map { get { return Instance._map; } }
@@ -38,6 +39,7 @@ public class Managers : MonoBehaviour
     public static CanvasManager Canvas { get { return Instance._canvas; } }
     public static SceneManagerEX Scene { get { return Instance._scene; } }
     public static ResourceManager Resource { get { return Instance._resource; } }
+    public static RelicManager Relic => Instance._relic;
     #endregion
 
     private bool _preparedToQuit = false;
