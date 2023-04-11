@@ -5,9 +5,9 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New Rune Item", menuName = "Map/Shop/Rune Item SO")]
 public class RuneItem : ShopItemSO
 {
-    public RuneSO rune;
+    public BaseRune rune;
     public override void Execute()
     {
-        Debug.Log(rune.Name);
+        Debug.Log(rune.BaseRuneSO);
     }
 }

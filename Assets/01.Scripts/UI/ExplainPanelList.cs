@@ -35,7 +35,7 @@ public class ExplainPanelList : MonoBehaviour
         _explaingPanelArray = GetComponentsInChildren<ExplainPanel>(true);
     }
 
-    public void OpenPanel(int index, Rune rune)
+    public void OpenPanel(int index, BaseRune rune)
     {
         if (_explaingPanelArray == null || _explaingPanelArray.Length <= 0)
         {

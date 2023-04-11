@@ -265,7 +265,7 @@ public class DialScene : BaseScene
 
     #region Description
 
-    public void CardDescPopup(Rune rune)
+    public void CardDescPopup(BaseRune rune)
     {
         if(rune == null)
         {

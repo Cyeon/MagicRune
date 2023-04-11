@@ -161,7 +161,7 @@ public class DialElement : MonoBehaviour
                     SelectCard = null;
                     if (_isRotate == true)
                     {
-                        Rune rune = SelectCard == null ? null : SelectCard.Rune;
+                        BaseRune rune = SelectCard == null ? null : SelectCard.Rune;
                         _dialScene?.CardDescPopup(rune);
                     }
                 }
@@ -282,6 +282,7 @@ public class DialElement : MonoBehaviour
         _runeList.Clear();
     }
 
+    [Obsolete]
     public bool CheckCondition(Condition condition)
     {
         ConditionType conditionType = condition.ConditionType;
@@ -308,22 +309,28 @@ public class DialElement : MonoBehaviour
     {
         if (BattleManager.Instance.enemy.IsDie == false && _selectCard != null)
         {
-            for (int i = 0; i < _selectCard.Rune.EffectList.Count; i++)
+            //for (int i = 0; i < _selectCard.Rune.EffectList.Count; i++)
+            //{
+            //    Pair pair = _selectCard.Rune.EffectList[i];
+            //    Unit target = pair.IsEnemy == true ? BattleManager.Instance.enemy : BattleManager.Instance.player;
+            //    if (CheckCondition(_selectCard.Rune.EffectList[i].Condition))
+            //    {
+            //        AttackEffectFunction(pair.EffectType, target, pair)?.Invoke();
+            //    }
+            //}
+
+            if (SelectCard.Rune.AbilityCondition())
             {
-                Pair pair = _selectCard.Rune.EffectList[i];
-                Unit target = pair.IsEnemy == true ? BattleManager.Instance.enemy : BattleManager.Instance.player;
-                if (CheckCondition(_selectCard.Rune.EffectList[i].Condition))
-                {
-                    AttackEffectFunction(pair.EffectType, target, pair)?.Invoke();
-                }
+                SelectCard.Rune.AbilityAction();
             }
 
-            _selectCard.Rune.SetCoolTime(_selectCard.Rune.GetRune().CoolTime);
+            _selectCard.Rune.SetCoolTime();
             _selectCard.SetCoolTime();
             SelectCard = null;
         }
     }
 
+    [Obsolete]
     public Action AttackEffectFunction(EffectType effectType, Unit target, Pair e)
     {
         Action action = null;

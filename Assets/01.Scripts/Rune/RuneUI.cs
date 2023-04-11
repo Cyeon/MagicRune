@@ -8,8 +8,8 @@ public class RuneUI : MonoBehaviour
     public Dial Dial;
     public DialElement DialElement;
 
-    private Rune _rune;
-    public Rune Rune => _rune;
+    private BaseRune _rune;
+    public BaseRune Rune => _rune;
 
     #region UI
     private Transform _runeArea;
@@ -48,14 +48,14 @@ public class RuneUI : MonoBehaviour
         //_magicImage.material = _outlineMaterialArray[(int)type];
     }
 
-    public void SetRune(Rune magic)
+    public void SetRune(BaseRune rune)
     {
-        _rune = magic;
+        _rune = rune;
     }
 
     public void UpdateUI()
     {
-        _runeImage.sprite = _rune.GetRune().RuneImage;
+        _runeImage.sprite = _rune.BaseRuneSO.RuneImage;
     }
 
     public void RuneColor(Color color)
@@ -65,11 +65,11 @@ public class RuneUI : MonoBehaviour
 
     public void SetCoolTime()
     {
-        if (_rune.GetCoolTime() > 0)
+        if (_rune.CoolTIme > 0)
         {
             //_runeImage.color = Color.gray;
             SetActiveOutline(OutlineType.Default);
-            _coolTimeText.SetText(_rune.GetCoolTime().ToString());
+            _coolTimeText.SetText(_rune.CoolTIme.ToString());
             _coolTimeText.gameObject.SetActive(true);
             RuneColor(new Color(0.26f, 0.26f, 0.26f, 1f));
             _xImage.gameObject.SetActive(true);

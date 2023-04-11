@@ -33,7 +33,7 @@ public class Dial : MonoBehaviour
     private float[] _lineDistanceArray = new float[3];
     public float[] LineDistanceArray => _lineDistanceArray;
 
-    private Dictionary<int, List<RuneUI>> _runeDict;
+    private Dictionary<int, List<BaseRune>> _runeDict;
     private Dictionary<EffectType, List<EffectObjectPair>> _effectDict = new Dictionary<EffectType, List<EffectObjectPair>>();
     private List<DialElement> _dialElementList;
     public List<DialElement> DialElementList => _dialElementList;
@@ -44,10 +44,10 @@ public class Dial : MonoBehaviour
 
     private void Awake()
     {
-        _runeDict = new Dictionary<int, List<RuneUI>>(3);
+        _runeDict = new Dictionary<int, List<BaseRune>>(3);
         for (int i = 1; i <= 3; i++)
         {
-            _runeDict.Add(i, new List<RuneUI>());
+            _runeDict.Add(i, new List<BaseRune>());
         }
         _dialElementList = new List<DialElement>();
 
@@ -74,9 +74,9 @@ public class Dial : MonoBehaviour
 
     public void SettingDialRune(bool isReset)
     {
-        foreach (KeyValuePair<int, List<RuneUI>> runeList in _runeDict)
+        foreach (KeyValuePair<int, List<BaseRune>> runeList in _runeDict)
         {
-            foreach (RuneUI rune in runeList.Value)
+            foreach (BaseRune rune in runeList.Value)
             {
                 if (rune != null)
                 {
@@ -333,17 +333,17 @@ public class Dial : MonoBehaviour
             {
                 if (_dialElementList[i].SelectCard != null && _dialElementList[i].SelectCard.Rune.IsCoolTime == false)
                 {
-                    g = _dialElementList[i].SelectCard.Rune.GetRune().RuneEffect;
+                    g = _dialElementList[i].SelectCard.Rune.BaseRuneSO.RuneEffect;
                     break;
                 }
             }
-            for (int i = _dialElementList.Count - 1; i >= 0; i--)
-            {
-                if (_dialElementList[i].SelectCard != null && _dialElementList[i].SelectCard.Rune.IsCoolTime == false)
-                {
-                    _dialElementList[i].SelectCard.Rune.GetRune(); // ...? ���ϴ� �ڵ���?
-                }
-            }
+            //for (int i = _dialElementList.Count - 1; i >= 0; i--)
+            //{
+            //    if (_dialElementList[i].SelectCard != null && _dialElementList[i].SelectCard.Rune.IsCoolTime == false)
+            //    {
+            //        _dialElementList[i].SelectCard.Rune.BaseRuneSO; // ...? ���ϴ� �ڵ���?
+            //    }
+            //}
 
             if (g == null)
             {
@@ -394,8 +394,8 @@ public class Dial : MonoBehaviour
                 int index = i;
                 _dialElementList[i].IsGlow = true;
                 BezierMissile b = Managers.Resource.Instantiate("BezierMissile", this.transform.parent).GetComponent<BezierMissile>();
-                b.SetEffect(_dialElementList[i].SelectCard.Rune.GetRune().RuneEffect);
-                switch (_dialElementList[i].SelectCard.Rune.GetRune().MainRune.Attribute)
+                b.SetEffect(_dialElementList[i].SelectCard.Rune.BaseRuneSO.RuneEffect);
+                switch (_dialElementList[i].SelectCard.Rune.BaseRuneSO.AttributeType)
                 {
                     case AttributeType.None:
                         break;
@@ -540,9 +540,9 @@ public class Dial : MonoBehaviour
 
         for (int i = 0; i < Managers.Deck.Deck.Count; i++)
         {
-            if (Managers.Deck.Deck[i].GetCoolTime() > 0)
+            if (Managers.Deck.Deck[i].CoolTIme > 0)
             {
-                Managers.Deck.Deck[i].SetCoolTime(Managers.Deck.Deck[i].GetCoolTime() - 1);
+                Managers.Deck.Deck[i].AddCoolTime(-1);
             }
         }
     }

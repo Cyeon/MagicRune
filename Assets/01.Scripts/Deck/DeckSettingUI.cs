@@ -83,7 +83,7 @@ public class DeckSettingUI : MonoBehaviour
     /// </summary>
     private void SetOwnDeck()
     {
-        foreach (Rune rune in Managers.Deck.Deck)
+        foreach (BaseRune rune in Managers.Deck.Deck)
         {
             DeckRunePanel runePanel = GetEmptyPanel();
             if (runePanel.enabled == false) { runePanel.enabled = true; }
@@ -105,7 +105,7 @@ public class DeckSettingUI : MonoBehaviour
     /// </summary>
     private void SetDialDeck()
     {
-        foreach (Rune rune in Managers.Deck.FirstDialDeck)
+        foreach (BaseRune rune in Managers.Deck.FirstDialDeck)
         {
             DeckRunePanel runePanel = GetEmptyPanel();
             if (runePanel.enabled == false) { runePanel.enabled = true; }
@@ -152,7 +152,7 @@ public class DeckSettingUI : MonoBehaviour
         _selectRune = rune;
         if (rune != null)
         {
-            _followObject.SetImage(_selectRune.Rune.GetRune().RuneImage);
+            _followObject.SetImage(_selectRune.Rune.BaseRuneSO.RuneImage);
             _followObject.FollowMouse();
             _followObject.gameObject.SetActive(true);
         }
@@ -207,7 +207,7 @@ public class DeckSettingUI : MonoBehaviour
     /// </summary>
     public void Switch()
     {
-        Rune tempRune = _selectRune.Rune;
+        BaseRune tempRune = _selectRune.Rune;
 
         if (_selectRune.NowDeck != _targetRune.NowDeck)
         {

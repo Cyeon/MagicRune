@@ -10,8 +10,8 @@ public class DeckRunePanel : MonoBehaviour, IDropHandler, IEndDragHandler, IBegi
 {
     private DeckSettingUI _deckSettingUI = null;
     private Image _runeImage = null;
-    private Rune _rune = null;
-    public Rune Rune => _rune;
+    private BaseRune _rune = null;
+    public BaseRune Rune => _rune;
 
     private DeckType _nowDeck = DeckType.Unknown;
     public DeckType NowDeck => _nowDeck;
@@ -45,11 +45,11 @@ public class DeckRunePanel : MonoBehaviour, IDropHandler, IEndDragHandler, IBegi
         _runeImage.sprite = null;
     }
 
-    public void Setting(Rune rune)
+    public void Setting(BaseRune rune)
     {
         _rune = rune;
         _isUse = true;
-        _runeImage.sprite = _rune.GetRune().RuneImage;
+        _runeImage.sprite = _rune.BaseRuneSO.RuneImage;
     }
 
 

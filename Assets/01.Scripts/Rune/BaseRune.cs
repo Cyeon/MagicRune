@@ -9,15 +9,22 @@ using System;
 public class BaseRune : MonoBehaviour
 {
     [SerializeField]
-    protected BaseRuneSO _baseCardSO;
+    protected BaseRuneSO _baseRuneSO;
+    public BaseRuneSO BaseRuneSO => _baseRuneSO;
 
     private int _coolTime;
+    public int CoolTIme => _coolTime;
 
-    public bool IsCoolTIme => _coolTime > 0;
+    public bool IsCoolTime => _coolTime > 0;
 
     public void SetCoolTime()
     {
-        _coolTime = _baseCardSO.CoolTime;
+        _coolTime = _baseRuneSO.CoolTime;
+    }
+
+    public void SetCoolTime(int value)
+    {
+        _coolTime = value;
     }
 
     public void AddCoolTime(int value)
@@ -45,7 +52,7 @@ public class BaseRune : MonoBehaviour
 
     public float GetAbliltiValaue(EffectType type)
     {
-        float? value = _baseCardSO.AbilityList.Where(x => x.EffectType == type).Select(x => x.Value).FirstOrDefault();
+        float? value = _baseRuneSO.AbilityList.Where(x => x.EffectType == type).Select(x => x.Value).FirstOrDefault();
 
         if (value.HasValue)
         {
