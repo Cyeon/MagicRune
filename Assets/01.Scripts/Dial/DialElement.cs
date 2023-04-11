@@ -54,7 +54,7 @@ public class DialElement : MonoBehaviour
                 if (_selectCard != null)
                 {
                     //_selectCard.SetActiveOutline(OutlineType.Default);
-                    //_selectCard.RuneColor(new Color(0.26f, 0.26f, 0.26f, 1f));
+                    _selectCard.RuneColor(new Color(0.26f, 0.26f, 0.26f, 1f));
                 }
                 _selectCard = value;
             }
@@ -63,11 +63,11 @@ public class DialElement : MonoBehaviour
                 if (_selectCard != null)
                 {
                     //_selectCard.SetActiveOutline(OutlineType.Default);
-                    //_selectCard.RuneColor(new Color(0.26f, 0.26f, 0.26f, 1f));
+                    _selectCard.RuneColor(new Color(0.26f, 0.26f, 0.26f, 1f));
                 }
                 _selectCard = value;
                 //_selectCard.SetActiveOutline(OutlineType.Cyan);
-                //_selectCard.RuneColor(Color.white);
+                _selectCard.RuneColor(Color.white);
             }
         }
     }

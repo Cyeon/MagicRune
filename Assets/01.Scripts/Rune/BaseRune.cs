@@ -20,17 +20,19 @@ public class BaseRune : MonoBehaviour
     #endregion
 
     #region UI Parameta
-    private SpriteRenderer _spriteRenderer;
+    private SpriteRenderer _runeSpriteRenderer;
     #endregion
 
     private void Start()
     {
-        _spriteRenderer = transform.Find("Sprite").GetComponent<SpriteRenderer>();
+        _runeSpriteRenderer = transform.Find("Sprite").GetComponent<SpriteRenderer>();
 
         if(_baseRuneSO != null)
         {
-            _spriteRenderer.sprite = _baseRuneSO.RuneSprite;
+            _runeSpriteRenderer.sprite = _baseRuneSO.RuneSprite;
         }
+
+        RuneColor(new Color(0.26f, 0.26f, 0.26f, 1f));
     }
 
     public void SetCoolTime()
@@ -78,5 +80,10 @@ public class BaseRune : MonoBehaviour
         }
 
         return int.MinValue;
+    }
+
+    public void RuneColor(Color color)
+    {
+        _runeSpriteRenderer.color = color;
     }
 }

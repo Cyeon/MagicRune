@@ -208,6 +208,29 @@ public class Dial : MonoBehaviour
             maxRuneCount--;
         }
 
+        for (int i = 1; i <= 3; i++)
+        {
+            if (_runeDict.ContainsKey(i))
+            {
+                int count = _runeDict[i].Count;
+                for (int k = 0; k < _copyCount; k++)
+                {
+                    for (int j = 0; j < count; j++)
+                    {
+                        BaseRune r = Managers.Resource.Instantiate(_runeDict[i][j].gameObject, _dialElementList[3 - i].transform).GetComponent<BaseRune>();
+                        r.transform.localScale = new Vector3(0.1f, 0.1f);
+                        _dialElementList[3 - i].AddRuneList(r);
+
+                        if (isReset == true)
+                        {
+                            r.SetCoolTime(0);
+                        }
+                        AddCard(r, i);
+                    }
+                }
+            }
+        }
+
         RuneSort();
 
         //foreach (KeyValuePair<int, List<BaseRune>> runeList in _runeDict)
@@ -415,25 +438,14 @@ public class Dial : MonoBehaviour
 
     public void AllMagicActive(bool value)
     {
-        if (_runeDict.ContainsKey(1))
+        for(int i = 1; i <= 3; i++)
         {
-            for (int i = 0; i < _runeDict[1].Count; i++)
+            if (_runeDict.ContainsKey(i))
             {
-                _runeDict[1][i].gameObject.SetActive(false);
-            }
-        }
-        if (_runeDict.ContainsKey(2))
-        {
-            for (int i = 0; i < _runeDict[2].Count; i++)
-            {
-                _runeDict[2][i].gameObject.SetActive(false);
-            }
-        }
-        if (_runeDict.ContainsKey(3))
-        {
-            for (int i = 0; i < _runeDict[3].Count; i++)
-            {
-                _runeDict[3][i].gameObject.SetActive(false);
+                for (int j = 0; j < _runeDict[i].Count; j++)
+                {
+                    _runeDict[3][j].gameObject.SetActive(false);
+                }
             }
         }
     }

@@ -17,6 +17,7 @@ public class BaseRuneSO : ScriptableObject
     public string RuneName;
     [ShowAssetPreview(32, 32)]
     public Sprite RuneSprite;
+    [ResizableTextArea]
     public string RuneDescription; // 필요한가..?
     public AttributeType AttributeType;
     public GameObject RuneEffect;
