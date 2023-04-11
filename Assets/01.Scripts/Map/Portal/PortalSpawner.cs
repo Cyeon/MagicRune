@@ -18,6 +18,9 @@ public class PortalSpawner : MonoBehaviour
     [SerializeField] private Vector2[] _twoPortalPositions = new Vector2[2];
     [SerializeField] private Vector2[] _threePortalPositions = new Vector2[3];
 
+    private bool _isSelect = false;
+    public bool IsSelect => _isSelect;
+
     private void OnEnable()
     {
         DontDestroyOnLoad(this);
@@ -72,6 +75,8 @@ public class PortalSpawner : MonoBehaviour
         _spawnPortals.ForEach(x => x.PortalReset());
         _spawnPortals.ForEach(x => Managers.Resource.Destroy(x.gameObject));
         _spawnPortals.Clear();
+
+        _isSelect = false;
     }
 
     public Portal GetEventPortal()
@@ -82,6 +87,7 @@ public class PortalSpawner : MonoBehaviour
     public void SelectPortal(Portal portal)
     {
         _selectPortal = portal;
+        _isSelect = true;
 
         if(portal is AttackPortal)
         {
