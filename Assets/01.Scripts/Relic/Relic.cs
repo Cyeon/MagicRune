@@ -9,16 +9,10 @@ public enum RelicType
     Continuous
 }
 
-public enum RelicName
-{
-    HealingBox,
-    Kinding
-}
-
 public class Relic : MonoBehaviour
 {
     public string debugName;
-    public RelicName relicName;
+    public string relicName;
     [TextArea(1, 10)] public string desc;
     [ShowAssetPreview(32, 32)] public Sprite icon;
     public RelicType relicType;

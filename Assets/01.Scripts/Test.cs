@@ -6,6 +6,7 @@ public class Test : MonoBehaviour
 {
     private void Start()
     {
-        Managers.Relic.AddRelic(RelicName.HealingBox);
+        Managers.Relic.AddRelic("HealingBox");
+        Managers.Relic.AddRelic("Kindling");
     }
 }
