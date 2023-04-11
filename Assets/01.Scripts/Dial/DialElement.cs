@@ -291,12 +291,12 @@ public class DialElement : MonoBehaviour
                 switch (condition.ComparisonType)
                 {
                     case ComparisonType.MoreThan:
-                        if (!(BattleManager.Instance.player.StatusManager.GetStatus(condition.StatusType).TypeValue >= condition.Value))
+                        if (!(BattleManager.Instance.player.StatusManager.GetStatus(condition.StatusType)?.TypeValue >= condition.Value))
                                 return false;
                         break;
 
                     case ComparisonType.LessThan:
-                        if (!(BattleManager.Instance.player.StatusManager.GetStatus(condition.StatusType).TypeValue <= condition.Value))
+                        if (!(BattleManager.Instance.player.StatusManager.GetStatus(condition.StatusType)?.TypeValue <= condition.Value))
                             return false;
                         break;
 

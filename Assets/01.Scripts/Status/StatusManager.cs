@@ -8,6 +8,17 @@ public class StatusManager
 {
     private List<Status> _statusList = new List<Status>();
     private DialScene _dialScene;
+    public DialScene DialScene
+    {
+        get
+        {
+            if(_dialScene == null)
+            {
+                _dialScene = SceneManagerEX.Instance.CurrentScene as DialScene;
+            }
+            return _dialScene;
+        }
+    }
     private Unit _unit;
 
 
@@ -33,17 +44,19 @@ public class StatusManager
             }
 
             status.AddValue(count);
-            _dialScene.ReloadStatusPanel(_unit, status);
+            DialScene.ReloadStatusPanel(_unit, status);
         }
         else
         {
             status = ResourceManager.Instance.Instantiate("Status/Status_" + statusName, _unit.statusTrm).GetComponent<Status>();
             status.AddValue(count);
             status.unit = _unit;
-            _dialScene.AddStatus(_unit, status);
+            DialScene.AddStatus(_unit, status);
+            _statusList.Add(status);
         }
 
-        status.OnAddStatus.ForEach(x => x.Invoke());
+        if(status.OnAddStatus.Count > 0)
+            status.OnAddStatus.ForEach(x => x.Invoke());
     }
 
     public void RemoveStatus(StatusName statusName, int count)
@@ -64,13 +77,13 @@ public class StatusManager
             return;
         }
 
-        _dialScene.ReloadStatusPanel(_unit, status);
+        DialScene.ReloadStatusPanel(_unit, status);
     }
 
     public void DeleteStatus(Status status)
     {
         _statusList.Remove(status);
-        _dialScene.RemoveStatusPanel(_unit, status.statusName);
+        DialScene.RemoveStatusPanel(_unit, status.statusName);
 
         for(int i = 0; i < _unit.statusTrm.childCount; ++i)
         {
@@ -118,7 +131,7 @@ public class StatusManager
 
         for(int i = 0; i < _statusList.Count; ++i)
         {
-            if (_statusList[i] != null)
+            if (_statusList[i] != null && _statusList[i].OnTurnStart.Count > 0)
             {
                 _statusList[i].OnTurnStart.ForEach(x => x.Invoke());
             }
@@ -131,7 +144,7 @@ public class StatusManager
 
         for (int i = 0; i < _statusList.Count; ++i)
         {
-            if (_statusList[i] != null)
+            if (_statusList[i] != null && _statusList[i].OnAttack.Count > 0)
             {
                 _statusList[i].OnAttack.ForEach(x => x.Invoke());
             }
@@ -144,7 +157,7 @@ public class StatusManager
 
         for (int i = 0; i < _statusList.Count; ++i)
         {
-            if (_statusList[i] != null)
+            if (_statusList[i] != null && _statusList[i].OnGetDamage.Count > 0)
             {
                 _statusList[i].OnGetDamage.ForEach(x => x.Invoke());
             }
@@ -157,7 +170,7 @@ public class StatusManager
 
         for (int i = 0; i < _statusList.Count; ++i)
         {
-            if (_statusList[i] != null)
+            if (_statusList[i] != null && _statusList[i].OnTurnEnd.Count > 0)
             {
                 _statusList[i].OnTurnEnd.ForEach(x => x.Invoke());
             }
@@ -178,7 +191,7 @@ public class StatusManager
                 }
 
                 _statusList[i].RemoveValue(1);
-                _dialScene.ReloadStatusPanel(_unit, _statusList[i]);
+                DialScene.ReloadStatusPanel(_unit, _statusList[i]);
             }
         }
     }
@@ -187,5 +200,10 @@ public class StatusManager
     {
         _statusList.Clear();
         _dialScene?.ClearStatusPanel(_unit);
+
+        for(int i = _unit.statusTrm.childCount - 1; i >= 0; --i)
+        {
+            ResourceManager.Instance.Destroy(_unit.statusTrm.GetChild(i).gameObject);
+        }
     }
 }
