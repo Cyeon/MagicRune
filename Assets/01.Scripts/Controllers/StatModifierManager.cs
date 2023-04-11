@@ -13,39 +13,50 @@ public enum StatModifierType
 
 public class StatModifierManager
 {
-    private Dictionary<StatModifierType, float> _statModifierDict = new Dictionary<StatModifierType, float>();
-    public Dictionary<StatModifierType, float> StatModifierDict => _statModifierDict;
+    private Dictionary<EffectType, Dictionary<StatModifierType, float>> _statModifierDict = new Dictionary<EffectType, Dictionary<StatModifierType, float>>();
+    public Dictionary<EffectType, Dictionary<StatModifierType, float>> StatModifierDict => _statModifierDict;
 
     public void Init()
     {
         Clear();
 
-        for (int i = 0; i < (int)StatModifierType.END; i++)
+        for (int i = 0; i < (int)EffectType.Etc; i++)
         {
-            _statModifierDict.Add((StatModifierType)i, int.MinValue);
+            _statModifierDict.Add((EffectType)i, new Dictionary<StatModifierType, float>());
+            for (int j = 0; j < (int)StatModifierType.END; j++)
+            {
+                _statModifierDict[(EffectType)i].Add((StatModifierType)j, int.MinValue);
+            }
         }
+
+
     }
 
-    public void AddStat(StatModifierType type, float value)
+    public void AddStat(EffectType effectType, StatModifierType type, float value)
     {
-        _statModifierDict[type] += value;
+        _statModifierDict[effectType][type] += value;
     }
 
-    public void SubtractStat(StatModifierType type, float value)
+    public void SubtractStat(EffectType effectType, StatModifierType type, float value)
     {
-        if(value == int.MinValue)
+        if (value == int.MinValue)
         {
-            _statModifierDict[type] = int.MinValue;
+            _statModifierDict[effectType][type] = int.MinValue;
         }
         else
         {
-            _statModifierDict[type] -= value;
+            _statModifierDict[effectType][type] -= value;
         }
     }
 
-    public void GetStatModifierValue(ref float? value)
+    public void RemoveStat(EffectType effectType, StatModifierType type)
     {
-        foreach (var stat in _statModifierDict)
+        _statModifierDict[effectType][type] = int.MinValue;
+    }
+
+    public void GetStatModifierValue(EffectType effectType, ref float? value)
+    {
+        foreach (var stat in _statModifierDict[effectType])
         {
             if (stat.Value != int.MinValue)
             {
@@ -66,6 +77,7 @@ public class StatModifierManager
                     case StatModifierType.END:
                         break;
                 }
+                value = Mathf.Floor(value.Value);
             }
         }
     }

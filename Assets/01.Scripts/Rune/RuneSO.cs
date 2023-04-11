@@ -154,7 +154,7 @@ public class RuneProperty
     public AttributeType Attribute;
 }
 
-[CreateAssetMenu(menuName = "SO/Rune")]
+[CreateAssetMenu(menuName = "SO/Rune/Rune")]
 public class RuneSO : ScriptableObject
 {
     [Tooltip("카드 이름")]

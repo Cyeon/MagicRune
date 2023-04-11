@@ -11,14 +11,18 @@ public class BaseRune : MonoBehaviour
     [SerializeField]
     protected BaseRuneSO _baseCardSO;
 
-    private void Start()
+    private int _coolTime;
+
+    public bool IsCoolTIme => _coolTime > 0;
+
+    public void SetCoolTime()
     {
-        Init();
+        _coolTime = _baseCardSO.CoolTime;
     }
 
-    public virtual void Init()
+    public void AddCoolTime(int value)
     {
-        _baseCardSO = Managers.Resource.Load<BaseRuneSO>("SO/Rune/" + typeof(BaseRuneSO).Name);
+        _coolTime += value;
     }
 
     public virtual bool AbilityCondition()
@@ -33,13 +37,10 @@ public class BaseRune : MonoBehaviour
         // 예시 용...
 
         // 5골드 이상일때 5골드를 소비하고 공격을 하는 경우
-        if(AbilityCondition())
-        {
-            float value = GetAbliltiValaue(EffectType.Attack);
+        float value = GetAbliltiValaue(EffectType.Attack);
 
-            Managers.GetPlayer().Attack(value == int.MinValue ? 0 : value);
-            Managers.Gold.AddGold(-1 * 5);
-        }
+        Managers.GetPlayer().Attack(value == int.MinValue ? 0 : value);
+        Managers.Gold.AddGold(-1 * 5);
     }
 
     public float GetAbliltiValaue(EffectType type)
@@ -48,7 +49,7 @@ public class BaseRune : MonoBehaviour
 
         if (value.HasValue)
         {
-            Managers.StatModifier.GetStatModifierValue(ref value);
+            Managers.StatModifier.GetStatModifierValue(type, ref value);
 
             return value.Value;
         }

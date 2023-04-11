@@ -4,11 +4,6 @@ using UnityEngine;
 
 public class RailGun : BaseRune
 {
-    public override void Init()
-    {
-        _baseCardSO = Managers.Resource.Load<BaseRuneSO>("SO/Rune/" + typeof(RailGun).Name);
-    }
-
     public override bool AbilityCondition()
     {
         float statusValue = StatusManager.Instance.GetUnitStatusValue(Managers.GetPlayer(), StatusName.Recharging);
@@ -18,11 +13,8 @@ public class RailGun : BaseRune
 
     public override void AbilityAction()
     {
-        if(AbilityCondition())
-        {
-            StatusManager.Instance.RemoveValue(Managers.GetPlayer(), StatusName.Recharging, 10);
+        StatusManager.Instance.RemoveValue(Managers.GetPlayer(), StatusName.Recharging, 10);
 
-            Managers.GetPlayer().Attack(GetAbliltiValaue(EffectType.Attack));
-        }
+        Managers.GetPlayer().Attack(GetAbliltiValaue(EffectType.Attack));
     }
 }
