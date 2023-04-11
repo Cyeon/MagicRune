@@ -150,6 +150,8 @@ public class BezierMissile : MonoBehaviour
 
     public void SetEffect(GameObject go)
     {
+        if (go == null) return;
+
         _effect = Managers.Resource.Instantiate($"Effects/" + go.name, this.transform);
         //_effect.transform.localScale *= 3f;
         //Vector3 pos = _effect.transform.position;

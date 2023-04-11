@@ -289,10 +289,10 @@ public class DialElement : MonoBehaviour
             if (SelectCard.AbilityCondition())
             {
                 SelectCard.AbilityAction();
-            }
 
-            _selectCard.SetCoolTime();
-            SelectCard = null;
+                _selectCard.SetCoolTime();
+                SelectCard = null;
+            }
         }
     }
 

@@ -56,28 +56,31 @@ public class StatModifierManager
 
     public void GetStatModifierValue(EffectType effectType, ref float? value)
     {
-        foreach (var stat in _statModifierDict[effectType])
+        if (_statModifierDict.ContainsKey(effectType) == true)
         {
-            if (stat.Value != int.MinValue)
+            foreach (var stat in _statModifierDict[effectType])
             {
-                switch (stat.Key)
+                if (stat.Value != int.MinValue)
                 {
-                    case StatModifierType.Add:
-                        value += stat.Value;
-                        break;
-                    case StatModifierType.Subtract:
-                        value -= stat.Value;
-                        break;
-                    case StatModifierType.Multiply:
-                        value *= stat.Value;
-                        break;
-                    case StatModifierType.Divide:
-                        value -= stat.Value;
-                        break;
-                    case StatModifierType.END:
-                        break;
+                    switch (stat.Key)
+                    {
+                        case StatModifierType.Add:
+                            value += stat.Value;
+                            break;
+                        case StatModifierType.Subtract:
+                            value -= stat.Value;
+                            break;
+                        case StatModifierType.Multiply:
+                            value *= stat.Value;
+                            break;
+                        case StatModifierType.Divide:
+                            value -= stat.Value;
+                            break;
+                        case StatModifierType.END:
+                            break;
+                    }
+                    value = Mathf.Floor(value.Value);
                 }
-                value = Mathf.Floor(value.Value);
             }
         }
     }

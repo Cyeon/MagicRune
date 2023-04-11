@@ -206,7 +206,7 @@ public class StatusManager : MonoSingleton<StatusManager>
             indexes.ForEach(e => AllRemStatus(unit, x.Value[e]));
             for(int i = 0; i < indexes.Count; ++i)
             {
-                if (x.Value[indexes[i]] != null)
+                if (x.Value.Count > 0 && x.Value[indexes[i]] != null)
                 {
                     AllRemStatus(unit, x.Value[indexes[i]]);
                 }

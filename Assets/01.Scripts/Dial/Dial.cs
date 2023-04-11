@@ -530,7 +530,10 @@ public class Dial : MonoBehaviour
                 int index = i;
                 _dialElementList[i].IsGlow = true;
                 BezierMissile b = Managers.Resource.Instantiate("BezierMissile", this.transform.parent).GetComponent<BezierMissile>();
-                b.SetEffect(_dialElementList[i].SelectCard.BaseRuneSO.RuneEffect);
+                if(_dialElementList[i].SelectCard.BaseRuneSO.RuneEffect != null)
+                {
+                    b.SetEffect(_dialElementList[i].SelectCard.BaseRuneSO.RuneEffect);
+                }
                 switch (_dialElementList[i].SelectCard.BaseRuneSO.AttributeType)
                 {
                     case AttributeType.None:
