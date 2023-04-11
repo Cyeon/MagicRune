@@ -6,29 +6,30 @@ using DG.Tweening;
 
 public class MapManager
 {
-    //[Header("Chapter")]
+    #region Chapter
     private List<Chapter> chapterList = new List<Chapter>();
 
     private int _chapter = 1;
     public int Chapter => _chapter;
     private Chapter _currentChapter = null;
     public Chapter CurrentChapter => _currentChapter;
+    #endregion
 
-    //[Header("Stage")]
+    #region Stage
     private List<Stage> stageList = new List<Stage>();
 
     [SerializeField]   private int Stage => Floor - ((this.Chapter - 1) * 9);
 
     private int _floor = 0;
     public int Floor => _floor;
+    #endregion
 
-    //[Header("Portal")]
     private PortalSpawner _portalSpawner;
     public PortalSpawner PortalSpawner => _portalSpawner;
 
-    //[Header("Attack")]
-    private Enemy selectEnemy;
-    public Enemy SelectEnemy { get => selectEnemy; set => selectEnemy = value; }
+    private Enemy _selectEnemy;
+    public Enemy SelectEnemy { get => _selectEnemy; set => _selectEnemy = value; }
+    public Sprite selectPortalSprite;
 
     private bool _isFirst = true;
 
@@ -132,7 +133,7 @@ public class MapManager
             _mapScene?.ArrowImage.transform.SetParent(MapSceneUI.StageList.GetChild(Stage + 1));
             _mapScene.ArrowImage.transform.localPosition = new Vector3(0, _mapScene.ArrowImage.transform.localPosition.y, 0);
         }
-        stageList[Stage].ChangeResource(Color.white, _portalSpawner.SelectedPortal.GetSprite());
+        stageList[Stage].ChangeResource(Color.white, selectPortalSprite);
         _floor += 1;
 
         Sequence seq = DOTween.Sequence();

@@ -90,9 +90,9 @@ public class Unit : MonoBehaviour
     private void Start() {
         _dialScene = Managers.Scene.CurrentScene as DialScene;
         _statusManager = new StatusManager(this, _dialScene);
-        _statusManager.Reset();
-
         statusTrm = transform.Find("Status");
+
+        _statusManager.Reset();
     }
 
     /// <summary>

@@ -14,7 +14,7 @@ public class StatusManager
         {
             if(_dialScene == null)
             {
-                _dialScene = SceneManagerEX.Instance.CurrentScene as DialScene;
+                _dialScene =  Managers.Scene.CurrentScene as DialScene;
             }
             return _dialScene;
         }
@@ -48,7 +48,7 @@ public class StatusManager
         }
         else
         {
-            status = ResourceManager.Instance.Instantiate("Status/Status_" + statusName, _unit.statusTrm).GetComponent<Status>();
+            status = Managers.Resource.Instantiate("Status/Status_" + statusName, _unit.statusTrm).GetComponent<Status>();
             status.AddValue(count);
             status.unit = _unit;
             DialScene.AddStatus(_unit, status);
@@ -89,7 +89,7 @@ public class StatusManager
         {
             if (_unit.statusTrm.GetChild(i).name == "Status_" + status.statusName)
             {
-                ResourceManager.Instance.Destroy(_unit.statusTrm.GetChild(i).gameObject);
+                Managers.Resource.Destroy(_unit.statusTrm.GetChild(i).gameObject);
             }
         }
     }
@@ -203,7 +203,8 @@ public class StatusManager
 
         for(int i = _unit.statusTrm.childCount - 1; i >= 0; --i)
         {
-            ResourceManager.Instance.Destroy(_unit.statusTrm.GetChild(i).gameObject);
+            Debug.Log(_unit.statusTrm.GetChild(i).name);
+            Managers.Resource.Destroy(_unit.statusTrm.GetChild(i).gameObject);
         }
     }
 }

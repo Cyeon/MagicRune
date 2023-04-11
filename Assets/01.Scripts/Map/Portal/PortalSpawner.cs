@@ -18,6 +18,11 @@ public class PortalSpawner : MonoBehaviour
     [SerializeField] private Vector2[] _twoPortalPositions = new Vector2[2];
     [SerializeField] private Vector2[] _threePortalPositions = new Vector2[3];
 
+    private void OnEnable()
+    {
+        DontDestroyOnLoad(this);
+    }
+
     public void SpawnPortal(StageType type)
     {
         switch(type)
@@ -91,6 +96,7 @@ public class PortalSpawner : MonoBehaviour
             atk.PortalEnemy.isEnter = true;
         }
 
+        Managers.Map.selectPortalSprite = portal.GetSprite();
     }
 
     public void ResetEnemyEnter()
