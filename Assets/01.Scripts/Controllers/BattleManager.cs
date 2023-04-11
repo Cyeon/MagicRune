@@ -142,6 +142,8 @@ public class BattleManager : MonoSingleton<BattleManager>
                 break;
 
             case GameTurn.Monster:
+                enemy?.StatusManager.OnTurnEnd();
+
                 player.StatusManager.TurnChange();
                 enemy.StatusManager.TurnChange();
 
@@ -160,8 +162,6 @@ public class BattleManager : MonoSingleton<BattleManager>
                     player.ResetShield();
                     _dialScene?.UpdateHealthbar(true);
                 }
-
-                enemy?.StatusManager.OnTurnEnd();
 
                 _dialScene?.Turn("Player Turn");
                 _dialScene?.Dial?.ResetDial();
