@@ -103,12 +103,6 @@ public class BattleManager : MonoSingleton<BattleManager>
     {
         if (enemy.HP <= 0 || player.HP <= 0) return;
 
-        if (_gameTurn == GameTurn.Player || _gameTurn == GameTurn.Monster)
-        {
-            player?.StatusManager.OnTurnEnd();
-            enemy?.StatusManager.OnTurnEnd();
-        }
-
         switch (_gameTurn)
         {
             case GameTurn.Unknown:
@@ -136,7 +130,8 @@ public class BattleManager : MonoSingleton<BattleManager>
                     _dialScene?.UpdateHealthbar(false);
                 }
 
-                //UIManager.Instance.Turn("Enemy Turn");
+                player?.StatusManager.OnTurnEnd();
+
                 _dialScene?.Turn("Enemy Turn");
                 _gameTurn = GameTurn.PlayerWait;
                 break;
@@ -166,7 +161,8 @@ public class BattleManager : MonoSingleton<BattleManager>
                     _dialScene?.UpdateHealthbar(true);
                 }
 
-                //UIManager.Instance.Turn("Player Turn");
+                enemy?.StatusManager.OnTurnEnd();
+
                 _dialScene?.Turn("Player Turn");
                 _dialScene?.Dial?.ResetDial();
                 _dialScene?.Dial?.AllMagicCircleGlow(false);
