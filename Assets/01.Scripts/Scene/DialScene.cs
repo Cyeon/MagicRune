@@ -463,4 +463,9 @@ public class DialScene : BaseScene
         _chooseRuneUI.SetUp();
     }
 
+    public void HideChooseRuneUI()
+    {
+        _chooseRuneUI.gameObject.SetActive(false);
+    }
+
 }

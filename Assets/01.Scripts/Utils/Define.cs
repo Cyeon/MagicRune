@@ -60,6 +60,20 @@ public class Define
         }
     }
 
+    private static DialScene _dialScene;
+    public static DialScene DialScene
+    {
+        get
+        {
+            if(_dialScene == null)
+            {
+                _dialScene = Managers.Scene.CurrentScene as DialScene;
+            }
+
+            return _dialScene;
+        }
+    }
+
     public enum Scene
     {
         Unknown,

@@ -49,7 +49,6 @@ public class BattleManager : MonoSingleton<BattleManager>
     {
         enemy = Managers.Resource.Instantiate("Enemy/" + Managers.Map.SelectEnemy.name).GetComponent<Enemy>();
         enemy.Init();
-        enemy.PatternManager.ChangePattern(enemy.PatternManager.patternList[0]);
 
         enemy.OnDieEvent.RemoveAllListeners();
         enemy.OnDieEvent.AddListener(() =>
@@ -120,7 +119,6 @@ public class BattleManager : MonoSingleton<BattleManager>
         switch (_gameTurn)
         {
             case GameTurn.Unknown:
-                enemy.PatternManager.StartAction();
                 EventManager.TriggerEvent(Define.ON_START_PLAYER_TURN);
                 _dialScene?.Turn("Player Turn");
                 _gameTurn = GameTurn.EnemyEnd;
