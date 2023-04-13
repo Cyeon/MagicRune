@@ -41,13 +41,13 @@ public class PatternManager : MonoBehaviour
 
     public void TurnAction()
     {
-        _currentPattern.TurnAction();
+        if (BattleManager.Instance.enemy.isTurnSkip == false)
+            _currentPattern.TurnAction();
     }
 
     public void StartAction()
     {
-        if(BattleManager.Instance.enemy.isTurnSkip == false)
-            _currentPattern.StartAction();
+        _currentPattern.StartAction();
     }
 
     public void EndAction()

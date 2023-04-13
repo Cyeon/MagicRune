@@ -1,10 +1,11 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public enum RewardType
 {
-    Gold
+    Gold,
+    Rune
 }
 
 public class RewardManager
@@ -15,6 +16,7 @@ public class RewardManager
     public void ImageLoad()
     {
         rewardSprites.Add(RewardType.Gold, Managers.Resource.Load<Sprite>("Coin_Icon"));
+        rewardSprites.Add(RewardType.Rune, Managers.Resource.Load<Sprite>("RuneIcon"));
     }
 
     public Sprite GetRewardIcon(RewardType type)

@@ -55,7 +55,7 @@ public class BattleManager : MonoSingleton<BattleManager>
         enemy.OnDieEvent.AddListener(() =>
         {
             REGold reward = new REGold();
-            reward.gold = Managers.Map.CurrentChapter.Gold;
+            reward.SetGold(Managers.Map.CurrentChapter.Gold);
             reward.AddRewardList();
 
             _dialScene?.RewardUI.VictoryPanelPopup();

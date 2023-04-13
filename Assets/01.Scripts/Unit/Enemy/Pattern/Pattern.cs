@@ -34,7 +34,7 @@ public class Pattern : MonoBehaviour
     }
 
     /// <summary>
-    /// �÷��̾� �Ͽ� ���� �ൿ���� �����ٶ� �ߵ��� ���� �׼� ����
+    /// 플레이어 턴이 시작될떄 발동되는 함수
     /// </summary>
     public void StartAction()
     {
@@ -47,7 +47,7 @@ public class Pattern : MonoBehaviour
     }
 
     /// <summary>
-    /// ���� ���� ���۵� �� �ߵ��� ���� �׼� ����
+    /// 적 턴이 시작될떄 발동되는 함수
     /// </summary>
     public void TurnAction()
     {
@@ -60,7 +60,7 @@ public class Pattern : MonoBehaviour
     }
 
     /// <summary>
-    /// ���� ���� ���� �� �ߵ��� ���� �׼� ����
+    /// 적 턴이 끝날때 발동되는 함수
     /// </summary>
     public void EndAction()
     {
@@ -72,6 +72,9 @@ public class Pattern : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 다음 액션으로 넘어가는 함수
+    /// </summary>
     public void NextAction()
     {
         _patternIndex++;
@@ -101,6 +104,9 @@ public class Pattern : MonoBehaviour
         actions[_patternIndex].TakeAction();
     }
 
+    /// <summary>
+    /// 다음 순서에 있는 패턴 가져오는 함수
+    /// </summary>
     public void NextPattern()
     {
         foreach (PatternTransition transition in transitions)

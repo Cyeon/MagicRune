@@ -12,7 +12,7 @@ public class RestEvent : StatusEvent
 
     private IEnumerator TurnChange()
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.5f);
         BattleManager.Instance.TurnChange();
     }
 }

@@ -38,6 +38,7 @@ public class DialScene : BaseScene
     [SerializeField]
     private RewardUI _rewardUI;
     public RewardUI RewardUI => _rewardUI;
+    private ChooseRuneUI _chooseRuneUI;
 
     protected override void Init()
     {
@@ -74,6 +75,8 @@ public class DialScene : BaseScene
         Managers.UI.Bind<TextMeshPro>("Status_Name_Text", Managers.Canvas.GetCanvas("Popup").gameObject);
         Managers.UI.Bind<TextMeshPro>("Status_Infomation_Text", Managers.Canvas.GetCanvas("Popup").gameObject);
 
+        Managers.UI.Bind<ChooseRuneUI>("ChooseRuneUI", Managers.Canvas.GetCanvas("Popup").gameObject);
+
         #endregion
 
         _enemyPatternIcon = Managers.UI.Get<Image>("NextPattern Image");
@@ -81,6 +84,8 @@ public class DialScene : BaseScene
 
         _statusDescName = Managers.UI.Get<TextMeshPro>("Status_Name_Text");
         _statusDescInfo = Managers.UI.Get<TextMeshPro>("Status_Infomation_Text");
+
+        _chooseRuneUI = Managers.UI.Get<ChooseRuneUI>("ChooseRuneUI").GetComponent<ChooseRuneUI>();
 
         //UIManager.Instance.Get<Button>("Restart Btn").onClick.RemoveAllListeners();
         //UIManager.Instance.Get<Button>("Restart Btn").onClick.AddListener(() =>
@@ -451,4 +456,11 @@ public class DialScene : BaseScene
     {
         _enemyIcon = renderer;
     }
+
+    public void ChooseRuneUISetUp()
+    {
+        _chooseRuneUI.gameObject.SetActive(true);
+        _chooseRuneUI.SetUp();
+    }
+
 }

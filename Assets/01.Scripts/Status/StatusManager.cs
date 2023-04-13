@@ -118,6 +118,8 @@ public class StatusManager
 
     public float GetStatusValue(StatusName status)
     {
+        if (GetStatus(status) == null) return 0;
+
         return GetStatus(status).TypeValue;
     }
 

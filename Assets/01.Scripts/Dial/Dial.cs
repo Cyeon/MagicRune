@@ -91,9 +91,9 @@ public class Dial : MonoBehaviour
     public int GetUsingRuneCount()
     {
         int count = 0;
-        for (int i = 0; i < _remainingRuneList.Count; i++)
+        for (int i = 0; i < Managers.Deck.Deck.Count; i++)
         {
-            if (_remainingRuneList[i].CoolTIme <= 0)
+            if (Managers.Deck.Deck[i].CoolTIme <= 0)
             {
                 count++;
             }
