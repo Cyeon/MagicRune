@@ -59,7 +59,8 @@ public abstract class BaseRune : MonoBehaviour, Item
 
     public virtual void Execute()
     {
-        Debug.Log(_baseRuneSO);
+        Debug.Log(_baseRuneSO.RuneName);
+        Managers.Deck.AddRune(this);
     }
 
     public void SetCoolTime()

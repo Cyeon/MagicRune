@@ -8,10 +8,4 @@ public class ShieldAttack : BaseRune
     {
         Managers.GetPlayer().Attack(Managers.GetPlayer().GetShield());
     }
-
-    public override void Execute()
-    {
-        Debug.Log("Buy ShieldAttack Rune!");
-        Managers.Deck.AddRune(this);
-    }
 }

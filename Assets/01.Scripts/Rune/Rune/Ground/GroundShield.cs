@@ -8,11 +8,4 @@ public class GroundShield : BaseRune
     {
         Managers.GetPlayer().AddShield(GetAbliltiValaue(EffectType.Defence));
     }
-
-    public override void Execute()
-    {
-        Debug.Log("Buy GroundShield Rune!");
-        Managers.Deck.AddRune(this);
-    }
-
 }

@@ -8,10 +8,4 @@ public class Fire : BaseRune
     {
         BattleManager.Instance.enemy.StatusManager.AddStatus(StatusName.Fire, 5);
     }
-
-    public override void Execute()
-    {
-        Debug.Log("Buy Fire Rune!");
-        Managers.Deck.AddRune(this);
-    }
 }

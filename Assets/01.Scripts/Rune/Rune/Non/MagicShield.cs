@@ -8,10 +8,4 @@ public class MagicShield : BaseRune
     {
         Managers.GetPlayer().AddShield(GetAbliltiValaue(EffectType.Defence));
     }
-
-    public override void Execute()
-    {
-        Debug.Log("Buy MagicShield Rune!");
-        Managers.Deck.AddRune(this);
-    }
 }
