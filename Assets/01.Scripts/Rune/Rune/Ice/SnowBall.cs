@@ -4,14 +4,9 @@ using UnityEngine;
 
 public class SnowBall : BaseRune
 {
-    public override bool AbilityCondition()
-    {
-        return true;
-    }
-
     public override void AbilityAction()
     {
         Managers.GetPlayer().Attack(GetAbliltiValaue(EffectType.Attack));
-        StatusManager.Instance.AddStatus(BattleManager.Instance.enemy, StatusName.Ice, 2);
+        BattleManager.Instance.enemy.StatusManager.AddStatus(StatusName.Ice, 2);
     }
 }

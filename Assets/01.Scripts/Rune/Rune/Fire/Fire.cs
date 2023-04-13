@@ -4,13 +4,8 @@ using UnityEngine;
 
 public class Fire : BaseRune
 {
-    public override bool AbilityCondition()
-    {
-        return true;
-    }
-
     public override void AbilityAction()
     {
-        StatusManager.Instance.AddStatus(BattleManager.Instance.enemy, StatusName.Fire, 5);
+        BattleManager.Instance.enemy.StatusManager.AddStatus(StatusName.Fire, 5);
     }
 }

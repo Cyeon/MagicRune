@@ -6,7 +6,7 @@ using MyBox;
 using System;
 
 [Serializable]
-public class BaseRune : MonoBehaviour
+public abstract class BaseRune : MonoBehaviour
 {
     #region Rune Stat Parameta
     [SerializeField]
@@ -52,21 +52,10 @@ public class BaseRune : MonoBehaviour
 
     public virtual bool AbilityCondition()
     {
-        bool isHaveGold = Managers.Gold.Gold >= 5;
-
-        return isHaveGold;
+        return true;
     }
 
-    public virtual void AbilityAction()
-    {
-        // 예시 용...
-
-        // 5골드 이상일때 5골드를 소비하고 공격을 하는 경우
-        float value = GetAbliltiValaue(EffectType.Attack);
-
-        Managers.GetPlayer().Attack(value == int.MinValue ? 0 : value);
-        Managers.Gold.AddGold(-1 * 5);
-    }
+    public abstract void AbilityAction();
 
     public float GetAbliltiValaue(EffectType type)
     {

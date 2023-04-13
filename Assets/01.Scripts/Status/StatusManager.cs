@@ -116,6 +116,11 @@ public class StatusManager
         return null;
     }
 
+    public float GetStatusValue(StatusName status)
+    {
+        return GetStatus(status).TypeValue;
+    }
+
     public void OnTurnStart()
     {
         if (_unit.IsDie) return;
