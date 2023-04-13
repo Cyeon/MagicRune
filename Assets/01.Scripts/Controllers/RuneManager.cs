@@ -36,10 +36,16 @@ public class RuneManager
     {
         List<BaseRune> runeList = new List<BaseRune>();
 
-        List<BaseRune> newRuneList = new List<BaseRune>(_runeList.BaseRuneList);
-        for (int i = 0; i < ignoreRuneList.Count; i++)
+        List<BaseRune> newRuneList = _runeList.BaseRuneList;
+        if (ignoreRuneList != null)
         {
-            newRuneList.Remove(ignoreRuneList[i]);
+            for (int i = 0; i < ignoreRuneList.Count; i++)
+            {
+                if (newRuneList.Contains(ignoreRuneList[i]))
+                {
+                    newRuneList.Remove(ignoreRuneList[i]);
+                }
+            }
         }
 
         List<int> numberList = new List<int>();
@@ -50,6 +56,7 @@ public class RuneManager
 
         for(int i = 0; i < count; i++)
         {
+            if (numberList.Count <= 0) break;
             int randomIndex = Random.Range(0, numberList.Count);
             runeList.Add(newRuneList[numberList[randomIndex]]);
             numberList.RemoveAt(randomIndex);

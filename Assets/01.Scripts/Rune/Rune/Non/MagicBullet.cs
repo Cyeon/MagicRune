@@ -8,4 +8,10 @@ public class MagicBullet : BaseRune
     {
         Managers.GetPlayer().Attack(GetAbliltiValaue(EffectType.Attack));
     }
+
+    public override void Execute()
+    {
+        Debug.Log("Buy MagicBullet Rune!");
+        Managers.Deck.AddRune(this);
+    }
 }

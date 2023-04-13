@@ -34,9 +34,9 @@ public class ShopUI : MonoBehaviour
         }
     }
 
-    public void ShopItemProduct(ShopItemSO item)
+    public void RuneItemProduct(Item item)
     {
-        ShopItemPanelUI ui = Managers.Resource.Instantiate(item.panelPrefab.name, _storeShelf).GetComponent<ShopItemPanelUI>();
+        ShopItemPanelUI ui = Managers.Resource.Instantiate("ItemPanel", _storeShelf).GetComponent<ShopItemPanelUI>();
         ui.Init(item);
         ui.userGold = _goldText;
     }

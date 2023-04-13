@@ -17,4 +17,10 @@ public class RailGun : BaseRune
 
         Managers.GetPlayer().Attack(GetAbliltiValaue(EffectType.Attack));
     }
+
+    public override void Execute()
+    {
+        Debug.Log("Buy RailGun Rune!");
+        Managers.Deck.AddRune(this);
+    }
 }

@@ -20,7 +20,7 @@ public class ShopItemSO : ScriptableObject
 
     public Sprite icon;
     public ShopItemType itemType = ShopItemType.Rune;
-    public ShopItemPanelUI panelPrefab;
+    //public ShopItemPanelUI panelPrefab;
 
     /// <summary>
     /// 현재 구매가 가능한가?

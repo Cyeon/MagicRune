@@ -8,4 +8,10 @@ public class Charge : BaseRune
     {
         Managers.GetPlayer().StatusManager.AddStatus(StatusName.Recharging, 5);
     }
+
+    public override void Execute()
+    {
+        Debug.Log("Buy Charge Rune!");
+        Managers.Deck.AddRune(this);
+    }
 }

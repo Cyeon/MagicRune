@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Data;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -15,34 +17,46 @@ public class ShopItem
 
 public class ShopItemPanelUI : MonoBehaviour
 {
-    private Image icon;
-    private TextMeshProUGUI goldText;
-    private ShopItemSO item;
+    private Image _icon;
+    private TextMeshProUGUI _goldText;
+    private Item _iItem;
     public TextMeshProUGUI userGold;
 
-    public void Init(ShopItemSO item)
+    private Action _buyAction;
+
+    public void Init(Item item, Action action = null)
     {
-        icon.sprite = item.icon;
-        goldText.SetText(item.gold.ToString());
-        this.item = item;
+        _iItem = item;
+        _icon.sprite = _iItem.Icon;
+        _goldText.SetText(_iItem.Gold.ToString());
+        _buyAction = action;
     }
 
     public void Buy()
     {
-        if (item.CheckAvailability())
+        //  단순 골드 비교면 이거면 충분. 하지만 다른 조건이 붙으면 함수하나 정으해야할 듯
+        if (Managers.Gold.Gold >= _iItem.Gold)
         {
-            item.Buy();
+            Managers.Gold.AddGold(-_iItem.Gold);
+            _iItem.Execute();
 
-            RuneItem rune = item as RuneItem;
-            Managers.Deck.AddRune(rune.rune);
+            _buyAction?.Invoke();
+            //switch (_iItem.ShopItemType)
+            //{
+            //    case ShopItemType.Rune:
+            //        //Managers.Deck.AddRune(_item as BaseRune);
+            //        userGold.SetText(Managers.Gold.Gold.ToString());
+            //        gameObject.SetActive(false);
+            //        break;
+            //}
             userGold.SetText(Managers.Gold.Gold.ToString());
-            gameObject.SetActive(false);
+            Managers.Resource.Destroy(this.gameObject);
         }
     }
 
     public void Awake()
     {
-        icon = transform.Find("Button/Icon").GetComponent<Image>();
-        goldText = transform.GetComponentInChildren<TextMeshProUGUI>();
+        _icon = transform.Find("Button/Icon").GetComponent<Image>();
+        _goldText = transform.GetComponentInChildren<TextMeshProUGUI>();
     }
 }

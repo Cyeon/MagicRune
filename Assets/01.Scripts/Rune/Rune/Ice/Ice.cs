@@ -8,4 +8,10 @@ public class Ice : BaseRune
     {
         BattleManager.Instance.enemy.StatusManager.AddStatus(StatusName.Ice, 3);
     }
+
+    public override void Execute()
+    {
+        Debug.Log("Buy Ice Rune!");
+        Managers.Deck.AddRune(this);
+    }
 }

@@ -73,6 +73,8 @@ public class Managers : MonoBehaviour
             _instance._map.Init();
             _instance._deck.Init();
             _instance._statModifier.Init();
+            _instance._rune.Init();
+            _instance._gold.Init();
 
             if(_player == null)
             {

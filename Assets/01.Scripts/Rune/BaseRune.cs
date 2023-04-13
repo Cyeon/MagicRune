@@ -4,9 +4,10 @@ using UnityEngine;
 using System.Linq;
 using MyBox;
 using System;
+using Random = UnityEngine.Random;
 
 [Serializable]
-public abstract class BaseRune : MonoBehaviour
+public abstract class BaseRune : MonoBehaviour, Item
 {
     #region Rune Stat Parameta
     [SerializeField]
@@ -17,6 +18,22 @@ public abstract class BaseRune : MonoBehaviour
     public int CoolTIme => _coolTime;
 
     public bool IsCoolTime => _coolTime > 0;
+
+    public Sprite Icon
+    {
+        get
+        {
+            if(_baseRuneSO != null)
+            {
+                return _baseRuneSO.RuneSprite;
+            }
+            return null;
+        }
+    }
+
+    public int Gold { get; private set; }
+
+    public ShopItemType ShopItemType { get => ShopItemType.Rune; }
     #endregion
 
     #region UI Parameta
@@ -27,12 +44,22 @@ public abstract class BaseRune : MonoBehaviour
     {
         _runeSpriteRenderer = transform.Find("Sprite").GetComponent<SpriteRenderer>();
 
-        if(_baseRuneSO != null)
+        if (_baseRuneSO != null)
         {
             _runeSpriteRenderer.sprite = _baseRuneSO.RuneSprite;
         }
 
         RuneColor(new Color(0.26f, 0.26f, 0.26f, 1f));
+    }
+
+    public void SetRandomGold(int start, int end)
+    {
+        Gold = Random.Range(start, end + 1);
+    }
+
+    public virtual void Execute()
+    {
+        Debug.Log(_baseRuneSO);
     }
 
     public void SetCoolTime()

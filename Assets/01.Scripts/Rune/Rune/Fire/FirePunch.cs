@@ -9,4 +9,10 @@ public class FirePunch : BaseRune
         Managers.GetPlayer().Attack(GetAbliltiValaue(EffectType.Attack));
         BattleManager.Instance.enemy.StatusManager.AddStatus(StatusName.Fire, 4);
     }
+
+    public override void Execute()
+    {
+        Debug.Log("Buy FirePunch Rune!");
+        Managers.Deck.AddRune(this);
+    }
 }
