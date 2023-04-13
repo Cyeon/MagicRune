@@ -91,9 +91,9 @@ public class Dial : MonoBehaviour
     public int GetUsingRuneCount()
     {
         int count = 0;
-        for (int i = 0; i < _remainingRuneList.Count; i++)
+        for (int i = 0; i < Managers.Deck.Deck.Count; i++)
         {
-            if (_remainingRuneList[i].CoolTIme <= 0)
+            if (Managers.Deck.Deck[i].CoolTIme <= 0)
             {
                 count++;
             }
@@ -498,7 +498,7 @@ public class Dial : MonoBehaviour
             //    _effectDict.Clear();
             //    return;
             //}
-            //_dialScene?.CardDescDown();
+            //Define.DialScene?.CardDescDown();
             //BezierMissile b = ResourceManager.Instance.Instantiate("BezierMissile", this.transform.parent).GetComponent<BezierMissile>();
             //b.SetEffect(g);
             //b.SetTrailColor(EffectType.Attack);
@@ -525,16 +525,13 @@ public class Dial : MonoBehaviour
             //});
 
             StartCoroutine(AttackCoroutine());
-
-            //_effectDict.Clear();
-            BattleManager.Instance.PlayerTurnEnd();
             _isAttack = false;
         }
     }
 
     private IEnumerator AttackCoroutine()
     {
-        _dialScene?.CardDescDown();
+        Define.DialScene?.CardDescDown();
         for (int i = _dialElementList.Count - 1; i >= 0; i--)
         {
             if (_dialElementList[i].SelectCard != null)

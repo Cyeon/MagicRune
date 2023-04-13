@@ -32,7 +32,7 @@ public class RuneManager
         return newRuneList[Random.Range(0, newRuneList.Count)];
     }
 
-    public List<BaseRune> GetRandomRune(int count = 1, List<BaseRune> ignoreRuneList = null)
+    public List<BaseRune> GetRandomRune(int count, List<BaseRune> ignoreRuneList = null)
     {
         List<BaseRune> runeList = new List<BaseRune>();
 

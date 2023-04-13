@@ -7,7 +7,7 @@ public class PatternManager : MonoBehaviour
     private Pattern _currentPattern;
     public Pattern CurrentPattern => _currentPattern;
     public List<Pattern> patternList = new List<Pattern>();
-    private int _index = 0;
+    private int _index = -1;
 
     private DialScene _disalScene;
 
@@ -24,6 +24,7 @@ public class PatternManager : MonoBehaviour
 
     public void ChangePattern(Pattern pattern)
     {
+        Debug.Log("Pattern Change " + _currentPattern + " -> " + pattern);
         _currentPattern = pattern;
         _disalScene?.ReloadPattern(_currentPattern.icon, _currentPattern.desc);
     }
@@ -41,13 +42,13 @@ public class PatternManager : MonoBehaviour
 
     public void TurnAction()
     {
-        _currentPattern.TurnAction();
+        if (BattleManager.Instance.enemy.isTurnSkip == false)
+            _currentPattern.TurnAction();
     }
 
     public void StartAction()
     {
-        if(BattleManager.Instance.enemy.isTurnSkip == false)
-            _currentPattern.StartAction();
+        _currentPattern.StartAction();
     }
 
     public void EndAction()

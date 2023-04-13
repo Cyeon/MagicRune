@@ -8,16 +8,18 @@ using TMPro;
 public class DamagePopup : MonoBehaviour
 {
     private TextMeshProUGUI _textMesh;
+    [SerializeField] private Vector3 _originalSize;
 
     private void Awake()
     {
         _textMesh = GetComponent<TextMeshProUGUI>();
-
     }
 
     public void Setup(float damageAmount, Vector3 pos, Status status = null)
     {
         transform.position = pos;
+        transform.localScale = _originalSize;
+
         _textMesh.SetText(damageAmount.ToString());
         if(status != null)
         {

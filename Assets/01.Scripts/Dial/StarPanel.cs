@@ -90,7 +90,7 @@ public class StarPanel : MonoBehaviour
                     //Debug.Log("touch");
                     if (Vector2.Distance(transform.position, Define.MainCam.ScreenToWorldPoint(touchEndedPos)) <= _outDistance)
                     {
-                        _dialScene?.AllCardDescPopup();
+                        Define.DialScene?.AllCardDescPopup();
                     }
                 }
             }

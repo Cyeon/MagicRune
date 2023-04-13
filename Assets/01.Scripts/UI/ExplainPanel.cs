@@ -28,9 +28,9 @@ public class ExplainPanel : MonoBehaviour
         _descText = transform.Find("Explain_Text").GetComponent<TextMeshProUGUI>();
     }
 
-    public void SetUI(BaseRune rune)
+    public virtual void SetUI(BaseRune rune)
     {
-        if(_nameText == null || _runeImage == null || _coolTimeText == null || _descText)
+        if (_nameText == null || _runeImage == null || _coolTimeText == null || _descText == null)
         {
             Setting();
         }

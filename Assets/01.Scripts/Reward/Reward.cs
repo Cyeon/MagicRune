@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,12 +8,12 @@ public abstract class Reward
     public string desc;
 
     /// <summary>
-    /// º¸»ó Áö±Ş ÇÔ¼ö
+    /// ë³´ìƒ ì§€ê¸‰ í•¨ìˆ˜
     /// </summary>
     public abstract void GiveReward();
 
     /// <summary>
-    /// º¸»ó ¸ñ·Ï¿¡ Ãß°¡
+    /// ë³´ìƒ ëª©ë¡ì— ì¶”ê°€
     /// </summary>
     public abstract void AddRewardList();
 }
