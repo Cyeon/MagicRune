@@ -9,9 +9,9 @@ public class ChooseRuneUI : MonoBehaviour
     private void Awake()
     {
         Transform trm = transform.Find("ChooseRuneList");
-        for(int i = 0; i <  _crPanelList.Count; i++)
+        for(int i = 0; i <  trm.childCount; i++)
         {
-            _crPanelList.Add(_crPanelList[i].GetComponent<ChooseRunePanel>());
+            _crPanelList.Add(trm.GetChild(i).GetComponent<ChooseRunePanel>());
         }
     }
 

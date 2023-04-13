@@ -14,6 +14,7 @@ public class ChooseRunePanel : ExplainPanel
 
     public override void SetUI(BaseRune rune)
     {
+        Debug.Log(rune.BaseRuneSO.RuneName);
         base.SetUI(rune);
         _rune = rune;
     }
