@@ -196,7 +196,7 @@ public class StatusManager
     public void Reset()
     {
         _statusList.Clear();
-        _dialScene?.ClearStatusPanel(_unit);
+        Define.DialScene?.ClearStatusPanel(_unit);
 
         for(int i = _unit.statusTrm.childCount - 1; i >= 0; --i)
         {

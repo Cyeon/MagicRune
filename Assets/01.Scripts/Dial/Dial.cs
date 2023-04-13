@@ -498,7 +498,7 @@ public class Dial : MonoBehaviour
             //    _effectDict.Clear();
             //    return;
             //}
-            //_dialScene?.CardDescDown();
+            //Define.DialScene?.CardDescDown();
             //BezierMissile b = ResourceManager.Instance.Instantiate("BezierMissile", this.transform.parent).GetComponent<BezierMissile>();
             //b.SetEffect(g);
             //b.SetTrailColor(EffectType.Attack);
@@ -531,7 +531,7 @@ public class Dial : MonoBehaviour
 
     private IEnumerator AttackCoroutine()
     {
-        _dialScene?.CardDescDown();
+        Define.DialScene?.CardDescDown();
         for (int i = _dialElementList.Count - 1; i >= 0; i--)
         {
             if (_dialElementList[i].SelectCard != null)

@@ -40,7 +40,7 @@ public class Unit : MonoBehaviour
             }
             if (Managers.Scene.CurrentScene == _dialScene)
             {
-                _dialScene?.UpdateHealthbar(IsPlayer);
+                Define.DialScene?.UpdateHealthbar(IsPlayer);
             }
 
             if (_health <= 0) Die();
@@ -59,7 +59,7 @@ public class Unit : MonoBehaviour
             {
                 _dialScene = Managers.Scene.CurrentScene as DialScene;
             }
-            _dialScene?.UpdateShieldText(_isPlayer, _shield);
+            Define.DialScene?.UpdateShieldText(_isPlayer, _shield);
         }
     }
 

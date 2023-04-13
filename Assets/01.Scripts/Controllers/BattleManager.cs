@@ -60,7 +60,7 @@ public class BattleManager : MonoSingleton<BattleManager>
             RERune rune = new RERune();
             rune.AddRewardList();
 
-            _dialScene?.RewardUI.VictoryPanelPopup();
+            Define.DialScene?.RewardUI.VictoryPanelPopup();
         });
 
         player = Managers.GetPlayer();
@@ -68,9 +68,9 @@ public class BattleManager : MonoSingleton<BattleManager>
         player.SliderInit();
 
         player.OnDieEvent.RemoveAllListeners();
-        player.OnDieEvent.AddListener(() => { _dialScene?.RewardUI.DefeatPanelPopup(); });
+        player.OnDieEvent.AddListener(() => { Define.DialScene?.RewardUI.DefeatPanelPopup(); });
 
-        _dialScene?.HealthbarInit(true, player.HP, player.MaxHealth);
+        Define.DialScene?.HealthbarInit(true, player.HP, player.MaxHealth);
 
         FeedbackManager.Instance.Init();
 
@@ -87,7 +87,15 @@ public class BattleManager : MonoSingleton<BattleManager>
 
         EventManager.TriggerEvent(Define.ON_START_PLAYER_TURN);
 
-        enemy.PatternManager.CurrentPattern.NextPattern();
+        if(enemy.PatternManager.CurrentPattern == null)
+        {
+            enemy.PatternManager.NextPattern();
+        }
+        else
+        {
+            enemy.PatternManager.CurrentPattern.NextPattern();
+        }
+
 
         player.StatusManager.OnTurnStart();
         enemy.PatternManager.StartAction();
@@ -120,7 +128,7 @@ public class BattleManager : MonoSingleton<BattleManager>
         {
             case GameTurn.Unknown:
                 EventManager.TriggerEvent(Define.ON_START_PLAYER_TURN);
-                _dialScene?.Turn("Player Turn");
+                Define.DialScene?.Turn("Player Turn");
                 _gameTurn = GameTurn.EnemyEnd;
                 break;
 
@@ -135,10 +143,10 @@ public class BattleManager : MonoSingleton<BattleManager>
                 if (enemy.Shield > 0)
                 {
                     enemy.ResetShield();
-                    _dialScene?.UpdateHealthbar(false);
+                    Define.DialScene?.UpdateHealthbar(false);
                 }
 
-                _dialScene?.Turn("Enemy Turn");
+                Define.DialScene?.Turn("Enemy Turn");
                 _gameTurn = GameTurn.PlayerEnd;
                 break;
 
@@ -160,15 +168,15 @@ public class BattleManager : MonoSingleton<BattleManager>
                 if (player.Shield > 0)
                 {
                     player.ResetShield();
-                    _dialScene?.UpdateHealthbar(true);
+                    Define.DialScene?.UpdateHealthbar(true);
                 }
 
-                _dialScene?.Turn("Player Turn");
-                _dialScene?.Dial?.ResetDial();
-                _dialScene?.Dial?.AllMagicCircleGlow(false);
-                _dialScene?.Dial?.AllMagicSetCoolTime();
-                _dialScene?.Dial?.SettingDialRune(false);
-                _dialScene?.AllCardDescPopup();
+                Define.DialScene?.Turn("Player Turn");
+                Define.DialScene?.Dial?.ResetDial();
+                Define.DialScene?.Dial?.AllMagicCircleGlow(false);
+                Define.DialScene?.Dial?.AllMagicSetCoolTime();
+                Define.DialScene?.Dial?.SettingDialRune(false);
+                Define.DialScene?.AllCardDescPopup();
                 _gameTurn = GameTurn.EnemyEnd;
                 break;
 
