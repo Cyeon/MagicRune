@@ -9,11 +9,11 @@ public class GoldManager
 
     public void Init()
     {
-        _gold = int.MaxValue;
+        _gold = 99999;
     }
 
     public void AddGold(int amount)
     {
-        _gold += amount;
+        _gold = Mathf.Clamp(_gold + amount, 0, int.MaxValue);
     }
 }

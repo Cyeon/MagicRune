@@ -91,9 +91,9 @@ public class Dial : MonoBehaviour
     public int GetUsingRuneCount()
     {
         int count = 0;
-        for (int i = 0; i < Managers.Deck.Deck.Count; i++)
+        for (int i = 0; i < _remainingRuneList.Count; i++)
         {
-            if (Managers.Deck.Deck[i].CoolTIme <= 0)
+            if (_remainingRuneList[i].CoolTIme <= 0)
             {
                 count++;
             }
@@ -153,8 +153,8 @@ public class Dial : MonoBehaviour
         }
         else
         {
-            SortingRemaingRune();
-            maxRuneCount = GetUsingRuneCount();
+            //SortingRemaingRune();
+            //maxRuneCount = GetUsingRuneCount();
             for (int i = 0; i < _maxRuneCount; i++)
             {
                 if (maxRuneCount <= 0)
@@ -175,6 +175,7 @@ public class Dial : MonoBehaviour
                 }
                 AddCard(r, 1);
                 Managers.Deck.RuneSwap(runeIndex, maxRuneCount - 1);
+                //_remainingRuneList.SwapInPlace(runeIndex, maxRuneCount - 1);
 
                 _remainingRuneList.RemoveAt(runeIndex);
                 maxRuneCount--;
@@ -202,12 +203,14 @@ public class Dial : MonoBehaviour
             }
             AddCard(r, 3 - index);
             Managers.Deck.RuneSwap(runeIndex, maxRuneCount - 1);
+            //_remainingRuneList.SwapInPlace(runeIndex, maxRuneCount - 1);
 
             _remainingRuneList.RemoveAt(runeIndex);
 
             maxRuneCount--;
         }
 
+        #region Copy
         for (int i = 1; i <= 3; i++)
         {
             if (_runeDict.ContainsKey(i))
@@ -229,6 +232,7 @@ public class Dial : MonoBehaviour
                     }
                 }
             }
+            #endregion
         }
 
         RuneSort();
@@ -444,7 +448,7 @@ public class Dial : MonoBehaviour
             {
                 for (int j = 0; j < _runeDict[i].Count; j++)
                 {
-                    _runeDict[3][j].gameObject.SetActive(false);
+                    _runeDict[i][j].gameObject.SetActive(false);
                 }
             }
         }
