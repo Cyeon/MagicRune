@@ -24,9 +24,12 @@ public class RuneManager
     {
         List<BaseRune> newRuneList = new List<BaseRune>(_runeList.BaseRuneList);
 
-        for(int i = 0; i < ignoreRuneList.Count; i++)
+        if(ignoreRuneList != null)
         {
-            newRuneList.Remove(ignoreRuneList[i]);
+            for (int i = 0; i < ignoreRuneList.Count; i++)
+            {
+                newRuneList.Remove(ignoreRuneList[i]);
+            }
         }
 
         return newRuneList[Random.Range(0, newRuneList.Count)];
