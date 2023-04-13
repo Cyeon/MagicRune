@@ -58,6 +58,9 @@ public class BattleManager : MonoSingleton<BattleManager>
             reward.SetGold(Managers.Map.CurrentChapter.Gold);
             reward.AddRewardList();
 
+            RERune rune = new RERune();
+            rune.AddRewardList();
+
             _dialScene?.RewardUI.VictoryPanelPopup();
         });
 

@@ -525,9 +525,6 @@ public class Dial : MonoBehaviour
             //});
 
             StartCoroutine(AttackCoroutine());
-
-            //_effectDict.Clear();
-            BattleManager.Instance.PlayerTurnEnd();
             _isAttack = false;
         }
     }

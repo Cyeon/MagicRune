@@ -105,7 +105,7 @@ public class Pattern : MonoBehaviour
     }
 
     /// <summary>
-    /// 다음 순서에 있는 패턴 가져오는 함수
+    /// 다음 순서에 있는 패턴으로 변경
     /// </summary>
     public void NextPattern()
     {
