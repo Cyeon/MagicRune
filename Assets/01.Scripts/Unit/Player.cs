@@ -9,16 +9,18 @@ public class Player : Unit
     public int cost = 10; // 마나
     public AudioClip attackSound = null;
 
+    public Transform relicTrm;
+
     private void Awake()
     {
-        _isPlayer = true;
-
         if (FindObjectsOfType<Player>().Length > 1)
         {
             Destroy(gameObject);
         }
-
         DontDestroyOnLoad(this);
+
+        _isPlayer = true;
+        relicTrm = transform.Find("Relic");
     }
 
     public void SliderInit()

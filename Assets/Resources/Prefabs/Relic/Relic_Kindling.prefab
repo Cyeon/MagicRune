@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &8378743581122507794
+--- !u!1 &774103070240817097
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,22 +8,22 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 5736046982554988565}
-  - component: {fileID: 5014004267170453785}
+  - component: {fileID: 774103070240817096}
+  - component: {fileID: 1588100847981781512}
   m_Layer: 0
-  m_Name: Status_Recharging
+  m_Name: Relic_Kindling
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &5736046982554988565
+--- !u!4 &774103070240817096
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8378743581122507794}
+  m_GameObject: {fileID: 774103070240817097}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -32,29 +32,21 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5014004267170453785
+--- !u!114 &1588100847981781512
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8378743581122507794}
+  m_GameObject: {fileID: 774103070240817097}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cde2e363b5d96b742919b2129a9046bf, type: 3}
+  m_Script: {fileID: 11500000, guid: d34cfccc9a0932c48a39dd659c8518ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  debugName: "\uCDA9\uC804"
-  statusName: 5
-  information: 
-  textColor: {r: 1, g: 1, b: 1, a: 1}
-  type: 0
-  isTurnRemove: 0
-  OnAddStatus: []
-  OnTurnStart: []
-  OnAttack: []
-  OnGetDamage: []
-  OnTurnEnd: []
-  icon: {fileID: 21300000, guid: fd4489fff7614ed4d9de3e70e9bec7cf, type: 3}
-  color: {r: 1, g: 1, b: 1, a: 1}
-  unit: {fileID: 0}
+  debugName: "\uBD88\uC3D8\uC2DC\uAC1C"
+  relicName: 1
+  desc: "\uD654\uC0C1\uC774 2\uBC30\uC758 \uB370\uBBF8\uC9C0\uB97C \uC8FC\uB294 \uB300\uC2E0
+    \uBAA8\uB450 \uC5C6\uC5B4\uC9D1\uB2C8\uB2E4."
+  icon: {fileID: 0}
+  relicType: 1
