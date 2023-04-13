@@ -4,35 +4,26 @@ using UnityEngine;
 
 public class RelicManager
 {
-    private List<Relic> _useRelicList = new List<Relic>();
-    private List<Relic> _continuousRelicList = new List<Relic>();
+    private List<Relic> _relicList = new List<Relic>();
 
-    public void AddRelic(string relicName)
+    public void AddRelic(RelicName relicName)
     {
         Relic relic = Managers.Resource.Instantiate("Relic/Relic_" + relicName, Managers.GetPlayer().relicTrm).GetComponent<Relic>();
         if (relic == null) return;
 
-        if(relic.relicType == RelicType.Use)
-        {
-            _useRelicList.Add(relic);
-            (relic as IUseHandler).Use();
-        }
-        else if(relic.relicType == RelicType.Continuous)
-        {
-            _continuousRelicList.Add(relic);
-        }
-
+        _relicList.Add(relic);
+        relic.OnAdd();
         Debug.Log(relic.debugName);
     }
 
-    public void ContinuousExecute(string relicName)
+    public void Reset()
     {
-        for(int i = 0; i < _continuousRelicList.Count; ++i)
+        for(int i = _relicList.Count - 1; i >= 0; i++)
         {
-            if (_continuousRelicList[i].relicName == relicName)
-            {
-                (_continuousRelicList[i] as IContinuousHandler).Execute();
-            }
+            _relicList[i].OnRemove();
+            Managers.Resource.Destroy(_relicList[i].gameObject) ;
         }
+
+        _relicList.Clear();
     }
 }

@@ -9,11 +9,21 @@ public enum RelicType
     Continuous
 }
 
-public class Relic : MonoBehaviour
+public enum RelicName
+{
+    None,
+    HealingBox,
+    Kindling,
+}
+
+public abstract class Relic : MonoBehaviour
 {
     public string debugName;
-    public string relicName;
+    public RelicName relicName = RelicName.None;
     [TextArea(1, 10)] public string desc;
     [ShowAssetPreview(32, 32)] public Sprite icon;
     public RelicType relicType;
+
+    public abstract void OnAdd();
+    public abstract void OnRemove();
 }
