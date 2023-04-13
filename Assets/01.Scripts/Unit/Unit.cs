@@ -77,37 +77,37 @@ public class Unit : MonoBehaviour
     [field: SerializeField] public UnityEvent<float> OnTakeDamage { get; set; }
 
     [field: SerializeField] public UnityEvent OnTakeDamageFeedback { get; set; }
-    [field: SerializeField] public Dictionary<StatusInvokeTime, List<Status>> unitStatusDic = new Dictionary<StatusInvokeTime, List<Status>>();
+    //[field: SerializeField] public Dictionary<StatusInvokeTime, List<Status>> unitStatusDic = new Dictionary<StatusInvokeTime, List<Status>>();
 
     public UnityEvent OnDieEvent;
     protected DialScene _dialScene;
 
+    public bool isTurnSkip = false;
+
+    [Header("Status")]
+    public Transform statusTrm;
+    private StatusManager _statusManager;
+    public StatusManager StatusManager => _statusManager;
+
     private void Start() {
-        ResetStatus();
         _dialScene = Managers.Scene.CurrentScene as DialScene;
-    }
+        _statusManager = new StatusManager(this, _dialScene);
+        statusTrm = transform.Find("Status");
 
-    public void ResetStatus()
-    {
-        unitStatusDic.Clear();
-
-        unitStatusDic.Add(StatusInvokeTime.Start, new List<Status>());
-        unitStatusDic.Add(StatusInvokeTime.Attack, new List<Status>());
-        unitStatusDic.Add(StatusInvokeTime.GetDamage, new List<Status>());
-        unitStatusDic.Add(StatusInvokeTime.End, new List<Status>());
+        _statusManager.Reset();
     }
 
     /// <summary>
     /// ������ �޴� �Լ�
     /// </summary>
     /// <param name="damage"></param>
-    public void TakeDamage(float damage, bool isFixed = false, Status status = null)
+    public void TakeDamage(float damage, bool isTrueDamage = false, Status status = null)
     {
         currentDmg = damage;
-        InvokeStatus(StatusInvokeTime.GetDamage);
+        _statusManager.OnGetDamage();
         currentDmg = Mathf.Floor(currentDmg);
 
-        if (Shield > 0 && isFixed == false)
+        if (Shield > 0 && isTrueDamage == false)
         {
             if (Shield - currentDmg >= 0)
                 Shield -= currentDmg;
@@ -151,20 +151,20 @@ public class Unit : MonoBehaviour
         return false;
     }
 
-    public void InvokeStatus(StatusInvokeTime time)
-    {
-        if (IsDie == true) return;
+    //public void InvokeStatus(StatusInvokeTime time)
+    //{
+    //    if (IsDie == true) return;
 
-        List<Status> status;
+    //    List<Status> status;
 
-        if (unitStatusDic.TryGetValue(time, out status))
-        {
-            if (status.Count > 0)
-            {
-                StatusManager.Instance.StatusFuncInvoke(status, this);
-            }
-        }
-    }
+    //    if (unitStatusDic.TryGetValue(time, out status))
+    //    {
+    //        if (status.Count > 0)
+    //        {
+    //            StatusManager.Instance.StatusFuncInvoke(status, this);
+    //        }
+    //    }
+    //}
 
     public float GetMaxHP()
     {
@@ -181,11 +181,14 @@ public class Unit : MonoBehaviour
         if (_isDie == false)
         {
             HP += value;
-            if(_dialScene == null)
-            {
-                _dialScene = Managers.Scene.CurrentScene as DialScene;
-            }
-            _dialScene?.UpdateHealthbar(IsPlayer);
+        }
+    }
+
+    public void RemTrueHP(float value)
+    {
+        if(_isDie == false)
+        {
+            HP -= value;
         }
     }
 

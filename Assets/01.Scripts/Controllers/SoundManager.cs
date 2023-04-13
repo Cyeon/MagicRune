@@ -80,7 +80,7 @@ public class SoundManager
         else
         {
             clip = Managers.Resource.Load<AudioClip>("Sound/" + path);
-            _audioClipDict.Add(clip.name, clip);
+            _audioClipDict.Add(path, clip);
         }
 
         PlaySound(clip, type, isLoop, pitch);

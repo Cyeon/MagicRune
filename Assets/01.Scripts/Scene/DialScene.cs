@@ -124,7 +124,7 @@ public class DialScene : BaseScene
 
         statusPanel.image.sprite = status.icon;
         statusPanel.image.color = status.color;
-        statusPanel.duration.text = status.typeValue.ToString();
+        statusPanel.duration.text = status.TypeValue.ToString();
         statusPanel.statusName = status.statusName;
         statusPanel.transform.SetParent(parent);
         statusPanel.transform.localScale = new Vector3(1.7f, 1.7f, 1.7f);
@@ -132,17 +132,30 @@ public class DialScene : BaseScene
         return statusPanel;
     }
 
+    private Transform GetStatusTrm(Unit unit)
+    {
+        return unit == BattleManager.Instance.player ?
+            Managers.UI.Get<Image>("P StatusPanel").transform : Managers.UI.Get<Image>("E StatusPanel").transform;
+    }
+
     public void AddStatus(Unit unit, Status status)
     {
-        Transform trm = unit == BattleManager.Instance.player ?
-            Managers.UI.Get<Image>("P StatusPanel").transform : Managers.UI.Get<Image>("E StatusPanel").transform;
-        GetStatusPanel(status, trm);
+        GetStatusPanel(status, GetStatusTrm(unit));
     }
+
+    public void ClearStatusPanel(Unit unit)
+    {
+        Transform trm = GetStatusTrm(unit);
+        for(int i = trm.childCount - 1; i >= 0; --i)
+        {
+            Destroy(trm.GetChild(i).gameObject);
+        }
+    }
+
 
     public GameObject GetStatusPanelStatusObj(Unit unit, StatusName name)
     {
-        Transform trm = unit == BattleManager.Instance.player ?
-            Managers.UI.Get<Image>("P StatusPanel").transform : Managers.UI.Get<Image>("E StatusPanel").transform;
+        Transform trm = GetStatusTrm(unit);
 
         GameObject obj = null;
         for (int i = 0; i < trm.childCount; i++)
@@ -156,20 +169,20 @@ public class DialScene : BaseScene
         return obj;
     }
 
-    public void ReloadStatusPanel(Unit unit, StatusName name, int duration)
+    public void ReloadStatusPanel(Unit unit, Status status)
     {
-        GameObject obj = GetStatusPanelStatusObj(unit, name);
+        GameObject obj = GetStatusPanelStatusObj(unit, status.statusName);
 
         if (obj == null)
             return;
 
-        if (duration <= 0)
+        if (status.TypeValue <= 0)
         {
-            RemoveStatusPanel(unit, name);
+            RemoveStatusPanel(unit, status.statusName);
             return;
         }
 
-        obj.GetComponent<StatusPanel>().duration.text = duration.ToString();
+        obj.GetComponent<StatusPanel>().duration.text = status.TypeValue.ToString();
     }
 
     public void RemoveStatusPanel(Unit unit, StatusName name)

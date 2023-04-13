@@ -1,17 +1,10 @@
+using MyBox;
 using NaughtyAttributes;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
-
-public enum StatusInvokeTime
-{
-    Start,
-    Attack,
-    GetDamage,
-    End
-}
 
 public enum StatusType
 {
@@ -33,52 +26,49 @@ public enum StatusName
     COUNT
 }
 
-[System.Serializable]
-public class Status
+public class Status : MonoBehaviour
 {
     public string debugName = "";
-    [Header("Information")]
     public StatusName statusName = StatusName.Null;
+    [TextArea(1, 5)]
     public string information = "";
     public Color textColor = Color.white;
 
     [Header("Type")]
-    public  StatusInvokeTime invokeTime = StatusInvokeTime.Start;
     public StatusType type = StatusType.Stack;
-    public int typeValue = 0;
+    private int _typeValue = 0;
+    public int TypeValue => _typeValue;
+    [ConditionalField(nameof(type), false, StatusType.Stack)]
     public bool isTurnRemove = false;
 
     [Header("Function")]
-    public UnityEvent statusFunc;
-    public UnityEvent addFunc;
+    public List<StatusEvent> OnAddStatus = new List<StatusEvent>();
+    public List<StatusEvent> OnTurnStart = new List<StatusEvent>();
+    public List<StatusEvent> OnAttack = new List<StatusEvent>();
+    public List<StatusEvent> OnGetDamage = new List<StatusEvent>();
+    public List<StatusEvent> OnTurnEnd = new List<StatusEvent>();
 
     [Header("Resource")]
-    [ShowAssetPreview(32, 32), Tooltip("�̹���")]
-    public Sprite icon;
+    [ShowAssetPreview(32, 32)] public Sprite icon;
     public Color color = Color.white;
 
     [HideInInspector] public Unit unit;
 
-    public Status(Status status)
+    public void AddValue(int count)
     {
-        this.statusName = status.statusName;
-        this.debugName = status.debugName;
-        this.information = status.information;
-        this.textColor = status.textColor;
-
-        this.invokeTime = status.invokeTime;
-        this.typeValue = status.typeValue;
-        this.isTurnRemove = status.isTurnRemove;
-
-        this.unit = status.unit;
-
-        this.statusFunc = status.statusFunc;
-        this.type = status.type;
-        this.addFunc = status.addFunc;
-
-        this.icon = status.icon;
-        this.color = status.color;
+        _typeValue += count;
+        unit.StatusManager.DialScene.ReloadStatusPanel(unit, this);
     }
 
-    
+    public void RemoveValue(int count)
+    {
+        _typeValue = Mathf.Clamp(_typeValue - count, 0, _typeValue);
+        if(_typeValue <= 0) 
+        { 
+            unit.StatusManager.DeleteStatus(this);
+            return;
+        }
+
+        unit.StatusManager.DialScene.ReloadStatusPanel(unit, this);
+    }
 }

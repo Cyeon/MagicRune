@@ -50,7 +50,7 @@ public class Enemy : Unit
     public void Attack(int damage)
     {
         currentDmg = damage;
-        InvokeStatus(StatusInvokeTime.Attack);
+        StatusManager.OnAttack();
 
         BattleManager.Instance.player.TakeDamage(currentDmg);
         Managers.Sound.PlaySound(attackSound, SoundType.Effect);

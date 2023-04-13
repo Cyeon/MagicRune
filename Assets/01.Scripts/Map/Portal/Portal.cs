@@ -65,7 +65,7 @@ public class Portal : MonoBehaviour, IPointerClickHandler
 
         if (currentClickNum == 1)
         {
-            if (_isEffecting) return;
+            if (_isEffecting || Managers.Map.PortalSpawner.IsSelect) return;
             Managers.Map.PortalSpawner.SelectPortal(this);
             Execute();
         }

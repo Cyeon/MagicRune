@@ -46,7 +46,8 @@ public class PatternManager : MonoBehaviour
 
     public void StartAction()
     {
-        _currentPattern.StartAction();
+        if(BattleManager.Instance.enemy.isTurnSkip == false)
+            _currentPattern.StartAction();
     }
 
     public void EndAction()

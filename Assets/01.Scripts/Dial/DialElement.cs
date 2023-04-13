@@ -399,7 +399,7 @@ public class DialElement : MonoBehaviour
                                         ((index) * oneDinstance)*/), 0.3f, RotateMode.Fast)
                                         .OnComplete(() =>
                                         {
-                                            //SelectCard = _runeList[index]; // ���� ���� ���ϴ� �ְ� �ȵ���?�� ����â ������ ������?
+                                            //SelectCard = _runeList[index]; // ���� ���� ���ϴ� �ְ� �ȵ���?�� ����â ������ ������?
                                             if (_selectCard != null) { _dialScene?.CardDescPopup(_selectCard); }
                                         });
                                 }

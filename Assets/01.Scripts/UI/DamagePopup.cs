@@ -22,15 +22,15 @@ public class DamagePopup : MonoBehaviour
         if(status != null)
         {
             _textMesh.color = status.textColor;
-            _textMesh.SetText(string.Format("{0} {1}", status.debugName, damageAmount));
+            _textMesh.SetText(string.Format("{0} {1}", status.debugName, damageAmount.ToString()));
         }
 
         Sequence seq = DOTween.Sequence();
-        seq.Append(transform.DOJump(new Vector3(pos.x + Random.Range(-1f, 1f), pos.y, pos.x), 0.8f, 1, 1f));
+        seq.Append(transform.DOJump(new Vector3(pos.x, pos.y + Random.Range(-3f, 3f), pos.x), 10f, 1, 1f)).SetEase(Ease.InQuart);
         seq.Join(_textMesh.DOFade(0, 1f).SetEase(Ease.InQuart));
         seq.AppendCallback(() =>
         {
-            Destroy(gameObject);
+            Managers.Resource.Destroy(gameObject);
         });
     }
 
