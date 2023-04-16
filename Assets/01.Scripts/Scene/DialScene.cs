@@ -79,6 +79,7 @@ public class DialScene : BaseScene
 
         #endregion
 
+        #region UI Get
         _enemyPatternIcon = Managers.UI.Get<Image>("NextPattern Image");
         _enemyPatternValueText = Managers.UI.Get<TextMeshProUGUI>("NextPattern ValueText");
 
@@ -97,6 +98,8 @@ public class DialScene : BaseScene
         Managers.UI.Get<Button>("Quit Btn").onClick.AddListener(() => Managers.GameQuit());
 
         _cardDescPanelList = _cardDescPanel.GetComponent<ExplainPanelList>();
+
+        #endregion
 
         Managers.Sound.PlaySound("BGM/DialSceneBGM", SoundType.Bgm, true, 1.0f);
     }
