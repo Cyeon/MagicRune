@@ -22,6 +22,9 @@ public class ShopItemPanelUI : MonoBehaviour
     private Item _iItem;
     public TextMeshProUGUI userGold;
 
+    /// <summary>
+    /// 아이템을 샀을때의 행동을 이걸로 넘길려했는데 필요없어짐. 혹시 모르니까 남겨둠
+    /// </summary>
     private Action _buyAction;
 
     public void Init(Item item, Action action = null)

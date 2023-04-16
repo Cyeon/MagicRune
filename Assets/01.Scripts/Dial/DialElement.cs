@@ -4,6 +4,9 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// ÇÑ ¶óÀÎÀÇ ·éµéÀ» °ü¸®ÇÔ. µ¹¾Æ°¡´Â ·ÎÁ÷ÀÖÀ½.
+/// </summary>
 public class DialElement : MonoBehaviour
 {
     private Dial _dial;
@@ -399,7 +402,7 @@ public class DialElement : MonoBehaviour
                                         ((index) * oneDinstance)*/), 0.3f, RotateMode.Fast)
                                         .OnComplete(() =>
                                         {
-                                            //SelectCard = _runeList[index]; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½Ö°ï¿½ ï¿½Èµï¿½î°¡ï¿½ï¿½?ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ã¢ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½?
+                                            //SelectCard = _runeList[index]; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½Ö°ï¿½ ï¿½Èµï¿½î°¡ï¿½ï¿?ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ã¢ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½?
                                             if (_selectCard != null) { Define.DialScene?.CardDescPopup(_selectCard); }
                                         });
                                 }

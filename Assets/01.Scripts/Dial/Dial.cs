@@ -12,6 +12,9 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
+/// <summary>
+/// Dial Element를 관리하고, 룬 정렬과 공격에 대한 내용
+/// </summary>
 public class Dial : MonoBehaviour
 {
     #region Rotate Parameta
@@ -38,6 +41,9 @@ public class Dial : MonoBehaviour
     private Dictionary<int, List<BaseRune>> _runeDict;
     private List<DialElement> _dialElementList;
     public List<DialElement> DialElementList => _dialElementList;
+    /// <summary>
+    /// 모든 룬에 담긴 리스트
+    /// </summary>
     private List<BaseRune> _remainingRuneList = new List<BaseRune>(20);
 
     private Transform _remamingRuneContainer;
@@ -51,19 +57,32 @@ public class Dial : MonoBehaviour
     {
         _remamingRuneContainer = transform.Find("RuneContainer");
 
+        #region Initialization
         _runeDict = new Dictionary<int, List<BaseRune>>(3);
         for (int i = 1; i <= 3; i++)
         {
             _runeDict.Add(i, new List<BaseRune>());
         }
         _dialElementList = new List<DialElement>();
+        #endregion
 
-        for(int i = 0; i < Managers.Deck.Deck.Count; i++)
+        #region Add RemainingRune
+        // Deck에는 안쪽 라인에 룬이 없다.
+        for (int i = 0; i < Managers.Deck.Deck.Count; i++)
         {
             BaseRune r = Managers.Resource.Instantiate(Managers.Deck.Deck[i].gameObject, _remamingRuneContainer).GetComponent<BaseRune>();
             r.gameObject.SetActive(false);
             _remainingRuneList.Add(r);
         }
+
+        // 나중에 바꿀 듯..?
+        for(int i = 0; i < Managers.Deck.FirstDialDeck.Count; i++)
+        {
+            BaseRune r = Managers.Resource.Instantiate(Managers.Deck.FirstDialDeck[i].gameObject, _remamingRuneContainer).GetComponent<BaseRune>();
+            r.gameObject.SetActive(false);
+            _remainingRuneList.Add(r);
+        }
+        #endregion
 
         _isAttack = false;
     }
@@ -136,19 +155,22 @@ public class Dial : MonoBehaviour
             for (int i = 0; i < 3; i++)
             {
                 int randomIndex = Random.Range(0, numberList.Count);
-                BaseRune r = _remainingRuneList.Find(x => x == Managers.Deck.FirstDialDeck[randomIndex]);
-                r.transform.SetParent(_dialElementList[2].transform);
-                r.transform.localScale = new Vector3(0.1f, 0.1f, 1f);
-                r.gameObject.SetActive(true);
-                _dialElementList[2].AddRuneList(r);
-                if (isReset == true)
+                BaseRune r = _remainingRuneList.Find(x => x.BaseRuneSO == Managers.Deck.FirstDialDeck[randomIndex].BaseRuneSO);
+                if (r != null)
                 {
-                    r.SetCoolTime(0);
-                }
-                AddCard(r, 1);
+                    r.transform.SetParent(_dialElementList[2].transform);
+                    r.transform.localScale = new Vector3(0.1f, 0.1f, 1f);
+                    r.gameObject.SetActive(true);
+                    _dialElementList[2].AddRuneList(r);
+                    if (isReset == true)
+                    {
+                        r.SetCoolTime(0);
+                    }
+                    AddCard(r, 1);
 
+                    _remainingRuneList.Remove(r);
+                }
                 numberList.RemoveAt(randomIndex);
-                _remainingRuneList.Remove(r);
             }
         }
         else
