@@ -9,7 +9,7 @@ public class GoldManager
 
     public void Init()
     {
-        _gold = int.MaxValue;
+        _gold = 12038571;
     }
 
     public void AddGold(int amount)

@@ -6,6 +6,6 @@ public class RestAction : PatternAction
 {
     public override void TakeAction()
     {
-        BattleManager.Instance.enemy.PatternManager.CurrentPattern.NextAction();
+        BattleManager.Instance.Enemy.PatternManager.CurrentPattern.NextAction();
     }
 }

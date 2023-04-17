@@ -6,6 +6,6 @@ public  class PatternAction : MonoBehaviour
 {
     public virtual void TakeAction()
     {
-        BattleManager.Instance.enemy.PatternManager.CurrentPattern.NextAction();
+        BattleManager.Instance.Enemy.PatternManager.CurrentPattern.NextAction();
     }
 }

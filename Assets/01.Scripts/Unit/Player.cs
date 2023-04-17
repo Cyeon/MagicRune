@@ -42,7 +42,7 @@ public class Player : Unit
 
         StatusManager.OnAttack();
 
-        BattleManager.Instance.enemy.TakeDamage(currentDmg);
+        BattleManager.Instance.Enemy.TakeDamage(currentDmg);
         Managers.Sound.PlaySound(attackSound, SoundType.Effect);
 
     }

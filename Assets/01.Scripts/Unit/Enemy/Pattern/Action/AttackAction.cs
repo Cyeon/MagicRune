@@ -36,7 +36,7 @@ public class AttackAction : PatternAction
     {
         for(int i = 0; i < count; i++)
         {
-            BattleManager.Instance.enemy.Attack(damage);
+            BattleManager.Instance.Enemy.Attack(damage);
             yield return new WaitForSeconds(0.2f);
         }
         base.TakeAction();

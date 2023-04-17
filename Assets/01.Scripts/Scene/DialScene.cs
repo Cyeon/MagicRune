@@ -388,7 +388,7 @@ public class DialScene : BaseScene
     public void UpdateHealthbar(bool isPlayer)
     {
         SliderInit(isPlayer);
-        Unit unit = isPlayer ? BattleManager.Instance.player : BattleManager.Instance.enemy;
+        Unit unit = isPlayer ? BattleManager.Instance.player : BattleManager.Instance.Enemy;
 
         if (unit.Shield > 0)
         {

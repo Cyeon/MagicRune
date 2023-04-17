@@ -566,7 +566,7 @@ public class Dial : MonoBehaviour
                         b.SetTrailColor(Color.yellow);
                         break;
                 }
-                b.Init(_dialElementList[i].SelectCard.transform, BattleManager.Instance.enemy.transform, 1.5f, 7, 7, () =>
+                b.Init(_dialElementList[i].SelectCard.transform, BattleManager.Instance.Enemy.transform, 1.5f, 7, 7, () =>
                 {
                     _dialElementList[index].Attack();
 

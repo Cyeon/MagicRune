@@ -6,6 +6,6 @@ public class Fire : BaseRune
 {
     public override void AbilityAction()
     {
-        BattleManager.Instance.enemy.StatusManager.AddStatus(StatusName.Fire, 5);
+        BattleManager.Instance.Enemy.StatusManager.AddStatus(StatusName.Fire, 5);
     }
 }

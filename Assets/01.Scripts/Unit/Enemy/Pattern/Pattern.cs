@@ -122,12 +122,12 @@ public class Pattern : MonoBehaviour
             {
                 if (transition.positivePattern != null)
                 {
-                    BattleManager.Instance.enemy.PatternManager.ChangePattern(transition.positivePattern);
+                    BattleManager.Instance.Enemy.PatternManager.ChangePattern(transition.positivePattern);
                     return;
                 }
             }
         }
 
-        BattleManager.Instance.enemy.PatternManager.NextPattern();
+        BattleManager.Instance.Enemy.PatternManager.NextPattern();
     }
 }

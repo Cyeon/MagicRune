@@ -6,6 +6,6 @@ public class Ice : BaseRune
 {
     public override void AbilityAction()
     {
-        BattleManager.Instance.enemy.StatusManager.AddStatus(StatusName.Chilliness, 3);
+        BattleManager.Instance.Enemy.StatusManager.AddStatus(StatusName.Chilliness, 3);
     }
 }

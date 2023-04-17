@@ -284,7 +284,7 @@ public class DialElement : MonoBehaviour
 
     public void Attack()
     {
-        if (BattleManager.Instance.enemy.IsDie == false && _selectCard != null)
+        if (BattleManager.Instance.Enemy.IsDie == false && _selectCard != null)
         {
             if (SelectCard.AbilityCondition())
             {

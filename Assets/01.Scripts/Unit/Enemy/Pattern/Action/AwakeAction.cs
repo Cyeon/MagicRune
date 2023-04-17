@@ -8,7 +8,7 @@ public class AwakeAction : PatternAction
 
     public override void TakeAction()
     {
-        BattleManager.Instance.enemy.SpriteRenderer.sprite = _awakingIcon;
+        BattleManager.Instance.Enemy.SpriteRenderer.sprite = _awakingIcon;
         base.TakeAction();
     }
 }
