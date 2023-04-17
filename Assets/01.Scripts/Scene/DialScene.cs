@@ -392,22 +392,22 @@ public class DialScene : BaseScene
 
         if (unit.Shield > 0)
         {
-            if (unit.HP + unit.Shield > unit.MaxHealth)
+            if (unit.HP + unit.Shield > unit.MaxHP)
                 hfSlider.value = hSlider.maxValue = sSlider.maxValue = hfSlider.maxValue = unit.HP + unit.Shield;
             else
-                hSlider.maxValue = sSlider.maxValue = hfSlider.maxValue = unit.MaxHealth;
+                hSlider.maxValue = sSlider.maxValue = hfSlider.maxValue = unit.MaxHP;
 
             hfSlider.value = hSlider.value;
             hSlider.value = unit.HP;
             sSlider.value = unit.HP + unit.Shield;
-            hText.text = string.Format("{0} / {1}", hSlider.value, unit.MaxHealth);
+            hText.text = string.Format("{0} / {1}", hSlider.value, unit.MaxHP);
         }
         else
         {
-            hSlider.maxValue = sSlider.maxValue = hfSlider.maxValue = unit.MaxHealth;
+            hSlider.maxValue = sSlider.maxValue = hfSlider.maxValue = unit.MaxHP;
             sSlider.value = 0;
             hSlider.value = unit.HP;
-            hText.text = string.Format("{0} / {1}", hSlider.value, unit.MaxHealth);
+            hText.text = string.Format("{0} / {1}", hSlider.value, unit.MaxHP);
         }
 
         Sequence seq = DOTween.Sequence();

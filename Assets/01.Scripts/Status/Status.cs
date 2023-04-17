@@ -57,7 +57,7 @@ public class Status : MonoBehaviour
     public void AddValue(int count)
     {
         _typeValue += count;
-        unit.StatusManager.DialScene.ReloadStatusPanel(unit, this);
+        Define.DialScene?.ReloadStatusPanel(unit, this);
     }
 
     public void RemoveValue(int count)
@@ -69,6 +69,6 @@ public class Status : MonoBehaviour
             return;
         }
 
-        unit.StatusManager.DialScene.ReloadStatusPanel(unit, this);
+        Define.DialScene?.ReloadStatusPanel(unit, this);
     }
 }

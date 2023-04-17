@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2311275383246026028}
   - component: {fileID: 5633572231141638463}
+  - component: {fileID: 3567029697562545611}
   - component: {fileID: 3630974883071128527}
   m_Layer: 0
   m_Name: ATK(10)+Heal(ATK)
@@ -51,9 +52,24 @@ MonoBehaviour:
   isIncluding: 1
   startPattern: []
   turnPattern:
+  - {fileID: 3567029697562545611}
   - {fileID: 3630974883071128527}
   endPattern: []
   transitions: []
+--- !u!114 &3567029697562545611
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1499661351915087396}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db7864d3a61bcc14a99708ff1475ef25, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 10
+  count: 1
 --- !u!114 &3630974883071128527
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -119,6 +135,7 @@ MonoBehaviour:
   _maxHealth: 40
   _health: 0
   _shield: 0
+  isTurnSkip: 0
   currentDmg: 0
   <OnTakeDamage>k__BackingField:
     m_PersistentCalls:
