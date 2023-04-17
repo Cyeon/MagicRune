@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class Player : Unit
 {
-    public int cost = 10; // 마나
+    //public int cost = 10; // 마나
     public AudioClip attackSound = null;
 
     public Transform relicTrm;

@@ -35,8 +35,8 @@ public class Enemy : Unit
         if(_patternManager == null)
             _patternManager = GetComponentInChildren<PatternManager>();
 
-        HP = MaxHealth;
-        Define.DialScene?.HealthbarInit(false, MaxHealth);
+        HP = MaxHP;
+        Define.DialScene?.HealthbarInit(false, MaxHP);
 
         enemyScaleVec = SpriteRenderer.transform.localScale;
         Define.DialScene?.EnemyIconSetting(SpriteRenderer);
@@ -65,10 +65,6 @@ public class Enemy : Unit
     {
         idleSequence.Kill();
         Define.DialScene?.EnemyIcon.transform.DORewind();
-        if (_dialScene != null)
-        {
-            _dialScene.EnemyIcon.transform.localScale = enemyScaleVec;
-        }
     }
 
     protected override void Die()

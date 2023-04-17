@@ -65,7 +65,7 @@ public class BattleManager : MonoSingleton<BattleManager>
         player.OnDieEvent.RemoveAllListeners();
         player.OnDieEvent.AddListener(() => { Define.DialScene?.RewardUI.DefeatPanelPopup(); });
 
-        Define.DialScene?.HealthbarInit(true, player.HP, player.MaxHealth);
+        Define.DialScene?.HealthbarInit(true, player.HP, player.MaxHP);
 
         FeedbackManager.Instance.Init();
 
