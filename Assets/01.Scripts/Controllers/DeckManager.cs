@@ -9,7 +9,7 @@ public class DeckManager
     private List<BaseRune> _defaultRune = new List<BaseRune>(20); // 초기 기본 지급 룬
     public List<BaseRune> DefaultRune => _defaultRune;
 
-    public const int FIRST_DIAL_DECK_MAX_COUNT = 6; // 첫번째 다이얼 덱 최대 개수
+    public const int FIRST_DIAL_DECK_MAX_COUNT = 3; // 첫번째 다이얼 덱 최대 개수
 
     private List<BaseRune> _firstDialDeck = new List<BaseRune>(); // 사전에 설정해둔 다이얼 안쪽의 1번째 줄 덱.
     public List<BaseRune> FirstDialDeck => _firstDialDeck;
