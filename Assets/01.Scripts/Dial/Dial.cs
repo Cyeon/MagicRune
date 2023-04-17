@@ -133,7 +133,7 @@ public class Dial : MonoBehaviour
 
         if (Managers.Deck.FirstDialDeck != null && Managers.Deck.FirstDialDeck.Count > 0)
         {
-            for (int i = 0; i < 3; i++)
+            for (int i = 0; i < _maxRuneCount; i++)
             {
                 int randomIndex = Random.Range(0, numberList.Count);
                 BaseRune r = _remainingRuneList.Find(x => x.BaseRuneSO == Managers.Deck.FirstDialDeck[randomIndex].BaseRuneSO);
@@ -149,6 +149,7 @@ public class Dial : MonoBehaviour
 
                 numberList.RemoveAt(randomIndex);
                 _remainingRuneList.Remove(r);
+                maxRuneCount--;
             }
         }
         else
