@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using DG.Tweening;
 using TMPro;
 using System;
+using System.Linq;
 
 public class UIManager
 {
@@ -48,6 +49,13 @@ public class UIManager
         if (objects == null)
         {
             Debug.LogWarning($"Failed to bind {name}");
+        }
+        if (_uiDict.ContainsKey(typeof(T)))
+        {
+            if (_uiDict[typeof(T)].Contains(objects) == true)
+            {
+                return;
+            }
         }
 
         if (_uiDict.ContainsKey(typeof(T)) == false)

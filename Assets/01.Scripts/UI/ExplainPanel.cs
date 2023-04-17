@@ -28,16 +28,16 @@ public class ExplainPanel : MonoBehaviour
         _descText = transform.Find("Explain_Text").GetComponent<TextMeshProUGUI>();
     }
 
-    public void SetUI(Rune rune)
+    public virtual void SetUI(BaseRune rune)
     {
-        if(_nameText == null || _runeImage == null || _coolTimeText == null || _descText)
+        if (_nameText == null || _runeImage == null || _coolTimeText == null || _descText == null)
         {
             Setting();
         }
 
-        _nameText.SetText(rune.GetRune().Name);
-        _runeImage.sprite = rune.GetRune().RuneImage;
-        _coolTimeText.SetText(rune.GetRune().CoolTime.ToString());
-        _descText.SetText(rune.GetRune().MainRune.CardDescription);
+        _nameText.SetText(rune.BaseRuneSO.RuneName);
+        _runeImage.sprite = rune.BaseRuneSO.RuneSprite;
+        _coolTimeText.SetText(rune.BaseRuneSO.CoolTime.ToString());
+        _descText.SetText(rune.BaseRuneSO.RuneDescription);
     }
 }

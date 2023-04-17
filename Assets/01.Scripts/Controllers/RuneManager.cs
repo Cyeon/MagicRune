@@ -6,36 +6,49 @@ public class RuneManager
 {
     private AllRuneListSO _runeList;
 
+    private List<BaseRune> _runeHandler = new List<BaseRune>();
+
     public void Init()
     {
         _runeList = Managers.Resource.Load<AllRuneListSO>("SO/" + typeof(AllRuneListSO).Name);
     }
 
-    public Rune GetRandomRuneOfRarity(RuneRarity rarity, List<RuneSO> ignoreRuneList = null)
+    public BaseRune GetRandomRuneOfRarity(RuneRarity rarity, List<BaseRune> ignoreRuneList = null)
     {
-        return new Rune(ignoreRuneList[0]); // 임시로
+
+
+        return ignoreRuneList[0]; // 임시로
     }
 
-    public Rune GetRandomRune(List<RuneSO> ignoreRuneList = null)
+    public BaseRune GetRandomRune(List<BaseRune> ignoreRuneList = null)
     {
-        List<RuneSO> newRuneList = new List<RuneSO>(_runeList.RuneList);
+        List<BaseRune> newRuneList = new List<BaseRune>(_runeList.BaseRuneList);
 
-        for(int i = 0; i < ignoreRuneList.Count; i++)
+        if(ignoreRuneList != null)
         {
-            newRuneList.Remove(ignoreRuneList[i]);
+            for (int i = 0; i < ignoreRuneList.Count; i++)
+            {
+                newRuneList.Remove(ignoreRuneList[i]);
+            }
         }
 
-        return new Rune(newRuneList[Random.Range(0, newRuneList.Count)]);
+        return newRuneList[Random.Range(0, newRuneList.Count)];
     }
 
-    public List<Rune> GetRandomRune(int count = 1, List<RuneSO> ignoreRuneList = null)
+    public List<BaseRune> GetRandomRune(int count, List<BaseRune> ignoreRuneList = null)
     {
-        List<Rune> runeList = new List<Rune>();
+        List<BaseRune> runeList = new List<BaseRune>();
 
-        List<RuneSO> newRuneList = new List<RuneSO>(_runeList.RuneList);
-        for (int i = 0; i < ignoreRuneList.Count; i++)
+        List<BaseRune> newRuneList = _runeList.BaseRuneList;
+        if (ignoreRuneList != null)
         {
-            newRuneList.Remove(ignoreRuneList[i]);
+            for (int i = 0; i < ignoreRuneList.Count; i++)
+            {
+                if (newRuneList.Contains(ignoreRuneList[i]))
+                {
+                    newRuneList.Remove(ignoreRuneList[i]);
+                }
+            }
         }
 
         List<int> numberList = new List<int>();
@@ -46,8 +59,9 @@ public class RuneManager
 
         for(int i = 0; i < count; i++)
         {
+            if (numberList.Count <= 0) break;
             int randomIndex = Random.Range(0, numberList.Count);
-            runeList.Add(new Rune(newRuneList[numberList[randomIndex]]));
+            runeList.Add(newRuneList[numberList[randomIndex]]);
             numberList.RemoveAt(randomIndex);
         }
 

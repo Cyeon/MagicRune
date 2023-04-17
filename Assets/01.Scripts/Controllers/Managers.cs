@@ -25,6 +25,8 @@ public class Managers : MonoBehaviour
     private CanvasManager _canvas = new CanvasManager();
     private SceneManagerEX _scene = new SceneManagerEX();
     private ResourceManager _resource = new ResourceManager();
+    private StatModifierManager _statModifier = new StatModifierManager();
+    private RelicManager _relic = new RelicManager();
 
     public static UIManager UI {  get { return Instance._ui; } }
     public static MapManager Map { get { return Instance._map; } }
@@ -38,6 +40,8 @@ public class Managers : MonoBehaviour
     public static CanvasManager Canvas { get { return Instance._canvas; } }
     public static SceneManagerEX Scene { get { return Instance._scene; } }
     public static ResourceManager Resource { get { return Instance._resource; } }
+    public static StatModifierManager StatModifier { get { return Instance._statModifier; } }
+    public static RelicManager Relic => Instance._relic;
     #endregion
 
     private bool _preparedToQuit = false;
@@ -70,6 +74,9 @@ public class Managers : MonoBehaviour
             _instance._canvas.Init(true);
             _instance._map.Init();
             _instance._deck.Init();
+            _instance._statModifier.Init();
+            _instance._rune.Init();
+            _instance._gold.Init();
 
             if(_player == null)
             {
@@ -89,7 +96,7 @@ public class Managers : MonoBehaviour
         {
             if (_preparedToQuit == false)
             {
-                AndroidToast.Instance.ShowToastMessage("µÚ·Î°¡±â ¹öÆ°À» ÇÑ ¹ø ´õ ´©¸£½Ã¸é Á¾·áÇÕ´Ï´Ù.");
+                AndroidToast.Instance.ShowToastMessage("ï¿½Ú·Î°ï¿½ï¿½ï¿½ ï¿½ï¿½Æ°ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ã¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Õ´Ï´ï¿½.");
                 PreparedToQuit();
             }
             else
@@ -132,5 +139,6 @@ public class Managers : MonoBehaviour
         Pool.Clear();
         Canvas.Clear();
         Sound.StopAllSound();
+        StatModifier.Clear();
     }
 }

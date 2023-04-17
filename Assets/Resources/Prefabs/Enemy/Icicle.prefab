@@ -55,7 +55,7 @@ MonoBehaviour:
   - {fileID: 4700046235551772768}
   endPattern: []
   transitions:
-  - {fileID: 3890459406095544085}
+  - {fileID: 5600372837901043623}
 --- !u!114 &4700046235551772768
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -606,7 +606,7 @@ MonoBehaviour:
   - {fileID: 8706212320668936135}
   endPattern: []
   transitions:
-  - {fileID: 3890459406095544085}
+  - {fileID: 6289716525639279446}
 --- !u!114 &8706212320668936135
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -749,7 +749,7 @@ GameObject:
   - component: {fileID: 1869751726943888103}
   - component: {fileID: 5519867942528748203}
   m_Layer: 0
-  m_Name: S_Ice(Coldness(1/3))
+  m_Name: S_Chilliness(Coldness(1/3))
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -805,7 +805,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a9a84362b976a746a341572651e7aa7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  status: 3
+  status: 7
   value: 0
   isSelf: 0
 --- !u!1 &4875227394031184638
@@ -1087,7 +1087,7 @@ MonoBehaviour:
   - {fileID: 4654309185862817150}
   endPattern: []
   transitions:
-  - {fileID: 3890459406095544085}
+  - {fileID: 4640302948287439124}
 --- !u!114 &4654309185862817150
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1165,6 +1165,7 @@ MonoBehaviour:
   OnDieEvent:
     m_PersistentCalls:
       m_Calls: []
+  isTurnSkip: 0
   statusTrm: {fileID: 0}
   enemyName: "\uC544\uC774\uC2DC\uD074"
   attackSound: {fileID: 8300000, guid: 14b13d596957d594ea53e14e0773678d, type: 3}
@@ -2029,7 +2030,7 @@ GameObject:
   - component: {fileID: 8290066194911172134}
   - component: {fileID: 7746664901297579348}
   m_Layer: 0
-  m_Name: S_Ice(Coldness(1/3))
+  m_Name: S_Chilliness(Coldness(1/3))
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2085,7 +2086,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a9a84362b976a746a341572651e7aa7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  status: 3
+  status: 7
   value: 0
   isSelf: 0
 --- !u!1 &7782914569266652075

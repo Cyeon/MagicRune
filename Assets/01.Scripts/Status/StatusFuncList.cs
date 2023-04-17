@@ -37,16 +37,16 @@ public class StatusFuncList : MonoBehaviour
     //public void StackDmg()
     //{
     //    unit.TakeDamage(status._typeValue, true, status);
-    //    _dialScene?.UpdateHealthbar(unit.IsPlayer);
+    //    Define.DialScene?.UpdateHealthbar(unit.IsPlayer);
     //    StatusManager.Instance.CountRemStatus(unit, status, 0);
-    //    _dialScene?.ReloadStatusPanel(unit, status.statusName, status._typeValue);
+    //    Define.DialScene?.ReloadStatusPanel(unit, status.statusName, status._typeValue);
     //}
 
     //public void WoundGetDmg()
     //{
     //    AddGetDamage(status._typeValue);
     //    status._typeValue = 0;
-    //    _dialScene?.ReloadStatusPanel(unit, status.statusName, status._typeValue);
+    //    Define.DialScene?.ReloadStatusPanel(unit, status.statusName, status._typeValue);
     //}
 
     //public void RemoveStack()

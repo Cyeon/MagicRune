@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.UI.Image;
 
 public class ResourceManager
 {
@@ -34,7 +35,12 @@ public class ResourceManager
             return null;
         }
 
-        if(original.GetComponent<Poolable>() != null)
+        return Instantiate(original, parent);
+    }
+
+    public GameObject Instantiate(GameObject original, Transform parent = null)
+    {
+        if (original.GetComponent<Poolable>() != null)
         {
             return Managers.Pool.Pop(original, parent).gameObject;
         }

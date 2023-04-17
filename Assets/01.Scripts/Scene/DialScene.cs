@@ -38,6 +38,7 @@ public class DialScene : BaseScene
     [SerializeField]
     private RewardUI _rewardUI;
     public RewardUI RewardUI => _rewardUI;
+    private ChooseRuneUI _chooseRuneUI;
 
     protected override void Init()
     {
@@ -74,6 +75,8 @@ public class DialScene : BaseScene
         Managers.UI.Bind<TextMeshPro>("Status_Name_Text", Managers.Canvas.GetCanvas("Popup").gameObject);
         Managers.UI.Bind<TextMeshPro>("Status_Infomation_Text", Managers.Canvas.GetCanvas("Popup").gameObject);
 
+        Managers.UI.Bind<ChooseRuneUI>("ChooseRuneUI", Managers.Canvas.GetCanvas("Popup").gameObject);
+
         #endregion
 
         _enemyPatternIcon = Managers.UI.Get<Image>("NextPattern Image");
@@ -81,6 +84,8 @@ public class DialScene : BaseScene
 
         _statusDescName = Managers.UI.Get<TextMeshPro>("Status_Name_Text");
         _statusDescInfo = Managers.UI.Get<TextMeshPro>("Status_Infomation_Text");
+
+        _chooseRuneUI = Managers.UI.Get<ChooseRuneUI>("ChooseRuneUI").GetComponent<ChooseRuneUI>();
 
         //UIManager.Instance.Get<Button>("Restart Btn").onClick.RemoveAllListeners();
         //UIManager.Instance.Get<Button>("Restart Btn").onClick.AddListener(() =>
@@ -278,7 +283,7 @@ public class DialScene : BaseScene
 
     #region Description
 
-    public void CardDescPopup(Rune rune)
+    public void CardDescPopup(BaseRune rune)
     {
         if(rune == null)
         {
@@ -310,7 +315,7 @@ public class DialScene : BaseScene
         {
             if (_dial.DialElementList[i].SelectCard != null)
             {
-                _cardDescPanelList.OpenPanel(i, _dial.DialElementList[i].SelectCard.Rune);
+                _cardDescPanelList.OpenPanel(i, _dial.DialElementList[i].SelectCard);
             }
             else
             {
@@ -383,26 +388,26 @@ public class DialScene : BaseScene
     public void UpdateHealthbar(bool isPlayer)
     {
         SliderInit(isPlayer);
-        Unit unit = isPlayer ? BattleManager.Instance.player : BattleManager.Instance.enemy;
+        Unit unit = isPlayer ? BattleManager.Instance.player : BattleManager.Instance.Enemy;
 
         if (unit.Shield > 0)
         {
-            if (unit.HP + unit.Shield > unit.MaxHealth)
+            if (unit.HP + unit.Shield > unit.MaxHP)
                 hfSlider.value = hSlider.maxValue = sSlider.maxValue = hfSlider.maxValue = unit.HP + unit.Shield;
             else
-                hSlider.maxValue = sSlider.maxValue = hfSlider.maxValue = unit.MaxHealth;
+                hSlider.maxValue = sSlider.maxValue = hfSlider.maxValue = unit.MaxHP;
 
             hfSlider.value = hSlider.value;
             hSlider.value = unit.HP;
             sSlider.value = unit.HP + unit.Shield;
-            hText.text = string.Format("{0} / {1}", hSlider.value, unit.MaxHealth);
+            hText.text = string.Format("{0} / {1}", hSlider.value, unit.MaxHP);
         }
         else
         {
-            hSlider.maxValue = sSlider.maxValue = hfSlider.maxValue = unit.MaxHealth;
+            hSlider.maxValue = sSlider.maxValue = hfSlider.maxValue = unit.MaxHP;
             sSlider.value = 0;
             hSlider.value = unit.HP;
-            hText.text = string.Format("{0} / {1}", hSlider.value, unit.MaxHealth);
+            hText.text = string.Format("{0} / {1}", hSlider.value, unit.MaxHP);
         }
 
         Sequence seq = DOTween.Sequence();
@@ -451,4 +456,16 @@ public class DialScene : BaseScene
     {
         _enemyIcon = renderer;
     }
+
+    public void ChooseRuneUISetUp()
+    {
+        _chooseRuneUI.gameObject.SetActive(true);
+        _chooseRuneUI.SetUp();
+    }
+
+    public void HideChooseRuneUI()
+    {
+        _chooseRuneUI.gameObject.SetActive(false);
+    }
+
 }

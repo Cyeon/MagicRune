@@ -5,7 +5,6 @@ using UnityEngine;
 public class ShopPortal : Portal
 {
     private ShopUI _shopUI;
-    public List<ShopItemSO> shopItemList = new List<ShopItemSO>();
 
     public override void Execute()
     {
@@ -21,17 +20,11 @@ public class ShopPortal : Portal
         //    _shopUI.ShopItemProduct(item);
         //}
 
-        List<int> numberList = new List<int>();
-        for(int i = 0; i < shopItemList.Count; i++)
+        List<BaseRune> list = Managers.Rune.GetRandomRune(9);
+        for(int i = 0; i < list.Count; i++)
         {
-            numberList.Add(i);
-        }
-
-        for(int i = 0; i < 3; i++)
-        {
-            int randomIndex = Random.Range(0, numberList.Count);
-            _shopUI.ShopItemProduct(shopItemList[numberList[randomIndex]]);
-            numberList.RemoveAt(randomIndex);
+            list[i].SetRandomGold(50, 100);
+            _shopUI.RuneItemProduct(list[i].GetComponent<Item>());
         }
         base.Execute();
     }

@@ -18,7 +18,7 @@ public class Unit : MonoBehaviour
     public bool IsDie => _isDie;
 
     [SerializeField] protected float _maxHealth;
-    public float MaxHealth => _maxHealth;
+    public float MaxHP => _maxHealth;
 
     [SerializeField] private float _health = 10f;
     public float HP
@@ -33,14 +33,9 @@ public class Unit : MonoBehaviour
             {
                 _health = _maxHealth;
             }
-
-            if (_dialScene == null)
+            if (Managers.Scene.CurrentScene == Define.DialScene)
             {
-                _dialScene = Managers.Scene.CurrentScene as DialScene;
-            }
-            if (Managers.Scene.CurrentScene == _dialScene)
-            {
-                _dialScene?.UpdateHealthbar(IsPlayer);
+                Define.DialScene?.UpdateHealthbar(IsPlayer);
             }
 
             if (_health <= 0) Die();
@@ -54,25 +49,18 @@ public class Unit : MonoBehaviour
         protected set
         {
             _shield = value;
-
-            if (_dialScene == null)
-            {
-                _dialScene = Managers.Scene.CurrentScene as DialScene;
-            }
-            _dialScene?.UpdateShieldText(_isPlayer, _shield);
+            Define.DialScene?.UpdateShieldText(_isPlayer, _shield);
         }
     }
+
+    public bool isTurnSkip = false;
 
     protected Slider _healthSlider;
     protected Slider _shieldSlider;
     protected Slider _healthFeedbackSlider;
     protected TextMeshProUGUI _healthText;
 
-    #region  ?�태?�상 관??변??
-
     public float currentDmg = 0;
-
-    #endregion
 
     [field: SerializeField] public UnityEvent<float> OnTakeDamage { get; set; }
 
@@ -80,9 +68,7 @@ public class Unit : MonoBehaviour
     //[field: SerializeField] public Dictionary<StatusInvokeTime, List<Status>> unitStatusDic = new Dictionary<StatusInvokeTime, List<Status>>();
 
     public UnityEvent OnDieEvent;
-    protected DialScene _dialScene;
 
-    public bool isTurnSkip = false;
 
     [Header("Status")]
     public Transform statusTrm;
@@ -90,8 +76,7 @@ public class Unit : MonoBehaviour
     public StatusManager StatusManager => _statusManager;
 
     private void Start() {
-        _dialScene = Managers.Scene.CurrentScene as DialScene;
-        _statusManager = new StatusManager(this, _dialScene);
+        _statusManager = new StatusManager(this);
         statusTrm = transform.Find("Status");
 
         _statusManager.Reset();
@@ -124,17 +109,9 @@ public class Unit : MonoBehaviour
         OnTakeDamage?.Invoke(currentDmg);
         OnTakeDamageFeedback?.Invoke();
 
-        if (_dialScene == null)
-        {
-            _dialScene = Managers.Scene.CurrentScene as DialScene;
-        }
-
         if (_isPlayer == false)
         {
-            if (_dialScene != null)
-            {
-                _dialScene.DamageUIPopup(currentDmg, Define.MainCam.WorldToScreenPoint(_dialScene.EnemyIcon.transform.position), status);
-            }
+            Define.DialScene?.DamageUIPopup(currentDmg, Define.MainCam.WorldToScreenPoint(Define.DialScene.EnemyIcon.transform.position), status); 
         }
     }
 

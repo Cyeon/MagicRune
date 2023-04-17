@@ -34,17 +34,13 @@ public class Enemy : Unit
     {
         if(_patternManager == null)
             _patternManager = GetComponentInChildren<PatternManager>();
-        if (_dialScene == null)
-            _dialScene = Managers.Scene.CurrentScene as DialScene;
 
-        HP = MaxHealth;
-        _dialScene?.HealthbarInit(false, MaxHealth);
+        HP = MaxHP;
+        Define.DialScene?.HealthbarInit(false, MaxHP);
 
         enemyScaleVec = SpriteRenderer.transform.localScale;
-        _dialScene?.EnemyIconSetting(SpriteRenderer);
+        Define.DialScene?.EnemyIconSetting(SpriteRenderer);
         transform.localPosition = new Vector3(0, 6, 0);
-
-        PatternManager.ChangePattern(PatternManager.patternList[0]);
     }
 
     public void Attack(int damage)
@@ -59,8 +55,8 @@ public class Enemy : Unit
     public void Idle()
     {
         idleSequence = DOTween.Sequence();
-        idleSequence.Append(_dialScene?.EnemyIcon.transform.DOScaleY(enemyScaleVec.y + 0.1f, 0.5f));
-        idleSequence.Append(_dialScene?.EnemyIcon.transform.DOScaleY(enemyScaleVec.y, 0.5f));
+        idleSequence.Append(Define.DialScene?.EnemyIcon.transform.DOScaleY(enemyScaleVec.y + 0.1f, 0.5f));
+        idleSequence.Append(Define.DialScene?.EnemyIcon.transform.DOScaleY(enemyScaleVec.y, 0.5f));
         idleSequence.AppendInterval(0.3f);
         idleSequence.SetLoops(-1);
     }
@@ -68,11 +64,7 @@ public class Enemy : Unit
     public void StopIdle()
     {
         idleSequence.Kill();
-        _dialScene?.EnemyIcon.transform.DORewind();
-        if (_dialScene != null)
-        {
-            _dialScene.EnemyIcon.transform.localScale = enemyScaleVec;
-        }
+        Define.DialScene?.EnemyIcon.transform.DORewind();
     }
 
     protected override void Die()

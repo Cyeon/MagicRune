@@ -1,4 +1,4 @@
-using DG.Tweening;
+﻿using DG.Tweening;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -9,49 +9,53 @@ using UnityEngine.Events;
 public enum GameTurn
 {
     Player,
-    Monster,
-    PlayerWait,
-    MonsterWait,
-    Unknown
+    Enemy,
+    PlayerEnd,
+    EnemyEnd,
+    Ready
 }
 
 public class BattleManager : MonoSingleton<BattleManager>
 {
     [SerializeField]
-    private GameTurn _gameTurn = GameTurn.Unknown;
+    private GameTurn _gameTurn = GameTurn.Ready;
     public GameTurn GameTurn => _gameTurn;
+
     public Player player = null;
-    public Enemy enemy = null;
-    public Unit currentUnit = null;
-    public Unit attackUnit = null;
+    private Enemy _enemy = null;
+    public Enemy Enemy => _enemy;
 
-    public AudioClip turnChangeSound = null;
+    public int missileCount = 0;
 
-    //public UnityEvent OnEnemyDie;
-
-    private DialScene _dialScene;
+    [SerializeField]
+    private AudioClip _turnChangeSound = null;
 
     private void Start()
     {
-        _dialScene = Managers.Scene.CurrentScene as DialScene;
-
-        GameStart();
+        BattleStart();
     }
 
-    public void GameStart()
+    private void OnDestroy()
     {
-        enemy = Managers.Resource.Instantiate("Enemy/" + Managers.Map.SelectEnemy.name).GetComponent<Enemy>();
-        enemy.Init();
-        enemy.PatternManager.ChangePattern(enemy.PatternManager.patternList[0]);
+        DOTween.KillAll();
+    }
 
-        enemy.OnDieEvent.RemoveAllListeners();
-        enemy.OnDieEvent.AddListener(() =>
+    public void BattleStart()
+    {
+        _enemy = Managers.Resource.Instantiate("Enemy/" + Managers.Map.SelectEnemy.name).GetComponent<Enemy>();
+        Enemy.Init();
+
+        Enemy.OnDieEvent.RemoveAllListeners();
+        Enemy.OnDieEvent.AddListener(() =>
         {
             REGold reward = new REGold();
-            reward.gold = Managers.Map.CurrentChapter.Gold;
+            reward.SetGold(Managers.Map.CurrentChapter.Gold);
             reward.AddRewardList();
 
-            _dialScene?.RewardUI.VictoryPanelPopup();
+            RERune rune = new RERune();
+            rune.AddRewardList();
+
+            Define.DialScene?.RewardUI.VictoryPanelPopup();
         });
 
         player = Managers.GetPlayer();
@@ -59,9 +63,9 @@ public class BattleManager : MonoSingleton<BattleManager>
         player.SliderInit();
 
         player.OnDieEvent.RemoveAllListeners();
-        player.OnDieEvent.AddListener(() => { _dialScene?.RewardUI.DefeatPanelPopup(); });
+        player.OnDieEvent.AddListener(() => { Define.DialScene?.RewardUI.DefeatPanelPopup(); });
 
-        _dialScene?.HealthbarInit(true, player.HP, player.MaxHealth);
+        Define.DialScene?.HealthbarInit(true, player.HP, player.MaxHP);
 
         FeedbackManager.Instance.Init();
 
@@ -70,26 +74,32 @@ public class BattleManager : MonoSingleton<BattleManager>
 
     private void OnPlayerTurn()
     {
-        //EventManager.TriggerEvent(Define.ON_END_MONSTER_TURN);
-
         _gameTurn = GameTurn.Player;
-        currentUnit = player;
-        attackUnit = enemy;
+
+        EventManager.TriggerEvent(Define.ON_START_PLAYER_TURN);
+
+       if(Enemy.isTurnSkip)
+        {
+            Enemy.isTurnSkip = false;
+        }
+       else
+        {
+            if (Enemy.PatternManager.CurrentPattern == null) Enemy.PatternManager.NextPattern();
+            else Enemy.PatternManager.CurrentPattern.NextPattern();
+        }
+
         player.StatusManager.OnTurnStart();
+        Enemy.PatternManager.StartAction();
     }
 
     public void OnMonsterTurn()
     {
+        _gameTurn = GameTurn.Enemy;
+        
         EventManager.TriggerEvent(Define.ON_START_MONSTER_TURN);
-        _gameTurn = GameTurn.Monster;
-        currentUnit = enemy;
-        attackUnit = player;
-        enemy?.StatusManager.OnTurnStart();
 
-        if(_gameTurn == GameTurn.Monster)
-        {
-            enemy.PatternManager.TurnAction();
-        }
+        Enemy?.StatusManager.OnTurnStart();
+        Enemy.PatternManager.TurnAction();
     }
 
     public bool IsPlayerTurn()
@@ -101,89 +111,87 @@ public class BattleManager : MonoSingleton<BattleManager>
 
     public void TurnChange()
     {
-        if (enemy.HP <= 0 || player.HP <= 0) return;
+        if (Enemy.HP <= 0 || player.HP <= 0) return;
 
         switch (_gameTurn)
         {
-            case GameTurn.Unknown:
-                enemy.PatternManager.StartAction();
-                EventManager<int>.TriggerEvent(Define.ON_START_PLAYER_TURN, 5);
+            case GameTurn.Ready:
                 EventManager.TriggerEvent(Define.ON_START_PLAYER_TURN);
-                EventManager<bool>.TriggerEvent(Define.ON_START_PLAYER_TURN, true);
-
-                //SoundManager.instance.PlaySound(turnChangeSound, SoundType.Effect);
-
-                //UIManager.Instance.Turn("Player Turn");
-                _dialScene?.Turn("Player Turn");
-                _gameTurn = GameTurn.MonsterWait;
+                Define.DialScene?.Turn("Player Turn");
+                _gameTurn = GameTurn.EnemyEnd;
                 break;
 
             case GameTurn.Player:
+                EventManager.TriggerEvent(Define.ON_END_PLAYER_TURN);
 
-                EventManager<bool>.TriggerEvent(Define.ON_START_MONSTER_TURN, false);
-
-                Managers.Sound.PlaySound(turnChangeSound, SoundType.Effect);
-
-                if (enemy.Shield > 0)
-                {
-                    enemy.ResetShield();
-                    _dialScene?.UpdateHealthbar(false);
-                }
+                Managers.Sound.PlaySound(_turnChangeSound, SoundType.Effect);
 
                 player?.StatusManager.OnTurnEnd();
+                player.StatusManager.TurnChange();
 
-                _dialScene?.Turn("Enemy Turn");
-                _gameTurn = GameTurn.PlayerWait;
+                if (Enemy.Shield > 0)
+                {
+                    Enemy.ResetShield();
+                    Define.DialScene?.UpdateHealthbar(false);
+                }
+
+                Define.DialScene?.Turn("Enemy Turn");
+                _gameTurn = GameTurn.PlayerEnd;
                 break;
 
-            case GameTurn.PlayerWait:
-                enemy.StopIdle();
+            case GameTurn.PlayerEnd:
+                Enemy.StopIdle();
                 OnMonsterTurn();
                 break;
 
-            case GameTurn.Monster:
-                player.StatusManager.TurnChange();
-                enemy.StatusManager.TurnChange();
+            case GameTurn.Enemy:
+                Enemy.PatternManager.EndAction();
 
-                enemy.PatternManager.EndAction();
-                enemy.PatternManager.CurrentPattern.NextPattern();
-                enemy.PatternManager.StartAction();
+                EventManager.TriggerEvent(Define.ON_END_MONSTER_TURN);
 
-                EventManager<int>.TriggerEvent(Define.ON_START_PLAYER_TURN, 5);
-                EventManager.TriggerEvent(Define.ON_START_PLAYER_TURN);
-                EventManager<bool>.TriggerEvent(Define.ON_START_PLAYER_TURN, true);
+                Enemy?.StatusManager.OnTurnEnd();
+                Enemy.StatusManager.TurnChange();
 
-                Managers.Sound.PlaySound(turnChangeSound, SoundType.Effect);
+                Managers.Sound.PlaySound(_turnChangeSound, SoundType.Effect);
 
                 if (player.Shield > 0)
                 {
                     player.ResetShield();
-                    _dialScene?.UpdateHealthbar(true);
+                    Define.DialScene?.UpdateHealthbar(true);
                 }
 
-                enemy?.StatusManager.OnTurnEnd();
-
-                _dialScene?.Turn("Player Turn");
-                _dialScene?.Dial?.ResetDial();
-                _dialScene?.Dial?.AllMagicCircleGlow(false);
-                _dialScene?.Dial?.AllMagicSetCoolTime();
-                _dialScene?.Dial?.SettingDialRune(false);
-                _dialScene?.AllCardDescPopup();
-                _gameTurn = GameTurn.MonsterWait;
+                Define.DialScene?.Turn("Player Turn");
+                Define.DialScene?.Dial?.ResetDial();
+                Define.DialScene?.Dial?.AllMagicCircleGlow(false);
+                Define.DialScene?.Dial?.AllMagicSetCoolTime();
+                Define.DialScene?.Dial?.SettingDialRune(false);
+                Define.DialScene?.AllCardDescPopup();
+                _gameTurn = GameTurn.EnemyEnd;
                 break;
 
-            case GameTurn.MonsterWait:
-                enemy.Idle();
+            case GameTurn.EnemyEnd:
+                Enemy.Idle();
                 OnPlayerTurn();
                 break;
         }
     }
 
-    
+    /// <summary>
+    /// 미사일 공격이 끝날떄 발동되는 함수 (모든 공격이 다 들어간 후에 턴이 체인지 되도록 만듬)
+    /// </summary>
+    public void MissileAttackEnd()
+    {
+        missileCount--;
+        if (_gameTurn == GameTurn.Player && missileCount <= 0)
+        {
+            missileCount = 0;
+            TurnChange();
+        }
+    }
 
     public void PlayerTurnEnd()
     {
-        if (_gameTurn == GameTurn.Player)
+        if(_gameTurn == GameTurn.Player)
         {
             TurnChange();
         }

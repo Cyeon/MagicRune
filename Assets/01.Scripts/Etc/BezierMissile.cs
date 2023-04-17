@@ -150,6 +150,8 @@ public class BezierMissile : MonoBehaviour
 
     public void SetEffect(GameObject go)
     {
+        if (go == null) return;
+
         _effect = Managers.Resource.Instantiate($"Effects/" + go.name, this.transform);
         //_effect.transform.localScale *= 3f;
         //Vector3 pos = _effect.transform.position;
@@ -183,13 +185,14 @@ public class BezierMissile : MonoBehaviour
             _effect = null;
 
             // 핸동하고
-            if(BattleManager.Instance.enemy.IsDie == false)
+            if(BattleManager.Instance.Enemy.IsDie == false)
             {
                 _endAction?.Invoke();
             }
 
             m_timerCurrent = 0;
             // 풀링
+            BattleManager.Instance.MissileAttackEnd();
             Managers.Resource.Destroy(this.gameObject);
         }
     }

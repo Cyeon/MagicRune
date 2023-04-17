@@ -1,31 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System.Linq;
-using Mono.Cecil;
 
 public class StatusManager
 {
     private List<Status> _statusList = new List<Status>();
-    private DialScene _dialScene;
-    public DialScene DialScene
-    {
-        get
-        {
-            if(_dialScene == null)
-            {
-                _dialScene =  Managers.Scene.CurrentScene as DialScene;
-            }
-            return _dialScene;
-        }
-    }
     private Unit _unit;
 
-
-    public StatusManager(Unit unit, DialScene dialScene)
+    public StatusManager(Unit unit)
     {
         _unit = unit;
-        _dialScene = dialScene;
     }
 
     public void AddStatus(StatusName statusName, int count)
@@ -44,14 +28,14 @@ public class StatusManager
             }
 
             status.AddValue(count);
-            DialScene.ReloadStatusPanel(_unit, status);
+            Define.DialScene?.ReloadStatusPanel(_unit, status);
         }
         else
         {
             status = Managers.Resource.Instantiate("Status/Status_" + statusName, _unit.statusTrm).GetComponent<Status>();
             status.unit = _unit;
             status.AddValue(count);
-            DialScene.AddStatus(_unit, status);
+            Define.DialScene?.AddStatus(_unit, status);
             _statusList.Add(status);
         }
 
@@ -76,7 +60,7 @@ public class StatusManager
     public void DeleteStatus(Status status)
     {
         _statusList.Remove(status);
-        DialScene.RemoveStatusPanel(_unit, status.statusName);
+        Define.DialScene?.RemoveStatusPanel(_unit, status.statusName);
 
         for(int i = 0; i < _unit.statusTrm.childCount; ++i)
         {
@@ -116,6 +100,13 @@ public class StatusManager
         }
 
         return null;
+    }
+
+    public float GetStatusValue(StatusName status)
+    {
+        if (GetStatus(status) == null) return 0;
+
+        return GetStatus(status).TypeValue;
     }
 
     public void OnTurnStart()
@@ -191,7 +182,7 @@ public class StatusManager
     public void Reset()
     {
         _statusList.Clear();
-        _dialScene?.ClearStatusPanel(_unit);
+        Define.DialScene?.ClearStatusPanel(_unit);
 
         for(int i = _unit.statusTrm.childCount - 1; i >= 0; --i)
         {

@@ -33,6 +33,14 @@ public class Define
     public const int ON_END_PLAYER_TURN = 200;
     public const int ON_END_MONSTER_TURN = 201;
 
+    public static int ON_ATTACK_PLAYER = 202;
+    public static int ON_ATTACK_ENEMY = 203;
+
+    public static int ON_GET_DAMAGE_PLAYTER = 204;
+    public static int ON_GET_DAMAGE_ENEMY = 205;
+
+    public const int ON_ADD_STATUS = 300;
+
     public const int GAME_WIN = 1000;
     public const int GAME_LOSE = 1001;
     public const int GAME_END = 1002;
@@ -49,6 +57,20 @@ public class Define
                 _mainCam = Camera.main;
             }
             return _mainCam;
+        }
+    }
+
+    private static DialScene _dialScene;
+    public static DialScene DialScene
+    {
+        get
+        {
+            if(_dialScene == null)
+            {
+                _dialScene = Managers.Scene.CurrentScene as DialScene;
+            }
+
+            return _dialScene;
         }
     }
 
