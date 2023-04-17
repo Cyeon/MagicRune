@@ -24,7 +24,6 @@ public class PatternManager : MonoBehaviour
 
     public void ChangePattern(Pattern pattern)
     {
-        Debug.Log("Pattern Change " + _currentPattern + " -> " + pattern);
         _currentPattern = pattern;
         _disalScene?.ReloadPattern(_currentPattern.icon, _currentPattern.desc);
     }
