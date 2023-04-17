@@ -1,16 +1,16 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class AddStatusOnStackOverflowEvent : StatusEvent
 {
-    [Header("Condition Á¶°Ç")]
+    [Header("Condition ì¡°ê±´")]
     [SerializeField]
     private StatusName _conditionStatus = StatusName.Null;
     [SerializeField]
     public int _conditionCount;
 
-    [Header("Result °á°ú")]
+    [Header("Result ê²°ê³¼")]
     [SerializeField]
     private StatusName _addStatus = StatusName.Null;
 

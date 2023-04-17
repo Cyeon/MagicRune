@@ -63,12 +63,8 @@ public class Unit : MonoBehaviour
     public float currentDmg = 0;
 
     [field: SerializeField] public UnityEvent<float> OnTakeDamage { get; set; }
-
     [field: SerializeField] public UnityEvent OnTakeDamageFeedback { get; set; }
-    //[field: SerializeField] public Dictionary<StatusInvokeTime, List<Status>> unitStatusDic = new Dictionary<StatusInvokeTime, List<Status>>();
-
     public UnityEvent OnDieEvent;
-
 
     [Header("Status")]
     public Transform statusTrm;
@@ -83,12 +79,12 @@ public class Unit : MonoBehaviour
     }
 
     /// <summary>
-    /// ������ �޴� �Լ�
+    /// 데미지 받는 함수
     /// </summary>
     /// <param name="damage"></param>
     public void TakeDamage(float damage, bool isTrueDamage = false, Status status = null)
     {
-        currentDmg = damage;
+        currentDmg = Mathf.Floor(damage);
         _statusManager.OnGetDamage();
         currentDmg = Mathf.Floor(currentDmg);
 
@@ -111,7 +107,7 @@ public class Unit : MonoBehaviour
 
         if (_isPlayer == false)
         {
-            Define.DialScene?.DamageUIPopup(currentDmg, Define.MainCam.WorldToScreenPoint(Define.DialScene.EnemyIcon.transform.position), status); 
+            Define.DialScene?.DamageUIPopup(currentDmg, Define.MainCam.WorldToScreenPoint(Define.DialScene.EnemyIcon.transform.position), status);
         }
     }
 
@@ -127,21 +123,6 @@ public class Unit : MonoBehaviour
 
         return false;
     }
-
-    //public void InvokeStatus(StatusInvokeTime time)
-    //{
-    //    if (IsDie == true) return;
-
-    //    List<Status> status;
-
-    //    if (unitStatusDic.TryGetValue(time, out status))
-    //    {
-    //        if (status.Count > 0)
-    //        {
-    //            StatusManager.Instance.StatusFuncInvoke(status, this);
-    //        }
-    //    }
-    //}
 
     public float GetMaxHP()
     {
