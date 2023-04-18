@@ -62,8 +62,6 @@ public class MapManager
         ChapterInit();
         _portalSpawner.ResetEnemyEnter();
         _portalSpawner.SpawnPortal(stageList[Stage].type);
-        MapSceneUI?.InfoUIReload();
-        //Managers.Canvas.GetCanvas("MapUI").GetComponent<MapUI>().InfoUIReload();
 
         Managers.Reward.ImageLoad();
     }
@@ -99,8 +97,6 @@ public class MapManager
             ResetChapter();
             // 플레이어 죽음 리셋
         }
-
-        MapSceneUI.InfoUIReload();
 
         if (_isFirst)
         {

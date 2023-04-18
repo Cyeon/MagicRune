@@ -25,10 +25,13 @@ public class Player : Unit
 
     public void SliderInit()
     {
-        Managers.UI.Bind<Slider>("P HealthFeedbackBar", Managers.Canvas.GetCanvas("Main").gameObject);
-        Managers.UI.Bind<Slider>("P ShieldBar", Managers.Canvas.GetCanvas("Main").gameObject);
-        Managers.UI.Bind<Slider>("P HealthBar", Managers.Canvas.GetCanvas("Main").gameObject);
-        Managers.UI.Bind<TextMeshProUGUI>("P HealthText", Managers.Canvas.GetCanvas("Main").gameObject);
+        if (Managers.UI.Get<Slider>("P HealthFeedbackBar") == null)
+        {
+            Managers.UI.Bind<Slider>("P HealthFeedbackBar", Managers.Canvas.GetCanvas("Main").gameObject);
+            Managers.UI.Bind<Slider>("P ShieldBar", Managers.Canvas.GetCanvas("Main").gameObject);
+            Managers.UI.Bind<Slider>("P HealthBar", Managers.Canvas.GetCanvas("Main").gameObject);
+            Managers.UI.Bind<TextMeshProUGUI>("P HealthText", Managers.Canvas.GetCanvas("Main").gameObject);
+        }
 
         _healthFeedbackSlider = Managers.UI.Get<Slider>("P HealthFeedbackBar");
         _shieldSlider = Managers.UI.Get<Slider>("P ShieldBar");

@@ -29,14 +29,10 @@ public class Unit : MonoBehaviour
             if (_isDie) return;
 
             _health = value;
-            if (_health > _maxHealth)
-            {
-                _health = _maxHealth;
-            }
-            if (Managers.Scene.CurrentScene == Define.DialScene)
-            {
-                Define.DialScene?.UpdateHealthbar(IsPlayer);
-            }
+
+            if (_health > _maxHealth) _health = _maxHealth;
+            if (Managers.Scene.CurrentScene == Define.DialScene) Define.DialScene?.UpdateHealthbar(IsPlayer);
+            if(_isPlayer) _userInfoUI.UpdateHealthText();
 
             if (_health <= 0) Die();
         }
@@ -71,11 +67,14 @@ public class Unit : MonoBehaviour
     private StatusManager _statusManager;
     public StatusManager StatusManager => _statusManager;
 
+    private UserInfoUI _userInfoUI;
+
     private void Start() {
         _statusManager = new StatusManager(this);
         statusTrm = transform.Find("Status");
 
         _statusManager.Reset();
+        _userInfoUI = Managers.UI.Get<UserInfoUI>("Upper_Frame");
     }
 
     /// <summary>
@@ -163,6 +162,7 @@ public class Unit : MonoBehaviour
         if (_isDie == false)
         {
             _maxHealth += amount;
+            _userInfoUI.UpdateHealthText();
         }
     }
 

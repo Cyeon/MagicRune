@@ -49,20 +49,16 @@ public class DistracotrFuncList : MonoBehaviour
             Managers.GetPlayer().AddHP(amount);
         else if (increaseMode == IncreaseMode.Percent)
             Managers.GetPlayer().AddHPPercent(amount);
-
-        MapSceneUI.InfoUIReload();
     }
 
     public void AddMaxHp(int amount)
     {
         Managers.GetPlayer().AddMaxHp(amount);
-        MapSceneUI.InfoUIReload();
     }
 
     public void AddGold(int amount)
     {
         Managers.Gold.AddGold(amount);
-        MapSceneUI.InfoUIReload();
     }
     public void BattleEnemy(Enemy enemy)
     {
