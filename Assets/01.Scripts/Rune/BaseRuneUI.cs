@@ -12,6 +12,7 @@ public class BaseRuneUI : MonoBehaviour
     void Start()
     {
         _runeSpriteRenderer = transform.Find("Sprite").GetComponent<SpriteRenderer>();
+        RuneColor(new Color(0.26f, 0.26f, 0.26f, 1f));
     }
 
     public void SetRune(BaseRune rune)
