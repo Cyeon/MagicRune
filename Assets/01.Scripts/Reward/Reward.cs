@@ -4,8 +4,11 @@ using UnityEngine;
 
 public abstract class Reward
 {
-    public Sprite icon;
-    public string desc;
+    public Sprite rewardIcon; // 아이콘
+    public string desc; // 설명
+
+    // 자동지급 할건지
+    public bool isAuto = false;
 
     /// <summary>
     /// 보상 지급 함수

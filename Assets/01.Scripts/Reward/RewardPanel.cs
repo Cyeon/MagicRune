@@ -12,7 +12,7 @@ public class RewardPanel : MonoBehaviour
 
     public void Init(Reward reward)
     {
-        _icon.sprite = reward.icon;
+        _icon.sprite = reward.rewardIcon;
         _desc.SetText(reward.desc);
 
         _button.onClick.AddListener(() => reward.GiveReward());                                       
