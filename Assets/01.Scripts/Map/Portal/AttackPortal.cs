@@ -11,7 +11,7 @@ public class AttackPortal : Portal
 
     public override void Execute()
     {
-        Managers.Map.SelectEnemy = _portalEnemy;
+        Managers.Enemy.AddEnemy(_portalEnemy);
         _portalEnemy.isEnter = true;
         Managers.Scene.LoadScene(Define.Scene.DialScene);
         base.Execute();

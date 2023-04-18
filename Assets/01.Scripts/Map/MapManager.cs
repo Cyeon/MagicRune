@@ -27,8 +27,6 @@ public class MapManager
     private PortalSpawner _portalSpawner;
     public PortalSpawner PortalSpawner => _portalSpawner;
 
-    private Enemy _selectEnemy;
-    public Enemy SelectEnemy { get => _selectEnemy; set => _selectEnemy = value; }
     public Sprite selectPortalSprite;
 
     private bool _isFirst = true;
@@ -111,6 +109,7 @@ public class MapManager
             MapSceneUI.Stages[i].sprite = stageList[i].icon;
             MapSceneUI.Stages[i].color = stageList[i].color;
         }
+        Managers.Enemy.ResetEnemy();
         #endregion
 
         if (stageList[Stage].type == StageType.Boss)

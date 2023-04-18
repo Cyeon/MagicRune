@@ -21,9 +21,8 @@ public class BattleManager : MonoSingleton<BattleManager>
     private GameTurn _gameTurn = GameTurn.Ready;
     public GameTurn GameTurn => _gameTurn;
 
-    public Player player = null;
-    private Enemy _enemy = null;
-    public Enemy Enemy => _enemy;
+    public Player Player => Managers.GetPlayer();
+    public Enemy Enemy => Managers.Enemy.CurrentEnemy;
 
     public int missileCount = 0;
 
@@ -42,30 +41,15 @@ public class BattleManager : MonoSingleton<BattleManager>
 
     public void BattleStart()
     {
-        _enemy = Managers.Resource.Instantiate("Enemy/" + Managers.Map.SelectEnemy.name).GetComponent<Enemy>();
-        Enemy.Init();
+        Managers.Enemy.BattleSetting();
 
-        Enemy.OnDieEvent.RemoveAllListeners();
-        Enemy.OnDieEvent.AddListener(() =>
-        {
-            REGold reward = new REGold();
-            reward.SetGold(Managers.Map.CurrentChapter.Gold);
-            reward.AddRewardList();
+        Player.StatusManager.Reset();
+        Player.SliderInit();
 
-            RERune rune = new RERune();
-            rune.AddRewardList();
+        Player.OnDieEvent.RemoveAllListeners();
+        Player.OnDieEvent.AddListener(() => { Define.DialScene?.RewardUI.DefeatPanelPopup(); });
 
-            Define.DialScene?.RewardUI.VictoryPanelPopup();
-        });
-
-        player = Managers.GetPlayer();
-        player.StatusManager.Reset();
-        player.SliderInit();
-
-        player.OnDieEvent.RemoveAllListeners();
-        player.OnDieEvent.AddListener(() => { Define.DialScene?.RewardUI.DefeatPanelPopup(); });
-
-        Define.DialScene?.HealthbarInit(true, player.HP, player.MaxHP);
+        Define.DialScene?.HealthbarInit(true, Player.HP, Player.MaxHP);
 
         FeedbackManager.Instance.Init();
 
@@ -88,7 +72,7 @@ public class BattleManager : MonoSingleton<BattleManager>
             else Enemy.PatternManager.CurrentPattern.NextPattern();
         }
 
-        player.StatusManager.OnTurnStart();
+        Player.StatusManager.OnTurnStart();
         Enemy.PatternManager.StartAction();
     }
 
@@ -111,7 +95,7 @@ public class BattleManager : MonoSingleton<BattleManager>
 
     public void TurnChange()
     {
-        if (Enemy.HP <= 0 || player.HP <= 0) return;
+        if (Enemy.HP <= 0 || Player.HP <= 0) return;
 
         switch (_gameTurn)
         {
@@ -126,8 +110,8 @@ public class BattleManager : MonoSingleton<BattleManager>
 
                 Managers.Sound.PlaySound(_turnChangeSound, SoundType.Effect);
 
-                player?.StatusManager.OnTurnEnd();
-                player.StatusManager.TurnChange();
+                Player?.StatusManager.OnTurnEnd();
+                Player.StatusManager.TurnChange();
 
                 if (Enemy.Shield > 0)
                 {
@@ -154,9 +138,9 @@ public class BattleManager : MonoSingleton<BattleManager>
 
                 Managers.Sound.PlaySound(_turnChangeSound, SoundType.Effect);
 
-                if (player.Shield > 0)
+                if (Player.Shield > 0)
                 {
-                    player.ResetShield();
+                    Player.ResetShield();
                     Define.DialScene?.UpdateHealthbar(true);
                 }
 

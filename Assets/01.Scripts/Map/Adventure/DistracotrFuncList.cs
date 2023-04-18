@@ -62,7 +62,7 @@ public class DistracotrFuncList : MonoBehaviour
     }
     public void BattleEnemy(Enemy enemy)
     {
-        Managers.Map.SelectEnemy = enemy;
+        Managers.Enemy.AddEnemy(enemy);
         Managers.Scene.LoadScene(Define.Scene.DialScene);
     }
 }

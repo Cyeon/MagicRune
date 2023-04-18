@@ -139,7 +139,7 @@ public class DialScene : BaseScene
 
     private Transform GetStatusTrm(Unit unit)
     {
-        return unit == BattleManager.Instance.player ?
+        return unit == BattleManager.Instance.Player ?
             Managers.UI.Get<Image>("P StatusPanel").transform : Managers.UI.Get<Image>("E StatusPanel").transform;
     }
 
@@ -388,7 +388,8 @@ public class DialScene : BaseScene
     public void UpdateHealthbar(bool isPlayer)
     {
         SliderInit(isPlayer);
-        Unit unit = isPlayer ? BattleManager.Instance.player : BattleManager.Instance.Enemy;
+        Unit unit = isPlayer ? BattleManager.Instance.Player : BattleManager.Instance.Enemy;
+        if (unit == null) return;
 
         if (unit.Shield > 0)
         {
