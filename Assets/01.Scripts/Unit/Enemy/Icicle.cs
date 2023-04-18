@@ -8,7 +8,7 @@ public class Icicle : Enemy
 
     public override void Init()
     {
-        SpriteRenderer.sprite = _originalIcon;
+        spriteRenderer.sprite = _originalIcon;
         base.Init();
     }
 }

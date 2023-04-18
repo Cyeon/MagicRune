@@ -23,6 +23,12 @@ public class RewardUI : MonoBehaviour
 
         foreach(var reward in Managers.Reward.GetRewardList())
         {
+            if (reward.isAuto)
+            {
+                reward.GiveReward();
+                continue;
+            }
+
             RewardPanel panel = Managers.Resource.Instantiate("Reward_Image", _victoryRewardPanel.transform).GetComponent<RewardPanel>();
             panel.transform.localScale = Vector3.one;
             panel.Init(reward);
