@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DamageEvent : StatusEvent
+public class SETakeDamage : StatusEvent
 {
     private enum DamageType
     {

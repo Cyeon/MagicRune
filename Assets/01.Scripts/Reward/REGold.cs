@@ -8,8 +8,9 @@ public class REGold : Reward
 
     public override void AddRewardList()
     {
-        icon = Managers.Reward.GetRewardIcon(RewardType.Gold);
+        rewardIcon = Managers.Reward.GetRewardIcon(RewardType.Gold);
         desc = string.Format("{0} 골드", _gold);
+        isAuto = true;
         Managers.Reward.AddRewardList(this);
     }
 

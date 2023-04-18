@@ -5,11 +5,11 @@ using UnityEngine;
 
 public enum RemoveType
 { 
-    Percent,
-    Int
+    Int,
+    Percent
 }
 
-public class RemDmgEvent : StatusEvent
+public class SERemoveDamage : StatusEvent
 {
     public RemoveType removeType = RemoveType.Int;
     [SerializeField, ConditionalField(nameof(removeType), false, RemoveType.Percent)]

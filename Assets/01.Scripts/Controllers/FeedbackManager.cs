@@ -12,6 +12,6 @@ public class FeedbackManager : MonoSingleton<FeedbackManager>
     {
         BattleManager.Instance.Enemy.OnTakeDamageFeedback.AddListener(() => _enemyAttackFeedback.PlayFeedbacks());
         _enemyAttackFeedback.Feedbacks[0].GetComponent<MMFeedbackPosition>().AnimatePositionTarget = BattleManager.Instance.Enemy.gameObject;
-        _enemyAttackFeedback.Feedbacks[2].GetComponent<MMFeedbackSpriteRenderer>().BoundSpriteRenderer = BattleManager.Instance.Enemy.SpriteRenderer;
+        _enemyAttackFeedback.Feedbacks[2].GetComponent<MMFeedbackSpriteRenderer>().BoundSpriteRenderer = BattleManager.Instance.Enemy.spriteRenderer;
     }
 }

@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RemStackEvent : StatusEvent
+public class SERemoveStatus : StatusEvent
 {
     private enum RemStackType
     {
