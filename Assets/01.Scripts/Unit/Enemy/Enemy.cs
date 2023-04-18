@@ -27,7 +27,7 @@ public class Enemy : Unit
     [SerializeField] private Transform _shieldBar;
     [SerializeField] private Transform _healthFeedbackBar;
     [SerializeField] private Transform _shieldIcon;
-    [SerializeField] private TextMeshPro _healthText;
+    [SerializeField] private TextMeshPro _enemyHealthText;
     [SerializeField] private TextMeshPro _shieldText;
 
     #endregion
@@ -78,7 +78,7 @@ public class Enemy : Unit
     private void HealthUIInit()
     {
         _healthBar.DOScaleX(HP / MaxHP, 0);
-        _healthText.text = string.Format("{0}/{1}", HP.ToString(), MaxHP.ToString());
+        _enemyHealthText.text = string.Format("{0}/{1}", HP.ToString(), MaxHP.ToString());
 
         _shieldBar.DOScaleX(0, 0);
         _healthFeedbackBar.DOScaleX(0, 0);
@@ -88,7 +88,7 @@ public class Enemy : Unit
     {
         _healthFeedbackBar.DOScaleX(_healthBar.localScale.x, 0);
         _healthBar.DOScaleX(HP / MaxHP, 0);
-        _healthText.text = string.Format("{0}/{1}", HP.ToString(), MaxHP.ToString());
+        _enemyHealthText.text = string.Format("{0}/{1}", HP.ToString(), MaxHP.ToString());
 
         if (Shield > 0)
         {
@@ -108,7 +108,7 @@ public class Enemy : Unit
         vibrateSeq.Append(_healthFeedbackBar.parent.DOScale(1f, 0));
     }
 
-    public override void UpdateShieldUI()
+    public override void UpdateShieldUI() 
     {
         _shieldText.SetText(Shield.ToString());
         UpdateHealthUI();

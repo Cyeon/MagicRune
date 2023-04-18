@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AddStatusOnStackOverflowEvent : StatusEvent
+public class SEAddStatusOnStackOverflow : StatusEvent
 {
     [Header("Condition 조건")]
     [SerializeField]
