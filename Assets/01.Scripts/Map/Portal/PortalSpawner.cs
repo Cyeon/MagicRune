@@ -37,7 +37,7 @@ public class PortalSpawner : MonoBehaviour
                 {
                     Enemy enemy = _attackPortal.GetAttackEnemy();
                     AttackPortal atkPortal = Managers.Resource.Instantiate("Portal/" + _attackPortal.name, transform).GetComponent<AttackPortal>();
-
+                    Debug.Log(enemy);
                     switch(count)
                     {
                         case 1:

@@ -20,7 +20,7 @@ public class AttackPortal : Portal
     public void Init(Vector2 pos, Enemy enemy)
     {
         _portalEnemy = enemy;
-        _spriteRenderer.sprite = enemy.SpriteRenderer.sprite;
+        _spriteRenderer.sprite = enemy.spriteRenderer.sprite;
         _titleText.text = enemy.enemyName;
         Init(pos);
     }

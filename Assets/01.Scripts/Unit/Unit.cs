@@ -31,7 +31,7 @@ public class Unit : MonoBehaviour
             _health = value;
 
             if (_health > _maxHealth) _health = _maxHealth;
-            if (Managers.Scene.CurrentScene == Define.DialScene) Define.DialScene?.UpdateHealthbar(IsPlayer);
+            if (Managers.Scene.CurrentScene == Define.DialScene) UpdateHealthUI();
             if(_isPlayer) _userInfoUI.UpdateHealthText();
 
             if (_health <= 0) Die();
@@ -45,7 +45,7 @@ public class Unit : MonoBehaviour
         protected set
         {
             _shield = value;
-            Define.DialScene?.UpdateShieldText(_isPlayer, _shield);
+            UpdateShieldUI();
         }
     }
 
@@ -106,7 +106,7 @@ public class Unit : MonoBehaviour
 
         if (_isPlayer == false)
         {
-            Define.DialScene?.DamageUIPopup(currentDmg, Define.MainCam.WorldToScreenPoint(Define.DialScene.EnemyIcon.transform.position), status);
+            Define.DialScene?.DamageUIPopup(currentDmg, Define.MainCam.WorldToScreenPoint(transform.position), status);
         }
     }
 
@@ -195,4 +195,15 @@ public class Unit : MonoBehaviour
         _isDie = true;
         OnDieEvent?.Invoke();
     }
+
+    public virtual void UpdateHealthUI()
+    {
+
+    }
+
+    public virtual void UpdateShieldUI()
+    {
+        Define.DialScene?.UpdateShieldText(Shield);
+    }
+
 }

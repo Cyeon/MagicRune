@@ -116,7 +116,7 @@ public class BattleManager : MonoSingleton<BattleManager>
                 if (Enemy.Shield > 0)
                 {
                     Enemy.ResetShield();
-                    Define.DialScene?.UpdateHealthbar(false);
+                    Enemy.UpdateHealthUI();
                 }
 
                 Define.DialScene?.Turn("Enemy Turn");
