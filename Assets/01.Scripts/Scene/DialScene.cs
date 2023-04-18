@@ -315,7 +315,7 @@ public class DialScene : BaseScene
         {
             if (_dial.DialElementList[i].SelectCard != null)
             {
-                _cardDescPanelList.OpenPanel(i, _dial.DialElementList[i].SelectCard);
+                _cardDescPanelList.OpenPanel(i, _dial.DialElementList[i].SelectCard.Rune);
             }
             else
             {

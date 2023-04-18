@@ -85,7 +85,7 @@ public class DeckSettingUI : MonoBehaviour
     {
         foreach (BaseRune rune in Managers.Deck.Deck)
         {
-            if (Managers.Deck.FirstDialDeck.Find(x => x == rune))
+            if (Managers.Deck.FirstDialDeck.Find(x => x == rune) != null)
             {
                 continue;
             }

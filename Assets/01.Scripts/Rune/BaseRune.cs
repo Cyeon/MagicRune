@@ -7,7 +7,7 @@ using System;
 using Random = UnityEngine.Random;
 
 [Serializable]
-public abstract class BaseRune : MonoBehaviour, Item
+public class BaseRune : Item
 {
     #region Rune Stat Parameta
     [SerializeField]
@@ -40,16 +40,9 @@ public abstract class BaseRune : MonoBehaviour, Item
     private SpriteRenderer _runeSpriteRenderer;
     #endregion
 
-    private void Start()
+    public virtual void Init()
     {
-        _runeSpriteRenderer = transform.Find("Sprite").GetComponent<SpriteRenderer>();
 
-        if (_baseRuneSO != null)
-        {
-            _runeSpriteRenderer.sprite = _baseRuneSO.RuneSprite;
-        }
-
-        RuneColor(new Color(0.26f, 0.26f, 0.26f, 1f));
     }
 
     public void SetRandomGold(int start, int end)
@@ -83,7 +76,10 @@ public abstract class BaseRune : MonoBehaviour, Item
         return true;
     }
 
-    public abstract void AbilityAction();
+    public virtual void AbilityAction()
+    {
+
+    }
 
     public float GetAbliltiValaue(EffectType type)
     {
@@ -97,10 +93,5 @@ public abstract class BaseRune : MonoBehaviour, Item
         }
 
         return int.MinValue;
-    }
-
-    public void RuneColor(Color color)
-    {
-        _runeSpriteRenderer.color = color;
     }
 }

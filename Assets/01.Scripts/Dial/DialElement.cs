@@ -42,9 +42,9 @@ public class DialElement : MonoBehaviour
 
     private int _lineID = -1;
 
-    private List<BaseRune> _runeList;
-    private BaseRune _selectCard;
-    public BaseRune SelectCard
+    private List<BaseRuneUI> _runeList;
+    private BaseRuneUI _selectCard;
+    public BaseRuneUI SelectCard
     {
         get => _selectCard;
         set
@@ -98,7 +98,7 @@ public class DialElement : MonoBehaviour
         _dial = GetComponentInParent<Dial>();
         _lineSpriteRenderer = transform.Find("LineVisualSprite").GetComponent<SpriteRenderer>();
         _textSpriteRenderer = transform.Find("TextVisualSprite").GetComponent<SpriteRenderer>();
-        _runeList = new List<BaseRune>();
+        _runeList = new List<BaseRuneUI>();
         //_spriteRenderer.alphaHitTestMinimumThreshold = 0.04f;
     }
 
@@ -126,14 +126,14 @@ public class DialElement : MonoBehaviour
                 {
                     int index = (int)(transform.eulerAngles.z / oneDinstance) % (_runeList.Count);
                     //index = (index + 1) % _runeList.Count; // �߰���
-                    if (_runeList[index].IsCoolTime == false)
+                    if (_runeList[index].Rune.IsCoolTime == false)
                     {
                         SelectCard = _runeList[index];
                         if (_isRotate == true)
                         {
                             if (_selectCard != null)
                             {
-                                Define.DialScene?.CardDescPopup(_selectCard);
+                                Define.DialScene?.CardDescPopup(_selectCard.Rune);
                             }
                         }
                     }
@@ -144,14 +144,14 @@ public class DialElement : MonoBehaviour
                     //index = (index - 1 < 0 ? _runeList.Count - 1 : index - 1) % (_runeList.Count);
                     index = (index + 1) % (_runeList.Count);
 
-                    if (_runeList[index].IsCoolTime == false)
+                    if (_runeList[index].Rune.IsCoolTime == false)
                     {
                         SelectCard = _runeList[index];
                         if (_isRotate == true)
                         {
                             if (_selectCard != null)
                             {
-                                Define.DialScene?.CardDescPopup(_selectCard);
+                                Define.DialScene?.CardDescPopup(_selectCard.Rune);
                             }
                         }
                     }
@@ -161,7 +161,7 @@ public class DialElement : MonoBehaviour
                     SelectCard = null;
                     if (_isRotate == true)
                     {
-                    BaseRune rune = SelectCard == null ? null : SelectCard;
+                        BaseRune rune = SelectCard == null ? null : SelectCard.Rune;
                         Define.DialScene?.CardDescPopup(rune);
                     }
                 }
@@ -205,7 +205,7 @@ public class DialElement : MonoBehaviour
     {
         if(isLeft == true)
         {
-            BaseRune rune = _runeList[index];
+            BaseRuneUI rune = _runeList[index];
 
             float radianValue = 0f;
             if(index - 1 < 0)
@@ -235,7 +235,7 @@ public class DialElement : MonoBehaviour
         }
         else
         {
-            BaseRune rune = _runeList[index];
+            BaseRuneUI rune = _runeList[index];
 
             float radianValue = (_dial.RuneAngle / _runeList.Count) * (index + 1) + (_dial.StartAngle * Mathf.Deg2Rad);
 
@@ -267,14 +267,14 @@ public class DialElement : MonoBehaviour
         return _lineID;
     }
 
-    public void AddRuneList(BaseRune rune)
+    public void AddRuneList(BaseRuneUI rune)
     {
         _runeList.Add(rune);
     }
 
-    public void SetRuneList(List<BaseRune> list)
+    public void SetRuneList(List<BaseRuneUI> list)
     {
-        _runeList = new List<BaseRune>(list);
+        _runeList = new List<BaseRuneUI>(list);
     }
 
     public void ResetRuneList()
@@ -286,11 +286,11 @@ public class DialElement : MonoBehaviour
     {
         if (BattleManager.Instance.Enemy.IsDie == false && _selectCard != null)
         {
-            if (SelectCard.AbilityCondition())
+            if (SelectCard.Rune.AbilityCondition())
             {
-                SelectCard.AbilityAction();
+                SelectCard.Rune.AbilityAction();
 
-                _selectCard.SetCoolTime();
+                _selectCard.Rune.SetCoolTime();
                 SelectCard = null;
             }
         }
@@ -352,7 +352,7 @@ public class DialElement : MonoBehaviour
                                         0.3f
                                     ).OnComplete(() =>
                                     {
-                                        if (_selectCard != null) { Define.DialScene?.CardDescPopup(_selectCard); }
+                                        if (_selectCard != null) { Define.DialScene?.CardDescPopup(_selectCard.Rune); }
                                     });
                                     //}
                                 }
@@ -370,7 +370,7 @@ public class DialElement : MonoBehaviour
                                         0.3f
                                     ).OnComplete(() =>
                                     {
-                                        if (_selectCard != null) { Define.DialScene?.CardDescPopup(_selectCard); }
+                                        if (_selectCard != null) { Define.DialScene?.CardDescPopup(_selectCard.Rune); }
                                     });
                                     //}
                                 }
@@ -389,7 +389,7 @@ public class DialElement : MonoBehaviour
                                         .OnComplete(() =>
                                         {
                                             //SelectCard = _runeList[index];
-                                            if (_selectCard != null) { Define.DialScene?.CardDescPopup(_selectCard); }
+                                            if (_selectCard != null) { Define.DialScene?.CardDescPopup(_selectCard.Rune); }
                                         });
                                 }
                                 else
@@ -400,7 +400,7 @@ public class DialElement : MonoBehaviour
                                         .OnComplete(() =>
                                         {
                                             //SelectCard = _runeList[index]; // ���� ���� ���ϴ� �ְ� �ȵ���?�� ����â ������ ������?
-                                            if (_selectCard != null) { Define.DialScene?.CardDescPopup(_selectCard); }
+                                            if (_selectCard != null) { Define.DialScene?.CardDescPopup(_selectCard.Rune); }
                                         });
                                 }
                             }

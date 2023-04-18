@@ -24,7 +24,7 @@ public class ShopPortal : Portal
         for(int i = 0; i < list.Count; i++)
         {
             list[i].SetRandomGold(50, 100);
-            _shopUI.RuneItemProduct(list[i].GetComponent<Item>());
+            _shopUI.RuneItemProduct(list[i].GetType() as Item);
         }
         base.Execute();
     }

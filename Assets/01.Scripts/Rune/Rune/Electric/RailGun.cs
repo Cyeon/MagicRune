@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class RailGun : BaseRune
 {
+    public override void Init()
+    {
+        _baseRuneSO = Managers.Resource.Load<BaseRuneSO>("SO/Rune/Electric/" + typeof(RailGun).Name);
+    }
     public override bool AbilityCondition()
     {
         float statusValue = Managers.GetPlayer().StatusManager.GetStatusValue(StatusName.Recharging);

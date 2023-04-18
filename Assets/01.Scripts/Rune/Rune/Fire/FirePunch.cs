@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class FirePunch : BaseRune
 {
+    public override void Init()
+    {
+        _baseRuneSO = Managers.Resource.Load<BaseRuneSO>("SO/Rune/Fire/" + typeof(FirePunch).Name);
+    }
     public override void AbilityAction()
     {
         Managers.GetPlayer().Attack(GetAbliltiValaue(EffectType.Attack));
