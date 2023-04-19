@@ -21,10 +21,10 @@ public class ShopPortal : Portal
         //}
 
         List<BaseRune> list = Managers.Rune.GetRandomRune(9);
-        for(int i = 0; i < list.Count; i++)
+        for (int i = 0; i < list.Count; i++)
         {
             list[i].SetRandomGold(50, 100);
-            _shopUI.RuneItemProduct(list[i].GetType() as Item);
+            _shopUI.RuneItemProduct(list[i]);
         }
         base.Execute();
     }
