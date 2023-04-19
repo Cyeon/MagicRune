@@ -16,7 +16,7 @@ public class Resonance : MonoBehaviour
 
     public void IceResonance()
     {
-        BattleManager.Instance.Enemy.StatusManager.AddStatus(StatusName.Chilliness, 5);
+        BattleManager.Instance.Enemy.StatusManager.AddStatus(StatusName.Chilliness, 3);
     }
 
     public void GroundResonance()
