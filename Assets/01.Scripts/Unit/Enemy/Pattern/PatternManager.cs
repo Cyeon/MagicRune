@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class PatternManager : MonoBehaviour
@@ -8,6 +9,10 @@ public class PatternManager : MonoBehaviour
     public Pattern CurrentPattern => _currentPattern;
     public List<Pattern> patternList = new List<Pattern>();
     private int _index = -1;
+
+    [Header("UI")]
+    [SerializeField] private SpriteRenderer _patternSprite;
+    [SerializeField] private TextMeshPro _patternText;
 
     private void Awake()
     {
@@ -21,7 +26,7 @@ public class PatternManager : MonoBehaviour
     public void ChangePattern(Pattern pattern)
     {
         _currentPattern = pattern;
-        Define.DialScene?.ReloadPattern(_currentPattern.icon, _currentPattern.desc);
+        UpdatePatternUI();
     }
 
     public void NextPattern()
@@ -49,5 +54,11 @@ public class PatternManager : MonoBehaviour
     public void EndAction()
     {
         _currentPattern.EndAction();
+    }
+
+    public void UpdatePatternUI()
+    {
+        _patternSprite.sprite = _currentPattern.icon;
+        _patternText.text = _currentPattern.desc;
     }
 }

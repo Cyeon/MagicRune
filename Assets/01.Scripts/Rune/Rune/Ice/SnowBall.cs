@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class SnowBall : BaseRune
 {
+    public override void Init()
+    {
+        _baseRuneSO = Managers.Resource.Load<BaseRuneSO>("SO/Rune/Ice/" + typeof(SnowBall).Name);
+    }
     public override void AbilityAction()
     {
         Managers.GetPlayer().Attack(GetAbliltiValaue(EffectType.Attack));

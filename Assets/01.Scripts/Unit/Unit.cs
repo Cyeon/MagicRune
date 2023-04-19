@@ -29,14 +29,10 @@ public class Unit : MonoBehaviour
             if (_isDie) return;
 
             _health = value;
-            if (_health > _maxHealth)
-            {
-                _health = _maxHealth;
-            }
-            if (Managers.Scene.CurrentScene == Define.DialScene)
-            {
-                Define.DialScene?.UpdateHealthbar(IsPlayer);
-            }
+
+            if (_health > _maxHealth) _health = _maxHealth;
+            if (Managers.Scene.CurrentScene == Define.DialScene) UpdateHealthUI();
+            if(_isPlayer) _userInfoUI.UpdateHealthText();
 
             if (_health <= 0) Die();
         }
@@ -49,7 +45,7 @@ public class Unit : MonoBehaviour
         protected set
         {
             _shield = value;
-            Define.DialScene?.UpdateShieldText(_isPlayer, _shield);
+            UpdateShieldUI();
         }
     }
 
@@ -63,32 +59,31 @@ public class Unit : MonoBehaviour
     public float currentDmg = 0;
 
     [field: SerializeField] public UnityEvent<float> OnTakeDamage { get; set; }
-
     [field: SerializeField] public UnityEvent OnTakeDamageFeedback { get; set; }
-    //[field: SerializeField] public Dictionary<StatusInvokeTime, List<Status>> unitStatusDic = new Dictionary<StatusInvokeTime, List<Status>>();
-
     public UnityEvent OnDieEvent;
-
 
     [Header("Status")]
     public Transform statusTrm;
     private StatusManager _statusManager;
     public StatusManager StatusManager => _statusManager;
 
+    private UserInfoUI _userInfoUI;
+
     private void Start() {
         _statusManager = new StatusManager(this);
         statusTrm = transform.Find("Status");
 
         _statusManager.Reset();
+        _userInfoUI = Managers.UI.Get<UserInfoUI>("Upper_Frame");
     }
 
     /// <summary>
-    /// ������ �޴� �Լ�
+    /// 데미지 받는 함수
     /// </summary>
     /// <param name="damage"></param>
     public void TakeDamage(float damage, bool isTrueDamage = false, Status status = null)
     {
-        currentDmg = damage;
+        currentDmg = Mathf.Floor(damage);
         _statusManager.OnGetDamage();
         currentDmg = Mathf.Floor(currentDmg);
 
@@ -111,7 +106,7 @@ public class Unit : MonoBehaviour
 
         if (_isPlayer == false)
         {
-            Define.DialScene?.DamageUIPopup(currentDmg, Define.MainCam.WorldToScreenPoint(Define.DialScene.EnemyIcon.transform.position), status); 
+            Define.DialScene?.DamageUIPopup(currentDmg, Define.MainCam.WorldToScreenPoint(transform.position), status);
         }
     }
 
@@ -127,21 +122,6 @@ public class Unit : MonoBehaviour
 
         return false;
     }
-
-    //public void InvokeStatus(StatusInvokeTime time)
-    //{
-    //    if (IsDie == true) return;
-
-    //    List<Status> status;
-
-    //    if (unitStatusDic.TryGetValue(time, out status))
-    //    {
-    //        if (status.Count > 0)
-    //        {
-    //            StatusManager.Instance.StatusFuncInvoke(status, this);
-    //        }
-    //    }
-    //}
 
     public float GetMaxHP()
     {
@@ -182,6 +162,7 @@ public class Unit : MonoBehaviour
         if (_isDie == false)
         {
             _maxHealth += amount;
+            _userInfoUI.UpdateHealthText();
         }
     }
 
@@ -214,4 +195,15 @@ public class Unit : MonoBehaviour
         _isDie = true;
         OnDieEvent?.Invoke();
     }
+
+    public virtual void UpdateHealthUI()
+    {
+
+    }
+
+    public virtual void UpdateShieldUI()
+    {
+        Define.DialScene?.UpdateShieldText(Shield);
+    }
+
 }

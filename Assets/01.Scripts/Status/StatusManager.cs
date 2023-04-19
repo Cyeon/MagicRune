@@ -186,7 +186,6 @@ public class StatusManager
 
         for(int i = _unit.statusTrm.childCount - 1; i >= 0; --i)
         {
-            Debug.Log(_unit.statusTrm.GetChild(i).name);
             Managers.Resource.Destroy(_unit.statusTrm.GetChild(i).gameObject);
         }
     }

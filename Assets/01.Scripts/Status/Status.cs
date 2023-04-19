@@ -15,14 +15,13 @@ public enum StatusType
 public enum StatusName
 {
     Null,
-    Weak,
-    Fire,
-    Ice,
-    Wound,
-    Recharging,
-    Coldness, // 냉기
-    Chilliness, // 한기
-    BladeOfKnife,
+    Fire,                     // 화상
+    Ice,                      // 빙결
+    Recharging,          // 충전
+    Coldness,             // 냉기
+    Chilliness,            // 한기
+    BladeOfKnife,       // 칼날
+    Impact,               // 충격
     COUNT
 }
 

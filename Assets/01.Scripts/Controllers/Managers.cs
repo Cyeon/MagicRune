@@ -27,6 +27,7 @@ public class Managers : MonoBehaviour
     private ResourceManager _resource = new ResourceManager();
     private StatModifierManager _statModifier = new StatModifierManager();
     private RelicManager _relic = new RelicManager();
+    private EnemyManager _enemy = new EnemyManager();
 
     public static UIManager UI {  get { return Instance._ui; } }
     public static MapManager Map { get { return Instance._map; } }
@@ -42,6 +43,7 @@ public class Managers : MonoBehaviour
     public static ResourceManager Resource { get { return Instance._resource; } }
     public static StatModifierManager StatModifier { get { return Instance._statModifier; } }
     public static RelicManager Relic => Instance._relic;
+    public static EnemyManager Enemy => Instance._enemy;
     #endregion
 
     private bool _preparedToQuit = false;
