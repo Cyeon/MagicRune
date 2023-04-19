@@ -44,12 +44,12 @@ public class Dial : MonoBehaviour
     #endregion
 
     private bool _isAttack;
-
-    private DialScene _dialScene;
+    private Resonance _resonance;
 
     private void Awake()
     {
         _remamingRuneContainer = transform.Find("RuneContainer");
+        _resonance = GetComponent<Resonance>();
 
         _runeDict = new Dictionary<int, List<BaseRuneUI>>(3);
         for (int i = 1; i <= 3; i++)
@@ -72,8 +72,6 @@ public class Dial : MonoBehaviour
 
     private void Start()
     {
-        _dialScene = Managers.Scene.CurrentScene as DialScene;
-
         for (int i = 0; i < 3; i++)
         {
             DialElement d = this.transform.GetChild(i).GetComponent<DialElement>();
@@ -388,7 +386,7 @@ public class Dial : MonoBehaviour
 
         if(isResonanceCheck)
         {
-            Debug.Log(compareAttributeType + "°ø¸í!");
+            _resonance.Invocation(compareAttributeType);
         }
     }
 
