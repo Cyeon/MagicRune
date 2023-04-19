@@ -34,6 +34,12 @@ public class DeckSettingUI : MonoBehaviour
 
     private void Awake()
     {
+        if (FindObjectsOfType<Player>().Length > 1)
+        {
+            Destroy(gameObject);
+        }
+        DontDestroyOnLoad(this);
+
         if (_runePanelPrefab != null) // 오브젝트들 미리 생성 
         {
             for (int i = 0; i < 30; i++)
@@ -68,8 +74,11 @@ public class DeckSettingUI : MonoBehaviour
     /// </summary>
     public void ActiveUI()
     {
-        SettingAllDeck();
-        _backgroundPanel.SetActive(true);
+        if(Managers.Scene.CurrentScene.GetType() != typeof(DialScene))
+        {
+            SettingAllDeck();
+            _backgroundPanel.SetActive(true);
+        }
     }
 
     private void SettingAllDeck()

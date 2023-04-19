@@ -13,7 +13,7 @@ public class GoldManager
     {
         _gold = 0;
 
-        Managers.UI.Bind<UserInfoUI>("Upper_Frame", GameObject.FindObjectOfType<DontDestroyOnLoad>().gameObject);
+        Managers.UI.Bind<UserInfoUI>("Upper_Frame", GameObject.FindObjectOfType<UserInfoPanelCanvas>().gameObject);
         _userInfoUI = Managers.UI.Get<UserInfoUI>("Upper_Frame");
         _userInfoUI.UpdateGoldText();
     }
