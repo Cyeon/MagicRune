@@ -44,12 +44,12 @@ public class Dial : MonoBehaviour
     #endregion
 
     private bool _isAttack;
-
-    private DialScene _dialScene;
+    private Resonance _resonance;
 
     private void Awake()
     {
         _remamingRuneContainer = transform.Find("RuneContainer");
+        _resonance = GetComponent<Resonance>();
 
         _runeDict = new Dictionary<int, List<BaseRuneUI>>(3);
         for (int i = 1; i <= 3; i++)
@@ -72,8 +72,6 @@ public class Dial : MonoBehaviour
 
     private void Start()
     {
-        _dialScene = Managers.Scene.CurrentScene as DialScene;
-
         for (int i = 0; i < 3; i++)
         {
             DialElement d = this.transform.GetChild(i).GetComponent<DialElement>();
@@ -332,6 +330,9 @@ public class Dial : MonoBehaviour
     private IEnumerator AttackCoroutine()
     {
         Define.DialScene?.CardDescDown();
+
+        AttributeType compareAttributeType = _dialElementList[0].SelectCard.Rune.BaseRuneSO.AttributeType;
+        bool isResonanceCheck = true;
         for (int i = _dialElementList.Count - 1; i >= 0; i--)
         {
             if (_dialElementList[i].SelectCard != null)
@@ -343,6 +344,10 @@ public class Dial : MonoBehaviour
                 {
                     b.SetEffect(_dialElementList[i].SelectCard.Rune.BaseRuneSO.RuneEffect);
                 }
+
+                if(isResonanceCheck)
+                    isResonanceCheck = _dialElementList[i].SelectCard.Rune.BaseRuneSO.AttributeType == compareAttributeType;
+
                 switch (_dialElementList[i].SelectCard.Rune.BaseRuneSO.AttributeType)
                 {
                     case AttributeType.None:
@@ -366,6 +371,7 @@ public class Dial : MonoBehaviour
                         b.SetTrailColor(Color.yellow);
                         break;
                 }
+
                 b.Init(_dialElementList[i].SelectCard.transform, BattleManager.Instance.Enemy.transform, 1.5f, 7, 7, () =>
                 {
                     _dialElementList[index].Attack();
@@ -376,6 +382,11 @@ public class Dial : MonoBehaviour
                 BattleManager.Instance.missileCount += 1;
                 yield return new WaitForSeconds(0.1f);
             }
+        }
+
+        if(isResonanceCheck)
+        {
+            _resonance.Invocation(compareAttributeType);
         }
     }
 
