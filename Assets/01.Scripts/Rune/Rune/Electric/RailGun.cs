@@ -17,8 +17,7 @@ public class RailGun : BaseRune
 
     public override void AbilityAction()
     {
-        Managers.GetPlayer().StatusManager.RemoveStatus(StatusName.Recharging, 10);
-
         Managers.GetPlayer().Attack(GetAbliltiValaue(EffectType.Attack));
+        Managers.GetPlayer().StatusManager.RemoveStatus(StatusName.Recharging, 10);
     }
 }
