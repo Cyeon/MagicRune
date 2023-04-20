@@ -46,8 +46,9 @@ public class DeckManager
             AddRune(new RailGun(), 3);
             AddRune(new Charge(), 3);
             AddRune(new FireRegeneration());
+            AddRune(new FireBreath());
 
-            for(int i = 0; i < _deck.Count; i++)
+            for (int i = 0; i < _deck.Count; i++)
             {
                 _deck[i].Init();
             }
