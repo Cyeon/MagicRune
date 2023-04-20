@@ -24,6 +24,8 @@ public class SETakeDamage : StatusEvent
         {
             _damage = _status.TypeValue;
         }
+
+        Debug.Log(_damage);
         _unit.TakeDamage(_damage, _isTrueDamage, _status);
     }
 }

@@ -60,6 +60,8 @@ public class StatusManager
 
     public void DeleteStatus(Status status)
     {
+        if (_unit.IsDie || IsHaveStatus(status.statusName) == false) return;
+
         _statusList.Remove(status);
         Define.DialScene?.RemoveStatusPanel(_unit, status.statusName);
 
@@ -74,10 +76,11 @@ public class StatusManager
 
     public void DeleteStatus(StatusName statusName)
     {
+        if (GetStatus(statusName) == null) return;
         DeleteStatus(GetStatus(statusName));
     }
 
-    private bool IsHaveStatus(StatusName status)
+    public bool IsHaveStatus(StatusName status)
     {
         for(int i = 0; i < _statusList.Count; ++i)
         {
@@ -189,10 +192,5 @@ public class StatusManager
         {
             Managers.Resource.Destroy(_unit.statusTrm.GetChild(i).gameObject);
         }
-    }
-
-    internal void AddStatus(StatusName impact, object value)
-    {
-        throw new NotImplementedException();
     }
 }
