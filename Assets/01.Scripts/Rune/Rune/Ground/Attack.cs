@@ -3,15 +3,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ShieldAttack : BaseRune
+public class Attack : BaseRune
 {
     public override void Init()
     {
-        _baseRuneSO = Managers.Resource.Load<BaseRuneSO>("SO/Rune/Ground/" + typeof(ShieldAttack).Name);
+        _baseRuneSO = Managers.Resource.Load<BaseRuneSO>("SO/Rune/Ground/" + typeof(Attack).Name);
     }
+
     public override void AbilityAction()
     {
-        Managers.GetPlayer().AddShield(GetAbliltiValaue(EffectType.Defence));
         BattleManager.Instance.Enemy.StatusManager.AddStatus(StatusName.Impact, GetAbliltiValaue(EffectType.Status).RoundToInt());
     }
 }

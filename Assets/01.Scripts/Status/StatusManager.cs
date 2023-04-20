@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -188,5 +189,10 @@ public class StatusManager
         {
             Managers.Resource.Destroy(_unit.statusTrm.GetChild(i).gameObject);
         }
+    }
+
+    internal void AddStatus(StatusName impact, object value)
+    {
+        throw new NotImplementedException();
     }
 }
