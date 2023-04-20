@@ -12,6 +12,6 @@ public class IceShield : BaseRune
     public override void AbilityAction()
     {
         Managers.GetPlayer().AddShield(GetAbliltiValaue(EffectType.Defence));
-        BattleManager.Instance.Enemy.StatusManager.AddStatus(StatusName.IceShield, GetAbliltiValaue(EffectType.Status).RoundToInt());
+        Managers.GetPlayer().StatusManager.AddStatus(StatusName.IceShield, GetAbliltiValaue(EffectType.Status).RoundToInt());
     }
 }

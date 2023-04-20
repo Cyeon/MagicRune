@@ -1,3 +1,4 @@
+using MyBox;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,7 +14,7 @@ public class FireBreath : BaseRune
     {
         for(int i = 0; i < 3; i++)
         {
-            BattleManager.Instance.Enemy.StatusManager.AddStatus(StatusName.Fire, 3);
+            BattleManager.Instance.Enemy.StatusManager.AddStatus(StatusName.Fire, GetAbliltiValaue(EffectType.Status).RoundToInt());
         }
     }
 }
