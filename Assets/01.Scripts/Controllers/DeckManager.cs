@@ -55,6 +55,8 @@ public class DeckManager
             // 얼음 속성
             AddRune(new Ice());
             AddRune(new SnowBall(), 2);
+            AddRune(new IceShield(), 2);
+            AddRune(new IceSmash(), 2);
 
             // 무속성
             AddRune(new MagicBullet());
