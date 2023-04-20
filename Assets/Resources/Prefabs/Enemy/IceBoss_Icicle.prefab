@@ -301,7 +301,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76e453d0137dffa4c86b004096088636, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  status: 6
+  status: 4
   value: 15
   isSelf: 1
 --- !u!1 &1556952493251077343
@@ -419,7 +419,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76e453d0137dffa4c86b004096088636, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  status: 6
+  status: 4
   value: 15
   isSelf: 1
 --- !u!1 &2584014135516664227
@@ -559,10 +559,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a9a84362b976a746a341572651e7aa7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  status: 7
+  status: 5
   value: 0
   isSelf: 0
-  _statusName: 6
+  _checkStatusName: 4
 --- !u!1 &2790445244770174630
 GameObject:
   m_ObjectHideFlags: 0
@@ -700,10 +700,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a9a84362b976a746a341572651e7aa7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  status: 7
+  status: 5
   value: 0
   isSelf: 0
-  _statusName: 6
+  _checkStatusName: 4
 --- !u!1 &3380282587722323158
 GameObject:
   m_ObjectHideFlags: 0
@@ -821,7 +821,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76e453d0137dffa4c86b004096088636, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  status: 8
+  status: 6
   value: 6
   isSelf: 1
 --- !u!114 &7495998144082673681
@@ -1102,7 +1102,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76e453d0137dffa4c86b004096088636, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  status: 6
+  status: 4
   value: 15
   isSelf: 1
 --- !u!1 &5704936873978239588
@@ -1303,7 +1303,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76e453d0137dffa4c86b004096088636, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  status: 6
+  status: 4
   value: 15
   isSelf: 1
 --- !u!1 &7230402538860865233
@@ -1443,10 +1443,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a9a84362b976a746a341572651e7aa7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  status: 7
+  status: 5
   value: 0
   isSelf: 0
-  _statusName: 6
+  _checkStatusName: 4
 --- !u!1 &7487168738078791230
 GameObject:
   m_ObjectHideFlags: 0
@@ -1816,10 +1816,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a9a84362b976a746a341572651e7aa7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  status: 7
+  status: 5
   value: 0
   isSelf: 0
-  _statusName: 6
+  _checkStatusName: 4
 --- !u!1 &8558184785674693566
 GameObject:
   m_ObjectHideFlags: 0
@@ -2038,6 +2038,22 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 34976972, guid: 1d902098969ddc24a8a9b824bb9545b3, type: 3}
+      propertyPath: m_Size.x
+      value: 7.84
+      objectReference: {fileID: 0}
+    - target: {fileID: 34976972, guid: 1d902098969ddc24a8a9b824bb9545b3, type: 3}
+      propertyPath: m_Size.y
+      value: 7.59
+      objectReference: {fileID: 0}
+    - target: {fileID: 34976972, guid: 1d902098969ddc24a8a9b824bb9545b3, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 34976972, guid: 1d902098969ddc24a8a9b824bb9545b3, type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3535539594408076956, guid: 1d902098969ddc24a8a9b824bb9545b3, type: 3}
       propertyPath: m_Name
       value: IceBoss_Icicle

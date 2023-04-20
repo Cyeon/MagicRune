@@ -11,7 +11,7 @@ public class Release : BaseRune
 
     public override void AbilityAction()
     {
-        float dmg = Managers.GetPlayer().StatusManager.GetStatusValue(StatusName.Recharging);
+        float dmg = Managers.GetPlayer().StatusManager.GetStatusValue(StatusName.Recharging) * 3;
         Managers.GetPlayer().StatusManager.DeleteStatus(StatusName.Recharging);
         Managers.GetPlayer().Attack(dmg);
     }
