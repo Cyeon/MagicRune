@@ -135,8 +135,25 @@ public class Dial : MonoBehaviour
         {
             for (int i = 0; i < _maxRuneCount; i++)
             {
-                int randomIndex = Random.Range(0, numberList.Count);
-                BaseRuneUI r = _remainingRuneList.Find(x => x.Rune == Managers.Deck.FirstDialDeck[randomIndex]);
+                int randomIndex = 0;
+                BaseRuneUI r = null;
+
+                if (numberList.Count != 0)
+                {
+                    randomIndex = Random.Range(0, numberList.Count);
+                    r = _remainingRuneList.Find(x => x.Rune == Managers.Deck.FirstDialDeck[randomIndex]);
+                    numberList.RemoveAt(randomIndex);
+                }
+                else
+                {
+                    while (r == null)
+                    {
+                        InfiniteLoopDetector.Run();
+                        BaseRune baseRune = Managers.Deck.GetRandomRune(Managers.Deck.FirstDialDeck);
+                        r = _remainingRuneList.Find(x => x.Rune == baseRune);
+                    }
+                }
+
                 r.transform.SetParent(_dialElementList[2].transform);
                 r.transform.localScale = new Vector3(0.1f, 0.1f, 1f);
                 r.gameObject.SetActive(true);
@@ -147,7 +164,6 @@ public class Dial : MonoBehaviour
                 }
                 AddCard(r, 1);
 
-                numberList.RemoveAt(randomIndex);
                 _remainingRuneList.Remove(r);
                 maxRuneCount--;
             }
@@ -279,7 +295,6 @@ public class Dial : MonoBehaviour
                 float height = Mathf.Sin(radianValue) * _lineDistanceArray[3 - line];
                 float width = Mathf.Cos(radianValue) * _lineDistanceArray[3 - line];
                 _runeDict[line][i].transform.position = new Vector3(width + this.transform.position.x, height + this.transform.position.y, 0);
-                //_magicDict[1][i].transform.localScale = new Vector3(0.02f, 0.02f, 1);
 
                 Vector2 direction = new Vector2(
                     _runeDict[line][i].transform.position.x - transform.position.x,
@@ -345,7 +360,7 @@ public class Dial : MonoBehaviour
                     b.SetEffect(_dialElementList[i].SelectCard.Rune.BaseRuneSO.RuneEffect);
                 }
 
-                if(isResonanceCheck)
+                if (isResonanceCheck)
                     isResonanceCheck = _dialElementList[i].SelectCard.Rune.BaseRuneSO.AttributeType == compareAttributeType;
 
                 switch (_dialElementList[i].SelectCard.Rune.BaseRuneSO.AttributeType)
@@ -384,7 +399,7 @@ public class Dial : MonoBehaviour
             }
         }
 
-        if(isResonanceCheck)
+        if (isResonanceCheck)
         {
             _resonance.Invocation(compareAttributeType);
         }
