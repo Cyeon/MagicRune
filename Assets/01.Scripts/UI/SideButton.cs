@@ -9,7 +9,7 @@ public class SideButton : MonoBehaviour
 
     void Start()
     {
-        _image = GetComponentInChildren<Image>();
+        _image = GetComponent<Image>();
 
         _image.alphaHitTestMinimumThreshold = 0.1f;
     }

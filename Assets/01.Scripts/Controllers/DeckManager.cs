@@ -21,19 +21,35 @@ public class DeckManager
     {
         if (_deck.Count == 0) // 덱이 비어있을 경우 설정해둔 초기 덱을 넣어줌 
         {
-            AddRune(new Fire());
-            AddRune(new FirePunch());
-            AddRune(new Ice());
-            AddRune(new MagicBullet());
-            AddRune(new MagicShield());
-            AddRune(new SnowBall());
-            AddRune(new SnowBall());
-            AddRune(new GroundShield());
-            AddRune(new ShieldAttack());
+            // 전기속성
             AddRune(new RailGun(), 3);
             AddRune(new Charge(), 3);
+            AddRune(new LightingRod());
+            AddRune(new Release());
 
-            for(int i = 0; i < _deck.Count; i++)
+            // 불 속성
+            AddRune(new Fire());
+            AddRune(new FirePunch());
+            AddRune(new FireRegeneration());
+            AddRune(new FireBreath());
+
+            // 땅 속성
+            AddRune(new GroundShield());
+            AddRune(new ShieldAttack());
+            AddRune(new Attack());
+            AddRune(new ThreeAttack());
+
+            // 얼음 속성
+            AddRune(new Ice());
+            AddRune(new SnowBall(), 2);
+            AddRune(new IceShield(), 2);
+            AddRune(new IceSmash(), 2);
+
+            // 무속성
+            AddRune(new MagicBullet());
+            AddRune(new MagicShield());
+
+            for (int i = 0; i < _deck.Count; i++)
             {
                 _deck[i].Init();
             }
@@ -69,7 +85,7 @@ public class DeckManager
 
     public void RuneSwap(int fIndex, int sIndex)
     {
-        _deck.SwapInPlace(fIndex, sIndex); // 여기 에러날 수 있음 아님 말고
+        _deck.SwapInPlace(fIndex, sIndex); //
     }
 
     public void UsingDeckSort()

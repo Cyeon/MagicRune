@@ -198,7 +198,7 @@ public class Unit : MonoBehaviour
 
     public virtual void UpdateHealthUI()
     {
-
+        Define.DialScene?.UpdateHealthbar(IsPlayer);
     }
 
     public virtual void UpdateShieldUI()

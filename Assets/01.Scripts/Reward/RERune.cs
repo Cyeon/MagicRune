@@ -15,8 +15,6 @@ public class RERune : Reward
 
     public override void GiveReward()
     {
-        _dialScene = Managers.Scene.CurrentScene as DialScene;
         Define.DialScene?.ChooseRuneUISetUp();
-
     }
 }

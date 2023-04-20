@@ -14,12 +14,24 @@ public class RuneManager
         //_runeList = Managers.Resource.Load<AllRuneListSO>("SO/" + typeof(AllRuneListSO).Name);
         _runeHandler.Add(new Fire());
         _runeHandler.Add(new FirePunch());
+        _runeHandler.Add(new FireRegeneration());
+        _runeHandler.Add(new FireBreath());
+
         _runeHandler.Add(new Ice());
         _runeHandler.Add(new SnowBall());
+        _runeHandler.Add(new IceShield());
+        _runeHandler.Add(new IceSmash());
+
         _runeHandler.Add(new ShieldAttack());
-        _runeHandler.Add(new GroundShield());
+        _runeHandler.Add(new Attack());
+        _runeHandler.Add(new ThreeAttack());
+        _runeHandler.Add(new GroundShield())
+            ;
         _runeHandler.Add(new Charge());
         _runeHandler.Add(new RailGun());
+        _runeHandler.Add(new LightingRod());
+        _runeHandler.Add(new Release());
+
         _runeHandler.Add(new MagicBullet());
         _runeHandler.Add(new MagicShield());
         foreach (var item in _runeHandler)
