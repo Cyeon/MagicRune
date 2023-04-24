@@ -65,11 +65,11 @@ public class RuneUI : MonoBehaviour
 
     public void SetCoolTime()
     {
-        if (_rune.CoolTIme > 0)
+        if (_rune.CoolTime > 0)
         {
             //_runeImage.color = Color.gray;
             SetActiveOutline(OutlineType.Default);
-            _coolTimeText.SetText(_rune.CoolTIme.ToString());
+            _coolTimeText.SetText(_rune.CoolTime.ToString());
             _coolTimeText.gameObject.SetActive(true);
             RuneColor(new Color(0.26f, 0.26f, 0.26f, 1f));
             _xImage.gameObject.SetActive(true);

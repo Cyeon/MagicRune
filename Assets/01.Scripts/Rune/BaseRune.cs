@@ -15,7 +15,7 @@ public class BaseRune : Item
     public BaseRuneSO BaseRuneSO => _baseRuneSO;
 
     private int _coolTime;
-    public int CoolTIme => _coolTime;
+    public int CoolTime => _coolTime;
 
     public bool IsCoolTime => _coolTime > 0;
 

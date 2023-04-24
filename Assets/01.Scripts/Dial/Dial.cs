@@ -75,7 +75,7 @@ public class Dial : MonoBehaviour
 
     public void SortingRemaingRune()
     {
-        Managers.Deck.Deck.OrderBy(z => z.CoolTIme);
+        Managers.Deck.Deck.OrderBy(z => z.CoolTime);
     }
 
     public int GetUsingRuneCount()
@@ -83,7 +83,7 @@ public class Dial : MonoBehaviour
         int count = 0;
         for (int i = 0; i < Managers.Deck.Deck.Count; i++)
         {
-            if (Managers.Deck.Deck[i].CoolTIme <= 0)
+            if (Managers.Deck.Deck[i].CoolTime <= 0)
             {
                 count++;
             }
@@ -117,7 +117,7 @@ public class Dial : MonoBehaviour
         List<int> numberList = new List<int>();
         for (int i = 0; i < Managers.Deck.FirstDialDeck.Count; i++)
         {
-            if (Managers.Deck.FirstDialDeck[i].CoolTIme <= 0)
+            if (Managers.Deck.FirstDialDeck[i].CoolTime <= 0)
             {
                 numberList.Add(i);
             }
@@ -171,7 +171,9 @@ public class Dial : MonoBehaviour
                     break;
                 }
 
+                SortingRemaingRune();
                 int runeIndex = Random.Range(0, maxRuneCount);
+                
 
                 BaseRuneUI r = Managers.Resource.Instantiate("Rune/BaseRune").GetComponent<BaseRuneUI>();
                 r.SetRune(Managers.Deck.Deck[runeIndex]);
@@ -184,7 +186,7 @@ public class Dial : MonoBehaviour
                     r.Rune.SetCoolTime(0);
                 }
                 AddCard(r, 1);
-                Managers.Deck.RuneSwap(runeIndex, maxRuneCount - 1);
+                //Managers.Deck.RuneSwap(runeIndex, maxRuneCount - 1);
 
                 maxRuneCount--;
             }
@@ -202,10 +204,12 @@ public class Dial : MonoBehaviour
             int runeIndex = Random.Range(0, maxRuneCount);
 
             int index = 1 - (i % 2);
-            while (Managers.Deck.FirstDialDeck.Find(x => x == Managers.Deck.Deck[runeIndex]) != null)
+            BaseRune rune = Managers.Deck.Deck[runeIndex];
+            while (rune.CoolTime > 0)
             {
                 InfiniteLoopDetector.Run();
                 runeIndex = Random.Range(0, maxRuneCount);
+                rune = Managers.Deck.Deck[runeIndex];
             }
             BaseRuneUI r = Managers.Resource.Instantiate("Rune/BaseRune").GetComponent<BaseRuneUI>();
             r.SetRune(Managers.Deck.Deck[runeIndex]);
@@ -412,7 +416,7 @@ public class Dial : MonoBehaviour
     {
         for (int i = 0; i < Managers.Deck.Deck.Count; i++)
         {
-            if (Managers.Deck.Deck[i].CoolTIme > 0)
+            if (Managers.Deck.Deck[i].CoolTime > 0)
             {
                 Managers.Deck.Deck[i].AddCoolTime(-1);
             }
