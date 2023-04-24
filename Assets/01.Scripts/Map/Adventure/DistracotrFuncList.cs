@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public enum IncreaseMode
 {
@@ -64,5 +65,16 @@ public class DistracotrFuncList : MonoBehaviour
     {
         Managers.Enemy.AddEnemy(enemy);
         Managers.Scene.LoadScene(Define.Scene.DialScene);
+    }
+
+    public void RandomRuneCopy()
+    {
+        BaseRune baseRune = Managers.Deck.GetRandomRune();
+        Managers.Deck.AddRune(baseRune);
+    }
+
+    public void RuneDelete()
+    {
+        //Managers.UI.Get<Image>("DeleteEventPanel_Image")
     }
 }

@@ -21,6 +21,7 @@ public class DeckManager
     {
         if (_deck.Count == 0) // 덱이 비어있을 경우 설정해둔 초기 덱을 넣어줌 
         {
+            #region Rune Add
             // 전기속성
             AddRune(new RailGun(), 3);
             AddRune(new Charge(), 3);
@@ -48,6 +49,7 @@ public class DeckManager
             // 무속성
             AddRune(new MagicBullet());
             AddRune(new MagicShield());
+            #endregion
 
             for (int i = 0; i < _deck.Count; i++)
             {
