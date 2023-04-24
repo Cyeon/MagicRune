@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 5736046982554988565}
   - component: {fileID: 5014004267170453785}
-  - component: {fileID: -8150513138779514717}
   - component: {fileID: 5477874327935523548}
+  - component: {fileID: 5448988652607670041}
   m_Layer: 0
   m_Name: Status_BladeOfKnife
   m_TagString: Untagged
@@ -47,7 +47,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   debugName: "\uCE7C\uB0A0"
-  statusName: 8
+  statusName: 6
   information: 
   textColor: {r: 1, g: 1, b: 1, a: 1}
   type: 0
@@ -55,27 +55,13 @@ MonoBehaviour:
   OnAddStatus: []
   OnTurnStart: []
   OnAttack:
-  - {fileID: -8150513138779514717}
+  - {fileID: 5448988652607670041}
   OnGetDamage:
   - {fileID: 5477874327935523548}
   OnTurnEnd: []
   icon: {fileID: 21300000, guid: 14e249f917459b4469fef5e512dadcae, type: 3}
   color: {r: 1, g: 1, b: 1, a: 1}
   unit: {fileID: 0}
---- !u!114 &-8150513138779514717
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8378743581122507794}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 615dc9b12d9bbc7459c8096f678ee76d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _damage: 0
-  _addValue: 2
 --- !u!114 &5477874327935523548
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -88,4 +74,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ae0a23744b262244814f6d0614a6598, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _remStackType: 0
   _value: 1
+--- !u!114 &5448988652607670041
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8378743581122507794}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9aabace8a6cbae4998938a7c31b1f63, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _addDamageType: 1
+  _damage: 0
+  _stackMultipleValue: 2

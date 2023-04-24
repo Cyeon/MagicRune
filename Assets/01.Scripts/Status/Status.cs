@@ -15,14 +15,14 @@ public enum StatusType
 public enum StatusName
 {
     Null,
-    Weak,
-    Fire,
-    Ice,
-    Wound,
-    Recharging,
-    Coldness, // 냉기
-    Chilliness, // 한기
-    BladeOfKnife,
+    Fire,                     // 화상
+    Ice,                      // 빙결
+    Recharging,          // 충전
+    Coldness,             // 냉기
+    Chilliness,            // 한기
+    BladeOfKnife,       // 칼날
+    Impact,               // 충격
+    IceShield,            // 얼음막
     COUNT
 }
 
@@ -57,7 +57,7 @@ public class Status : MonoBehaviour
     public void AddValue(int count)
     {
         _typeValue += count;
-        unit.StatusManager.DialScene.ReloadStatusPanel(unit, this);
+        Define.DialScene?.ReloadStatusPanel(unit, this);
     }
 
     public void RemoveValue(int count)
@@ -69,6 +69,6 @@ public class Status : MonoBehaviour
             return;
         }
 
-        unit.StatusManager.DialScene.ReloadStatusPanel(unit, this);
+        Define.DialScene?.ReloadStatusPanel(unit, this);
     }
 }

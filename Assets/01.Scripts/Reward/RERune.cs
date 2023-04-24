@@ -8,15 +8,13 @@ public class RERune : Reward
 
     public override void AddRewardList()
     {
-        icon = Managers.Reward.GetRewardIcon(RewardType.Rune);
+        rewardIcon = Managers.Reward.GetRewardIcon(RewardType.Rune);
         desc = "·é Ãß°¡ÇÏ±â";
         Managers.Reward.AddRewardList(this);
     }
 
     public override void GiveReward()
     {
-        _dialScene = Managers.Scene.CurrentScene as DialScene;
         Define.DialScene?.ChooseRuneUISetUp();
-
     }
 }

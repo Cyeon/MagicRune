@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class GroundShield : BaseRune
 {
+    public override void Init()
+    {
+        _baseRuneSO = Managers.Resource.Load<BaseRuneSO>("SO/Rune/Ground/" + typeof(GroundShield).Name);
+    }
     public override void AbilityAction()
     {
         Managers.GetPlayer().AddShield(GetAbliltiValaue(EffectType.Defence));

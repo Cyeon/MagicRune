@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class PatternManager : MonoBehaviour
@@ -9,12 +10,12 @@ public class PatternManager : MonoBehaviour
     public List<Pattern> patternList = new List<Pattern>();
     private int _index = -1;
 
-    private DialScene _disalScene;
+    [Header("UI")]
+    [SerializeField] private SpriteRenderer _patternSprite;
+    [SerializeField] private TextMeshPro _patternText;
 
     private void Awake()
     {
-        _disalScene = Managers.Scene.CurrentScene as DialScene;
-
         foreach (var pattern in transform.GetComponentsInChildren<Pattern>())
         {
             if(pattern.isIncluding)
@@ -24,9 +25,8 @@ public class PatternManager : MonoBehaviour
 
     public void ChangePattern(Pattern pattern)
     {
-        Debug.Log("Pattern Change " + _currentPattern + " -> " + pattern);
         _currentPattern = pattern;
-        _disalScene?.ReloadPattern(_currentPattern.icon, _currentPattern.desc);
+        UpdatePatternUI();
     }
 
     public void NextPattern()
@@ -42,7 +42,7 @@ public class PatternManager : MonoBehaviour
 
     public void TurnAction()
     {
-        if (BattleManager.Instance.enemy.isTurnSkip == false)
+        if (BattleManager.Instance.Enemy.isTurnSkip == false)
             _currentPattern.TurnAction();
     }
 
@@ -54,5 +54,11 @@ public class PatternManager : MonoBehaviour
     public void EndAction()
     {
         _currentPattern.EndAction();
+    }
+
+    public void UpdatePatternUI()
+    {
+        _patternSprite.sprite = _currentPattern.icon;
+        _patternText.text = _currentPattern.desc;
     }
 }

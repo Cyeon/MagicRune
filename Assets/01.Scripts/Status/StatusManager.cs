@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,25 +6,11 @@ using UnityEngine;
 public class StatusManager
 {
     private List<Status> _statusList = new List<Status>();
-    private DialScene _dialScene;
-    public DialScene DialScene
-    {
-        get
-        {
-            if(_dialScene == null)
-            {
-                _dialScene =  Managers.Scene.CurrentScene as DialScene;
-            }
-            return _dialScene;
-        }
-    }
     private Unit _unit;
 
-
-    public StatusManager(Unit unit, DialScene dialScene)
+    public StatusManager(Unit unit)
     {
         _unit = unit;
-        _dialScene = dialScene;
     }
 
     public void AddStatus(StatusName statusName, int count)
@@ -42,14 +29,14 @@ public class StatusManager
             }
 
             status.AddValue(count);
-            DialScene.ReloadStatusPanel(_unit, status);
+            Define.DialScene?.ReloadStatusPanel(_unit, status);
         }
         else
         {
             status = Managers.Resource.Instantiate("Status/Status_" + statusName, _unit.statusTrm).GetComponent<Status>();
             status.unit = _unit;
             status.AddValue(count);
-            DialScene.AddStatus(_unit, status);
+            Define.DialScene?.AddStatus(_unit, status);
             _statusList.Add(status);
         }
 
@@ -73,8 +60,10 @@ public class StatusManager
 
     public void DeleteStatus(Status status)
     {
+        if (_unit.IsDie || IsHaveStatus(status.statusName) == false) return;
+
         _statusList.Remove(status);
-        DialScene.RemoveStatusPanel(_unit, status.statusName);
+        Define.DialScene?.RemoveStatusPanel(_unit, status.statusName);
 
         for(int i = 0; i < _unit.statusTrm.childCount; ++i)
         {
@@ -87,10 +76,11 @@ public class StatusManager
 
     public void DeleteStatus(StatusName statusName)
     {
+        if (GetStatus(statusName) == null) return;
         DeleteStatus(GetStatus(statusName));
     }
 
-    private bool IsHaveStatus(StatusName status)
+    public bool IsHaveStatus(StatusName status)
     {
         for(int i = 0; i < _statusList.Count; ++i)
         {
@@ -200,7 +190,6 @@ public class StatusManager
 
         for(int i = _unit.statusTrm.childCount - 1; i >= 0; --i)
         {
-            Debug.Log(_unit.statusTrm.GetChild(i).name);
             Managers.Resource.Destroy(_unit.statusTrm.GetChild(i).gameObject);
         }
     }

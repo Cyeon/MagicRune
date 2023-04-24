@@ -9,7 +9,7 @@ public class DeckManager
     private List<BaseRune> _defaultRune = new List<BaseRune>(20); // 초기 기본 지급 룬
     public List<BaseRune> DefaultRune => _defaultRune;
 
-    public const int FIRST_DIAL_DECK_MAX_COUNT = 6; // 첫번째 다이얼 덱 최대 개수
+    public const int FIRST_DIAL_DECK_MAX_COUNT = 3; // 첫번째 다이얼 덱 최대 개수
 
     private List<BaseRune> _firstDialDeck = new List<BaseRune>(); // 사전에 설정해둔 다이얼 안쪽의 1번째 줄 덱.
     public List<BaseRune> FirstDialDeck => _firstDialDeck;
@@ -21,25 +21,48 @@ public class DeckManager
     {
         if (_deck.Count == 0) // 덱이 비어있을 경우 설정해둔 초기 덱을 넣어줌 
         {
-            if(_defaultRune.Count <= 0)
-            {
-                _defaultRune = new List<BaseRune>(Managers.Resource.Load<AllRuneListSO>("SO/DefaultRuneListSO").BaseRuneList);
-            }
+            // 전기속성
+            AddRune(new RailGun(), 3);
+            AddRune(new Charge(), 3);
+            AddRune(new LightingRod());
+            AddRune(new Release());
 
-            if (_defaultRune.Count >= 0)
+            // 불 속성
+            AddRune(new Fire());
+            AddRune(new FirePunch());
+            AddRune(new FireRegeneration());
+            AddRune(new FireBreath());
+
+            // 땅 속성
+            AddRune(new GroundShield());
+            AddRune(new ShieldAttack());
+            AddRune(new Attack());
+            AddRune(new ThreeAttack());
+
+            // 얼음 속성
+            AddRune(new Ice());
+            AddRune(new SnowBall(), 2);
+            AddRune(new IceShield(), 2);
+            AddRune(new IceSmash(), 2);
+
+            // 무속성
+            AddRune(new MagicBullet());
+            AddRune(new MagicShield());
+
+            for (int i = 0; i < _deck.Count; i++)
             {
-                for (int i = 0; i < _defaultRune.Count; i++)
-                {
-                    AddRune(_defaultRune[i]);
-                }
+                _deck[i].Init();
             }
         }
     }
 
     /// <summary> Deck에 룬 추가 </summary>
-    public void AddRune(BaseRune rune)
+    public void AddRune(BaseRune rune, int count = 1)
     {
-        _deck.Add(rune);
+        for (int i = 0; i < count; i++)
+        {
+            _deck.Add(rune);
+        }
     }
 
     /// <summary> Deck에서 룬 지우기 </summary>
@@ -62,7 +85,7 @@ public class DeckManager
 
     public void RuneSwap(int fIndex, int sIndex)
     {
-        _deck.SwapInPlace(fIndex, sIndex);
+        _deck.SwapInPlace(fIndex, sIndex); //
     }
 
     public void UsingDeckSort()
@@ -96,5 +119,20 @@ public class DeckManager
         }
 
         return count;
+    }
+
+    public BaseRune GetRandomRune(List<BaseRune> ignoreRuneList = null)
+    {
+        List<BaseRune> newRuneList = new List<BaseRune>(Deck);
+
+        if (ignoreRuneList != null)
+        {
+            for (int i = 0; i < ignoreRuneList.Count; i++)
+            {
+                newRuneList.Remove(ignoreRuneList[i]);
+            }
+        }
+        int idx = Random.Range(0, newRuneList.Count);
+        return newRuneList[idx];
     }
 }

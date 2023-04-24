@@ -185,7 +185,7 @@ public class BezierMissile : MonoBehaviour
             _effect = null;
 
             // 핸동하고
-            if(BattleManager.Instance.enemy.IsDie == false)
+            if(BattleManager.Instance.Enemy.IsDie == false)
             {
                 _endAction?.Invoke();
             }

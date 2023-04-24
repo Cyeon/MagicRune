@@ -1,3 +1,4 @@
+using MyBox;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -33,6 +34,8 @@ public class ShopItemPanelUI : MonoBehaviour
         _icon.sprite = _iItem.Icon;
         _goldText.SetText(_iItem.Gold.ToString());
         _buyAction = action;
+
+        transform.localScale = Vector3.one * 0.8f;
     }
 
     public void Buy()

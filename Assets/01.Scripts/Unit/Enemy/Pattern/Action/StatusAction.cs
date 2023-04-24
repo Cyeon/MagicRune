@@ -10,7 +10,7 @@ public class StatusAction : PatternAction
 
     public override void TakeAction()
     {
-        Unit unit = isSelf ? BattleManager.Instance.enemy : BattleManager.Instance.player;
+        Unit unit = isSelf ? BattleManager.Instance.Enemy : BattleManager.Instance.Player;
 
         if(value < 0)
         {
@@ -21,6 +21,6 @@ public class StatusAction : PatternAction
             unit.StatusManager.AddStatus(status, value);
         }
 
-        BattleManager.Instance.enemy.PatternManager.CurrentPattern.NextAction();
+        BattleManager.Instance.Enemy.PatternManager.CurrentPattern.NextAction();
     }
 }

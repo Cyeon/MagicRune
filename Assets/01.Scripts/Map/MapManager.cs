@@ -27,8 +27,6 @@ public class MapManager
     private PortalSpawner _portalSpawner;
     public PortalSpawner PortalSpawner => _portalSpawner;
 
-    private Enemy _selectEnemy;
-    public Enemy SelectEnemy { get => _selectEnemy; set => _selectEnemy = value; }
     public Sprite selectPortalSprite;
 
     private bool _isFirst = true;
@@ -62,8 +60,6 @@ public class MapManager
         ChapterInit();
         _portalSpawner.ResetEnemyEnter();
         _portalSpawner.SpawnPortal(stageList[Stage].type);
-        MapSceneUI?.InfoUIReload();
-        //Managers.Canvas.GetCanvas("MapUI").GetComponent<MapUI>().InfoUIReload();
 
         Managers.Reward.ImageLoad();
     }
@@ -100,8 +96,6 @@ public class MapManager
             // 플레이어 죽음 리셋
         }
 
-        MapSceneUI.InfoUIReload();
-
         if (_isFirst)
         {
             _isFirst = false;
@@ -115,6 +109,7 @@ public class MapManager
             MapSceneUI.Stages[i].sprite = stageList[i].icon;
             MapSceneUI.Stages[i].color = stageList[i].color;
         }
+        Managers.Enemy.ResetEnemy();
         #endregion
 
         if (stageList[Stage].type == StageType.Boss)

@@ -2,16 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ShopUI : MonoBehaviour
 {
-    private TextMeshProUGUI _goldText;
     private Transform _storeShelf;
 
     private void Start()
     {
-        Managers.UI.Bind<TextMeshProUGUI>("Shop GoldBar Amount", Managers.Canvas.GetCanvas("Shop").gameObject);
-        _goldText = Managers.UI.Get<TextMeshProUGUI>("Shop GoldBar Amount");
         _storeShelf = transform.Find("StoreShelf");
 
         Managers.Canvas.GetCanvas("Shop").enabled = false;
@@ -27,7 +25,6 @@ public class ShopUI : MonoBehaviour
 
     public void Open()
     {
-        _goldText.SetText(Managers.Gold.Gold.ToString());
         for (int i = _storeShelf.transform.childCount - 1; i >= 0; --i)
         {
             Managers.Resource.Destroy(_storeShelf.transform.GetChild(i).gameObject);
@@ -38,6 +35,5 @@ public class ShopUI : MonoBehaviour
     {
         ShopItemPanelUI ui = Managers.Resource.Instantiate("ItemPanel", _storeShelf).GetComponent<ShopItemPanelUI>();
         ui.Init(item);
-        ui.userGold = _goldText;
     }
 }

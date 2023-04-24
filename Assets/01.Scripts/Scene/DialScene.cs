@@ -15,13 +15,6 @@ public class DialScene : BaseScene
     public Dial Dial => _dial;
 
     [SerializeField]
-    private SpriteRenderer _enemyIcon;
-    public SpriteRenderer EnemyIcon => _enemyIcon;
-
-    private Image _enemyPatternIcon;
-    private TextMeshProUGUI _enemyPatternValueText;
-
-    [SerializeField]
     private GameObject _cardDescPanel;
     private ExplainPanelList _cardDescPanelList;
 
@@ -54,15 +47,6 @@ public class DialScene : BaseScene
         Managers.UI.Bind<Image>("P StatusPanel", Managers.Canvas.GetCanvas("Main").gameObject);
         Managers.UI.Bind<Image>("E StatusPanel", Managers.Canvas.GetCanvas("Main").gameObject);
 
-        Managers.UI.Bind<Image>("NextPattern Image", Managers.Canvas.GetCanvas("Main").gameObject);
-        Managers.UI.Bind<TextMeshProUGUI>("NextPattern ValueText", Managers.Canvas.GetCanvas("Main").gameObject);
-
-        Managers.UI.Bind<Slider>("E HealthBar", Managers.Canvas.GetCanvas("Main").gameObject);
-        Managers.UI.Bind<Slider>("E ShieldBar", Managers.Canvas.GetCanvas("Main").gameObject);
-        Managers.UI.Bind<TextMeshProUGUI>("E HealthText", Managers.Canvas.GetCanvas("Main").gameObject);
-        Managers.UI.Bind<Slider>("E HealthFeedbackBar", Managers.Canvas.GetCanvas("Main").gameObject);
-        Managers.UI.Bind<TextMeshProUGUI>("E Shield Value", Managers.Canvas.GetCanvas("Main").gameObject);
-
         Managers.UI.Bind<Slider>("P HealthBar", Managers.Canvas.GetCanvas("Main").gameObject);
         Managers.UI .Bind<Slider>("P ShieldBar", Managers.Canvas.GetCanvas("Main").gameObject);
         Managers.UI.Bind<TextMeshProUGUI>("P HealthText", Managers.Canvas.GetCanvas("Main").gameObject);
@@ -78,10 +62,6 @@ public class DialScene : BaseScene
         Managers.UI.Bind<ChooseRuneUI>("ChooseRuneUI", Managers.Canvas.GetCanvas("Popup").gameObject);
 
         #endregion
-
-        #region UI Get
-        _enemyPatternIcon = Managers.UI.Get<Image>("NextPattern Image");
-        _enemyPatternValueText = Managers.UI.Get<TextMeshProUGUI>("NextPattern ValueText");
 
         _statusDescName = Managers.UI.Get<TextMeshPro>("Status_Name_Text");
         _statusDescInfo = Managers.UI.Get<TextMeshPro>("Status_Infomation_Text");
@@ -142,7 +122,7 @@ public class DialScene : BaseScene
 
     private Transform GetStatusTrm(Unit unit)
     {
-        return unit == BattleManager.Instance.player ?
+        return unit == BattleManager.Instance.Player ?
             Managers.UI.Get<Image>("P StatusPanel").transform : Managers.UI.Get<Image>("E StatusPanel").transform;
     }
 
@@ -216,7 +196,7 @@ public class DialScene : BaseScene
 
     public void StatusPopup(Status status)
     {
-        GameObject obj = Managers.Resource.Instantiate("StatusPopup", _enemyIcon.transform);
+        GameObject obj = Managers.Resource.Instantiate("StatusPopup", BattleManager.Instance.Enemy.transform);
         Image img = obj.GetComponent<Image>();
         img.sprite = status.icon;
         obj.transform.localScale = Vector3.one * 8f;
@@ -229,7 +209,7 @@ public class DialScene : BaseScene
             Managers.Resource.Destroy(obj);
         });
 
-        GameObject textPopup = Managers.Resource.Instantiate("StatusTextPopup", _enemyIcon.transform);
+        GameObject textPopup = Managers.Resource.Instantiate("StatusTextPopup", BattleManager.Instance.Enemy.transform);
         TextMeshProUGUI text = textPopup.GetComponent<TextMeshProUGUI>();
         text.text = status.debugName;
         textPopup.transform.localPosition = new Vector3(0, 300, 0);
@@ -251,36 +231,6 @@ public class DialScene : BaseScene
         pos.z = 0;
         pos.y += 1;
         popup.Setup(message, pos);
-    }
-    #endregion
-
-    #region Pattern
-    public void ReloadPattern(Sprite sprite, string value = "")
-    {
-        if(_enemyPatternIcon == null)
-            _enemyPatternIcon = Managers.UI.Get<Image>("NextPattern Image");
-
-        _enemyPatternIcon.sprite = sprite;
-        _enemyPatternValueText.text = value;
-    }
-
-    public IEnumerator PatternIconAnimationCoroutine()
-    {
-        for (int i = 0; i < 6; i++)
-        {
-            GameObject obj = Instantiate(_enemyPatternIcon.gameObject, _enemyPatternIcon.transform.parent);
-            obj.transform.position = _enemyPatternIcon.transform.position;
-            PatternIconAnimation(obj);
-            yield return new WaitForSeconds(0.2f);
-        }
-    }
-
-    private void PatternIconAnimation(GameObject obj)
-    {
-        Sequence seq = DOTween.Sequence();
-        seq.Append(obj.transform.DOScale(2f, 0.5f));
-        seq.Join(obj.GetComponent<Image>().DOFade(0, 0.5f));
-        seq.AppendCallback(() => Destroy(obj));
     }
     #endregion
 
@@ -318,7 +268,7 @@ public class DialScene : BaseScene
         {
             if (_dial.DialElementList[i].SelectCard != null)
             {
-                _cardDescPanelList.OpenPanel(i, _dial.DialElementList[i].SelectCard);
+                _cardDescPanelList.OpenPanel(i, _dial.DialElementList[i].SelectCard.Rune);
             }
             else
             {
@@ -391,26 +341,27 @@ public class DialScene : BaseScene
     public void UpdateHealthbar(bool isPlayer)
     {
         SliderInit(isPlayer);
-        Unit unit = isPlayer ? BattleManager.Instance.player : BattleManager.Instance.enemy;
+        Unit unit = isPlayer ? BattleManager.Instance.Player : BattleManager.Instance.Enemy;
+        if (unit == null) return;
 
         if (unit.Shield > 0)
         {
-            if (unit.HP + unit.Shield > unit.MaxHealth)
+            if (unit.HP + unit.Shield > unit.MaxHP)
                 hfSlider.value = hSlider.maxValue = sSlider.maxValue = hfSlider.maxValue = unit.HP + unit.Shield;
             else
-                hSlider.maxValue = sSlider.maxValue = hfSlider.maxValue = unit.MaxHealth;
+                hSlider.maxValue = sSlider.maxValue = hfSlider.maxValue = unit.MaxHP;
 
             hfSlider.value = hSlider.value;
             hSlider.value = unit.HP;
             sSlider.value = unit.HP + unit.Shield;
-            hText.text = string.Format("{0} / {1}", hSlider.value, unit.MaxHealth);
+            hText.text = string.Format("{0} / {1}", hSlider.value, unit.MaxHP);
         }
         else
         {
-            hSlider.maxValue = sSlider.maxValue = hfSlider.maxValue = unit.MaxHealth;
+            hSlider.maxValue = sSlider.maxValue = hfSlider.maxValue = unit.MaxHP;
             sSlider.value = 0;
             hSlider.value = unit.HP;
-            hText.text = string.Format("{0} / {1}", hSlider.value, unit.MaxHealth);
+            hText.text = string.Format("{0} / {1}", hSlider.value, unit.MaxHP);
         }
 
         Sequence seq = DOTween.Sequence();
@@ -424,42 +375,24 @@ public class DialScene : BaseScene
     #endregion
 
 
-    public void UpdateShieldText(bool isPlayer, float shield)
+    public void UpdateShieldText(float shield)
     {
-        if (isPlayer)
-        {
-            TextMeshProUGUI playerShieldText = Managers.UI.Get<TextMeshProUGUI>("P Shield Value");
+        TextMeshProUGUI playerShieldText = Managers.UI.Get<TextMeshProUGUI>("P Shield Value");
 
-            playerShieldText.SetText(shield.ToString());
+        playerShieldText.SetText(shield.ToString());
 
-            Sequence seq = DOTween.Sequence();
-            seq.Append(playerShieldText.transform.parent.DOScale(1.4f, 0.1f));
-            seq.Append(playerShieldText.transform.parent.DOScale(1f, 0.1f));
-        }
-        else
-        {
-            TextMeshProUGUI enemyShieldText = Managers.UI.Get<TextMeshProUGUI>("E Shield Value");
+        Sequence seq = DOTween.Sequence();
+        seq.Append(playerShieldText.transform.parent.DOScale(1.4f, 0.1f));
+        seq.Append(playerShieldText.transform.parent.DOScale(1f, 0.1f));
 
-            enemyShieldText.SetText(shield.ToString());
-
-            Sequence seq = DOTween.Sequence();
-            seq.Append(enemyShieldText.transform.parent.DOScale(1.2f, 0.1f));
-            seq.Append(enemyShieldText.transform.parent.DOScale(1f, 0.1f));
-        }
-
-        UpdateHealthbar(isPlayer);
+        UpdateHealthbar(true);
     }
 
     public override void Clear()
     {
         // �� Ŭ����
     }
-
-    public void EnemyIconSetting(SpriteRenderer renderer)
-    {
-        _enemyIcon = renderer;
-    }
-
+    
     public void ChooseRuneUISetUp()
     {
         _chooseRuneUI.gameObject.SetActive(true);

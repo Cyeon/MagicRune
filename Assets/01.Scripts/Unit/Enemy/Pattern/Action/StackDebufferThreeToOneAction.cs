@@ -1,13 +1,20 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class StackDebufferThreeToOneAction : StatusAction
 {
+    [Header("Condition 조건")]
+    [SerializeField] private StatusName _checkStatusName = StatusName.Coldness;
+
     public override void TakeAction()
     {
-        value = Mathf.RoundToInt(BattleManager.Instance.enemy.StatusManager.GetStatus(StatusName.Coldness).TypeValue * 0.3f);
-        BattleManager.Instance.enemy.StatusManager.DeleteStatus(StatusName.Coldness);
+        if(BattleManager.Instance.Enemy.StatusManager.GetStatus(_checkStatusName) != null)
+        {
+            value = Mathf.RoundToInt(BattleManager.Instance.Enemy.StatusManager.GetStatus(_checkStatusName).TypeValue * 0.3f);
+            BattleManager.Instance.Enemy.StatusManager.DeleteStatus(_checkStatusName);
+        }
+
         base.TakeAction();
     }
 }

@@ -8,6 +8,7 @@ public class HealingAction : PatternAction
 
     public override void TakeAction()
     {
-        BattleManager.Instance.enemy.AddHP(_value);
+        BattleManager.Instance.Enemy.AddHP(_value);
+        base.TakeAction();
     }
 }

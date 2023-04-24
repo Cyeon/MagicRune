@@ -1,4 +1,4 @@
-using DG.Tweening;
+﻿using DG.Tweening;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -12,32 +12,26 @@ public enum GameTurn
     Enemy,
     PlayerEnd,
     EnemyEnd,
-    Unknown
+    Ready
 }
 
 public class BattleManager : MonoSingleton<BattleManager>
 {
     [SerializeField]
-    private GameTurn _gameTurn = GameTurn.Unknown;
+    private GameTurn _gameTurn = GameTurn.Ready;
     public GameTurn GameTurn => _gameTurn;
-    public Player player = null;
-    public Enemy enemy = null;
-    public Unit currentUnit = null;
-    public Unit attackUnit = null;
 
-    public AudioClip turnChangeSound = null;
-
-    //public UnityEvent OnEnemyDie;
-
-    private DialScene _dialScene;
+    public Player Player => Managers.GetPlayer();
+    public Enemy Enemy => Managers.Enemy.CurrentEnemy;
 
     public int missileCount = 0;
 
+    [SerializeField]
+    private AudioClip _turnChangeSound = null;
+
     private void Start()
     {
-        _dialScene = Managers.Scene.CurrentScene as DialScene;
-
-        GameStart();
+        BattleStart();
     }
 
     private void OnDestroy()
@@ -45,32 +39,17 @@ public class BattleManager : MonoSingleton<BattleManager>
         DOTween.KillAll();
     }
 
-    public void GameStart()
+    public void BattleStart()
     {
-        enemy = Managers.Resource.Instantiate("Enemy/" + Managers.Map.SelectEnemy.name).GetComponent<Enemy>();
-        enemy.Init();
+        Managers.Enemy.BattleSetting();
 
-        enemy.OnDieEvent.RemoveAllListeners();
-        enemy.OnDieEvent.AddListener(() =>
-        {
-            REGold reward = new REGold();
-            reward.SetGold(Managers.Map.CurrentChapter.Gold);
-            reward.AddRewardList();
+        Player.StatusManager.Reset();
+        Player.SliderInit();
 
-            RERune rune = new RERune();
-            rune.AddRewardList();
+        Player.OnDieEvent.RemoveAllListeners();
+        Player.OnDieEvent.AddListener(() => { Define.DialScene?.RewardUI.DefeatPanelPopup(); });
 
-            Define.DialScene?.RewardUI.VictoryPanelPopup();
-        });
-
-        player = Managers.GetPlayer();
-        player.StatusManager.Reset();
-        player.SliderInit();
-
-        player.OnDieEvent.RemoveAllListeners();
-        player.OnDieEvent.AddListener(() => { Define.DialScene?.RewardUI.DefeatPanelPopup(); });
-
-        Define.DialScene?.HealthbarInit(true, player.HP, player.MaxHealth);
+        Define.DialScene?.HealthbarInit(true, Player.HP, Player.MaxHP);
 
         FeedbackManager.Instance.Init();
 
@@ -79,38 +58,32 @@ public class BattleManager : MonoSingleton<BattleManager>
 
     private void OnPlayerTurn()
     {
-        //EventManager.TriggerEvent(Define.ON_END_MONSTER_TURN);
-
         _gameTurn = GameTurn.Player;
-        currentUnit = player;
-        attackUnit = enemy;
 
         EventManager.TriggerEvent(Define.ON_START_PLAYER_TURN);
 
-        if(enemy.PatternManager.CurrentPattern == null)
+       if(Enemy.isTurnSkip)
         {
-            enemy.PatternManager.NextPattern();
+            Enemy.isTurnSkip = false;
         }
-        else
+       else
         {
-            enemy.PatternManager.CurrentPattern.NextPattern();
+            if (Enemy.PatternManager.CurrentPattern == null) Enemy.PatternManager.NextPattern();
+            else Enemy.PatternManager.CurrentPattern.NextPattern();
         }
 
-
-        player.StatusManager.OnTurnStart();
-        enemy.PatternManager.StartAction();
+        Player.StatusManager.OnTurnStart();
+        Enemy.PatternManager.StartAction();
     }
 
     public void OnMonsterTurn()
     {
         _gameTurn = GameTurn.Enemy;
-        currentUnit = enemy;
-        attackUnit = player;
         
         EventManager.TriggerEvent(Define.ON_START_MONSTER_TURN);
 
-        enemy?.StatusManager.OnTurnStart();
-        enemy.PatternManager.TurnAction();
+        Enemy?.StatusManager.OnTurnStart();
+        Enemy.PatternManager.TurnAction();
     }
 
     public bool IsPlayerTurn()
@@ -122,11 +95,11 @@ public class BattleManager : MonoSingleton<BattleManager>
 
     public void TurnChange()
     {
-        if (enemy.HP <= 0 || player.HP <= 0) return;
+        if (Enemy.HP <= 0 || Player.HP <= 0) return;
 
         switch (_gameTurn)
         {
-            case GameTurn.Unknown:
+            case GameTurn.Ready:
                 EventManager.TriggerEvent(Define.ON_START_PLAYER_TURN);
                 Define.DialScene?.Turn("Player Turn");
                 _gameTurn = GameTurn.EnemyEnd;
@@ -135,15 +108,15 @@ public class BattleManager : MonoSingleton<BattleManager>
             case GameTurn.Player:
                 EventManager.TriggerEvent(Define.ON_END_PLAYER_TURN);
 
-                Managers.Sound.PlaySound(turnChangeSound, SoundType.Effect);
+                Managers.Sound.PlaySound(_turnChangeSound, SoundType.Effect);
 
-                player?.StatusManager.OnTurnEnd();
-                player.StatusManager.TurnChange();
+                Player?.StatusManager.OnTurnEnd();
+                Player.StatusManager.TurnChange();
 
-                if (enemy.Shield > 0)
+                if (Enemy.Shield > 0)
                 {
-                    enemy.ResetShield();
-                    Define.DialScene?.UpdateHealthbar(false);
+                    Enemy.ResetShield();
+                    Enemy.UpdateHealthUI();
                 }
 
                 Define.DialScene?.Turn("Enemy Turn");
@@ -151,23 +124,23 @@ public class BattleManager : MonoSingleton<BattleManager>
                 break;
 
             case GameTurn.PlayerEnd:
-                enemy.StopIdle();
+                Enemy.StopIdle();
                 OnMonsterTurn();
                 break;
 
             case GameTurn.Enemy:
-                enemy.PatternManager.EndAction();
+                Enemy.PatternManager.EndAction();
 
                 EventManager.TriggerEvent(Define.ON_END_MONSTER_TURN);
 
-                enemy?.StatusManager.OnTurnEnd();
-                enemy.StatusManager.TurnChange();
+                Enemy?.StatusManager.OnTurnEnd();
+                Enemy.StatusManager.TurnChange();
 
-                Managers.Sound.PlaySound(turnChangeSound, SoundType.Effect);
+                Managers.Sound.PlaySound(_turnChangeSound, SoundType.Effect);
 
-                if (player.Shield > 0)
+                if (Player.Shield > 0)
                 {
-                    player.ResetShield();
+                    Player.ResetShield();
                     Define.DialScene?.UpdateHealthbar(true);
                 }
 
@@ -181,12 +154,15 @@ public class BattleManager : MonoSingleton<BattleManager>
                 break;
 
             case GameTurn.EnemyEnd:
-                enemy.Idle();
+                Enemy.Idle();
                 OnPlayerTurn();
                 break;
         }
     }
 
+    /// <summary>
+    /// 미사일 공격이 끝날떄 발동되는 함수 (모든 공격이 다 들어간 후에 턴이 체인지 되도록 만듬)
+    /// </summary>
     public void MissileAttackEnd()
     {
         missileCount--;
