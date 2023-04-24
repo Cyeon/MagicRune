@@ -62,7 +62,7 @@ public class Unit : MonoBehaviour
     [field: SerializeField] public UnityEvent OnTakeDamageFeedback { get; set; }
     public UnityEvent OnDieEvent;
 
-    [Header("Status")]
+    [HideInInspector]
     public Transform statusTrm;
     private StatusManager _statusManager;
     public StatusManager StatusManager => _statusManager;
@@ -190,7 +190,7 @@ public class Unit : MonoBehaviour
         _health = _maxHealth;
     }
 
-    protected virtual void Die()
+    public virtual void Die()
     {
         _isDie = true;
         OnDieEvent?.Invoke();

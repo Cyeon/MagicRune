@@ -1,21 +1,25 @@
-using DG.Tweening;
-using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using DG.Tweening;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.UIElements;
-using static UnityEngine.Rendering.DebugUI;
 
 public class Enemy : Unit
 {
+    public enum EnemyTag
+    {
+        Ice,
+        Fire
+    }
+
+    [Header("Enemy Info")]
     public string enemyName;
+    public EnemyTag tag;
     public AudioClip attackSound = null;
     private Sequence idleSequence = null;
     public bool isEnter = false;
 
     public Vector3 enemyScaleVec = Vector3.one;
+
+
     private PatternManager _patternManager;
     public PatternManager PatternManager => _patternManager;
 
@@ -67,12 +71,10 @@ public class Enemy : Unit
         spriteRenderer.DORewind();
     }
 
-    protected override void Die()
+    public override void Die()
     {
         base.Die();
         Managers.Resource.Destroy(gameObject);
-        //BattleManager.Instance.OnEnemyDie?.Invoke();
-        //OnDieEvent?.Invoke();
     }
 
     private void HealthUIInit()

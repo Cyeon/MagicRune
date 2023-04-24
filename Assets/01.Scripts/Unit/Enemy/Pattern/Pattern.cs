@@ -11,9 +11,7 @@ public class Pattern : MonoBehaviour
     public string patternName;
     public Sprite icon;
     public string desc ="";
-    public bool isIncluding = true;
-
-    private DialScene _dialScene;
+    public bool isIncluding = true; // 순화되는 패턴 목록에 포함할건가?
 
     [Header("[ Actions ]")]
     public List<PatternAction> startPattern;
@@ -26,12 +24,6 @@ public class Pattern : MonoBehaviour
     private int _patternIndex = 0;
     private enum patternInvokeTime { start, turn, end};
     private patternInvokeTime _patternTime = patternInvokeTime.start;
-
-    
-    public void Start()
-    {
-        _dialScene = Managers.Scene.CurrentScene as DialScene;
-    }
 
     /// <summary>
     /// 플레이어 턴이 시작될떄 발동되는 함수
