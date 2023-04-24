@@ -19,6 +19,8 @@ public class DeckManager
 
     public void Init()
     {
+        // 나중에 Json 저장하면 여기서 불러오기 등을 하겠지...
+
         if (_deck.Count == 0) // 덱이 비어있을 경우 설정해둔 초기 덱을 넣어줌 
         {
             // 전기속성
@@ -54,6 +56,11 @@ public class DeckManager
                 _deck[i].Init();
             }
         }
+    }
+
+    public void SetDefaultDeck() // 여기에 덱을 짜는 어떤 클래스를 넣어
+    {
+
     }
 
     /// <summary> Deck에 룬 추가 </summary>

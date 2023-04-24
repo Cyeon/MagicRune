@@ -20,6 +20,7 @@ public class Managers : MonoBehaviour
     private RuneManager _rune = new RuneManager();
     private GoldManager _gold = new GoldManager();
     private GameManager _game = new GameManager();
+    private JsonManager _json = new JsonManager();
     private SoundManager _sound = new SoundManager();
     private RewardManager _reward = new RewardManager();
     private CanvasManager _canvas = new CanvasManager();
@@ -36,6 +37,7 @@ public class Managers : MonoBehaviour
     public static RuneManager Rune { get { return Instance._rune; } }
     public static GoldManager Gold { get { return Instance._gold; } }
     public static GameManager Game { get { return Instance._game; } }
+    public static JsonManager Json { get { return Instance._json; } }
     public static SoundManager Sound { get { return Instance._sound; } }
     public static RewardManager Reward { get { return Instance._reward; } }
     public static CanvasManager Canvas { get { return Instance._canvas; } }
@@ -79,6 +81,7 @@ public class Managers : MonoBehaviour
             _instance._statModifier.Init();
             _instance._rune.Init();
             _instance._gold.Init();
+            _instance._json.Init();
 
             if(_player == null)
             {

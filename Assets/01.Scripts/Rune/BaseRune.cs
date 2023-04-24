@@ -18,7 +18,9 @@ public class BaseRune : Item
     public int CoolTime => _coolTime;
 
     public bool IsCoolTime => _coolTime > 0;
+    #endregion
 
+    #region Item Interface
     public Sprite Icon
     {
         get
@@ -34,10 +36,6 @@ public class BaseRune : Item
     public int Gold { get; private set; }
 
     public ShopItemType ShopItemType { get => ShopItemType.Rune; }
-    #endregion
-
-    #region UI Parameta
-    private SpriteRenderer _runeSpriteRenderer;
     #endregion
 
     public virtual void Init()
