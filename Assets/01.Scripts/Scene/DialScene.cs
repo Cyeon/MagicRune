@@ -79,8 +79,6 @@ public class DialScene : BaseScene
 
         _cardDescPanelList = _cardDescPanel.GetComponent<ExplainPanelList>();
 
-        #endregion
-
         Managers.Sound.PlaySound("BGM/DialSceneBGM", SoundType.Bgm, true, 1.0f);
     }
 

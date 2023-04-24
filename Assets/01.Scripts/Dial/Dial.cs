@@ -12,9 +12,6 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
-/// <summary>
-/// Dial Element�� �����ϰ�, �� ���İ� ���ݿ� ���� ����
-/// </summary>
 public class Dial : MonoBehaviour
 {
     #region Rotate Parameta
@@ -53,14 +50,12 @@ public class Dial : MonoBehaviour
         _remamingRuneContainer = transform.Find("RuneContainer");
         _resonance = GetComponent<Resonance>();
 
-        #region Initialization
         _runeDict = new Dictionary<int, List<BaseRuneUI>>(3);
         for (int i = 1; i <= 3; i++)
         {
             _runeDict.Add(i, new List<BaseRuneUI>());
         }
         _dialElementList = new List<DialElement>();
-        #endregion
 
         for (int i = 0; i < _maxRuneCount * 3; i++)
         {
@@ -68,14 +63,6 @@ public class Dial : MonoBehaviour
             _runeDict[(i % 3) + 1].Add(r);
             //r.Rune.Init();
             //r.gameObject.SetActive(false);
-        }
-
-        // ���߿� �ٲ� ��..?
-        for(int i = 0; i < Managers.Deck.FirstDialDeck.Count; i++)
-        {
-            BaseRune r = Managers.Resource.Instantiate(Managers.Deck.FirstDialDeck[i].gameObject, _remamingRuneContainer).GetComponent<BaseRune>();
-            r.gameObject.SetActive(false);
-            _remainingRuneList.Add(r);
         }
 
         _isAttack = false;
@@ -102,9 +89,9 @@ public class Dial : MonoBehaviour
     public int GetUsingRuneCount()
     {
         int count = 0;
-        for (int i = 0; i < _remainingRuneList.Count; i++)
+        for (int i = 0; i < Managers.Deck.Deck.Count; i++)
         {
-            if (_remainingRuneList[i].CoolTIme <= 0)
+            if (Managers.Deck.Deck[i].CoolTIme <= 0)
             {
                 count++;
             }
@@ -178,8 +165,8 @@ public class Dial : MonoBehaviour
         }
         else
         {
-            //SortingRemaingRune();
-            //maxRuneCount = GetUsingRuneCount();
+            SortingRemaingRune();
+            maxRuneCount = GetUsingRuneCount();
             for (int i = 0; i < _maxRuneCount; i++)
             {
                 if (maxRuneCount <= 0)
@@ -201,7 +188,6 @@ public class Dial : MonoBehaviour
                 }
                 AddCard(r, 1);
                 Managers.Deck.RuneSwap(runeIndex, maxRuneCount - 1);
-                //_remainingRuneList.SwapInPlace(runeIndex, maxRuneCount - 1);
 
                 maxRuneCount--;
             }
@@ -234,12 +220,10 @@ public class Dial : MonoBehaviour
             }
             AddCard(r, 3 - index);
             Managers.Deck.RuneSwap(runeIndex, maxRuneCount - 1);
-            //_remainingRuneList.SwapInPlace(runeIndex, maxRuneCount - 1);
 
             maxRuneCount--;
         }
 
-        #region Copy
         for (int i = 1; i <= 3; i++)
         {
             if (_runeDict.ContainsKey(i))
@@ -262,7 +246,6 @@ public class Dial : MonoBehaviour
                     }
                 }
             }
-            #endregion
         }
 
         RuneSort();
@@ -335,7 +318,7 @@ public class Dial : MonoBehaviour
             {
                 for (int j = 0; j < _runeDict[i].Count; j++)
                 {
-                    _runeDict[i][j].gameObject.SetActive(false);
+                    _runeDict[3][j].gameObject.SetActive(false);
                 }
             }
         }
