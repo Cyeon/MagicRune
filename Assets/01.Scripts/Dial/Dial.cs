@@ -39,7 +39,6 @@ public class Dial : MonoBehaviour
     private List<DialElement> _dialElementList;
     public List<DialElement> DialElementList => _dialElementList;
 
-    private Transform _remamingRuneContainer;
     #endregion
 
     private bool _isAttack;
@@ -47,7 +46,7 @@ public class Dial : MonoBehaviour
 
     private void Awake()
     {
-        _remamingRuneContainer = transform.Find("RuneContainer");
+        #region Initialization 
         _resonance = GetComponent<Resonance>();
 
         _runeDict = new Dictionary<int, List<BaseRuneUI>>(3);
@@ -56,14 +55,7 @@ public class Dial : MonoBehaviour
             _runeDict.Add(i, new List<BaseRuneUI>());
         }
         _dialElementList = new List<DialElement>();
-
-        for (int i = 0; i < _maxRuneCount * 3; i++)
-        {
-            BaseRuneUI r = Managers.Resource.Instantiate("Rune/BaseRune", _remamingRuneContainer).GetComponent<BaseRuneUI>();
-            _runeDict[(i % 3) + 1].Add(r);
-            //r.Rune.Init();
-            //r.gameObject.SetActive(false);
-        }
+        #endregion
 
         _isAttack = false;
     }
@@ -125,7 +117,10 @@ public class Dial : MonoBehaviour
         List<int> numberList = new List<int>();
         for (int i = 0; i < Managers.Deck.FirstDialDeck.Count; i++)
         {
-            numberList.Add(i);
+            if (Managers.Deck.FirstDialDeck[i].CoolTIme <= 0)
+            {
+                numberList.Add(i);
+            }
         }
 
         if (Managers.Deck.FirstDialDeck != null && Managers.Deck.FirstDialDeck.Count > 0)
@@ -138,12 +133,14 @@ public class Dial : MonoBehaviour
                 if (numberList.Count != 0)
                 {
                     randomIndex = Random.Range(0, numberList.Count);
-                    r.SetRune(Managers.Deck.Deck.Find(x => x == Managers.Deck.FirstDialDeck[randomIndex]));
+                    BaseRune rune = Managers.Deck.Deck.Find(x => x == Managers.Deck.FirstDialDeck[randomIndex]);
+
+                    r.SetRune(rune);
                     numberList.RemoveAt(randomIndex);
                 }
                 else
                 {
-                    while (r == null)
+                    while (r.Rune == null)
                     {
                         BaseRune baseRune = Managers.Deck.GetRandomRune(Managers.Deck.FirstDialDeck);
                         r.SetRune(Managers.Deck.Deck.Find(x => x == baseRune));
@@ -193,6 +190,8 @@ public class Dial : MonoBehaviour
             }
         }
 
+        SortingRemaingRune();
+        maxRuneCount = GetUsingRuneCount();
         for (int i = 0; i < _maxRuneCount * 2; i++)
         {
             if (maxRuneCount <= 0)
@@ -224,6 +223,7 @@ public class Dial : MonoBehaviour
             maxRuneCount--;
         }
 
+        #region Copy
         for (int i = 1; i <= 3; i++)
         {
             if (_runeDict.ContainsKey(i))
@@ -247,6 +247,7 @@ public class Dial : MonoBehaviour
                 }
             }
         }
+        #endregion
 
         RuneSort();
     }
