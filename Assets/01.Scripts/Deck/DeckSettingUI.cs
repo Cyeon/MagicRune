@@ -194,7 +194,7 @@ public class DeckSettingUI : MonoBehaviour
                 case DeckType.FirstDialDeck:
                     if (Managers.Deck.FirstDialDeck.Count < DeckManager.FIRST_DIAL_DECK_MAX_COUNT)
                     {
-                        Managers.Deck.SetFirstDeck(SelectRune.Rune);
+                        Managers.Deck.AddRuneFirstDeck(SelectRune.Rune);
                         //Managers.Deck.RemoveRune(SelectRune.Rune);
                         SelectRune.transform.SetParent(_dialDeckContentTransform);
                         SelectRune.SetDeck(DeckType.FirstDialDeck);
@@ -230,7 +230,7 @@ public class DeckSettingUI : MonoBehaviour
                 Managers.Deck.RemoveFirstDeck(_targetRune.Rune);
                 //Managers.Deck.RemoveRune(_selectRune.Rune);
 
-                Managers.Deck.SetFirstDeck(_selectRune.Rune);
+                Managers.Deck.AddRuneFirstDeck(_selectRune.Rune);
                 //Managers.Deck.AddRune(_targetRune.Rune);
             }
             else if (_selectRune.NowDeck == DeckType.FirstDialDeck)
@@ -238,7 +238,7 @@ public class DeckSettingUI : MonoBehaviour
                 Managers.Deck.RemoveFirstDeck(_selectRune.Rune);
                 //Managers.Deck.RemoveRune(_targetRune.Rune);
 
-                Managers.Deck.SetFirstDeck(_targetRune.Rune);
+                Managers.Deck.AddRuneFirstDeck(_targetRune.Rune);
                 //Managers.Deck.AddRune(_selectRune.Rune);
             }
         }

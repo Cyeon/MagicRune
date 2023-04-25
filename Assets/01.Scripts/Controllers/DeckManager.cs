@@ -68,13 +68,13 @@ public class DeckManager
     }
 
     /// <summary> Deck¿¡¼­ ·é Áö¿ì±â </summary>
-    public void RemoveRune(BaseRune rune)
+    public void RemoveDeck(BaseRune rune)
     {
         _deck.Remove(rune);
     }
  
     /// <summary> FirstDialDeck¿¡ ·é Ãß°¡ </summary>
-    public void SetFirstDeck(BaseRune rune)
+    public void AddRuneFirstDeck(BaseRune rune)
     {
         _firstDialDeck.Add(rune);
     }
