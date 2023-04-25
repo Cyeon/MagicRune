@@ -52,7 +52,6 @@ public class BaseRune : Item
 
     public virtual void Execute()
     {
-        Debug.Log(_baseRuneSO.RuneName);
         Managers.Deck.AddRune(this);
     }
 

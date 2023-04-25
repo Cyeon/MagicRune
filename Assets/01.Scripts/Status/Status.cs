@@ -22,6 +22,7 @@ public enum StatusName
     Chilliness,            // 한기
     BladeOfKnife,       // 칼날
     Impact,               // 충격
+    IceShield,            // 얼음막
     COUNT
 }
 

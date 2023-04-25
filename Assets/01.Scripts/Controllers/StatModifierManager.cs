@@ -4,6 +4,8 @@ using UnityEngine;
 
 public enum StatModifierType
 {
+    // 이 순서대로 연산 처리함
+
     Add,
     Subtract,
     Multiply,

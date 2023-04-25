@@ -34,8 +34,15 @@ public class RestUI : MonoBehaviour
         _enhanceBtn.onClick.AddListener(() =>
         {
             _restBtn.onClick.RemoveAllListeners();
-            Debug.Log("Enhance Complete");
 
+            // 각각 상황에 맞는 캔버스 띄우기
+            switch (_enhanceType)
+            {
+                case EnhanceType.Change:
+                    break;
+                case EnhanceType.Sacrifice:
+                    break;
+            }
 
             NextStage();
         });
@@ -44,6 +51,11 @@ public class RestUI : MonoBehaviour
     public void SetEnhanceType(EnhanceType type)
     {
         _enhanceType = type;
+    }
+
+    public void SetRandonEnhanceType()
+    {
+        _enhanceType = (EnhanceType)Random.Range((int)EnhanceType.START, (int)EnhanceType.END + 1);
     }
 
     public void PortalStartAnimation()

@@ -20,7 +20,7 @@ public class GoldManager
 
     public void AddGold(int amount)
     {
-        _gold += amount;
+        _gold = Mathf.Clamp(_gold + amount, 0, int.MaxValue);
         _userInfoUI.UpdateGoldText();
     }
 }
