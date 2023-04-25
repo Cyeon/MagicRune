@@ -19,6 +19,8 @@ public class DeckManager
 
     public void Init()
     {
+        // 나중에 Json 저장하면 여기서 불러오기 등을 하겠지...
+
         if (_deck.Count == 0) // 덱이 비어있을 경우 설정해둔 초기 덱을 넣어줌 
         {
             #region Rune Add
@@ -51,10 +53,27 @@ public class DeckManager
             AddRune(new MagicShield());
             #endregion
 
-            for (int i = 0; i < _deck.Count; i++)
-            {
-                _deck[i].Init();
-            }
+            //SetDefaultDeck(Managers.Resource.Load<DeckSO>("SO/Deck/TestDeck").RuneList);
+
+            RuneInit();
+        }
+    }
+
+    public void SetDefaultDeck(List<BaseRuneSO> runeList)
+    {
+        for(int i = 0; i < runeList.Count; i++)
+        {
+            AddRune(Managers.Rune.GetRune(runeList[i]));
+        }
+
+        RuneInit();
+    }
+
+    private void RuneInit()
+    {
+        for (int i = 0; i < _deck.Count; i++)
+        {
+            _deck[i].Init();
         }
     }
 

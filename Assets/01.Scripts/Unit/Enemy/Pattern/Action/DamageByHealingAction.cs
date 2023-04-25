@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class DamageByHealingAction : HealingAction
 {
-    public override void TakeAction()
+    public override void TurnAction()
     {
         _value = Mathf.FloorToInt(BattleManager.Instance.Enemy.currentDmg);
-        base.TakeAction();
+        base.TurnAction();
     }
 }

@@ -7,7 +7,6 @@ public class AttackPortal : Portal
 {
     private Enemy _portalEnemy;
     public Enemy PortalEnemy => _portalEnemy;
-    public AttackMapListSO attackMap;
 
     public override void Execute()
     {
@@ -21,46 +20,8 @@ public class AttackPortal : Portal
     {
         _portalEnemy = enemy;
         _spriteRenderer.sprite = enemy.spriteRenderer.sprite;
+        _spriteRenderer.transform.localScale = enemy.spriteRenderer.transform.localScale;
         _titleText.text = enemy.enemyName;
         Init(pos);
     }
-
-    public Enemy GetAttackEnemy()
-    {
-        List<Enemy> enemyList = GetAttackEnemyList();
-
-        int idx = Random.Range(0, enemyList.Count);
-        if (enemyList.Count == 0)
-        {
-            return attackMap.defaultEnemy;
-        }
-        enemyList[idx].isEnter = true;
-        return enemyList[idx];
-    }
-
-    public int GetAttackEnemyCount()
-    {
-        return GetAttackEnemyList().Count;
-    }
-
-    private List<Enemy> GetAttackEnemyList()
-    {
-        List<Enemy> enemyList = new List<Enemy>();
-        for (int i = 0; i < attackMap.map.Count; ++i)
-        {
-            if (attackMap.map[i].MinFloor <= Managers.Map.Floor + 1 && attackMap.map[i].MaxFloor >= Managers.Map.Floor + 1)
-            {
-                foreach (var enemy in attackMap.map[i].enemyList)
-                {
-                    if (!enemy.isEnter)
-                    {
-                        enemyList.Add(enemy);
-                    }
-                }
-            }
-        }
-
-        return enemyList;
-    }
-
 }

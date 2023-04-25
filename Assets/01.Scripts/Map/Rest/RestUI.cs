@@ -19,6 +19,8 @@ public class RestUI : MonoBehaviour
 
     private EnhanceType _enhanceType;
 
+    private bool _isHealing = false;
+
     private void Start()
     {
         GetComponent<Canvas>().enabled = false;
@@ -72,12 +74,19 @@ public class RestUI : MonoBehaviour
 
     private IEnumerator RestCoroutine()
     {
-        Managers.GetPlayer().AddHPPercent(_healthPercent);
-        _healthParticle.SetActive(true);
+        if (!_isHealing)
+        {
+            _isHealing = true;
 
-        yield return new WaitForSeconds(1.5f);
+            Managers.GetPlayer().AddHPPercent(_healthPercent);
+            _healthParticle.SetActive(true);
 
-        NextStage();
+            yield return new WaitForSeconds(1.5f);
+
+            _isHealing = false;
+            NextStage();
+        }
+
     }
 
     private void NextStage()

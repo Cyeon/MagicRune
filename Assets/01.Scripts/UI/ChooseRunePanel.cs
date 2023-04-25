@@ -10,6 +10,11 @@ public class ChooseRunePanel : ExplainPanel
     {
         Managers.Deck.AddRune(_rune);
         Define.DialScene?.HideChooseRuneUI();
+
+        if (Managers.Reward.GetRewardList().Count == 0)
+        {
+            BattleManager.Instance.NextStage();
+        }
     }
 
     public override void SetUI(BaseRune rune)

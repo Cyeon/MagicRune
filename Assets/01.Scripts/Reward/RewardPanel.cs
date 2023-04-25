@@ -15,7 +15,8 @@ public class RewardPanel : MonoBehaviour
         _icon.sprite = reward.rewardIcon;
         _desc.SetText(reward.desc);
 
-        _button.onClick.AddListener(() => reward.GiveReward());                                       
+        _button.onClick.AddListener(() => reward.GiveReward());
+        _button.onClick.AddListener(() => reward.isGive = true);
         _button.onClick.AddListener(() => Managers.Resource.Destroy(gameObject));
     }
 

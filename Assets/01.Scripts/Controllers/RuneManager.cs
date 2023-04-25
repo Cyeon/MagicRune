@@ -4,9 +4,6 @@ using UnityEngine;
 
 public class RuneManager
 {
-    [System.Obsolete]
-    private AllRuneListSO _runeList;
-
     private List<BaseRune> _runeHandler = new List<BaseRune>();
 
     public void Init()
@@ -34,6 +31,7 @@ public class RuneManager
 
         _runeHandler.Add(new MagicBullet());
         _runeHandler.Add(new MagicShield());
+
         foreach (var item in _runeHandler)
         {
             item.Init();
@@ -93,5 +91,10 @@ public class RuneManager
         }
 
         return runeList;
+    }
+
+    public BaseRune GetRune(BaseRuneSO runeSO)
+    {
+        return _runeHandler.Find(x => x.BaseRuneSO == runeSO);
     }
 }
