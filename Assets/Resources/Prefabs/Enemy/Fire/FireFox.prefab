@@ -10,9 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1275727553683471303}
   - component: {fileID: 7759494164077254770}
-  - component: {fileID: 1537609850787791981}
   m_Layer: 0
-  m_Name: DEF(10)
+  m_Name: FoxBall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -31,7 +30,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 482703424218209037}
-  m_RootOrder: 3
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &7759494164077254770
 MonoBehaviour:
@@ -45,97 +44,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2192153269515d74695b667fe90c4d36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  patternName: "\uBC29\uC5B4"
-  icon: {fileID: 21300000, guid: a28c2afe1020a2c48ad8e49fda3af0dc, type: 3}
-  desc: 10
-  isIncluding: 1
-  startPattern: []
-  turnPattern:
-  - {fileID: 1537609850787791981}
-  endPattern: []
-  transitions: []
---- !u!114 &1537609850787791981
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 923945766284124140}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cfa8887165156c64fa123504b8100fe4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  amount: 10
---- !u!1 &2971983514629148634
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 8649418972959301899}
-  - component: {fileID: 698958297900863906}
-  - component: {fileID: 3796768261319830033}
-  m_Layer: 0
-  m_Name: S_PoisonousLiquid
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &8649418972959301899
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2971983514629148634}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 482703424218209037}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &698958297900863906
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2971983514629148634}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2192153269515d74695b667fe90c4d36, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  patternName: "2\uB3C5\uC561 \uBD80\uC5EC"
-  icon: {fileID: 21300000, guid: 7647512e03be6ad47829d4357a457af8, type: 3}
+  patternName: "\uC5EC\uC6B0\uAD6C\uC2AC"
+  icon: {fileID: 21300000, guid: 8a89272fa4eafcd4fb95306b343443e9, type: 3}
   desc: 
   isIncluding: 1
   startPattern: []
-  turnPattern:
-  - {fileID: 3796768261319830033}
+  turnPattern: []
   endPattern: []
   transitions: []
---- !u!114 &3796768261319830033
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2971983514629148634}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 76e453d0137dffa4c86b004096088636, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  status: 9
-  value: 2
-  isSelf: 0
 --- !u!1 &4657442987853799146
 GameObject:
   m_ObjectHideFlags: 0
@@ -148,7 +64,7 @@ GameObject:
   - component: {fileID: 4510695831864927042}
   - component: {fileID: 305205884266686413}
   m_Layer: 0
-  m_Name: ATK(10)
+  m_Name: ATK(5*4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -183,7 +99,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   patternName: "\uACF5\uACA9"
   icon: {fileID: 21300000, guid: 0ba7bc4db41d35e4099b792db367a0fa, type: 3}
-  desc: 10
+  desc: 5X4
   isIncluding: 1
   startPattern: []
   turnPattern:
@@ -202,8 +118,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db7864d3a61bcc14a99708ff1475ef25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 10
-  count: 1
+  damage: 5
+  count: 4
 --- !u!1 &8512203668073210084
 GameObject:
   m_ObjectHideFlags: 0
@@ -216,7 +132,7 @@ GameObject:
   - component: {fileID: 4457744073780990210}
   - component: {fileID: 2551560772075343848}
   m_Layer: 0
-  m_Name: ATK(10)
+  m_Name: ATK(5*2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -235,7 +151,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 482703424218209037}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &4457744073780990210
 MonoBehaviour:
@@ -251,7 +167,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   patternName: "\uACF5\uACA9"
   icon: {fileID: 21300000, guid: 0ba7bc4db41d35e4099b792db367a0fa, type: 3}
-  desc: 10
+  desc: 5X2
   isIncluding: 1
   startPattern: []
   turnPattern:
@@ -270,8 +186,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db7864d3a61bcc14a99708ff1475ef25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 10
-  count: 1
+  damage: 5
+  count: 2
 --- !u!1001 &3927241957304435079
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -294,10 +210,10 @@ PrefabInstance:
     - target: {fileID: 3535539594128554667, guid: f1a706a7f0436ee45869c5f1ea4fc0b1, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 8a9aa2937eb0d08458dc9d1f6dc39781, type: 3}
+      objectReference: {fileID: 21300000, guid: 5e84d9376c7530646804030b3c296c23, type: 3}
     - target: {fileID: 3535539594408076956, guid: f1a706a7f0436ee45869c5f1ea4fc0b1, type: 3}
       propertyPath: m_Name
-      value: FireSpider
+      value: FireFox
       objectReference: {fileID: 0}
     - target: {fileID: 3535539594408076957, guid: f1a706a7f0436ee45869c5f1ea4fc0b1, type: 3}
       propertyPath: m_RootOrder
@@ -349,15 +265,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8949788419246248273, guid: f1a706a7f0436ee45869c5f1ea4fc0b1, type: 3}
       propertyPath: _health
-      value: 65
+      value: 80
       objectReference: {fileID: 0}
     - target: {fileID: 8949788419246248273, guid: f1a706a7f0436ee45869c5f1ea4fc0b1, type: 3}
       propertyPath: enemyName
-      value: "\uBD88 \uAC70\uBBF8"
+      value: "\uBD88 \uC57C\uCC28"
       objectReference: {fileID: 0}
     - target: {fileID: 8949788419246248273, guid: f1a706a7f0436ee45869c5f1ea4fc0b1, type: 3}
       propertyPath: _maxHealth
-      value: 65
+      value: 80
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f1a706a7f0436ee45869c5f1ea4fc0b1, type: 3}

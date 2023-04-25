@@ -1,4 +1,5 @@
 using DG.Tweening;
+using MyBox;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -17,11 +18,11 @@ public class Unit : MonoBehaviour
     private bool _isDie = false;
     public bool IsDie => _isDie;
 
-    [SerializeField] protected float _maxHealth;
-    public float MaxHP => _maxHealth;
+    [SerializeField] protected int _maxHealth;
+    public int MaxHP => _maxHealth;
 
-    [SerializeField] private float _health = 10f;
-    public float HP
+    [SerializeField] private int _health = 10;
+    public int HP
     {
         get => _health;
         protected set
@@ -38,8 +39,8 @@ public class Unit : MonoBehaviour
         }
     }
 
-    [SerializeField] private float _shield = 0f;
-    public float Shield
+    [SerializeField] private int _shield = 0;
+    public int Shield
     {
         get => _shield;
         protected set
@@ -56,7 +57,7 @@ public class Unit : MonoBehaviour
     protected Slider _healthFeedbackSlider;
     protected TextMeshProUGUI _healthText;
 
-    public float currentDmg = 0;
+    public int currentDmg = 0;
 
     public Action OnGetDamage;
 
@@ -85,9 +86,8 @@ public class Unit : MonoBehaviour
     /// <param name="damage"></param>
     public void TakeDamage(float damage, bool isTrueDamage = false, Status status = null)
     {
-        currentDmg = Mathf.Floor(damage);
+        currentDmg = damage.RoundToInt();
         OnGetDamage?.Invoke();
-        currentDmg = Mathf.Floor(currentDmg);
 
         if (Shield > 0 && isTrueDamage == false)
         {
@@ -143,7 +143,7 @@ public class Unit : MonoBehaviour
     {
         if (_isDie == false)
         {
-            HP += value;
+            HP += value.RoundToInt();
         }
     }
 
@@ -151,7 +151,7 @@ public class Unit : MonoBehaviour
     {
         if(_isDie == false)
         {
-            HP -= value;
+            HP -= value.RoundToInt();
         }
     }
 
@@ -159,7 +159,7 @@ public class Unit : MonoBehaviour
     {
         if (_isDie == false)
         {
-            HP += value / 100 * _maxHealth;
+            HP += (int)(value / 100 * _maxHealth);
         }
     }
 
@@ -167,7 +167,7 @@ public class Unit : MonoBehaviour
     {
         if (_isDie == false)
         {
-            _maxHealth += amount;
+            _maxHealth += amount.RoundToInt();
             _userInfoUI.UpdateHealthText();
         }
     }
@@ -176,7 +176,7 @@ public class Unit : MonoBehaviour
     {
         if (_isDie == false)
         {
-            Shield += value;
+            Shield += value.RoundToInt();
         }
     }
 

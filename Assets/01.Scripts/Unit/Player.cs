@@ -1,3 +1,4 @@
+using MyBox;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -41,7 +42,7 @@ public class Player : Unit
 
     public void Attack(float dmg)
     {
-        currentDmg = dmg;
+        currentDmg = dmg.RoundToInt();
 
         StatusManager.OnAttack();
 
