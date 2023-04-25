@@ -58,6 +58,8 @@ public class Unit : MonoBehaviour
 
     public float currentDmg = 0;
 
+    public Action OnGetDamage;
+
     [field: SerializeField] public UnityEvent<float> OnTakeDamage { get; set; }
     [field: SerializeField] public UnityEvent OnTakeDamageFeedback { get; set; }
     public UnityEvent OnDieEvent;
@@ -84,7 +86,7 @@ public class Unit : MonoBehaviour
     public void TakeDamage(float damage, bool isTrueDamage = false, Status status = null)
     {
         currentDmg = Mathf.Floor(damage);
-        _statusManager.OnGetDamage();
+        OnGetDamage?.Invoke();
         currentDmg = Mathf.Floor(currentDmg);
 
         if (Shield > 0 && isTrueDamage == false)

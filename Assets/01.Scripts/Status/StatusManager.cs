@@ -11,6 +11,7 @@ public class StatusManager
     public StatusManager(Unit unit)
     {
         _unit = unit;
+        _unit.OnGetDamage += OnGetDamage;
     }
 
     public void AddStatus(StatusName statusName, int count)

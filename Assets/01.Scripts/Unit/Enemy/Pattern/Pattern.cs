@@ -21,7 +21,7 @@ public class Pattern : MonoBehaviour
     [Header("[ Transition ]")]
     public List<PatternTransition> transitions;
 
-    private int _patternIndex = 0;
+    private int _actionIndex = 0;
     private enum patternInvokeTime { start, turn, end};
     private patternInvokeTime _patternTime = patternInvokeTime.start;
 
@@ -30,11 +30,11 @@ public class Pattern : MonoBehaviour
     /// </summary>
     public void StartAction()
     {
-        _patternIndex = 0;
+        _actionIndex = 0;
         _patternTime = patternInvokeTime.start;
-        if(startPattern.Count > _patternIndex)
+        if(startPattern.Count > _actionIndex)
         {
-            startPattern[_patternIndex].TakeAction();
+            startPattern[_actionIndex].TakeAction();
         }
     }
 
@@ -43,12 +43,13 @@ public class Pattern : MonoBehaviour
     /// </summary>
     public void TurnAction()
     {
-        _patternIndex = 0;
+        _actionIndex = 0;
         _patternTime = patternInvokeTime.turn;
-        if (turnPattern.Count > _patternIndex)
+        if (turnPattern.Count > _actionIndex)
         {
-            turnPattern[_patternIndex].TakeAction();
+            turnPattern[_actionIndex].TakeAction();
         }
+        else BattleManager.Instance.TurnChange();
     }
 
     /// <summary>
@@ -56,11 +57,11 @@ public class Pattern : MonoBehaviour
     /// </summary>
     public void EndAction()
     {
-        _patternIndex = 0;
+        _actionIndex = 0;
         _patternTime = patternInvokeTime.end;
-        if (endPattern.Count > _patternIndex)
+        if (endPattern.Count > _actionIndex)
         {
-            endPattern[_patternIndex].TakeAction();
+            endPattern[_actionIndex].TakeAction();
         }
     }
 
@@ -69,7 +70,7 @@ public class Pattern : MonoBehaviour
     /// </summary>
     public void NextAction()
     {
-        _patternIndex++;
+        _actionIndex++;
 
         List<PatternAction> actions = new List<PatternAction>();
         switch (_patternTime)
@@ -80,6 +81,11 @@ public class Pattern : MonoBehaviour
 
             case patternInvokeTime.turn:
                 actions = turnPattern;
+                if (actions.Count <= _actionIndex)
+                {
+                    BattleManager.Instance.TurnChange();
+                    return;
+                }
                 break;
 
             case patternInvokeTime.end:
@@ -87,13 +93,10 @@ public class Pattern : MonoBehaviour
                 break;
         }
 
-        if(actions.Count <= _patternIndex)
+        if(actions.Count > _actionIndex)
         {
-            BattleManager.Instance.TurnChange();
-            return;
+            actions[_actionIndex].TakeAction();
         }
-
-        actions[_patternIndex].TakeAction();
     }
 
     /// <summary>

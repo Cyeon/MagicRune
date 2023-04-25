@@ -5,8 +5,8 @@ using UnityEngine;
 
 public class AttackAction : PatternAction
 {
-    public int damage;
-    public int count;
+    public int damage= 10;
+    public int count = 1;
 
     public override void TakeAction()
     {

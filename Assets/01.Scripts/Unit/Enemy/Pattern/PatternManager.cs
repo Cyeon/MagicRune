@@ -7,6 +7,10 @@ public class PatternManager : MonoBehaviour
 {
     private Pattern _currentPattern;
     public Pattern CurrentPattern => _currentPattern;
+
+    private Pattern _beforePattern;
+    public Pattern BeforePattern => _beforePattern;
+
     public List<Pattern> patternList = new List<Pattern>();
     private int _index = -1;
 
@@ -25,6 +29,7 @@ public class PatternManager : MonoBehaviour
 
     public void ChangePattern(Pattern pattern)
     {
+        _beforePattern = _currentPattern;
         _currentPattern = pattern;
         UpdatePatternUI();
     }
@@ -32,7 +37,7 @@ public class PatternManager : MonoBehaviour
     public void NextPattern()
     {
         _index++;
-        if(_index ==  patternList.Count)
+        if (_index == patternList.Count)
         {
             _index = 0;
         }
@@ -60,5 +65,11 @@ public class PatternManager : MonoBehaviour
     {
         _patternSprite.sprite = _currentPattern.icon;
         _patternText.text = _currentPattern.desc;
+    }
+
+    public Pattern GetNextPattern()
+    {
+        Pattern p = (_index + 1 == patternList.Count) ? patternList[0] : patternList[_index + 1];
+        return p;
     }
 }
