@@ -93,7 +93,7 @@ public class Dial : MonoBehaviour
         {
             _remainingDeck.Add(_usingDeck[i]);
         }
-        for (int i = _cooltimeDeck.Count - 1; i >= 0 ; i++)
+        for (int i = _cooltimeDeck.Count - 1; i >= 0 ; i--)
         {
             if (_cooltimeDeck[i].IsCoolTime == false)
             {

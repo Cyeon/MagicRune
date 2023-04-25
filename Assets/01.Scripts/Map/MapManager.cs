@@ -53,7 +53,8 @@ public class MapManager
 
         if (_portalSpawner == null)
         {
-            PortalSpawner portalSpawner = Managers.Resource.Instantiate(typeof(PortalSpawner).Name).GetComponent<PortalSpawner>();
+            PortalSpawner portalSpawner = Managers.Resource.Instantiate(typeof(PortalSpawner).Name, Managers.Scene.CurrentScene.transform).GetComponent<PortalSpawner>();
+            portalSpawner.transform.SetParent(null);
             _portalSpawner = portalSpawner;
         }
 
