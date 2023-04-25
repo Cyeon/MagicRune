@@ -45144,11 +45144,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1a68e167d080b040af1b7d7ac5a5e5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxHealth: 0
-  _health: 10
+  _maxHealth: 500
+  _health: 500
   _shield: 0
-  isTurnSkip: 0
   currentDmg: 0
+  attackSound: {fileID: 8300000, guid: e80bdb09e3ee7274a855277bfed0a493, type: 3}
+  isTurnSkip: 0
   <OnTakeDamage>k__BackingField:
     m_PersistentCalls:
       m_Calls: []
@@ -45171,7 +45172,6 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   statusTrm: {fileID: 0}
-  attackSound: {fileID: 8300000, guid: e80bdb09e3ee7274a855277bfed0a493, type: 3}
   relicTrm: {fileID: 0}
 --- !u!4 &787757381
 Transform:

@@ -507,7 +507,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76e453d0137dffa4c86b004096088636, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  status: 0
+  status: 11
   value: 2
   isSelf: 1
 --- !u!1 &8141345865886587257
@@ -849,6 +849,14 @@ PrefabInstance:
     - target: {fileID: 8949788419246248273, guid: 1d902098969ddc24a8a9b824bb9545b3, type: 3}
       propertyPath: _health
       value: 300
+      objectReference: {fileID: 0}
+    - target: {fileID: 8949788419246248273, guid: 1d902098969ddc24a8a9b824bb9545b3, type: 3}
+      propertyPath: isEnter
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8949788419246248273, guid: 1d902098969ddc24a8a9b824bb9545b3, type: 3}
+      propertyPath: enemyTag
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8949788419246248273, guid: 1d902098969ddc24a8a9b824bb9545b3, type: 3}
       propertyPath: enemyName
