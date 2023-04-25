@@ -8,7 +8,7 @@ public class StatusAction : PatternAction
     public int value;
     public bool isSelf;
 
-    public override void TakeAction()
+    public override void TurnAction()
     {
         Unit unit = isSelf ? BattleManager.Instance.Enemy : BattleManager.Instance.Player;
 

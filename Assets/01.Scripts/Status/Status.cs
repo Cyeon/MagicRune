@@ -23,6 +23,9 @@ public enum StatusName
     BladeOfKnife,       // 칼날
     Impact,               // 충격
     IceShield,            // 얼음막
+    PoisonousLiquid,  // 독액
+    FoxOrb,             // 여우구슬
+    FlameArmor,        // 화염갑옷
     COUNT
 }
 
@@ -47,6 +50,7 @@ public class Status : MonoBehaviour
     public List<StatusEvent> OnAttack = new List<StatusEvent>();
     public List<StatusEvent> OnGetDamage = new List<StatusEvent>();
     public List<StatusEvent> OnTurnEnd = new List<StatusEvent>();
+    public List<StatusEvent> OnRemoveStatus = new List<StatusEvent>();
 
     [Header("Resource")]
     [ShowAssetPreview(32, 32)] public Sprite icon;

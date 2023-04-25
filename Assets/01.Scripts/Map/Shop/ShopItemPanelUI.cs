@@ -21,7 +21,6 @@ public class ShopItemPanelUI : MonoBehaviour
     private Image _icon;
     private TextMeshProUGUI _goldText;
     private Item _iItem;
-    public TextMeshProUGUI userGold;
 
     /// <summary>
     /// 아이템을 샀을때의 행동을 이걸로 넘길려했는데 필요없어짐. 혹시 모르니까 남겨둠
@@ -55,7 +54,6 @@ public class ShopItemPanelUI : MonoBehaviour
             //        gameObject.SetActive(false);
             //        break;
             //}
-            userGold.SetText(Managers.Gold.Gold.ToString());
             Managers.Resource.Destroy(this.gameObject);
         }
     }

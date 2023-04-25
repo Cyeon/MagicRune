@@ -11,7 +11,7 @@ public class GoldManager
 
     public void Init()
     {
-        _gold = 0;
+        _gold = 100;
 
         Managers.UI.Bind<UserInfoUI>("Upper_Frame", GameObject.FindObjectOfType<UserInfoPanelCanvas>().gameObject);
         _userInfoUI = Managers.UI.Get<UserInfoUI>("Upper_Frame");

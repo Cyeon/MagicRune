@@ -31,11 +31,11 @@ public class PortalSpawner : MonoBehaviour
         switch(type)
         {
             case StageType.Attack:
-                int count = Mathf.Clamp(_attackPortal.GetAttackEnemyCount(), 1, 4);
+                int count = Mathf.Clamp(Managers.Map.CurrentChapter.GetEnemyCount(), 1, 4);
 
                 for(int i = 0; i < count; i++)
                 {
-                    Enemy enemy = _attackPortal.GetAttackEnemy();
+                    Enemy enemy = Managers.Map.CurrentChapter.GetEnemy();
                     AttackPortal atkPortal = Managers.Resource.Instantiate("Portal/" + _attackPortal.name, transform).GetComponent<AttackPortal>();
                     switch(count)
                     {
@@ -102,10 +102,5 @@ public class PortalSpawner : MonoBehaviour
         }
 
         Managers.Map.selectPortalSprite = portal.GetSprite();
-    }
-
-    public void ResetEnemyEnter()
-    {
-        _attackPortal.attackMap.map.ForEach(x => x.Reset());
     }
 }

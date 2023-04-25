@@ -74,6 +74,12 @@ public class BattleManager : MonoSingleton<BattleManager>
 
         Player.StatusManager.OnTurnStart();
         Enemy.PatternManager.StartAction();
+
+        if (Player.isTurnSkip == true)
+        {
+            TurnChange();
+            Player.isTurnSkip = false;
+        }
     }
 
     public void OnMonsterTurn()
@@ -111,7 +117,6 @@ public class BattleManager : MonoSingleton<BattleManager>
                 Managers.Sound.PlaySound(_turnChangeSound, SoundType.Effect);
 
                 Player?.StatusManager.OnTurnEnd();
-                Player.StatusManager.TurnChange();
 
                 if (Enemy.Shield > 0)
                 {
@@ -134,7 +139,9 @@ public class BattleManager : MonoSingleton<BattleManager>
                 EventManager.TriggerEvent(Define.ON_END_MONSTER_TURN);
 
                 Enemy?.StatusManager.OnTurnEnd();
+
                 Enemy.StatusManager.TurnChange();
+                Player.StatusManager.TurnChange();
 
                 Managers.Sound.PlaySound(_turnChangeSound, SoundType.Effect);
 

@@ -8,12 +8,15 @@ public class IceSmash : BaseRune
     {
         _baseRuneSO = Managers.Resource.Load<BaseRuneSO>("SO/Rune/Ice/" + typeof(IceSmash).Name);
     }
+
+    public override bool AbilityCondition()
+    {
+        return BattleManager.Instance.Enemy.StatusManager.GetStatus(StatusName.Ice) != null;
+    }
+
     public override void AbilityAction()
     {
-        if(BattleManager.Instance.Enemy.StatusManager.GetStatus(StatusName.Ice) != null)
-        {
-            BattleManager.Instance.Enemy.StatusManager.DeleteStatus(StatusName.Ice);
-            Managers.GetPlayer().Attack(GetAbliltiValaue(EffectType.Attack));
-        }
+        BattleManager.Instance.Enemy.StatusManager.DeleteStatus(StatusName.Ice);
+        Managers.GetPlayer().Attack(GetAbliltiValaue(EffectType.Attack));
     }
 }
