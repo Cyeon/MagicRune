@@ -62,11 +62,11 @@ public class BattleManager : MonoSingleton<BattleManager>
 
         EventManager.TriggerEvent(Define.ON_START_PLAYER_TURN);
 
-       if(Enemy.isTurnSkip)
+        if (Enemy.isTurnSkip)
         {
             Enemy.isTurnSkip = false;
         }
-       else
+        else
         {
             if (Enemy.PatternManager.CurrentPattern == null) Enemy.PatternManager.NextPattern();
             else Enemy.PatternManager.CurrentPattern.NextPattern();
@@ -79,7 +79,7 @@ public class BattleManager : MonoSingleton<BattleManager>
     public void OnMonsterTurn()
     {
         _gameTurn = GameTurn.Enemy;
-        
+
         EventManager.TriggerEvent(Define.ON_START_MONSTER_TURN);
 
         Enemy?.StatusManager.OnTurnStart();
@@ -175,7 +175,7 @@ public class BattleManager : MonoSingleton<BattleManager>
 
     public void PlayerTurnEnd()
     {
-        if(_gameTurn == GameTurn.Player)
+        if (_gameTurn == GameTurn.Player)
         {
             TurnChange();
         }

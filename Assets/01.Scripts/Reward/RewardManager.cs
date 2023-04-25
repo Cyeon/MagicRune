@@ -15,8 +15,14 @@ public class RewardManager
 
     public void ImageLoad()
     {
-        rewardSprites.Add(RewardType.Gold, Managers.Resource.Load<Sprite>("Coin_Icon"));
-        rewardSprites.Add(RewardType.Rune, Managers.Resource.Load<Sprite>("RuneIcon"));
+        if(rewardSprites.ContainsKey(RewardType.Gold) == false)
+        {
+            rewardSprites.Add(RewardType.Gold, Managers.Resource.Load<Sprite>("Coin_Icon"));
+        }
+        if (rewardSprites.ContainsKey(RewardType.Rune) == false)
+        {
+            rewardSprites.Add(RewardType.Rune, Managers.Resource.Load<Sprite>("RuneIcon"));
+        }
     }
 
     public Sprite GetRewardIcon(RewardType type)

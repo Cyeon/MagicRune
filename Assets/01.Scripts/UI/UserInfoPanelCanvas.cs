@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class UserInfoPanelCanvas : MonoBehaviour
 {
-    private void Awake()
+    private void Start()
     {
         if (FindObjectsOfType<Player>().Length > 1)
         {

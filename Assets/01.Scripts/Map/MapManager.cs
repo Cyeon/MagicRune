@@ -46,14 +46,14 @@ public class MapManager
 
     private MapScene _mapScene;
 
-    public void Init()
+    public void MapInit()
     {
-        _mapSceneUI = Managers.Canvas.GetCanvas("MapUI").GetComponent<MapUI>();
+        _mapSceneUI = Managers.Canvas.GetCanvas("MapUI")?.GetComponent<MapUI>();
         chapterList = new List<Chapter>(Managers.Resource.Load<ChapterListSO>("SO/" + typeof(ChapterListSO).Name).chapterList);
 
         if (_portalSpawner == null)
         {
-            PortalSpawner portalSpawner = Managers.Resource.Instantiate(typeof(PortalSpawner).Name ).GetComponent<PortalSpawner>();
+            PortalSpawner portalSpawner = Managers.Resource.Instantiate(typeof(PortalSpawner).Name).GetComponent<PortalSpawner>();
             _portalSpawner = portalSpawner;
         }
 
@@ -90,7 +90,7 @@ public class MapManager
 
     public void NextStage()
     {
-        if (Managers.GetPlayer().IsDie == true) // 버그
+        if (Managers.GetPlayer() != null && Managers.GetPlayer().IsDie == true)
         {
             ResetChapter();
             // 플레이어 죽음 리셋

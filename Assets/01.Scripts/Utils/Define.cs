@@ -79,5 +79,6 @@ public class Define
         Unknown,
         MapScene,
         DialScene,
+        DeckScene,
     }
 }

@@ -335,9 +335,16 @@ public class Dial : MonoBehaviour
             }
         }
     }
+    
+    public bool MagicEmpty()
+    {
+        return _dialElementList[0].SelectCard == null && _dialElementList[1].SelectCard == null && _dialElementList[2].SelectCard == null;
+    }
 
     public void Attack()
     {
+        if (MagicEmpty() == true) return;
+
         if (_isAttack == true) return;
         if (BattleManager.Instance.GameTurn == GameTurn.Player)
         {
