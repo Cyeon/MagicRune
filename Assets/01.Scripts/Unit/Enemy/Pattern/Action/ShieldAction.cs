@@ -6,7 +6,7 @@ public class ShieldAction : PatternAction
 {
     public int amount;
 
-    public override void TakeAction()
+    public override void TurnAction()
     {
         BattleManager.Instance.Enemy.AddShield(amount);
         BattleManager.Instance.Enemy.PatternManager.CurrentPattern.NextAction();

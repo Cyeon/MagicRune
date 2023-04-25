@@ -8,7 +8,7 @@ public class AttackAction : PatternAction
     public int damage= 10;
     public int count = 1;
 
-    public override void TakeAction()
+    public override void TurnAction()
     {
         StartCoroutine(AttackCoroutine());
     }
@@ -20,6 +20,6 @@ public class AttackAction : PatternAction
             BattleManager.Instance.Enemy.Attack(damage);
             yield return new WaitForSeconds(0.2f);
         }
-        base.TakeAction();
+        base.TurnAction();
     }
 }

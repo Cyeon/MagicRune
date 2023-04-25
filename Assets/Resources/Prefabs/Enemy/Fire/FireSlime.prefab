@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 8311638913425904492}
   - component: {fileID: 1969479872306931210}
   - component: {fileID: 8930811436974085077}
-  - component: {fileID: 8364970159065311563}
   m_Layer: 0
   m_Name: Absorption
   m_TagString: Untagged
@@ -54,7 +53,7 @@ MonoBehaviour:
   - {fileID: 8930811436974085077}
   turnPattern: []
   endPattern:
-  - {fileID: 8364970159065311563}
+  - {fileID: 8930811436974085077}
   transitions: []
 --- !u!114 &8930811436974085077
 MonoBehaviour:
@@ -66,19 +65,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 889c3ea4c19a9964f8faba7e6b83f8fb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  absorptionDmg: 0
---- !u!114 &8364970159065311563
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4288845587294073424}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1cf3f42c2583f804eb7c4b96a5f25161, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &5320256324158273165

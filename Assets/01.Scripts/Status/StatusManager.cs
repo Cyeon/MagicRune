@@ -9,6 +9,8 @@ public class StatusManager
     private List<Status> _statusList = new List<Status>();
     private Unit _unit;
 
+    public Action<Status, int> OnAddStatus;
+
     public StatusManager(Unit unit)
     {
         _unit = unit;
@@ -44,6 +46,8 @@ public class StatusManager
 
         if(status.OnAddStatus.Count > 0)
             status.OnAddStatus.ForEach(x => x.Invoke());
+
+        OnAddStatus?.Invoke(status, count);
     }
 
     public void RemoveStatus(StatusName statusName, int count)

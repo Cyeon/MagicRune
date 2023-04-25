@@ -7,7 +7,7 @@ public class StackDebufferThreeToOneAction : StatusAction
     [Header("Condition 조건")]
     [SerializeField] private StatusName _checkStatusName = StatusName.Coldness;
 
-    public override void TakeAction()
+    public override void TurnAction()
     {
         if(BattleManager.Instance.Enemy.StatusManager.GetStatus(_checkStatusName) != null)
         {
@@ -15,6 +15,6 @@ public class StackDebufferThreeToOneAction : StatusAction
             BattleManager.Instance.Enemy.StatusManager.DeleteStatus(_checkStatusName);
         }
 
-        base.TakeAction();
+        base.TurnAction();
     }
 }

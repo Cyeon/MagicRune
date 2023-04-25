@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class DefByDamageAttackAction : AttackAction
 {
-    public override void TakeAction()
+    public override void TurnAction()
     {
         damage = Mathf.FloorToInt(BattleManager.Instance.Enemy.Shield);
         count = 1;
 
-        base.TakeAction();
+        base.TurnAction();
     }
 }

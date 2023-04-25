@@ -6,9 +6,9 @@ public class HealingAction : PatternAction
 {
     [SerializeField] protected int _value;
 
-    public override void TakeAction()
+    public override void TurnAction()
     {
         BattleManager.Instance.Enemy.AddHP(_value);
-        base.TakeAction();
+        base.TurnAction();
     }
 }

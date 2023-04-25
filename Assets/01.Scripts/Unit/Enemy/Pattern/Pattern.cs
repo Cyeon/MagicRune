@@ -34,7 +34,7 @@ public class Pattern : MonoBehaviour
         _patternTime = patternInvokeTime.start;
         if(startPattern.Count > _actionIndex)
         {
-            startPattern[_actionIndex].TakeAction();
+            startPattern[_actionIndex].StartAction();
         }
     }
 
@@ -47,7 +47,7 @@ public class Pattern : MonoBehaviour
         _patternTime = patternInvokeTime.turn;
         if (turnPattern.Count > _actionIndex)
         {
-            turnPattern[_actionIndex].TakeAction();
+            turnPattern[_actionIndex].TurnAction();
         }
         else BattleManager.Instance.TurnChange();
     }
@@ -61,7 +61,7 @@ public class Pattern : MonoBehaviour
         _patternTime = patternInvokeTime.end;
         if (endPattern.Count > _actionIndex)
         {
-            endPattern[_actionIndex].TakeAction();
+            endPattern[_actionIndex].EndAction();
         }
     }
 
@@ -77,6 +77,10 @@ public class Pattern : MonoBehaviour
         {
             case patternInvokeTime.start:
                 actions = startPattern;
+                if (actions.Count > _actionIndex)
+                {
+                    actions[_actionIndex].StartAction();
+                }
                 break;
 
             case patternInvokeTime.turn:
@@ -86,16 +90,16 @@ public class Pattern : MonoBehaviour
                     BattleManager.Instance.TurnChange();
                     return;
                 }
+                actions[_actionIndex].TurnAction();
                 break;
 
             case patternInvokeTime.end:
                 actions = endPattern;
+                if (actions.Count > _actionIndex)
+                {
+                    actions[_actionIndex].EndAction();
+                }
                 break;
-        }
-
-        if(actions.Count > _actionIndex)
-        {
-            actions[_actionIndex].TakeAction();
         }
     }
 
