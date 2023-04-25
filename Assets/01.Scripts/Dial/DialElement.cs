@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// �� ������ ����� ������. ���ư��� ��������.
+/// �� ������ �����?������. ���ư��� ��������.
 /// </summary>
 public class DialElement : MonoBehaviour
 {
@@ -293,7 +293,7 @@ public class DialElement : MonoBehaviour
             {
                 SelectCard.Rune.AbilityAction();
 
-                _selectCard.Rune.SetCoolTime();
+                //_selectCard.Rune.SetCoolTime();
                 SelectCard = null;
             }
         }
@@ -402,7 +402,7 @@ public class DialElement : MonoBehaviour
                                         ((index) * oneDinstance)*/), 0.3f, RotateMode.Fast)
                                         .OnComplete(() =>
                                         {
-                                            //SelectCard = _runeList[index]; // ���� ���� ���ϴ� �ְ� �ȵ���?�� ����â ������ ������?
+                                            //SelectCard = _runeList[index]; // ���� ���� ���ϴ� �ְ� �ȵ���?�� ����â ������ ������?
                                             if (_selectCard != null) { Define.DialScene?.CardDescPopup(_selectCard.Rune); }
                                         });
                                 }

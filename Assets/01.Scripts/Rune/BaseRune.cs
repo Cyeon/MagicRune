@@ -73,16 +73,20 @@ public class BaseRune : Item
     public void SetCoolTime()
     {
         _coolTime = _baseRuneSO.CoolTime;
+
+        Debug.Log(_coolTime);
     }
 
     public void SetCoolTime(int value)
     {
         _coolTime = value;
+        Debug.Log(_coolTime);
     }
 
     public void AddCoolTime(int value)
     {
         _coolTime += value;
+        Debug.Log(_coolTime);
     }
     
     public void SetIsUsing(bool value)

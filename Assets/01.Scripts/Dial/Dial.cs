@@ -94,6 +94,11 @@ public class Dial : MonoBehaviour
             _remainingDeck.Add(_usingDeck[i]);
             _usingDeck.RemoveAt(i);
         }
+        Debug.Log("------------------");
+        foreach (var list in _cooltimeDeck)
+        {
+            Debug.Log($"{list.CoolTime}");
+        }
         for (int i = _cooltimeDeck.Count - 1; i >= 0 ; i--)
         {
             if (_cooltimeDeck[i].IsCoolTime == false)
@@ -313,8 +318,14 @@ public class Dial : MonoBehaviour
                 int index = i;
                 _dialElementList[i].IsGlow = true;
                 BaseRune rune = _usingDeck.Find(x => x == _dialElementList[i].SelectCard.Rune);
-                _cooltimeDeck.Add(rune);
                 _usingDeck.Remove(rune);
+                rune.SetCoolTime();
+                _cooltimeDeck.Add(rune);
+                Debug.Log("------------------");
+                foreach (var list in _cooltimeDeck)
+                {
+                    Debug.Log($"{list.CoolTime}");
+                }
                 BezierMissile b = Managers.Resource.Instantiate("BezierMissile", this.transform.parent).GetComponent<BezierMissile>();
                 if (_dialElementList[i].SelectCard.Rune.BaseRuneSO.RuneEffect != null)
                 {
@@ -375,11 +386,11 @@ public class Dial : MonoBehaviour
 
     public void AllMagicSetCoolTime()
     {
-        for (int i = 0; i < Managers.Deck.Deck.Count; i++)
+        for (int i = 0; i < _cooltimeDeck.Count; i++)
         {
-            if (Managers.Deck.Deck[i].CoolTime > 0)
+            if (_cooltimeDeck[i].CoolTime > 0)
             {
-                Managers.Deck.Deck[i].AddCoolTime(-1);
+                _cooltimeDeck[i].AddCoolTime(-1);
             }
         }
     }
