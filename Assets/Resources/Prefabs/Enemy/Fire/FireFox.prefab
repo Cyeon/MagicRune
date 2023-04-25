@@ -10,8 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1275727553683471303}
   - component: {fileID: 7759494164077254770}
+  - component: {fileID: 1895385326828714467}
   m_Layer: 0
-  m_Name: FoxBall
+  m_Name: S_FoxOrb
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -48,10 +49,25 @@ MonoBehaviour:
   icon: {fileID: 21300000, guid: 8a89272fa4eafcd4fb95306b343443e9, type: 3}
   desc: 
   isIncluding: 1
-  startPattern: []
-  turnPattern: []
-  endPattern: []
+  startPattern:
+  - {fileID: 1895385326828714467}
+  turnPattern:
+  - {fileID: 1895385326828714467}
+  endPattern:
+  - {fileID: 1895385326828714467}
   transitions: []
+--- !u!114 &1895385326828714467
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 923945766284124140}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9016f0343730ac547adb77c04213c152, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4657442987853799146
 GameObject:
   m_ObjectHideFlags: 0
