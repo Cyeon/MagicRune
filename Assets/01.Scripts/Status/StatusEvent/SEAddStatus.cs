@@ -26,11 +26,14 @@ public class SEAddStatus : StatusEvent
             else unit = Managers.GetPlayer();
         }
 
-        if (_addStackType == AddStackType.Dmg)
+        if(_unit.currentDmg > 0)
         {
-            _value = Mathf.FloorToInt(_unit.currentDmg);
-        }
+            if (_addStackType == AddStackType.Dmg)
+            {
+                _value = Mathf.FloorToInt(_unit.currentDmg);
+            }
 
-        unit.StatusManager.AddStatus(_statusName, _value);
+            unit.StatusManager.AddStatus(_statusName, _value);
+        }
     }
 }
