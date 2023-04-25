@@ -87,12 +87,21 @@ public class Enemy : Unit
     public override void UpdateHealthUI()
     {
         _healthFeedbackBar.DOScaleX(_healthBar.localScale.x, 0);
-        _healthBar.DOScaleX(HP / MaxHP, 0);
+        _healthBar.DOScaleX((float)HP / MaxHP, 0);
+
         _enemyHealthText.text = string.Format("{0}/{1}", HP.ToString(), MaxHP.ToString());
 
         if (Shield > 0)
         {
-            _shieldBar.DOScaleX(Mathf.Clamp((HP + Shield) / MaxHP, 0, 1), 0);
+            if(HP + Shield > MaxHP)
+            {
+                _shieldBar.DOScaleX(1, 0);
+                _healthBar.DOScaleX((float)HP / (MaxHP + Shield), 0);
+            }
+            else
+            {
+                _shieldBar.DOScaleX((float)(HP + Shield) / MaxHP, 0);
+            }
         }
         else
         {
@@ -101,7 +110,7 @@ public class Enemy : Unit
 
         Sequence seq = DOTween.Sequence();
         seq.AppendInterval(0.5f);
-        seq.Append(_healthFeedbackBar.DOScaleX(HP / MaxHP, 0.2f));
+        seq.Append(_healthFeedbackBar.DOScaleX((float)HP / MaxHP, 0.2f));
 
         Sequence vibrateSeq = DOTween.Sequence();
         vibrateSeq.Append(_healthFeedbackBar.parent.DOShakeScale(0.1f));

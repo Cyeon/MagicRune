@@ -18,7 +18,7 @@ public class StatusAction : PatternAction
         }
         else if (value > 0)
         {
-            unit.StatusManager.AddStatus(status, value + 1);
+            unit.StatusManager.AddStatus(status, value);
         }
 
         BattleManager.Instance.Enemy.PatternManager.CurrentPattern.NextAction();

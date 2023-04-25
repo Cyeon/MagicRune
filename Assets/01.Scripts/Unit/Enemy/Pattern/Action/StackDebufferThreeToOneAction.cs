@@ -11,7 +11,7 @@ public class StackDebufferThreeToOneAction : StatusAction
     {
         if(BattleManager.Instance.Enemy.StatusManager.GetStatus(_checkStatusName) != null)
         {
-            value = Mathf.RoundToInt(BattleManager.Instance.Enemy.StatusManager.GetStatus(_checkStatusName).TypeValue * 0.3f);
+            value = Mathf.RoundToInt(BattleManager.Instance.Enemy.StatusManager.GetStatus(_checkStatusName).TypeValue * 0.3f) + 1;
             BattleManager.Instance.Enemy.StatusManager.DeleteStatus(_checkStatusName);
         }
 
