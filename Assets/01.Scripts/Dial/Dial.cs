@@ -40,6 +40,7 @@ public class Dial : MonoBehaviour
     public List<DialElement> DialElementList => _dialElementList;
 
     private List<BaseRune> _remainingDeck = new List<BaseRune>();
+    private List<BaseRune> _usingDeck = new List<BaseRune>();
     private List<BaseRune> _cooltimeDeck = new List<BaseRune>();
 
     #endregion
@@ -83,11 +84,23 @@ public class Dial : MonoBehaviour
         {
             for (int i = 0; i < runeList.Value.Count; i++)
             {
-                _remainingDeck.Add(runeList.Value[i].Rune);
                 Managers.Resource.Destroy(runeList.Value[i].gameObject);
             }
         }
         _runeDict.Clear();
+
+        for(int i = 0; i < _usingDeck.Count; i++)
+        {
+            _remainingDeck.Add(_usingDeck[i]);
+        }
+        for (int i = _cooltimeDeck.Count - 1; i >= 0 ; i++)
+        {
+            if (_cooltimeDeck[i].IsCoolTime == false)
+            {
+                _remainingDeck.Add(_cooltimeDeck[i]);
+                _cooltimeDeck.RemoveAt(i);
+            }
+        }
 
         for (int i = 0; i < _dialElementList.Count; i++)
         {
@@ -120,6 +133,7 @@ public class Dial : MonoBehaviour
             _dialElementList[2].AddRuneList(r);
             AddCard(r, 1);
             _remainingDeck.Remove(rune);
+            _usingDeck.Add(rune);
         }
 
         for(int i = 0; i < _maxRuneCount - Managers.Deck.FirstDialDeck.Count; i++)
@@ -135,6 +149,7 @@ public class Dial : MonoBehaviour
             _dialElementList[2].AddRuneList(r);
             AddCard(r, 1);
             _remainingDeck.Remove(rune);
+            _usingDeck.Add(rune);
         }
         #endregion
 
@@ -160,6 +175,7 @@ public class Dial : MonoBehaviour
             _dialElementList[index].AddRuneList(r);
             AddCard(r, 3 - index);
             _remainingDeck.Remove(rune);
+            _usingDeck.Add(rune);
         }
         #endregion
 
@@ -292,8 +308,8 @@ public class Dial : MonoBehaviour
             {
                 int index = i;
                 _dialElementList[i].IsGlow = true;
-                _cooltimeDeck.Add(_runeDict[i + 1].Find(x => x == _dialElementList[i].SelectCard).Rune);
-                _runeDict[i + 1].Remove(_runeDict[i + 1].Find(x => x == _dialElementList[i].SelectCard));
+                _cooltimeDeck.Add(_usingDeck.Find(x => x == _dialElementList[i].SelectCard.Rune));
+                _usingDeck.Remove(_usingDeck.Find(x => x == _dialElementList[i].SelectCard.Rune));
                 BezierMissile b = Managers.Resource.Instantiate("BezierMissile", this.transform.parent).GetComponent<BezierMissile>();
                 if (_dialElementList[i].SelectCard.Rune.BaseRuneSO.RuneEffect != null)
                 {
