@@ -43,10 +43,10 @@ public class RuneUI : MonoBehaviour
     //    DialElement.MoveRune(0, false); // 이 함수를 부르는 것 맞는 거 같은데 일단 여기서는 아님
     //}
 
-    public void SetActiveOutline(OutlineType type)
-    {
-        //_magicImage.material = _outlineMaterialArray[(int)type];
-    }
+    //public void SetActiveOutline(OutlineType type)
+    //{
+    //    //_magicImage.material = _outlineMaterialArray[(int)type];
+    //}
 
     public void SetRune(BaseRune rune)
     {
@@ -68,7 +68,7 @@ public class RuneUI : MonoBehaviour
         if (_rune.CoolTime > 0)
         {
             //_runeImage.color = Color.gray;
-            SetActiveOutline(OutlineType.Default);
+            //SetActiveOutline(OutlineType.Default);
             _coolTimeText.SetText(_rune.CoolTime.ToString());
             _coolTimeText.gameObject.SetActive(true);
             RuneColor(new Color(0.26f, 0.26f, 0.26f, 1f));
