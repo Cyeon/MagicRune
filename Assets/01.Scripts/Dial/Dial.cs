@@ -1,12 +1,9 @@
 using DG.Tweening;
-using MoreMountains.Tools;
 using MyBox;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -89,16 +86,13 @@ public class Dial : MonoBehaviour
         }
         _runeDict.Clear();
 
-        for(int i = 0; i < _usingDeck.Count; i++)
+        for(int i = _usingDeck.Count - 1; i >= 0; i--)
         {
             _remainingDeck.Add(_usingDeck[i]);
             _usingDeck.RemoveAt(i);
         }
-        Debug.Log("------------------");
-        foreach (var list in _cooltimeDeck)
-        {
-            Debug.Log($"{list.CoolTime}");
-        }
+        _usingDeck.Clear();
+
         for (int i = _cooltimeDeck.Count - 1; i >= 0 ; i--)
         {
             if (_cooltimeDeck[i].IsCoolTime == false)
@@ -122,8 +116,8 @@ public class Dial : MonoBehaviour
             }
             _remainingDeck.Clear();
             _remainingDeck = new List<BaseRune>(Managers.Deck.Deck);
+            _cooltimeDeck.Clear();
         }
-
         #endregion
 
         #region First Line
@@ -321,11 +315,6 @@ public class Dial : MonoBehaviour
                 _usingDeck.Remove(rune);
                 rune.SetCoolTime();
                 _cooltimeDeck.Add(rune);
-                Debug.Log("------------------");
-                foreach (var list in _cooltimeDeck)
-                {
-                    Debug.Log($"{list.CoolTime}");
-                }
                 BezierMissile b = Managers.Resource.Instantiate("BezierMissile", this.transform.parent).GetComponent<BezierMissile>();
                 if (_dialElementList[i].SelectCard.Rune.BaseRuneSO.RuneEffect != null)
                 {
@@ -386,12 +375,11 @@ public class Dial : MonoBehaviour
 
     public void AllMagicSetCoolTime()
     {
+        Debug.Log("ÄðÅ¸ÀÓ °¨¼Ò");
+
         for (int i = 0; i < _cooltimeDeck.Count; i++)
         {
-            if (_cooltimeDeck[i].CoolTime > 0)
-            {
-                _cooltimeDeck[i].AddCoolTime(-1);
-            }
+            _cooltimeDeck[i].AddCoolTime(-1);
         }
     }
 }
