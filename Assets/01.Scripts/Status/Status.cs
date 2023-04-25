@@ -18,7 +18,7 @@ public enum StatusName
     Fire,                     // 화상
     Ice,                      // 빙결
     Recharging,          // 충전
-    Coldness,             // 냉기
+    ChillinessZip,        // 한기냉축
     Chilliness,            // 한기
     BladeOfKnife,       // 칼날
     Impact,               // 충격
@@ -27,6 +27,8 @@ public enum StatusName
     FoxOrb,              // 여우구슬
     FlameArmor,       // 화염갑옷
     Boom,                // 폭팔
+    Absorptioning,     // 흡수중
+    Absorption,         //흡수
     COUNT
 }
 

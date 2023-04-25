@@ -10,9 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 8311638913425904492}
   - component: {fileID: 1969479872306931210}
-  - component: {fileID: 8930811436974085077}
+  - component: {fileID: 1318501583068510468}
   m_Layer: 0
-  m_Name: Absorption
+  m_Name: S_Absorptionint(1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -50,12 +50,11 @@ MonoBehaviour:
   desc: 
   isIncluding: 1
   startPattern:
-  - {fileID: 8930811436974085077}
+  - {fileID: 1318501583068510468}
   turnPattern: []
-  endPattern:
-  - {fileID: 8930811436974085077}
+  endPattern: []
   transitions: []
---- !u!114 &8930811436974085077
+--- !u!114 &1318501583068510468
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -64,9 +63,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 4288845587294073424}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 889c3ea4c19a9964f8faba7e6b83f8fb, type: 3}
+  m_Script: {fileID: 11500000, guid: 76e453d0137dffa4c86b004096088636, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  status: 13
+  value: 1
+  isSelf: 1
 --- !u!1 &5320256324158273165
 GameObject:
   m_ObjectHideFlags: 0

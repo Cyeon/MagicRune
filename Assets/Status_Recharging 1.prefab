@@ -10,9 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 5736046982554988565}
   - component: {fileID: 5014004267170453785}
-  - component: {fileID: -8795133249385837813}
   m_Layer: 0
-  m_Name: Status_Coldness
+  m_Name: Status_Recharging 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -45,8 +44,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cde2e363b5d96b742919b2129a9046bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  debugName: "\uB0C9\uAE30\uC751\uCD95"
-  statusName: 4
+  debugName: "\uCDA9\uC804"
+  statusName: 3
   information: 
   textColor: {r: 1, g: 1, b: 1, a: 1}
   type: 0
@@ -54,23 +53,8 @@ MonoBehaviour:
   OnAddStatus: []
   OnTurnStart: []
   OnAttack: []
-  OnGetDamage:
-  - {fileID: -8795133249385837813}
+  OnGetDamage: []
   OnTurnEnd: []
-  icon: {fileID: 21300000, guid: 890186f66def00b44bef117039f24101, type: 3}
+  icon: {fileID: 21300000, guid: fd4489fff7614ed4d9de3e70e9bec7cf, type: 3}
   color: {r: 1, g: 1, b: 1, a: 1}
   unit: {fileID: 0}
---- !u!114 &-8795133249385837813
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8378743581122507794}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6ae0a23744b262244814f6d0614a6598, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _remStackType: 1
-  _value: 1
