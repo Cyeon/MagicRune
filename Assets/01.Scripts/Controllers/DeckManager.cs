@@ -11,10 +11,10 @@ public class DeckManager
 
     public const int FIRST_DIAL_DECK_MAX_COUNT = 3; // 첫번째 다이얼 덱 최대 개수
 
-    private List<BaseRune> _firstDialDeck = new List<BaseRune>(); // 사전에 설정해둔 다이얼 안쪽의 1번째 줄 덱.
+    private List<BaseRune> _firstDialDeck = new List<BaseRune>(3); // 사전에 설정해둔 다이얼 안쪽의 1번째 줄 덱.
     public List<BaseRune> FirstDialDeck => _firstDialDeck;
 
-    private List<BaseRune> _deck = new List<BaseRune>(); // 소지하고 있는 모든 룬
+    private List<BaseRune> _deck = new List<BaseRune>(12); // 소지하고 있는 모든 룬
     public List<BaseRune> Deck => _deck;
 
     public void Init()
@@ -113,21 +113,26 @@ public class DeckManager
 
     public void UsingDeckSort()
     {
-        List<BaseRune> usingRune = new List<BaseRune>();
-        List<BaseRune> notUsingRune = new List<BaseRune>();
+        //List<BaseRune> usingRune = new List<BaseRune>();
+        //List<BaseRune> notUsingRune = new List<BaseRune>();
 
-        usingRune = _deck.Where(x => x.IsCoolTime == false).ToList();
-        notUsingRune = _deck.Where(x => x.IsCoolTime == true).ToList();
+        //usingRune = _deck.Where(x => x.IsCoolTime == false).ToList();
+        //notUsingRune = _deck.Where(x => x.IsCoolTime == true).ToList();
 
+
+        //_deck.Clear();
+        //for(int i = 0; i < usingRune.Count; i++)
+        //{
+        //    _deck.Add(usingRune[i]);
+        //}
+        //for (int i = 0; i < notUsingRune.Count; i++)
+        //{
+        //    _deck.Add(notUsingRune[i]);
+        //}
+
+        List<BaseRune> newDeck = _deck.OrderBy(x => x.IsCoolTime == false)/*.ThenBy(x => x.IsUsing == false)*/.ToList();
         _deck.Clear();
-        for(int i = 0; i < usingRune.Count; i++)
-        {
-            _deck.Add(usingRune[i]);
-        }
-        for (int i = 0; i < notUsingRune.Count; i++)
-        {
-            _deck.Add(notUsingRune[i]);
-        }
+        _deck = new List<BaseRune>(newDeck);
     }
 
     public int GetUsingRuneCount()
@@ -135,7 +140,7 @@ public class DeckManager
         int count = 0;
         for(int i = 0; i < _deck.Count; i++)
         {
-            if (_deck[i].IsCoolTime == false)
+            if (_deck[i].IsCoolTime == false && _deck[i].IsUsing == false)
             {
                 count++;
             }
