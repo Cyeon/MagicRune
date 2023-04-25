@@ -9,6 +9,20 @@ using Random = UnityEngine.Random;
 [Serializable]
 public class BaseRune : Item
 {
+    #region Constructor
+    public BaseRune()
+    {
+
+    }
+
+    public BaseRune(BaseRune rune)
+    {
+        _baseRuneSO = rune.BaseRuneSO;
+        _coolTime = rune.CoolTime;
+        _isUsing = rune.IsUsing;
+    }
+    #endregion
+
     #region Rune Stat Parameta
     [SerializeField]
     protected BaseRuneSO _baseRuneSO;
@@ -18,6 +32,9 @@ public class BaseRune : Item
     public int CoolTime => _coolTime;
 
     public bool IsCoolTime => _coolTime > 0;
+
+    private bool _isUsing = false;
+    public bool IsUsing => _isUsing;
     #endregion
 
     #region Item Interface
@@ -66,6 +83,11 @@ public class BaseRune : Item
     public void AddCoolTime(int value)
     {
         _coolTime += value;
+    }
+    
+    public void SetIsUsing(bool value)
+    {
+        _isUsing = value;
     }
 
     public virtual bool AbilityCondition()

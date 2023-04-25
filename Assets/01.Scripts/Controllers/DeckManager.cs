@@ -104,7 +104,11 @@ public class DeckManager
 
     public void RuneSwap(int fIndex, int sIndex)
     {
-        _deck.SwapInPlace(fIndex, sIndex); //
+        if (fIndex == sIndex) return;
+
+        BaseRune tempRune = _deck[fIndex];
+        _deck[fIndex] = _deck[sIndex];
+        _deck[sIndex] = tempRune;
     }
 
     public void UsingDeckSort()

@@ -75,7 +75,7 @@ public class Dial : MonoBehaviour
 
     public void SortingRemaingRune()
     {
-        Managers.Deck.Deck.OrderBy(z => z.CoolTime);
+        Managers.Deck.Deck.OrderBy(z => z.CoolTime).ThenByDescending(x => x.IsUsing);
     }
 
     public int GetUsingRuneCount()
@@ -83,7 +83,7 @@ public class Dial : MonoBehaviour
         int count = 0;
         for (int i = 0; i < Managers.Deck.Deck.Count; i++)
         {
-            if (Managers.Deck.Deck[i].CoolTime <= 0)
+            if (Managers.Deck.Deck[i].CoolTime <= 0 && Managers.Deck.Deck[i].IsUsing == false)
             {
                 count++;
             }
@@ -109,130 +109,204 @@ public class Dial : MonoBehaviour
             _dialElementList[i].ResetRuneList();
             _dialElementList[i].SelectCard = null;
         }
+
+        if(isReset == true)
+        {
+            for(int i = 0; i < Managers.Deck.Deck.Count; i++)
+            {
+                Managers.Deck.Deck[i].SetCoolTime(0);
+            }
+        }
         #endregion
 
-        SortingRemaingRune();
-        int maxRuneCount = GetUsingRuneCount();
+        #region Basic
+        //SortingRemaingRune();
+        //int maxRuneCount = GetUsingRuneCount();
 
-        List<int> numberList = new List<int>();
+        //List<int> numberList = new List<int>();
+        //for (int i = 0; i < Managers.Deck.FirstDialDeck.Count; i++)
+        //{
+        //    if (Managers.Deck.FirstDialDeck[i].CoolTime <= 0)
+        //    {
+        //        numberList.Add(i);
+        //    }
+        //}
+
+        //if (Managers.Deck.FirstDialDeck != null && Managers.Deck.FirstDialDeck.Count > 0)
+        //{
+        //    for (int i = 0; i < _maxRuneCount; i++)
+        //    {
+        //        int randomIndex = 0;
+        //        BaseRuneUI r = Managers.Resource.Instantiate("Rune/BaseRune").GetComponent<BaseRuneUI>();
+
+        //        if (numberList.Count != 0)
+        //        {
+        //            randomIndex = Random.Range(0, numberList.Count);
+        //            BaseRune rune = Managers.Deck.Deck.Find(x => x == Managers.Deck.FirstDialDeck[randomIndex]);
+
+        //            r.SetRune(rune);
+        //            numberList.RemoveAt(randomIndex);
+        //        }
+        //        else
+        //        {
+        //            while (r.Rune == null)
+        //            {
+        //                BaseRune baseRune = Managers.Deck.GetRandomRune(Managers.Deck.FirstDialDeck);
+        //                r.SetRune(Managers.Deck.Deck.Find(x => x == baseRune));
+        //            }
+        //        }
+
+        //        r.transform.SetParent(_dialElementList[2].transform);
+        //        r.transform.localScale = new Vector3(0.1f, 0.1f, 1f);
+        //        r.gameObject.SetActive(true);
+        //        _dialElementList[2].AddRuneList(r);
+        //        if (isReset == true)
+        //        {
+        //            r.Rune.SetCoolTime(0);
+        //        }
+        //        AddCard(r, 1);
+
+        //        maxRuneCount--;
+        //    }
+        //}
+        //else
+        //{
+        //    SortingRemaingRune();
+        //    maxRuneCount = GetUsingRuneCount();
+        //    for (int i = 0; i < _maxRuneCount; i++)
+        //    {
+        //        if (maxRuneCount <= 0)
+        //        {
+        //            break;
+        //        }
+
+        //        SortingRemaingRune();
+        //        maxRuneCount = GetUsingRuneCount();
+        //        int runeIndex = Random.Range(0, maxRuneCount);
+
+        //        BaseRune rune = Managers.Deck.Deck[runeIndex];
+        //        while (rune.CoolTime > 0)
+        //        {
+        //            InfiniteLoopDetector.Run();
+        //            runeIndex = Random.Range(0, maxRuneCount);
+        //            rune = Managers.Deck.Deck[runeIndex];
+        //        }
+        //        BaseRuneUI r = Managers.Resource.Instantiate("Rune/BaseRune").GetComponent<BaseRuneUI>();
+        //        r.SetRune(rune);
+        //        r.transform.SetParent(_dialElementList[2].transform);
+        //        r.transform.localScale = new Vector3(0.1f, 0.1f, 1f);
+        //        r.gameObject.SetActive(true);
+        //        _dialElementList[2].AddRuneList(r);
+        //        if (isReset == true)
+        //        {
+        //            r.Rune.SetCoolTime(0);
+        //        }
+        //        AddCard(r, 1);
+        //        //Managers.Deck.RuneSwap(runeIndex, maxRuneCount - 1);
+
+        //        maxRuneCount--;
+        //    }
+        //}
+
+        //SortingRemaingRune();
+        //maxRuneCount = GetUsingRuneCount();
+        //for (int i = 0; i < _maxRuneCount * 2; i++)
+        //{
+        //    if (maxRuneCount <= 0)
+        //    {
+        //        break;
+        //    }
+
+        //    int runeIndex = Random.Range(0, maxRuneCount);
+
+        //    int index = 1 - (i % 2);
+        //    BaseRune rune = Managers.Deck.Deck[runeIndex];
+        //    while (rune.CoolTime > 0)
+        //    {
+        //        InfiniteLoopDetector.Run();
+        //        runeIndex = Random.Range(0, maxRuneCount);
+        //        rune = Managers.Deck.Deck[runeIndex];
+        //    }
+        //    BaseRuneUI r = Managers.Resource.Instantiate("Rune/BaseRune").GetComponent<BaseRuneUI>();
+        //    r.SetRune(rune);
+        //    r.transform.SetParent(_dialElementList[index].transform);
+        //    r.transform.localScale = new Vector3(0.1f, 0.1f, 1f);
+        //    r.gameObject.SetActive(true);
+        //    _dialElementList[index].AddRuneList(r);
+        //    if (isReset == true)
+        //    {
+        //        r.Rune.SetCoolTime(0);
+        //    }
+        //    AddCard(r, 3 - index);
+        //    Managers.Deck.RuneSwap(runeIndex, maxRuneCount - 1);
+
+        //    maxRuneCount--;
+        //}
+        #endregion
+
+        #region First Line
         for (int i = 0; i < Managers.Deck.FirstDialDeck.Count; i++)
         {
-            if (Managers.Deck.FirstDialDeck[i].CoolTime <= 0)
-            {
-                numberList.Add(i);
-            }
-        }
-
-        if (Managers.Deck.FirstDialDeck != null && Managers.Deck.FirstDialDeck.Count > 0)
-        {
-            for (int i = 0; i < _maxRuneCount; i++)
-            {
-                int randomIndex = 0;
-                BaseRuneUI r = Managers.Resource.Instantiate("Rune/BaseRune").GetComponent<BaseRuneUI>();
-
-                if (numberList.Count != 0)
-                {
-                    randomIndex = Random.Range(0, numberList.Count);
-                    BaseRune rune = Managers.Deck.Deck.Find(x => x == Managers.Deck.FirstDialDeck[randomIndex]);
-
-                    r.SetRune(rune);
-                    numberList.RemoveAt(randomIndex);
-                }
-                else
-                {
-                    while (r.Rune == null)
-                    {
-                        BaseRune baseRune = Managers.Deck.GetRandomRune(Managers.Deck.FirstDialDeck);
-                        r.SetRune(Managers.Deck.Deck.Find(x => x == baseRune));
-                    }
-                }
-
-                r.transform.SetParent(_dialElementList[2].transform);
-                r.transform.localScale = new Vector3(0.1f, 0.1f, 1f);
-                r.gameObject.SetActive(true);
-                _dialElementList[2].AddRuneList(r);
-                if (isReset == true)
-                {
-                    r.Rune.SetCoolTime(0);
-                }
-                AddCard(r, 1);
-
-                maxRuneCount--;
-            }
-        }
-        else
-        {
-            SortingRemaingRune();
-            maxRuneCount = GetUsingRuneCount();
-            for (int i = 0; i < _maxRuneCount; i++)
-            {
-                if (maxRuneCount <= 0)
-                {
-                    break;
-                }
-
-                SortingRemaingRune();
-                maxRuneCount = GetUsingRuneCount();
-                int runeIndex = Random.Range(0, maxRuneCount);
-
-                BaseRune rune = Managers.Deck.Deck[runeIndex];
-                while (rune.CoolTime > 0)
-                {
-                    InfiniteLoopDetector.Run();
-                    runeIndex = Random.Range(0, maxRuneCount);
-                    rune = Managers.Deck.Deck[runeIndex];
-                }
-                BaseRuneUI r = Managers.Resource.Instantiate("Rune/BaseRune").GetComponent<BaseRuneUI>();
-                r.SetRune(rune);
-                r.transform.SetParent(_dialElementList[2].transform);
-                r.transform.localScale = new Vector3(0.1f, 0.1f, 1f);
-                r.gameObject.SetActive(true);
-                _dialElementList[2].AddRuneList(r);
-                if (isReset == true)
-                {
-                    r.Rune.SetCoolTime(0);
-                }
-                AddCard(r, 1);
-                //Managers.Deck.RuneSwap(runeIndex, maxRuneCount - 1);
-
-                maxRuneCount--;
-            }
+            BaseRuneUI r = Managers.Resource.Instantiate("Rune/BaseRune").GetComponent<BaseRuneUI>();
+            r.SetRune(Managers.Deck.Deck.Find(x => x == Managers.Deck.FirstDialDeck[i]));
+            r.transform.SetParent(_dialElementList[2].transform);
+            r.transform.localScale = new Vector3(0.1f, 0.1f, 1f);
+            r.gameObject.SetActive(true);
+            r.Rune.SetIsUsing(true);
+            _dialElementList[2].AddRuneList(r);
+            AddCard(r, 1);
         }
 
         SortingRemaingRune();
-        maxRuneCount = GetUsingRuneCount();
+        int runeCount = GetUsingRuneCount();
+        for(int i = 0; i < _maxRuneCount - Managers.Deck.FirstDialDeck.Count; i++)
+        {
+            int runeIndex = Random.Range(0, runeCount);
+
+            BaseRuneUI r = Managers.Resource.Instantiate("Rune/BaseRune").GetComponent<BaseRuneUI>();
+            r.SetRune(Managers.Deck.Deck[i]);
+            r.transform.SetParent(_dialElementList[2].transform);
+            r.transform.localScale = new Vector3(0.1f, 0.1f, 1f);
+            r.gameObject.SetActive(true);
+            r.Rune.SetIsUsing(true);
+            _dialElementList[2].AddRuneList(r);
+            AddCard(r, 1);
+            Managers.Deck.RuneSwap(runeIndex, --runeCount);
+        }
+        #endregion
+
+        #region Second&Third Line
+        //SortingRemaingRune();
+        //runeCount = GetUsingRuneCount();
         for (int i = 0; i < _maxRuneCount * 2; i++)
         {
-            if (maxRuneCount <= 0)
+            if (runeCount <= 0)
             {
                 break;
             }
 
-            int runeIndex = Random.Range(0, maxRuneCount);
+            int runeIndex = Random.Range(0, runeCount);
 
             int index = 1 - (i % 2);
             BaseRune rune = Managers.Deck.Deck[runeIndex];
-            while (rune.CoolTime > 0)
-            {
-                InfiniteLoopDetector.Run();
-                runeIndex = Random.Range(0, maxRuneCount);
-                rune = Managers.Deck.Deck[runeIndex];
-            }
+            //while (rune.IsUsing == true)
+            //{
+            //    InfiniteLoopDetector.Run();
+            //    Managers.Deck.RuneSwap(runeIndex, --runeCount);
+            //    runeIndex = Random.Range(0, runeCount);
+            //    rune = Managers.Deck.Deck[runeIndex];
+            //}
             BaseRuneUI r = Managers.Resource.Instantiate("Rune/BaseRune").GetComponent<BaseRuneUI>();
             r.SetRune(rune);
             r.transform.SetParent(_dialElementList[index].transform);
             r.transform.localScale = new Vector3(0.1f, 0.1f, 1f);
             r.gameObject.SetActive(true);
+            r.Rune.SetIsUsing(true);
             _dialElementList[index].AddRuneList(r);
-            if (isReset == true)
-            {
-                r.Rune.SetCoolTime(0);
-            }
             AddCard(r, 3 - index);
-            Managers.Deck.RuneSwap(runeIndex, maxRuneCount - 1);
-
-            maxRuneCount--;
+            Managers.Deck.RuneSwap(runeIndex, --runeCount);
         }
+        #endregion
 
         #region Copy
         for (int i = 1; i <= 3; i++)
@@ -249,10 +323,6 @@ public class Dial : MonoBehaviour
                         r.transform.localScale = new Vector3(0.1f, 0.1f);
                         _dialElementList[3 - i].AddRuneList(r);
 
-                        if (isReset == true)
-                        {
-                            r.Rune.SetCoolTime(0);
-                        }
                         AddCard(r, i);
                     }
                 }
@@ -335,7 +405,7 @@ public class Dial : MonoBehaviour
             }
         }
     }
-    
+
     public bool MagicEmpty()
     {
         return _dialElementList[0].SelectCard == null && _dialElementList[1].SelectCard == null && _dialElementList[2].SelectCard == null;
