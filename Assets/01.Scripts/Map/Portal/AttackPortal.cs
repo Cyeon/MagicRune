@@ -20,6 +20,7 @@ public class AttackPortal : Portal
     {
         _portalEnemy = enemy;
         _spriteRenderer.sprite = enemy.spriteRenderer.sprite;
+        _spriteRenderer.transform.localScale = enemy.spriteRenderer.transform.localScale;
         _titleText.text = enemy.enemyName;
         Init(pos);
     }
