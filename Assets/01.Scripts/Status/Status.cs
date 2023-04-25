@@ -25,7 +25,7 @@ public enum StatusName
     IceShield,            // 얼음막
     PoisonousLiquid,  // 독액
     FoxOrb,             // 여우구슬
-    LavaArmor,        // 용암갑옷
+    FlameArmor,        // 화염갑옷
     COUNT
 }
 

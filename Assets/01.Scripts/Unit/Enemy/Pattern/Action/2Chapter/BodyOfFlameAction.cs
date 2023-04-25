@@ -3,21 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PyrexyAction : PatternAction
+public class BodyOfFlameAction : PatternAction
 {
     public override void StartAction()
     {
-        BattleManager.Instance.Enemy.StatusManager.OnAddStatus += Pyrexy;
+        BattleManager.Instance.Enemy.StatusManager.OnAddStatus += BodyOfFlame;
         base.StartAction();
     }
 
     public override void EndAction()
     {
-        BattleManager.Instance.Enemy.StatusManager.OnAddStatus -= Pyrexy;
+        BattleManager.Instance.Enemy.StatusManager.OnAddStatus -= BodyOfFlame;
         base.EndAction();
     }
 
-    public void Pyrexy(Status status, int count)
+    public void BodyOfFlame(Status status, int count)
     {
         if(status.statusName == StatusName.Fire)
         {
