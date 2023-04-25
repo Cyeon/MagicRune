@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2211433695766941965}
   - component: {fileID: 5130367511282824195}
-  - component: {fileID: 6319476061521045293}
+  - component: {fileID: 5452554163896150074}
   m_Layer: 0
   m_Name: BoomCount1
   m_TagString: Untagged
@@ -47,14 +47,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   patternName: "\uD3ED\uD314 \uCE74\uC6B4\uD2B8"
   icon: {fileID: 21300000, guid: 429fddd4c3cd140fd88d8f01caab5d2c, type: 3}
-  desc: 1
+  desc: 
   isIncluding: 1
   startPattern: []
   turnPattern:
-  - {fileID: 6319476061521045293}
+  - {fileID: 5452554163896150074}
   endPattern: []
   transitions: []
---- !u!114 &6319476061521045293
+--- !u!114 &5452554163896150074
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -63,9 +63,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 2460570167442713077}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e88b8770594d0dc43b7e8d6d314299da, type: 3}
+  m_Script: {fileID: 11500000, guid: 76e453d0137dffa4c86b004096088636, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  status: 12
+  value: -1
+  isSelf: 1
 --- !u!1 &5738959046233562328
 GameObject:
   m_ObjectHideFlags: 0
@@ -76,8 +79,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8211426149042748674}
   - component: {fileID: 8196952486571936999}
-  - component: {fileID: 5325874164513744536}
-  - component: {fileID: 8166411976403004073}
+  - component: {fileID: 3215006477355493981}
   m_Layer: 0
   m_Name: Boom(40)
   m_TagString: Untagged
@@ -118,11 +120,10 @@ MonoBehaviour:
   isIncluding: 1
   startPattern: []
   turnPattern:
-  - {fileID: 5325874164513744536}
-  endPattern:
-  - {fileID: 8166411976403004073}
+  - {fileID: 3215006477355493981}
+  endPattern: []
   transitions: []
---- !u!114 &5325874164513744536
+--- !u!114 &3215006477355493981
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -131,23 +132,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 5738959046233562328}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: db7864d3a61bcc14a99708ff1475ef25, type: 3}
+  m_Script: {fileID: 11500000, guid: 76e453d0137dffa4c86b004096088636, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 40
-  count: 1
---- !u!114 &8166411976403004073
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5738959046233562328}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9f8fd85619c7b8c4d8bd810d12e5dd0a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  status: 12
+  value: -1
+  isSelf: 1
 --- !u!1 &6792092608420542882
 GameObject:
   m_ObjectHideFlags: 0
@@ -158,7 +148,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5875152241483585123}
   - component: {fileID: 4474079620485470908}
-  - component: {fileID: 3613804853941133804}
+  - component: {fileID: 1924233427048653104}
   m_Layer: 0
   m_Name: BoomCount2
   m_TagString: Untagged
@@ -195,14 +185,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   patternName: "\uD3ED\uD314 \uCE74\uC6B4\uD2B8"
   icon: {fileID: 21300000, guid: 429fddd4c3cd140fd88d8f01caab5d2c, type: 3}
-  desc: 2
+  desc: 
   isIncluding: 1
   startPattern: []
   turnPattern:
-  - {fileID: 3613804853941133804}
+  - {fileID: 1924233427048653104}
   endPattern: []
   transitions: []
---- !u!114 &3613804853941133804
+--- !u!114 &1924233427048653104
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -211,9 +201,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 6792092608420542882}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e88b8770594d0dc43b7e8d6d314299da, type: 3}
+  m_Script: {fileID: 11500000, guid: 76e453d0137dffa4c86b004096088636, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  status: 12
+  value: 2
+  isSelf: 1
 --- !u!1001 &3927241957304435079
 PrefabInstance:
   m_ObjectHideFlags: 0

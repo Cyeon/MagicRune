@@ -24,8 +24,9 @@ public enum StatusName
     Impact,               // 충격
     IceShield,            // 얼음막
     PoisonousLiquid,  // 독액
-    FoxOrb,             // 여우구슬
-    FlameArmor,        // 화염갑옷
+    FoxOrb,              // 여우구슬
+    FlameArmor,       // 화염갑옷
+    Boom,                // 폭팔
     COUNT
 }
 

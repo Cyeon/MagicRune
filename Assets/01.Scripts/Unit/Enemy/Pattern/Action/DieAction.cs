@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DieAction : PatternAction
 {
-    public override void TurnAction()
+    public override void EndAction()
     {
         BattleManager.Instance.Enemy.Die();
     }
