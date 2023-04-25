@@ -29,7 +29,6 @@ public class RestUI : MonoBehaviour
         _restBtn.onClick.AddListener(() =>
         {
             _enhanceBtn.onClick.RemoveAllListeners();
-            _isHealing = false;
             StartCoroutine(RestCoroutine());
         });
 
@@ -84,6 +83,7 @@ public class RestUI : MonoBehaviour
 
             yield return new WaitForSeconds(1.5f);
 
+            _isHealing = false;
             NextStage();
         }
 
