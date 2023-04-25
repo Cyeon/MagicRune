@@ -12,12 +12,6 @@ using UnityEngine.UI;
 
 public class Unit : MonoBehaviour
 {
-    protected bool _isPlayer = false;
-    public bool IsPlayer => _isPlayer;
-
-    private bool _isDie = false;
-    public bool IsDie => _isDie;
-
     [SerializeField] protected int _maxHealth;
     public int MaxHP => _maxHealth;
 
@@ -33,7 +27,7 @@ public class Unit : MonoBehaviour
 
             if (_health > _maxHealth) _health = _maxHealth;
             if (Managers.Scene.CurrentScene == Define.DialScene) UpdateHealthUI();
-            if(_isPlayer) _userInfoUI.UpdateHealthText();
+            if(this is Player) _userInfoUI.UpdateHealthText();
 
             if (_health <= 0) Die();
         }
@@ -50,27 +44,32 @@ public class Unit : MonoBehaviour
         }
     }
 
-    public bool isTurnSkip = false;
+    public int currentDmg = 0;
+    public AudioClip attackSound = null;
+    [HideInInspector] public bool isTurnSkip = false;
 
+    #region UI
     protected Slider _healthSlider;
     protected Slider _shieldSlider;
     protected Slider _healthFeedbackSlider;
     protected TextMeshProUGUI _healthText;
+    private UserInfoUI _userInfoUI;
+    #endregion
 
-    public int currentDmg = 0;
+    private bool _isDie = false;
+    public bool IsDie => _isDie;
 
-    public Action OnGetDamage;
-
-    [field: SerializeField] public UnityEvent<float> OnTakeDamage { get; set; }
+    #region Event
+    [field: SerializeField, Header("Event")] public UnityEvent<float> OnTakeDamage { get; set; }
     [field: SerializeField] public UnityEvent OnTakeDamageFeedback { get; set; }
     public UnityEvent OnDieEvent;
+    public Action OnGetDamage;
+    #endregion
 
     [HideInInspector]
     public Transform statusTrm;
     private StatusManager _statusManager;
     public StatusManager StatusManager => _statusManager;
-
-    private UserInfoUI _userInfoUI;
 
     private void Start() {
         _statusManager = new StatusManager(this);
@@ -110,10 +109,17 @@ public class Unit : MonoBehaviour
             OnTakeDamage?.Invoke(currentDmg);
         OnTakeDamageFeedback?.Invoke();
 
-        if (_isPlayer == false)
+        if (this is Enemy)
         {
             Define.DialScene?.DamageUIPopup(currentDmg, Define.MainCam.WorldToScreenPoint(transform.position), status);
         }
+    }
+
+    public virtual void Attack(float danage)
+    {
+        currentDmg = danage.RoundToInt();
+        StatusManager.OnAttack();
+        Managers.Sound.PlaySound(attackSound, SoundType.Effect);
     }
 
     public bool IsHealthAmount(float amount, ComparisonType type)
@@ -176,7 +182,7 @@ public class Unit : MonoBehaviour
     {
         if (_isDie == false)
         {
-            Shield += value.RoundToInt();
+            Shield += value.RoundToInt(); 
         }
     }
 
@@ -204,7 +210,7 @@ public class Unit : MonoBehaviour
 
     public virtual void UpdateHealthUI()
     {
-        Define.DialScene?.UpdateHealthbar(IsPlayer);
+        Define.DialScene?.UpdateHealthbar(true);
     }
 
     public virtual void UpdateShieldUI()

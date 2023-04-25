@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -12,18 +12,55 @@ public class PatternManager : MonoBehaviour
     public Pattern BeforePattern => _beforePattern;
 
     public List<Pattern> patternList = new List<Pattern>();
+    private Dictionary<string, Pattern[]> patternTreeDic = new Dictionary<string, Pattern[]>();
     private int _index = -1;
+
+    private string _treeName;
+    private bool _treeChange = false;
 
     [Header("UI")]
     [SerializeField] private SpriteRenderer _patternSprite;
     [SerializeField] private TextMeshPro _patternText;
 
-    private void Awake()
+    public void Init()
     {
-        foreach (var pattern in transform.GetComponentsInChildren<Pattern>())
+        foreach (var pattern in transform.GetComponentsInChildren<Transform>())
         {
-            if(pattern.isIncluding)
-                patternList.Add(pattern);
+            if (pattern.name.Contains("Tree"))
+            {
+                Pattern[] list = pattern.GetComponentsInChildren<Pattern>();
+                patternTreeDic.Add(pattern.name, list);
+            }
+            else
+            { 
+                Pattern cPattern = pattern.GetComponent<Pattern>();
+                if(cPattern != null)
+                {
+                    if (cPattern.isIncluding) patternList.Add(cPattern);
+                }
+            }
+        }
+    }
+
+    /// <summary>
+    /// 패턴 트리 변경하는 함수 (인자를 아무것도 안 넘기면 기본트리로 돌아옴)
+    /// </summary>
+    /// <param name="treeName"></param>
+    public void ChangeTree(string treeName = "")
+    {
+        if(treeName == "")
+        {
+            _treeChange = false;
+            return;
+        }
+
+        if(patternTreeDic.ContainsKey(treeName))
+        {
+            _treeChange = true;
+            _treeName = treeName;
+
+            _index = 0;
+            ChangePattern(patternTreeDic[_treeName][_index]);
         }
     }
 
@@ -37,6 +74,17 @@ public class PatternManager : MonoBehaviour
     public void NextPattern()
     {
         _index++;
+
+        if (_treeChange)
+        {
+            if (_index == patternTreeDic[_treeName].Length)
+            {
+                _index = 0;
+            }
+            ChangePattern(patternTreeDic[_treeName][_index]);
+            return;
+        }
+
         if (_index == patternList.Count)
         {
             _index = 0;

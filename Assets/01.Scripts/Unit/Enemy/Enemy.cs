@@ -1,4 +1,5 @@
 ﻿using DG.Tweening;
+using MyBox;
 using TMPro;
 using UnityEngine;
 
@@ -12,8 +13,7 @@ public class Enemy : Unit
 
     [Header("Enemy Info")]
     public string enemyName;
-    public EnemyTag tag;
-    public AudioClip attackSound = null;
+    public EnemyTag enemyTag = EnemyTag.Ice;
     private Sequence idleSequence = null;
     public bool isEnter = false;
 
@@ -40,20 +40,18 @@ public class Enemy : Unit
     {
         if(_patternManager == null)
             _patternManager = GetComponentInChildren<PatternManager>();
-        
+
+        _patternManager.Init();
         HealthUIInit();
 
         enemyScaleVec = spriteRenderer.transform.localScale;
         transform.localPosition = new Vector3(0, 6, 0);
     }
 
-    public void Attack(int damage)
+    public override void Attack(float damage)
     {
-        currentDmg = damage;
-        StatusManager.OnAttack();
-
+        base.Attack(damage);
         BattleManager.Instance.Player.TakeDamage(currentDmg);
-        Managers.Sound.PlaySound(attackSound, SoundType.Effect);
     }
 
     public void Idle()
