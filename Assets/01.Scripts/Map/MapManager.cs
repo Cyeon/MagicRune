@@ -7,7 +7,7 @@ using DG.Tweening;
 public class MapManager
 {
     #region Chapter
-    private List<Chapter> chapterList = new List<Chapter>();
+    private List<Chapter> _chapterList = new List<Chapter>();
 
     private int _chapter = 1;
     public int Chapter => _chapter;
@@ -18,7 +18,7 @@ public class MapManager
     #region Stage
     private List<Stage> stageList = new List<Stage>();
 
-    [SerializeField]   private int Stage => Floor - ((this.Chapter - 1) * 9);
+    public int Stage => Floor - ((this.Chapter - 1) * 9);
 
     private int _floor = 0;
     public int Floor => _floor;
@@ -49,7 +49,7 @@ public class MapManager
     public void Init()
     {
         _mapSceneUI = Managers.Canvas.GetCanvas("MapUI").GetComponent<MapUI>();
-        chapterList = new List<Chapter>(Managers.Resource.Load<ChapterListSO>("SO/" + typeof(ChapterListSO).Name).chapterList);
+        _chapterList = new List<Chapter>(Managers.Resource.Load<ChapterListSO>("SO/" + typeof(ChapterListSO).Name).chapterList);
 
         if (_portalSpawner == null)
         {
@@ -58,7 +58,7 @@ public class MapManager
         }
 
         ChapterInit();
-        _portalSpawner.ResetEnemyEnter();
+        _chapterList.ForEach(x => x.EnemyReset());
         _portalSpawner.SpawnPortal(stageList[Stage].type);
 
         Managers.Reward.ImageLoad();
@@ -67,7 +67,7 @@ public class MapManager
     private void ChapterInit()
     {
         stageList.Clear();
-        _currentChapter = chapterList[Chapter - 1];
+        _currentChapter = _chapterList[Chapter - 1];
 
         int idx = 0;
         foreach (var chance in _currentChapter.eventStagesChance)
@@ -99,7 +99,7 @@ public class MapManager
         if (_isFirst)
         {
             _isFirst = false;
-            _portalSpawner.ResetEnemyEnter();
+            _chapterList.ForEach(x => x.EnemyReset());
             return;
         }
 
@@ -146,7 +146,7 @@ public class MapManager
 
     public void NextChapter()
     {
-        if(Chapter < chapterList.Count)
+        if(Chapter < _chapterList.Count)
         {
             _chapter++;
         }
