@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class StatusManager
 {
@@ -65,6 +66,9 @@ public class StatusManager
 
         _statusList.Remove(status);
         Define.DialScene?.RemoveStatusPanel(_unit, status.statusName);
+
+        if (status.OnRemoveStatus.Count > 0)
+            status.OnRemoveStatus.ForEach(x => x.Invoke());
 
         for(int i = 0; i < _unit.statusTrm.childCount; ++i)
         {
@@ -170,6 +174,7 @@ public class StatusManager
     {
         if (_unit.IsDie) return;
 
+        List<Status> remStatusList = new List<Status>();
         for(int i = 0; i < _statusList.Count; ++i)
         {
             if (_statusList[i] != null)
@@ -178,8 +183,15 @@ public class StatusManager
                 {
                     if (_statusList[i].isTurnRemove == false) continue;
                 }
+                remStatusList.Add(_statusList[i]);
+            }
+        }
 
-                _statusList[i].RemoveValue(1);
+        for(int i = 0; i < remStatusList.Count; ++i)
+        {
+            if (remStatusList[i] != null)
+            {
+                remStatusList[i].RemoveValue(1);
             }
         }
     }

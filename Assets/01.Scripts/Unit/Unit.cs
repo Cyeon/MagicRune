@@ -92,7 +92,10 @@ public class Unit : MonoBehaviour
         if (Shield > 0 && isTrueDamage == false)
         {
             if (Shield - currentDmg >= 0)
+            {
                 Shield -= currentDmg;
+                currentDmg = 0;
+            }
             else
             {
                 currentDmg -= Shield;
@@ -103,7 +106,8 @@ public class Unit : MonoBehaviour
         else
             HP -= currentDmg;
 
-        OnTakeDamage?.Invoke(currentDmg);
+        if(isTrueDamage == false)
+            OnTakeDamage?.Invoke(currentDmg);
         OnTakeDamageFeedback?.Invoke();
 
         if (_isPlayer == false)
