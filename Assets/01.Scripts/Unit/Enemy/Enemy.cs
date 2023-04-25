@@ -71,6 +71,7 @@ public class Enemy : Unit
     {
         base.Die();
         Managers.Resource.Destroy(gameObject);
+        StopAllCoroutines();
         //BattleManager.Instance.OnEnemyDie?.Invoke();
         //OnDieEvent?.Invoke();
     }

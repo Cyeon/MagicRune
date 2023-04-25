@@ -172,11 +172,18 @@ public class Dial : MonoBehaviour
                 }
 
                 SortingRemaingRune();
+                maxRuneCount = GetUsingRuneCount();
                 int runeIndex = Random.Range(0, maxRuneCount);
-                
 
+                BaseRune rune = Managers.Deck.Deck[runeIndex];
+                while (rune.CoolTime > 0)
+                {
+                    InfiniteLoopDetector.Run();
+                    runeIndex = Random.Range(0, maxRuneCount);
+                    rune = Managers.Deck.Deck[runeIndex];
+                }
                 BaseRuneUI r = Managers.Resource.Instantiate("Rune/BaseRune").GetComponent<BaseRuneUI>();
-                r.SetRune(Managers.Deck.Deck[runeIndex]);
+                r.SetRune(rune);
                 r.transform.SetParent(_dialElementList[2].transform);
                 r.transform.localScale = new Vector3(0.1f, 0.1f, 1f);
                 r.gameObject.SetActive(true);
@@ -212,7 +219,7 @@ public class Dial : MonoBehaviour
                 rune = Managers.Deck.Deck[runeIndex];
             }
             BaseRuneUI r = Managers.Resource.Instantiate("Rune/BaseRune").GetComponent<BaseRuneUI>();
-            r.SetRune(Managers.Deck.Deck[runeIndex]);
+            r.SetRune(rune);
             r.transform.SetParent(_dialElementList[index].transform);
             r.transform.localScale = new Vector3(0.1f, 0.1f, 1f);
             r.gameObject.SetActive(true);

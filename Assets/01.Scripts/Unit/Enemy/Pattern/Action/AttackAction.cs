@@ -29,7 +29,10 @@ public class AttackAction : PatternAction
         ////seq.Append(Define.DialScene?.EnemyIcon.transform.DOMoveY(5.82f, 0.2f)).SetEase(Ease.Linear);
         //seq.AppendCallback(() => BattleManager.Instance.TurnChange());
 
-        StartCoroutine(AttackCoroutine());
+        if(Managers.Enemy.CurrentEnemy.IsDie == false)
+        {
+            StartCoroutine(AttackCoroutine());
+        }
     }
 
     private IEnumerator AttackCoroutine()
