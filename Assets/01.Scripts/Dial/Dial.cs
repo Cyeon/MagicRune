@@ -92,6 +92,7 @@ public class Dial : MonoBehaviour
         for(int i = 0; i < _usingDeck.Count; i++)
         {
             _remainingDeck.Add(_usingDeck[i]);
+            _usingDeck.RemoveAt(i);
         }
         for (int i = _cooltimeDeck.Count - 1; i >= 0 ; i--)
         {
@@ -113,7 +114,6 @@ public class Dial : MonoBehaviour
             for (int i = 0; i < Managers.Deck.Deck.Count; i++)
             {
                 Managers.Deck.Deck[i].SetCoolTime(0);
-                Managers.Deck.Deck[i].SetIsUsing(false);
             }
             _remainingDeck.Clear();
             _remainingDeck = new List<BaseRune>(Managers.Deck.Deck);
@@ -126,17 +126,23 @@ public class Dial : MonoBehaviour
         {
             BaseRuneUI r = Managers.Resource.Instantiate("Rune/BaseRune").GetComponent<BaseRuneUI>();
             BaseRune rune = _remainingDeck.Find(x => x.BaseRuneSO == Managers.Deck.FirstDialDeck[i].BaseRuneSO && x.CoolTime <= 0);
-            r.SetRune(rune);
-            r.transform.SetParent(_dialElementList[2].transform);
-            r.transform.localScale = new Vector3(0.1f, 0.1f, 1f);
+            if (rune == null)
+            {
+                int runeIndex = Random.Range(0, _remainingDeck.Count);
+
+                rune = _remainingDeck[runeIndex];
+            }
             r.gameObject.SetActive(true);
             _dialElementList[2].AddRuneList(r);
             AddCard(r, 1);
             _remainingDeck.Remove(rune);
             _usingDeck.Add(rune);
+            r.transform.SetParent(_dialElementList[2].transform);
+            r.transform.localScale = new Vector3(0.1f, 0.1f, 1f);
+            r.SetRune(rune);
         }
 
-        for(int i = 0; i < _maxRuneCount - Managers.Deck.FirstDialDeck.Count; i++)
+        for (int i = 0; i < _maxRuneCount - Managers.Deck.FirstDialDeck.Count; i++)
         {
             int runeIndex = Random.Range(0, _remainingDeck.Count);
 
@@ -154,8 +160,6 @@ public class Dial : MonoBehaviour
         #endregion
 
         #region Second&Third Line
-        //SortingRemaingRune();
-        //runeCount = GetUsingRuneCount();
         for (int i = 0; i < _maxRuneCount * 2; i++)
         {
             if (_remainingDeck.Count <= 0)
@@ -191,7 +195,7 @@ public class Dial : MonoBehaviour
                     {
                         BaseRuneUI r = Managers.Resource.Instantiate("Rune/BaseRune", _dialElementList[3 - i].transform).GetComponent<BaseRuneUI>();
                         r.SetRune(_runeDict[i][j].Rune);
-                        r.transform.localScale = new Vector3(0.1f, 0.1f);
+                        r.transform.localScale = new Vector3(0.1f, 0.1f, 1f);
                         _dialElementList[3 - i].AddRuneList(r);
 
                         AddCard(r, i);
@@ -308,8 +312,9 @@ public class Dial : MonoBehaviour
             {
                 int index = i;
                 _dialElementList[i].IsGlow = true;
-                _cooltimeDeck.Add(_usingDeck.Find(x => x == _dialElementList[i].SelectCard.Rune));
-                _usingDeck.Remove(_usingDeck.Find(x => x == _dialElementList[i].SelectCard.Rune));
+                BaseRune rune = _usingDeck.Find(x => x == _dialElementList[i].SelectCard.Rune);
+                _cooltimeDeck.Add(rune);
+                _usingDeck.Remove(rune);
                 BezierMissile b = Managers.Resource.Instantiate("BezierMissile", this.transform.parent).GetComponent<BezierMissile>();
                 if (_dialElementList[i].SelectCard.Rune.BaseRuneSO.RuneEffect != null)
                 {
