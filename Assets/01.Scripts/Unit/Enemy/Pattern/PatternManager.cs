@@ -54,6 +54,8 @@ public class PatternManager : MonoBehaviour
             return;
         }
 
+        if (treeName == _treeName) return;
+
         if(patternTreeDic.ContainsKey(treeName))
         {
             _treeChange = true;
@@ -112,6 +114,7 @@ public class PatternManager : MonoBehaviour
     public void UpdatePatternUI()
     {
         _patternSprite.sprite = _currentPattern.icon;
+        _patternSprite.transform.localScale = _currentPattern.iconSize;
         _patternText.text = _currentPattern.desc;
     }
 
