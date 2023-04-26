@@ -10,12 +10,7 @@ public class AttackAction : PatternAction
 
     public override void TurnAction()
     {
-        _dialScene = Managers.Scene.CurrentScene as DialScene;
-    }
-
-    public override void TakeAction()
-    {
-        if(Managers.Enemy.CurrentEnemy.IsDie == false)
+        if (Managers.Enemy.CurrentEnemy.IsDie == false)
         {
             StartCoroutine(AttackCoroutine());
         }
