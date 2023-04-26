@@ -98,6 +98,7 @@ public class RuneEventUI : MonoBehaviour
                 selectPanel.SetMode(mode);
                 selectPanel.SetRune(rune);
                 selectPanel.SetUI();
+                selectPanel.transform.localScale = Vector3.one;
 
                 selectPanel.transform.SetParent(_content);
                 _runePanelList.Add(selectPanel.gameObject);
