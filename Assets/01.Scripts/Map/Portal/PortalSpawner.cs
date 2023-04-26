@@ -28,6 +28,7 @@ public class PortalSpawner : MonoBehaviour
 
     public void SpawnPortal(StageType type)
     {
+        Debug.Log(type);
         switch(type)
         {
             case StageType.Attack:
