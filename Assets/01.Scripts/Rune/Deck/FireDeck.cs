@@ -12,7 +12,7 @@ public class FireDeck : Deck
             AddRune(new MagicBullet());
         }
 
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < 2; i++)
         {
             AddRune(new Fire());
             AddRune(new FireBreath());
