@@ -13,4 +13,11 @@ public class SnowBall : BaseRune
         Managers.GetPlayer().Attack(GetAbliltiValaue(EffectType.Attack));
         BattleManager.Instance.Enemy.StatusManager.AddStatus(StatusName.Chilliness, 2);
     }
+
+    public override object Clone()
+    {
+        SnowBall snowBall = new SnowBall();
+        snowBall.Init();
+        return snowBall;
+    }
 }

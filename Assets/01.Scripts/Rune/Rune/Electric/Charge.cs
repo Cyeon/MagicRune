@@ -13,4 +13,12 @@ public class Charge : BaseRune
     {
         Managers.GetPlayer().StatusManager.AddStatus(StatusName.Recharging, 5);
     }
+
+    public override object Clone()
+    {
+        Charge charge = new Charge();
+        charge.Init();
+
+        return charge;
+    }
 }

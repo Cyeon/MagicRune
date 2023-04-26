@@ -5,9 +5,10 @@ using System.Linq;
 using MyBox;
 using System;
 using Random = UnityEngine.Random;
+using Unity.VisualScripting;
 
 [Serializable]
-public class BaseRune : Item
+public class BaseRune : Item, ICloneable
 {
     #region Constructor
     public BaseRune()
@@ -114,5 +115,10 @@ public class BaseRune : Item
         }
 
         return int.MinValue;
+    }
+
+    public virtual object Clone()
+    {
+        return this;
     }
 }

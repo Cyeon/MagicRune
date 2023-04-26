@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class RERune : Reward
 {
-    private DialScene _dialScene;
-
     public override void AddRewardList()
     {
         rewardIcon = Managers.Reward.GetRewardIcon(RewardType.Rune);

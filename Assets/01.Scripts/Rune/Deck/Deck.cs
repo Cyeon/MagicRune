@@ -5,6 +5,9 @@ using UnityEngine.UI;
 
 public class Deck : MonoBehaviour
 {
+    [SerializeField]
+    private DeckSO _deck;
+
     private Button _btn;
 
     private List<BaseRune> _runeList = new List<BaseRune>();
@@ -13,10 +16,11 @@ public class Deck : MonoBehaviour
     {
         _btn = GetComponent<Button>();
 
-        Init();
+        //Init();
 
         _btn.onClick.RemoveAllListeners();
-        _btn.onClick.AddListener(() => Managers.Deck.SetDefaultDeck(_runeList));
+        //_btn.onClick.AddListener(() => Managers.Deck.SetDefaultDeck(_runeList));
+        _btn.onClick.AddListener(() => Managers.Deck.SetDefaultDeck(_deck.RuneList));
         _btn.onClick.AddListener(() => Managers.Scene.LoadScene(Define.Scene.MapScene));
     }
 

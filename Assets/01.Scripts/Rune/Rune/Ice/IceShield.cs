@@ -14,4 +14,11 @@ public class IceShield : BaseRune
         Managers.GetPlayer().AddShield(GetAbliltiValaue(EffectType.Defence));
         Managers.GetPlayer().StatusManager.AddStatus(StatusName.IceShield, GetAbliltiValaue(EffectType.Status).RoundToInt());
     }
+
+    public override object Clone()
+    {
+        IceShield iceShield = new IceShield();
+        iceShield.Init();
+        return iceShield;
+    }
 }

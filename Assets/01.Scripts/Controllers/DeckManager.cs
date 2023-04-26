@@ -14,7 +14,7 @@ public class DeckManager
     private List<BaseRune> _firstDialDeck = new List<BaseRune>(3); // ������ �����ص� ���̾� ������ 1��° �� ��.
     public List<BaseRune> FirstDialDeck => _firstDialDeck;
 
-    private List<BaseRune> _deck = new List<BaseRune>(12); // �����ϰ� �ִ� ��� ��
+    private List<BaseRune> _deck = new List<BaseRune>(12); // �����ϰ� �ִ� ���?��
     public List<BaseRune> Deck => _deck;
 
     public void Init()
@@ -27,6 +27,16 @@ public class DeckManager
         for(int i = 0; i < runeList.Count; i++)
         {
             AddRune(runeList[i]);
+        }
+
+        RuneInit();
+    }
+
+    public void SetDefaultDeck(List<BaseRuneSO> runeList)
+    {
+        for (int i = 0; i < runeList.Count; i++)
+        {
+            AddRune(Managers.Rune.GetRune(runeList[i]));
         }
 
         RuneInit();
@@ -46,7 +56,7 @@ public class DeckManager
         _deck.Add(rune);
     }
 
-    /// <summary> Deck���� �� ����� </summary>
+    /// <summary> Deck���� �� �����?</summary>
     public void RemoveDeck(BaseRune rune)
     {
         _deck.Remove(rune);
@@ -58,7 +68,7 @@ public class DeckManager
         _firstDialDeck.Add(rune);
     }
 
-    /// <summary> FistDialDeck���� �� ����� </summary>
+    /// <summary> FistDialDeck���� �� �����?</summary>
     public void RemoveFirstDeck(BaseRune rune)
     {
         _firstDialDeck.Remove(rune);

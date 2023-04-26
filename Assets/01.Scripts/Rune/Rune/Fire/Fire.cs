@@ -13,4 +13,11 @@ public class Fire : BaseRune
     {
         BattleManager.Instance.Enemy.StatusManager.AddStatus(StatusName.Fire, 5);
     }
+
+    public override object Clone()
+    {
+        Fire fire = new Fire();
+        fire.Init();
+        return fire;
+    }
 }

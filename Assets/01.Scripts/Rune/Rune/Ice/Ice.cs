@@ -12,4 +12,11 @@ public class Ice : BaseRune
     {
         BattleManager.Instance.Enemy.StatusManager.AddStatus(StatusName.Chilliness, 3);
     }
+
+    public override object Clone()
+    {
+        Ice ice = new Ice();
+        ice.Init();
+        return ice;
+    }
 }

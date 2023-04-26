@@ -19,4 +19,11 @@ public class IceSmash : BaseRune
         BattleManager.Instance.Enemy.StatusManager.DeleteStatus(StatusName.Ice);
         Managers.GetPlayer().Attack(GetAbliltiValaue(EffectType.Attack));
     }
+
+    public override object Clone()
+    {
+        IceSmash iceSmash = new IceSmash();
+        iceSmash.Init();
+        return iceSmash;
+    }
 }

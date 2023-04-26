@@ -12,4 +12,11 @@ public class MagicBullet : BaseRune
     {
         Managers.GetPlayer().Attack(GetAbliltiValaue(EffectType.Attack));
     }
+
+    public override object Clone()
+    {
+        MagicBullet magicBullet = new MagicBullet();
+        magicBullet.Init();
+        return magicBullet;
+    }
 }

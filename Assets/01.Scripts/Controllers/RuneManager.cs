@@ -36,6 +36,12 @@ public class RuneManager
         for(int i = 0; i < _runeHandler.Count; i++)
         {
             _runeHandler[i].Init();
+            //_runeNameDict.Add(_runeHandler[i].GetType().Name, _runeHandler[i]);
+        }
+
+        foreach(var list in _runeNameDict)
+        {
+            Debug.Log($"{list.Key}, {list.Value}");
         }
     }
 
@@ -96,10 +102,11 @@ public class RuneManager
 
     public BaseRune GetRune(BaseRuneSO runeSO)
     {
-        List<BaseRune> newList = new List<BaseRune>(_runeHandler);
-        //BaseRune rune = _runeHandler.Find(x => x.BaseRuneSO == runeSO);
+        return _runeHandler.Find(x => x.BaseRuneSO == runeSO).Clone() as BaseRune;
+    }
 
-        //return _runeHandler.Find(x => x.BaseRuneSO == runeSO);
-        return newList.Find(x => x.BaseRuneSO == runeSO);
+    public BaseRune GetRune(BaseRune rune)
+    {
+        return _runeHandler.Find(x => x.BaseRuneSO == rune.BaseRuneSO).Clone() as BaseRune;
     }
 }

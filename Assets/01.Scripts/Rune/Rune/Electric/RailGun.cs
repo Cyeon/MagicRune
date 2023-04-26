@@ -20,4 +20,11 @@ public class RailGun : BaseRune
         Managers.GetPlayer().Attack(GetAbliltiValaue(EffectType.Attack));
         Managers.GetPlayer().StatusManager.RemoveStatus(StatusName.Recharging, 10);
     }
+
+    public override object Clone()
+    {
+        RailGun railGun = new RailGun();
+        railGun.Init();
+        return railGun;
+    }
 }
