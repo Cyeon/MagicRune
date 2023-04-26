@@ -69,7 +69,7 @@ public class BaseRune : Item, ICloneable
 
     public virtual void Execute()
     {
-        Managers.Deck.AddRune(this);
+        Managers.Deck.AddRune(Managers.Rune.GetRune(this));
     }
 
     public void SetCoolTime()
