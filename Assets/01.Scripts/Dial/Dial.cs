@@ -134,11 +134,11 @@ public class Dial : MonoBehaviour
             r.gameObject.SetActive(true);
             _dialElementList[2].AddRuneList(r);
             AddCard(r, 1);
-            _remainingDeck.Remove(rune);
-            _usingDeck.Add(rune);
             r.transform.SetParent(_dialElementList[2].transform);
             r.transform.localScale = new Vector3(0.1f, 0.1f, 1f);
             r.SetRune(rune);
+            _remainingDeck.Remove(rune);
+            _usingDeck.Add(rune);
         }
 
         for (int i = 0; i < _maxRuneCount - Managers.Deck.FirstDialDeck.Count; i++)
@@ -303,6 +303,7 @@ public class Dial : MonoBehaviour
     {
         Define.DialScene?.CardDescDown();
 
+        // 이 부분 예외처리 필요
         AttributeType compareAttributeType = _dialElementList[0].SelectCard.Rune.BaseRuneSO.AttributeType;
         bool isResonanceCheck = true;
         for (int i = _dialElementList.Count - 1; i >= 0; i--)
@@ -379,7 +380,10 @@ public class Dial : MonoBehaviour
 
         for (int i = 0; i < _cooltimeDeck.Count; i++)
         {
-            _cooltimeDeck[i].AddCoolTime(-1);
+            if (_cooltimeDeck[i].IsCoolTime == true)
+            {
+                _cooltimeDeck[i].AddCoolTime(-1);
+            }
         }
     }
 }

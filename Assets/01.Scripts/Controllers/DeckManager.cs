@@ -57,11 +57,11 @@ public class DeckManager
         //}
     }
 
-    public void SetDefaultDeck(List<BaseRuneSO> runeList)
+    public void SetDefaultDeck(List<BaseRune> runeList)
     {
         for(int i = 0; i < runeList.Count; i++)
         {
-            AddRune(Managers.Rune.GetRune(runeList[i]));
+            AddRune(runeList[i]);
         }
 
         RuneInit();
@@ -76,12 +76,9 @@ public class DeckManager
     }
 
     /// <summary> Deck¿¡ ·é Ãß°¡ </summary>
-    public void AddRune(BaseRune rune, int count = 1)
+    public void AddRune(BaseRune rune)
     {
-        for (int i = 0; i < count; i++)
-        {
-            _deck.Add(rune);
-        }
+        _deck.Add(rune);
     }
 
     /// <summary> Deck¿¡¼­ ·é Áö¿ì±â </summary>

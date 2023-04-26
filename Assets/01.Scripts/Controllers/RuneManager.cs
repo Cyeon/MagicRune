@@ -1,14 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class RuneManager
 {
     private List<BaseRune> _runeHandler = new List<BaseRune>();
+    private Dictionary<string, BaseRune> _runeNameDict = new Dictionary<string, BaseRune>();
 
     public void Init()
     {
-        //_runeList = Managers.Resource.Load<AllRuneListSO>("SO/" + typeof(AllRuneListSO).Name);
         _runeHandler.Add(new Fire());
         _runeHandler.Add(new FirePunch());
         _runeHandler.Add(new FireRegeneration());
@@ -22,8 +23,8 @@ public class RuneManager
         _runeHandler.Add(new ShieldAttack());
         _runeHandler.Add(new Attack());
         _runeHandler.Add(new ThreeAttack());
-        _runeHandler.Add(new GroundShield())
-            ;
+        _runeHandler.Add(new GroundShield());
+
         _runeHandler.Add(new Charge());
         _runeHandler.Add(new RailGun());
         _runeHandler.Add(new LightingRod());
@@ -32,9 +33,9 @@ public class RuneManager
         _runeHandler.Add(new MagicBullet());
         _runeHandler.Add(new MagicShield());
 
-        foreach (var item in _runeHandler)
+        for(int i = 0; i < _runeHandler.Count; i++)
         {
-            item.Init();
+            _runeHandler[i].Init();
         }
     }
 
@@ -95,6 +96,10 @@ public class RuneManager
 
     public BaseRune GetRune(BaseRuneSO runeSO)
     {
-        return _runeHandler.Find(x => x.BaseRuneSO == runeSO);
+        List<BaseRune> newList = new List<BaseRune>(_runeHandler);
+        //BaseRune rune = _runeHandler.Find(x => x.BaseRuneSO == runeSO);
+
+        //return _runeHandler.Find(x => x.BaseRuneSO == runeSO);
+        return newList.Find(x => x.BaseRuneSO == runeSO);
     }
 }

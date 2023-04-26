@@ -92,12 +92,13 @@ public class BaseRune : Item
 
     public virtual bool AbilityCondition()
     {
+        Debug.Log("BaseRune Condition");
         return true;
     }
 
     public virtual void AbilityAction()
     {
-
+        Debug.Log("BaseRune Attack");
     }
 
     public float GetAbliltiValaue(EffectType type)
