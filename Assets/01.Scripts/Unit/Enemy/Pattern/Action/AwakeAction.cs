@@ -6,9 +6,10 @@ public class AwakeAction : PatternAction
 {
     [SerializeField] private Sprite _awakingIcon;
 
-    public override void TakeAction()
+    public override void StartAction()
     {
         BattleManager.Instance.Enemy.spriteRenderer.sprite = _awakingIcon;
-        base.TakeAction();
+        BattleManager.Instance.Enemy.PatternManager.ChangeTree("AwakingTree");
+        base.StartAction();
     }
 }

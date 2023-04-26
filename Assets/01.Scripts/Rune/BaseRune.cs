@@ -60,6 +60,7 @@ public class BaseRune : Item
 
     }
 
+
     public void SetRandomGold(int start, int end)
     {
         Gold = Random.Range(start, end + 1);

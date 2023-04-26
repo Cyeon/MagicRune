@@ -8,11 +8,23 @@ public class StatusAction : PatternAction
     public int value;
     public bool isSelf;
 
-    public override void TakeAction()
+    public override void StartAction()
+    {
+        Status();
+        base.StartAction();
+    }
+
+    public override void TurnAction()
+    {
+        Status();
+        base.TurnAction();
+    }
+
+    private void Status()
     {
         Unit unit = isSelf ? BattleManager.Instance.Enemy : BattleManager.Instance.Player;
 
-        if(value < 0)
+        if (value < 0)
         {
             unit.StatusManager.RemoveStatus(status, value * -1);
         }
@@ -20,7 +32,5 @@ public class StatusAction : PatternAction
         {
             unit.StatusManager.AddStatus(status, value);
         }
-
-        BattleManager.Instance.Enemy.PatternManager.CurrentPattern.NextAction();
     }
 }

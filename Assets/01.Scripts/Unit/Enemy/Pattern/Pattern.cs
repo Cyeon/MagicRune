@@ -10,10 +10,9 @@ public class Pattern : MonoBehaviour
 {
     public string patternName;
     public Sprite icon;
+    public Vector3 iconSize = Vector3.one;
     public string desc ="";
-    public bool isIncluding = true;
-
-    private DialScene _dialScene;
+    public bool isIncluding = true; // 순화되는 패턴 목록에 포함할건가?
 
     [Header("[ Actions ]")]
     public List<PatternAction> startPattern;
@@ -23,26 +22,20 @@ public class Pattern : MonoBehaviour
     [Header("[ Transition ]")]
     public List<PatternTransition> transitions;
 
-    private int _patternIndex = 0;
+    private int _actionIndex = 0;
     private enum patternInvokeTime { start, turn, end};
     private patternInvokeTime _patternTime = patternInvokeTime.start;
-
-    
-    public void Start()
-    {
-        _dialScene = Managers.Scene.CurrentScene as DialScene;
-    }
 
     /// <summary>
     /// 플레이어 턴이 시작될떄 발동되는 함수
     /// </summary>
     public void StartAction()
     {
-        _patternIndex = 0;
+        _actionIndex = 0;
         _patternTime = patternInvokeTime.start;
-        if(startPattern.Count > _patternIndex)
+        if(startPattern.Count > _actionIndex)
         {
-            startPattern[_patternIndex].TakeAction();
+            startPattern[_actionIndex].StartAction();
         }
     }
 
@@ -51,12 +44,13 @@ public class Pattern : MonoBehaviour
     /// </summary>
     public void TurnAction()
     {
-        _patternIndex = 0;
+        _actionIndex = 0;
         _patternTime = patternInvokeTime.turn;
-        if (turnPattern.Count > _patternIndex)
+        if (turnPattern.Count > _actionIndex)
         {
-            turnPattern[_patternIndex].TakeAction();
+            turnPattern[_actionIndex].TurnAction();
         }
+        else BattleManager.Instance.TurnChange();
     }
 
     /// <summary>
@@ -64,11 +58,11 @@ public class Pattern : MonoBehaviour
     /// </summary>
     public void EndAction()
     {
-        _patternIndex = 0;
+        _actionIndex = 0;
         _patternTime = patternInvokeTime.end;
-        if (endPattern.Count > _patternIndex)
+        if (endPattern.Count > _actionIndex)
         {
-            endPattern[_patternIndex].TakeAction();
+            endPattern[_actionIndex].EndAction();
         }
     }
 
@@ -77,31 +71,37 @@ public class Pattern : MonoBehaviour
     /// </summary>
     public void NextAction()
     {
-        _patternIndex++;
+        _actionIndex++;
 
         List<PatternAction> actions = new List<PatternAction>();
         switch (_patternTime)
         {
             case patternInvokeTime.start:
                 actions = startPattern;
+                if (actions.Count > _actionIndex)
+                {
+                    actions[_actionIndex].StartAction();
+                }
                 break;
 
             case patternInvokeTime.turn:
                 actions = turnPattern;
+                if (actions.Count <= _actionIndex)
+                {
+                    BattleManager.Instance.TurnChange();
+                    return;
+                }
+                actions[_actionIndex].TurnAction();
                 break;
 
             case patternInvokeTime.end:
                 actions = endPattern;
+                if (actions.Count > _actionIndex)
+                {
+                    actions[_actionIndex].EndAction();
+                }
                 break;
         }
-
-        if(actions.Count <= _patternIndex)
-        {
-            BattleManager.Instance.TurnChange();
-            return;
-        }
-
-        actions[_patternIndex].TakeAction();
     }
 
     /// <summary>

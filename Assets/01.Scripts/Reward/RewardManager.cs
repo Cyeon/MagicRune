@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public enum RewardType
@@ -40,5 +41,5 @@ public class RewardManager
         _rewards.Add(reward);
     }
 
-    public List<Reward> GetRewardList() { return _rewards; }
+    public List<Reward> GetRewardList() { return _rewards.Where(x => x.isGive == false && x.isAuto == false).ToList(); }
 }

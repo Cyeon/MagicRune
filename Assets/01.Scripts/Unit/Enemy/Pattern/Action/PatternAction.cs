@@ -4,7 +4,17 @@ using UnityEngine;
 
 public  class PatternAction : MonoBehaviour
 {
-    public virtual void TakeAction()
+    public virtual void StartAction()
+    {
+        BattleManager.Instance.Enemy.PatternManager.CurrentPattern.NextAction();
+    }
+
+    public virtual void TurnAction()
+    {
+        BattleManager.Instance.Enemy.PatternManager.CurrentPattern.NextAction();
+    }
+
+    public virtual void EndAction()
     {
         BattleManager.Instance.Enemy.PatternManager.CurrentPattern.NextAction();
     }

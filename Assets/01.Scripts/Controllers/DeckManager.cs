@@ -6,55 +6,20 @@ using MyBox;
 
 public class DeckManager
 {
-    private List<BaseRune> _defaultRune = new List<BaseRune>(20); // ÃÊ±â ±âº» Áö±Þ ·é
+    private List<BaseRune> _defaultRune = new List<BaseRune>(20); // ï¿½Ê±ï¿½ ï¿½âº» ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
     public List<BaseRune> DefaultRune => _defaultRune;
 
-    public const int FIRST_DIAL_DECK_MAX_COUNT = 3; // Ã¹¹øÂ° ´ÙÀÌ¾ó µ¦ ÃÖ´ë °³¼ö
+    public const int FIRST_DIAL_DECK_MAX_COUNT = 3; // Ã¹ï¿½ï¿½Â° ï¿½ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½
 
-    private List<BaseRune> _firstDialDeck = new List<BaseRune>(3); // »çÀü¿¡ ¼³Á¤ÇØµÐ ´ÙÀÌ¾ó ¾ÈÂÊÀÇ 1¹øÂ° ÁÙ µ¦.
+    private List<BaseRune> _firstDialDeck = new List<BaseRune>(3); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Øµï¿½ ï¿½ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 1ï¿½ï¿½Â° ï¿½ï¿½ ï¿½ï¿½.
     public List<BaseRune> FirstDialDeck => _firstDialDeck;
 
-    private List<BaseRune> _deck = new List<BaseRune>(12); // ¼ÒÁöÇÏ°í ÀÖ´Â ¸ðµç ·é
+    private List<BaseRune> _deck = new List<BaseRune>(12); // ï¿½ï¿½ï¿½ï¿½ï¿½Ï°ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½
     public List<BaseRune> Deck => _deck;
 
     public void Init()
     {
-        // ³ªÁß¿¡ Json ÀúÀåÇÏ¸é ¿©±â¼­ ºÒ·¯¿À±â µîÀ» ÇÏ°ÚÁö...
-
-        //if (_deck.Count == 0) // µ¦ÀÌ ºñ¾îÀÖÀ» °æ¿ì ¼³Á¤ÇØµÐ ÃÊ±â µ¦À» ³Ö¾îÁÜ 
-        //{
-        //    // Àü±â¼Ó¼º
-        //    AddRune(new RailGun(), 3);
-        //    AddRune(new Charge(), 3);
-        //    AddRune(new LightingRod());
-        //    AddRune(new Release());
-
-        //    // ºÒ ¼Ó¼º
-        //    AddRune(new Fire());
-        //    AddRune(new FirePunch());
-        //    AddRune(new FireRegeneration());
-        //    AddRune(new FireBreath());
-
-        //    // ¶¥ ¼Ó¼º
-        //    AddRune(new GroundShield());
-        //    AddRune(new ShieldAttack());
-        //    AddRune(new Attack());
-        //    AddRune(new ThreeAttack());
-
-        //    // ¾óÀ½ ¼Ó¼º
-        //    AddRune(new Ice());
-        //    AddRune(new SnowBall(), 2);
-        //    AddRune(new IceShield(), 2);
-        //    AddRune(new IceSmash(), 2);
-
-        //    // ¹«¼Ó¼º
-        //    AddRune(new MagicBullet());
-        //    AddRune(new MagicShield());
-
-        //    //SetDefaultDeck(Managers.Resource.Load<DeckSO>("SO/Deck/TestDeck").RuneList);
-
-        //    RuneInit();
-        //}
+        // ï¿½ï¿½ï¿½ß¿ï¿½ Json ï¿½ï¿½ï¿½ï¿½ï¿½Ï¸ï¿½ ï¿½ï¿½ï¿½â¼­ ï¿½Ò·ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ï°ï¿½ï¿½ï¿½...
     }
 
     public void SetDefaultDeck(List<BaseRune> runeList)
@@ -75,25 +40,25 @@ public class DeckManager
         }
     }
 
-    /// <summary> Deck¿¡ ·é Ãß°¡ </summary>
+    /// <summary> Deckï¿½ï¿½ ï¿½ï¿½ ï¿½ß°ï¿½ </summary>
     public void AddRune(BaseRune rune)
     {
         _deck.Add(rune);
     }
 
-    /// <summary> Deck¿¡¼­ ·é Áö¿ì±â </summary>
-    public void RemoveRune(BaseRune rune)
+    /// <summary> Deckï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ </summary>
+    public void RemoveDeck(BaseRune rune)
     {
         _deck.Remove(rune);
     }
  
-    /// <summary> FirstDialDeck¿¡ ·é Ãß°¡ </summary>
-    public void SetFirstDeck(BaseRune rune)
+    /// <summary> FirstDialDeckï¿½ï¿½ ï¿½ï¿½ ï¿½ß°ï¿½ </summary>
+    public void AddRuneFirstDeck(BaseRune rune)
     {
         _firstDialDeck.Add(rune);
     }
 
-    /// <summary> FistDialDeck¿¡¼­ ·é Áö¿ì±â </summary>
+    /// <summary> FistDialDeckï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ </summary>
     public void RemoveFirstDeck(BaseRune rune)
     {
         _firstDialDeck.Remove(rune);

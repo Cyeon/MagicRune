@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Security.Cryptography;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UI;
 
 public enum GameTurn
 {
@@ -31,6 +32,7 @@ public class BattleManager : MonoSingleton<BattleManager>
 
     private void Start()
     {
+        Managers.UI.Bind<Image>("Background", Managers.Canvas.GetCanvas("BG").gameObject);
         BattleStart();
     }
 
@@ -41,6 +43,8 @@ public class BattleManager : MonoSingleton<BattleManager>
 
     public void BattleStart()
     {
+        Managers.UI.Get<Image>("Background").sprite = Managers.Map.CurrentChapter.background;
+
         Managers.Enemy.BattleSetting();
 
         Player.StatusManager.Reset();
@@ -74,6 +78,12 @@ public class BattleManager : MonoSingleton<BattleManager>
 
         Player.StatusManager.OnTurnStart();
         Enemy.PatternManager.StartAction();
+
+        if (Player.isTurnSkip == true)
+        {
+            TurnChange();
+            Player.isTurnSkip = false;
+        }
     }
 
     public void OnMonsterTurn()
@@ -111,7 +121,6 @@ public class BattleManager : MonoSingleton<BattleManager>
                 Managers.Sound.PlaySound(_turnChangeSound, SoundType.Effect);
 
                 Player?.StatusManager.OnTurnEnd();
-                Player.StatusManager.TurnChange();
 
                 if (Enemy.Shield > 0)
                 {
@@ -134,7 +143,9 @@ public class BattleManager : MonoSingleton<BattleManager>
                 EventManager.TriggerEvent(Define.ON_END_MONSTER_TURN);
 
                 Enemy?.StatusManager.OnTurnEnd();
+
                 Enemy.StatusManager.TurnChange();
+                Player.StatusManager.TurnChange();
 
                 Managers.Sound.PlaySound(_turnChangeSound, SoundType.Effect);
 

@@ -19,6 +19,7 @@ public class AdventureUI : MonoBehaviour
     private Button[] _distractorButtons;
     private List<TextMeshProUGUI> _distractorText = new List<TextMeshProUGUI>();
 
+
     private void Start()
     {
         Managers.UI.Bind<Image>("Adventure_Image", Managers.Canvas.GetCanvas("Adventure").gameObject);
@@ -67,4 +68,5 @@ public class AdventureUI : MonoBehaviour
             _distractorButtons[i].gameObject.SetActive(true);
         }
     }
+
 }

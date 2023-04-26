@@ -9,6 +9,7 @@ public abstract class Reward
 
     // 자동지급 할건지
     public bool isAuto = false;
+    [HideInInspector] public bool isGive = false;
 
     /// <summary>
     /// 보상 지급 함수

@@ -1,3 +1,4 @@
+using MyBox;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -6,9 +7,7 @@ using UnityEngine.UI;
 
 public class Player : Unit
 {
-    //public int cost = 10; // 마나
-    public AudioClip attackSound = null;
-
+    [HideInInspector]
     public Transform relicTrm;
 
     private void Awake()
@@ -19,7 +18,6 @@ public class Player : Unit
         }
         DontDestroyOnLoad(this);
 
-        _isPlayer = true;
         relicTrm = transform.Find("Relic");
     }
 
@@ -39,14 +37,9 @@ public class Player : Unit
         _healthText = Managers.UI.Get<TextMeshProUGUI>("P HealthText");
     }
 
-    public void Attack(float dmg)
+    public override void Attack(float dmg)
     {
-        currentDmg = dmg;
-
-        StatusManager.OnAttack();
-
+        base.Attack(dmg);
         BattleManager.Instance.Enemy.TakeDamage(currentDmg);
-        Managers.Sound.PlaySound(attackSound, SoundType.Effect);
-
     }
 }

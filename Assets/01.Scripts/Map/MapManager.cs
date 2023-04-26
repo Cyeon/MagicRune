@@ -7,7 +7,7 @@ using DG.Tweening;
 public class MapManager
 {
     #region Chapter
-    private List<Chapter> chapterList = new List<Chapter>();
+    private List<Chapter> _chapterList = new List<Chapter>();
 
     private int _chapter = 1;
     public int Chapter => _chapter;
@@ -18,7 +18,7 @@ public class MapManager
     #region Stage
     private List<Stage> stageList = new List<Stage>();
 
-    [SerializeField]   private int Stage => Floor - ((this.Chapter - 1) * 9);
+    public int Stage => Floor - ((this.Chapter - 1) * 9);
 
     private int _floor = 0;
     public int Floor => _floor;
@@ -48,8 +48,8 @@ public class MapManager
 
     public void MapInit()
     {
-        _mapSceneUI = Managers.Canvas.GetCanvas("MapUI")?.GetComponent<MapUI>();
-        chapterList = new List<Chapter>(Managers.Resource.Load<ChapterListSO>("SO/" + typeof(ChapterListSO).Name).chapterList);
+        _mapSceneUI = Managers.Canvas.GetCanvas("MapUI").GetComponent<MapUI>();
+        _chapterList = new List<Chapter>(Managers.Resource.Load<ChapterListSO>("SO/" + typeof(ChapterListSO).Name).chapterList);
 
         if (_portalSpawner == null)
         {
@@ -59,7 +59,7 @@ public class MapManager
         }
 
         ChapterInit();
-        _portalSpawner.ResetEnemyEnter();
+        _chapterList.ForEach(x => x.EnemyReset());
         _portalSpawner.SpawnPortal(stageList[Stage].type);
 
         Managers.Reward.ImageLoad();
@@ -68,7 +68,7 @@ public class MapManager
     private void ChapterInit()
     {
         stageList.Clear();
-        _currentChapter = chapterList[Chapter - 1];
+        _currentChapter = _chapterList[Chapter - 1];
 
         int idx = 0;
         foreach (var chance in _currentChapter.eventStagesChance)
@@ -94,17 +94,17 @@ public class MapManager
         if (Managers.GetPlayer() != null && Managers.GetPlayer().IsDie == true)
         {
             ResetChapter();
-            // ÇÃ·¹ÀÌ¾î Á×À½ ¸®¼Â
+            // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         }
 
         if (_isFirst)
         {
             _isFirst = false;
-            _portalSpawner.ResetEnemyEnter();
+            _chapterList.ForEach(x => x.EnemyReset());
             return;
         }
 
-        #region ÃÊ±âÈ­ ºÎºÐ
+        #region ï¿½Ê±ï¿½È­ ï¿½Îºï¿½
         for (int i = 0; i < stageList.Count; ++i)
         {
             MapSceneUI.Stages[i].sprite = stageList[i].icon;
@@ -147,7 +147,7 @@ public class MapManager
 
     public void NextChapter()
     {
-        if(Chapter < chapterList.Count)
+        if(Chapter < _chapterList.Count)
         {
             _chapter++;
         }
