@@ -10,7 +10,7 @@ public class Pattern : MonoBehaviour
 {
     public string patternName;
     public Sprite icon;
-    public Vector2 iconSize = Vector2.one;
+    public Vector3 iconSize = Vector3.one;
     public string desc ="";
     public bool isIncluding = true; // 순화되는 패턴 목록에 포함할건가?
 

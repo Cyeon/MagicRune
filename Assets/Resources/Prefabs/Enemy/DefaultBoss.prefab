@@ -713,7 +713,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1869906942}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.204, y: -2.2, z: 0}
+  m_LocalPosition: {x: -0.204, y: -4.13, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1067,8 +1067,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3535539594128554661}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 1}
+  m_LocalPosition: {x: 0, y: -1.01, z: 0}
+  m_LocalScale: {x: 3, y: 3, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1320265130489049737}
@@ -1178,8 +1178,9 @@ MonoBehaviour:
   _maxHealth: 20
   _health: 20
   _shield: 0
-  isTurnSkip: 0
   currentDmg: 0
+  attackSound: {fileID: 8300000, guid: 14b13d596957d594ea53e14e0773678d, type: 3}
+  isTurnSkip: 0
   <OnTakeDamage>k__BackingField:
     m_PersistentCalls:
       m_Calls: []
@@ -1191,7 +1192,7 @@ MonoBehaviour:
       m_Calls: []
   statusTrm: {fileID: 0}
   enemyName: "\uB208\uBB49\uCE58"
-  attackSound: {fileID: 8300000, guid: 14b13d596957d594ea53e14e0773678d, type: 3}
+  enemyTag: 0
   isEnter: 0
   enemyScaleVec: {x: 2, y: 2, z: 2}
   spriteRenderer: {fileID: 3535539594128554667}
