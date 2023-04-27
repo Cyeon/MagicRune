@@ -80,6 +80,8 @@ public class DialScene : BaseScene
         _cardDescPanelList = _cardDescPanel.GetComponent<ExplainPanelList>();
 
         Managers.Sound.PlaySound("BGM/DialSceneBGM", SoundType.Bgm, true, 1.0f);
+
+        Debug.Log($"Resolution : {Screen.width}, {Screen.height}");
     }
 
     public void Turn(string text)
