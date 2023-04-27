@@ -349,7 +349,17 @@ public class Dial : MonoBehaviour
                         break;
                 }
 
-                b.Init(_dialElementList[i].SelectCard.transform, BattleManager.Instance.Enemy.transform, 1.5f, 7, 7, () =>
+                Transform pos = null;
+                switch (_dialElementList[i].SelectCard.Rune.BaseRuneSO.Direction)
+                {
+                    case EffectDirection.Enemy:
+                        pos = BattleManager.Instance.Enemy.transform;
+                        break;
+                    case EffectDirection.Player:
+                        pos = this.transform;
+                        break;
+                }
+                b.Init(_dialElementList[i].SelectCard.transform, pos, 1.5f, 7, 7, () =>
                 {
                     _dialElementList[index].Attack();
                     //_dialElementList[i] = null;

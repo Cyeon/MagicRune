@@ -11,6 +11,12 @@ public class AbilityValue
     public int Value;
 }
 
+public enum EffectDirection
+{
+    Enemy,
+    Player,
+}
+
 [CreateAssetMenu(menuName = "SO/Rune/BaseRuneSO")]
 public class BaseRuneSO : ScriptableObject
 {
@@ -23,6 +29,7 @@ public class BaseRuneSO : ScriptableObject
     public GameObject RuneEffect;
     public RuneRarity Rarity;
     public int CoolTime;
+    public EffectDirection Direction;
 
     // Ability Parameta
 
