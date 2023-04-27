@@ -19,11 +19,11 @@ public class OptionUI : MonoBehaviour
         Managers.UI.Bind<Slider>("Effect_Slider", this.gameObject);
         Managers.UI.Bind<Button>("GiveUp_Button", this.gameObject);
         Managers.UI.Bind<Button>("OptionBGPanel_Image", this.gameObject);
-        Managers.UI.Bind<GameObject>("WarningPanel", this.gameObject);
+        Managers.UI.Bind<Image>("WarningPanel", this.gameObject);
         Managers.UI.Bind<Button>("GiveUpAccept_Button", this.gameObject);
         Managers.UI.Bind<Button>("GiveUpCancel_Button", this.gameObject);
 
-        _warningPanel = Managers.UI.Get<GameObject>("WarningPanel");
+        _warningPanel = Managers.UI.Get<Image>("WarningPanel").gameObject;
         _warningPanel.SetActive(false);
         _panels.SetActive(false);
 
@@ -53,6 +53,12 @@ public class OptionUI : MonoBehaviour
     {
         _isUsing = !_isUsing;
         _panels.SetActive(_isUsing);
+    }
+
+    public void ActiveUI(bool isaActive)
+    {
+        _isUsing = isaActive;
+        _panels.SetActive(isaActive);
     }
 
     private void PopupWarning(bool isAcive)
