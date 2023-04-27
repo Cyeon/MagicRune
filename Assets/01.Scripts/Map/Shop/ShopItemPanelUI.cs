@@ -23,44 +23,38 @@ public class ShopItemPanelUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _runeNameText;
     [SerializeField] private TextMeshProUGUI _runeDescText;
 
-    private Item _iItem;
+    public Item item;
 
     /// <summary>
     /// 아이템을 샀을때의 행동을 이걸로 넘길려했는데 필요없어짐. 혹시 모르니까 남겨둠
     /// </summary>
-    private Action _buyAction;
+    private Action<ShopItemPanelUI> _buyAction;
 
-    public void Init(Item item, Action action = null)
+    public void Init(Item item, Action<ShopItemPanelUI> action = null)
     {
-        _iItem = item;
+        this.item = item;
         _buyAction = action;
 
-        _icon.sprite = _iItem.Icon;
-        _goldText.SetText(_iItem.Gold.ToString());
-        _runeNameText.SetText(_iItem.Rune.BaseRuneSO.RuneName);
-        _runeDescText.SetText(_iItem.Rune.BaseRuneSO.RuneDescription);
+        _icon.sprite = this.item.Icon;
+        _goldText.SetText(this.item.Gold.ToString());
+        _runeNameText.SetText(this.item.Rune.BaseRuneSO.RuneName);
+        _runeDescText.SetText(this.item.Rune.BaseRuneSO.RuneDescription);
+        GoldTextColorUpdate();
 
         transform.localScale = Vector3.one * 0.8f;
     }
 
-    public void Buy()
+    public void BuyCheck()
     {
         //  단순 골드 비교면 이거면 충분. 하지만 다른 조건이 붙으면 함수하나 정으해야할 듯
-        if (Managers.Gold.Gold >= _iItem.Gold)
+        if (Managers.Gold.Gold >= item.Gold)
         {
-            Managers.Gold.AddGold(-_iItem.Gold);
-            _iItem.Execute();
-
-            _buyAction?.Invoke();
-            //switch (_iItem.ShopItemType)
-            //{
-            //    case ShopItemType.Rune:
-            //        //Managers.Deck.AddRune(_item as BaseRune);
-            //        userGold.SetText(Managers.Gold.Gold.ToString());
-            //        gameObject.SetActive(false);
-            //        break;
-            //}
-            Managers.Resource.Destroy(this.gameObject);
+            _buyAction?.Invoke(this);
         }
+    }
+
+    public void GoldTextColorUpdate()
+    {
+        _goldText.color = Managers.Gold.Gold < item.Gold ? Color.red : Color.white;
     }
 }
