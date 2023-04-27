@@ -15,4 +15,11 @@ public class LightingRod : BaseRune
         Managers.GetPlayer().StatusManager.AddStatus(StatusName.Recharging, GetAbliltiValaue(EffectType.Status).RoundToInt());
         Managers.GetPlayer().TakeDamage(GetAbliltiValaue(EffectType.Attack));
     }
+
+    public override object Clone()
+    {
+        LightingRod lightingRod = new LightingRod();
+        lightingRod.Init();
+        return lightingRod;
+    }
 }

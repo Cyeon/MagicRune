@@ -17,4 +17,11 @@ public class FireBreath : BaseRune
             BattleManager.Instance.Enemy.StatusManager.AddStatus(StatusName.Fire, GetAbliltiValaue(EffectType.Status).RoundToInt());
         }
     }
+
+    public override object Clone()
+    {
+        FireBreath fireBreath = new FireBreath();
+        fireBreath.Init();
+        return fireBreath;
+    }
 }

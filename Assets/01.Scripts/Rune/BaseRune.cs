@@ -5,10 +5,25 @@ using System.Linq;
 using MyBox;
 using System;
 using Random = UnityEngine.Random;
+using Unity.VisualScripting;
 
 [Serializable]
-public class BaseRune : Item
+public class BaseRune : Item, ICloneable
 {
+    #region Constructor
+    public BaseRune()
+    {
+
+    }
+
+    public BaseRune(BaseRune rune)
+    {
+        _baseRuneSO = rune.BaseRuneSO;
+        _coolTime = rune.CoolTime;
+        _isUsing = rune.IsUsing;
+    }
+    #endregion
+
     #region Rune Stat Parameta
     [SerializeField]
     protected BaseRuneSO _baseRuneSO;
@@ -18,6 +33,9 @@ public class BaseRune : Item
     public int CoolTime => _coolTime;
 
     public bool IsCoolTime => _coolTime > 0;
+
+    private bool _isUsing = false;
+    public bool IsUsing => _isUsing;
     #endregion
 
     #region Item Interface
@@ -36,12 +54,14 @@ public class BaseRune : Item
     public int Gold { get; private set; }
 
     public ShopItemType ShopItemType { get => ShopItemType.Rune; }
+    public BaseRune Rune => this;
     #endregion
 
     public virtual void Init()
     {
 
     }
+
 
     public void SetRandomGold(int start, int end)
     {
@@ -50,7 +70,7 @@ public class BaseRune : Item
 
     public virtual void Execute()
     {
-        Managers.Deck.AddRune(this);
+        Managers.Deck.AddRune(Managers.Rune.GetRune(this));
     }
 
     public void SetCoolTime()
@@ -67,15 +87,21 @@ public class BaseRune : Item
     {
         _coolTime += value;
     }
+    
+    public void SetIsUsing(bool value)
+    {
+        _isUsing = value;
+    }
 
     public virtual bool AbilityCondition()
     {
+        Debug.Log("BaseRune Condition");
         return true;
     }
 
     public virtual void AbilityAction()
     {
-
+        Debug.Log("BaseRune Attack");
     }
 
     public float GetAbliltiValaue(EffectType type)
@@ -90,5 +116,10 @@ public class BaseRune : Item
         }
 
         return int.MinValue;
+    }
+
+    public virtual object Clone()
+    {
+        return this;
     }
 }

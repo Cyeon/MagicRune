@@ -40,6 +40,6 @@ public class MapUI : MonoBehaviour
             }
         }
 
-        Managers.Map.NextStage();
+        //Managers.Map.NextStage();
     }
 }

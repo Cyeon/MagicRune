@@ -76,11 +76,11 @@ public class Unit : MonoBehaviour
         statusTrm = transform.Find("Status");
 
         _statusManager.Reset();
-        _userInfoUI = Managers.UI.Get<UserInfoUI>("Upper_Frame");
+        _userInfoUI = Managers.UI.Get<UserInfoUI>("Upper_Frame", UIType.DontDestroyUI);
     }
 
     /// <summary>
-    /// 데미지 받는 함수
+    /// ?��?지 받는 ?�수
     /// </summary>
     /// <param name="damage"></param>
     public void TakeDamage(float damage, bool isTrueDamage = false, Status status = null)

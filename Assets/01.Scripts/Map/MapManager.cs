@@ -16,7 +16,7 @@ public class MapManager
     #endregion
 
     #region Stage
-    private List<Stage> stageList = new List<Stage>();
+    private List<Stage> _stageList = new List<Stage>();
 
     public int Stage => Floor - ((this.Chapter - 1) * 9);
 
@@ -46,27 +46,36 @@ public class MapManager
 
     private MapScene _mapScene;
 
-    public void Init()
+    public void MapInit()
     {
         _mapSceneUI = Managers.Canvas.GetCanvas("MapUI").GetComponent<MapUI>();
         _chapterList = new List<Chapter>(Managers.Resource.Load<ChapterListSO>("SO/" + typeof(ChapterListSO).Name).chapterList);
 
         if (_portalSpawner == null)
         {
-            PortalSpawner portalSpawner = Managers.Resource.Instantiate(typeof(PortalSpawner).Name ).GetComponent<PortalSpawner>();
+            PortalSpawner portalSpawner = Managers.Resource.Instantiate(typeof(PortalSpawner).Name, Managers.Scene.CurrentScene.transform).GetComponent<PortalSpawner>();
+            portalSpawner.transform.SetParent(null);
             _portalSpawner = portalSpawner;
         }
 
-        ChapterInit();
-        _chapterList.ForEach(x => x.EnemyReset());
-        _portalSpawner.SpawnPortal(stageList[Stage].type);
-
         Managers.Reward.ImageLoad();
+
+        if (_isFirst)
+        {
+            ChapterInit();
+            _isFirst = false;
+            _chapterList.ForEach(x => x.EnemyReset());
+            _portalSpawner.SpawnPortal(_stageList[Stage].type);
+        }
+        else
+        {
+            NextStage();
+        }
     }
 
     private void ChapterInit()
     {
-        stageList.Clear();
+        _stageList.Clear();
         _currentChapter = _chapterList[Chapter - 1];
 
         int idx = 0;
@@ -76,43 +85,35 @@ public class MapManager
             int random = Random.Range(1, 100);
 
             stage.Init(random <= chance ? StageType.Event : StageType.Attack, MapSceneUI.Stages[idx], idx);
-            stageList.Add(stage);
+            _stageList.Add(stage);
 
             idx++;
         }
 
         Stage bossStage = new Stage();
         bossStage.Init(StageType.Boss, MapSceneUI.Stages[9], 9);
-        stageList.Add(bossStage);
+        _stageList.Add(bossStage);
 
-        stageList[0].ChangeResource(Color.white);
+        _stageList[0].ChangeResource(Color.white);
     }
 
     public void NextStage()
     {
-        if (Managers.GetPlayer().IsDie == true) // πˆ±◊
+        if (Managers.GetPlayer() != null && Managers.GetPlayer().IsDie == true)
         {
             ResetChapter();
-            // «√∑π¿ÃæÓ ¡◊¿Ω ∏Æº¬
         }
 
-        if (_isFirst)
+        #region Ï¥àÍ∏∞Ìôî
+        for (int i = 0; i < _stageList.Count; ++i)
         {
-            _isFirst = false;
-            _chapterList.ForEach(x => x.EnemyReset());
-            return;
-        }
-
-        #region √ ±‚»≠ ∫Œ∫–
-        for (int i = 0; i < stageList.Count; ++i)
-        {
-            MapSceneUI.Stages[i].sprite = stageList[i].icon;
-            MapSceneUI.Stages[i].color = stageList[i].color;
+            MapSceneUI.Stages[i].sprite = _stageList[i].icon;
+            MapSceneUI.Stages[i].color = _stageList[i].color;
         }
         Managers.Enemy.ResetEnemy();
         #endregion
 
-        if (stageList[Stage].type == StageType.Boss)
+        if (_stageList[Stage].type == StageType.Boss)
         {
             NextChapter();
             return;
@@ -129,7 +130,7 @@ public class MapManager
             _mapScene?.ArrowImage.transform.SetParent(MapSceneUI.StageList.GetChild(Stage + 1));
             _mapScene.ArrowImage.transform.localPosition = new Vector3(0, _mapScene.ArrowImage.transform.localPosition.y, 0);
         }
-        stageList[Stage].ChangeResource(Color.white, selectPortalSprite);
+        _stageList[Stage].ChangeResource(Color.white, selectPortalSprite);
         _floor += 1;
 
         Sequence seq = DOTween.Sequence();
@@ -139,8 +140,8 @@ public class MapManager
         seq.Append(MapSceneUI.Stages[Stage].DOColor(Color.white, 0.5f));
         seq.AppendCallback(() =>
         {
-            stageList[Stage].color = Color.white;
-            _portalSpawner.SpawnPortal(stageList[Stage].type);
+            _stageList[Stage].color = Color.white;
+            _portalSpawner.SpawnPortal(_stageList[Stage].type);
         });
     }
 
@@ -152,7 +153,7 @@ public class MapManager
         }
 
         ChapterInit();
-        _portalSpawner.SpawnPortal(stageList[Stage].type);
+        _portalSpawner.SpawnPortal(_stageList[Stage].type);
     }
 
     public void ResetChapter()

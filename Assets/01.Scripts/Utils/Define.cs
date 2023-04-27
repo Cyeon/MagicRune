@@ -45,6 +45,9 @@ public class Define
     public const int GAME_LOSE = 1001;
     public const int GAME_END = 1002;
 
+    public const int SELECT_RUNE_EVENT = 5000;
+    public const int RUNE_EVENT_SETTING = 5001;
+
     public const int CLICK_VIEW_UI = 10000;
 
     private static Camera _mainCam;
@@ -79,5 +82,6 @@ public class Define
         Unknown,
         MapScene,
         DialScene,
+        DeckScene,
     }
 }

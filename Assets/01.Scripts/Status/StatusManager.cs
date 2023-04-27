@@ -66,6 +66,7 @@ public class StatusManager
 
     public void DeleteStatus(Status status)
     {
+        if (status == null) return;
         if (_unit.IsDie || IsHaveStatus(status.statusName) == false) return;
 
         _statusList.Remove(status);

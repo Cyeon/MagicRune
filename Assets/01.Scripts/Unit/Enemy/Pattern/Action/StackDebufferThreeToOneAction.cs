@@ -5,7 +5,7 @@ using UnityEngine;
 public class StackDebufferThreeToOneAction : StatusAction
 {
     [Header("Condition 조건")]
-    [SerializeField] private StatusName _checkStatusName = StatusName.Coldness;
+    [SerializeField] private StatusName _checkStatusName = StatusName.ChillinessZip;
 
     public override void TurnAction()
     {

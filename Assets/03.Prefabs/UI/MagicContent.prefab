@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8299025801448075172}
-  - component: {fileID: 8299025801448075173}
   m_Layer: 5
   m_Name: MagicContent
   m_TagString: Untagged
@@ -37,26 +36,3 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &8299025801448075173
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8299025801448075175}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ddb349eb3f25794b92ceece3ffbcd30, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _magicCircle: {fileID: 0}
-  _startAxis: 90
-  _distance: 300
-  _offset: {x: 0, y: 900}
-  _rotateSpeed: 200
-  _attackEffect: {fileID: 1426304098941858083, guid: 9dd93f28a2b7477439d08440675ea353, type: 3}
-  _attackEffectParent: {fileID: 8299025801448075172}
-  _startPos: {fileID: 8299025801448075172}
-  _enemyPos: {fileID: 0}
-  _playerPos: {fileID: 0}
-  _bezierRate: 0.5

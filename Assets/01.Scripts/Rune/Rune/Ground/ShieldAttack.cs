@@ -14,4 +14,11 @@ public class ShieldAttack : BaseRune
         Managers.GetPlayer().AddShield(GetAbliltiValaue(EffectType.Defence));
         BattleManager.Instance.Enemy.StatusManager.AddStatus(StatusName.Impact, GetAbliltiValaue(EffectType.Status).RoundToInt());
     }
+
+    public override object Clone()
+    {
+        ShieldAttack shieldAttack = new ShieldAttack();
+        shieldAttack.Init();
+        return shieldAttack;
+    }
 }

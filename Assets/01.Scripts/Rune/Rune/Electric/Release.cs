@@ -15,4 +15,11 @@ public class Release : BaseRune
         Managers.GetPlayer().StatusManager.DeleteStatus(StatusName.Recharging);
         Managers.GetPlayer().Attack(dmg);
     }
+
+    public override object Clone()
+    {
+        Release release = new Release();
+        release.Init();
+        return release;
+    }
 }

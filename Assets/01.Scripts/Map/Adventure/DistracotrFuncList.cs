@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public enum IncreaseMode
 {
@@ -60,9 +61,23 @@ public class DistracotrFuncList : MonoBehaviour
     {
         Managers.Gold.AddGold(amount);
     }
+
     public void BattleEnemy(Enemy enemy)
     {
         Managers.Enemy.AddEnemy(enemy);
         Managers.Scene.LoadScene(Define.Scene.DialScene);
+    }
+
+    public void RandomRuneCopy()
+    {
+        BaseRune baseRune = Managers.Deck.GetRandomRune();
+        Managers.Deck.AddRune(baseRune);
+
+        EventManager<BaseRune>.TriggerEvent(Define.SELECT_RUNE_EVENT, baseRune);
+    }
+
+    public void DeleteRune()
+    {
+        EventManager<RuneSelectMode>.TriggerEvent(Define.RUNE_EVENT_SETTING, RuneSelectMode.Delete);
     }
 }

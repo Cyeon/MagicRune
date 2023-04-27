@@ -17,4 +17,11 @@ public class ThreeAttack : BaseRune
             BattleManager.Instance.Enemy.StatusManager.AddStatus(StatusName.Impact, GetAbliltiValaue(EffectType.Status).RoundToInt());
         }
     }
+
+    public override object Clone()
+    {
+        ThreeAttack threeAttack = new ThreeAttack();
+        threeAttack.Init();
+        return threeAttack;
+    }
 }

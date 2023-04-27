@@ -13,4 +13,11 @@ public class MagicShield : BaseRune
     {
         Managers.GetPlayer().AddShield(GetAbliltiValaue(EffectType.Defence));
     }
+
+    public override object Clone()
+    {
+        MagicShield magicShield = new MagicShield();
+        magicShield.Init();
+        return magicShield;
+    }
 }

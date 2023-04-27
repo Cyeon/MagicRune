@@ -12,4 +12,11 @@ public class GroundShield : BaseRune
     {
         Managers.GetPlayer().AddShield(GetAbliltiValaue(EffectType.Defence));
     }
+
+    public override object Clone()
+    {
+        GroundShield groundShield = new GroundShield();
+        groundShield.Init();
+        return groundShield;
+    }
 }

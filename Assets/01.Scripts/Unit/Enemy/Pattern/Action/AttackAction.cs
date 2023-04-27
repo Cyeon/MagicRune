@@ -10,7 +10,10 @@ public class AttackAction : PatternAction
 
     public override void TurnAction()
     {
-        StartCoroutine(AttackCoroutine());
+        if (Managers.Enemy.CurrentEnemy.IsDie == false)
+        {
+            StartCoroutine(AttackCoroutine());
+        }
     }
 
     private IEnumerator AttackCoroutine()

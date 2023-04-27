@@ -7,9 +7,8 @@ public class EmissionAction : PatternAction
 {
     public override void TurnAction()
     {
-        int damage;
-        int.TryParse(BattleManager.Instance.Enemy.PatternManager.CurrentPattern.desc, out damage);
-        BattleManager.Instance.Enemy.Attack(damage);
+        BattleManager.Instance.Enemy.Attack(BattleManager.Instance.Enemy.StatusManager.GetStatusValue(StatusName.Absorption));
+        BattleManager.Instance.Enemy.StatusManager.DeleteStatus(BattleManager.Instance.Enemy.StatusManager.GetStatus(StatusName.Absorption));
         base.TurnAction();
     }
 }

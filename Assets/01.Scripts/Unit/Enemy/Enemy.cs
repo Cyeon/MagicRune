@@ -73,6 +73,7 @@ public class Enemy : Unit
     {
         base.Die();
         Managers.Resource.Destroy(gameObject);
+        StopAllCoroutines();
     }
 
     private void HealthUIInit()

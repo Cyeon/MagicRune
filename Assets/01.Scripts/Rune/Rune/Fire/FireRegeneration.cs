@@ -15,4 +15,11 @@ public class FireRegeneration : BaseRune
         Managers.GetPlayer().AddHP(GetAbliltiValaue(EffectType.Etc));
         Managers.GetPlayer().StatusManager.AddStatus(StatusName.Fire, GetAbliltiValaue(EffectType.Status).RoundToInt());
     }
+
+    public override object Clone()
+    {
+        FireRegeneration fireRegeneration = new FireRegeneration();
+        fireRegeneration.Init();
+        return fireRegeneration;
+    }
 }

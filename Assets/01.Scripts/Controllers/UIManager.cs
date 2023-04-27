@@ -7,34 +7,18 @@ using TMPro;
 using System;
 using System.Linq;
 
+public enum UIType
+{
+    DestroyUI,
+    DontDestroyUI,
+}
+
 public class UIManager
 {
-    private Dictionary<Type, List<UnityEngine.Object>> _uiDict = new Dictionary<Type, List<UnityEngine.Object>>();
+    private Dictionary<Type, List<UnityEngine.Object>> _destroyUIDict = new Dictionary<Type, List<UnityEngine.Object>>();
+    private Dictionary<Type, List<UnityEngine.Object>> _dontDestroyUIDict = new Dictionary<Type, List<UnityEngine.Object>>();
 
-    #region Bind & Get
-
-    /// <summary>
-    /// UI 바인딩 함수
-    /// </summary>
-    /// <typeparam name="T">UI의 타입</typeparam>
-    /// <param name="type">정의된 열거자</param>
-    /// <param name="gameObject">찾을 캔버스</param>
-    [Obsolete]
-    public void Bind<T>(Type type, GameObject gameObject = null) where T : UnityEngine.Object
-    {
-        string[] names = Enum.GetNames(type);
-        List<UnityEngine.Object> objects = new List<UnityEngine.Object>(names.Length);
-
-        for (int i = 0; i < names.Length; i++)
-        {
-            objects[i] = Utill.FindChild<T>(gameObject, names[i], true);
-            if (objects[i] == null)
-            {
-                Debug.LogWarning($"Failed to bind {names[i]}");
-            }
-        }
-        _uiDict.Add(typeof(T), objects);
-    }
+    #region Bind
 
     /// <summary>
     /// UI 바인딩 함수
@@ -42,7 +26,20 @@ public class UIManager
     /// <typeparam name="T">UI의 타입</typeparam>
     /// <param name="name">정의된 UI 이름</param>
     /// <param name="gameObject">찾을 캔버스</param>
-    public void Bind<T>(string name, GameObject gameObject = null) where T : UnityEngine.Object
+    public void Bind<T>(string name, GameObject gameObject = null, UIType uiType = UIType.DestroyUI) where T : UnityEngine.Object
+    {
+        switch (uiType)
+        {
+            case UIType.DestroyUI:
+                BindOfDestroyUI<T>(name, gameObject);
+                break;
+            case UIType.DontDestroyUI:
+                BindOfDontDestroyUI<T>(name, gameObject);
+                break;
+        }
+    }
+
+    private void BindOfDestroyUI<T>(string name, GameObject gameObject = null) where T : UnityEngine.Object
     {
         UnityEngine.Object objects = null;
         objects = Utill.FindChild<T>(gameObject, name, true);
@@ -50,60 +47,74 @@ public class UIManager
         {
             Debug.LogWarning($"Failed to bind {name}");
         }
-        if (_uiDict.ContainsKey(typeof(T)))
+        if (_destroyUIDict.ContainsKey(typeof(T)))
         {
-            if (_uiDict[typeof(T)].Contains(objects) == true)
+            if (_destroyUIDict[typeof(T)].Contains(objects) == true)
             {
                 return;
             }
         }
 
-        if (_uiDict.ContainsKey(typeof(T)) == false)
+        if (_destroyUIDict.ContainsKey(typeof(T)) == false)
         {
-            _uiDict.Add(typeof(T), new List<UnityEngine.Object> { objects });
+            _destroyUIDict.Add(typeof(T), new List<UnityEngine.Object> { objects });
         }
         else
         {
-            _uiDict[typeof(T)].Add(objects);
+            _destroyUIDict[typeof(T)].Add(objects);
         }
-
     }
 
-    [Obsolete]
-    public T Get<T>(int index) where T : UnityEngine.Object
+    private void BindOfDontDestroyUI<T>(string name, GameObject gameObject = null) where T : UnityEngine.Object
     {
-        List<UnityEngine.Object> objects = null;
-
-        //if (_uiObject.TryGetValue(typeof(T), out objects) == false)
-        //{
-        //    return null;
-        //}
-
-        //if (objects.Count <= index)
-        //{
-        //    return null;
-        //}
-
-        //return objects[index] as T;
-
-        if (_uiDict.ContainsKey(typeof(T)))
+        UnityEngine.Object objects = null;
+        objects = Utill.FindChild<T>(gameObject, name, true);
+        if (objects == null)
         {
-            objects = new List<UnityEngine.Object>(_uiDict[typeof(T)]);
-            return objects[index] as T;
+            Debug.LogWarning($"Failed to bind {name}");
+        }
+        if (_dontDestroyUIDict.ContainsKey(typeof(T)))
+        {
+            if (_dontDestroyUIDict[typeof(T)].Contains(objects) == true)
+            {
+                return;
+            }
+        }
+
+        if (_dontDestroyUIDict.ContainsKey(typeof(T)) == false)
+        {
+            _dontDestroyUIDict.Add(typeof(T), new List<UnityEngine.Object> { objects });
         }
         else
         {
-            return null;
+            _dontDestroyUIDict[typeof(T)].Add(objects);
         }
     }
 
-    public T Get<T>(string name) where T : UnityEngine.Object
-    {
-        List<UnityEngine.Object> objects = null;
+    #endregion
 
-        if (_uiDict.ContainsKey(typeof(T)))
+    #region Get
+
+    public T Get<T>(string name, UIType uiType = UIType.DestroyUI) where T : UnityEngine.Object
+    {
+        switch (uiType)
         {
-            objects = new List<UnityEngine.Object>(_uiDict[typeof(T)]);
+            case UIType.DestroyUI:
+                return GetOfDestroyUI<T>(name);
+            case UIType.DontDestroyUI:
+                return GetOfDontDestroyUI<T>(name);
+            default:
+                return null;
+        }
+    }
+
+    private T GetOfDestroyUI<T>(string name) where T : UnityEngine.Object
+    {
+
+        if (_destroyUIDict.ContainsKey(typeof(T)))
+        {
+            List<UnityEngine.Object> objects = null;
+            objects = new List<UnityEngine.Object>(_destroyUIDict[typeof(T)]);
             return objects.Find(x => x.name == name) as T;
         }
         else
@@ -112,10 +123,70 @@ public class UIManager
         }
     }
 
-    public void Clear()
+    private T GetOfDontDestroyUI<T>(string name) where T : UnityEngine.Object
     {
-        _uiDict.Clear();
+
+        if (_dontDestroyUIDict.ContainsKey(typeof(T)))
+        {
+            List<UnityEngine.Object> objects = null;
+            objects = new List<UnityEngine.Object>(_dontDestroyUIDict[typeof(T)]);
+            return objects.Find(x => x.name == name) as T;
+        }
+        else
+        {
+            return null;
+        }
     }
 
     #endregion
+
+    #region Remove
+
+    public bool Remove<T>(string name, UIType type = UIType.DestroyUI) where T : UnityEngine.Object
+    {
+        switch (type)
+        {
+            case UIType.DestroyUI:
+                return RemoveOfDestroyUI<T>(name);
+            case UIType.DontDestroyUI:
+                return RemoveOfDontDestroyUI<T>(name);
+            default:
+                return false;
+        }
+    }
+
+    private bool RemoveOfDestroyUI<T>(string name) where T : UnityEngine.Object
+    {
+        if (_destroyUIDict.ContainsKey(typeof(T)))
+        {
+            UnityEngine.Object objects = _destroyUIDict[typeof(T)].Find(x => x.name == name);
+            _destroyUIDict[typeof(T)].Remove(objects);
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    private bool RemoveOfDontDestroyUI<T>(string name) where T : UnityEngine.Object
+    {
+        if (_destroyUIDict.ContainsKey(typeof(T)))
+        {
+            UnityEngine.Object objects = _destroyUIDict[typeof(T)].Find(x => x.name == name);
+            _destroyUIDict[typeof(T)].Remove(objects);
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    #endregion
+
+    public void Clear()
+    {
+        _destroyUIDict.Clear();
+    }
 }

@@ -14,4 +14,11 @@ public class Attack : BaseRune
     {
         BattleManager.Instance.Enemy.StatusManager.AddStatus(StatusName.Impact, GetAbliltiValaue(EffectType.Status).RoundToInt());
     }
+
+    public override object Clone()
+    {
+        Attack attack = new Attack();
+        attack.Init();
+        return attack;
+    }
 }

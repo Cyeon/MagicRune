@@ -9,7 +9,7 @@ public class AwakeAction : PatternAction
     public override void StartAction()
     {
         BattleManager.Instance.Enemy.spriteRenderer.sprite = _awakingIcon;
-        BattleManager.Instance.Enemy.PatternManager.ChangeTree("Awaking");
+        BattleManager.Instance.Enemy.PatternManager.ChangeTree("AwakingTree");
         base.StartAction();
     }
 }
