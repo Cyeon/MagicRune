@@ -6,7 +6,8 @@ using UnityEngine.Audio;
 public enum SoundType
 {
     Bgm,
-    Effect
+    Effect,
+    Master
 }
 
 public class SoundManager
@@ -21,13 +22,13 @@ public class SoundManager
 
     public void Init()
     {
-        if(_audioSource == null)
+        if (_audioSource == null)
         {
             _audioSource = new GameObject { name = "BGM" }.AddComponent<AudioSource>();
             _audioSource.loop = true;
             _audioSource.playOnAwake = false;
 
-            if(_mixer == null)
+            if (_mixer == null)
             {
                 _mixer = Managers.Resource.Load<AudioMixer>("Main");
             }
@@ -48,12 +49,12 @@ public class SoundManager
     /// <param name="isLoop">반복 여부</param>
     public void PlaySound(AudioClip clip, SoundType type, bool isLoop = false, float pitch = 1.0f)
     {
-        if(_audioClipDict.ContainsKey(clip.name) == false)
+        if (_audioClipDict.ContainsKey(clip.name) == false)
         {
             _audioClipDict.Add(clip.name, clip);
         }
 
-        switch(type)
+        switch (type)
         {
             case SoundType.Bgm:
                 _audioSource.Stop();
@@ -102,7 +103,7 @@ public class SoundManager
                 _audioSource.Stop();
                 break;
             case SoundType.Effect:
-                foreach(AudioSource source in _effectSoundList)
+                foreach (AudioSource source in _effectSoundList)
                 {
                     source.Stop();
                     Managers.Resource.Destroy(source.gameObject);
@@ -122,5 +123,22 @@ public class SoundManager
             Managers.Resource.Destroy(source.gameObject);
         }
         _effectSoundList.Clear();
+    }
+
+    public void SetVolume(float volume, SoundType type)
+    {
+        if (volume <= -40f)
+        {
+            volume = -80f;
+        }
+        string parameterName = type.ToString() + "Volume";
+        _mixer.SetFloat(parameterName, volume);
+    }
+
+    public float GetVolume(SoundType type)
+    {
+        float volume = 0f;
+        _mixer.GetFloat(type.ToString() + "Volume",out volume);
+        return volume;
     }
 }
