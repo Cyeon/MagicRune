@@ -350,25 +350,23 @@ public class Dial : MonoBehaviour
                 }
 
                 Transform pos = null;
+                float bendValue = 0f;
                 switch (_dialElementList[i].SelectCard.Rune.BaseRuneSO.Direction)
                 {
                     case EffectDirection.Enemy:
                         pos = BattleManager.Instance.Enemy.transform;
-                        b.Init(_dialElementList[i].SelectCard.transform, pos, 1.5f, 10, 10, () =>
-                        {
-                            _dialElementList[index].Attack();
-                            //_dialElementList[i] = null;
-                        });
+                        bendValue = 7f;
                         break;
                     case EffectDirection.Player:
                         pos = this.transform;
-                        b.Init(_dialElementList[i].SelectCard.transform, pos, 1.5f, 10, 10, () =>
-                        {
-                            _dialElementList[index].Attack();
-                            //_dialElementList[i] = null;
-                        });
+                        bendValue = 15f;
                         break;
                 }
+                b.Init(_dialElementList[i].SelectCard.transform, pos, 1.5f, bendValue, bendValue, () =>
+                {
+                    _dialElementList[index].Attack();
+                    //_dialElementList[i] = null;
+                });
 
                 BattleManager.Instance.missileCount += 1;
                 yield return new WaitForSeconds(0.1f);
