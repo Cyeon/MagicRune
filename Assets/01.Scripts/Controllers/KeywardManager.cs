@@ -8,7 +8,10 @@ public class KeywardManager
 
     public void Init()
     {
-        _keywardList = Managers.Resource.Load<KeywardListSO>("SO/" + typeof(KeywardListSO).Name).KeywardList;
+        if(_keywardList.Count <= 0)
+        {
+            _keywardList = Managers.Resource.Load<KeywardListSO>("SO/" + typeof(KeywardListSO).Name).KeywardList;
+        }
     }
 
     public Keyward GetKeyward(StatusName statusName)
