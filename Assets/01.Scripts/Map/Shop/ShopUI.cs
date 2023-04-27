@@ -44,6 +44,14 @@ public class ShopUI : MonoBehaviour
     private void BuyCheck(ShopItemPanelUI shopItem)
     {
         _shopItemPanel = shopItem;
+
+        if(Managers.Gold.Gold < _shopItemPanel.item.Gold)
+        {
+            InfoMessage message = Managers.Resource.Instantiate("InfoMessage", transform).GetComponent<InfoMessage>();
+            message.Setup("돈이 부족합니다.", Input.GetTouch(0).position);
+            return;
+        }
+
         _buyCheck.SetActive(true);
     }
 

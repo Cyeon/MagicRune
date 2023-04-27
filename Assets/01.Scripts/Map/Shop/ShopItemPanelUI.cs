@@ -47,10 +47,7 @@ public class ShopItemPanelUI : MonoBehaviour
     public void BuyCheck()
     {
         //  단순 골드 비교면 이거면 충분. 하지만 다른 조건이 붙으면 함수하나 정으해야할 듯
-        if (Managers.Gold.Gold >= item.Gold)
-        {
-            _buyAction?.Invoke(this);
-        }
+        _buyAction?.Invoke(this);
     }
 
     public void GoldTextColorUpdate()
