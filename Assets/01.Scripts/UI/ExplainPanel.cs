@@ -22,7 +22,7 @@ public class ExplainPanel : MonoBehaviour
 
     #endregion
 
-    private BaseRune _rune;
+    protected BaseRune _rune;
 
     private List<KeywardPanel> _keywardPanelList = new List<KeywardPanel>();
 
