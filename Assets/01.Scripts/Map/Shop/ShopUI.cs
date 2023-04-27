@@ -1,12 +1,16 @@
+using MyBox;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using static UnityEditor.Progress;
 
 public class ShopUI : MonoBehaviour
 {
     private Transform _storeShelf;
+    private ShopItemPanelUI _shopItemPanel;
+    [SerializeField] private GameObject _buyCheck;
 
     private void Start()
     {
@@ -34,6 +38,32 @@ public class ShopUI : MonoBehaviour
     public void RuneItemProduct(Item item)
     {
         ShopItemPanelUI ui = Managers.Resource.Instantiate("ItemPanel", _storeShelf).GetComponent<ShopItemPanelUI>();
-        ui.Init(item);
+        ui.Init(item, BuyCheck);
+    }
+
+    private void BuyCheck(ShopItemPanelUI shopItem)
+    {
+        _shopItemPanel = shopItem;
+
+        if(Managers.Gold.Gold < _shopItemPanel.item.Gold)
+        {
+            InfoMessage message = Managers.Resource.Instantiate("InfoMessage", transform).GetComponent<InfoMessage>();
+            message.Setup("돈이 부족합니다.", Input.GetTouch(0).position);
+            return;
+        }
+
+        _buyCheck.SetActive(true);
+    }
+
+    public void Buy()
+    {
+        _buyCheck.SetActive(false);
+
+        Managers.Gold.AddGold(-_shopItemPanel.item.Gold);
+        _shopItemPanel.item.Execute();
+
+        Managers.Resource.Destroy(_shopItemPanel.gameObject);
+
+        _storeShelf.transform.GetComponentsInChildren<ShopItemPanelUI>().ForEach(x => x.GoldTextColorUpdate());
     }
 }
