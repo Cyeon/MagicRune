@@ -7,6 +7,7 @@ public interface Item
 {
     public Sprite Icon { get; }
     public int Gold { get; }
+    public BaseRune Rune { get; }
 
     /// <summary>
     /// 딱히 쓰는데는 없음

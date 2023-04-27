@@ -18,8 +18,11 @@ public class ShopItem
 
 public class ShopItemPanelUI : MonoBehaviour
 {
-    private Image _icon;
-    private TextMeshProUGUI _goldText;
+    [SerializeField] private Image _icon;
+    [SerializeField] private TextMeshProUGUI _goldText;
+    [SerializeField] private TextMeshProUGUI _runeNameText;
+    [SerializeField] private TextMeshProUGUI _runeDescText;
+
     private Item _iItem;
 
     /// <summary>
@@ -30,9 +33,12 @@ public class ShopItemPanelUI : MonoBehaviour
     public void Init(Item item, Action action = null)
     {
         _iItem = item;
+        _buyAction = action;
+
         _icon.sprite = _iItem.Icon;
         _goldText.SetText(_iItem.Gold.ToString());
-        _buyAction = action;
+        _runeNameText.SetText(_iItem.Rune.BaseRuneSO.RuneName);
+        _runeDescText.SetText(_iItem.Rune.BaseRuneSO.RuneDescription);
 
         transform.localScale = Vector3.one * 0.8f;
     }
@@ -56,11 +62,5 @@ public class ShopItemPanelUI : MonoBehaviour
             //}
             Managers.Resource.Destroy(this.gameObject);
         }
-    }
-
-    public void Awake()
-    {
-        _icon = transform.Find("Button/Icon").GetComponent<Image>();
-        _goldText = transform.GetComponentInChildren<TextMeshProUGUI>();
     }
 }

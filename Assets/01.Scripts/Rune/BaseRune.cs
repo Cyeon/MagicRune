@@ -54,6 +54,7 @@ public class BaseRune : Item, ICloneable
     public int Gold { get; private set; }
 
     public ShopItemType ShopItemType { get => ShopItemType.Rune; }
+    public BaseRune Rune => this;
     #endregion
 
     public virtual void Init()
