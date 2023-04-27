@@ -3,12 +3,29 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum KeywardType
+{
+    None,
+    Charge,
+    Fire,
+    Impact,
+    Chilliness,
+    Ice
+}
+
 [Serializable]
 public class Keyward
 {
     public string KeywardName;
-    public StatusName StatusName;
+    public KeywardType TypeName;
     public string KeywardDescription;
+
+    public Keyward()
+    {
+        KeywardName = "";
+        TypeName = KeywardType.None;
+        KeywardDescription = "";
+    }
 }
 
 [CreateAssetMenu(menuName = "SO/Keyward/KeywardList")]

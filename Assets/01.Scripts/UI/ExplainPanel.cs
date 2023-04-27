@@ -40,7 +40,7 @@ public class ExplainPanel : MonoBehaviour
         SetKeyward();
     }
 
-    private void ClearKeyward()
+    public void ClearKeyward()
     {
         for(int i = 0; i < _keywardPanelList.Count; i++)
         {
@@ -48,12 +48,13 @@ public class ExplainPanel : MonoBehaviour
         }
     }
 
-    private void SetKeyward()
+    public void SetKeyward()
     {
         for(int i = 0; i < _rune.BaseRuneSO.KeywardList.Length; i++)
         {
             KeywardPanel panel = Managers.Resource.Instantiate("UI/KeywardPanel", _keywardArea).GetComponent<KeywardPanel>();
             panel.SetKeyward(Managers.Keyward.GetKeyward(_rune.BaseRuneSO.KeywardList[i]));
+            _keywardPanelList.Add(panel);
         }
     }
 }

@@ -30,5 +30,5 @@ public class BaseRuneSO : ScriptableObject
     // 공격 5, 빙결 2, 방어 10 이렇게만. 진짜 능력치만
     public List<AbilityValue> AbilityList;
 
-    public StatusName[] KeywardList;
+    public KeywardType[] KeywardList;
 }

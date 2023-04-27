@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class KeywardManager
 {
@@ -14,13 +16,25 @@ public class KeywardManager
         }
     }
 
-    public Keyward GetKeyward(StatusName statusName)
+    public Keyward GetKeyward(KeywardType typeName)
     {
-        return _keywardList.Find(x => x.StatusName == statusName);
+        Keyward keyward = _keywardList.Find(x => x.TypeName == typeName);
+        if(keyward == null)
+        {
+            keyward = new Keyward();
+        }
+
+        return keyward;
     }
 
     public Keyward GetKeyward(string name)
     {
-        return _keywardList.Find(x => x.KeywardName == name); 
+        Keyward keyward = _keywardList.Find(x => x.KeywardName == name);
+        if (keyward == null)
+        {
+            keyward = new Keyward();
+        }
+
+        return keyward;
     }
 }

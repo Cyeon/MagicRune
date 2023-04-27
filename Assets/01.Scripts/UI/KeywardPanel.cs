@@ -22,6 +22,8 @@ public class KeywardPanel : MonoBehaviour
 
     private void UpdateUI()
     {
+        if (_keyward == null) return;
+
         _nameText.SetText(_keyward.KeywardName);
         _descText.SetText(_keyward.KeywardDescription);
     }
