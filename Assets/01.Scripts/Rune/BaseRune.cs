@@ -119,6 +119,7 @@ public class BaseRune : Item, ICloneable
 
     public virtual object Clone()
     {
-        return this;
+        BaseRune rune = new BaseRune();
+        return rune;
     }
 }

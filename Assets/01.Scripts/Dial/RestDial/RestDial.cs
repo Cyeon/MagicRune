@@ -27,7 +27,7 @@ public class RestDial : MonoBehaviour
     #endregion
 
     #region Rune Container
-    private Dictionary<int, List<BaseRuneUI>> _runeDict;
+    private Dictionary<int, List<RestRuneUI>> _runeDict;
     private List<DialElement> _dialElementList;
     public List<DialElement> DialElementList => _dialElementList;
 
@@ -41,10 +41,10 @@ public class RestDial : MonoBehaviour
         #region Initialization 
         _resonance = GetComponent<Resonance>();
 
-        _runeDict = new Dictionary<int, List<BaseRuneUI>>(3);
+        _runeDict = new Dictionary<int, List<RestRuneUI>>(3);
         for (int i = 1; i <= 3; i++)
         {
-            _runeDict.Add(i, new List<BaseRuneUI>());
+            _runeDict.Add(i, new List<RestRuneUI>());
         }
         _dialElementList = new List<DialElement>();
         #endregion
@@ -63,7 +63,7 @@ public class RestDial : MonoBehaviour
         }
     }
 
-    public void AddCard(BaseRuneUI card, int tier)
+    public void AddCard(RestRuneUI card, int tier)
     {
         if (card != null)
         {
@@ -73,7 +73,7 @@ public class RestDial : MonoBehaviour
             }
             else
             {
-                _runeDict.Add(tier, new List<BaseRuneUI> { card });
+                _runeDict.Add(tier, new List<RestRuneUI> { card });
             }
 
             RuneSort();

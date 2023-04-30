@@ -30,4 +30,9 @@ public class RestRuneUI : MonoBehaviour
     {
         return _action;
     }
+
+    public void RuneColor(Color color)
+    {
+        _spriteRenderer.color = color;
+    }
 }
