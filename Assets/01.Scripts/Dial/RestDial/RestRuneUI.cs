@@ -26,6 +26,11 @@ public class RestRuneUI : MonoBehaviour
         _spriteRenderer.sprite = _sprite;
     }
 
+    public Sprite GetSprite()
+    {
+        return _sprite;
+    }
+
     public Action ClickAction()
     {
         return _action;

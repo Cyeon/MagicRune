@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class RestDialElement : MonoBehaviour
 {
-    private Dial _dial;
+    private RestDial _dial;
     private SpriteRenderer _lineSpriteRenderer;
     private SpriteRenderer _textSpriteRenderer;
     [SerializeField]
@@ -93,7 +93,7 @@ public class RestDialElement : MonoBehaviour
 
     private void Awake()
     {
-        _dial = GetComponentInParent<Dial>();
+        _dial = GetComponentInParent<RestDial>();
         _lineSpriteRenderer = transform.Find("LineVisualSprite").GetComponent<SpriteRenderer>();
         _textSpriteRenderer = transform.Find("TextVisualSprite").GetComponent<SpriteRenderer>();
         _runeList = new List<RestRuneUI>();
@@ -115,7 +115,7 @@ public class RestDialElement : MonoBehaviour
 
     private void RotateMagicCircle()
     {
-        if (_runeList.Count > 0 && BattleManager.Instance.IsPlayerTurn())
+        if (_runeList.Count > 0)
         {
             // UI Ǯ���ϸ鼭 �� �κ� ������
             //if (transform.eulerAngles.z <= _dial.RuneAngle / 2 || transform.eulerAngles.z >= (360f - _dial.RuneAngle / 2))
@@ -169,7 +169,7 @@ public class RestDialElement : MonoBehaviour
             //}
         }
 
-        if (_isRotate && BattleManager.Instance.IsPlayerTurn())
+        if (_isRotate)
         {
             _offset = ((Vector3)Input.GetTouch(_fingerID).position - _touchPos);
 
@@ -328,7 +328,7 @@ public class RestDialElement : MonoBehaviour
                     _fingerID = -1;
                     _isRotate = false;
 
-                    if (_runeList.Count > 0 && BattleManager.Instance.IsPlayerTurn())
+                    if (_runeList.Count > 0)
                     {
                         //if (transform.eulerAngles.z <= _dial.RuneAngle / 2 + transform.eulerAngles.z || transform.eulerAngles.z >= (360f - _dial.RuneAngle / 2))
                         //{

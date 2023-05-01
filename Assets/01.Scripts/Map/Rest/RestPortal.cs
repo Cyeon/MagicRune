@@ -6,14 +6,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
-public enum EnhanceType
-{
-    START,
-    Change, // 변경
-    Sacrifice, // 재물
-    END,
-}
-
 public class RestPortal : Portal
 {
     private RestUI _restUI;
@@ -24,8 +16,6 @@ public class RestPortal : Portal
 
         Managers.Canvas.GetCanvas("MapUI").enabled = false;
         Managers.Canvas.GetCanvas("Rest").enabled = true;
-        _restUI.PortalStartAnimation();
-        _restUI.SetRandonEnhanceType(); // 랜덤으로 정해줌
         base.Execute();
     }
 }
