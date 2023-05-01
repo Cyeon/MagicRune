@@ -33,6 +33,8 @@ public class DialScene : BaseScene
     public RewardUI RewardUI => _rewardUI;
     private ChooseRuneUI _chooseRuneUI;
 
+    private UserInfoUI _userInfoUI;
+
     protected override void Init()
     {
         base.Init();
@@ -61,6 +63,8 @@ public class DialScene : BaseScene
 
         Managers.UI.Bind<ChooseRuneUI>("ChooseRuneUI", Managers.Canvas.GetCanvas("Popup").gameObject);
 
+        Managers.UI.Bind<UserInfoUI>("Upper_Frame", Managers.Canvas.GetCanvas("UserInfoPanelCanvas").gameObject);
+
         #endregion
 
         _statusDescName = Managers.UI.Get<TextMeshPro>("Status_Name_Text");
@@ -80,6 +84,16 @@ public class DialScene : BaseScene
         _cardDescPanelList = _cardDescPanel.GetComponent<ExplainPanelList>();
 
         Managers.Sound.PlaySound("BGM/DialSceneBGM", SoundType.Bgm, true, 1.0f);
+
+        _userInfoUI = Managers.UI.Get<UserInfoUI>("Upper_Frame");
+
+        _userInfoUI.UpdateHealthText();
+        _userInfoUI.UpdateGoldText();
+
+        Managers.Gold.UpdateGoldAction -= _userInfoUI.UpdateGoldText;
+        Managers.Gold.UpdateGoldAction += _userInfoUI.UpdateGoldText;
+
+        Managers.GetPlayer().userInfoUI = _userInfoUI;
     }
 
     public void Turn(string text)

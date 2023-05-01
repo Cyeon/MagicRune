@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Security.Cryptography;
 using UnityEngine;
+using UnityEngine.Analytics;
 using Random = UnityEngine.Random;
 
 public class BezierMissile : MonoBehaviour
@@ -28,6 +29,7 @@ public class BezierMissile : MonoBehaviour
     private Transform _transform;
 
     private Action _endAction;
+    private Action _goldGiveAction;
 
     private TrailRenderer _trail;
 
@@ -113,6 +115,25 @@ public class BezierMissile : MonoBehaviour
         _endAction = action;
     }
 
+    public void Init(Vector3 p1, Vector3 p2, Vector3 p3, Vector3 p4, float _speed, Action endAction = null, Action goldAction = null)
+    {
+        m_timerCurrent = 0f;
+        m_speed = _speed;
+
+        // 끝에 도착할 시간을 랜덤으로 줌.
+        m_timerMax = Random.Range(0.8f, 1.0f);
+
+        m_points[0] = p1;
+        m_points[1] = p2;
+        m_points[2] = p3;
+        m_points[3] = p4;
+
+        _transform.position = p1;
+
+        _endAction = endAction;
+        _goldGiveAction = goldAction;
+    }
+
     public void SetTrailColor(EffectType type)
     {
         switch (type)
@@ -184,6 +205,7 @@ public class BezierMissile : MonoBehaviour
             Managers.Resource.Destroy(_effect);
             _effect = null;
 
+            _goldGiveAction?.Invoke();
             // 핸동하고
             if(BattleManager.Instance.Enemy.IsDie == false)
             {

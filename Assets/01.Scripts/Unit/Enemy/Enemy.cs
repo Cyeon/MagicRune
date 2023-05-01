@@ -71,9 +71,18 @@ public class Enemy : Unit
 
     public override void Die()
     {
-        base.Die();
-        Managers.Resource.Destroy(gameObject);
-        StopAllCoroutines();
+        _isDie = true;
+
+        Sequence seq = DOTween.Sequence();
+        seq.Append(spriteRenderer.DOFade(0, 0.75f));
+        seq.Join(transform.DOMoveY(transform.position.y - 1f, 0.75f));
+        seq.AppendCallback(() =>
+        {
+            OnDieEvent?.Invoke();
+            Managers.Resource.Destroy(gameObject);
+            StopAllCoroutines();
+        });
+
     }
 
     private void HealthUIInit()
