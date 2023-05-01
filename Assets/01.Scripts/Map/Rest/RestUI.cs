@@ -12,6 +12,7 @@ public class RestUI : MonoBehaviour
 
     [SerializeField]
     private RestDial _dial;
+    public RestDial Dial => _dial;
 
     private void Start()
     {
@@ -23,7 +24,6 @@ public class RestUI : MonoBehaviour
     {
         Managers.Canvas.GetCanvas(this.name).enabled = false;
         Managers.Canvas.GetCanvas("MapUI").enabled = true;
-        // Dial 안에 내용 플링
         _dial.gameObject.SetActive(false);
         Managers.Map.NextStage();
     }

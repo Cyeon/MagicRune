@@ -10,15 +10,22 @@ public class RestRuneUI : MonoBehaviour
     private Sprite _sprite;
     private Action _action;
 
+    [TextArea]
+    private string _desc;
+    public string Desc => _desc;
+
     private void Start()
     {
         TryGetComponent<SpriteRenderer>(out _spriteRenderer);
+
+        RuneColor(new Color(0.26f, 0.26f, 0.26f, 1f));
     }
 
-    public void SetInfo(Sprite sprite, Action action)
+    public void SetInfo(Sprite sprite, Action action, string desc)
     {
         _sprite = sprite;
         _action = action;
+        _desc = desc;
 
         if(_spriteRenderer == null)
             TryGetComponent<SpriteRenderer>(out _spriteRenderer);

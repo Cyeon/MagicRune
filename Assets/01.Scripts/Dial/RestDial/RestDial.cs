@@ -1,7 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 public class RestDial : MonoBehaviour
@@ -40,6 +42,9 @@ public class RestDial : MonoBehaviour
 
     private RestUI _restUI;
 
+    [SerializeField]
+    private TextMeshProUGUI _descText;
+
     private void Awake()
     {
         #region Initialization 
@@ -73,7 +78,7 @@ public class RestDial : MonoBehaviour
         {
             // 깅회 1
             // 맞는 UI 띄워ㅓ주기
-        });
+        }, "같은 등급의\n다른 룬으로 바꾼다.");
         _dialElementList[0].AddRuneList(enhanceRune1);
         AddCard(enhanceRune1, 3);
 
@@ -83,7 +88,7 @@ public class RestDial : MonoBehaviour
         {
             // 회복
             StartCoroutine(RestActionCoroutine());
-        });
+        }, "최대 체력의\n25%를 회복한다.");
         _dialElementList[0].AddRuneList(restRune);
         AddCard(restRune, 3);
 
@@ -93,7 +98,7 @@ public class RestDial : MonoBehaviour
         {
             // 깅회 2
             // 맞는 UI 띄워ㅓ주기
-        });
+        }, "여러개의 룬을 바쳐\n더 높은 등급의\n룬을 얻는다.");
         _dialElementList[0].AddRuneList(enhanceRune2);
         AddCard(enhanceRune2, 3);
 
@@ -102,7 +107,7 @@ public class RestDial : MonoBehaviour
         {
             RestRuneUI rune = Managers.Resource.Instantiate("Rune/" + typeof(RestRuneUI).Name, _dialElementList[0].transform).GetComponent<RestRuneUI>();
             rune.transform.localScale = new Vector3(0.1f, 0.1f, 1f);
-            rune.SetInfo(_runeDict[3][i].GetSprite(), _runeDict[3][i].ClickAction());
+            rune.SetInfo(_runeDict[3][i].GetSprite(), _runeDict[3][i].ClickAction(), _runeDict[3][i].Desc);
             _dialElementList[0].AddRuneList(rune);
             AddCard(rune, 3);
         }
@@ -111,9 +116,14 @@ public class RestDial : MonoBehaviour
         RuneSort();
     }
 
+    public void EditText(string text)
+    {
+        _descText.SetText(text);
+    }
+
     private IEnumerator RestActionCoroutine()
     {
-        GameObject effect = Managers.Resource.Instantiate("HealthParticle");
+        GameObject effect = Managers.Resource.Instantiate("Effects/HealthParticle", Managers.Canvas.GetCanvas("Rest").transform);
         Managers.GetPlayer().AddHPPercent(25);
         yield return new WaitForSeconds(1.5f);
         _restUI.NextStage();
@@ -170,12 +180,28 @@ public class RestDial : MonoBehaviour
         }
     }
 
+    public void Clear()
+    {
+        for(int i = 0; i < _runeDict[3].Count; i++)
+        {
+            Managers.Resource.Destroy(_runeDict[3][i].gameObject);
+        }
+        _dialElementList[0].SelectCard = null;
+        _dialElementList[0].Clear();
+        _runeDict.Clear();
+    }
+
     public void ResetDial()
     {
         for (int i = 0; i < _dialElementList.Count; i++)
         {
             _dialElementList[i].transform.eulerAngles = Vector3.zero;
         }
+    }
+
+    public void PanelUI()
+    {
+
     }
 
     public void AllMagicActive(bool value)

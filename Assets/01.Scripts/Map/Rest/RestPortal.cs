@@ -16,6 +16,11 @@ public class RestPortal : Portal
 
         Managers.Canvas.GetCanvas("MapUI").enabled = false;
         Managers.Canvas.GetCanvas("Rest").enabled = true;
+
+        if(_restUI != null)
+        {
+            _restUI.Dial.gameObject.SetActive(true);
+        }
         base.Execute();
     }
 }
