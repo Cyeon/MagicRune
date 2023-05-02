@@ -10,13 +10,13 @@ public class InfoMessage : MonoBehaviour
 
     private void Awake()
     {
-        _textMesh = GetComponent<TextMeshProUGUI>();
-
+        _textMesh = GetComponentInChildren<TextMeshProUGUI>();
     }
 
     public void Setup(string message, Vector3 pos)
     {
         transform.position = pos;
+        transform.localScale = Vector3.one;
         _textMesh.SetText(message);
 
         Sequence seq = DOTween.Sequence();
@@ -25,7 +25,7 @@ public class InfoMessage : MonoBehaviour
         seq.Join(_textMesh.DOFade(0, 0.3f).SetEase(Ease.InQuart));
         seq.AppendCallback(() =>
         {
-            Destroy(gameObject);
+            Managers.Resource.Destroy(gameObject);
         });
     }
 

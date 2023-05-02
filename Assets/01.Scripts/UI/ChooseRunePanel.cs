@@ -10,7 +10,7 @@ public class ChooseRunePanel : ExplainPanel
         Managers.Deck.AddRune(Managers.Rune.GetRune(_rune));
         Define.DialScene?.HideChooseRuneUI();
 
-        if (Managers.Reward.GetRewardList().Count == 0)
+        if (Managers.Reward.IsHaveNextClickReward())
         {
             BattleManager.Instance.NextStage();
         }
