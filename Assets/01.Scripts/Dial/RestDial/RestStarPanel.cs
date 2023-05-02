@@ -46,7 +46,25 @@ public class RestStarPanel : MonoBehaviour
             }
             if (touch.phase == TouchPhase.Moved)
             {
+                touchDif = (touch.position - touchBeganPos);
+                int count = (int)(Mathf.Abs(touchDif.y) / (swipeSensitivity / 3));
+                count = Mathf.Min(count, 3);
 
+                for (int i = 0; i < 3; i++)
+                {
+                    if(i < count)
+                    {
+                        _dial.MagicCircleGlow(2 - i, true);
+                    }
+                    else
+                    {
+                        _dial.MagicCircleGlow(2 - i, false);
+                    }
+                }
+                //for (int i = 3 - 1; i >= 3 - count; i--)
+                //{
+                //    _dial.MagicCircleGlow(i, true);
+                //}
             }
             if (touch.phase == TouchPhase.Ended)
             {
@@ -65,6 +83,10 @@ public class RestStarPanel : MonoBehaviour
                         {
                             _dial.Attack();
                         }
+                        else
+                        {
+                            _dial.AllMagicCircleGlow(false);
+                        }
                     }
                     else if (touchDif.y < 0 && Mathf.Abs(touchDif.y) > Mathf.Abs(touchDif.x))
                     {
@@ -78,6 +100,7 @@ public class RestStarPanel : MonoBehaviour
                     {
                         //Debug.Log("Left");
                     }
+                    _dial.AllMagicCircleGlow(false);
                 }
                 //��ġ.
                 else

@@ -7,6 +7,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using static UnityEngine.Rendering.DebugUI;
 using Random = UnityEngine.Random;
 
 public class Dial : MonoBehaviour
@@ -311,7 +312,7 @@ public class Dial : MonoBehaviour
             if (_dialElementList[i].SelectCard != null)
             {
                 int index = i;
-                _dialElementList[i].IsGlow = true;
+                MagicCircleGlow(i, true);
                 BaseRune rune = _usingDeck.Find(x => x == _dialElementList[i].SelectCard.Rune);
                 _usingDeck.Remove(rune);
                 rune.SetCoolTime();
@@ -385,6 +386,11 @@ public class Dial : MonoBehaviour
         {
             _dialElementList[i].IsGlow = value;
         }
+    }
+
+    public void MagicCircleGlow(int index, bool value)
+    {
+        _dialElementList[index].IsGlow = value;
     }
 
     public void AllMagicSetCoolTime()

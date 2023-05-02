@@ -78,6 +78,7 @@ public class RestDial : MonoBehaviour
         {
             // 깅회 1
             // 맞는 UI 띄워ㅓ주기
+            Debug.Log("강화1");
         }, "같은 등급의\n다른 룬으로 바꾼다.");
         _dialElementList[0].AddRuneList(enhanceRune1);
         AddCard(enhanceRune1, 3);
@@ -98,6 +99,7 @@ public class RestDial : MonoBehaviour
         {
             // 깅회 2
             // 맞는 UI 띄워ㅓ주기
+            Debug.Log("강화2");
         }, "여러개의 룬을 바쳐\n더 높은 등급의\n룬을 얻는다.");
         _dialElementList[0].AddRuneList(enhanceRune2);
         AddCard(enhanceRune2, 3);
@@ -216,6 +218,11 @@ public class RestDial : MonoBehaviour
                 }
             }
         }
+    }
+
+    public void MagicCircleGlow(int index, bool value)
+    {
+        _dialElementList[index].IsGlow = value;
     }
 
     public bool MagicEmpty()
