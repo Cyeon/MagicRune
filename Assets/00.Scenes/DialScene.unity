@@ -2772,6 +2772,7 @@ GameObject:
   - component: {fileID: 787803313}
   - component: {fileID: 787803312}
   - component: {fileID: 787803311}
+  - component: {fileID: 787803314}
   m_Layer: 5
   m_Name: HoldingRuneBtn
   m_TagString: Untagged
@@ -2894,6 +2895,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 787803309}
   m_CullTransparentMesh: 1
+--- !u!114 &787803314
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 787803309}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9a83341330785245bf49fef58d8f820, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &820903607
 GameObject:
   m_ObjectHideFlags: 0
@@ -4850,6 +4863,7 @@ GameObject:
   - component: {fileID: 1204897086}
   - component: {fileID: 1204897085}
   - component: {fileID: 1204897084}
+  - component: {fileID: 1204897087}
   m_Layer: 5
   m_Name: UseRuneButton
   m_TagString: Untagged
@@ -4972,6 +4986,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1204897082}
   m_CullTransparentMesh: 1
+--- !u!114 &1204897087
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1204897082}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9a83341330785245bf49fef58d8f820, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1245628572
 GameObject:
   m_ObjectHideFlags: 0
@@ -8101,9 +8127,37 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4752574022654321064, guid: 9d9cc8fc169f27e47814c186ce99ab04, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4752574023005131558, guid: 9d9cc8fc169f27e47814c186ce99ab04, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4752574023005131558, guid: 9d9cc8fc169f27e47814c186ce99ab04, type: 3}
       propertyPath: m_SizeDelta.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4752574023005131558, guid: 9d9cc8fc169f27e47814c186ce99ab04, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4752574023005131559, guid: 9d9cc8fc169f27e47814c186ce99ab04, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4752574023005131576, guid: 9d9cc8fc169f27e47814c186ce99ab04, type: 3}
+      propertyPath: m_Spacing.x
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 4752574023005131576, guid: 9d9cc8fc169f27e47814c186ce99ab04, type: 3}
+      propertyPath: m_Padding.m_Top
+      value: 80
+      objectReference: {fileID: 0}
+    - target: {fileID: 4752574023005131576, guid: 9d9cc8fc169f27e47814c186ce99ab04, type: 3}
+      propertyPath: m_Padding.m_Bottom
+      value: 80
       objectReference: {fileID: 0}
     - target: {fileID: 4752574023146445448, guid: 9d9cc8fc169f27e47814c186ce99ab04, type: 3}
       propertyPath: m_AnchorMax.x
@@ -8115,6 +8169,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4752574023146445448, guid: 9d9cc8fc169f27e47814c186ce99ab04, type: 3}
       propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4752574023146445448, guid: 9d9cc8fc169f27e47814c186ce99ab04, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4752574023146445448, guid: 9d9cc8fc169f27e47814c186ce99ab04, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4752574023146445448, guid: 9d9cc8fc169f27e47814c186ce99ab04, type: 3}
+      propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
