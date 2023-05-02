@@ -113,6 +113,7 @@ public class RestStarPanel : MonoBehaviour
                     {
                         Define.DialScene?.AllCardDescPopup();
                     }
+                    _dial.AllMagicCircleGlow(false);
                 }
             }
         }

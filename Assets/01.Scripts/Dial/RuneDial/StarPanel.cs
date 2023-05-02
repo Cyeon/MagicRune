@@ -118,6 +118,7 @@ public class StarPanel : MonoBehaviour
                     {
                         Define.DialScene?.AllCardDescPopup();
                     }
+                    _dial.AllMagicCircleGlow(false);
                 }
             }
         }
