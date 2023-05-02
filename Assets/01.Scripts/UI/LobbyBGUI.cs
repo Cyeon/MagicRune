@@ -10,23 +10,9 @@ public class LobbyBGUI : MonoBehaviour
     public Ease moveBGEase;
     public float moveBGSpeed;
 
-    public void MoveMainBG()
+    public void MoveBG(int leftRightToMain)
     {
-        bgParent.transform.DOMoveX(0 + 720, moveBGSpeed).SetEase(moveBGEase);
+        bgParent.transform.DOMoveX(1440 * leftRightToMain + 720, moveBGSpeed).SetEase(moveBGEase);
 
     }
-
-    public void MoveShopBG()
-    {
-        bgParent.transform.DOMoveX(2160 + 720, moveBGSpeed).SetEase(moveBGEase);
-
-    }
-
-    public void MoveSkillTreeBG()
-    {
-        bgParent.transform.DOMoveX(-2160 + 720, moveBGSpeed).SetEase(moveBGEase);
-
-    }
-
-
 }
