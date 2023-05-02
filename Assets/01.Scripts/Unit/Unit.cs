@@ -130,7 +130,10 @@ public class Unit : MonoBehaviour
                 StopCoroutine(_hitCoroutine);
             }
 
-            _hitCoroutine = StartCoroutine(HitCoroutine());
+            if (this.gameObject.activeSelf == true)
+            {
+                _hitCoroutine = StartCoroutine(HitCoroutine());
+            }
         }
     }
 
@@ -231,6 +234,7 @@ public class Unit : MonoBehaviour
     public virtual void Die()
     {
         _isDie = true;
+        StopAllCoroutines();
         OnDieEvent?.Invoke();
     }
 

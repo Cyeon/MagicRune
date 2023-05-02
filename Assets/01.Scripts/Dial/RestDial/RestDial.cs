@@ -78,6 +78,8 @@ public class RestDial : MonoBehaviour
         {
             // 깅회 1
             // 맞는 UI 띄워ㅓ주기
+            PopupText text = Managers.Resource.Instantiate("UI/PopupText").GetComponent<PopupText>();
+            text.SetText("개발 중인 기능입니다.");
             Debug.Log("강화1");
         }, "같은 등급의\n다른 룬으로 바꾼다.");
         _dialElementList[0].AddRuneList(enhanceRune1);
@@ -100,6 +102,8 @@ public class RestDial : MonoBehaviour
             // 깅회 2
             // 맞는 UI 띄워ㅓ주기
             Debug.Log("강화2");
+            PopupText text = Managers.Resource.Instantiate("UI/PopupText").GetComponent<PopupText>();
+            text.SetText("개발 중인 기능입니다.");
         }, "여러개의 룬을 바쳐\n더 높은 등급의\n룬을 얻는다.");
         _dialElementList[0].AddRuneList(enhanceRune2);
         AddCard(enhanceRune2, 3);

@@ -50,6 +50,8 @@ public class ExplainPanel : MonoBehaviour
 
     public void SetKeyward()
     {
+        if (_keywardArea == null) return;
+
         for(int i = 0; i < _rune.BaseRuneSO.KeywardList.Length; i++)
         {
             KeywardPanel panel = Managers.Resource.Instantiate("UI/KeywardPanel", _keywardArea).GetComponent<KeywardPanel>();
