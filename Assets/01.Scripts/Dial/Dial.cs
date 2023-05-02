@@ -7,6 +7,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using static UnityEngine.ParticleSystem;
 using Random = UnityEngine.Random;
 
 public class Dial : MonoBehaviour
@@ -86,14 +87,14 @@ public class Dial : MonoBehaviour
         }
         _runeDict.Clear();
 
-        for(int i = _usingDeck.Count - 1; i >= 0; i--)
+        for (int i = _usingDeck.Count - 1; i >= 0; i--)
         {
             _remainingDeck.Add(_usingDeck[i]);
             _usingDeck.RemoveAt(i);
         }
         _usingDeck.Clear();
 
-        for (int i = _cooltimeDeck.Count - 1; i >= 0 ; i--)
+        for (int i = _cooltimeDeck.Count - 1; i >= 0; i--)
         {
             if (_cooltimeDeck[i].IsCoolTime == false)
             {
@@ -385,5 +386,23 @@ public class Dial : MonoBehaviour
                 _cooltimeDeck[i].AddCoolTime(-1);
             }
         }
+    }
+
+    public void CheckResonance()
+    {
+        AttributeType criterionType = _dialElementList[0].SelectCard.Rune.BaseRuneSO.AttributeType;
+        bool isSame = true;
+
+        for (int i = 1; i < _dialElementList.Count; i++)
+        {
+            isSame = criterionType == _dialElementList[i].SelectCard.Rune.BaseRuneSO.AttributeType;
+            if (!isSame)
+                break;
+        }
+
+        if (isSame)
+            _resonance.ResonanceEffect(criterionType);
+        else
+            _resonance.ResonanceEffect(AttributeType.None, false);
     }
 }
