@@ -1,7 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class RuneManager
 {
@@ -33,13 +36,13 @@ public class RuneManager
         _runeHandler.Add(new MagicBullet());
         _runeHandler.Add(new MagicShield());
 
-        for(int i = 0; i < _runeHandler.Count; i++)
+        for (int i = 0; i < _runeHandler.Count; i++)
         {
             _runeHandler[i].Init();
             //_runeNameDict.Add(_runeHandler[i].GetType().Name, _runeHandler[i]);
         }
 
-        foreach(var list in _runeNameDict)
+        foreach (var list in _runeNameDict)
         {
             Debug.Log($"{list.Key}, {list.Value}");
         }
@@ -47,9 +50,22 @@ public class RuneManager
 
     public BaseRune GetRandomRuneOfRarity(RuneRarity rarity, List<BaseRune> ignoreRuneList = null)
     {
+        List<BaseRune> newRuneList = new List<BaseRune>(_runeHandler);
+        if (ignoreRuneList != null)
+        {
+            for (int i = 0; i < ignoreRuneList.Count; i++)
+            {
+                if (newRuneList.Contains(ignoreRuneList[i]) == true)
+                {
+                    newRuneList.Remove(ignoreRuneList[i]);
+                }
+            }
+        }
 
+        newRuneList = newRuneList.Where(x => x.BaseRuneSO.Rarity == rarity).ToList();
 
-        return ignoreRuneList[0]; // юс╫ц╥н
+        int idx = Random.Range(0, newRuneList.Count);
+        return newRuneList[idx].Clone() as BaseRune;
     }
 
     public BaseRune GetRandomRune(List<BaseRune> ignoreRuneList = null)
@@ -60,11 +76,14 @@ public class RuneManager
         {
             for (int i = 0; i < ignoreRuneList.Count; i++)
             {
-                newRuneList.Remove(ignoreRuneList[i]);
+                if (newRuneList.Contains(ignoreRuneList[i]) == true)
+                {
+                    newRuneList.Remove(ignoreRuneList[i]);
+                }
             }
         }
         int idx = Random.Range(0, newRuneList.Count);
-        return newRuneList[idx];
+        return newRuneList[idx].Clone() as BaseRune;
     }
 
     public List<BaseRune> GetRandomRune(int count, List<BaseRune> ignoreRuneList = null)
@@ -72,6 +91,7 @@ public class RuneManager
         List<BaseRune> runeList = new List<BaseRune>();
 
         List<BaseRune> newRuneList = new List<BaseRune>(_runeHandler);
+
         if (ignoreRuneList != null)
         {
             for (int i = 0; i < ignoreRuneList.Count; i++)
@@ -84,16 +104,16 @@ public class RuneManager
         }
 
         List<int> numberList = new List<int>();
-        for(int i = 0; i < newRuneList.Count; i++)
+        for (int i = 0; i < newRuneList.Count; i++)
         {
             numberList.Add(i);
         }
 
-        for(int i = 0; i < count; i++)
+        for (int i = 0; i < count; i++)
         {
             if (numberList.Count <= 0) break;
             int randomIndex = Random.Range(0, numberList.Count);
-            runeList.Add(newRuneList[numberList[randomIndex]]);
+            runeList.Add(newRuneList[numberList[randomIndex]].Clone() as BaseRune);
             numberList.RemoveAt(randomIndex);
         }
 

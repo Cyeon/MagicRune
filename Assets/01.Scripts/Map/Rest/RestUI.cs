@@ -8,93 +8,23 @@ public class RestUI : MonoBehaviour
 {
     [SerializeField, Range(0, 100)]
     private int _healthPercent = 25;
+    public int HealthPercent => _healthPercent;
 
     [SerializeField]
-    private Button _restBtn;
-    [SerializeField]
-    private Button _enhanceBtn;
-
-    [SerializeField]
-    private GameObject _healthParticle;
-
-    private EnhanceType _enhanceType;
-
-    private bool _isHealing = false;
+    private RestDial _dial;
+    public RestDial Dial => _dial;
 
     private void Start()
     {
         GetComponent<Canvas>().enabled = false;
 
-        _restBtn.onClick.RemoveAllListeners();
-        _restBtn.onClick.AddListener(() =>
-        {
-            _enhanceBtn.onClick.RemoveAllListeners();
-            StartCoroutine(RestCoroutine());
-        });
-
-        //_enhanceBtn.onClick.RemoveAllListeners();
-        _enhanceBtn.onClick.AddListener(() =>
-        {
-            _restBtn.onClick.RemoveAllListeners();
-
-            // 각각 상황에 맞는 캔버스 띄우기
-            switch (_enhanceType)
-            {
-                case EnhanceType.Change:
-                    break;
-                case EnhanceType.Sacrifice:
-                    break;
-            }
-
-            NextStage();
-        });
     }
 
-    public void SetEnhanceType(EnhanceType type)
+    public void NextStage()
     {
-        _enhanceType = type;
-    }
-
-    public void SetRandonEnhanceType()
-    {
-        _enhanceType = (EnhanceType)Random.Range((int)EnhanceType.START, (int)EnhanceType.END + 1);
-    }
-
-    public void PortalStartAnimation()
-    {
-        _restBtn.gameObject.SetActive(true);
-        _enhanceBtn.gameObject.SetActive(true);
-
-        _restBtn.transform.localScale = Vector3.zero;
-        _enhanceBtn.transform.localScale = Vector3.zero;
-
-        _restBtn.transform.DOScale(1.5f, 0.1f);
-        _enhanceBtn.transform.DOScale(1.5f, 0.1f);
-    }
-
-    private IEnumerator RestCoroutine()
-    {
-        if (!_isHealing)
-        {
-            _isHealing = true;
-
-            Managers.GetPlayer().AddHPPercent(_healthPercent);
-            _healthParticle.SetActive(true);
-
-            yield return new WaitForSeconds(1.5f);
-
-            _isHealing = false;
-            NextStage();
-        }
-
-    }
-
-    private void NextStage()
-    {
-        _restBtn.gameObject.SetActive(false);
-        _enhanceBtn.gameObject.SetActive(false);
         Managers.Canvas.GetCanvas(this.name).enabled = false;
         Managers.Canvas.GetCanvas("MapUI").enabled = true;
+        _dial.gameObject.SetActive(false);
         Managers.Map.NextStage();
     }
 }

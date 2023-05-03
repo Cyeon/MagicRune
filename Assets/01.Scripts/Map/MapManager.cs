@@ -136,8 +136,8 @@ public class MapManager
         Sequence seq = DOTween.Sequence();
         seq.AppendInterval(0.5f);
         if (Stage < MapSceneUI.StageList.childCount - 2)
-            seq.Append(MapSceneUI.StageList.transform.DOLocalMoveX(Stage * -300f, 1f));
-        seq.Append(MapSceneUI.Stages[Stage].DOColor(Color.white, 0.5f));
+            seq.Append(MapSceneUI.StageList.transform.DOLocalMoveX(Stage * -300f, 0.5f));
+        seq.Append(MapSceneUI.Stages[Stage].DOColor(Color.white, 0.25f));
         seq.AppendCallback(() =>
         {
             _stageList[Stage].color = Color.white;
