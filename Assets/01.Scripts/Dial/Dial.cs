@@ -403,6 +403,6 @@ public class Dial : MonoBehaviour
         if (isSame)
             _resonance.ResonanceEffect(criterionType);
         else
-            _resonance.ResonanceEffect(AttributeType.None, false);
+            _resonance.ActiveAllEffectObject(false);
     }
 }

@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -24,13 +24,13 @@ public class Resonance : MonoBehaviour
 
     private void Start()
     {
-
+        // Set Dictionary 
         for (int i = 0; i < MAX_PARTICLE_COUNT; i++)
         {
             _effectParticleDictionary.Add(_effectNameArr[i], new List<ParticleSystem>());
         }
 
-        // ���� ��ƼŬ ����
+        // 공명 파티클 생성
         for (int i = 0; i < MAX_PARTICLE_COUNT; i++)
         {
             GameObject gameObject = Managers.Resource.Instantiate("Effects/MagicAura", transform);
@@ -51,7 +51,7 @@ public class Resonance : MonoBehaviour
     public void Invocation(AttributeType resonanceType)
     {
         Invoke(resonanceType + "Resonance", 0);
-        ResonanceEffect(AttributeType.None, false);
+        ActiveAllEffectObject(false);
     }
 
     public void FireResonance()
@@ -74,40 +74,52 @@ public class Resonance : MonoBehaviour
         BattleManager.Instance.Player.StatusManager.AddStatus(StatusName.Recharging, 5);
     }
 
-    public void ResonanceEffect(AttributeType type, bool isActive = true)
+    /// <summary>
+    /// 공명 이펙트 세팅해주는 함수 
+    /// </summary>
+    /// <param name="type">공명 속성</param>
+    /// <param name="isActive">키고 꺼줘요</param>
+    public void ResonanceEffect(AttributeType type)
     {
-        ActiveAllEffectObject(isActive);
+        if (type == AttributeType.None || type == AttributeType.NonAttribute) { return; }
 
-        if (!isActive)
-            return;
+        ActiveAllEffectObject(true);
 
-        List<Gradient> gradients = new List<Gradient>();
+        List<Gradient> gradients = GetGradients(type);
 
-        for (int i = 0; i < _gradiantList.Count; i++)
+        for (int i = 0; i < _effectNameArr.Length; i++)
         {
-            if (_gradiantList[i].type == type)
+            for (int j = 0; j < MAX_PARTICLE_COUNT; j++)
             {
-                gradients = _gradiantList[i].gradients;
-                break;
-            }
-        }
-
-        for (int i = 0; i < MAX_PARTICLE_COUNT; i++)
-        {
-            for (int j = 0; j < _effectNameArr.Length; j++)
-            {
-                ParticleSystem.ColorOverLifetimeModule color = _effectParticleDictionary[_effectNameArr[i]][j].colorOverLifetime;
-                color.color.gradient.SetKeys(gradients[i].colorKeys, gradients[i].alphaKeys);
+                ParticleSystem.ColorOverLifetimeModule col = _effectParticleDictionary[_effectNameArr[i]][j].colorOverLifetime;
+                col.color = gradients[i];
             }
         }
     }
 
-    private void ActiveAllEffectObject(bool isActive)
+    /// <summary>
+    /// inspecter에서 설정해둔 그라디언트 가져오는 함수 
+    /// </summary>
+    /// <param name="type">찾을 속성</param>
+    /// <returns>속성별 그라디언트를 반환</returns>
+    private List<Gradient> GetGradients(AttributeType type)
+    {
+        for (int i = 0; i < _gradiantList.Count; i++)
+        {
+            if (_gradiantList[i].type == type)
+            {
+                return _gradiantList[i].gradients;
+            }
+        }
+
+        return null;
+    }
+
+    public void ActiveAllEffectObject(bool isActive)
     {
         for (int i = 0; i < _particleObjectArr.Length; i++)
         {
             _particleObjectArr[i].SetActive(isActive);
         }
-
     }
 }

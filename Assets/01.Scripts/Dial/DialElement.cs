@@ -70,10 +70,10 @@ public class DialElement : MonoBehaviour
                     //_selectCard.SetActiveOutline(OutlineType.Default);
                     _selectCard.RuneColor(new Color(0.26f, 0.26f, 0.26f, 1f));
                 }
+                
                 _selectCard = value;
-
-
                 _dial.CheckResonance();
+
                 //_selectCard.SetActiveOutline(OutlineType.Cyan);
                 _selectCard.RuneColor(Color.white);
             }
@@ -395,8 +395,8 @@ public class DialElement : MonoBehaviour
                                         (index + 1) % _runeList.Count * oneDinstance*/), 0.3f, RotateMode.Fast)
                                     .OnComplete(() =>
                                     {
-                                            //SelectCard = _runeList[index];
-                                            if (_selectCard != null) { Define.DialScene?.CardDescPopup(_selectCard.Rune); }
+                                        //SelectCard = _runeList[index];
+                                        if (_selectCard != null) { Define.DialScene?.CardDescPopup(_selectCard.Rune); }
                                     });
                             }
                             else
@@ -406,8 +406,8 @@ public class DialElement : MonoBehaviour
                                         ((index) * oneDinstance)*/), 0.3f, RotateMode.Fast)
                                     .OnComplete(() =>
                                     {
-                                            //SelectCard = _runeList[index]; // ���� ���� ���ϴ� �ְ� �ȵ���?�� ����â ������ ������?
-                                            if (_selectCard != null) { Define.DialScene?.CardDescPopup(_selectCard.Rune); }
+                                        //SelectCard = _runeList[index]; // ���� ���� ���ϴ� �ְ� �ȵ���?�� ����â ������ ������?
+                                        if (_selectCard != null) { Define.DialScene?.CardDescPopup(_selectCard.Rune); }
                                     });
                             }
                         }
