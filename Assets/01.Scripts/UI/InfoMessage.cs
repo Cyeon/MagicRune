@@ -16,6 +16,7 @@ public class InfoMessage : MonoBehaviour
     public void Setup(string message, Vector3 pos)
     {
         transform.position = pos;
+        transform.localScale = Vector3.one;
         _textMesh.SetText(message);
 
         Sequence seq = DOTween.Sequence();

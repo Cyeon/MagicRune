@@ -11,6 +11,12 @@ public class AbilityValue
     public int Value;
 }
 
+public enum EffectDirection
+{
+    Enemy,
+    Player,
+}
+
 [CreateAssetMenu(menuName = "SO/Rune/BaseRuneSO")]
 public class BaseRuneSO : ScriptableObject
 {
@@ -23,6 +29,7 @@ public class BaseRuneSO : ScriptableObject
     public GameObject RuneEffect;
     public RuneRarity Rarity;
     public int CoolTime;
+    public EffectDirection Direction;
 
     // Ability Parameta
 
@@ -30,19 +37,5 @@ public class BaseRuneSO : ScriptableObject
     // 공격 5, 빙결 2, 방어 10 이렇게만. 진짜 능력치만
     public List<AbilityValue> AbilityList;
 
-
-    //private BaseRune을 가지고 잇음
-
-    public void AddRune()
-    {
-        // BaseRune.Excute 같은 거 실행함 
-    }
-
-    ///BaseRune
-    // 대충 virtual 함수로 Excute건 뭐건 있음 
-
-    /// 룬 : BaseRune
-    // 대충 Excute를 재정의 함 {
-    // 덱 매니저.Add(new 대충 룬) 
-    // }
+    public KeywardType[] KeywardList;
 }

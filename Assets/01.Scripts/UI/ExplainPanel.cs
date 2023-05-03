@@ -8,36 +8,55 @@ public class ExplainPanel : MonoBehaviour
 {
     #region UI Parameter
 
+    [SerializeField]
     private TextMeshProUGUI _nameText;
+    [SerializeField]
     private Image _runeImage;
+    [SerializeField]
     private TextMeshProUGUI _coolTimeText;
+    [SerializeField]
     private TextMeshProUGUI _descText;
+
+    [SerializeField]
+    private Transform _keywardArea;
 
     #endregion
 
-    private void Start()
-    {
-        Setting();
-    }
+    protected BaseRune _rune;
 
-    private void Setting()
-    {
-        _nameText = transform.Find("Skill_Name_Text").GetComponent<TextMeshProUGUI>();
-        _runeImage = transform.Find("Explain_Skill_Icon").GetComponent<Image>();
-        _coolTimeText = transform.Find("CoolTime_Icon/CoolTime_Text").GetComponent<TextMeshProUGUI>();
-        _descText = transform.Find("Explain_Text").GetComponent<TextMeshProUGUI>();
-    }
+    private List<KeywardPanel> _keywardPanelList = new List<KeywardPanel>();
 
     public virtual void SetUI(BaseRune rune)
     {
-        if (_nameText == null || _runeImage == null || _coolTimeText == null || _descText == null)
-        {
-            Setting();
-        }
+        _rune = rune;
 
         _nameText.SetText(rune.BaseRuneSO.RuneName);
         _runeImage.sprite = rune.BaseRuneSO.RuneSprite;
         _coolTimeText.SetText(rune.BaseRuneSO.CoolTime.ToString());
         _descText.SetText(rune.BaseRuneSO.RuneDescription);
+
+        ClearKeyward();
+
+        SetKeyward();
+    }
+
+    public void ClearKeyward()
+    {
+        for(int i = 0; i < _keywardPanelList.Count; i++)
+        {
+            Managers.Resource.Destroy(_keywardPanelList[i].gameObject);
+        }
+    }
+
+    public void SetKeyward()
+    {
+        if (_keywardArea == null) return;
+
+        for(int i = 0; i < _rune.BaseRuneSO.KeywardList.Length; i++)
+        {
+            KeywardPanel panel = Managers.Resource.Instantiate("UI/KeywardPanel", _keywardArea).GetComponent<KeywardPanel>();
+            panel.SetKeyward(Managers.Keyward.GetKeyward(_rune.BaseRuneSO.KeywardList[i]));
+            _keywardPanelList.Add(panel);
+        }
     }
 }

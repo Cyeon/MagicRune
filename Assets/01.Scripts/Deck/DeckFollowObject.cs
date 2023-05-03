@@ -26,6 +26,7 @@ public class DeckFollowObject : MonoBehaviour
                 break;
             }
         }
+        transform.Find("Card").gameObject.SetActive(false);
     }
     private void Update()
     {

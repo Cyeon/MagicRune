@@ -41,5 +41,16 @@ public class RewardManager
         _rewards.Add(reward);
     }
 
-    public List<Reward> GetRewardList() { return _rewards.Where(x => x.isGive == false && x.isAuto == false).ToList(); }
+    /// <summary>
+    /// 지급안된 보상 목록들 불러오는 함수
+    /// </summary>
+    /// <returns></returns>
+    public List<Reward> GetRewardList() { return _rewards; }
+
+    /// <summary>
+    /// 자동지급되는 보상들 외에 아직 지급받을 보상이 있는가?
+    /// </summary>
+    /// <returns></returns>
+    public bool IsHaveNextClickReward() { return _rewards.Where(x => x.isGive == false && x.isAuto == false).ToList().Count == 0; }
+
 }

@@ -4,15 +4,13 @@ using UnityEngine;
 
 public class ChooseRunePanel : ExplainPanel
 {
-    private BaseRune _rune;
-
     public void ChooseRune()
     {
         //Managers.Deck.AddRune(_rune);
         Managers.Deck.AddRune(Managers.Rune.GetRune(_rune));
         Define.DialScene?.HideChooseRuneUI();
 
-        if (Managers.Reward.GetRewardList().Count == 0)
+        if (Managers.Reward.IsHaveNextClickReward())
         {
             BattleManager.Instance.NextStage();
         }

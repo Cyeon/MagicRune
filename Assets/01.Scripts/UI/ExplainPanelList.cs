@@ -59,8 +59,8 @@ public class ExplainPanelList : MonoBehaviour
     {
         for (int i = 0; i < _explaingPanelArray.Length; i++)
         {
+            _explaingPanelArray[i].ClearKeyward();
             _explaingPanelArray[i].gameObject.SetActive(true);
-            
         }
     }
 

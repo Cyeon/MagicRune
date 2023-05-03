@@ -14,7 +14,7 @@ public class FoxOrbAction : PatternAction
 
     public override void TurnAction()
     {
-        if(!_isGetDamage)
+        if(_isGetDamage == false)
         {
             BattleManager.Instance.Enemy.StatusManager.AddStatus(StatusName.FoxOrb, 1);
         }
