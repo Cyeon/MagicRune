@@ -74,7 +74,7 @@ public class DeckSettingUI : MonoBehaviour
     /// </summary>
     public void ActiveUI()
     {
-        if(Managers.Scene.CurrentScene.GetType() != typeof(DialScene))
+        if (Managers.Scene.CurrentScene.GetType() != typeof(DialScene))
         {
             SettingAllDeck();
             _backgroundPanel.SetActive(true);
@@ -195,13 +195,11 @@ public class DeckSettingUI : MonoBehaviour
                     if (Managers.Deck.FirstDialDeck.Count < DeckManager.FIRST_DIAL_DECK_MAX_COUNT)
                     {
                         Managers.Deck.AddRuneFirstDeck(SelectRune.Rune);
-                        //Managers.Deck.RemoveRune(SelectRune.Rune);
                         SelectRune.transform.SetParent(_dialDeckContentTransform);
                         SelectRune.SetDeck(DeckType.FirstDialDeck);
                     }
                     break;
                 case DeckType.OwnDeck:
-                    //Managers.Deck.AddRune(SelectRune.Rune);
                     Managers.Deck.RemoveFirstDeck(SelectRune.Rune);
                     SelectRune.transform.SetParent(_ownDeckContentTransform);
                     SelectRune.SetDeck(DeckType.OwnDeck);
@@ -223,23 +221,25 @@ public class DeckSettingUI : MonoBehaviour
     {
         BaseRune tempRune = _selectRune.Rune;
 
+        if (_selectRune.NowDeck == DeckType.FirstDialDeck && _targetRune.NowDeck == DeckType.OwnDeck)
+        {
+            Equip(DeckType.OwnDeck);
+            return;
+        }
+
         if (_selectRune.NowDeck != _targetRune.NowDeck)
         {
             if (_selectRune.NowDeck == DeckType.OwnDeck)
             {
                 Managers.Deck.RemoveFirstDeck(_targetRune.Rune);
-                //Managers.Deck.RemoveRune(_selectRune.Rune);
 
                 Managers.Deck.AddRuneFirstDeck(_selectRune.Rune);
-                //Managers.Deck.AddRune(_targetRune.Rune);
             }
             else if (_selectRune.NowDeck == DeckType.FirstDialDeck)
             {
                 Managers.Deck.RemoveFirstDeck(_selectRune.Rune);
-                //Managers.Deck.RemoveRune(_targetRune.Rune);
 
                 Managers.Deck.AddRuneFirstDeck(_targetRune.Rune);
-                //Managers.Deck.AddRune(_selectRune.Rune);
             }
         }
 
