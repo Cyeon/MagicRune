@@ -21,14 +21,15 @@ public class Managers : MonoBehaviour
     private GoldManager _gold = new GoldManager();
     private GameManager _game = new GameManager();
     private JsonManager _json = new JsonManager();
+    private RelicManager _relic = new RelicManager();
+    private EnemyManager _enemy = new EnemyManager();
     private SoundManager _sound = new SoundManager();
     private RewardManager _reward = new RewardManager();
     private CanvasManager _canvas = new CanvasManager();
     private SceneManagerEX _scene = new SceneManagerEX();
+    private KeywardManager _keyward = new KeywardManager();
     private ResourceManager _resource = new ResourceManager();
     private StatModifierManager _statModifier = new StatModifierManager();
-    private RelicManager _relic = new RelicManager();
-    private EnemyManager _enemy = new EnemyManager();
 
     public static UIManager UI { get { return Instance._ui; } }
     public static MapManager Map { get { return Instance._map; } }
@@ -38,14 +39,15 @@ public class Managers : MonoBehaviour
     public static GoldManager Gold { get { return Instance._gold; } }
     public static GameManager Game { get { return Instance._game; } }
     public static JsonManager Json { get { return Instance._json; } }
+    public static RelicManager Relic => Instance._relic;
+    public static EnemyManager Enemy => Instance._enemy;
     public static SoundManager Sound { get { return Instance._sound; } }
     public static RewardManager Reward { get { return Instance._reward; } }
     public static CanvasManager Canvas { get { return Instance._canvas; } }
     public static SceneManagerEX Scene { get { return Instance._scene; } }
+    public static KeywardManager Keyward { get { return Instance._keyward; } }
     public static ResourceManager Resource { get { return Instance._resource; } }
     public static StatModifierManager StatModifier { get { return Instance._statModifier; } }
-    public static RelicManager Relic => Instance._relic;
-    public static EnemyManager Enemy => Instance._enemy;
     #endregion
 
     private bool _preparedToQuit = false;
@@ -81,6 +83,7 @@ public class Managers : MonoBehaviour
             _instance._statModifier.Init();
             _instance._deck.Init();
             _instance._gold.Init();
+            _instance._keyward.Init();
 
         }
 

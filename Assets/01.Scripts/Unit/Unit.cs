@@ -71,12 +71,25 @@ public class Unit : MonoBehaviour
     private StatusManager _statusManager;
     public StatusManager StatusManager => _statusManager;
 
+    [SerializeField]
+    private SpriteRenderer _spriteRenderer;
+    [SerializeField]
+    private Material _hitMat;
+    private Material _defaultMat;
+
+    private Coroutine _hitCoroutine;
+
     private void Start() {
         _statusManager = new StatusManager(this);
         statusTrm = transform.Find("Status");
 
         _statusManager.Reset();
         _userInfoUI = Managers.UI.Get<UserInfoUI>("Upper_Frame", UIType.DontDestroyUI);
+
+        if(_spriteRenderer != null)
+        {
+            _defaultMat = _spriteRenderer.material;
+        }
     }
 
     /// <summary>
@@ -112,7 +125,23 @@ public class Unit : MonoBehaviour
         if (this is Enemy)
         {
             Define.DialScene?.DamageUIPopup(currentDmg, Define.MainCam.WorldToScreenPoint(transform.position), status);
+            if(_hitCoroutine != null)
+            {
+                StopCoroutine(_hitCoroutine);
+            }
+
+            if (this.gameObject.activeSelf == true)
+            {
+                _hitCoroutine = StartCoroutine(HitCoroutine());
+            }
         }
+    }
+
+    private IEnumerator HitCoroutine()
+    {
+        _spriteRenderer.material = _hitMat;
+        yield return new WaitForSeconds(0.1f);
+        _spriteRenderer.material = _defaultMat;
     }
 
     public virtual void Attack(float danage)
@@ -205,6 +234,7 @@ public class Unit : MonoBehaviour
     public virtual void Die()
     {
         _isDie = true;
+        StopAllCoroutines();
         OnDieEvent?.Invoke();
     }
 

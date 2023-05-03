@@ -14,15 +14,17 @@ public class JsonManager
     private string _path = "";
     public string PATH => _path;
 
+    private string _pathFileName = "/SAVE_DATA_FILE";
+
     public void Init()
     {
         if (Application.platform == RuntimePlatform.Android)
         {
-            _path = Application.persistentDataPath + "/SAVE_DATA_FILE";
+            _path = Application.persistentDataPath + _pathFileName;
         }
         else
         {
-            _path = Application.dataPath + "/SAVE_DATA_FILE";
+            _path = Application.dataPath + _pathFileName;
         }
 
         if (!Directory.Exists(_path))

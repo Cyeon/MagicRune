@@ -8,6 +8,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using static UnityEngine.ParticleSystem;
+using static UnityEngine.Rendering.DebugUI;
 using Random = UnityEngine.Random;
 
 public class Dial : MonoBehaviour
@@ -312,7 +313,7 @@ public class Dial : MonoBehaviour
             if (_dialElementList[i].SelectCard != null)
             {
                 int index = i;
-                _dialElementList[i].IsGlow = true;
+                MagicCircleGlow(i, true);
                 BaseRune rune = _usingDeck.Find(x => x == _dialElementList[i].SelectCard.Rune);
                 _usingDeck.Remove(rune);
                 rune.SetCoolTime();
@@ -350,7 +351,20 @@ public class Dial : MonoBehaviour
                         break;
                 }
 
-                b.Init(_dialElementList[i].SelectCard.transform, BattleManager.Instance.Enemy.transform, 1.5f, 7, 7, () =>
+                Transform pos = null;
+                float bendValue = 0f;
+                switch (_dialElementList[i].SelectCard.Rune.BaseRuneSO.Direction)
+                {
+                    case EffectDirection.Enemy:
+                        pos = BattleManager.Instance.Enemy.transform;
+                        bendValue = 7f;
+                        break;
+                    case EffectDirection.Player:
+                        pos = this.transform;
+                        bendValue = 15f;
+                        break;
+                }
+                b.Init(_dialElementList[i].SelectCard.transform, pos, 1.5f, bendValue, bendValue, () =>
                 {
                     _dialElementList[index].Attack();
                     //_dialElementList[i] = null;
@@ -373,6 +387,11 @@ public class Dial : MonoBehaviour
         {
             _dialElementList[i].IsGlow = value;
         }
+    }
+
+    public void MagicCircleGlow(int index, bool value)
+    {
+        _dialElementList[index].IsGlow = value;
     }
 
     public void AllMagicSetCoolTime()

@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class ChooseRunePanel : ExplainPanel
 {
-    private BaseRune _rune;
-
     public void ChooseRune()
     {
         //Managers.Deck.AddRune(_rune);
