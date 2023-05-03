@@ -37,6 +37,7 @@ public class RuneListViewUI : MonoBehaviour
     public void SetHoldingRunes()
     {
         SettingPanels(Managers.Deck.Deck.FindAll(x => x.IsCoolTime == true), true);
+        EventManager.StartListening(Define.ON_START_PLAYER_TURN, UpdateCoolTime);
         ActiveUI(true);
     }
     /// <summary>
@@ -72,5 +73,12 @@ public class RuneListViewUI : MonoBehaviour
     {
         _backgroundPanel.SetActive(isActive);
         _scrollView.SetActive(isActive);
+    }
+
+    private void UpdateCoolTime()
+    {
+        ReturnPanels();
+        SettingPanels(Managers.Deck.Deck.FindAll(x => x.IsCoolTime == true), true);
+        EventManager.StopListening(Define.ON_START_PLAYER_TURN, UpdateCoolTime);
     }
 }
