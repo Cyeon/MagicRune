@@ -13,6 +13,7 @@ public class AdventureUI : MonoBehaviour
 
     [SerializeField]
     private GameObject _storyPanel;
+    private Button _storyPanelClickBtn;
     private TextMeshProUGUI _storyText;
 
     private GameObject _distractorPanel;
@@ -31,7 +32,9 @@ public class AdventureUI : MonoBehaviour
         _titleText = Managers.UI.Get<TextMeshProUGUI>("AdventureTitle_Text");
 
         _storyText = Managers.UI.Get<TextMeshProUGUI>("Story_Text");
-        Managers.UI.Get<Button>("Story_Button").onClick.AddListener(() => StoryClick());
+        _storyPanelClickBtn = Managers.UI.Get<Button>("Story_Button");
+
+        _storyPanelClickBtn.onClick.AddListener(() => StoryClick());
 
         _distractorPanel = transform.Find("Distractor").gameObject;
         _distractorButtons = _distractorPanel.GetComponentsInChildren<Button>(true);
@@ -42,7 +45,7 @@ public class AdventureUI : MonoBehaviour
 
     private void StoryClick()
     {
-        _storyPanel.SetActive(false);
+        //_storyPanel.SetActive(false);
         _distractorPanel.SetActive(true);
     }
 
@@ -59,12 +62,23 @@ public class AdventureUI : MonoBehaviour
 
         for (int i = 0; i < info.distractors.Count; i++)
         {
-            _distractorText[i].text = info.distractors[i].text;
+            _distractorText[i].text = info.distractors[i].distractorText;
             _distractorButtons[i].onClick.RemoveAllListeners();
+
             int index = i;
-            _distractorButtons[i].onClick.AddListener(() => info.distractors[index].function.Invoke());
-            if (info.distractors[index].isNextStage)
+            _distractorButtons[i].onClick.AddListener(() =>
+            {
+                info.distractors[index].function.Invoke();
+                _storyText.text = info.distractors[index].resultText;
+                _distractorPanel.SetActive(false);
+
+                _storyPanelClickBtn.onClick.RemoveAllListeners();
+                _storyPanelClickBtn.onClick.AddListener(() => { DistracotrFuncList.NextStage(); });
+            });
+
+            if (info.distractors[index].resultText == "")
                 _distractorButtons[i].onClick.AddListener(() => DistracotrFuncList.NextStage());
+
             _distractorButtons[i].gameObject.SetActive(true);
         }
     }
