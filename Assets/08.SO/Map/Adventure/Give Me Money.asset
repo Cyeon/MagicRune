@@ -17,26 +17,29 @@ MonoBehaviour:
   message: "\uB2F9\uC2E0\uC774 \uC7A0\uB4E0 \uC0AC\uC774, \uC778\uAE30\uCC99\uC774
     \uB4E4\uB824\uC635\uB2C8\uB2E4."
   distractors:
-  - text: "[\uD655\uC778\uD55C\uB2E4] \uB79C\uB364\uD55C \uBAAC\uC2A4\uD130\uC640
+  - distractorText: "[\uD655\uC778\uD55C\uB2E4] \uB79C\uB364\uD55C \uBAAC\uC2A4\uD130\uC640
       \uC870\uC6B0\uD569\uB2C8\uB2E4."
-    isNextStage: 0
+    resultText: "\uAC11\uC791\uC2A4\uB7F0 \uBAAC\uC2A4\uD130\uC758 \uCD9C\uD604\uC5D0
+      \uB2F9\uC2E0\uC740 \uAE5C\uC9DD \uB180\uB790\uC9C0\uB9CC \uC798 \uB300\uCC98\uD588\uC2B5\uB2C8\uB2E4."
     function:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 896080243694524714, guid: 224f0ca2aa1150447ad34e73a82c6cf7, type: 3}
           m_TargetAssemblyTypeName: DistracotrFuncList, Assembly-CSharp
-          m_MethodName: NextStage
-          m_Mode: 1
+          m_MethodName: BattleEnemy
+          m_Mode: 2
           m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_ObjectArgument: {fileID: 5383020803786264790, guid: afc08dcb646d04641885cdabadc34e73, type: 3}
+            m_ObjectArgumentAssemblyTypeName: Enemy, Assembly-CSharp
             m_IntArgument: 0
             m_FloatArgument: 0
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-  - text: "[\uC794\uB2E4] \uAE08\uD654 50\uAC1C\uB97C \uC783\uC2B5\uB2C8\uB2E4. "
-    isNextStage: 1
+  - distractorText: "[\uC794\uB2E4] \uAE08\uD654 50\uAC1C\uB97C \uC783\uC2B5\uB2C8\uB2E4."
+    resultText: "\uC878\uB9B0 \uB2F9\uC2E0\uC740 \uADF8\uB0E5 \uC790\uAE30\uB85C
+      \uD588\uC2B5\uB2C8\uB2E4.\uC544\uCE68\uC5D0 \uC77C\uC5B4\uB098\uBCF4\uB2C8
+      \uB3C8\uC8FC\uBA38\uB2C8\uAC00 \uC870\uAE08 \uAC00\uBCBC\uC6CC\uC84C\uB124\uC694."
     function:
       m_PersistentCalls:
         m_Calls:

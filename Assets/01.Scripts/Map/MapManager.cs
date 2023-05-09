@@ -46,6 +46,13 @@ public class MapManager
 
     private MapScene _mapScene;
 
+    #region Adventure
+    private bool _isAdventure = false;
+    public bool IsAdventureWar {get => _isAdventure; set { _isAdventure = value;} }
+    private string _adventureResultText;
+    public string AdventureResultText => _adventureResultText;
+    #endregion
+
     public void MapInit()
     {
         _mapSceneUI = Managers.Canvas.GetCanvas("MapUI").GetComponent<MapUI>();
@@ -66,6 +73,10 @@ public class MapManager
             _isFirst = false;
             _chapterList.ForEach(x => x.EnemyReset());
             _portalSpawner.SpawnPortal(_stageList[Stage].type);
+        }
+        else if (_isAdventure)
+        {
+            Managers.Canvas.GetCanvas("Adventure").enabled = true;
         }
         else
         {
@@ -161,5 +172,11 @@ public class MapManager
         _chapter = 1;
         ChapterInit();
         Managers.GetPlayer().ResetHealth();
+    }
+
+    public void AdventureWar(string text)
+    {
+        _isAdventure = true;
+        _adventureResultText = text;
     }
 }
