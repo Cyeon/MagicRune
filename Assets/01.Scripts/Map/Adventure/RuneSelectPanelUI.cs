@@ -73,7 +73,7 @@ public class RuneSelectPanelUI : MonoBehaviour, IPointerClickHandler
                 Managers.Deck.RemoveDeck(_baseRune);
                 break;
             case RuneSelectMode.Copy:
-                Managers.Deck.AddRune(_baseRune);
+                Managers.Deck.AddRune(Managers.Rune.GetRune(_baseRune));
                 break;
             case RuneSelectMode.Enforce:
                 //강화하는 거 생기면 그거 함수 넣어주면 됨  

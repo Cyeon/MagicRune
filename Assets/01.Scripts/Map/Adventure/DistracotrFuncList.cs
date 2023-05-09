@@ -71,7 +71,7 @@ public class DistracotrFuncList : MonoBehaviour
     public void RandomRuneCopy()
     {
         BaseRune baseRune = Managers.Deck.GetRandomRune();
-        Managers.Deck.AddRune(baseRune);
+        Managers.Deck.AddRune(Managers.Rune.GetRune(baseRune));
 
         EventManager<BaseRune>.TriggerEvent(Define.SELECT_RUNE_EVENT, baseRune);
     }
