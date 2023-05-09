@@ -185,6 +185,19 @@ public class DialScene : BaseScene
         Managers.Resource.Destroy(obj);
     }
 
+    public void AddStatusEffect(Unit unit, Status status)
+    {
+        Image effect = Managers.Resource.Instantiate("UI/StatusEffect", Managers.Canvas.GetCanvas("Popup").transform).GetComponent<Image>();
+        effect.transform.position = Define.MainCam.WorldToScreenPoint(unit.transform.position);
+        effect.sprite = status.icon;
+
+        Sequence seq = DOTween.Sequence();
+        seq.AppendInterval(0.1f);
+        seq.Append(effect.transform.DOScale(4.5f, 0.5f));
+        seq.Join(effect.DOFade(0f, 0.5f));
+        seq.AppendCallback(() => Managers.Resource.Destroy(effect.gameObject));
+    }
+
     #endregion
 
     #region Popup
