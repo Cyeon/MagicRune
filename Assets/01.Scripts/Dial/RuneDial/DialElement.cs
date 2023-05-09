@@ -46,7 +46,12 @@ public class DialElement : MonoBehaviour
     private BaseRuneUI _selectCard;
     public BaseRuneUI SelectCard
     {
-        get => _selectCard;
+        get
+        {
+            if (_selectCard == null)
+                _selectCard = _runeList[0];
+            return _selectCard;
+        }
         set
         {
             if (value == null)
@@ -65,7 +70,10 @@ public class DialElement : MonoBehaviour
                     //_selectCard.SetActiveOutline(OutlineType.Default);
                     _selectCard.RuneColor(new Color(0.26f, 0.26f, 0.26f, 1f));
                 }
+                
                 _selectCard = value;
+                _dial.CheckResonance();
+
                 //_selectCard.SetActiveOutline(OutlineType.Cyan);
                 _selectCard.RuneColor(Color.white);
             }
@@ -80,7 +88,7 @@ public class DialElement : MonoBehaviour
     {
         set
         {
-            if(value == true)
+            if (value == true)
             {
                 _textSpriteRenderer.sprite = _glowTextSprite;
             }
@@ -202,12 +210,12 @@ public class DialElement : MonoBehaviour
     [Obsolete]
     public void MoveRune(int index, bool isLeft = true)
     {
-        if(isLeft == true)
+        if (isLeft == true)
         {
             BaseRuneUI rune = _runeList[index];
 
             float radianValue = 0f;
-            if(index - 1 < 0)
+            if (index - 1 < 0)
             {
                 radianValue = (_dial.RuneAngle / _runeList.Count) * (index - 1) + (_dial.StartAngle * Mathf.Deg2Rad);
             }
@@ -332,77 +340,77 @@ public class DialElement : MonoBehaviour
                     {
                         //if (transform.eulerAngles.z <= _dial.RuneAngle / 2 + transform.eulerAngles.z || transform.eulerAngles.z >= (360f - _dial.RuneAngle / 2))
                         //{
-                            if (_isUseRotateOffset)
+                        if (_isUseRotateOffset)
+                        {
+                            float oneDinstance = _dial.RuneAngle / _runeList.Count;
+                            bool inBoolean = (transform.eulerAngles.z % oneDinstance) <= _selectOffset;
+                            bool outBoolean = (oneDinstance - (transform.eulerAngles.z % oneDinstance)) <= _selectOffset;
+                            if (inBoolean)
                             {
-                                float oneDinstance = _dial.RuneAngle / _runeList.Count;
-                                bool inBoolean = (transform.eulerAngles.z % oneDinstance) <= _selectOffset;
-                                bool outBoolean = (oneDinstance - (transform.eulerAngles.z % oneDinstance)) <= _selectOffset;
-                                if (inBoolean)
+                                int index = (int)(transform.eulerAngles.z / oneDinstance) % (_runeList.Count);
+                                //index = Mathf.Clamp(index, 0, _runeList.Count - 1);
+                                //if (_magicList[index].Rune.IsCoolTime == false)
+                                //{
+                                // ������ ���� ����
+                                DOTween.To(
+                                    () => transform.eulerAngles,
+                                    x => transform.eulerAngles = x,
+                                    new Vector3(0, 0, ((int)(transform.eulerAngles.z / oneDinstance)) * oneDinstance),
+                                    0.3f
+                                ).OnComplete(() =>
                                 {
-                                    int index = (int)(transform.eulerAngles.z / oneDinstance) % (_runeList.Count);
-                                    //index = Mathf.Clamp(index, 0, _runeList.Count - 1);
-                                    //if (_magicList[index].Rune.IsCoolTime == false)
-                                    //{
-                                    // ������ ���� ����
-                                    DOTween.To(
-                                        () => transform.eulerAngles,
-                                        x => transform.eulerAngles = x,
-                                        new Vector3(0, 0, ((int)(transform.eulerAngles.z / oneDinstance)) * oneDinstance),
-                                        0.3f
-                                    ).OnComplete(() =>
+                                    if (_selectCard != null) { Define.DialScene?.CardDescPopup(_selectCard.Rune); }
+                                });
+                                //}
+                            }
+                            else if (outBoolean)
+                            {
+                                int index = ((int)(transform.eulerAngles.z / oneDinstance) + 1) % (_runeList.Count);
+                                index = (index + 1) % _runeList.Count;
+                                //index = Mathf.Clamp(index + 1, 0, _runeList.Count - 1);
+                                //if (_magicList[index].Rune.IsCoolTime == false)
+                                //{
+                                DOTween.To(
+                                    () => transform.eulerAngles,
+                                    x => transform.eulerAngles = x,
+                                    new Vector3(0, 0, ((int)(transform.eulerAngles.z / oneDinstance)) * oneDinstance + _dial.StartAngle),
+                                    0.3f
+                                ).OnComplete(() =>
+                                {
+                                    if (_selectCard != null) { Define.DialScene?.CardDescPopup(_selectCard.Rune); }
+                                });
+                                //}
+                            }
+                        }
+                        else
+                        {
+                            float oneDinstance = _dial.RuneAngle / _runeList.Count;
+                            int index = (int)(transform.eulerAngles.z / oneDinstance) % (_runeList.Count);
+
+                            float distance = transform.eulerAngles.z % oneDinstance;
+                            if (distance >= oneDinstance / 2f)
+                            {
+                                transform.DORotate(new Vector3(0, 0, ((index + 1) % _runeList.Count * oneDinstance)/* >= 120 ?
+                                        ((index + 1) % _runeList.Count * oneDinstance) + 360f - oneDinstance * _runeList.Count :
+                                        (index + 1) % _runeList.Count * oneDinstance*/), 0.3f, RotateMode.Fast)
+                                    .OnComplete(() =>
                                     {
+                                        //SelectCard = _runeList[index];
                                         if (_selectCard != null) { Define.DialScene?.CardDescPopup(_selectCard.Rune); }
                                     });
-                                    //}
-                                }
-                                else if (outBoolean)
-                                {
-                                    int index = ((int)(transform.eulerAngles.z / oneDinstance) + 1) % (_runeList.Count);
-                                    index = (index + 1) % _runeList.Count;
-                                    //index = Mathf.Clamp(index + 1, 0, _runeList.Count - 1);
-                                    //if (_magicList[index].Rune.IsCoolTime == false)
-                                    //{
-                                    DOTween.To(
-                                        () => transform.eulerAngles,
-                                        x => transform.eulerAngles = x,
-                                        new Vector3(0, 0, ((int)(transform.eulerAngles.z / oneDinstance)) * oneDinstance + _dial.StartAngle),
-                                        0.3f
-                                    ).OnComplete(() =>
-                                    {
-                                        if (_selectCard != null) { Define.DialScene?.CardDescPopup(_selectCard.Rune); }
-                                    });
-                                    //}
-                                }
                             }
                             else
                             {
-                                float oneDinstance = _dial.RuneAngle / _runeList.Count;
-                                int index = (int)(transform.eulerAngles.z / oneDinstance) % (_runeList.Count);
-
-                                float distance = transform.eulerAngles.z % oneDinstance;
-                                if (distance >= oneDinstance / 2f)
-                                {
-                                    transform.DORotate(new Vector3(0, 0, ((index + 1) % _runeList.Count * oneDinstance)/* >= 120 ?
-                                        ((index + 1) % _runeList.Count * oneDinstance) + 360f - oneDinstance * _runeList.Count :
-                                        (index + 1) % _runeList.Count * oneDinstance*/), 0.3f, RotateMode.Fast)
-                                        .OnComplete(() =>
-                                        {
-                                            //SelectCard = _runeList[index];
-                                            if (_selectCard != null) { Define.DialScene?.CardDescPopup(_selectCard.Rune); }
-                                        });
-                                }
-                                else
-                                {
-                                    transform.DORotate(new Vector3(0, 0, ((index) * oneDinstance)/* >= 120 ?
+                                transform.DORotate(new Vector3(0, 0, ((index) * oneDinstance)/* >= 120 ?
                                         ((index) * oneDinstance) + 360f - oneDinstance * _runeList.Count :
                                         ((index) * oneDinstance)*/), 0.3f, RotateMode.Fast)
-                                        .OnComplete(() =>
-                                        {
-                                            //SelectCard = _runeList[index]; // ���� ���� ���ϴ� �ְ� �ȵ���?�� ����â ������ ������?
-                                            if (_selectCard != null) { Define.DialScene?.CardDescPopup(_selectCard.Rune); }
-                                        });
-                                }
+                                    .OnComplete(() =>
+                                    {
+                                        //SelectCard = _runeList[index]; // ���� ���� ���ϴ� �ְ� �ȵ���?�� ����â ������ ������?
+                                        if (_selectCard != null) { Define.DialScene?.CardDescPopup(_selectCard.Rune); }
+                                    });
                             }
+                        }
                         //}
                     }
                 }
