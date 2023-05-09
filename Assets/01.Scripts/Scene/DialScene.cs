@@ -108,12 +108,8 @@ public class DialScene : BaseScene
     {
         //StatusPanel statusPanel = Instantiate(isPopup ? _statusPopup : _statusPrefab).GetComponent<StatusPanel>();
         StatusPanel statusPanel = Managers.Resource.Instantiate("Status").GetComponent<StatusPanel>();
-        statusPanel.status = status;
+        statusPanel.Init(status);
 
-        statusPanel.image.sprite = status.icon;
-        statusPanel.image.color = status.color;
-        statusPanel.duration.text = status.TypeValue.ToString();
-        statusPanel.statusName = status.statusName;
         statusPanel.transform.SetParent(parent);
         statusPanel.transform.localScale = new Vector3(1.7f, 1.7f, 1.7f);
 
@@ -148,7 +144,7 @@ public class DialScene : BaseScene
         GameObject obj = null;
         for (int i = 0; i < trm.childCount; i++)
         {
-            if (trm.GetChild(i).GetComponent<StatusPanel>().statusName == name)
+            if (trm.GetChild(i).GetComponent<StatusPanel>().StatusName == name)
             {
                 obj = trm.GetChild(i).gameObject;
             }
@@ -170,7 +166,7 @@ public class DialScene : BaseScene
             return;
         }
 
-        obj.GetComponent<StatusPanel>().duration.text = status.TypeValue.ToString();
+        obj.GetComponent<StatusPanel>().UpdateDurationText();
     }
 
     public void RemoveStatusPanel(Unit unit, StatusName name)
