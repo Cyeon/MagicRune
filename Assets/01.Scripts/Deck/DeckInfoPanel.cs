@@ -12,6 +12,8 @@ public class DeckInfoPanel : MonoBehaviour
     private TextMeshProUGUI _nameText;
     [SerializeField]
     private TextMeshProUGUI _descText;
+    [SerializeField]
+    private Button _selectButton;
 
     private DeckSO _deckSO;
 
