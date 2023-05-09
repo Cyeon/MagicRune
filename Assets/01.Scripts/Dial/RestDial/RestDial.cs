@@ -72,6 +72,16 @@ public class RestDial : MonoBehaviour
             _dialElementList.Add(d);
         }
 
+        RestRuneUI restRune = Managers.Resource.Instantiate("Rune/" + typeof(RestRuneUI).Name, _dialElementList[0].transform).GetComponent<RestRuneUI>();
+        restRune.transform.localScale = new Vector3(0.1f, 0.1f, 1f);
+        restRune.SetInfo(_restSpriteArray[1], () =>
+        {
+            // 회복
+            StartCoroutine(RestActionCoroutine());
+        }, "최대 체력의\n25%를 회복한다.");
+        _dialElementList[0].AddRuneList(restRune);
+        AddCard(restRune, 3);
+
         RestRuneUI enhanceRune1 = Managers.Resource.Instantiate("Rune/" + typeof(RestRuneUI).Name, _dialElementList[0].transform).GetComponent<RestRuneUI>();
         enhanceRune1.transform.localScale = new Vector3(0.1f, 0.1f, 1f);
         enhanceRune1.SetInfo(_restSpriteArray[0], () =>
@@ -84,16 +94,6 @@ public class RestDial : MonoBehaviour
         }, "같은 등급의\n다른 룬으로 바꾼다.");
         _dialElementList[0].AddRuneList(enhanceRune1);
         AddCard(enhanceRune1, 3);
-
-        RestRuneUI restRune = Managers.Resource.Instantiate("Rune/" + typeof(RestRuneUI).Name, _dialElementList[0].transform).GetComponent<RestRuneUI>();
-        restRune.transform.localScale = new Vector3(0.1f, 0.1f, 1f);
-        restRune.SetInfo(_restSpriteArray[1], () =>
-        {
-            // 회복
-            StartCoroutine(RestActionCoroutine());
-        }, "최대 체력의\n25%를 회복한다.");
-        _dialElementList[0].AddRuneList(restRune);
-        AddCard(restRune, 3);
 
         RestRuneUI enhanceRune2 = Managers.Resource.Instantiate("Rune/" + typeof(RestRuneUI).Name, _dialElementList[0].transform).GetComponent<RestRuneUI>();
         enhanceRune2.transform.localScale = new Vector3(0.1f, 0.1f, 1f);

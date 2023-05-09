@@ -31,4 +31,9 @@ public class SoundPool : MonoBehaviour
         Managers.Sound.RemoveEffectSoundSource(_audioSource);
         Managers.Resource.Destroy(this.gameObject);
     }
+
+    private void OnDestroy()
+    {
+        StopAllCoroutines();
+    }
 }

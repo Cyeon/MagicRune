@@ -465,7 +465,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.000034928322}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &8552491851225046264
@@ -488,7 +488,7 @@ MonoBehaviour:
   m_ChildAlignment: 1
   m_StartCorner: 0
   m_StartAxis: 0
-  m_CellSize: {x: 500, y: 500}
+  m_CellSize: {x: 400, y: 700}
   m_Spacing: {x: 60, y: 15}
   m_Constraint: 0
   m_ConstraintCount: 2
@@ -700,7 +700,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.38679248, g: 0.38679248, b: 0.38679248, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -754,8 +754,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -17, y: -17}
+  m_AnchoredPosition: {x: 30, y: -30}
+  m_SizeDelta: {x: -60, y: -60}
   m_Pivot: {x: 0, y: 1}
 --- !u!222 &8552491851973175226
 CanvasRenderer:
@@ -999,10 +999,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a53ce3989ddf9ae4788596bc77ee1bbc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _deckImage: {fileID: 0}
-  _nameText: {fileID: 0}
-  _descText: {fileID: 0}
-  _content: {fileID: 0}
+  _deckImage: {fileID: 8552491852168134585}
+  _nameText: {fileID: 8552491851659989491}
+  _descText: {fileID: 8552491851195807047}
+  _content: {fileID: 8552491851225046266}
 --- !u!114 &1914874089
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1016,15 +1016,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.49056602, g: 0.49056602, b: 0.49056602, a: 0.49803922}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
-  m_Type: 0
+  m_Sprite: {fileID: 21300000, guid: cdbbd84872da94966a3d6d020311b9ae, type: 3}
+  m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -1032,7 +1032,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
+  m_PixelsPerUnitMultiplier: 0.37
 --- !u!1 &8552491852545552362
 GameObject:
   m_ObjectHideFlags: 0
@@ -1045,7 +1045,6 @@ GameObject:
   - component: {fileID: 8552491852545552365}
   - component: {fileID: 8552491852545552366}
   - component: {fileID: 8552491852545552367}
-  - component: {fileID: 8552491852545552360}
   m_Layer: 5
   m_Name: RunePanel
   m_TagString: Untagged
@@ -1137,25 +1136,12 @@ MonoBehaviour:
   m_HorizontalScrollbar: {fileID: 0}
   m_VerticalScrollbar: {fileID: 8552491852721199815}
   m_HorizontalScrollbarVisibility: 0
-  m_VerticalScrollbarVisibility: 0
+  m_VerticalScrollbarVisibility: 1
   m_HorizontalScrollbarSpacing: 0
   m_VerticalScrollbarSpacing: 0
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &8552491852545552360
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8552491852545552362}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ba7cbaa0b0a2a6347955e7b3caae8297, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  DeckType: 1
 --- !u!1 &8552491852721199809
 GameObject:
   m_ObjectHideFlags: 0
