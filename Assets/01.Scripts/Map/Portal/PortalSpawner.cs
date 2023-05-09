@@ -1,4 +1,4 @@
-using MyBox;
+﻿using MyBox;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -28,6 +28,12 @@ public class PortalSpawner : MonoBehaviour
 
     public void SpawnPortal(StageType type)
     {
+        if (_spawnPortals.Count != 0)
+        {
+            Debug.LogWarning("이미 생성된 포탈이 있습니다.");
+            return;
+        }
+
         switch(type)
         {
             case StageType.Attack:
