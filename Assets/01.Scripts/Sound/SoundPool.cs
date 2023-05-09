@@ -21,6 +21,7 @@ public class SoundPool : MonoBehaviour
 
         _audioSource.clip = clip;
         _audioSource.pitch = pitch;
+        _audioSource.Play();
 
         StartCoroutine(PoolCoroutine(clip.length));
     }
