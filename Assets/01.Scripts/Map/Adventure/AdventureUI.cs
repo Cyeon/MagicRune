@@ -1,4 +1,5 @@
 using MyBox;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -20,8 +21,7 @@ public class AdventureUI : MonoBehaviour
     private Button[] _distractorButtons;
     private List<TextMeshProUGUI> _distractorText = new List<TextMeshProUGUI>();
 
-
-    private void Start()
+    private void OnEnable()
     {
         Managers.UI.Bind<Image>("Adventure_Image", Managers.Canvas.GetCanvas("Adventure").gameObject);
         Managers.UI.Bind<TextMeshProUGUI>("AdventureTitle_Text", Managers.Canvas.GetCanvas("Adventure").gameObject);
@@ -40,7 +40,13 @@ public class AdventureUI : MonoBehaviour
         _distractorButtons = _distractorPanel.GetComponentsInChildren<Button>(true);
         _distractorButtons.ForEach(x => _distractorText.Add(x.GetComponentInChildren<TextMeshProUGUI>(true)));
 
-        GetComponent<Canvas>().enabled = false;
+        if (!Managers.Map.IsAdventureWar)
+            GetComponent<Canvas>().enabled = false;
+        else
+        {
+            WarNextSetting(Managers.Map.AdventureResultText);
+        }
+
     }
 
     private void StoryClick()
@@ -51,6 +57,9 @@ public class AdventureUI : MonoBehaviour
 
     public void Init(AdventureSO info, AdventurePortal portal)
     {
+        _storyPanelClickBtn.onClick.RemoveAllListeners();
+        _storyPanelClickBtn.onClick.AddListener(() => StoryClick());
+
         _storyPanel.SetActive(true);
         _distractorButtons.ForEach(x => x.gameObject.SetActive(false));
         _distractorPanel.SetActive(false);
@@ -68,7 +77,15 @@ public class AdventureUI : MonoBehaviour
             int index = i;
             _distractorButtons[i].onClick.AddListener(() =>
             {
-                info.distractors[index].function.Invoke();
+                info.distractors[index].function?.Invoke();
+                if (info.distractors[index].function.GetPersistentEventCount() > 0)
+                {
+                    if (info.distractors[index].function?.GetPersistentMethodName(0) == "BattleEnemy")
+                    {
+                        Managers.Map.AdventureWar(info.distractors[index].resultText);
+                    }
+                }
+
                 _storyText.text = info.distractors[index].resultText;
                 _distractorPanel.SetActive(false);
 
@@ -83,4 +100,14 @@ public class AdventureUI : MonoBehaviour
         }
     }
 
+    public void WarNextSetting(string resultText)
+    {
+        _distractorPanel.SetActive(false);
+
+        _storyText.text = resultText;
+        _storyPanelClickBtn.onClick.RemoveAllListeners();
+        _storyPanelClickBtn.onClick.AddListener(() => { DistracotrFuncList.NextStage(); });
+
+        Managers.Map.IsAdventureWar = false;
+    }
 }
