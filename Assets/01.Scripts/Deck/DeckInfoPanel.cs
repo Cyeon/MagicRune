@@ -30,7 +30,26 @@ public class DeckInfoPanel : MonoBehaviour
 
         _deckSO = info.DeckSO;
 
-        // 
+        DeleteRune();
+
+        CreateRune();
+    }
+
+    private void CreateRune()
+    {
+        for(int i = 0; i < _deckSO.RuneList.Count; i++)
+        {
+            ExplainPanel panel = Managers.Resource.Instantiate("UI/Explain_Panel", _content).GetComponent<ExplainPanel>();
+            panel.SetUI(_deckSO.RuneList[i], false);
+        }
+    }
+
+    private void DeleteRune()
+    {
+        for(int i = _content.childCount - 1; i >= 0 ; i--)
+        {
+            Managers.Resource.Destroy(_content.GetChild(i).gameObject);
+        }
     }
 
     public void SelectDeck()
