@@ -21,6 +21,7 @@ public class SoundPool : MonoBehaviour
 
         _audioSource.clip = clip;
         _audioSource.pitch = pitch;
+        _audioSource.Play();
 
         StartCoroutine(PoolCoroutine(clip.length));
     }
@@ -30,5 +31,10 @@ public class SoundPool : MonoBehaviour
         yield return new WaitForSeconds(delay);
         Managers.Sound.RemoveEffectSoundSource(_audioSource);
         Managers.Resource.Destroy(this.gameObject);
+    }
+
+    private void OnDestroy()
+    {
+        StopAllCoroutines();
     }
 }

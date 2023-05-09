@@ -26,7 +26,7 @@ public class ExplainPanel : MonoBehaviour
 
     private List<KeywardPanel> _keywardPanelList = new List<KeywardPanel>();
 
-    public virtual void SetUI(BaseRune rune)
+    public virtual void SetUI(BaseRune rune, bool isReward = true)
     {
         _rune = rune;
 
@@ -35,27 +35,47 @@ public class ExplainPanel : MonoBehaviour
         _coolTimeText.SetText(rune.BaseRuneSO.CoolTime.ToString());
         _descText.SetText(rune.BaseRuneSO.RuneDescription);
 
-        ClearKeyward();
+        if (isReward == true)
+        {
+            ClearKeyward();
 
-        SetKeyward();
+            SetKeyward(rune.BaseRuneSO);
+        }
+    }
+
+    public void SetUI(BaseRuneSO rune, bool isReward = true)
+    {
+        //_rune = rune;
+
+        _nameText.SetText(rune.RuneName);
+        _runeImage.sprite = rune.RuneSprite;
+        _coolTimeText.SetText(rune.CoolTime.ToString());
+        _descText.SetText(rune.RuneDescription);
+
+        if (isReward == true)
+        {
+            ClearKeyward();
+
+            SetKeyward(rune);
+        }
     }
 
     public void ClearKeyward()
     {
-        for(int i = 0; i < _keywardPanelList.Count; i++)
+        for (int i = 0; i < _keywardPanelList.Count; i++)
         {
             Managers.Resource.Destroy(_keywardPanelList[i].gameObject);
         }
     }
 
-    public void SetKeyward()
+    public void SetKeyward(BaseRuneSO rune)
     {
         if (_keywardArea == null) return;
 
-        for(int i = 0; i < _rune.BaseRuneSO.KeywardList.Length; i++)
+        for (int i = 0; i < rune.KeywardList.Length; i++)
         {
             KeywardPanel panel = Managers.Resource.Instantiate("UI/KeywardPanel", _keywardArea).GetComponent<KeywardPanel>();
-            panel.SetKeyward(Managers.Keyward.GetKeyward(_rune.BaseRuneSO.KeywardList[i]));
+            panel.SetKeyward(Managers.Keyward.GetKeyward(rune.KeywardList[i]));
             _keywardPanelList.Add(panel);
         }
     }

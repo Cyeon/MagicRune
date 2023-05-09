@@ -364,6 +364,7 @@ public class Dial : MonoBehaviour
                         bendValue = 15f;
                         break;
                 }
+                Managers.Sound.PlaySound(_dialElementList[i].SelectCard.Rune.BaseRuneSO.RuneSound, SoundType.Effect);
                 b.Init(_dialElementList[i].SelectCard.transform, pos, 1.5f, bendValue, bendValue, () =>
                 {
                     _dialElementList[index].Attack();

@@ -29,17 +29,26 @@ public class MapUI : MonoBehaviour
     public Sprite stageAtkIcon;
     public Sprite stageBossIcon;
     public Sprite stageEventIcon;
-    
+
+    private Image _mainBackground = null;
+
     private void Start()
     {
-        if(stages.Count <= 0)
+        _mainBackground = transform.Find("Main Background").GetComponent<Image>();
+
+        if (stages.Count <= 0)
         {
             for (int i = 0; i < StageList.childCount; ++i)
             {
                 stages.Add(StageList.GetChild(i).GetComponent<Image>());
             }
         }
+        ChangeBackground();
+    }
 
-        //Managers.Map.NextStage();
+    public void ChangeBackground()
+    {
+        string path = "Sprite/MapBg_" + Managers.Map.Chapter.ToString();
+        _mainBackground.sprite = Managers.Resource.Load<Sprite>(path);
     }
 }

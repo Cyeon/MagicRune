@@ -30,6 +30,7 @@ public class BaseRuneSO : ScriptableObject
     public RuneRarity Rarity;
     public int CoolTime;
     public EffectDirection Direction;
+    public AudioClip RuneSound;
 
     // Ability Parameta
 

@@ -26,6 +26,8 @@ public class DistracotrFuncList : MonoBehaviour
 
     private IncreaseMode increaseMode = IncreaseMode.Unknown;
 
+    private float _index;
+
     /// <summary>
     /// Healing, IncreaseMaxHp 사용 전 Amount로 더해줄지 percent로 계산해서 더해줄지 결정 해주기 
     /// </summary>
@@ -62,6 +64,11 @@ public class DistracotrFuncList : MonoBehaviour
         Managers.Gold.AddGold(amount);
     }
 
+    public void IndexSetting(float index)
+    {
+        _index = index;
+    }
+
     public void BattleEnemy(Enemy enemy)
     {
         Managers.Enemy.AddEnemy(enemy);
@@ -71,7 +78,7 @@ public class DistracotrFuncList : MonoBehaviour
     public void RandomRuneCopy()
     {
         BaseRune baseRune = Managers.Deck.GetRandomRune();
-        Managers.Deck.AddRune(baseRune);
+        Managers.Deck.AddRune(Managers.Rune.GetRune(baseRune));
 
         EventManager<BaseRune>.TriggerEvent(Define.SELECT_RUNE_EVENT, baseRune);
     }
