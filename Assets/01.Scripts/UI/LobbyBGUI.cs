@@ -13,6 +13,10 @@ public class LobbyBGUI : MonoBehaviour
     public void MoveBG(int leftRightToMain)
     {
         bgParent.transform.DOMoveX(1440 * leftRightToMain + 720, moveBGSpeed).SetEase(moveBGEase);
+    }
 
+    public void GameStart()
+    {
+        Managers.Scene.LoadScene(Define.Scene.MapScene);
     }
 }
