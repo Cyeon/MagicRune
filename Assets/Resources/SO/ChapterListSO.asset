@@ -13,34 +13,6 @@ MonoBehaviour:
   m_Name: ChapterListSO
   m_EditorClassIdentifier: 
   chapterList:
-  - chapter: 2
-    background: {fileID: 21300000, guid: 0b1f6cbda84edbc40864d9badb9932aa, type: 3}
-    eventStagesChance:
-    - 0
-    - 100
-    - 0
-    - 0
-    - 100
-    - 0
-    - 100
-    - 100
-    - 0
-    minGold: 100
-    maxGold: 150
-    boss: {fileID: 5475244823323083153, guid: ad1cdcaaa49cd5348b0bd8606ab08f40, type: 3}
-    defaultEnemy: {fileID: 5383020803786264790, guid: f574733ce0a1f764d831954dc24011f0, type: 3}
-    enemyList:
-    - minStage: 0
-      maxStage: 4
-      enemyList:
-      - {fileID: 5383020803786264790, guid: f574733ce0a1f764d831954dc24011f0, type: 3}
-      - {fileID: 5383020803786264790, guid: b3e36bc4b56f1fa42aeed1e905e6892d, type: 3}
-      - {fileID: 5383020803786264790, guid: 7ee92901f6057654b9dee074ac0214ca, type: 3}
-    - minStage: 5
-      maxStage: 9
-      enemyList:
-      - {fileID: 5383020803786264790, guid: 32272b46329d0804aba5136ae6128147, type: 3}
-      - {fileID: 5383020803786264790, guid: afc08dcb646d04641885cdabadc34e73, type: 3}
   - chapter: 1
     background: {fileID: 21300000, guid: 0efcdcba1956a3d448f95ffe72b8605b, type: 3}
     eventStagesChance:
@@ -70,3 +42,31 @@ MonoBehaviour:
       - {fileID: 7522581223924523599, guid: a082cc338f8a2fa4d95e20b77047db0d, type: 3}
       - {fileID: 1199820026715167465, guid: 780e74dda57a00945abc82eb4c5c321e, type: 3}
       - {fileID: 1234878908919791390, guid: 758e75402bb6ac7429fa771dd7906fe0, type: 3}
+  - chapter: 2
+    background: {fileID: 21300000, guid: 0b1f6cbda84edbc40864d9badb9932aa, type: 3}
+    eventStagesChance:
+    - 0
+    - 100
+    - 0
+    - 0
+    - 100
+    - 0
+    - 100
+    - 100
+    - 0
+    minGold: 100
+    maxGold: 150
+    boss: {fileID: 5475244823323083153, guid: ad1cdcaaa49cd5348b0bd8606ab08f40, type: 3}
+    defaultEnemy: {fileID: 5383020803786264790, guid: f574733ce0a1f764d831954dc24011f0, type: 3}
+    enemyList:
+    - minStage: 0
+      maxStage: 4
+      enemyList:
+      - {fileID: 5383020803786264790, guid: f574733ce0a1f764d831954dc24011f0, type: 3}
+      - {fileID: 5383020803786264790, guid: b3e36bc4b56f1fa42aeed1e905e6892d, type: 3}
+      - {fileID: 5383020803786264790, guid: 7ee92901f6057654b9dee074ac0214ca, type: 3}
+    - minStage: 5
+      maxStage: 9
+      enemyList:
+      - {fileID: 5383020803786264790, guid: 32272b46329d0804aba5136ae6128147, type: 3}
+      - {fileID: 5383020803786264790, guid: afc08dcb646d04641885cdabadc34e73, type: 3}
