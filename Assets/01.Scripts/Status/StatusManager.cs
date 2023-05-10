@@ -47,6 +47,8 @@ public class StatusManager
         if(status.OnAddStatus.Count > 0)
             status.OnAddStatus.ForEach(x => x.Invoke());
 
+        if(_unit is Enemy)
+            Define.DialScene?.AddStatusEffect(_unit, status);
         OnAddStatus?.Invoke(status, count);
     }
 

@@ -50,7 +50,11 @@ public class Pattern : MonoBehaviour
         {
             turnPattern[_actionIndex].TurnAction();
         }
-        else BattleManager.Instance.TurnChange();
+        else
+        {
+            if(BattleManager.Instance.Enemy.PatternManager.IsEffecting == false)
+                BattleManager.Instance.TurnChange();
+        }
     }
 
     /// <summary>
@@ -88,7 +92,8 @@ public class Pattern : MonoBehaviour
                 actions = turnPattern;
                 if (actions.Count <= _actionIndex)
                 {
-                    BattleManager.Instance.TurnChange();
+                    BattleManager.Instance.Enemy.PatternManager.isPatternActioning = false;
+                    BattleManager.Instance.Enemy.PatternManager.PatternEnd();
                     return;
                 }
                 actions[_actionIndex].TurnAction();
