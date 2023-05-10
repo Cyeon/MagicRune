@@ -92,7 +92,8 @@ public class Pattern : MonoBehaviour
                 actions = turnPattern;
                 if (actions.Count <= _actionIndex)
                 {
-                    BattleManager.Instance.TurnChange();
+                    BattleManager.Instance.Enemy.PatternManager.isPatternActioning = false;
+                    BattleManager.Instance.Enemy.PatternManager.PatternEnd();
                     return;
                 }
                 actions[_actionIndex].TurnAction();
