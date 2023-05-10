@@ -65,6 +65,7 @@ public class SoundManager
                 break;
             case SoundType.Effect:
                 SoundPool sound = Managers.Resource.Instantiate("Sound/SoundPool").GetComponent<SoundPool>();
+                sound.transform.position = Vector3.zero;
                 sound.Init(clip, pitch);
                 _effectSoundList.Add(sound.AudioSource);
                 break;

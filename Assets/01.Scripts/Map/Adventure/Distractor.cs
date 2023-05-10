@@ -1,3 +1,4 @@
+using MyBox;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,10 +9,10 @@ public class Distractor
 {
     [Tooltip("선택지 텍스트")]
     [TextArea(1, 3)]
-    public string text;
+    public string distractorText = "";
 
-    [Tooltip("전투 등의 다른 씬으로 이동하는 선택지는 체크 해제")]
-    public bool isNextStage = true;
+    [Tooltip("선택 결과 텍스트"), TextArea(1, 3)]
+    public string resultText = "";
 
     [Tooltip("실행함수")]
     public ButtonClickedEvent function;

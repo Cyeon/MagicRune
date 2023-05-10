@@ -16,9 +16,9 @@ public class ChooseRunePanel : ExplainPanel
         }
     }
 
-    public override void SetUI(BaseRune rune)
+    public override void SetUI(BaseRune rune, bool isReward = true)
     {
-        base.SetUI(rune);
+        base.SetUI(rune, isReward);
         _rune = rune;
     }
 }

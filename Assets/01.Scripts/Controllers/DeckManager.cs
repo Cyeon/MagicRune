@@ -24,6 +24,8 @@ public class DeckManager
 
     public void SetDefaultDeck(List<BaseRune> runeList)
     {
+        _deck.Clear();
+
         for(int i = 0; i < runeList.Count; i++)
         {
             AddRune(runeList[i]);

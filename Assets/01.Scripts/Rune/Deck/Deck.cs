@@ -21,7 +21,7 @@ public class Deck : MonoBehaviour
         _btn.onClick.RemoveAllListeners();
         //_btn.onClick.AddListener(() => Managers.Deck.SetDefaultDeck(_runeList));
         _btn.onClick.AddListener(() => Managers.Deck.SetDefaultDeck(_deck.RuneList));
-        _btn.onClick.AddListener(() => Managers.Scene.LoadScene(Define.Scene.MapScene));
+        //_btn.onClick.AddListener(() => Managers.Scene.LoadScene(Define.Scene.MapScene));
     }
 
     protected virtual void Init()
