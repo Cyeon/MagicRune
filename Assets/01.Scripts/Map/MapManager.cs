@@ -166,6 +166,7 @@ public class MapManager
         ChapterInit();
         _portalSpawner.SpawnPortal(_stageList[Stage].type);
         _mapSceneUI.ChangeBackground();
+        _mapSceneUI.ChapterTransition.Transition();
     }
 
     public void ResetChapter()

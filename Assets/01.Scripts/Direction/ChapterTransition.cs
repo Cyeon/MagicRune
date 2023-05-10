@@ -16,7 +16,7 @@ public class ChapterTransition : MonoBehaviour
     private float _wipeSpeed = 0.5f;
     private float _fadeSpeed = 0.5f;
 
-    private void Start()
+    private void Awake()
     {
         _storyboard = FindObjectOfType<CinemachineStoryboard>();
         _chapterNumberText = transform.Find("ChapterNumberText").GetComponent<TextMeshProUGUI>();
