@@ -3,6 +3,7 @@ using MyBox;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class DialElement : MonoBehaviour
 {
@@ -99,6 +100,9 @@ public class DialElement : MonoBehaviour
         }
     }
 
+    private bool _isPointerDown = false;
+    private float _pointerDownTimer = 0f;
+
     private void Awake()
     {
         _dial = GetComponentInParent<Dial>();
@@ -119,6 +123,18 @@ public class DialElement : MonoBehaviour
         Swipe1();
 
         RotateMagicCircle();
+
+        if(_isPointerDown == true)
+        {
+            _pointerDownTimer += Time.deltaTime;
+
+            if (_pointerDownTimer >= 0.25f)
+            {
+                _dial.SelectDialElement(this);
+                _isPointerDown = false;
+                _pointerDownTimer = 0f;
+            }
+        }
     }
 
     private void RotateMagicCircle()
