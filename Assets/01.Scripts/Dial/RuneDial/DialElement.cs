@@ -349,6 +349,10 @@ public class DialElement : MonoBehaviour
             {
 
             }
+            if(touch.phase == TouchPhase.Stationary)
+            {
+
+            }
             if (touch.phase == TouchPhase.Ended)
             {
                 if (_isRotate == true)
