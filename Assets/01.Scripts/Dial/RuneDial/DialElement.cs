@@ -129,11 +129,6 @@ public class DialElement : MonoBehaviour
     {
         Swipe1();
 
-        if (_dialState == DialState.Drag)
-        {
-             
-        }
-
         UpdateRunePanel();
         //RotateMagicCircle();
     }
