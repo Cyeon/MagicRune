@@ -6,6 +6,7 @@ using UnityEngine;
 [System.Serializable]
 public class Chapter
 {
+    public string chapterName = "";
     public int chapter = 0;
     public Sprite background;
 

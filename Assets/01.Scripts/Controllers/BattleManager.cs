@@ -55,8 +55,6 @@ public class BattleManager : MonoSingleton<BattleManager>
 
         Define.DialScene?.HealthbarInit(true, Player.HP, Player.MaxHP);
 
-        FeedbackManager.Instance.Init();
-
         TurnChange();
     }
 
