@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,6 +13,9 @@ public class DeckChangePanel : MonoBehaviour
     [SerializeField]
     private DeckInfoPanel _deckInfoPanel;
 
+    
+
+
     void Start()
     {
         for(int i = 0; i < _deckInfoList.Length; i++)
@@ -21,14 +25,15 @@ public class DeckChangePanel : MonoBehaviour
             //panel.GetComponentInChildren<Image>().sprite = _deckInfoList[index].DeckImage;
             panel.transform.GetChild(0).GetComponent<Image>().sprite = _deckInfoList[index].DeckImage;
             panel.GetComponent<Button>().onClick.RemoveAllListeners();
-            panel.GetComponent<Button>().onClick.AddListener(() => _deckInfoPanel.SetInfo(_deckInfoList[index]));
+            panel.GetComponent<Button>().onClick.AddListener(() => _deckInfoPanel.SetInfo(_deckInfoList[index], index));
             panel.GetComponent<Button>().onClick.AddListener(() => Managers.Deck.SetDefaultDeck(_deckInfoList[index].DeckSO.RuneList));
             panel.GetComponent<Button>().onClick.AddListener(() => SelectButton(index));
         }
 
         Managers.Deck.SetDefaultDeck(_deckInfoList[0].DeckSO.RuneList);
-        _deckInfoPanel.SetInfo(_deckInfoList[0]);
+        _deckInfoPanel.SetInfo(_deckInfoList[0], 0);
         SelectButton(0);
+        _deckInfoPanel.SelectDeck();
     }
 
     private void SelectButton(int index)

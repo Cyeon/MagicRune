@@ -7,8 +7,6 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using static UnityEngine.ParticleSystem;
-using static UnityEngine.Rendering.DebugUI;
 using Random = UnityEngine.Random;
 
 public class Dial : MonoBehaviour
@@ -41,7 +39,12 @@ public class Dial : MonoBehaviour
     private List<BaseRune> _remainingDeck = new List<BaseRune>();
     private List<BaseRune> _usingDeck = new List<BaseRune>();
     private List<BaseRune> _cooltimeDeck = new List<BaseRune>();
+    #endregion
 
+    #region DialElement Drag
+    private DialElement _selectDialElement;
+
+    private bool _isDialSelect = false;
     #endregion
 
     private bool _isAttack;
@@ -74,6 +77,24 @@ public class Dial : MonoBehaviour
         }
 
         SettingDialRune(true);
+    }
+
+    public void SelectDialElement(DialElement e)
+    {
+        _selectDialElement = e;
+
+        _isDialSelect = _selectDialElement != null;
+    }
+
+    private void Update()
+    {
+        if(_isDialSelect == true)
+        {
+            // 선택한 다이얼이 터치위치를 따라가고
+            // 근데 가장 위와 아래 범위는 안 벘어 남
+            // 위로 가며
+            Debug.Log("Select Dial");
+        }
     }
 
     public void SettingDialRune(bool isReset)

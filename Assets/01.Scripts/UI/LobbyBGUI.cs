@@ -1,18 +1,48 @@
 using DG.Tweening;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.UI.Extensions;
 
 public class LobbyBGUI : MonoBehaviour
 {
-    [SerializeField] RectTransform bgParent;
+    [SerializeField]
+    private HorizontalScrollSnap _scrollSnap;
+    [SerializeField]
+    private RectTransform _selectPanel;
+    [SerializeField]
+    private float[] _xPosArray;
 
     public Ease moveBGEase;
     public float moveBGSpeed;
 
+    private int _index = -1;
+
+    private void Start()
+    {
+        _scrollSnap.OnSelectionPageChangedEvent.AddListener(ChangeIndex);
+        MoveSelectPanel(_scrollSnap.CurrentPage);
+    }
+
+    public void ChangeIndex(int index)
+    {
+        _index = index;
+
+        MoveSelectPanel(_index);
+    }
+
+    public void MoveSelectPanel(int leftRightToMain)
+    {
+        _selectPanel.DOAnchorPosX(_xPosArray[leftRightToMain], moveBGSpeed).SetEase(moveBGEase);
+    }
+
+    [Obsolete]
     public void MoveBG(int leftRightToMain)
     {
-        bgParent.transform.DOMoveX(1440 * leftRightToMain + 720, moveBGSpeed).SetEase(moveBGEase);
+        _index = leftRightToMain;
+        _scrollSnap.ChangePage(leftRightToMain);
     }
 
     public void GameStart()

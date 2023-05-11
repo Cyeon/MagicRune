@@ -36,6 +36,8 @@ public class DeckManager
 
     public void SetDefaultDeck(List<BaseRuneSO> runeList)
     {
+        _deck.Clear();
+
         for (int i = 0; i < runeList.Count; i++)
         {
             AddRune(Managers.Rune.GetRune(runeList[i]));

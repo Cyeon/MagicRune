@@ -3,6 +3,13 @@ using MyBox;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
+
+public enum DialState
+{
+    Rotate,
+    Drag,
+}
 
 public class DialElement : MonoBehaviour
 {
@@ -99,6 +106,9 @@ public class DialElement : MonoBehaviour
         }
     }
 
+    private bool _isPointerDown = false;
+    private float _pointerDownTimer = 0f;
+
     private void Awake()
     {
         _dial = GetComponentInParent<Dial>();
@@ -119,6 +129,18 @@ public class DialElement : MonoBehaviour
         Swipe1();
 
         RotateMagicCircle();
+
+        if(_isPointerDown == true)
+        {
+            _pointerDownTimer += Time.deltaTime;
+
+            if (_pointerDownTimer >= 0.25f)
+            {
+                _dial.SelectDialElement(this);
+                _isPointerDown = false;
+                _pointerDownTimer = 0f;
+            }
+        }
     }
 
     private void RotateMagicCircle()
@@ -297,7 +319,6 @@ public class DialElement : MonoBehaviour
             {
                 SelectCard.Rune.AbilityAction();
 
-                //_selectCard.Rune.SetCoolTime();
                 SelectCard = null;
             }
         }
@@ -314,8 +335,7 @@ public class DialElement : MonoBehaviour
                 touchBeganPos = touch.position;
 
                 float distance = Vector2.Distance(Define.MainCam.ScreenToWorldPoint(touchBeganPos), (Vector2)this.transform.position);
-                if (distance >= _inDistance &&
-                    distance <= _outDistance)
+                if (distance >= _inDistance && distance <= _outDistance)
                 {
                     if (_isRotate == true) return;
 
@@ -338,8 +358,6 @@ public class DialElement : MonoBehaviour
 
                     if (_runeList.Count > 0 && BattleManager.Instance.IsPlayerTurn())
                     {
-                        //if (transform.eulerAngles.z <= _dial.RuneAngle / 2 + transform.eulerAngles.z || transform.eulerAngles.z >= (360f - _dial.RuneAngle / 2))
-                        //{
                         if (_isUseRotateOffset)
                         {
                             float oneDinstance = _dial.RuneAngle / _runeList.Count;
@@ -348,10 +366,6 @@ public class DialElement : MonoBehaviour
                             if (inBoolean)
                             {
                                 int index = (int)(transform.eulerAngles.z / oneDinstance) % (_runeList.Count);
-                                //index = Mathf.Clamp(index, 0, _runeList.Count - 1);
-                                //if (_magicList[index].Rune.IsCoolTime == false)
-                                //{
-                                // ������ ���� ����
                                 DOTween.To(
                                     () => transform.eulerAngles,
                                     x => transform.eulerAngles = x,
@@ -361,15 +375,11 @@ public class DialElement : MonoBehaviour
                                 {
                                     if (_selectCard != null) { Define.DialScene?.CardDescPopup(_selectCard.Rune); }
                                 });
-                                //}
                             }
                             else if (outBoolean)
                             {
                                 int index = ((int)(transform.eulerAngles.z / oneDinstance) + 1) % (_runeList.Count);
                                 index = (index + 1) % _runeList.Count;
-                                //index = Mathf.Clamp(index + 1, 0, _runeList.Count - 1);
-                                //if (_magicList[index].Rune.IsCoolTime == false)
-                                //{
                                 DOTween.To(
                                     () => transform.eulerAngles,
                                     x => transform.eulerAngles = x,
@@ -379,7 +389,6 @@ public class DialElement : MonoBehaviour
                                 {
                                     if (_selectCard != null) { Define.DialScene?.CardDescPopup(_selectCard.Rune); }
                                 });
-                                //}
                             }
                         }
                         else
@@ -390,28 +399,21 @@ public class DialElement : MonoBehaviour
                             float distance = transform.eulerAngles.z % oneDinstance;
                             if (distance >= oneDinstance / 2f)
                             {
-                                transform.DORotate(new Vector3(0, 0, ((index + 1) % _runeList.Count * oneDinstance)/* >= 120 ?
-                                        ((index + 1) % _runeList.Count * oneDinstance) + 360f - oneDinstance * _runeList.Count :
-                                        (index + 1) % _runeList.Count * oneDinstance*/), 0.3f, RotateMode.Fast)
+                                transform.DORotate(new Vector3(0, 0, ((index + 1) % _runeList.Count * oneDinstance)), 0.3f, RotateMode.Fast)
                                     .OnComplete(() =>
                                     {
-                                        //SelectCard = _runeList[index];
                                         if (_selectCard != null) { Define.DialScene?.CardDescPopup(_selectCard.Rune); }
                                     });
                             }
                             else
                             {
-                                transform.DORotate(new Vector3(0, 0, ((index) * oneDinstance)/* >= 120 ?
-                                        ((index) * oneDinstance) + 360f - oneDinstance * _runeList.Count :
-                                        ((index) * oneDinstance)*/), 0.3f, RotateMode.Fast)
+                                transform.DORotate(new Vector3(0, 0, ((index) * oneDinstance)), 0.3f, RotateMode.Fast)
                                     .OnComplete(() =>
                                     {
-                                        //SelectCard = _runeList[index]; // ���� ���� ���ϴ� �ְ� �ȵ���?�� ����â ������ ������?
                                         if (_selectCard != null) { Define.DialScene?.CardDescPopup(_selectCard.Rune); }
                                     });
                             }
                         }
-                        //}
                     }
                 }
             }
