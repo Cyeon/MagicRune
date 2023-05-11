@@ -1,4 +1,4 @@
-using MyBox;
+ï»¿using MyBox;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -13,7 +13,7 @@ public class Chapter
     [Range(0, 100)]
     public float[] eventStagesChance = new float[9];
 
-    [Header("¸ó½ºÅÍ Àâ¾ÒÀ» ¶§ Áö±ÞµÉ °ñµå")]
+    [Header("ëª¬ìŠ¤í„° ìž¡ì•˜ì„ ë•Œ ì§€ê¸‰ë  ê³¨ë“œ")]
     public int minGold = 0;
     public int maxGold = 100;
     public int Gold => Random.Range(minGold, maxGold);

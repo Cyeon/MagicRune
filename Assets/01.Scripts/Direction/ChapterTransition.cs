@@ -5,6 +5,7 @@ using UnityEngine;
 using DG.Tweening;
 using Cinemachine;
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 public class ChapterTransition : MonoBehaviour
 {
@@ -49,6 +50,8 @@ public class ChapterTransition : MonoBehaviour
             _storyboard.m_SplitView -= _wipeSpeed * Time.deltaTime;
             yield return new WaitForEndOfFrame();
         }
+
+        Managers.Map.SpawnPortal();
     }
 
     private void FadeText(float fade)

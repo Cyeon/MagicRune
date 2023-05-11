@@ -33,11 +33,20 @@ public class MapUI : MonoBehaviour
     private Image _mainBackground = null;
 
     private ChapterTransition _chapterTransition = null;
-    public ChapterTransition ChapterTransition => _chapterTransition;
+    public ChapterTransition ChapterTransition
+    {
+        get
+        {
+            if(_chapterTransition == null)
+            {
+                _chapterTransition = FindObjectOfType<ChapterTransition>();
+            }
+            return _chapterTransition;
+        }
+    }
 
     private void Start()
     {
-        _chapterTransition = FindObjectOfType<ChapterTransition>();
         _mainBackground = transform.Find("Main Background").GetComponent<Image>();
 
         if (stages.Count <= 0)
@@ -48,7 +57,6 @@ public class MapUI : MonoBehaviour
             }
         }
         ChangeBackground();
-        ChapterTransition.Transition();
     }
 
     public void ChangeBackground()

@@ -131,7 +131,7 @@ public class BattleManager : MonoSingleton<BattleManager>
                 break;
 
             case GameTurn.PlayerEnd:
-                Enemy.StopIdle();
+                //Enemy.StopIdle();
                 OnMonsterTurn();
                 break;
 
@@ -163,7 +163,7 @@ public class BattleManager : MonoSingleton<BattleManager>
                 break;
 
             case GameTurn.EnemyEnd:
-                Enemy.Idle();
+                //Enemy.Idle();
                 OnPlayerTurn();
                 break;
         }
