@@ -303,10 +303,18 @@ public class Dial : MonoBehaviour
         }
     }
 
-    public bool MagicEmpty()
+    public bool MagicEmpty(bool isAll = true)
     {
-        return _dialElementList[0].SelectCard == null && _dialElementList[1].SelectCard == null && _dialElementList[2].SelectCard == null;
+        if (isAll)
+        {
+            return _dialElementList[0].SelectCard == null && _dialElementList[1].SelectCard == null && _dialElementList[2].SelectCard == null;
+        }
+        else
+        {
+            return _dialElementList[0].SelectCard == null || _dialElementList[1].SelectCard == null || _dialElementList[2].SelectCard == null;
+        }
     }
+
 
     public void Attack()
     {
@@ -431,19 +439,26 @@ public class Dial : MonoBehaviour
 
     public void CheckResonance()
     {
-        AttributeType criterionType = _dialElementList[0].SelectCard.Rune.BaseRuneSO.AttributeType;
-        bool isSame = true;
-
-        for (int i = 1; i < _dialElementList.Count; i++)
+        if (MagicEmpty(false))
         {
-            isSame = criterionType == _dialElementList[i].SelectCard.Rune.BaseRuneSO.AttributeType;
-            if (!isSame)
-                break;
-        }
-
-        if (isSame)
-            _resonance.ResonanceEffect(criterionType);
-        else
             _resonance.ActiveAllEffectObject(false);
+        }
+        else
+        {
+            AttributeType criterionType = _dialElementList[0].SelectCard.Rune.BaseRuneSO.AttributeType;
+            bool isSame = true;
+
+            for (int i = 1; i < _dialElementList.Count; i++)
+            {
+                isSame = criterionType == _dialElementList[i].SelectCard.Rune.BaseRuneSO.AttributeType;
+                if (!isSame)
+                    break;
+            }
+
+            if (isSame)
+                _resonance.ResonanceEffect(criterionType);
+            else
+                _resonance.ActiveAllEffectObject(false);
+        }
     }
 }
