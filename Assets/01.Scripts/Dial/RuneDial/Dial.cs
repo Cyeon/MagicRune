@@ -97,6 +97,15 @@ public class Dial : MonoBehaviour
         }
     }
 
+    public void LineSwap(int fLine, int sLine)
+    {
+        List<BaseRuneUI> newList = new List<BaseRuneUI>(_runeDict[fLine]);
+        _runeDict[fLine].Clear();
+        _runeDict[fLine] = new List<BaseRuneUI>(_runeDict[sLine]);
+        _runeDict[sLine].Clear();
+        _runeDict[sLine] = new List<BaseRuneUI>(newList);
+    }
+
     public void SettingDialRune(bool isReset)
     {
         #region Clear

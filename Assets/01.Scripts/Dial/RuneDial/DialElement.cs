@@ -132,7 +132,9 @@ public class DialElement : MonoBehaviour
         Swipe1();
 
         UpdateRunePanel();
+
         //RotateMagicCircle();
+
         if(_isTouchDown == true)
         {
             _touchDownTimer += Time.deltaTime;
@@ -175,6 +177,7 @@ public class DialElement : MonoBehaviour
             transform.rotation = Quaternion.Euler(rot);
             _touchPos = Input.GetTouch(_fingerID).position;
             _touchDownTimer = 0f;
+            _dial.SelectDialElement(null);
         }
     }
 
@@ -356,25 +359,6 @@ public class DialElement : MonoBehaviour
                             RotateMagicCircle();
                             break;
                         case DialState.Drag:
-                            
-
-                            //for (int i = 0; i < 3; i++)
-                            //{
-                            //    if (i < count)
-                            //    {
-                            //        _dial.MagicCircleGlow(2 - i, true);
-                            //    }
-                            //    else
-                            //    {
-                            //        _dial.MagicCircleGlow(2 - i, false);
-                            //    }
-                            //}
-
-                            //if (touchDif.y < 0)
-                            //{
-                            //    _dial.AllMagicCircleGlow(false);
-                            //    //return;
-                            //}
                             break;
                     }
                     break;
@@ -385,6 +369,7 @@ public class DialElement : MonoBehaviour
                         _isTouchDown = false;
                         _dialState = DialState.None;
                         _touchDownTimer = 0f;
+                        _dial.SelectDialElement(null);
 
                         if (_runeList.Count > 0 && BattleManager.Instance.IsPlayerTurn())
                         {
