@@ -34,9 +34,10 @@ public class ChapterTransition : MonoBehaviour
     private IEnumerator Wipe()
     {
         _storyboard.m_SplitView = 1;
-        while (_storyboard.m_SplitView >= 0)
+        while (_storyboard.m_SplitView > 0)
         {
             _storyboard.m_SplitView -= _wipeSpeed * Time.deltaTime;
+            if (_storyboard.m_SplitView < 0) _storyboard.m_SplitView = 0;
             yield return new WaitForEndOfFrame();
         }
 
