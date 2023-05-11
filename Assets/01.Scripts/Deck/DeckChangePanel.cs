@@ -13,9 +13,6 @@ public class DeckChangePanel : MonoBehaviour
     [SerializeField]
     private DeckInfoPanel _deckInfoPanel;
 
-    
-
-
     void Start()
     {
         for(int i = 0; i < _deckInfoList.Length; i++)

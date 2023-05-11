@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.UI.Extensions;
 
 public class DeckInfoPanel : MonoBehaviour
 {
@@ -30,6 +31,8 @@ public class DeckInfoPanel : MonoBehaviour
 
     [SerializeField]
     private Image _deckDisplayImage;
+    [SerializeField]
+    private HorizontalScrollSnap _scrollSnap;
 
     public void SetInfo(DeckInfoSO info, int index)
     {
@@ -68,11 +71,14 @@ public class DeckInfoPanel : MonoBehaviour
 
     public void SelectDeck()
     {
+        if (_selectArea == _selectIndex) return;
+
         Managers.Deck.SetDefaultDeck(_deckSO.RuneList);
         _selectIndex = _selectArea;
 
         UpdateSelectText(_selectArea == _selectIndex);
         _deckDisplayImage.sprite = _deckInfoSO.DeckImage;
+        _scrollSnap.ChangePage(2);
     }
 
     private void UpdateSelectText(bool value)
