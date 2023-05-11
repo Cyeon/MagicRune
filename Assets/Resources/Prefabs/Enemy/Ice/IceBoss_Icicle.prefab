@@ -643,7 +643,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0aa4da75a66794c458458b64c7b2c126, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _awakingIcon: {fileID: 21300000, guid: 1abc27c56f381c6449f0d37410c5f409, type: 3}
+  _awakingIcon: {fileID: 21300000, guid: 0a0148c1f30f1574995ebfe36b7bd448, type: 3}
 --- !u!1 &4040457094386273756
 GameObject:
   m_ObjectHideFlags: 0
@@ -1407,6 +1407,30 @@ PrefabInstance:
       propertyPath: m_WasSpriteAssigned
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3535539594128554666, guid: 1d902098969ddc24a8a9b824bb9545b3, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3535539594128554666, guid: 1d902098969ddc24a8a9b824bb9545b3, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3535539594128554667, guid: 1d902098969ddc24a8a9b824bb9545b3, type: 3}
+      propertyPath: m_Size.x
+      value: 10.24
+      objectReference: {fileID: 0}
+    - target: {fileID: 3535539594128554667, guid: 1d902098969ddc24a8a9b824bb9545b3, type: 3}
+      propertyPath: m_Size.y
+      value: 10.24
+      objectReference: {fileID: 0}
+    - target: {fileID: 3535539594128554667, guid: 1d902098969ddc24a8a9b824bb9545b3, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 3f62a82b5e7152a489e2a8d48c4d8abb, type: 3}
+    - target: {fileID: 3535539594128554667, guid: 1d902098969ddc24a8a9b824bb9545b3, type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3535539594408076956, guid: 1d902098969ddc24a8a9b824bb9545b3, type: 3}
       propertyPath: m_Name
       value: IceBoss_Icicle
@@ -1470,6 +1494,17 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: 8949788419246248273, guid: 1d902098969ddc24a8a9b824bb9545b3, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 1d902098969ddc24a8a9b824bb9545b3, type: 3}
+--- !u!114 &875672938388875079 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1428042976502517616, guid: 1d902098969ddc24a8a9b824bb9545b3, type: 3}
+  m_PrefabInstance: {fileID: 2303149620231661623}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0a82a086afdc494db67a8b50f091d1e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &2303149620746877313 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 592089526, guid: 1d902098969ddc24a8a9b824bb9545b3, type: 3}
@@ -1529,7 +1564,19 @@ MonoBehaviour:
       m_Calls: []
   <OnTakeDamageFeedback>k__BackingField:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 875672938388875079}
+        m_TargetAssemblyTypeName: MoreMountains.Feedbacks.MMShaker, MoreMountains.Feedbacks
+        m_MethodName: StartShaking
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   OnDieEvent:
     m_PersistentCalls:
       m_Calls: []
@@ -1547,7 +1594,7 @@ MonoBehaviour:
   _shieldIcon: {fileID: 6164876304791464560}
   _enemyHealthText: {fileID: 2303149622330130456}
   _shieldText: {fileID: 7677528095831001798}
-  _originalIcon: {fileID: 21300000, guid: c7dc33f3a6534014c9050665d50e3d0e, type: 3}
+  _originalIcon: {fileID: 21300000, guid: 3f62a82b5e7152a489e2a8d48c4d8abb, type: 3}
 --- !u!4 &3442117447178252989 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3473038323310664330, guid: 1d902098969ddc24a8a9b824bb9545b3, type: 3}

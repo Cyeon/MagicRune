@@ -55,8 +55,6 @@ public class BattleManager : MonoSingleton<BattleManager>
 
         Define.DialScene?.HealthbarInit(true, Player.HP, Player.MaxHP);
 
-        FeedbackManager.Instance.Init();
-
         TurnChange();
     }
 
@@ -133,7 +131,7 @@ public class BattleManager : MonoSingleton<BattleManager>
                 break;
 
             case GameTurn.PlayerEnd:
-                Enemy.StopIdle();
+                //Enemy.StopIdle();
                 OnMonsterTurn();
                 break;
 
@@ -165,7 +163,7 @@ public class BattleManager : MonoSingleton<BattleManager>
                 break;
 
             case GameTurn.EnemyEnd:
-                Enemy.Idle();
+                //Enemy.Idle();
                 OnPlayerTurn();
                 break;
         }
