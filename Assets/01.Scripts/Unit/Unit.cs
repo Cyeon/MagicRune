@@ -1,4 +1,5 @@
 using DG.Tweening;
+using MoreMountains.Feedbacks;
 using MyBox;
 using System;
 using System.Collections;
@@ -79,11 +80,14 @@ public class Unit : MonoBehaviour
 
     private Coroutine _hitCoroutine;
 
-    private void Start() {
+    [SerializeField] private MMPositionShaker _hitShaker; 
+
+    private void Start()
+    {
         _statusManager = new StatusManager(this);
         statusTrm = transform.Find("Status");
-
         _statusManager.Reset();
+
         _userInfoUI = Managers.UI.Get<UserInfoUI>("Upper_Frame", UIType.DontDestroyUI);
 
         if(_spriteRenderer != null)
@@ -92,10 +96,6 @@ public class Unit : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// ?°ë?ì§€ ë°›ëŠ” ?¨ìˆ˜
-    /// </summary>
-    /// <param name="damage"></param>
     public void TakeDamage(float damage, bool isTrueDamage = false, Status status = null)
     {
         currentDmg = damage.RoundToInt();
@@ -135,6 +135,11 @@ public class Unit : MonoBehaviour
                 _hitCoroutine = StartCoroutine(HitCoroutine());
             }
         }
+    }
+
+    public bool IsHitAnimationPlaying()
+    {
+        return _hitShaker.Shaking;
     }
 
     private IEnumerator HitCoroutine()
