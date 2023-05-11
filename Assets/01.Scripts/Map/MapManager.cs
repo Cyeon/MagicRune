@@ -72,7 +72,7 @@ public class MapManager
             ChapterInit();
             _isFirst = false;
             _chapterList.ForEach(x => x.EnemyReset());
-            _portalSpawner.SpawnPortal(_stageList[Stage].type);
+            _mapSceneUI.ChapterTransition.Transition();
         }
         else if (_isAdventure)
         {
@@ -82,6 +82,11 @@ public class MapManager
         {
             NextStage();
         }
+    }
+
+    public void SpawnPortal()
+    {
+        PortalSpawner.SpawnPortal(_stageList[Stage].type);
     }
 
     private void ChapterInit()
