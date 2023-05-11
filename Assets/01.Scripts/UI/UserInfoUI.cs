@@ -5,14 +5,8 @@ using UnityEngine;
 
 public class UserInfoUI : MonoBehaviour
 {
-    private TextMeshProUGUI _hpText;
-    private TextMeshProUGUI _goldText;
-
-    private void Awake()
-    {
-        _hpText = transform.Find("HP_Image/Text").GetComponent<TextMeshProUGUI>();
-        _goldText = transform.Find("Coin_Image/Text").GetComponent<TextMeshProUGUI>();
-    }
+    [SerializeField] private TextMeshProUGUI _hpText;
+    [SerializeField] private TextMeshProUGUI _goldText;
 
     public void UpdateHealthText()
     {
