@@ -26,11 +26,13 @@ public class Unit : MonoBehaviour
 
             _health = value;
 
+            if (_health < 0) _health = 0;
             if (_health > _maxHealth) _health = _maxHealth;
+
             if (Managers.Scene.CurrentScene == Define.DialScene) UpdateHealthUI();
             if(this is Player) userInfoUI.UpdateHealthText();
 
-            if (_health <= 0) Die();
+            if (_health == 0) Die();
         }
     }
 
