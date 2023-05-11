@@ -22,12 +22,19 @@ public class ChapterTransition : MonoBehaviour
         _storyboard = FindObjectOfType<CinemachineStoryboard>();
         _chapterNumberText = transform.Find("ChapterNumberText").GetComponent<TextMeshProUGUI>();
         _chapterNameText = transform.Find("ChapterNameText").GetComponent<TextMeshProUGUI>();
+
+        _chapterNumberText.gameObject.SetActive(false);
+        _chapterNameText.gameObject.SetActive(false);
     }
 
     public void Transition()
     {
+        _chapterNumberText.gameObject.SetActive(true);
+        _chapterNameText.gameObject.SetActive(true);
+
         _chapterNumberText.SetText("Chapter " + Managers.Map.Chapter.ToString());
         _chapterNameText.SetText(Managers.Map.CurrentChapter.chapterName);
+
         StartCoroutine(Wipe());
     }
 
@@ -52,6 +59,8 @@ public class ChapterTransition : MonoBehaviour
             yield return new WaitForEndOfFrame();
         }
 
+        _chapterNumberText.gameObject.SetActive(false);
+        _chapterNameText.gameObject.SetActive(false);
         Managers.Map.SpawnPortal();
     }
 
