@@ -137,7 +137,7 @@ public class DialElement : MonoBehaviour
         {
             _touchDownTimer += Time.deltaTime;
 
-            if(_touchDownTimer > 0.3f)
+            if(_touchDownTimer > 3f)
             {
                 _dialState = DialState.Drag;
                 _dial.SelectDialElement(this);
@@ -174,6 +174,7 @@ public class DialElement : MonoBehaviour
 
             transform.rotation = Quaternion.Euler(rot);
             _touchPos = Input.GetTouch(_fingerID).position;
+            _touchDownTimer = 0f;
         }
     }
 
@@ -344,6 +345,7 @@ public class DialElement : MonoBehaviour
 
                         _touchPos = touch.position;
                     }
+                    _dialState = DialState.Rotate;
                     break;
                 case TouchPhase.Moved:
                     switch (_dialState)
@@ -381,6 +383,8 @@ public class DialElement : MonoBehaviour
                     {
                         _fingerID = -1;
                         _isTouchDown = false;
+                        _dialState = DialState.None;
+                        _touchDownTimer = 0f;
 
                         if (_runeList.Count > 0 && BattleManager.Instance.IsPlayerTurn())
                         {
@@ -442,7 +446,6 @@ public class DialElement : MonoBehaviour
                             }
 
                         }
-                        _dialState = DialState.None;
                     }
                     break;
             }
