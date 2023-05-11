@@ -109,6 +109,8 @@ public class DialElement : MonoBehaviour
         }
     }
 
+    private float _touchDownTimer = 0f;
+
 
     private void Awake()
     {
@@ -131,6 +133,16 @@ public class DialElement : MonoBehaviour
 
         UpdateRunePanel();
         //RotateMagicCircle();
+        if(_isTouchDown == true)
+        {
+            _touchDownTimer += Time.deltaTime;
+
+            if(_touchDownTimer > 0.3f)
+            {
+                _dialState = DialState.Drag;
+                _dial.SelectDialElement(this);
+            }
+        }
     }
 
     private void RotateMagicCircle()
@@ -334,16 +346,6 @@ public class DialElement : MonoBehaviour
                     }
                     break;
                 case TouchPhase.Moved:
-
-                    if (touch.deltaTime >= 0.3f)
-                    {
-                        _dialState = DialState.Drag;
-                    }
-                    else
-                    {
-                        _dialState = DialState.Rotate;
-                    }
-
                     switch (_dialState)
                     {
                         case DialState.None:
@@ -352,7 +354,25 @@ public class DialElement : MonoBehaviour
                             RotateMagicCircle();
                             break;
                         case DialState.Drag:
-                            Debug.Log("라인 체인지");
+                            
+
+                            //for (int i = 0; i < 3; i++)
+                            //{
+                            //    if (i < count)
+                            //    {
+                            //        _dial.MagicCircleGlow(2 - i, true);
+                            //    }
+                            //    else
+                            //    {
+                            //        _dial.MagicCircleGlow(2 - i, false);
+                            //    }
+                            //}
+
+                            //if (touchDif.y < 0)
+                            //{
+                            //    _dial.AllMagicCircleGlow(false);
+                            //    //return;
+                            //}
                             break;
                     }
                     break;

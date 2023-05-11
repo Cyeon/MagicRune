@@ -255,7 +255,7 @@ public class Dial : MonoBehaviour
         }
     }
 
-    public void LineCardSort(int line)
+    public void LineCardSort(int line, bool isTween = false, float tweenDuration = 0.2f)
     {
         if (_runeDict.ContainsKey(line))
         {
@@ -267,11 +267,18 @@ public class Dial : MonoBehaviour
 
                 float height = Mathf.Sin(radianValue) * _lineDistanceArray[3 - line];
                 float width = Mathf.Cos(radianValue) * _lineDistanceArray[3 - line];
-                _runeDict[line][i].transform.position = new Vector3(width + this.transform.position.x, height + this.transform.position.y, 0);
+                if (isTween)
+                {
+                    _runeDict[line][i].transform.DOMove(new Vector3(width + this.transform.position.x, height + this.transform.position.y, 0), tweenDuration);
+                }
+                else
+                {
+                    _runeDict[line][i].transform.position = new Vector3(width + this.transform.position.x, height + this.transform.position.y, 0);
+                }
 
                 Vector2 direction = new Vector2(
-                    _runeDict[line][i].transform.position.x - transform.position.x,
-                    _runeDict[line][i].transform.position.y - transform.position.y
+                    (width + this.transform.position.x) - transform.position.x,
+                    (height + this.transform.position.y) - transform.position.y
                 );
 
                 float ang = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;

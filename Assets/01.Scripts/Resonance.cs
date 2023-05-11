@@ -78,7 +78,6 @@ public class Resonance : MonoBehaviour
     /// 공명 이펙트 세팅해주는 함수 
     /// </summary>
     /// <param name="type">공명 속성</param>
-    /// <param name="isActive">키고 꺼줘요</param>
     public void ResonanceEffect(AttributeType type)
     {
         if (type == AttributeType.None || type == AttributeType.NonAttribute) { return; }
@@ -119,7 +118,8 @@ public class Resonance : MonoBehaviour
     {
         for (int i = 0; i < _particleObjectArr.Length; i++)
         {
-            _particleObjectArr[i].SetActive(isActive);
+            if (_particleObjectArr[i] != null)
+                _particleObjectArr[i].SetActive(isActive);
         }
     }
 }
