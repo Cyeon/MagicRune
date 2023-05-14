@@ -51,6 +51,15 @@ public class StarPanel : MonoBehaviour
             }
             if (touch.phase == TouchPhase.Moved)
             {
+                for(int i = 0; i < _dial.DialElementList.Count; i++)
+                {
+                    if (_dial.DialElementList[i].DialState == DialState.Drag)
+                    {
+                        _dial.AllMagicCircleGlow(false);
+                        return;
+                    }
+                }
+
                 touchDif = (touch.position - touchBeganPos);
                 
                 int count = (int)(Mathf.Abs(touchDif.y) / (swipeSensitivity / 3));

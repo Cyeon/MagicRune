@@ -47,6 +47,7 @@ public class DialElement : MonoBehaviour
     private float _runePoolOffset = 5f;
 
     private int _fingerID = -1;
+    public int FingerID => _fingerID;
 
     private int _lineID = -1;
 
@@ -93,6 +94,9 @@ public class DialElement : MonoBehaviour
     private float _selectOffset;
     private bool _isTouchDown = false;
     private DialState _dialState = DialState.None;
+    public DialState DialState { get => _dialState; set => _dialState = value; }
+    [SerializeField]
+    private float _dragTouchTime = 3f;
 
     public bool IsGlow
     {
@@ -139,7 +143,8 @@ public class DialElement : MonoBehaviour
         {
             _touchDownTimer += Time.deltaTime;
 
-            if(_touchDownTimer > 3f)
+            // 이거 터치하고 가만히 있을때만 되게 바꿀까?
+            if(_touchDownTimer > _dragTouchTime)
             {
                 _dialState = DialState.Drag;
                 _dial.SelectDialElement(this);

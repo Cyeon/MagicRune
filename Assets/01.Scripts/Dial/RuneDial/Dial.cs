@@ -43,6 +43,7 @@ public class Dial : MonoBehaviour
 
     #region DialElement Drag
     private DialElement _selectDialElement;
+    private int _selectIndex = -1;
 
     private bool _isDialSelect = false;
     #endregion
@@ -81,7 +82,20 @@ public class Dial : MonoBehaviour
 
     public void SelectDialElement(DialElement e)
     {
+        if(_selectDialElement != null)
+        {
+            _selectDialElement.DialState = DialState.None;
+        }
         _selectDialElement = e;
+
+        if(e == null)
+        {
+            _selectIndex = -1;
+        }
+        else
+        {
+
+        }
 
         _isDialSelect = _selectDialElement != null;
     }
@@ -90,10 +104,20 @@ public class Dial : MonoBehaviour
     {
         if(_isDialSelect == true)
         {
-            // 선택한 다이얼이 터치위치를 따라가고
-            // 근데 가장 위와 아래 범위는 안 벘어 남
-            // 위로 가며
             Debug.Log("Select Dial");
+
+
+            Touch touch = Input.GetTouch(_selectDialElement.FingerID);
+            float offset = 0.5f;
+            if(touch.deltaPosition.normalized.y > offset)
+            {
+                // Up
+
+            }
+            else if(touch.deltaPosition.normalized.y < -offset)
+            {
+                // Down
+            }
         }
     }
 
@@ -104,6 +128,8 @@ public class Dial : MonoBehaviour
         _runeDict[fLine] = new List<BaseRuneUI>(_runeDict[sLine]);
         _runeDict[sLine].Clear();
         _runeDict[sLine] = new List<BaseRuneUI>(newList);
+
+        RuneSort(true);
     }
 
     public void SettingDialRune(bool isReset)
@@ -256,11 +282,11 @@ public class Dial : MonoBehaviour
         }
     }
 
-    private void RuneSort()
+    private void RuneSort(bool isTween = false)
     {
         for (int i = 1; i <= 3; i++)
         {
-            LineCardSort(i);
+            LineCardSort(i, isTween);
         }
     }
 
@@ -278,6 +304,7 @@ public class Dial : MonoBehaviour
                 float width = Mathf.Cos(radianValue) * _lineDistanceArray[3 - line];
                 if (isTween)
                 {
+                    transform.DOKill();
                     _runeDict[line][i].transform.DOMove(new Vector3(width + this.transform.position.x, height + this.transform.position.y, 0), tweenDuration);
                 }
                 else
