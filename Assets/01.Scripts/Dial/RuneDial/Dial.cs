@@ -94,7 +94,7 @@ public class Dial : MonoBehaviour
         }
         else
         {
-
+            _selectIndex = _dialElementList.FindIndex(x => x == e);
         }
 
         _isDialSelect = _selectDialElement != null;
@@ -106,17 +106,24 @@ public class Dial : MonoBehaviour
         {
             Debug.Log("Select Dial");
 
-
             Touch touch = Input.GetTouch(_selectDialElement.FingerID);
-            float offset = 0.5f;
+            float offset = 0.7f;
+            // _dialElementList -> 위에서 부터 0 - 1 - 2
+            // _runeDict -> 아래서 부터 1 - 2 - 3
+
             if(touch.deltaPosition.normalized.y > offset)
             {
                 // Up
-
+                if (_selectIndex == 0) return; // Index를 좀 제대로 파악해야 할 듯
+                LineSwap(_selectIndex + 1, _selectIndex);
+                SelectDialElement(_dialElementList[_selectIndex - 1]);
             }
             else if(touch.deltaPosition.normalized.y < -offset)
             {
                 // Down
+                if (_selectIndex == _dialElementList.Count - 1) return;
+                LineSwap(_selectIndex + 1, _selectIndex + 2);
+                SelectDialElement(_dialElementList[_selectIndex + 1]);
             }
         }
     }

@@ -51,7 +51,7 @@ public class StarPanel : MonoBehaviour
             }
             if (touch.phase == TouchPhase.Moved)
             {
-                for(int i = 0; i < _dial.DialElementList.Count; i++)
+                for (int i = 0; i < _dial.DialElementList.Count; i++)
                 {
                     if (_dial.DialElementList[i].DialState == DialState.Drag)
                     {
