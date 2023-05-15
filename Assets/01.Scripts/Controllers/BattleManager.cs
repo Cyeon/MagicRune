@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Security.Cryptography;
+using System.Xml.Schema;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -90,7 +91,17 @@ public class BattleManager : MonoSingleton<BattleManager>
 
         EventManager.TriggerEvent(Define.ON_START_MONSTER_TURN);
 
-        Enemy?.StatusManager.OnTurnStart();
+        Enemy.StatusManager.OnTurnStart();
+        StartCoroutine(EnemyStatusWaitCoroutine());
+    }
+
+    IEnumerator EnemyStatusWaitCoroutine()
+    {
+        while(Enemy.IsHitAnimationPlaying())
+        {
+            yield return new WaitForEndOfFrame();
+        }
+
         Enemy.PatternManager.TurnAction();
     }
 

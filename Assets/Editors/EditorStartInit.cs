@@ -1,6 +1,5 @@
+#if UNITY_EDITOR
 using UnityEditor;
-using UnityEditor.SceneManagement;
-using UnityEngine;
 
 [InitializeOnLoad]
 public class EditorStartInit
@@ -10,14 +9,15 @@ public class EditorStartInit
     {
         var pathOfFirstScene = EditorBuildSettings.scenes[0].path;
         var sceneAsset = AssetDatabase.LoadAssetAtPath<SceneAsset>(pathOfFirstScene);
-        EditorSceneManager.playModeStartScene = sceneAsset;
-        UnityEditor.EditorApplication.isPlaying = true;
+        UnityEditor.SceneManagement.EditorSceneManager.playModeStartScene = sceneAsset;
+        EditorApplication.isPlaying = true;
     }
 
     [MenuItem("SceneStart/현재 씬부터 시작")]
     public static void StartFromThisScene()
     {
-        EditorSceneManager.playModeStartScene = null;
-        UnityEditor.EditorApplication.isPlaying = true;
+        UnityEditor.SceneManagement.EditorSceneManager.playModeStartScene = null;
+        EditorApplication.isPlaying = true;
     }
 }
+#endif

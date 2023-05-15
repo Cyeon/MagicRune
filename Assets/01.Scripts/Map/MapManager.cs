@@ -66,6 +66,7 @@ public class MapManager
         }
 
         Managers.Reward.ImageLoad();
+        _mapSceneUI.ChapterTransition.Init();
 
         if (_isFirst)
         {
@@ -169,7 +170,6 @@ public class MapManager
         }
 
         ChapterInit();
-        _portalSpawner.SpawnPortal(_stageList[Stage].type);
         _mapSceneUI.ChangeBackground();
         _mapSceneUI.ChapterTransition.Transition();
     }
