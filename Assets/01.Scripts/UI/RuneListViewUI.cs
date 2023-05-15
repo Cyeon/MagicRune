@@ -49,6 +49,12 @@ public class RuneListViewUI : MonoBehaviour
         ActiveUI(true);
     }
 
+    public void SetAllRunes()
+    {
+        SettingPanels(Managers.Deck.Deck);
+        ActiveUI(true);
+    }
+
     private void SettingPanels(List<BaseRune> baseRuneList, bool isCoolTIme = false)
     {
         for (int i = 0; i < baseRuneList.Count; i++)
