@@ -46,6 +46,8 @@ public class Dial : MonoBehaviour
     private int _selectIndex = -1;
 
     private bool _isDialSelect = false;
+
+    private Vector2 _touchBeganPos;
     #endregion
 
     private bool _isAttack;
@@ -100,6 +102,27 @@ public class Dial : MonoBehaviour
         _isDialSelect = _selectDialElement != null;
     }
 
+    public void SelectDialElement(int index)
+    {
+        if (_selectDialElement != null)
+        {
+            _selectDialElement.DialState = DialState.None;
+        }
+
+        if (index == -1)
+        {
+            _selectDialElement = _dialElementList[index];
+        }
+        else
+        {
+            _selectDialElement = null;
+        }
+
+        _selectIndex = index;
+
+        _isDialSelect = _selectDialElement != null;
+    }
+
     private void Update()
     {
         if(_isDialSelect == true && _selectIndex != -1)
@@ -107,43 +130,82 @@ public class Dial : MonoBehaviour
             Debug.Log("Select Dial");
 
             Touch touch = Input.GetTouch(_selectDialElement.FingerID);
-            float offset = 0.7f;
+
+
+            switch (touch.phase)
+            {
+                case TouchPhase.Began:
+                    _touchBeganPos = touch.position;
+                    break;
+                case TouchPhase.Moved:
+                    float distance = Mathf.Abs(Vector2.Distance(transform.position, Define.MainCam.ScreenToWorldPoint(_touchBeganPos)));
+
+                    for(int i = _dialElementList.Count - 1; i >= 0; i--)
+                    {
+                        if (_dialElementList[i].OutDistance >= distance)
+                        {
+                            // 라인 스왑
+                            int fIndex = _lineDistanceArray.Length - _selectIndex;
+                            if (fIndex == 0 || fIndex == _lineDistanceArray.Length - 1)
+                            {
+                                Debug.Log("Break");
+                                return;
+                            }
+                            int sIndex = _dialElementList.Count + 1 - i;
+                            LineSwap(fIndex, sIndex);
+                            SelectDialElement(sIndex);
+                            Debug.Log("Line Swap");
+                        }
+                        else
+                        {
+                            // 계속 여기로 나오는데
+                            Debug.Log("Line Out!");
+                        }
+                    }
+
+                    break;
+                case TouchPhase.Ended:
+                    SelectDialElement(null);
+                    _isDialSelect = false;
+                    break;
+            }
+
+            //float offset = 0.7f;
             // _dialElementList -> 위에서 부터 0 - 1 - 2
             // _runeDict -> 아래서 부터 1 - 2 - 3
 
-            if(touch.deltaPosition.normalized.y > offset)
-            {
-                // Up
-                if (_selectIndex == 0) return; // Index를 좀 제대로 파악해야 할 듯
-                if(_selectIndex == _dialElementList.Count - 1)
-                {
-                    LineSwap(_selectIndex, _selectIndex - 1);
-                }
-                else
-                {
-                    LineSwap(_selectIndex + 1, _selectIndex + 2);
-                }
-                MagicCircleGlow(_selectIndex, false);
-                SelectDialElement(_dialElementList[_selectIndex - 1]);
-                MagicCircleGlow(_selectIndex, true);
-            }
-            else if(touch.deltaPosition.normalized.y < -offset)
-            {
-                // Down
-                if (_selectIndex == _dialElementList.Count - 1) return;
-                if(_selectIndex == 0)
-                {
-                    LineSwap(_dialElementList.Count - 1, _dialElementList.Count);
-                }
-                else
-                {
-                    LineSwap(_selectIndex + 1, _selectIndex);
-                }
-                MagicCircleGlow(_selectIndex, false);
-                SelectDialElement(_dialElementList[_selectIndex + 1]);
-                MagicCircleGlow(_selectIndex, true);
-            }
-            
+            //if(touch.deltaPosition.normalized.y > offset)
+            //{
+            //    // Up
+            //    if (_selectIndex == 0) return; // Index를 좀 제대로 파악해야 할 듯
+            //    if(_selectIndex == _dialElementList.Count - 1)
+            //    {
+            //        LineSwap(_selectIndex, _selectIndex - 1);
+            //    }
+            //    else
+            //    {
+            //        LineSwap(_selectIndex + 1, _selectIndex + 2);
+            //    }
+            //    MagicCircleGlow(_selectIndex, false);
+            //    SelectDialElement(_dialElementList[_selectIndex - 1]);
+            //    MagicCircleGlow(_selectIndex, true);
+            //}
+            //else if(touch.deltaPosition.normalized.y < -offset)
+            //{
+            //    // Down
+            //    if (_selectIndex == _dialElementList.Count - 1) return;
+            //    if(_selectIndex == 0)
+            //    {
+            //        LineSwap(_dialElementList.Count - 1, _dialElementList.Count);
+            //    }
+            //    else
+            //    {
+            //        LineSwap(_selectIndex + 1, _selectIndex);
+            //    }
+            //    MagicCircleGlow(_selectIndex, false);
+            //    SelectDialElement(_dialElementList[_selectIndex + 1]);
+            //    MagicCircleGlow(_selectIndex, true);
+            //}
         }
     }
 

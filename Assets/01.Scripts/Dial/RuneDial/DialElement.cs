@@ -39,8 +39,10 @@ public class DialElement : MonoBehaviour
 
     [SerializeField]
     private float _inDistance;
+    public float InDistance => _inDistance;
     [SerializeField]
     private float _outDistance;
+    public float OutDistance => _outDistance;
     #endregion
 
     [SerializeField]
