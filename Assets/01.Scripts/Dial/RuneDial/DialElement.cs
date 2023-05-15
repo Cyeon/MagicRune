@@ -375,6 +375,7 @@ public class DialElement : MonoBehaviour
                         _dialState = DialState.None;
                         _touchDownTimer = 0f;
                         _dial.SelectDialElement(null);
+                        _dial.AllMagicCircleGlow(false);
 
                         if (_runeList.Count > 0 && BattleManager.Instance.IsPlayerTurn())
                         {

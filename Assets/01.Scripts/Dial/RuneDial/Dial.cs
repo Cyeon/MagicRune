@@ -102,7 +102,7 @@ public class Dial : MonoBehaviour
 
     private void Update()
     {
-        if(_isDialSelect == true)
+        if(_isDialSelect == true && _selectIndex != -1)
         {
             Debug.Log("Select Dial");
 
@@ -115,16 +115,35 @@ public class Dial : MonoBehaviour
             {
                 // Up
                 if (_selectIndex == 0) return; // Index를 좀 제대로 파악해야 할 듯
-                LineSwap(_selectIndex + 1, _selectIndex);
+                if(_selectIndex == _dialElementList.Count - 1)
+                {
+                    LineSwap(_selectIndex, _selectIndex - 1);
+                }
+                else
+                {
+                    LineSwap(_selectIndex + 1, _selectIndex + 2);
+                }
+                MagicCircleGlow(_selectIndex, false);
                 SelectDialElement(_dialElementList[_selectIndex - 1]);
+                MagicCircleGlow(_selectIndex, true);
             }
             else if(touch.deltaPosition.normalized.y < -offset)
             {
                 // Down
                 if (_selectIndex == _dialElementList.Count - 1) return;
-                LineSwap(_selectIndex + 1, _selectIndex + 2);
+                if(_selectIndex == 0)
+                {
+                    LineSwap(_dialElementList.Count - 1, _dialElementList.Count);
+                }
+                else
+                {
+                    LineSwap(_selectIndex + 1, _selectIndex);
+                }
+                MagicCircleGlow(_selectIndex, false);
                 SelectDialElement(_dialElementList[_selectIndex + 1]);
+                MagicCircleGlow(_selectIndex, true);
             }
+            
         }
     }
 

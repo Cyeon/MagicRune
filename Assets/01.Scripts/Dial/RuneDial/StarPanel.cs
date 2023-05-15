@@ -11,14 +11,12 @@ public class StarPanel : MonoBehaviour
     [SerializeField]
     private Dial _dial;
 
-    private DialScene _dialScene;
-
     #region Swipe Parameta
-    private Vector2 touchBeganPos;
-    private Vector2 touchEndedPos;
-    private Vector2 touchDif;
+    private Vector2 _touchBeganPos;
+    private Vector2 _touchEndedPos;
+    private Vector2 _touchDif;
     [SerializeField]
-    private float swipeSensitivity = 5;
+    private float _swipeSensitivity = 450;
     #endregion
 
     [SerializeField]
@@ -30,8 +28,6 @@ public class StarPanel : MonoBehaviour
     {
         _spriteRenderer = GetComponent<SpriteRenderer>();
         //_image.alphaHitTestMinimumThreshold = 0.1f;
-
-        _dialScene = Managers.Scene.CurrentScene as DialScene;
     }
 
     private void Update()
@@ -45,57 +41,62 @@ public class StarPanel : MonoBehaviour
         {
             Touch touch = Input.GetTouch(0);
 
+            
+
             if (touch.phase == TouchPhase.Began)
             {
-                touchBeganPos = touch.position;
+                _touchBeganPos = touch.position;
             }
             if (touch.phase == TouchPhase.Moved)
             {
-                for (int i = 0; i < _dial.DialElementList.Count; i++)
+                if (Mathf.Abs(Vector2.Distance(transform.position, Define.MainCam.ScreenToWorldPoint(_touchBeganPos))) <= _outDistance)
                 {
-                    if (_dial.DialElementList[i].DialState == DialState.Drag)
+                    for (int i = 0; i < _dial.DialElementList.Count; i++)
+                    {
+                        if (_dial.DialElementList[i].DialState == DialState.Drag)
+                        {
+                            _dial.AllMagicCircleGlow(false);
+                            return;
+                        }
+                    }
+
+                    _touchDif = (touch.position - _touchBeganPos);
+
+                    int count = (int)(Mathf.Abs(_touchDif.y) / (_swipeSensitivity / 3));
+                    count = Mathf.Min(count, 3);
+
+                    for (int i = 0; i < 3; i++)
+                    {
+                        if (i < count)
+                        {
+                            _dial.MagicCircleGlow(2 - i, true);
+                        }
+                        else
+                        {
+                            _dial.MagicCircleGlow(2 - i, false);
+                        }
+                    }
+
+                    if (_touchDif.y < 0)
                     {
                         _dial.AllMagicCircleGlow(false);
-                        return;
+                        //return;
                     }
-                }
-
-                touchDif = (touch.position - touchBeganPos);
-                
-                int count = (int)(Mathf.Abs(touchDif.y) / (swipeSensitivity / 3));
-                count = Mathf.Min(count, 3);
-
-                for (int i = 0; i < 3; i++)
-                {
-                    if (i < count)
-                    {
-                        _dial.MagicCircleGlow(2 - i, true);
-                    }
-                    else
-                    {
-                        _dial.MagicCircleGlow(2 - i, false);
-                    }
-                }
-
-                if (touchDif.y < 0)
-                {
-                    _dial.AllMagicCircleGlow(false);
-                    //return;
                 }
             }
             if (touch.phase == TouchPhase.Ended)
             {
-                touchEndedPos = touch.position;
-                touchDif = (touchEndedPos - touchBeganPos);
+                _touchEndedPos = touch.position;
+                _touchDif = (_touchEndedPos - _touchBeganPos);
 
                 //��������. ��ġ�� x�̵��Ÿ��� y�̵��Ÿ��� �ΰ������� ũ��
-                if (Mathf.Abs(touchDif.y) > swipeSensitivity || Mathf.Abs(touchDif.x) > swipeSensitivity)
+                if (Mathf.Abs(_touchDif.y) > _swipeSensitivity || Mathf.Abs(_touchDif.x) > _swipeSensitivity)
                 {
-                    if (touchDif.y > 0 && Mathf.Abs(touchDif.y) > Mathf.Abs(touchDif.x))
+                    if (_touchDif.y > 0 && Mathf.Abs(_touchDif.y) > Mathf.Abs(_touchDif.x))
                     {
                         //Debug.Log("up");
 
-                        float distance = Vector2.Distance(Define.MainCam.ScreenToWorldPoint(touchBeganPos), (Vector2)transform.position);
+                        float distance = Vector2.Distance(Define.MainCam.ScreenToWorldPoint(_touchBeganPos), (Vector2)transform.position);
                         if(distance >= _inDistance && distance <= _outDistance)
                         {
                             _dial.Attack();
@@ -105,16 +106,16 @@ public class StarPanel : MonoBehaviour
                             _dial.AllMagicCircleGlow(false);
                         }
                     }
-                    else if (touchDif.y < 0 && Mathf.Abs(touchDif.y) > Mathf.Abs(touchDif.x))
+                    else if (_touchDif.y < 0 && Mathf.Abs(_touchDif.y) > Mathf.Abs(_touchDif.x))
                     {
                         //Debug.Log("down");
                         _dial.AllMagicCircleGlow(false);
                     }
-                    else if (touchDif.x > 0 && Mathf.Abs(touchDif.y) < Mathf.Abs(touchDif.x))
+                    else if (_touchDif.x > 0 && Mathf.Abs(_touchDif.y) < Mathf.Abs(_touchDif.x))
                     {
                         //Debug.Log("right");
                     }
-                    else if (touchDif.x < 0 && Mathf.Abs(touchDif.y) < Mathf.Abs(touchDif.x))
+                    else if (_touchDif.x < 0 && Mathf.Abs(_touchDif.y) < Mathf.Abs(_touchDif.x))
                     {
                         //Debug.Log("Left");
                     }
@@ -123,7 +124,7 @@ public class StarPanel : MonoBehaviour
                 else
                 {
                     //Debug.Log("touch");
-                    if (Vector2.Distance(transform.position, Define.MainCam.ScreenToWorldPoint(touchEndedPos)) <= _outDistance)
+                    if (Vector2.Distance(transform.position, Define.MainCam.ScreenToWorldPoint(_touchEndedPos)) <= _outDistance)
                     {
                         Define.DialScene?.AllCardDescPopup();
                     }
