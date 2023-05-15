@@ -11,8 +11,8 @@ public class DeckManager
 
     public const int FIRST_DIAL_DECK_MAX_COUNT = 3; // 첫번째 다이얼 덱 최대 개수
 
-    private List<BaseRune> _firstDialDeck = new List<BaseRune>(3); // 사전에 설정해둔 다이얼 안쪽의 1번째 줄 덱.
-    public List<BaseRune> FirstDialDeck => _firstDialDeck;
+    //private List<BaseRune> _firstDialDeck = new List<BaseRune>(3); // 사전에 설정해둔 다이얼 안쪽의 1번째 줄 덱.
+    //public List<BaseRune> FirstDialDeck => _firstDialDeck;
 
     private List<BaseRune> _deck = new List<BaseRune>(12); // 소지하고 있는 모든 룬
     public List<BaseRune> Deck => _deck;
@@ -66,17 +66,17 @@ public class DeckManager
         _deck.Remove(rune);
     }
 
-    /// <summary> FirstDialDeck에 룬 추가 </summary>
-    public void AddRuneFirstDeck(BaseRune rune)
-    {
-        _firstDialDeck.Add(rune);
-    }
+    ///// <summary> FirstDialDeck에 룬 추가 </summary>
+    //public void AddRuneFirstDeck(BaseRune rune)
+    //{
+    //    _firstDialDeck.Add(rune);
+    //}
 
-    /// <summary> FistDialDeck에서 룬 지우기 </summary>
-    public void RemoveFirstDeck(BaseRune rune)
-    {
-        _firstDialDeck.Remove(rune);
-    }
+    ///// <summary> FistDialDeck에서 룬 지우기 </summary>
+    //public void RemoveFirstDeck(BaseRune rune)
+    //{
+    //    _firstDialDeck.Remove(rune);
+    //}
 
     public void RuneSwap(int fIndex, int sIndex)
     {
