@@ -306,13 +306,14 @@ public class DialElement : MonoBehaviour
         return _lineID;
     }
 
-    public void AddRuneList(BaseRuneUI rune)
+    public void AddRuneList(in BaseRuneUI rune)
     {
         _runeList.Add(rune);
     }
 
-    public void SetRuneList(List<BaseRuneUI> list)
+    public void SetRuneList(in List<BaseRuneUI> list)
     {
+        _runeList.Clear();
         _runeList = new List<BaseRuneUI>(list);
     }
 

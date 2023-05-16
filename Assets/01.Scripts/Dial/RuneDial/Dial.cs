@@ -84,11 +84,15 @@ public class Dial : MonoBehaviour
 
     public void SelectDialElement(DialElement e)
     {
-        if(_selectDialElement != null)
+        if (_selectDialElement != null)
         {
             _selectDialElement.DialState = DialState.None;
         }
         _selectDialElement = e;
+        if(_selectDialElement != null)
+        {
+            _selectDialElement.DialState = DialState.Drag;
+        }
 
         if(e == null)
         {
@@ -102,7 +106,7 @@ public class Dial : MonoBehaviour
         _isDialSelect = _selectDialElement != null;
     }
 
-    public void SelectDialElement(int index)
+    public void SelectDialElement(in int index)
     {
         if (_selectDialElement != null)
         {
@@ -111,11 +115,12 @@ public class Dial : MonoBehaviour
 
         if (index == -1)
         {
-            _selectDialElement = _dialElementList[index];
+            _selectDialElement = null;
         }
         else
         {
-            _selectDialElement = null;
+            _selectDialElement = _dialElementList[index];
+            _selectDialElement.DialState = DialState.Drag;
         }
 
         _selectIndex = index;
@@ -138,31 +143,28 @@ public class Dial : MonoBehaviour
                     _touchBeganPos = touch.position;
                     break;
                 case TouchPhase.Moved:
-                    float distance = Mathf.Abs(Vector2.Distance(transform.position, Define.MainCam.ScreenToWorldPoint(_touchBeganPos)));
+                    float distance = Mathf.Abs(Vector2.Distance(transform.position, Define.MainCam.ScreenToWorldPoint(touch.position)));
 
-                    for(int i = _dialElementList.Count - 1; i >= 0; i--)
+                    if (_dialElementList[2].InDistance <= distance)
                     {
-                        if (_dialElementList[i].OutDistance >= distance)
+                        for (int i = _dialElementList.Count - 1; i >= 0; i--)
                         {
-                            // 라인 스왑
-                            int fIndex = _lineDistanceArray.Length - _selectIndex;
-                            if (fIndex == 0 || fIndex == _lineDistanceArray.Length - 1)
+                            if (_dialElementList[i].OutDistance >= distance)
                             {
-                                Debug.Log("Break");
-                                return;
+                                // 라인 스왑
+                                int fIndex = 3 - _selectIndex;
+                                //if (fIndex == 0 || fIndex == _dialElementList.Count - 1)
+                                //{
+                                //    Debug.Log("Break");
+                                //    return;
+                                //}
+                                int sIndex = 3 - i;
+                                LineSwap(fIndex, sIndex);
+                                SelectDialElement(i);
+                                break;
                             }
-                            int sIndex = _dialElementList.Count + 1 - i;
-                            LineSwap(fIndex, sIndex);
-                            SelectDialElement(sIndex);
-                            Debug.Log("Line Swap");
-                        }
-                        else
-                        {
-                            // 계속 여기로 나오는데
-                            Debug.Log("Line Out!");
                         }
                     }
-
                     break;
                 case TouchPhase.Ended:
                     SelectDialElement(null);
@@ -211,11 +213,22 @@ public class Dial : MonoBehaviour
 
     public void LineSwap(int fLine, int sLine)
     {
+        if (fLine == sLine) return;
+
+        if(_runeDict.ContainsKey(fLine) == false || _runeDict.ContainsKey(sLine) == false)
+        {
+            Debug.LogWarning("Not have Key");
+            return;
+        }
+
         List<BaseRuneUI> newList = new List<BaseRuneUI>(_runeDict[fLine]);
         _runeDict[fLine].Clear();
         _runeDict[fLine] = new List<BaseRuneUI>(_runeDict[sLine]);
+        _dialElementList[3 - fLine].SetRuneList(_runeDict[sLine]);
         _runeDict[sLine].Clear();
         _runeDict[sLine] = new List<BaseRuneUI>(newList);
+        _dialElementList[3 - sLine].SetRuneList(newList);
+
 
         RuneSort(true);
     }
@@ -353,7 +366,7 @@ public class Dial : MonoBehaviour
         RuneSort();
     }
 
-    public void AddCard(BaseRuneUI card, int tier)
+    public void AddCard(in BaseRuneUI card, in int tier)
     {
         if (card != null)
         {
