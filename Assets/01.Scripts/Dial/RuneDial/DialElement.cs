@@ -49,7 +49,7 @@ public class DialElement : MonoBehaviour
     private float _runePoolOffset = 5f;
 
     private int _fingerID = -1;
-    public int FingerID => _fingerID;
+    public int FingerID { get => _fingerID; set => _fingerID = value; }
 
     private int _lineID = -1;
 
@@ -95,6 +95,7 @@ public class DialElement : MonoBehaviour
     [SerializeField, Range(0f, 90f)]
     private float _selectOffset;
     private bool _isTouchDown = false;
+    public bool IsTouchDown { get => _isTouchDown; set => _isTouchDown = value; }
     private DialState _dialState = DialState.None;
     public DialState DialState { get => _dialState; set => _dialState = value; }
     [SerializeField]

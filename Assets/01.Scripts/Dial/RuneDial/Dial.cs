@@ -46,8 +46,6 @@ public class Dial : MonoBehaviour
     private int _selectIndex = -1;
 
     private bool _isDialSelect = false;
-
-    private Vector2 _touchBeganPos;
     #endregion
 
     private bool _isAttack;
@@ -84,14 +82,22 @@ public class Dial : MonoBehaviour
 
     public void SelectDialElement(DialElement e)
     {
+        if (_selectDialElement == e) return;
+
+        int fingerId = -1;
         if (_selectDialElement != null)
         {
             _selectDialElement.DialState = DialState.None;
+             fingerId = _selectDialElement.FingerID;
         }
         _selectDialElement = e;
         if(_selectDialElement != null)
         {
             _selectDialElement.DialState = DialState.Drag;
+            if(fingerId != -1)
+            {
+                _selectDialElement.FingerID = fingerId;
+            }
         }
 
         if(e == null)
@@ -100,7 +106,14 @@ public class Dial : MonoBehaviour
         }
         else
         {
-            _selectIndex = _dialElementList.FindIndex(x => x == e);
+            for(int i = 0; i < _dialElementList.Count; i++)
+            {
+                if (_dialElementList[i] == e)
+                {
+                    _selectIndex = i;
+                    break;
+                }
+            }
         }
 
         _isDialSelect = _selectDialElement != null;
@@ -108,9 +121,13 @@ public class Dial : MonoBehaviour
 
     public void SelectDialElement(in int index)
     {
+        if(_selectIndex == index) return;
+
+        //SelectDialElement(_dialElementList[index]);
         if (_selectDialElement != null)
         {
             _selectDialElement.DialState = DialState.None;
+            _selectDialElement.IsTouchDown = false;
         }
 
         if (index == -1)
@@ -120,6 +137,12 @@ public class Dial : MonoBehaviour
         else
         {
             _selectDialElement = _dialElementList[index];
+            _selectDialElement.DialState = DialState.Drag;
+            _selectDialElement.IsTouchDown = true;
+        }
+
+        if (_selectDialElement != null)
+        {
             _selectDialElement.DialState = DialState.Drag;
         }
 
@@ -136,12 +159,8 @@ public class Dial : MonoBehaviour
 
             Touch touch = Input.GetTouch(_selectDialElement.FingerID);
 
-
             switch (touch.phase)
             {
-                case TouchPhase.Began:
-                    _touchBeganPos = touch.position;
-                    break;
                 case TouchPhase.Moved:
                     float distance = Mathf.Abs(Vector2.Distance(transform.position, Define.MainCam.ScreenToWorldPoint(touch.position)));
 
@@ -151,13 +170,7 @@ public class Dial : MonoBehaviour
                         {
                             if (_dialElementList[i].OutDistance >= distance)
                             {
-                                // 라인 스왑
                                 int fIndex = 3 - _selectIndex;
-                                //if (fIndex == 0 || fIndex == _dialElementList.Count - 1)
-                                //{
-                                //    Debug.Log("Break");
-                                //    return;
-                                //}
                                 int sIndex = 3 - i;
                                 LineSwap(fIndex, sIndex);
                                 SelectDialElement(i);
@@ -224,11 +237,11 @@ public class Dial : MonoBehaviour
         List<BaseRuneUI> newList = new List<BaseRuneUI>(_runeDict[fLine]);
         _runeDict[fLine].Clear();
         _runeDict[fLine] = new List<BaseRuneUI>(_runeDict[sLine]);
-        _dialElementList[3 - fLine].SetRuneList(_runeDict[sLine]);
         _runeDict[sLine].Clear();
         _runeDict[sLine] = new List<BaseRuneUI>(newList);
-        _dialElementList[3 - sLine].SetRuneList(newList);
 
+        _dialElementList[3 - fLine].SetRuneList(_runeDict[fLine]);
+        _dialElementList[3 - sLine].SetRuneList(_runeDict[sLine]);
 
         RuneSort(true);
     }
