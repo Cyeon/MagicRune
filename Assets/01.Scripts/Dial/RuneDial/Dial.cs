@@ -88,7 +88,8 @@ public class Dial : MonoBehaviour
         if (_selectDialElement != null)
         {
             _selectDialElement.DialState = DialState.None;
-             fingerId = _selectDialElement.FingerID;
+            fingerId = _selectDialElement.FingerID;
+            _selectDialElement.IsTouchDown = false;
         }
         _selectDialElement = e;
         if(_selectDialElement != null)
@@ -97,6 +98,7 @@ public class Dial : MonoBehaviour
             if(fingerId != -1)
             {
                 _selectDialElement.FingerID = fingerId;
+                _selectDialElement.IsTouchDown = true;
             }
         }
 
@@ -124,10 +126,13 @@ public class Dial : MonoBehaviour
         if(_selectIndex == index) return;
 
         //SelectDialElement(_dialElementList[index]);
+
+        int fingerId = -1;
         if (_selectDialElement != null)
         {
             _selectDialElement.DialState = DialState.None;
             _selectDialElement.IsTouchDown = false;
+            fingerId = _selectDialElement.FingerID;
         }
 
         if (index == -1)
@@ -139,6 +144,10 @@ public class Dial : MonoBehaviour
             _selectDialElement = _dialElementList[index];
             _selectDialElement.DialState = DialState.Drag;
             _selectDialElement.IsTouchDown = true;
+            if (fingerId != -1)
+            {
+                _selectDialElement.FingerID = fingerId;
+            }
         }
 
         if (_selectDialElement != null)
@@ -156,7 +165,7 @@ public class Dial : MonoBehaviour
         if(_isDialSelect == true && _selectIndex != -1)
         {
             Debug.Log("Select Dial");
-
+            if (_selectDialElement == null || _selectDialElement.FingerID == -1) return;
             Touch touch = Input.GetTouch(_selectDialElement.FingerID);
 
             switch (touch.phase)
