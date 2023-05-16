@@ -9,7 +9,7 @@ public class DebugNextStageBtn : MonoBehaviour
     {
         transform.GetComponent<Button>().onClick.AddListener(() =>
         {
-            Managers.Map.PortalSpawner.ResetPortal();
+            Managers.Map.StageSpawner.ResetPortal();
             Managers.Map.NextStage();
         });
     }

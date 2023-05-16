@@ -55,7 +55,7 @@ public class AdventureUI : MonoBehaviour
         _distractorPanel.SetActive(true);
     }
 
-    public void Init(AdventureSO info, AdventurePortal portal)
+    public void Init(AdventureSO info)
     {
         _storyPanelClickBtn.onClick.RemoveAllListeners();
         _storyPanelClickBtn.onClick.AddListener(() => StoryClick());

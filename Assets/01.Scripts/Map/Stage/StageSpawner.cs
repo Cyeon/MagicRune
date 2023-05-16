@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PortalSpawner : MonoBehaviour
+public class StageSpawner : MonoBehaviour
 {
     [Header("Portal Prefab")]
     [SerializeField] private AttackPortal _attackPortal;

@@ -15,19 +15,21 @@ public class MapManager
     public Chapter CurrentChapter => _currentChapter;
     #endregion
 
+    #region Half
+    private List<StageType> _firstHalfStageList = new List<StageType>(); // 전반부
+    private List<StageType> _secondHalfStageList = new List<StageType>(); // 후반부
+    #endregion
+
     #region Stage
     private List<Stage> _stageList = new List<Stage>();
-
     public int Stage => Floor - ((this.Chapter - 1) * 9);
+    #endregion 
 
     private int _floor = 0;
     public int Floor => _floor;
-    #endregion
 
-    private PortalSpawner _portalSpawner;
-    public PortalSpawner PortalSpawner => _portalSpawner;
-
-    public Sprite selectPortalSprite;
+    private StageSpawner _stageSpawner;
+    public StageSpawner StageSpawner => _stageSpawner;
 
     private bool _isFirst = true;
 
@@ -58,11 +60,11 @@ public class MapManager
         _mapSceneUI = Managers.Canvas.GetCanvas("MapUI").GetComponent<MapUI>();
         _chapterList = new List<Chapter>(Managers.Resource.Load<ChapterListSO>("SO/" + typeof(ChapterListSO).Name).chapterList);
 
-        if (_portalSpawner == null)
+        if (_stageSpawner == null)
         {
-            PortalSpawner portalSpawner = Managers.Resource.Instantiate(typeof(PortalSpawner).Name, Managers.Scene.CurrentScene.transform).GetComponent<PortalSpawner>();
+            StageSpawner portalSpawner = Managers.Resource.Instantiate(typeof(StageSpawner).Name, Managers.Scene.CurrentScene.transform).GetComponent<StageSpawner>();
             portalSpawner.transform.SetParent(null);
-            _portalSpawner = portalSpawner;
+            _stageSpawner = portalSpawner;
         }
 
         Managers.Reward.ImageLoad();
@@ -85,33 +87,14 @@ public class MapManager
         }
     }
 
-    public void SpawnPortal()
-    {
-        PortalSpawner.SpawnPortal(_stageList[Stage].type);
-    }
-
     private void ChapterInit()
     {
         _stageList.Clear();
         _currentChapter = _chapterList[Chapter - 1];
 
-        int idx = 0;
-        foreach (var chance in _currentChapter.eventStagesChance)
-        {
-            Stage stage = new Stage();
-            int random = Random.Range(1, 100);
-
-            stage.Init(random <= chance ? StageType.Event : StageType.Attack, MapSceneUI.Stages[idx], idx);
-            _stageList.Add(stage);
-
-            idx++;
-        }
-
-        Stage bossStage = new Stage();
-        bossStage.Init(StageType.Boss, MapSceneUI.Stages[9], 9);
-        _stageList.Add(bossStage);
-
-        _stageList[0].ChangeResource(Color.white);
+        _firstHalfStageList.Add(StageType.Attack);
+        _firstHalfStageList.Add(StageType.Attack);
+        _firstHalfStageList.Add(StageType.Adventure);
     }
 
     public void NextStage()
@@ -158,7 +141,7 @@ public class MapManager
         seq.AppendCallback(() =>
         {
             _stageList[Stage].color = Color.white;
-            _portalSpawner.SpawnPortal(_stageList[Stage].type);
+            _stageSpawner.SpawnPortal(_stageList[Stage].type);
         });
     }
 

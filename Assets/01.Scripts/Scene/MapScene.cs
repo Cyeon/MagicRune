@@ -15,9 +15,6 @@ public class MapScene : BaseScene
     {
         base.Init();
 
-        Managers.UI.Bind<Image>("Stage Arrow", Managers.Canvas.GetCanvas("MapUI").gameObject);
-        _arrowImage = Managers.UI.Get<Image>("Stage Arrow");
-
         Managers.UI.Bind<UserInfoUI>("Upper_Frame", Managers.Canvas.GetCanvas("UserInfoPanelCanvas").gameObject);
         _userInfoUI = Managers.UI.Get<UserInfoUI>("Upper_Frame");
         Managers.GetPlayer().userInfoUI = _userInfoUI;
