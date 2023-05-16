@@ -90,6 +90,7 @@ public class Dial : MonoBehaviour
             _selectDialElement.DialState = DialState.None;
             fingerId = _selectDialElement.FingerID;
             _selectDialElement.IsTouchDown = false;
+            _selectDialElement.IsGlow = false;
         }
         _selectDialElement = e;
         if(_selectDialElement != null)
@@ -98,8 +99,9 @@ public class Dial : MonoBehaviour
             if(fingerId != -1)
             {
                 _selectDialElement.FingerID = fingerId;
-                _selectDialElement.IsTouchDown = true;
             }
+            _selectDialElement.IsTouchDown = true;
+            _selectDialElement.IsGlow = true;
         }
 
         if(e == null)
@@ -133,6 +135,7 @@ public class Dial : MonoBehaviour
             _selectDialElement.DialState = DialState.None;
             _selectDialElement.IsTouchDown = false;
             fingerId = _selectDialElement.FingerID;
+            _selectDialElement.IsGlow = false;
         }
 
         if (index == -1)
@@ -144,6 +147,7 @@ public class Dial : MonoBehaviour
             _selectDialElement = _dialElementList[index];
             _selectDialElement.DialState = DialState.Drag;
             _selectDialElement.IsTouchDown = true;
+            _selectDialElement.IsGlow = true;
             if (fingerId != -1)
             {
                 _selectDialElement.FingerID = fingerId;
@@ -249,8 +253,20 @@ public class Dial : MonoBehaviour
         _runeDict[sLine].Clear();
         _runeDict[sLine] = new List<BaseRuneUI>(newList);
 
-        _dialElementList[3 - fLine].SetRuneList(_runeDict[fLine]);
-        _dialElementList[3 - sLine].SetRuneList(_runeDict[sLine]);
+        int dialFLine = 3 - fLine;
+        int dialSLine = 3 - sLine;
+        _dialElementList[dialFLine].SetRuneList(_runeDict[fLine]);
+        _dialElementList[dialSLine].SetRuneList(_runeDict[sLine]);
+
+        for(int i = 0; i < _dialElementList[dialFLine].RuneList.Count; i++)
+        {
+            _dialElementList[dialFLine].RuneList[i].transform.SetParent(_dialElementList[dialFLine].transform);
+        }
+
+        for (int i = 0; i < _dialElementList[dialSLine].RuneList.Count; i++)
+        {
+            _dialElementList[dialSLine].RuneList[i].transform.SetParent(_dialElementList[dialSLine].transform);
+        }
 
         RuneSort(true);
     }
@@ -403,6 +419,12 @@ public class Dial : MonoBehaviour
 
             RuneSort();
         }
+    }
+
+    public void LineSort(int line, bool isTween = false, float tweenDuration = 0.2f)
+    {
+        // 각도는 유지시키고 길이만 그러니까 (1, 1) 점을 각도는 유지시키고 밀어서 (2, 2) 대충 이렇게
+        // 수학시간에 행렬 하면서 배운 거 같은데 난 2시간이나 빠져서.. 잘 몰루겠다...
     }
 
     private void RuneSort(bool isTween = false)

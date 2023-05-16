@@ -54,6 +54,7 @@ public class DialElement : MonoBehaviour
     private int _lineID = -1;
 
     private List<BaseRuneUI> _runeList;
+    public List<BaseRuneUI> RuneList => _runeList;
     private BaseRuneUI _selectCard;
     public BaseRuneUI SelectCard
     {
@@ -95,7 +96,7 @@ public class DialElement : MonoBehaviour
     [SerializeField, Range(0f, 90f)]
     private float _selectOffset;
     private bool _isTouchDown = false;
-    public bool IsTouchDown { get => _isTouchDown; set => _isTouchDown = value; }
+    public bool IsTouchDown { get => _isTouchDown; set { _isTouchDown = value; _touchDownTimer = 0f; } }
     private DialState _dialState = DialState.None;
     public DialState DialState { get => _dialState; set => _dialState = value; }
     [SerializeField]
@@ -201,14 +202,27 @@ public class DialElement : MonoBehaviour
                 int index = (int)(transform.eulerAngles.z / oneDinstance) % (_runeList.Count);
                 if (_runeList[index].Rune.IsCoolTime == false)
                 {
-                    SelectCard = _runeList[index];
-                    if (_isTouchDown == true)
-                    {
-                        if (_selectCard != null)
+                    //if (SelectCard != _runeList[index])
+                    //{
+                        SelectCard = _runeList[index];
+                        // 맨 앞에 있는 애릴 맨 뒤로 보낸다.
+                        //if (index != 0)
+                        //{
+                        //    BaseRuneUI rune = _runeList[0];
+                        //    _runeList.RemoveAt(0);
+                        //    _runeList.Add(rune);
+                        //}
+
+                        //Debug.Log("Left");
+
+                        if (_isTouchDown == true)
                         {
-                            Define.DialScene?.CardDescPopup(_selectCard.Rune);
+                            if (_selectCard != null)
+                            {
+                                Define.DialScene?.CardDescPopup(_selectCard.Rune);
+                            }
                         }
-                    }
+                    //}
                 }
             }
             else if (outBoolean && transform.eulerAngles.z <= 360)
@@ -218,14 +232,26 @@ public class DialElement : MonoBehaviour
 
                 if (_runeList[index].Rune.IsCoolTime == false)
                 {
-                    SelectCard = _runeList[index];
-                    if (_isTouchDown == true)
-                    {
-                        if (_selectCard != null)
+                    //if (SelectCard != _runeList[index])
+                    //{
+                        SelectCard = _runeList[index];
+                        // 맨 뒤에 애를 맨 앞으로 보낸다!
+                        //Debug.Log("Right");
+                        //if (index != 0)
+                        //{
+                        //    BaseRuneUI rune = _runeList[_runeList.Count - 1];
+                        //    _runeList.RemoveAt(_runeList.Count - 1);
+                        //    _runeList.Insert(0, rune);
+                        //}
+
+                        if (_isTouchDown == true)
                         {
-                            Define.DialScene?.CardDescPopup(_selectCard.Rune);
+                            if (_selectCard != null)
+                            {
+                                Define.DialScene?.CardDescPopup(_selectCard.Rune);
+                            }
                         }
-                    }
+                    //}
                 }
             }
             else
@@ -435,6 +461,7 @@ public class DialElement : MonoBehaviour
                                     transform.DORotate(new Vector3(0, 0, ((index) * oneDinstance)), 0.3f, RotateMode.Fast)
                                         .OnComplete(() =>
                                         {
+
                                             if (_selectCard != null) { Define.DialScene?.CardDescPopup(_selectCard.Rune); }
                                         });
                                 }
