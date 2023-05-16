@@ -45,7 +45,7 @@ public class Enemy : Unit
         HealthUIInit();
 
         enemyScaleVec = spriteRenderer.transform.localScale;
-        transform.localPosition = new Vector3(0, 6, 0);
+        transform.localPosition = new Vector3(2, 4, 0);
     }
 
     public override void Attack(float damage)

@@ -57,6 +57,8 @@ public class BattleManager : MonoSingleton<BattleManager>
         Define.DialScene?.HealthbarInit(true, Player.HP, Player.MaxHP);
 
         TurnChange();
+
+        //Define.DialScene?.CardDescPopup(Define.DialScene?.Dial?.DialElementList[2].SelectCard.Rune);
     }
 
     private void OnPlayerTurn()
@@ -143,6 +145,7 @@ public class BattleManager : MonoSingleton<BattleManager>
 
             case GameTurn.PlayerEnd:
                 //Enemy.StopIdle();
+                Define.DialScene?.CardDescDown();
                 OnMonsterTurn();
                 break;
 
@@ -169,7 +172,7 @@ public class BattleManager : MonoSingleton<BattleManager>
                 Define.DialScene?.Dial?.AllMagicCircleGlow(false);
                 Define.DialScene?.Dial?.AllMagicSetCoolTime();
                 Define.DialScene?.Dial?.SettingDialRune(false);
-                Define.DialScene?.AllCardDescPopup();
+                //Define.DialScene?.CardDescPopup(Define.DialScene?.Dial?.DialElementList[2].SelectCard.Rune);
                 _gameTurn = GameTurn.EnemyEnd;
                 break;
 

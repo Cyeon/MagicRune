@@ -15,8 +15,7 @@ public class DialScene : BaseScene
     public Dial Dial => _dial;
 
     [SerializeField]
-    private GameObject _cardDescPanel;
-    private ExplainPanelList _cardDescPanelList;
+    private ExplainPanel _cardDescPanel = null;
 
     [SerializeField]
     private GameObject _statusDescPanel;
@@ -45,12 +44,12 @@ public class DialScene : BaseScene
 
         Managers.UI.Bind<Image>("TurnBackground", Managers.Canvas.GetCanvas("Popup").gameObject);
         Managers.UI.Bind<TextMeshProUGUI>("TurnText", Managers.Canvas.GetCanvas("Popup").gameObject);
-            
+
         Managers.UI.Bind<Image>("P StatusPanel", Managers.Canvas.GetCanvas("Main").gameObject);
         Managers.UI.Bind<Image>("E StatusPanel", Managers.Canvas.GetCanvas("Main").gameObject);
 
         Managers.UI.Bind<Slider>("P HealthBar", Managers.Canvas.GetCanvas("Main").gameObject);
-        Managers.UI .Bind<Slider>("P ShieldBar", Managers.Canvas.GetCanvas("Main").gameObject);
+        Managers.UI.Bind<Slider>("P ShieldBar", Managers.Canvas.GetCanvas("Main").gameObject);
         Managers.UI.Bind<TextMeshProUGUI>("P HealthText", Managers.Canvas.GetCanvas("Main").gameObject);
         Managers.UI.Bind<Slider>("P HealthFeedbackBar", Managers.Canvas.GetCanvas("Main").gameObject);
         Managers.UI.Bind<TextMeshProUGUI>("P Shield Value", Managers.Canvas.GetCanvas("Main").gameObject);
@@ -80,8 +79,6 @@ public class DialScene : BaseScene
         //});
         Managers.UI.Get<Button>("Quit Btn").onClick.RemoveAllListeners();
         Managers.UI.Get<Button>("Quit Btn").onClick.AddListener(() => Managers.GameQuit());
-
-        _cardDescPanelList = _cardDescPanel.GetComponent<ExplainPanelList>();
 
         Managers.Sound.PlaySound("BGM/DialSceneBGM", SoundType.Bgm, true, 1.0f);
 
@@ -143,7 +140,7 @@ public class DialScene : BaseScene
     public void ClearStatusPanel(Unit unit)
     {
         Transform trm = GetStatusTrm(unit);
-        for(int i = trm.childCount - 1; i >= 0; --i)
+        for (int i = trm.childCount - 1; i >= 0; --i)
         {
             Destroy(trm.GetChild(i).gameObject);
         }
@@ -260,48 +257,51 @@ public class DialScene : BaseScene
 
     public void CardDescPopup(BaseRune rune)
     {
-        if(rune == null)
-        {
-            CardDescDown();
-        }
-        else
-        {
-            _cardDescPanel.SetActive(true);
-            if (_cardDescPanelList == null)
-            {
-                _cardDescPanelList = _cardDescPanel.GetComponent<ExplainPanelList>();
-            }
-
-            _cardDescPanelList.OpenPanel(0, rune);
-            _cardDescPanelList.ClosePanel(1);
-            _cardDescPanelList.ClosePanel(2);
-        }
+        _cardDescPanel.SetUI(rune);
+        //if (rune == null)
+        //{
+        //    CardDescDown();
+        //    _cardDescPanel.SetUI(null, true);
+        //}
+        //else
+        //{
+        //    //_cardDescPanel.SetActive(true);
+        //    //if (_cardDescPanelList == null)
+        //    //{
+        //    //    _cardDescPanelList = _cardDescPanel.GetComponent<ExplainPanelList>();
+        //    //}
+        //    //_cardDescPanelList.OpenPanel(0, rune);s
+        //    //_cardDescPanelList.ClosePanel(1);
+        //    //_cardDescPanelList.ClosePanel(2);
+        //}
     }
 
     public void AllCardDescPopup()
     {
-        _cardDescPanel.SetActive(true);
-        if (_cardDescPanelList == null)
-        {
-            _cardDescPanelList = _cardDescPanel.GetComponent<ExplainPanelList>();
-        }
+        //_cardDescPanel.SetActive(true);
+        //if (_cardDescPanelList == null)
+        //{
+        //    _cardDescPanelList = _cardDescPanel.GetComponent<ExplainPanelList>();
+        //}
 
-        for (int i = 0; i < _dial.DialElementList.Count; i++)
-        {
-            if (_dial.DialElementList[i].SelectCard != null)
-            {
-                _cardDescPanelList.OpenPanel(_dial.DialElementList.Count - 1 - i, _dial.DialElementList[i].SelectCard.Rune);
-            }
-            else
-            {
-                _cardDescPanelList.ClosePanel(i);
-            }
-        }
+        //for (int i = 0; i < _dial.DialElementList.Count; i++)
+        //{
+        //    if (_dial.DialElementList[i].SelectCard != null)
+        //    {
+        //        _cardDescPanelList.OpenPanel(_dial.DialElementList.Count - 1 - i, _dial.DialElementList[i].SelectCard.Rune);
+        //    }
+        //    else
+        //    {
+        //        _cardDescPanelList.ClosePanel(i);
+        //    }
+        //}
     }
 
     public void CardDescDown()
     {
-        _cardDescPanel.SetActive(false);
+        BaseRune rune = null;
+        _cardDescPanel.SetUI(rune);
+        //_cardDescPanel.SetActive(false);
     }
 
     public void StatusDescPopup(Status status, Vector3 pos, bool isDown = true)
@@ -414,7 +414,7 @@ public class DialScene : BaseScene
     {
         // �� Ŭ����
     }
-    
+
     public void ChooseRuneUISetUp()
     {
         _chooseRuneUI.gameObject.SetActive(true);

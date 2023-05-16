@@ -188,6 +188,7 @@ public class Dial : MonoBehaviour
         #endregion
 
         RuneSort();
+        Define.DialScene.CardDescPopup(DialElementList[2].SelectCard.Rune);
     }
 
     public void AddCard(BaseRuneUI card, int tier)
@@ -284,7 +285,7 @@ public class Dial : MonoBehaviour
 
     private IEnumerator AttackCoroutine()
     {
-        Define.DialScene?.CardDescDown();
+        //Define.DialScene?.CardDescDown();
 
         // 이 부분 예외처리 필요
         AttributeType compareAttributeType = _dialElementList[0].SelectCard.Rune.BaseRuneSO.AttributeType;
