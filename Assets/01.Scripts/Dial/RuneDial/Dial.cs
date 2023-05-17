@@ -197,43 +197,6 @@ public class Dial : MonoBehaviour
                     _isDialSelect = false;
                     break;
             }
-
-            //float offset = 0.7f;
-            // _dialElementList -> 위에서 부터 0 - 1 - 2
-            // _runeDict -> 아래서 부터 1 - 2 - 3
-
-            //if(touch.deltaPosition.normalized.y > offset)
-            //{
-            //    // Up
-            //    if (_selectIndex == 0) return; // Index를 좀 제대로 파악해야 할 듯
-            //    if(_selectIndex == _dialElementList.Count - 1)
-            //    {
-            //        LineSwap(_selectIndex, _selectIndex - 1);
-            //    }
-            //    else
-            //    {
-            //        LineSwap(_selectIndex + 1, _selectIndex + 2);
-            //    }
-            //    MagicCircleGlow(_selectIndex, false);
-            //    SelectDialElement(_dialElementList[_selectIndex - 1]);
-            //    MagicCircleGlow(_selectIndex, true);
-            //}
-            //else if(touch.deltaPosition.normalized.y < -offset)
-            //{
-            //    // Down
-            //    if (_selectIndex == _dialElementList.Count - 1) return;
-            //    if(_selectIndex == 0)
-            //    {
-            //        LineSwap(_dialElementList.Count - 1, _dialElementList.Count);
-            //    }
-            //    else
-            //    {
-            //        LineSwap(_selectIndex + 1, _selectIndex);
-            //    }
-            //    MagicCircleGlow(_selectIndex, false);
-            //    SelectDialElement(_dialElementList[_selectIndex + 1]);
-            //    MagicCircleGlow(_selectIndex, true);
-            //}
         }
     }
 
@@ -258,13 +221,30 @@ public class Dial : MonoBehaviour
         _dialElementList[dialFLine].SetRuneList(_runeDict[fLine]);
         _dialElementList[dialSLine].SetRuneList(_runeDict[sLine]);
 
-        for(int i = 0; i < _dialElementList[dialFLine].RuneList.Count; i++)
+        float zRotate = _dialElementList[dialFLine].transform.rotation.z;
+        _dialElementList[dialFLine].transform.rotation = Quaternion.Euler(0, 0, _dialElementList[dialSLine].transform.rotation.z);
+        _dialElementList[dialSLine].transform.rotation = Quaternion.Euler(0, 0, zRotate);
+        int num = 0 + 1 + 2;
+        num -= dialFLine;
+        num -= dialSLine;
+        _dialElementList[num].transform.rotation = Quaternion.Euler(0, 0, 0);
+
+        // y값이 이상해!
+        float offset = _lineDistanceArray[dialFLine] / _lineDistanceArray[dialSLine];
+        for (int i = 0; i < _dialElementList[dialFLine].RuneList.Count; i++)
         {
+            //_dialElementList[dialFLine].RuneList[i].transform.DOKill();
+            //_dialElementList[dialFLine].RuneList[i].transform.DOMove(_dialElementList[dialFLine].RuneList[i].transform.position * offset, 0.2f);
+            _dialElementList[dialFLine].RuneList[i].transform.localScale = new Vector3(0.1f, 0.1f, 1f);
             _dialElementList[dialFLine].RuneList[i].transform.SetParent(_dialElementList[dialFLine].transform);
         }
 
+        offset = _lineDistanceArray[dialSLine] / _lineDistanceArray[dialFLine];
         for (int i = 0; i < _dialElementList[dialSLine].RuneList.Count; i++)
         {
+            //_dialElementList[dialSLine].RuneList[i].transform.DOKill();
+            //_dialElementList[dialSLine].RuneList[i].transform.DOMove(_dialElementList[dialSLine].RuneList[i].transform.position * offset, 0.2f);
+            _dialElementList[dialSLine].RuneList[i].transform.localScale = new Vector3(0.1f, 0.1f, 1f);
             _dialElementList[dialSLine].RuneList[i].transform.SetParent(_dialElementList[dialSLine].transform);
         }
 
@@ -419,12 +399,6 @@ public class Dial : MonoBehaviour
 
             RuneSort();
         }
-    }
-
-    public void LineSort(int line, bool isTween = false, float tweenDuration = 0.2f)
-    {
-        // 각도는 유지시키고 길이만 그러니까 (1, 1) 점을 각도는 유지시키고 밀어서 (2, 2) 대충 이렇게
-        // 수학시간에 행렬 하면서 배운 거 같은데 난 2시간이나 빠져서.. 잘 몰루겠다...
     }
 
     private void RuneSort(bool isTween = false)

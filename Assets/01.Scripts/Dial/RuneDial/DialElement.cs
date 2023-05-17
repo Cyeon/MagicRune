@@ -474,6 +474,27 @@ public class DialElement : MonoBehaviour
         }
     }
 
+    [Obsolete]
+    public void RuneListSort()
+    {
+        if (_runeList[0] == _selectCard) return;
+        int count = 0; 
+        for(int i = 0; i < _runeList.Count; i++)
+        {
+            if (_runeList[i] == _selectCard) break;
+            else count++;
+        }
+
+        if (count <= 0) return;
+        for(int i = 0; i < count; i++)
+        {
+            BaseRuneUI rune = _runeList[0];
+            _runeList.RemoveAt(0);
+            _runeList.Add(rune);
+            rune.transform.SetAsLastSibling();
+        }
+    }
+
 #if UNITY_EDITOR
     private void OnDrawGizmosSelected()
     {
