@@ -10,6 +10,7 @@ public enum StageType
     Adventure,
     Rest,
     Shop,
+    Boss
 }
 
 public class Stage : MonoBehaviour

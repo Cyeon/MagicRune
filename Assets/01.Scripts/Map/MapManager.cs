@@ -31,8 +31,6 @@ public class MapManager
     private StageSpawner _stageSpawner;
     public StageSpawner StageSpawner => _stageSpawner;
 
-    private bool _isFirst = true;
-
     private MapUI _mapSceneUI;
     public MapUI MapSceneUI
     {
@@ -48,6 +46,8 @@ public class MapManager
 
     private MapScene _mapScene;
 
+    private bool _isFirst = true;
+
     #region Adventure
     private bool _isAdventure = false;
     public bool IsAdventureWar {get => _isAdventure; set { _isAdventure = value;} }
@@ -55,6 +55,7 @@ public class MapManager
     public string AdventureResultText => _adventureResultText;
     #endregion
 
+    #region Init
     public void MapInit()
     {
         _mapSceneUI = Managers.Canvas.GetCanvas("MapUI").GetComponent<MapUI>();
@@ -95,6 +96,40 @@ public class MapManager
         _firstHalfStageList.Add(StageType.Attack);
         _firstHalfStageList.Add(StageType.Attack);
         _firstHalfStageList.Add(StageType.Adventure);
+
+        if(IsFiftyChance())
+        {
+            _firstHalfStageList.Add(IsFiftyChance() ? StageType.Shop : StageType.Rest);
+            _firstHalfStageList.Add(IsFiftyChance() ? StageType.Attack : StageType.Adventure);
+        }
+        else
+        {
+            _firstHalfStageList.Add(IsFiftyChance() ? StageType.Attack : StageType.Adventure);
+            if (IsFiftyChance())
+            {
+                _firstHalfStageList.Add(IsFiftyChance() ? StageType.Shop : StageType.Rest);
+            }
+            else
+            {
+                _firstHalfStageList.Add(IsFiftyChance() ? StageType.Attack : StageType.Adventure);
+            }
+        }
+
+        FirstHalf();
+    }
+    #endregion
+
+    #region Next
+    public void NextChapter()
+    {
+        if (Chapter < _chapterList.Count)
+        {
+            _chapter++;
+        }
+
+        ChapterInit();
+        _mapSceneUI.ChangeBackground();
+        _mapSceneUI.ChapterTransition.Transition();
     }
 
     public void NextStage()
@@ -104,14 +139,7 @@ public class MapManager
             ResetChapter();
         }
 
-        #region 초기화
-        for (int i = 0; i < _stageList.Count; ++i)
-        {
-            MapSceneUI.Stages[i].sprite = _stageList[i].icon;
-            MapSceneUI.Stages[i].color = _stageList[i].color;
-        }
         Managers.Enemy.ResetEnemy();
-        #endregion
 
         if (_stageList[Stage].type == StageType.Boss)
         {
@@ -119,43 +147,28 @@ public class MapManager
             return;
         }
 
-        MapSceneUI.StageList.transform.DOLocalMoveX(Stage * -300f, 0);
         if(_mapScene == null)
         {
             _mapScene = Managers.Scene.CurrentScene as MapScene;
         }
 
-        if (_mapScene != null)
-        {
-            _mapScene?.ArrowImage.transform.SetParent(MapSceneUI.StageList.GetChild(Stage + 1));
-            _mapScene.ArrowImage.transform.localPosition = new Vector3(0, _mapScene.ArrowImage.transform.localPosition.y, 0);
-        }
-        _stageList[Stage].ChangeResource(Color.white, selectPortalSprite);
         _floor += 1;
-
-        Sequence seq = DOTween.Sequence();
-        seq.AppendInterval(0.5f);
-        if (Stage < MapSceneUI.StageList.childCount - 2)
-            seq.Append(MapSceneUI.StageList.transform.DOLocalMoveX(Stage * -300f, 0.5f));
-        seq.Append(MapSceneUI.Stages[Stage].DOColor(Color.white, 0.25f));
-        seq.AppendCallback(() =>
-        {
-            _stageList[Stage].color = Color.white;
-            _stageSpawner.SpawnPortal(_stageList[Stage].type);
-        });
     }
+    #endregion
 
-    public void NextChapter()
+    #region Half
+    public void FirstHalf()
     {
-        if(Chapter < _chapterList.Count)
-        {
-            _chapter++;
-        }
+        _stageList.ForEach(x => Managers.Resource.Destroy(x.gameObject));
+        _stageList.Clear();
 
-        ChapterInit();
-        _mapSceneUI.ChangeBackground();
-        _mapSceneUI.ChapterTransition.Transition();
+        for(int i = 0; i < _firstHalfStageList.Count; i++)
+        {
+            Stage stage = StageSpawner.SpawnStage(_firstHalfStageList[i]);
+            _stageList.Add(stage);
+        }
     }
+    #endregion
 
     public void ResetChapter()
     {
@@ -168,5 +181,15 @@ public class MapManager
     {
         _isAdventure = true;
         _adventureResultText = text;
+    }
+
+
+    /// <summary>
+    /// 50% 확률
+    /// </summary>
+    /// <returns></returns>
+    private bool IsFiftyChance()
+    {
+        return Random.Range(0, 2) == 0;
     }
 }
