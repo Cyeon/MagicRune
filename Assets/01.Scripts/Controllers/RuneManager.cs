@@ -27,6 +27,7 @@ public class RuneManager
         _runeHandler.Add(new Attack());
         _runeHandler.Add(new ThreeAttack());
         _runeHandler.Add(new GroundShield());
+        _runeHandler.Add(new GroundBeat());
 
         _runeHandler.Add(new Charge());
         _runeHandler.Add(new RailGun());

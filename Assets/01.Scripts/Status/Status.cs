@@ -15,20 +15,21 @@ public enum StatusType
 public enum StatusName
 {
     Null,
-    Fire,                     // 화상
-    Ice,                      // 빙결
-    Recharging,          // 충전
-    ChillinessZip,        // 한기냉축
-    Chilliness,            // 한기
+    Fire,               // 화상
+    Ice,                // 빙결
+    Recharging,         // 충전
+    ChillinessZip,      // 한기응축
+    Chilliness,         // 한기
     BladeOfKnife,       // 칼날
-    Impact,               // 충격
-    IceShield,            // 얼음막
-    PoisonousLiquid,  // 독액
-    FoxOrb,              // 여우구슬
-    FlameArmor,       // 화염갑옷
-    Boom,                // 폭팔
-    Absorptioning,     // 흡수중
-    Absorption,         //흡수
+    Impact,             // 충격
+    IceShield,          // 얼음 보호막
+    PoisonousLiquid,    // 독액
+    FoxOrb,             // 여우구슬
+    FlameArmor,         // 화염갑옷
+    Boom,               // 폭발
+    Absorptioning,      // 흡수 중
+    Absorption,         // 흡수
+    GroundBeat,         // 땅울림
     COUNT
 }
 
