@@ -59,6 +59,7 @@ public class ShopUI : MonoBehaviour
         _buyCheck.SetActive(false);
 
         Managers.Gold.AddGold(-_shopItemPanel.item.Gold);
+        Managers.Sound.PlaySound("SFX/Buy", SoundType.Effect);
         _shopItemPanel.item.Execute();
 
         Managers.Resource.Destroy(_shopItemPanel.gameObject);
