@@ -7,7 +7,6 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using static UnityEditor.PlayerSettings;
 using Random = UnityEngine.Random;
 
 public class Dial : MonoBehaviour
@@ -225,7 +224,7 @@ public class Dial : MonoBehaviour
         float offset = _lineDistanceArray[dialFLine] / _lineDistanceArray[dialSLine];
         for (int i = 0; i < _dialElementList[dialFLine].RuneList.Count; i++)
         {
-            // y°ªÀÌ ÀÌ»óÇØ!
+            // yê°’ì´ ì´ìƒí•´!
             //_dialElementList[dialFLine].RuneList[i].transform.DOKill();
             //_dialElementList[dialFLine].RuneList[i].transform.DOMove(_dialElementList[dialFLine].RuneList[i].transform.position * offset/* + this.transform.position*/, 0.2f);
             _dialElementList[dialFLine].RuneList[i].transform.localScale = new Vector3(0.1f, 0.1f, 1f);
@@ -271,9 +270,9 @@ public class Dial : MonoBehaviour
                 //if (this.transform.position.x > _runeDict[line][i].transform.position.y)
                 //{
                 //    fAngle = 360 - fAngle;
-                //    // 0~180 µµ´Â ±¸ÇÒ ¼ö ÀÖÁö¸¸, y1 > y2 ÀÎ °æ¿ì.. Áï
-                //    // 3»çºĞ¸é 4»çºĞ¸éÀº 360 - (180~360) ¸¦ ÇØÁà¼­ [0,180]
-                //    // °ªÀ¸·Î º¸Á¤ÇØÁØ´Ù.
+                //    // 0~180 ë„ëŠ” êµ¬í•  ìˆ˜ ìˆì§€ë§Œ, y1 > y2 ì¸ ê²½ìš°.. ì¦‰
+                //    // 3ì‚¬ë¶„ë©´ 4ì‚¬ë¶„ë©´ì€ 360 - (180~360) ë¥¼ í•´ì¤˜ì„œ [0,180]
+                //    // ê°’ìœ¼ë¡œ ë³´ì •í•´ì¤€ë‹¤.
                 //}                                                                                                                                                                                           
 
                 float height = Mathf.Sin((fAngle + 90) * Mathf.Deg2Rad) * _lineDistanceArray[3 - line];
@@ -535,7 +534,7 @@ public class Dial : MonoBehaviour
     {
         //Define.DialScene?.CardDescDown();
 
-        // ÀÌ ºÎºĞ ¿¹¿ÜÃ³¸® ÇÊ¿ä
+        // ì´ ë¶€ë¶„ ì˜ˆì™¸ì²˜ë¦¬ í•„ìš”
         AttributeType compareAttributeType = _dialElementList[0].SelectCard.Rune.BaseRuneSO.AttributeType;
         bool isResonanceCheck = true;
         for (int i = _dialElementList.Count - 1; i >= 0; i--)
@@ -627,7 +626,7 @@ public class Dial : MonoBehaviour
 
     public void AllMagicSetCoolTime()
     {
-        Debug.Log("ÄğÅ¸ÀÓ °¨¼Ò");
+        Debug.Log("ì¿¨íƒ€ì„ ê°ì†Œ");
 
         for (int i = 0; i < _cooltimeDeck.Count; i++)
         {
