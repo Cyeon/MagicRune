@@ -10,5 +10,6 @@ public class Icicle : Enemy
     {
         spriteRenderer.sprite = _originalIcon;
         base.Init();
+        transform.localPosition = new Vector3(2, 6f, 0);
     }
 }
