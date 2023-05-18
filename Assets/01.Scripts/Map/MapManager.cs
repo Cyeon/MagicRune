@@ -4,6 +4,13 @@ using System.Linq;
 using UnityEngine;
 using DG.Tweening;
 
+public enum HalfType
+{
+    First,
+    Second,
+    Boss
+}
+
 public class MapManager
 {
     #region Chapter
@@ -18,11 +25,16 @@ public class MapManager
     #region Half
     private List<StageType> _firstHalfStageList = new List<StageType>(); // 전반부
     private List<StageType> _secondHalfStageList = new List<StageType>(); // 후반부
+
+    private int _halfProgress = 0; // 현재 진행도
+    private int _nextCondition = 4; // 다음 단계로 넘어가는 조건 스테이지 개수
+
+    private HalfType _halfType = HalfType.First;
+    public HalfType CurrentHalfType => _halfType;
     #endregion
 
     #region Stage
     private List<Stage> _stageList = new List<Stage>();
-    public int Stage => Floor - ((this.Chapter - 1) * 9);
     #endregion 
 
     private int _floor = 0;
@@ -148,7 +160,7 @@ public class MapManager
         }
         
         FirstHalf();
-        SecondHalf();
+    
     }
     #endregion
 
@@ -174,7 +186,7 @@ public class MapManager
 
         Managers.Enemy.ResetEnemy();
 
-        if (_stageList[Stage].type == StageType.Boss)
+        if (CurrentHalfType == HalfType.Boss)
         {
             NextChapter();
             return;
@@ -185,15 +197,29 @@ public class MapManager
             _mapScene = Managers.Scene.CurrentScene as MapScene;
         }
 
-        _floor += 1;
+        _floor++;
+
+        _halfProgress++;
+        if(_halfProgress == _nextCondition)
+        {
+            if (CurrentHalfType == HalfType.First) SecondHalf();
+            else if (CurrentHalfType == HalfType.Second) BossHalf();
+        }
     }
     #endregion
 
     #region Half
-    public void FirstHalf()
+    private void HalfReset()
     {
         _stageList.ForEach(x => Managers.Resource.Destroy(x.gameObject));
         _stageList.Clear();
+
+        _halfProgress = 0;
+    }
+
+    public void FirstHalf()
+    {
+        HalfReset();
 
         for(int i = 0; i < _firstHalfStageList.Count; i++)
         {
@@ -204,14 +230,21 @@ public class MapManager
 
     public void SecondHalf()
     {
-        _stageList.ForEach(x => Managers.Resource.Destroy(x.gameObject));
-        _stageList.Clear();
+        HalfReset();
 
         for (int i = 0; i < _secondHalfStageList.Count; i++)
         {
             Stage stage = StageSpawner.SpawnStage(_secondHalfStageList[i]);
             _stageList.Add(stage);
         }
+    }
+
+    private void BossHalf()
+    {
+        HalfReset();
+
+        Stage stage = StageSpawner.SpawnStage(StageType.Boss);
+        _stageList.Add(stage);
     }
 
     /// <summary>
@@ -255,5 +288,10 @@ public class MapManager
     private bool IsFiftyChance()
     {
         return Random.Range(0, 2) == 0;
+    }
+
+    public List<Stage> GetStageList()
+    {
+        return _stageList;
     }
 }

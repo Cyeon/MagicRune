@@ -14,6 +14,6 @@ public class BossStage : Stage
 
     public override void Init()
     {
-
+        transform.Find("Icon").GetComponent<SpriteRenderer>().sprite = Managers.Map.CurrentChapter.boss.spriteRenderer.sprite;
     }
 }
