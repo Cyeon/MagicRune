@@ -6,6 +6,7 @@ using DG.Tweening;
 
 public enum PeriodType
 {
+    None,
     First,
     Second,
     Boss
@@ -29,7 +30,7 @@ public class MapManager
     private int _periodProgress = 0; // 현재 진행도
     private int _nextCondition = 4; // 다음 단계로 넘어가는 조건 스테이지 개수
 
-    private PeriodType _periodType = PeriodType.First;
+    private PeriodType _periodType = PeriodType.None;
     public PeriodType CurrentPeriodType => _periodType;
     #endregion
 
@@ -105,6 +106,8 @@ public class MapManager
         _stageList.Clear();
         _currentChapter = _chapterList[Chapter - 1];
 
+        _periodType = PeriodType.None;
+
         bool isAttack = false;
 
         // 전반부 세팅
@@ -158,9 +161,7 @@ public class MapManager
 
             _secondPeriodStageList.Add(isAttack ? StageType.Adventure : StageType.Attack);
         }
-        
-        FirstPeriod();
-    
+        NextPeriod();
     }
     #endregion
 
@@ -202,49 +203,44 @@ public class MapManager
         _periodProgress++;
         if(_periodProgress == _nextCondition)
         {
-            if (CurrentPeriodType == PeriodType.First) SecondPeriod();
-            else if (CurrentPeriodType == PeriodType.Second) BossPeriod();
+            NextPeriod();
         }
     }
     #endregion
 
     #region Period
-    private void PeriodReset()
+    public void NextPeriod()
     {
         _stageList.ForEach(x => Managers.Resource.Destroy(x.gameObject));
         _stageList.Clear();
 
         _periodProgress = 0;
-    }
+        _periodType++;
 
-    public void FirstPeriod()
-    {
-        PeriodReset();
-
-        for(int i = 0; i < _firstPeriodStageList.Count; i++)
+        Stage stage;
+        switch(CurrentPeriodType)
         {
-            Stage stage = StageSpawner.SpawnStage(_firstPeriodStageList[i]);
-            _stageList.Add(stage);
+            case PeriodType.First:
+                for (int i = 0; i < _firstPeriodStageList.Count; i++)
+                {
+                    stage = StageSpawner.SpawnStage(_firstPeriodStageList[i]);
+                    _stageList.Add(stage);
+                }
+                break;
+
+            case PeriodType.Second:
+                for (int i = 0; i < _secondPeriodStageList.Count; i++)
+                {
+                    stage = StageSpawner.SpawnStage(_secondPeriodStageList[i]);
+                    _stageList.Add(stage);
+                }
+                break;
+
+            case PeriodType.Boss:
+                stage = StageSpawner.SpawnStage(StageType.Boss);
+                _stageList.Add(stage);
+                break;
         }
-    }
-
-    public void SecondPeriod()
-    {
-        PeriodReset();
-
-        for (int i = 0; i < _secondPeriodStageList.Count; i++)
-        {
-            Stage stage = StageSpawner.SpawnStage(_secondPeriodStageList[i]);
-            _stageList.Add(stage);
-        }
-    }
-
-    private void BossPeriod()
-    {
-        PeriodReset();
-
-        Stage stage = StageSpawner.SpawnStage(StageType.Boss);
-        _stageList.Add(stage);
     }
 
     /// <summary>
