@@ -44,6 +44,8 @@ public class StatusManager
             _statusList.Add(status);
         }
 
+        Managers.Sound.PlaySound("SFX/State", SoundType.Effect);
+
         if(status.OnAddStatus.Count > 0)
             status.OnAddStatus.ForEach(x => x.Invoke());
 
