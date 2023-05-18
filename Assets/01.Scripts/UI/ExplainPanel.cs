@@ -87,6 +87,7 @@ public class ExplainPanel : MonoBehaviour
         for (int i = 0; i < rune.KeywardList.Length; i++)
         {
             KeywardPanel panel = Managers.Resource.Instantiate("UI/KeywardPanel", _keywardArea).GetComponent<KeywardPanel>();
+            panel.transform.localScale = Vector3.one;
             panel.SetKeyward(Managers.Keyward.GetKeyward(rune.KeywardList[i]));
             _keywardPanelList.Add(panel);
         }

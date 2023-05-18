@@ -27,11 +27,16 @@ public class RuneManager
         _runeHandler.Add(new Attack());
         _runeHandler.Add(new ThreeAttack());
         _runeHandler.Add(new GroundShield());
+        _runeHandler.Add(new GroundBeat());
+        _runeHandler.Add(new Bouncing());
 
         _runeHandler.Add(new Charge());
         _runeHandler.Add(new RailGun());
         _runeHandler.Add(new LightingRod());
         _runeHandler.Add(new Release());
+        _runeHandler.Add(new ElectricBarrier());
+        _runeHandler.Add(new ElectricAbsorption());
+        _runeHandler.Add(new SelfGeneration());
 
         _runeHandler.Add(new MagicBullet());
         _runeHandler.Add(new MagicShield());

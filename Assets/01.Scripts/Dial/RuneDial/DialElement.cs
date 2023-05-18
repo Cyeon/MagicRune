@@ -7,6 +7,7 @@ using UnityEngine.EventSystems;
 
 public enum DialState
 {
+    None,
     Rotate,
     Drag,
 }
@@ -38,25 +39,29 @@ public class DialElement : MonoBehaviour
 
     [SerializeField]
     private float _inDistance;
+    public float InDistance => _inDistance;
     [SerializeField]
     private float _outDistance;
+    public float OutDistance => _outDistance;
     #endregion
 
     [SerializeField]
     private float _runePoolOffset = 5f;
 
     private int _fingerID = -1;
+    public int FingerID { get => _fingerID; set => _fingerID = value; }
 
     private int _lineID = -1;
 
     private List<BaseRuneUI> _runeList;
+    public List<BaseRuneUI> RuneList => _runeList;
     private BaseRuneUI _selectCard;
     public BaseRuneUI SelectCard
     {
         get
         {
-            if (_selectCard == null)
-                _selectCard = _runeList[0];
+            //if (_selectCard == null)
+            //    _selectCard = _runeList[0];
             return _selectCard;
         }
         set
@@ -77,19 +82,25 @@ public class DialElement : MonoBehaviour
                     //_selectCard.SetActiveOutline(OutlineType.Default);
                     _selectCard.RuneColor(new Color(0.26f, 0.26f, 0.26f, 1f));
                 }
-                
+
                 _selectCard = value;
-                _dial.CheckResonance();
 
                 //_selectCard.SetActiveOutline(OutlineType.Cyan);
                 _selectCard.RuneColor(Color.white);
+
             }
+            _dial.CheckResonance();
         }
     }
 
     [SerializeField, Range(0f, 90f)]
     private float _selectOffset;
-    private bool _isRotate = false;
+    private bool _isTouchDown = false;
+    public bool IsTouchDown { get => _isTouchDown; set { _isTouchDown = value; _touchDownTimer = 0f; } }
+    private DialState _dialState = DialState.None;
+    public DialState DialState { get => _dialState; set => _dialState = value; }
+    [SerializeField]
+    private float _dragTouchTime = 3f;
 
     public bool IsGlow
     {
@@ -106,8 +117,8 @@ public class DialElement : MonoBehaviour
         }
     }
 
-    private bool _isPointerDown = false;
-    private float _pointerDownTimer = 0f;
+    private float _touchDownTimer = 0f;
+
 
     private void Awake()
     {
@@ -128,78 +139,26 @@ public class DialElement : MonoBehaviour
     {
         Swipe1();
 
-        RotateMagicCircle();
+        UpdateRunePanel();
 
-        if(_isPointerDown == true)
+        //RotateMagicCircle();
+
+        if(_isTouchDown == true)
         {
-            _pointerDownTimer += Time.deltaTime;
+            _touchDownTimer += Time.deltaTime;
 
-            if (_pointerDownTimer >= 0.25f)
+            // ÀÌ°Å ÅÍÄ¡ÇÏ°í °¡¸¸È÷ ÀÖÀ»¶§¸¸ µÇ°Ô ¹Ù²Ü±î?
+            if(_touchDownTimer > _dragTouchTime)
             {
+                _dialState = DialState.Drag;
                 _dial.SelectDialElement(this);
-                _isPointerDown = false;
-                _pointerDownTimer = 0f;
             }
         }
     }
 
     private void RotateMagicCircle()
     {
-        if (_runeList.Count > 0 && BattleManager.Instance.IsPlayerTurn())
-        {
-            // UI Ç®ï¿½ï¿½ï¿½Ï¸é¼­ ï¿½ï¿½ ï¿½Îºï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-            //if (transform.eulerAngles.z <= _dial.RuneAngle / 2 || transform.eulerAngles.z >= (360f - _dial.RuneAngle / 2))
-            //{
-            float oneDinstance = _dial.RuneAngle / _runeList.Count;
-            bool inBoolean = (transform.eulerAngles.z % oneDinstance) <= _selectOffset;
-            bool outBoolean = (oneDinstance - (transform.eulerAngles.z % oneDinstance)) <= _selectOffset;
-            if (inBoolean)
-            {
-                int index = (int)(transform.eulerAngles.z / oneDinstance) % (_runeList.Count);
-                //index = (index + 1) % _runeList.Count; // ï¿½ß°ï¿½ï¿½ï¿½
-                if (_runeList[index].Rune.IsCoolTime == false)
-                {
-                    SelectCard = _runeList[index];
-                    if (_isRotate == true)
-                    {
-                        if (_selectCard != null)
-                        {
-                            Define.DialScene?.CardDescPopup(_selectCard.Rune);
-                        }
-                    }
-                }
-            }
-            else if (outBoolean)
-            {
-                int index = (int)(transform.eulerAngles.z / oneDinstance) % (_runeList.Count);
-                //index = (index - 1 < 0 ? _runeList.Count - 1 : index - 1) % (_runeList.Count);
-                index = (index + 1) % (_runeList.Count);
-
-                if (_runeList[index].Rune.IsCoolTime == false)
-                {
-                    SelectCard = _runeList[index];
-                    if (_isRotate == true)
-                    {
-                        if (_selectCard != null)
-                        {
-                            Define.DialScene?.CardDescPopup(_selectCard.Rune);
-                        }
-                    }
-                }
-            }
-            else
-            {
-                SelectCard = null;
-                if (_isRotate == true)
-                {
-                    BaseRune rune = SelectCard == null ? null : SelectCard.Rune;
-                    Define.DialScene?.CardDescPopup(rune);
-                }
-            }
-            //}
-        }
-
-        if (_isRotate && BattleManager.Instance.IsPlayerTurn())
+        if (_isTouchDown && BattleManager.Instance.IsPlayerTurn())
         {
             _offset = ((Vector3)Input.GetTouch(_fingerID).position - _touchPos);
 
@@ -226,6 +185,84 @@ public class DialElement : MonoBehaviour
 
             transform.rotation = Quaternion.Euler(rot);
             _touchPos = Input.GetTouch(_fingerID).position;
+            _touchDownTimer = 0f;
+            _dial.SelectDialElement(null);
+        }
+    }
+
+    private void UpdateRunePanel()
+    {
+        if (_runeList.Count > 0 && BattleManager.Instance.IsPlayerTurn())
+        {
+            float oneDinstance = _dial.RuneAngle / _runeList.Count;
+            bool inBoolean = (transform.eulerAngles.z % oneDinstance) <= _selectOffset;
+            bool outBoolean = (oneDinstance - (transform.eulerAngles.z % oneDinstance)) <= _selectOffset;
+            if (inBoolean && transform.eulerAngles.z >= 0)
+            {
+                int index = (int)(transform.eulerAngles.z / oneDinstance) % (_runeList.Count);
+                if (_runeList[index].Rune.IsCoolTime == false)
+                {
+                    //if (SelectCard != _runeList[index])
+                    //{
+                        SelectCard = _runeList[index];
+                        // ¸Ç ¾Õ¿¡ ÀÖ´Â ¾Ö¸± ¸Ç µÚ·Î º¸³½´Ù.
+                        //if (index != 0)
+                        //{
+                        //    BaseRuneUI rune = _runeList[0];
+                        //    _runeList.RemoveAt(0);
+                        //    _runeList.Add(rune);
+                        //}
+
+                        //Debug.Log("Left");
+
+                        if (_isTouchDown == true)
+                        {
+                            if (_selectCard != null)
+                            {
+                                Define.DialScene?.CardDescPopup(_selectCard.Rune);
+                            }
+                        }
+                    //}
+                }
+            }
+            else if (outBoolean && transform.eulerAngles.z <= 360)
+            {
+                int index = (int)(transform.eulerAngles.z / oneDinstance) % (_runeList.Count);
+                index = (index + 1) % (_runeList.Count);
+
+                if (_runeList[index].Rune.IsCoolTime == false)
+                {
+                    //if (SelectCard != _runeList[index])
+                    //{
+                        SelectCard = _runeList[index];
+                        // ¸Ç µÚ¿¡ ¾Ö¸¦ ¸Ç ¾ÕÀ¸·Î º¸³½´Ù!
+                        //Debug.Log("Right");
+                        //if (index != 0)
+                        //{
+                        //    BaseRuneUI rune = _runeList[_runeList.Count - 1];
+                        //    _runeList.RemoveAt(_runeList.Count - 1);
+                        //    _runeList.Insert(0, rune);
+                        //}
+
+                        if (_isTouchDown == true)
+                        {
+                            if (_selectCard != null)
+                            {
+                                Define.DialScene?.CardDescPopup(_selectCard.Rune);
+                            }
+                        }
+                    //}
+                }
+            }
+            else
+            {
+                SelectCard = null;
+                if (_isTouchDown == true)
+                {
+                    BaseRune rune = SelectCard == null ? null : SelectCard.Rune;
+                    Define.DialScene?.CardDescPopup(rune);
+                }
+            }
         }
     }
 
@@ -296,13 +333,14 @@ public class DialElement : MonoBehaviour
         return _lineID;
     }
 
-    public void AddRuneList(BaseRuneUI rune)
+    public void AddRuneList(in BaseRuneUI rune)
     {
         _runeList.Add(rune);
     }
 
-    public void SetRuneList(List<BaseRuneUI> list)
+    public void SetRuneList(in List<BaseRuneUI> list)
     {
+        _runeList.Clear();
         _runeList = new List<BaseRuneUI>(list);
     }
 
@@ -330,93 +368,130 @@ public class DialElement : MonoBehaviour
         {
             Touch touch = Input.GetTouch(0);
 
-            if (touch.phase == TouchPhase.Began)
+            switch (touch.phase)
             {
-                touchBeganPos = touch.position;
+                case TouchPhase.Began:
+                    touchBeganPos = touch.position;
 
-                float distance = Vector2.Distance(Define.MainCam.ScreenToWorldPoint(touchBeganPos), (Vector2)this.transform.position);
-                if (distance >= _inDistance && distance <= _outDistance)
-                {
-                    if (_isRotate == true) return;
-
-                    _fingerID = touch.fingerId;
-                    _isRotate = true;
-
-                    _touchPos = touch.position;
-                }
-            }
-            if (touch.phase == TouchPhase.Moved)
-            {
-
-            }
-            if (touch.phase == TouchPhase.Ended)
-            {
-                if (_isRotate == true)
-                {
-                    _fingerID = -1;
-                    _isRotate = false;
-
-                    if (_runeList.Count > 0 && BattleManager.Instance.IsPlayerTurn())
+                    float inputDistance = Vector2.Distance(Define.MainCam.ScreenToWorldPoint(touchBeganPos), (Vector2)this.transform.position);
+                    if (inputDistance >= _inDistance && inputDistance <= _outDistance)
                     {
-                        if (_isUseRotateOffset)
-                        {
-                            float oneDinstance = _dial.RuneAngle / _runeList.Count;
-                            bool inBoolean = (transform.eulerAngles.z % oneDinstance) <= _selectOffset;
-                            bool outBoolean = (oneDinstance - (transform.eulerAngles.z % oneDinstance)) <= _selectOffset;
-                            if (inBoolean)
-                            {
-                                int index = (int)(transform.eulerAngles.z / oneDinstance) % (_runeList.Count);
-                                DOTween.To(
-                                    () => transform.eulerAngles,
-                                    x => transform.eulerAngles = x,
-                                    new Vector3(0, 0, ((int)(transform.eulerAngles.z / oneDinstance)) * oneDinstance),
-                                    0.3f
-                                ).OnComplete(() =>
-                                {
-                                    if (_selectCard != null) { Define.DialScene?.CardDescPopup(_selectCard.Rune); }
-                                });
-                            }
-                            else if (outBoolean)
-                            {
-                                int index = ((int)(transform.eulerAngles.z / oneDinstance) + 1) % (_runeList.Count);
-                                index = (index + 1) % _runeList.Count;
-                                DOTween.To(
-                                    () => transform.eulerAngles,
-                                    x => transform.eulerAngles = x,
-                                    new Vector3(0, 0, ((int)(transform.eulerAngles.z / oneDinstance)) * oneDinstance + _dial.StartAngle),
-                                    0.3f
-                                ).OnComplete(() =>
-                                {
-                                    if (_selectCard != null) { Define.DialScene?.CardDescPopup(_selectCard.Rune); }
-                                });
-                            }
-                        }
-                        else
-                        {
-                            float oneDinstance = _dial.RuneAngle / _runeList.Count;
-                            int index = (int)(transform.eulerAngles.z / oneDinstance) % (_runeList.Count);
+                        if (_isTouchDown == true) return;
 
-                            float distance = transform.eulerAngles.z % oneDinstance;
-                            if (distance >= oneDinstance / 2f)
+                        _fingerID = touch.fingerId;
+                        _isTouchDown = true;
+
+                        _touchPos = touch.position;
+                    }
+                    _dialState = DialState.Rotate;
+                    break;
+                case TouchPhase.Moved:
+                    switch (_dialState)
+                    {
+                        case DialState.None:
+                            break;
+                        case DialState.Rotate:
+                            RotateMagicCircle();
+                            break;
+                        case DialState.Drag:
+                            break;
+                    }
+                    break;
+                case TouchPhase.Ended:
+                    if (_isTouchDown == true)
+                    {
+                        _fingerID = -1;
+                        _isTouchDown = false;
+                        _dialState = DialState.None;
+                        _touchDownTimer = 0f;
+                        _dial.SelectDialElement(null);
+                        _dial.AllMagicCircleGlow(false);
+
+                        if (_runeList.Count > 0 && BattleManager.Instance.IsPlayerTurn())
+                        {
+                            if (_isUseRotateOffset)
                             {
-                                transform.DORotate(new Vector3(0, 0, ((index + 1) % _runeList.Count * oneDinstance)), 0.3f, RotateMode.Fast)
-                                    .OnComplete(() =>
+                                float oneDinstance = _dial.RuneAngle / _runeList.Count;
+                                bool inBoolean = (transform.eulerAngles.z % oneDinstance) <= _selectOffset;
+                                bool outBoolean = (oneDinstance - (transform.eulerAngles.z % oneDinstance)) <= _selectOffset;
+                                if (inBoolean)
+                                {
+                                    int index = (int)(transform.eulerAngles.z / oneDinstance) % (_runeList.Count);
+                                    DOTween.To(
+                                        () => transform.eulerAngles,
+                                        x => transform.eulerAngles = x,
+                                        new Vector3(0, 0, ((int)(transform.eulerAngles.z / oneDinstance)) * oneDinstance),
+                                        0.3f
+                                    ).OnComplete(() =>
                                     {
                                         if (_selectCard != null) { Define.DialScene?.CardDescPopup(_selectCard.Rune); }
                                     });
+                                }
+                                else if (outBoolean)
+                                {
+                                    int index = ((int)(transform.eulerAngles.z / oneDinstance) + 1) % (_runeList.Count);
+                                    index = (index + 1) % _runeList.Count;
+                                    DOTween.To(
+                                        () => transform.eulerAngles,
+                                        x => transform.eulerAngles = x,
+                                        new Vector3(0, 0, ((int)(transform.eulerAngles.z / oneDinstance)) * oneDinstance + _dial.StartAngle),
+                                        0.3f
+                                    ).OnComplete(() =>
+                                    {
+                                        if (_selectCard != null) { Define.DialScene?.CardDescPopup(_selectCard.Rune); }
+                                    });
+                                }
                             }
                             else
                             {
-                                transform.DORotate(new Vector3(0, 0, ((index) * oneDinstance)), 0.3f, RotateMode.Fast)
-                                    .OnComplete(() =>
-                                    {
-                                        if (_selectCard != null) { Define.DialScene?.CardDescPopup(_selectCard.Rune); }
-                                    });
+                                float oneDinstance = _dial.RuneAngle / _runeList.Count;
+                                int index = (int)(transform.eulerAngles.z / oneDinstance) % (_runeList.Count);
+
+                                float distance = transform.eulerAngles.z % oneDinstance;
+                                if (distance >= oneDinstance / 2f)
+                                {
+                                    transform.DORotate(new Vector3(0, 0, ((index + 1) % _runeList.Count * oneDinstance)), 0.3f, RotateMode.Fast)
+                                        .OnComplete(() =>
+                                        {
+                                            if (_selectCard != null) { Define.DialScene?.CardDescPopup(_selectCard.Rune); }
+                                        });
+                                }
+                                else
+                                {
+                                    transform.DORotate(new Vector3(0, 0, ((index) * oneDinstance)), 0.3f, RotateMode.Fast)
+                                        .OnComplete(() =>
+                                        {
+
+                                            if (_selectCard != null) { Define.DialScene?.CardDescPopup(_selectCard.Rune); }
+                                        });
+                                }
                             }
+
                         }
                     }
-                }
+                    break;
             }
+        }
+    }
+
+    [Obsolete]
+    public void RuneListSort()
+    {
+        if (_runeList[0] == _selectCard) return;
+        int count = 0; 
+        for(int i = 0; i < _runeList.Count; i++)
+        {
+            if (_runeList[i] == _selectCard) break;
+            else count++;
+        }
+
+        if (count <= 0) return;
+        for(int i = 0; i < count; i++)
+        {
+            BaseRuneUI rune = _runeList[0];
+            _runeList.RemoveAt(0);
+            _runeList.Add(rune);
+            rune.transform.SetAsLastSibling();
         }
     }
 
@@ -429,4 +504,4 @@ public class DialElement : MonoBehaviour
         Gizmos.color = Color.white;
     }
 #endif
-}
+} 
