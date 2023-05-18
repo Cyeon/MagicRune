@@ -30,6 +30,9 @@ public enum StatusName
     Absorptioning,      // 흡수 중
     Absorption,         // 흡수
     GroundBeat,         // 땅울림
+    Bouncing,           // 척력
+    DiamondBody,        // 금강불괴
+    SelfGeneration,     // 자가발전
     COUNT
 }
 
