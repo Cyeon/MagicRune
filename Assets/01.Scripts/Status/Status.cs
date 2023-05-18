@@ -58,7 +58,7 @@ public class Status : MonoBehaviour
     [Header("Resource")]
     [ShowAssetPreview(32, 32)] public Sprite icon;
     public Color color = Color.white;
-
+    public AudioClip sound = null;
     [HideInInspector] public Unit unit;
 
     public void AddValue(int count)

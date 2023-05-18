@@ -44,12 +44,15 @@ public class StatusManager
             _statusList.Add(status);
         }
 
-        Managers.Sound.PlaySound("SFX/State", SoundType.Effect);
+        if (status.sound == null)
+            Managers.Sound.PlaySound("SFX/State", SoundType.Effect);
+        else
+            Managers.Sound.PlaySound(status.sound, SoundType.Effect);
 
-        if(status.OnAddStatus.Count > 0)
+        if (status.OnAddStatus.Count > 0)
             status.OnAddStatus.ForEach(x => x.Invoke());
 
-        if(_unit is Enemy)
+        if (_unit is Enemy)
             Define.DialScene?.AddStatusEffect(_unit, status);
         OnAddStatus?.Invoke(status, count);
     }
@@ -79,7 +82,7 @@ public class StatusManager
         if (status.OnRemoveStatus.Count > 0)
             status.OnRemoveStatus.ForEach(x => x.Invoke());
 
-        for(int i = 0; i < _unit.statusTrm.childCount; ++i)
+        for (int i = 0; i < _unit.statusTrm.childCount; ++i)
         {
             if (_unit.statusTrm.GetChild(i).name == "Status_" + status.statusName)
             {
@@ -96,7 +99,7 @@ public class StatusManager
 
     public bool IsHaveStatus(StatusName status)
     {
-        for(int i = 0; i < _statusList.Count; ++i)
+        for (int i = 0; i < _statusList.Count; ++i)
         {
             if (_statusList[i].statusName == status)
             {
@@ -109,7 +112,7 @@ public class StatusManager
 
     public Status GetStatus(StatusName status)
     {
-        for(int i = 0; i <_statusList.Count; ++i)
+        for (int i = 0; i < _statusList.Count; ++i)
         {
             if (_statusList[i].statusName == status)
             {
@@ -131,7 +134,7 @@ public class StatusManager
     {
         if (_unit.IsDie) return;
 
-        for(int i = 0; i < _statusList.Count; ++i)
+        for (int i = 0; i < _statusList.Count; ++i)
         {
             if (_statusList[i] != null && _statusList[i].OnTurnStart.Count > 0)
             {
@@ -184,7 +187,7 @@ public class StatusManager
         if (_unit.IsDie) return;
 
         List<Status> remStatusList = new List<Status>();
-        for(int i = 0; i < _statusList.Count; ++i)
+        for (int i = 0; i < _statusList.Count; ++i)
         {
             if (_statusList[i] != null)
             {
@@ -196,7 +199,7 @@ public class StatusManager
             }
         }
 
-        for(int i = 0; i < remStatusList.Count; ++i)
+        for (int i = 0; i < remStatusList.Count; ++i)
         {
             if (remStatusList[i] != null)
             {
@@ -210,7 +213,7 @@ public class StatusManager
         _statusList.Clear();
         Define.DialScene?.ClearStatusPanel(_unit);
 
-        for(int i = _unit.statusTrm.childCount - 1; i >= 0; --i)
+        for (int i = _unit.statusTrm.childCount - 1; i >= 0; --i)
         {
             Managers.Resource.Destroy(_unit.statusTrm.GetChild(i).gameObject);
         }
