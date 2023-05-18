@@ -1559,6 +1559,7 @@ MonoBehaviour:
   currentDmg: 0
   attackSound: {fileID: 8300000, guid: 14b13d596957d594ea53e14e0773678d, type: 3}
   isTurnSkip: 0
+  userInfoUI: {fileID: 0}
   <OnTakeDamage>k__BackingField:
     m_PersistentCalls:
       m_Calls: []
@@ -1583,9 +1584,10 @@ MonoBehaviour:
   statusTrm: {fileID: 0}
   _spriteRenderer: {fileID: 3379578682269471388}
   _hitMat: {fileID: 2100000, guid: fcaf6d7d3ad6d5e47896eac99588c7cf, type: 2}
+  _hitShaker: {fileID: 875672938388875079}
   enemyName: "\uC544\uC774\uC2DC\uD074"
   enemyTag: 0
-  isEnter: 0
+  isEnter: 1
   enemyScaleVec: {x: 1, y: 1, z: 1}
   spriteRenderer: {fileID: 3379578682269471388}
   _healthBar: {fileID: 2303149620909332957}

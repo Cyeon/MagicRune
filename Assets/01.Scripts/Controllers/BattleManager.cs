@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Security.Cryptography;
+using System.Xml.Schema;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -56,6 +57,8 @@ public class BattleManager : MonoSingleton<BattleManager>
         Define.DialScene?.HealthbarInit(true, Player.HP, Player.MaxHP);
 
         TurnChange();
+
+        //Define.DialScene?.CardDescPopup(Define.DialScene?.Dial?.DialElementList[2].SelectCard.Rune);
     }
 
     private void OnPlayerTurn()
@@ -90,7 +93,17 @@ public class BattleManager : MonoSingleton<BattleManager>
 
         EventManager.TriggerEvent(Define.ON_START_MONSTER_TURN);
 
-        Enemy?.StatusManager.OnTurnStart();
+        Enemy.StatusManager.OnTurnStart();
+        StartCoroutine(EnemyStatusWaitCoroutine());
+    }
+
+    IEnumerator EnemyStatusWaitCoroutine()
+    {
+        while(Enemy.IsHitAnimationPlaying())
+        {
+            yield return new WaitForEndOfFrame();
+        }
+
         Enemy.PatternManager.TurnAction();
     }
 
@@ -132,6 +145,7 @@ public class BattleManager : MonoSingleton<BattleManager>
 
             case GameTurn.PlayerEnd:
                 //Enemy.StopIdle();
+                Define.DialScene?.CardDescDown();
                 OnMonsterTurn();
                 break;
 
@@ -158,7 +172,7 @@ public class BattleManager : MonoSingleton<BattleManager>
                 Define.DialScene?.Dial?.AllMagicCircleGlow(false);
                 Define.DialScene?.Dial?.AllMagicSetCoolTime();
                 Define.DialScene?.Dial?.SettingDialRune(false);
-                Define.DialScene?.AllCardDescPopup();
+                //Define.DialScene?.CardDescPopup(Define.DialScene?.Dial?.DialElementList[2].SelectCard.Rune);
                 _gameTurn = GameTurn.EnemyEnd;
                 break;
 

@@ -345,47 +345,8 @@ public class Dial : MonoBehaviour
             _cooltimeDeck.Clear();
         }
         #endregion
-
-        #region First Line
-        for (int i = 0; i < Managers.Deck.FirstDialDeck.Count; i++)
-        {
-            BaseRuneUI r = Managers.Resource.Instantiate("Rune/BaseRune").GetComponent<BaseRuneUI>();
-            BaseRune rune = _remainingDeck.Find(x => x.BaseRuneSO == Managers.Deck.FirstDialDeck[i].BaseRuneSO && x.CoolTime <= 0);
-            if (rune == null)
-            {
-                int runeIndex = Random.Range(0, _remainingDeck.Count);
-
-                rune = _remainingDeck[runeIndex];
-            }
-            r.gameObject.SetActive(true);
-            _dialElementList[2].AddRuneList(r);
-            AddCard(r, 1);
-            r.transform.SetParent(_dialElementList[2].transform);
-            r.transform.localScale = new Vector3(0.1f, 0.1f, 1f);
-            r.SetRune(rune);
-            _remainingDeck.Remove(rune);
-            _usingDeck.Add(rune);
-        }
-
-        for (int i = 0; i < _maxRuneCount - Managers.Deck.FirstDialDeck.Count; i++)
-        {
-            int runeIndex = Random.Range(0, _remainingDeck.Count);
-
-            BaseRuneUI r = Managers.Resource.Instantiate("Rune/BaseRune").GetComponent<BaseRuneUI>();
-            BaseRune rune = _remainingDeck[runeIndex];
-            r.SetRune(rune);
-            r.transform.SetParent(_dialElementList[2].transform);
-            r.transform.localScale = new Vector3(0.1f, 0.1f, 1f);
-            r.gameObject.SetActive(true);
-            _dialElementList[2].AddRuneList(r);
-            AddCard(r, 1);
-            _remainingDeck.Remove(rune);
-            _usingDeck.Add(rune);
-        }
-        #endregion
-
-        #region Second&Third Line
-        for (int i = 0; i < _maxRuneCount * 2; i++)
+    
+        for (int i = 0; i < _maxRuneCount * 3; i++)
         {
             if (_remainingDeck.Count <= 0)
             {
@@ -394,7 +355,7 @@ public class Dial : MonoBehaviour
 
             int runeIndex = Random.Range(0, _remainingDeck.Count);
 
-            int index = 1 - (i % 2);
+            int index = 2 - (i % 3);
             BaseRune rune = _remainingDeck[runeIndex];
             BaseRuneUI r = Managers.Resource.Instantiate("Rune/BaseRune").GetComponent<BaseRuneUI>();
             r.SetRune(rune);
@@ -406,7 +367,6 @@ public class Dial : MonoBehaviour
             _remainingDeck.Remove(rune);
             _usingDeck.Add(rune);
         }
-        #endregion
 
         #region Copy
         for (int i = 1; i <= 3; i++)
@@ -431,6 +391,7 @@ public class Dial : MonoBehaviour
         #endregion
 
         RuneSort();
+        Define.DialScene.CardDescPopup(DialElementList[2].SelectCard.Rune);
     }
 
     public void AddCard(in BaseRuneUI card, in int tier)
@@ -572,7 +533,7 @@ public class Dial : MonoBehaviour
 
     private IEnumerator AttackCoroutine()
     {
-        Define.DialScene?.CardDescDown();
+        //Define.DialScene?.CardDescDown();
 
         // 이 부분 예외처리 필요
         AttributeType compareAttributeType = _dialElementList[0].SelectCard.Rune.BaseRuneSO.AttributeType;

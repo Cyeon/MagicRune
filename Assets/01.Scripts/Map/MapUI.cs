@@ -62,6 +62,7 @@ public class MapUI : MonoBehaviour
     public void ChangeBackground()
     {
         string path = "Sprite/MapBg_" + Managers.Map.Chapter.ToString();
-        _mainBackground.sprite = Managers.Resource.Load<Sprite>(path);
+        if(_mainBackground != null)
+            _mainBackground.sprite = Resources.Load<Sprite>(path);
     }
 }

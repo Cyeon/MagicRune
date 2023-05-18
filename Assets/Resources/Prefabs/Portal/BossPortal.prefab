@@ -27,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 284912653289038305}
   m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 1}
+  m_LocalScale: {x: 0, y: 2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 279952405097935421}
@@ -4835,6 +4835,7 @@ GameObject:
   m_Component:
   - component: {fileID: 279952405097935421}
   - component: {fileID: 175911709853890195}
+  - component: {fileID: 7303941246849283894}
   m_Layer: 0
   m_Name: Point Light
   m_TagString: Untagged
@@ -4919,6 +4920,26 @@ Light:
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+--- !u!114 &7303941246849283894
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 285930588102397057}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Version: 1
+  m_UsePipelineSettings: 1
+  m_AdditionalLightsShadowResolutionTier: 2
+  m_LightLayerMask: 1
+  m_CustomShadowLayers: 0
+  m_ShadowLayerMask: 1
+  m_LightCookieSize: {x: 1, y: 1}
+  m_LightCookieOffset: {x: 0, y: 0}
 --- !u!1 &6360908911264746068
 GameObject:
   m_ObjectHideFlags: 0
@@ -4946,7 +4967,7 @@ Transform:
   m_GameObject: {fileID: 6360908911264746068}
   m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 1}
+  m_LocalScale: {x: 0, y: 2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6360908911507675361}
@@ -10053,7 +10074,7 @@ Transform:
   m_GameObject: {fileID: 6360908912483352301}
   m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 1}
+  m_LocalScale: {x: 0, y: 2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6360908911954986365}
@@ -14972,7 +14993,7 @@ Transform:
   m_GameObject: {fileID: 6360908913206104818}
   m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 1}
+  m_LocalScale: {x: 0, y: 2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6360908911933069580}
@@ -19797,7 +19818,7 @@ Transform:
   m_GameObject: {fileID: 6360908913250950772}
   m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 1}
+  m_LocalScale: {x: 0, y: 2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6360908913072739817}
@@ -24621,7 +24642,7 @@ RectTransform:
   m_GameObject: {fileID: 7598823918868226014}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.7, y: 0.7, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7598823920053720215}
@@ -24681,7 +24702,7 @@ SpriteRenderer:
   m_Size: {x: 1.51, y: 1.12}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &7598823919002838878
@@ -24801,6 +24822,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _effectingTime: 0.5
+  _portalEffectScale: {x: 2, y: 2, z: 1}
 --- !u!114 &74256948913124278
 MonoBehaviour:
   m_ObjectHideFlags: 0

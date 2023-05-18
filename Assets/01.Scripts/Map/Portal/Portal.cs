@@ -11,7 +11,7 @@ public class Portal : MonoBehaviour, IPointerClickHandler
     [SerializeField] private float _effectingTime = 1f;
     private bool _isEffecting = false;
     
-    private Vector3 _portalEffectScale = Vector3.one;
+    [SerializeField] private Vector3 _portalEffectScale = Vector3.one;
     protected SpriteRenderer _spriteRenderer;
     protected TextMeshPro _titleText;
 
@@ -19,7 +19,6 @@ public class Portal : MonoBehaviour, IPointerClickHandler
 
     private void Awake()
     {
-        _portalEffectScale = transform.Find("Effect").Find("Effect1").localScale;
         _spriteRenderer = transform.Find("Icon").GetComponent<SpriteRenderer>();
         _titleText = transform.Find("TitleText").GetComponent<TextMeshPro>();
 

@@ -1,4 +1,5 @@
 using DG.Tweening;
+using MoreMountains.Feedbacks;
 using MyBox;
 using System;
 using System.Collections;
@@ -25,11 +26,13 @@ public class Unit : MonoBehaviour
 
             _health = value;
 
+            if (_health < 0) _health = 0;
             if (_health > _maxHealth) _health = _maxHealth;
-            if (Managers.Scene.CurrentScene == Define.DialScene) UpdateHealthUI();
-            if(this is Player) _userInfoUI.UpdateHealthText();
 
-            if (_health <= 0) Die();
+            if (Managers.Scene.CurrentScene == Define.DialScene) UpdateHealthUI();
+            if(this is Player) userInfoUI.UpdateHealthText();
+
+            if (_health == 0) Die();
         }
     }
 
@@ -53,10 +56,10 @@ public class Unit : MonoBehaviour
     protected Slider _shieldSlider;
     protected Slider _healthFeedbackSlider;
     protected TextMeshProUGUI _healthText;
-    private UserInfoUI _userInfoUI;
+    public UserInfoUI userInfoUI;
     #endregion
 
-    private bool _isDie = false;
+    protected bool _isDie = false;
     public bool IsDie => _isDie;
 
     #region Event
@@ -79,23 +82,21 @@ public class Unit : MonoBehaviour
 
     private Coroutine _hitCoroutine;
 
-    private void Start() {
+    [SerializeField] private MMPositionShaker _hitShaker; 
+
+    private void Start()
+    {
         _statusManager = new StatusManager(this);
         statusTrm = transform.Find("Status");
-
         _statusManager.Reset();
-        _userInfoUI = Managers.UI.Get<UserInfoUI>("Upper_Frame", UIType.DontDestroyUI);
 
         if(_spriteRenderer != null)
         {
             _defaultMat = _spriteRenderer.material;
         }
+        userInfoUI = Managers.UI.Get<UserInfoUI>("Upper_Frame");
     }
 
-    /// <summary>
-    /// ?°ë?ì§€ ë°›ëŠ” ?¨ìˆ˜
-    /// </summary>
-    /// <param name="damage"></param>
     public void TakeDamage(float damage, bool isTrueDamage = false, Status status = null)
     {
         currentDmg = damage.RoundToInt();
@@ -135,6 +136,11 @@ public class Unit : MonoBehaviour
                 _hitCoroutine = StartCoroutine(HitCoroutine());
             }
         }
+    }
+
+    public bool IsHitAnimationPlaying()
+    {
+        return _hitShaker.Shaking;
     }
 
     private IEnumerator HitCoroutine()
@@ -203,7 +209,7 @@ public class Unit : MonoBehaviour
         if (_isDie == false)
         {
             _maxHealth += amount.RoundToInt();
-            _userInfoUI.UpdateHealthText();
+            userInfoUI.UpdateHealthText();
         }
     }
 

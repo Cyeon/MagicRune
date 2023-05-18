@@ -1,12 +1,12 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 /// <summary>
-/// À¯¹°ÀÌ³ª ¸ğÇè¹æ ÀÌº¥Æ® µîÀ¸·Î ·éÀÇ º¯µ¿ÀÌ ÀÖÀ» ¶§ ÀÌ ½ºÅ©¸³Æ®°¡ ºÙÀº ÇÁ¸®ÆÕÀ» ÅëÇØ 
-/// ·éÀ» »èÁ¦/º¹Á¦/°­È­ µîÀÇ Çàµ¿À» ÇØÁÜ (Á¤È®Èù UI¸¦ º¸¿©ÁÜ)
+/// ìœ ë¬¼ì´ë‚˜ ëª¨í—˜ë°© ì´ë²¤íŠ¸ ë“±ìœ¼ë¡œ ë£¬ì˜ ë³€ë™ì´ ìˆì„ ë•Œ ì´ ìŠ¤í¬ë¦½íŠ¸ê°€ ë¶™ì€ í”„ë¦¬íŒ¹ì„ í†µí•´ 
+/// ë£¬ì„ ì‚­ì œ/ë³µì œ/ê°•í™” ë“±ì˜ í–‰ë™ì„ í•´ì¤Œ (ì •í™•íŒ UIë¥¼ ë³´ì—¬ì¤Œ)
 /// </summary>
 public class RuneEventUI : MonoBehaviour
 {
@@ -49,7 +49,7 @@ public class RuneEventUI : MonoBehaviour
             _scrollView.SetActive(false);
             _selectedRuneObject.SetActive(false);
             ReturnRunePanels();
-            DistracotrFuncList.NextStage(); // ÀüÅõ ¾À¿¡¼­ ÀÛµ¿½ÃÅ°¸é ÀÌ°Å ¶§¹®¿¡ ¹ö±× ³¯ ¼öµµ ÀÖÀ»µí? ÀÏ´Ü ¸Ş¸ğ 
+            //DistracotrFuncList.NextStage(); // ì „íˆ¬ ì”¬ì—ì„œ ì‘ë™ì‹œí‚¤ë©´ ì´ê±° ë•Œë¬¸ì— ë²„ê·¸ ë‚  ìˆ˜ë„ ìˆì„ë“¯? ì¼ë‹¨ ë©”ëª¨ 
         });
 
         _scrollView.SetActive(false);
@@ -69,7 +69,7 @@ public class RuneEventUI : MonoBehaviour
     }
 
     /// <summary>
-    /// º¹Á¦/Á¦°Å ¹¹µç ÀÏ´Ü ÇÏ±â·Î ¼±ÅÃÇÑ ·éÀ» Å©°Ô ¶ç¿öÁÜ 
+    /// ë³µì œ/ì œê±° ë­ë“  ì¼ë‹¨ í•˜ê¸°ë¡œ ì„ íƒí•œ ë£¬ì„ í¬ê²Œ ë„ì›Œì¤Œ 
     /// </summary>
     /// <param name="rune"></param>
     private void PopupSelectRune(BaseRune rune)
@@ -82,9 +82,9 @@ public class RuneEventUI : MonoBehaviour
     }
 
     /// <summary>
-    /// µ¦¿¡ ÀÖ´Â ·éµéÀ» ¼±ÅÃÇÒ ¼ö ÀÖµµ·Ï ¶ç¿öÁÜ
+    /// ë±ì— ìˆëŠ” ë£¬ë“¤ì„ ì„ íƒí•  ìˆ˜ ìˆë„ë¡ ë„ì›Œì¤Œ
     /// </summary>
-    /// <param name="mode">º¹Á¦/Á¦°Å µîÀÇ ¸ğµå ¼±ÅÃ</param>
+    /// <param name="mode">ë³µì œ/ì œê±° ë“±ì˜ ëª¨ë“œ ì„ íƒ</param>
     private void SettingRunePanels(RuneSelectMode mode)
     {
         if (_runePanelList.Count > 0) { ReturnRunePanels(); }
@@ -109,7 +109,7 @@ public class RuneEventUI : MonoBehaviour
     }
 
     /// <summary>
-    ///  Pool ¿ëµµ
+    ///  Pool ìš©ë„
     /// </summary>
     private void ReturnRunePanels()
     {
