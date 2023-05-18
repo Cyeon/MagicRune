@@ -93,29 +93,62 @@ public class MapManager
         _stageList.Clear();
         _currentChapter = _chapterList[Chapter - 1];
 
+        bool isAttack = false;
+
+        // 전반부 세팅
+        _firstHalfStageList.Add(StageType.Attack);
         _firstHalfStageList.Add(StageType.Attack);
         _firstHalfStageList.Add(StageType.Attack);
         _firstHalfStageList.Add(StageType.Adventure);
+        _firstHalfStageList.Add(StageType.Adventure);
 
-        if(IsFiftyChance())
+        if (IsFiftyChance())
         {
             _firstHalfStageList.Add(IsFiftyChance() ? StageType.Shop : StageType.Rest);
-            _firstHalfStageList.Add(IsFiftyChance() ? StageType.Attack : StageType.Adventure);
+            isAttack = AttackOrAdventure(_firstHalfStageList);
         }
         else
         {
-            _firstHalfStageList.Add(IsFiftyChance() ? StageType.Attack : StageType.Adventure);
+            isAttack = AttackOrAdventure(_firstHalfStageList);
             if (IsFiftyChance())
             {
                 _firstHalfStageList.Add(IsFiftyChance() ? StageType.Shop : StageType.Rest);
             }
             else
             {
-                _firstHalfStageList.Add(IsFiftyChance() ? StageType.Attack : StageType.Adventure);
+                isAttack = AttackOrAdventure(_firstHalfStageList);
             }
         }
 
+        // 후반부 세팅
+
+        _secondHalfStageList.Add(StageType.Attack);
+        _secondHalfStageList.Add(StageType.Attack);
+        _secondHalfStageList.Add(StageType.Attack);
+        _secondHalfStageList.Add(StageType.Adventure);
+        _secondHalfStageList.Add(StageType.Adventure);
+        
+        if(!_firstHalfStageList.Contains(StageType.Rest) && !_firstHalfStageList.Contains(StageType.Shop))
+        {
+            _secondHalfStageList.Add(StageType.Rest);
+            _secondHalfStageList.Add(StageType.Shop);
+        }
+        else
+        {
+            if(_firstHalfStageList.Contains(StageType.Rest))
+            {
+                _secondHalfStageList.Add(StageType.Shop);
+            }
+            else
+            {
+                _secondHalfStageList.Add(StageType.Rest);
+            }
+
+            _secondHalfStageList.Add(isAttack ? StageType.Adventure : StageType.Attack);
+        }
+        
         FirstHalf();
+        SecondHalf();
     }
     #endregion
 
@@ -166,6 +199,37 @@ public class MapManager
         {
             Stage stage = StageSpawner.SpawnStage(_firstHalfStageList[i]);
             _stageList.Add(stage);
+        }
+    }
+
+    public void SecondHalf()
+    {
+        _stageList.ForEach(x => Managers.Resource.Destroy(x.gameObject));
+        _stageList.Clear();
+
+        for (int i = 0; i < _secondHalfStageList.Count; i++)
+        {
+            Stage stage = StageSpawner.SpawnStage(_secondHalfStageList[i]);
+            _stageList.Add(stage);
+        }
+    }
+
+    /// <summary>
+    /// 공격 혹은 모험 스테이지를 넣는다. 공격이면 true 모험이면 false
+    /// </summary>
+    /// <param name="half"></param>
+    /// <returns></returns>
+    private bool AttackOrAdventure(List<StageType> half)
+    {
+        if (IsFiftyChance())
+        {
+            half.Add(StageType.Attack);
+            return true;
+        }
+        else
+        {
+            half.Add(StageType.Adventure);
+            return false;
         }
     }
     #endregion
