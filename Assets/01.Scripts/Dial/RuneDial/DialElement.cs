@@ -126,7 +126,6 @@ public class DialElement : MonoBehaviour
         _lineSpriteRenderer = transform.Find("LineVisualSprite").GetComponent<SpriteRenderer>();
         _textSpriteRenderer = transform.Find("TextVisualSprite").GetComponent<SpriteRenderer>();
         _runeList = new List<BaseRuneUI>();
-        //_spriteRenderer.alphaHitTestMinimumThreshold = 0.04f;
     }
 
     private void Start()
@@ -147,7 +146,6 @@ public class DialElement : MonoBehaviour
         {
             _touchDownTimer += Time.deltaTime;
 
-            // ÀÌ°Å ÅÍÄ¡ÇÏ°í °¡¸¸È÷ ÀÖÀ»¶§¸¸ µÇ°Ô ¹Ù²Ü±î?
             if(_touchDownTimer > _dragTouchTime)
             {
                 _dialState = DialState.Drag;
@@ -185,7 +183,13 @@ public class DialElement : MonoBehaviour
 
             transform.rotation = Quaternion.Euler(rot);
             _touchPos = Input.GetTouch(_fingerID).position;
-            _touchDownTimer = 0f;
+
+            //Debug.Log(temp / _rotDamp);
+            if(Mathf.Abs(temp / _rotDamp) >= 3F)
+            {
+                _touchDownTimer = 0f;
+            }
+
             _dial.SelectDialElement(null);
         }
     }
@@ -205,7 +209,7 @@ public class DialElement : MonoBehaviour
                     //if (SelectCard != _runeList[index])
                     //{
                         SelectCard = _runeList[index];
-                        // ¸Ç ¾Õ¿¡ ÀÖ´Â ¾Ö¸± ¸Ç µÚ·Î º¸³½´Ù.
+                        // ë§¨ ì•ì— ìˆëŠ” ì• ë¦´ ë§¨ ë’¤ë¡œ ë³´ë‚¸ë‹¤.
                         //if (index != 0)
                         //{
                         //    BaseRuneUI rune = _runeList[0];
@@ -235,7 +239,7 @@ public class DialElement : MonoBehaviour
                     //if (SelectCard != _runeList[index])
                     //{
                         SelectCard = _runeList[index];
-                        // ¸Ç µÚ¿¡ ¾Ö¸¦ ¸Ç ¾ÕÀ¸·Î º¸³½´Ù!
+                        // ë§¨ ë’¤ì— ì• ë¥¼ ë§¨ ì•ìœ¼ë¡œ ë³´ë‚¸ë‹¤!
                         //Debug.Log("Right");
                         //if (index != 0)
                         //{
