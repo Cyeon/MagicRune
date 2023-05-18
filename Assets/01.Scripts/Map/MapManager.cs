@@ -4,7 +4,7 @@ using System.Linq;
 using UnityEngine;
 using DG.Tweening;
 
-public enum HalfType
+public enum PeriodType
 {
     First,
     Second,
@@ -22,15 +22,15 @@ public class MapManager
     public Chapter CurrentChapter => _currentChapter;
     #endregion
 
-    #region Half
-    private List<StageType> _firstHalfStageList = new List<StageType>(); // 전반부
-    private List<StageType> _secondHalfStageList = new List<StageType>(); // 후반부
+    #region Period
+    private List<StageType> _firstPeriodStageList = new List<StageType>(); // 전반부
+    private List<StageType> _secondPeriodStageList = new List<StageType>(); // 후반부
 
-    private int _halfProgress = 0; // 현재 진행도
+    private int _periodProgress = 0; // 현재 진행도
     private int _nextCondition = 4; // 다음 단계로 넘어가는 조건 스테이지 개수
 
-    private HalfType _halfType = HalfType.First;
-    public HalfType CurrentHalfType => _halfType;
+    private PeriodType _periodType = PeriodType.First;
+    public PeriodType CurrentPeriodType => _periodType;
     #endregion
 
     #region Stage
@@ -108,58 +108,58 @@ public class MapManager
         bool isAttack = false;
 
         // 전반부 세팅
-        _firstHalfStageList.Add(StageType.Attack);
-        _firstHalfStageList.Add(StageType.Attack);
-        _firstHalfStageList.Add(StageType.Attack);
-        _firstHalfStageList.Add(StageType.Adventure);
-        _firstHalfStageList.Add(StageType.Adventure);
+        _firstPeriodStageList.Add(StageType.Attack);
+        _firstPeriodStageList.Add(StageType.Attack);
+        _firstPeriodStageList.Add(StageType.Attack);
+        _firstPeriodStageList.Add(StageType.Adventure);
+        _firstPeriodStageList.Add(StageType.Adventure);
 
         if (IsFiftyChance())
         {
-            _firstHalfStageList.Add(IsFiftyChance() ? StageType.Shop : StageType.Rest);
-            isAttack = AttackOrAdventure(_firstHalfStageList);
+            _firstPeriodStageList.Add(IsFiftyChance() ? StageType.Shop : StageType.Rest);
+            isAttack = AttackOrAdventure(_firstPeriodStageList);
         }
         else
         {
-            isAttack = AttackOrAdventure(_firstHalfStageList);
+            isAttack = AttackOrAdventure(_firstPeriodStageList);
             if (IsFiftyChance())
             {
-                _firstHalfStageList.Add(IsFiftyChance() ? StageType.Shop : StageType.Rest);
+                _firstPeriodStageList.Add(IsFiftyChance() ? StageType.Shop : StageType.Rest);
             }
             else
             {
-                isAttack = AttackOrAdventure(_firstHalfStageList);
+                isAttack = AttackOrAdventure(_firstPeriodStageList);
             }
         }
 
         // 후반부 세팅
 
-        _secondHalfStageList.Add(StageType.Attack);
-        _secondHalfStageList.Add(StageType.Attack);
-        _secondHalfStageList.Add(StageType.Attack);
-        _secondHalfStageList.Add(StageType.Adventure);
-        _secondHalfStageList.Add(StageType.Adventure);
+        _secondPeriodStageList.Add(StageType.Attack);
+        _secondPeriodStageList.Add(StageType.Attack);
+        _secondPeriodStageList.Add(StageType.Attack);
+        _secondPeriodStageList.Add(StageType.Adventure);
+        _secondPeriodStageList.Add(StageType.Adventure);
         
-        if(!_firstHalfStageList.Contains(StageType.Rest) && !_firstHalfStageList.Contains(StageType.Shop))
+        if(!_firstPeriodStageList.Contains(StageType.Rest) && !_firstPeriodStageList.Contains(StageType.Shop))
         {
-            _secondHalfStageList.Add(StageType.Rest);
-            _secondHalfStageList.Add(StageType.Shop);
+            _secondPeriodStageList.Add(StageType.Rest);
+            _secondPeriodStageList.Add(StageType.Shop);
         }
         else
         {
-            if(_firstHalfStageList.Contains(StageType.Rest))
+            if(_firstPeriodStageList.Contains(StageType.Rest))
             {
-                _secondHalfStageList.Add(StageType.Shop);
+                _secondPeriodStageList.Add(StageType.Shop);
             }
             else
             {
-                _secondHalfStageList.Add(StageType.Rest);
+                _secondPeriodStageList.Add(StageType.Rest);
             }
 
-            _secondHalfStageList.Add(isAttack ? StageType.Adventure : StageType.Attack);
+            _secondPeriodStageList.Add(isAttack ? StageType.Adventure : StageType.Attack);
         }
         
-        FirstHalf();
+        FirstPeriod();
     
     }
     #endregion
@@ -186,7 +186,7 @@ public class MapManager
 
         Managers.Enemy.ResetEnemy();
 
-        if (CurrentHalfType == HalfType.Boss)
+        if (CurrentPeriodType == PeriodType.Boss)
         {
             NextChapter();
             return;
@@ -199,49 +199,49 @@ public class MapManager
 
         _floor++;
 
-        _halfProgress++;
-        if(_halfProgress == _nextCondition)
+        _periodProgress++;
+        if(_periodProgress == _nextCondition)
         {
-            if (CurrentHalfType == HalfType.First) SecondHalf();
-            else if (CurrentHalfType == HalfType.Second) BossHalf();
+            if (CurrentPeriodType == PeriodType.First) SecondPeriod();
+            else if (CurrentPeriodType == PeriodType.Second) BossPeriod();
         }
     }
     #endregion
 
-    #region Half
-    private void HalfReset()
+    #region Period
+    private void PeriodReset()
     {
         _stageList.ForEach(x => Managers.Resource.Destroy(x.gameObject));
         _stageList.Clear();
 
-        _halfProgress = 0;
+        _periodProgress = 0;
     }
 
-    public void FirstHalf()
+    public void FirstPeriod()
     {
-        HalfReset();
+        PeriodReset();
 
-        for(int i = 0; i < _firstHalfStageList.Count; i++)
+        for(int i = 0; i < _firstPeriodStageList.Count; i++)
         {
-            Stage stage = StageSpawner.SpawnStage(_firstHalfStageList[i]);
+            Stage stage = StageSpawner.SpawnStage(_firstPeriodStageList[i]);
             _stageList.Add(stage);
         }
     }
 
-    public void SecondHalf()
+    public void SecondPeriod()
     {
-        HalfReset();
+        PeriodReset();
 
-        for (int i = 0; i < _secondHalfStageList.Count; i++)
+        for (int i = 0; i < _secondPeriodStageList.Count; i++)
         {
-            Stage stage = StageSpawner.SpawnStage(_secondHalfStageList[i]);
+            Stage stage = StageSpawner.SpawnStage(_secondPeriodStageList[i]);
             _stageList.Add(stage);
         }
     }
 
-    private void BossHalf()
+    private void BossPeriod()
     {
-        HalfReset();
+        PeriodReset();
 
         Stage stage = StageSpawner.SpawnStage(StageType.Boss);
         _stageList.Add(stage);
@@ -250,18 +250,18 @@ public class MapManager
     /// <summary>
     /// 공격 혹은 모험 스테이지를 넣는다. 공격이면 true 모험이면 false
     /// </summary>
-    /// <param name="half"></param>
+    /// <param name="period"></param>
     /// <returns></returns>
-    private bool AttackOrAdventure(List<StageType> half)
+    private bool AttackOrAdventure(List<StageType> period)
     {
         if (IsFiftyChance())
         {
-            half.Add(StageType.Attack);
+            period.Add(StageType.Attack);
             return true;
         }
         else
         {
-            half.Add(StageType.Adventure);
+            period.Add(StageType.Adventure);
             return false;
         }
     }

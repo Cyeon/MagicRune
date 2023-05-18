@@ -5,7 +5,7 @@ using UnityEngine;
 [System.Serializable]
 public class AttackMapInfo
 {
-    public HalfType halfType;
+    public PeriodType periodType;
     public List<Enemy> enemyList = new List<Enemy>();
 
     public void Reset()

@@ -35,7 +35,7 @@ public class Chapter
         List<Enemy> enemyList = new List<Enemy>();
         for (int i = 0; i < this.enemyList.Count; ++i)
         {
-            if (this.enemyList[i].halfType == Managers.Map.CurrentHalfType)
+            if (this.enemyList[i].periodType == Managers.Map.CurrentPeriodType)
             {
                 foreach (var enemy in this.enemyList[i].enemyList)
                 {
