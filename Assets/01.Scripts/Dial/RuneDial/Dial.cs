@@ -391,7 +391,7 @@ public class Dial : MonoBehaviour
         #endregion
 
         RuneSort();
-        Define.DialScene.CardDescPopup(DialElementList[2].SelectCard.Rune);
+        //Define.DialScene.CardDescPopup(DialElementList[2].SelectCard.Rune);
     }
 
     public void AddCard(in BaseRuneUI card, in int tier)
