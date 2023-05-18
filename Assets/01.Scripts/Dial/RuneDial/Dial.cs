@@ -7,6 +7,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using static UnityEditor.PlayerSettings;
 using Random = UnityEngine.Random;
 
 public class Dial : MonoBehaviour
@@ -221,20 +222,12 @@ public class Dial : MonoBehaviour
         _dialElementList[dialFLine].SetRuneList(_runeDict[fLine]);
         _dialElementList[dialSLine].SetRuneList(_runeDict[sLine]);
 
-        float zRotate = _dialElementList[dialFLine].transform.rotation.z;
-        _dialElementList[dialFLine].transform.rotation = Quaternion.Euler(0, 0, _dialElementList[dialSLine].transform.rotation.z);
-        _dialElementList[dialSLine].transform.rotation = Quaternion.Euler(0, 0, zRotate);
-        int num = 0 + 1 + 2;
-        num -= dialFLine;
-        num -= dialSLine;
-        _dialElementList[num].transform.rotation = Quaternion.Euler(0, 0, 0);
-
-        // y값이 이상해!
         float offset = _lineDistanceArray[dialFLine] / _lineDistanceArray[dialSLine];
         for (int i = 0; i < _dialElementList[dialFLine].RuneList.Count; i++)
         {
+            // y값이 이상해!
             //_dialElementList[dialFLine].RuneList[i].transform.DOKill();
-            //_dialElementList[dialFLine].RuneList[i].transform.DOMove(_dialElementList[dialFLine].RuneList[i].transform.position * offset, 0.2f);
+            //_dialElementList[dialFLine].RuneList[i].transform.DOMove(_dialElementList[dialFLine].RuneList[i].transform.position * offset/* + this.transform.position*/, 0.2f);
             _dialElementList[dialFLine].RuneList[i].transform.localScale = new Vector3(0.1f, 0.1f, 1f);
             _dialElementList[dialFLine].RuneList[i].transform.SetParent(_dialElementList[dialFLine].transform);
         }
@@ -243,12 +236,68 @@ public class Dial : MonoBehaviour
         for (int i = 0; i < _dialElementList[dialSLine].RuneList.Count; i++)
         {
             //_dialElementList[dialSLine].RuneList[i].transform.DOKill();
-            //_dialElementList[dialSLine].RuneList[i].transform.DOMove(_dialElementList[dialSLine].RuneList[i].transform.position * offset, 0.2f);
+            //_dialElementList[dialSLine].RuneList[i].transform.DOMove(_dialElementList[dialSLine].RuneList[i].transform.position * offset/* + this.transform.position*/, 0.2f);
             _dialElementList[dialSLine].RuneList[i].transform.localScale = new Vector3(0.1f, 0.1f, 1f);
             _dialElementList[dialSLine].RuneList[i].transform.SetParent(_dialElementList[dialSLine].transform);
         }
 
+        //float zRotate = _dialElementList[dialFLine].transform.rotation.z;
+        //_dialElementList[dialFLine].transform.rotation = Quaternion.Euler(0, 0, _dialElementList[dialSLine].transform.rotation.z);
+        //_dialElementList[dialSLine].transform.rotation = Quaternion.Euler(0, 0, zRotate);
+        //int num = 0 + 1 + 2;
+        //num -= dialFLine;
+        //num -= dialSLine;
+        //_dialElementList[num].transform.rotation = Quaternion.Euler(0, 0, 0);
+
+        for (int i = 0; i < _dialElementList.Count; i++)
+        {
+            _dialElementList[i].transform.rotation = Quaternion.Euler(Vector3.zero);
+        }
+
         RuneSort(true);
+        //for (int i = 1; i <= 3; i++)
+        //{
+        //    RuneMove(i, true);
+        //}
+    }
+
+    public void RuneMove(int line, bool isTween = false)
+    {
+        if (_runeDict.ContainsKey(line))
+        {
+            for (int i = 0; i < _runeDict[line].Count; i++)
+            {
+                float fAngle = Mathf.Atan2(_runeDict[line][i].transform.position.y - this.transform.position.y, _runeDict[line][i].transform.position.x - this.transform.position.x)/* * Mathf.Deg2Rad *//*180 / Mathf.PI*/;
+                //if (this.transform.position.x > _runeDict[line][i].transform.position.y)
+                //{
+                //    fAngle = 360 - fAngle;
+                //    // 0~180 도는 구할 수 있지만, y1 > y2 인 경우.. 즉
+                //    // 3사분면 4사분면은 360 - (180~360) 를 해줘서 [0,180]
+                //    // 값으로 보정해준다.
+                //}                                                                                                                                                                                           
+
+                float height = Mathf.Sin((fAngle + 90) * Mathf.Deg2Rad) * _lineDistanceArray[3 - line];
+                float width = Mathf.Cos((fAngle + 90) * Mathf.Deg2Rad) * _lineDistanceArray[3 - line];
+                if (isTween)
+                {
+                    transform.DOKill();
+                    _runeDict[line][i].transform.DOMove(new Vector3(width + this.transform.position.x, height + this.transform.position.y, 0), 0.2f);
+                }
+                else
+                {
+                    _runeDict[line][i].transform.position = new Vector3(width + this.transform.position.x, height + this.transform.position.y, 0);
+                }
+
+                Vector2 direction = new Vector2(
+                    (width + this.transform.position.x) - transform.position.x,
+                    (height + this.transform.position.y) - transform.position.y
+                );
+
+                float ang = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+                Quaternion angleAxis = Quaternion.AngleAxis(ang - 90f, Vector3.forward);
+                _runeDict[line][i].transform.rotation = angleAxis;
+            }
+        }
     }
 
     public void SettingDialRune(bool isReset)
@@ -421,14 +470,23 @@ public class Dial : MonoBehaviour
 
                 float height = Mathf.Sin(radianValue) * _lineDistanceArray[3 - line];
                 float width = Mathf.Cos(radianValue) * _lineDistanceArray[3 - line];
+                Transform tr = _runeDict[line][i].transform;
+                //if (_dialElementList[3 - line].SelectCard != null)
+                //{
+                //    tr = RuneTransformBySelectRune(line, i);
+                //}
+                //else
+                //{
+                //    tr = _runeDict[line][i].transform;
+                //}
                 if (isTween)
                 {
-                    transform.DOKill();
-                    _runeDict[line][i].transform.DOMove(new Vector3(width + this.transform.position.x, height + this.transform.position.y, 0), tweenDuration);
+                    tr.DOKill();
+                    tr.DOMove(new Vector3(width + this.transform.position.x, height + this.transform.position.y, 0), tweenDuration);
                 }
                 else
                 {
-                    _runeDict[line][i].transform.position = new Vector3(width + this.transform.position.x, height + this.transform.position.y, 0);
+                    tr.position = new Vector3(width + this.transform.position.x, height + this.transform.position.y, 0);
                 }
 
                 Vector2 direction = new Vector2(
@@ -441,6 +499,26 @@ public class Dial : MonoBehaviour
                 _runeDict[line][i].transform.rotation = angleAxis;
             }
         }
+    }
+
+    public Transform RuneTransformBySelectRune(int line, int index)
+    {
+        List<BaseRuneUI> newList = new List<BaseRuneUI>(_runeDict[line]);
+
+        int count = newList.Count;
+        for (int i = 0; i < count; i++)
+        {
+            if (newList[0] == _dialElementList[3 - line].SelectCard)
+                break;
+            else
+            {
+                BaseRuneUI rune = newList[0];
+                newList.RemoveAt(0);
+                newList.Add(rune);
+            }
+        }
+
+        return newList[index].transform;
     }
 
     public void ResetDial()
