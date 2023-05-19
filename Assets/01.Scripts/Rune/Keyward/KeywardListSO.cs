@@ -10,7 +10,9 @@ public enum KeywardType
     Fire,
     Impact,
     Chilliness,
-    Ice
+    Ice,
+    consume,
+    penetration
 }
 
 [Serializable]
