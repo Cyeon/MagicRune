@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 5736046982554988565}
   - component: {fileID: 5014004267170453785}
-  - component: {fileID: -5440034718441148645}
-  - component: {fileID: 8251275857192386022}
+  - component: {fileID: 4797063877606698396}
+  - component: {fileID: 8381808294418735018}
   m_Layer: 0
   m_Name: Status_Fire
   m_TagString: Untagged
@@ -49,22 +49,23 @@ MonoBehaviour:
   debugName: "\uD654\uC0C1"
   statusName: 1
   information: "\uD654\uC0C1 \uC218\uCE58\uB9CC\uD07C \uD53C\uD574\uB97C \uC8FC\uACE0
-    \uD134 \uC885\uB8CC\uC2DC \uD654\uC0C1 \uC218\uCE58\uAC00 1 \uC904\uC5B4\uB4ED\uB2C8\uB2E4."
+    \uD134 \uC885\uB8CC\uC2DC \uD654\uC0C1 \uC218\uCE58\uAC00 \uC808\uBC18 \uC904\uC5B4\uB4ED\uB2C8\uB2E4."
   textColor: {r: 1, g: 1, b: 1, a: 1}
   type: 0
-  isTurnRemove: 1
+  isTurnRemove: 0
   OnAddStatus: []
   OnTurnStart:
-  - {fileID: -5440034718441148645}
+  - {fileID: 8381808294418735018}
   OnAttack: []
   OnGetDamage: []
   OnTurnEnd:
-  - {fileID: 8251275857192386022}
+  - {fileID: 4797063877606698396}
   OnRemoveStatus: []
   icon: {fileID: 21300000, guid: 7b4de38f1f488c342af446425cf2ccbd, type: 3}
   color: {r: 1, g: 1, b: 1, a: 1}
+  sound: {fileID: 0}
   unit: {fileID: 0}
---- !u!114 &-5440034718441148645
+--- !u!114 &4797063877606698396
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -73,14 +74,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 8378743581122507794}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3046498c3aae9c74bbdbbe0e2c1c66e5, type: 3}
+  m_Script: {fileID: 11500000, guid: 4ef520f74c6cb274e89fbadc7b050e99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _damageType: 1
-  _damage: 0
-  _isTrueDamage: 1
-  _invoekTurn: 1
---- !u!114 &8251275857192386022
+  _turnType: 0
+--- !u!114 &8381808294418735018
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -89,10 +87,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8378743581122507794}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3046498c3aae9c74bbdbbe0e2c1c66e5, type: 3}
+  m_Script: {fileID: 11500000, guid: 4ef520f74c6cb274e89fbadc7b050e99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _damageType: 1
-  _damage: 0
-  _isTrueDamage: 1
-  _invoekTurn: 0
+  _turnType: 1
