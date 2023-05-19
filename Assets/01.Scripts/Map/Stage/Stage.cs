@@ -22,7 +22,7 @@ public class Stage : MonoBehaviour
     /// </summary>
     public virtual void InStage()
     {
-
+        Managers.Map.CurrentPeriodStageList.Remove(type);
     }
 
     public virtual void Init()

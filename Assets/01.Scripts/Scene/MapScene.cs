@@ -6,10 +6,9 @@ using UnityEngine.UI;
 
 public class MapScene : BaseScene
 {
-    private Image _arrowImage;
-    public Image ArrowImage => _arrowImage;
-
     private UserInfoUI _userInfoUI;
+
+    public MapDial mapDial;
 
     protected override void Init()
     {
@@ -25,8 +24,17 @@ public class MapScene : BaseScene
         Managers.Gold.UpdateGoldAction -= _userInfoUI.UpdateGoldText;
         Managers.Gold.UpdateGoldAction += _userInfoUI.UpdateGoldText;
 
+        mapDial = FindObjectOfType<MapDial>();
+
         SceneType = Define.Scene.MapScene;
         Managers.Map.MapInit();
+    }
+
+    private void Start()
+    {
+
+        mapDial.Clear();
+        mapDial.MapStageSpawn();
     }
 
     public override void Clear()

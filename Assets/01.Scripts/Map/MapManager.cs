@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using DG.Tweening;
+using Unity.VisualScripting;
 
 public enum PeriodType
 {
@@ -27,16 +28,15 @@ public class MapManager
     private List<StageType> _firstPeriodStageList = new List<StageType>(); // 전반부
     private List<StageType> _secondPeriodStageList = new List<StageType>(); // 후반부
 
+    private List<StageType> _currentPeriodStageList = new List<StageType>(); // 현재 단계
+    public List<StageType> CurrentPeriodStageList => _currentPeriodStageList;
+
     private int _periodProgress = 0; // 현재 진행도
     private int _nextCondition = 4; // 다음 단계로 넘어가는 조건 스테이지 개수
 
     private PeriodType _periodType = PeriodType.None;
     public PeriodType CurrentPeriodType => _periodType;
     #endregion
-
-    #region Stage
-    private List<Stage> _stageList = new List<Stage>();
-    #endregion 
 
     private int _floor = 0;
     public int Floor => _floor;
@@ -58,6 +58,17 @@ public class MapManager
     }
 
     private MapScene _mapScene;
+    public MapScene MapScene
+    {
+        get
+        {
+            if (_mapScene == null)
+            {
+                _mapScene = Managers.Scene.CurrentScene as MapScene;
+            }
+            return _mapScene;
+        }
+    }
 
     private bool _isFirst = true;
 
@@ -103,7 +114,7 @@ public class MapManager
 
     private void ChapterInit()
     {
-        _stageList.Clear();
+        _currentPeriodStageList.Clear();
         _currentChapter = _chapterList[Chapter - 1];
 
         _periodType = PeriodType.None;
@@ -180,6 +191,11 @@ public class MapManager
 
     public void NextStage()
     {
+        MapScene.mapDial.gameObject.SetActive(true);
+
+        MapScene.mapDial.Clear();
+        MapScene.mapDial.MapStageSpawn();
+
         if (Managers.GetPlayer() != null && Managers.GetPlayer().IsDie == true)
         {
             ResetChapter();
@@ -191,11 +207,6 @@ public class MapManager
         {
             NextChapter();
             return;
-        }
-
-        if(_mapScene == null)
-        {
-            _mapScene = Managers.Scene.CurrentScene as MapScene;
         }
 
         _floor++;
@@ -211,34 +222,23 @@ public class MapManager
     #region Period
     public void NextPeriod()
     {
-        _stageList.ForEach(x => Managers.Resource.Destroy(x.gameObject));
-        _stageList.Clear();
+        _currentPeriodStageList.Clear();
 
         _periodProgress = 0;
         _periodType++;
 
-        Stage stage;
-        switch(CurrentPeriodType)
+        switch (CurrentPeriodType)
         {
             case PeriodType.First:
-                for (int i = 0; i < _firstPeriodStageList.Count; i++)
-                {
-                    stage = StageSpawner.SpawnStage(_firstPeriodStageList[i]);
-                    _stageList.Add(stage);
-                }
+                _currentPeriodStageList = _firstPeriodStageList;
                 break;
 
             case PeriodType.Second:
-                for (int i = 0; i < _secondPeriodStageList.Count; i++)
-                {
-                    stage = StageSpawner.SpawnStage(_secondPeriodStageList[i]);
-                    _stageList.Add(stage);
-                }
+                _currentPeriodStageList = _secondPeriodStageList;
                 break;
 
             case PeriodType.Boss:
-                stage = StageSpawner.SpawnStage(StageType.Boss);
-                _stageList.Add(stage);
+                _currentPeriodStageList.Add(StageType.Boss);
                 break;
         }
     }
@@ -284,10 +284,5 @@ public class MapManager
     private bool IsFiftyChance()
     {
         return Random.Range(0, 2) == 0;
-    }
-
-    public List<Stage> GetStageList()
-    {
-        return _stageList;
     }
 }

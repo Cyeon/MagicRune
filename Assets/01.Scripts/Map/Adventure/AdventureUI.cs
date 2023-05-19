@@ -57,7 +57,7 @@ public class AdventureUI : MonoBehaviour
 
     public void Init(AdventureSO info)
     {
-        _storyPanelClickBtn.onClick.RemoveAllListeners();
+        _storyPanelClickBtn.onClick.RemoveAllListeners(); 
         _storyPanelClickBtn.onClick.AddListener(() => StoryClick());
 
         _storyPanel.SetActive(true);
