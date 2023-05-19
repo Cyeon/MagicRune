@@ -224,9 +224,6 @@ public class Dial : MonoBehaviour
         float offset = _lineDistanceArray[dialFLine] / _lineDistanceArray[dialSLine];
         for (int i = 0; i < _dialElementList[dialFLine].RuneList.Count; i++)
         {
-            // y값이 이상해!
-            //_dialElementList[dialFLine].RuneList[i].transform.DOKill();
-            //_dialElementList[dialFLine].RuneList[i].transform.DOMove(_dialElementList[dialFLine].RuneList[i].transform.position * offset/* + this.transform.position*/, 0.2f);
             _dialElementList[dialFLine].RuneList[i].transform.localScale = new Vector3(0.1f, 0.1f, 1f);
             _dialElementList[dialFLine].RuneList[i].transform.SetParent(_dialElementList[dialFLine].transform);
         }
@@ -234,30 +231,60 @@ public class Dial : MonoBehaviour
         offset = _lineDistanceArray[dialSLine] / _lineDistanceArray[dialFLine];
         for (int i = 0; i < _dialElementList[dialSLine].RuneList.Count; i++)
         {
-            //_dialElementList[dialSLine].RuneList[i].transform.DOKill();
-            //_dialElementList[dialSLine].RuneList[i].transform.DOMove(_dialElementList[dialSLine].RuneList[i].transform.position * offset/* + this.transform.position*/, 0.2f);
             _dialElementList[dialSLine].RuneList[i].transform.localScale = new Vector3(0.1f, 0.1f, 1f);
             _dialElementList[dialSLine].RuneList[i].transform.SetParent(_dialElementList[dialSLine].transform);
         }
 
-        //float zRotate = _dialElementList[dialFLine].transform.rotation.z;
-        //_dialElementList[dialFLine].transform.rotation = Quaternion.Euler(0, 0, _dialElementList[dialSLine].transform.rotation.z);
+        //float zRotate = _dialElementList[dialFLine].transform.rotation.eulerAngles.z;
+        //_dialElementList[dialFLine].transform.rotation = Quaternion.Euler(0, 0, _dialElementList[dialSLine].transform.rotation.eulerAngles.z);
         //_dialElementList[dialSLine].transform.rotation = Quaternion.Euler(0, 0, zRotate);
         //int num = 0 + 1 + 2;
         //num -= dialFLine;
         //num -= dialSLine;
         //_dialElementList[num].transform.rotation = Quaternion.Euler(0, 0, 0);
 
-        for (int i = 0; i < _dialElementList.Count; i++)
+        //for (int i = 0; i < _dialElementList.Count; i++)
+        //{
+        //    _dialElementList[i].transform.rotation = Quaternion.Euler(Vector3.zero);
+        //}
+
+        //RuneSort(true);
+        for (int i = 1; i <= 3; i++)
         {
-            _dialElementList[i].transform.rotation = Quaternion.Euler(Vector3.zero);
+            RuneMove(i, true);
+        }
+    }
+
+    public float GetAngleRadian(float dx, float dy)
+    {
+        if (dx == 0 && dy == 0)
+            return 0;
+
+        if(dy == 0)
+        {
+            if (dx > 0)
+                return 0;
+            else
+                return Mathf.PI;
         }
 
-        RuneSort(true);
-        //for (int i = 1; i <= 3; i++)
-        //{
-        //    RuneMove(i, true);
-        //}
+        if(dx == 0)
+        {
+            if (dy == 0)
+                return (Mathf.PI / 2);
+            else
+                return (Mathf.PI / 2) * 3;
+        }
+
+        if (dx > 0)
+        {
+            if (dy > 0)
+                return Mathf.Atan(dy / dx);
+            else
+                return Mathf.Atan(dy / dx) + (2 * Mathf.PI);
+        }
+        else
+            return Mathf.Atan(dy / dx) + Mathf.PI;
     }
 
     public void RuneMove(int line, bool isTween = false)
@@ -266,20 +293,16 @@ public class Dial : MonoBehaviour
         {
             for (int i = 0; i < _runeDict[line].Count; i++)
             {
-                float fAngle = Mathf.Atan2(_runeDict[line][i].transform.position.y - this.transform.position.y, _runeDict[line][i].transform.position.x - this.transform.position.x)/* * Mathf.Deg2Rad *//*180 / Mathf.PI*/;
-                //if (this.transform.position.x > _runeDict[line][i].transform.position.y)
-                //{
-                //    fAngle = 360 - fAngle;
-                //    // 0~180 도는 구할 수 있지만, y1 > y2 인 경우.. 즉
-                //    // 3사분면 4사분면은 360 - (180~360) 를 해줘서 [0,180]
-                //    // 값으로 보정해준다.
-                //}                                                                                                                                                                                           
+                float dy = _runeDict[line][i].transform.position.y - this.transform.position.y;
+                float dx = _runeDict[line][i].transform.position.x - this.transform.position.x;
 
-                float height = Mathf.Sin((fAngle + 90) * Mathf.Deg2Rad) * _lineDistanceArray[3 - line];
-                float width = Mathf.Cos((fAngle + 90) * Mathf.Deg2Rad) * _lineDistanceArray[3 - line];
+                float fAngle = GetAngleRadian(dx, dy);
+
+                float height = Mathf.Sin(fAngle) * _lineDistanceArray[3 - line];
+                float width = Mathf.Cos(fAngle) * _lineDistanceArray[3 - line];
                 if (isTween)
                 {
-                    transform.DOKill();
+                    _runeDict[line][i].transform.DOKill();
                     _runeDict[line][i].transform.DOMove(new Vector3(width + this.transform.position.x, height + this.transform.position.y, 0), 0.2f);
                 }
                 else
@@ -534,7 +557,7 @@ public class Dial : MonoBehaviour
     {
         //Define.DialScene?.CardDescDown();
 
-        // 이 부분 예외처리 필요
+        // ???遊붋?????깅뇶嶺뚳퐣瑗???熬곣뫗??
         AttributeType compareAttributeType = _dialElementList[0].SelectCard.Rune.BaseRuneSO.AttributeType;
         bool isResonanceCheck = true;
         for (int i = _dialElementList.Count - 1; i >= 0; i--)
@@ -626,7 +649,7 @@ public class Dial : MonoBehaviour
 
     public void AllMagicSetCoolTime()
     {
-        Debug.Log("쿨타임 감소");
+        Debug.Log("?臾낅쳜????띠룆흮??");
 
         for (int i = 0; i < _cooltimeDeck.Count; i++)
         {
