@@ -12,7 +12,7 @@ public class Reload : BaseRune
 
     public override void AbilityAction()
     {
-        
+        BattleManager.Instance.Player.StatusManager.AddStatus(StatusName.Penetration, 1);
     }
 
     public override object Clone()
