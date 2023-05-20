@@ -34,7 +34,8 @@ public enum StatusName
     DiamondBody,        // 금강불괴
     SelfGeneration,     // 자가발전
     OverHeat,           // 과열
-    Heating,        // 발열
+    Heating,            // 발열
+    Penetration,        // 관통
     COUNT
 }
 

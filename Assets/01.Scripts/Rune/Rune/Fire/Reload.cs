@@ -12,14 +12,13 @@ public class Reload : BaseRune
 
     public override void AbilityAction()
     {
-        Managers.GetPlayer().AddHP(GetAbliltiValaue(EffectType.Etc));
-        Managers.GetPlayer().StatusManager.AddStatus(StatusName.Fire, GetAbliltiValaue(EffectType.Status).RoundToInt());
+        
     }
 
     public override object Clone()
     {
-        FireRegeneration fireRegeneration = new FireRegeneration();
-        fireRegeneration.Init();
-        return fireRegeneration;
+        Reload reload = new Reload();
+        reload.Init();
+        return reload;
     }
 }

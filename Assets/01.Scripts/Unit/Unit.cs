@@ -155,6 +155,12 @@ public class Unit : MonoBehaviour
         currentDmg = damage.RoundToInt();
         StatusManager.OnAttack();
         Managers.Sound.PlaySound(attackSound, SoundType.Effect);
+
+        if (StatusManager.IsHaveStatus(StatusName.Penetration))
+        {
+            StatusManager.DeleteStatus(StatusName.Penetration);
+            isTrueDamage = true;
+        }
     }
 
     public bool IsHealthAmount(float amount, ComparisonType type)
