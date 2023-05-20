@@ -13,7 +13,7 @@ public class ElectricAbsorption : BaseRune
     public override void AbilityAction()
     {
         Managers.GetPlayer().StatusManager.AddStatus(StatusName.Recharging, GetAbliltiValaue(EffectType.Status).RoundToInt());
-        Managers.GetPlayer().Attack(GetAbliltiValaue(EffectType.Attack));
+        Managers.GetPlayer().Attack(GetAbliltiValaue(EffectType.Attack), IsIncludeKeyword(KeywordType.Penetration));
     }
 
     public override object Clone()

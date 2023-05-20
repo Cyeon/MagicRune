@@ -124,7 +124,7 @@ public class BaseRune : Item, ICloneable
         return rune;
     }
 
-    protected bool IsIncludeKeyward(KeywardType keyward)
+    protected bool IsIncludeKeyword(KeywordType keyward)
     {
         return _baseRuneSO.KeywardList.Contains(keyward);
     }

@@ -1,4 +1,4 @@
-﻿using DG.Tweening;
+using DG.Tweening;
 using MyBox;
 using TMPro;
 using UnityEngine;
@@ -38,7 +38,7 @@ public class Enemy : Unit
 
     public virtual void Init()
     {
-        if(_patternManager == null)
+        if (_patternManager == null)
             _patternManager = GetComponentInChildren<PatternManager>();
 
         _patternManager.Init();
@@ -48,10 +48,10 @@ public class Enemy : Unit
         transform.localPosition = new Vector3(2, 4.5f, 0);
     }
 
-    public override void Attack(float damage)
+    public override void Attack(float damage, bool isTrueDamage = false)
     {
         base.Attack(damage);
-        BattleManager.Instance.Player.TakeDamage(currentDmg);
+        BattleManager.Instance.Player.TakeDamage(currentDmg, isTrueDamage);
     }
 
     public void Idle()
@@ -104,7 +104,7 @@ public class Enemy : Unit
 
         if (Shield > 0)
         {
-            if(HP + Shield > MaxHP)
+            if (HP + Shield > MaxHP)
             {
                 _shieldBar.DOScaleX(1, 0);
                 _healthBar.DOScaleX((float)HP / (MaxHP + Shield), 0);
@@ -128,7 +128,7 @@ public class Enemy : Unit
         vibrateSeq.Append(_healthFeedbackBar.parent.DOScale(1f, 0));
     }
 
-    public override void UpdateShieldUI() 
+    public override void UpdateShieldUI()
     {
         _shieldText.SetText(Shield.ToString());
         UpdateHealthUI();

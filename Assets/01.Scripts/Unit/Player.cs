@@ -37,9 +37,9 @@ public class Player : Unit
         _healthText = Managers.UI.Get<TextMeshProUGUI>("P HealthText");
     }
 
-    public override void Attack(float dmg)
+    public override void Attack(float dmg, bool isTrueDamage)
     {
         base.Attack(dmg);
-        BattleManager.Instance.Enemy.TakeDamage(currentDmg);
+        BattleManager.Instance.Enemy.TakeDamage(currentDmg, isTrueDamage);
     }
 }

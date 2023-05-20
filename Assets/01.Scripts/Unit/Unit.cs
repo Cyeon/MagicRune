@@ -30,7 +30,7 @@ public class Unit : MonoBehaviour
             if (_health > _maxHealth) _health = _maxHealth;
 
             if (Managers.Scene.CurrentScene == Define.DialScene) UpdateHealthUI();
-            if(this is Player) userInfoUI.UpdateHealthText();
+            if (this is Player) userInfoUI.UpdateHealthText();
 
             if (_health == 0) Die();
         }
@@ -82,7 +82,7 @@ public class Unit : MonoBehaviour
 
     private Coroutine _hitCoroutine;
 
-    [SerializeField] private MMPositionShaker _hitShaker; 
+    [SerializeField] private MMPositionShaker _hitShaker;
 
     private void Start()
     {
@@ -90,7 +90,7 @@ public class Unit : MonoBehaviour
         statusTrm = transform.Find("Status");
         _statusManager.Reset();
 
-        if(_spriteRenderer != null)
+        if (_spriteRenderer != null)
         {
             _defaultMat = _spriteRenderer.material;
         }
@@ -119,14 +119,14 @@ public class Unit : MonoBehaviour
         else
             HP -= currentDmg;
 
-        if(isTrueDamage == false)
+        if (isTrueDamage == false)
             OnTakeDamage?.Invoke(currentDmg);
         OnTakeDamageFeedback?.Invoke();
 
         if (this is Enemy)
         {
             Define.DialScene?.DamageUIPopup(currentDmg, Define.MainCam.WorldToScreenPoint(transform.position), status);
-            if(_hitCoroutine != null)
+            if (_hitCoroutine != null)
             {
                 StopCoroutine(_hitCoroutine);
             }
@@ -150,9 +150,9 @@ public class Unit : MonoBehaviour
         _spriteRenderer.material = _defaultMat;
     }
 
-    public virtual void Attack(float danage)
+    public virtual void Attack(float damage, bool isTrueDamage = false)
     {
-        currentDmg = danage.RoundToInt();
+        currentDmg = damage.RoundToInt();
         StatusManager.OnAttack();
         Managers.Sound.PlaySound(attackSound, SoundType.Effect);
     }
@@ -190,7 +190,7 @@ public class Unit : MonoBehaviour
 
     public void RemTrueHP(float value)
     {
-        if(_isDie == false)
+        if (_isDie == false)
         {
             HP -= value.RoundToInt();
         }
@@ -217,7 +217,7 @@ public class Unit : MonoBehaviour
     {
         if (_isDie == false)
         {
-            Shield += value.RoundToInt(); 
+            Shield += value.RoundToInt();
         }
     }
 

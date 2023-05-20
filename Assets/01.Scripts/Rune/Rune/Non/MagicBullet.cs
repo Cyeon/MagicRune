@@ -10,7 +10,7 @@ public class MagicBullet : BaseRune
     }
     public override void AbilityAction()
     {
-        Managers.GetPlayer().Attack(GetAbliltiValaue(EffectType.Attack));
+        Managers.GetPlayer().Attack(GetAbliltiValaue(EffectType.Attack), IsIncludeKeyword(KeywordType.Penetration));
     }
 
     public override object Clone()

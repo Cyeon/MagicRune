@@ -13,7 +13,7 @@ public class Release : BaseRune
     {
         float dmg = Managers.GetPlayer().StatusManager.GetStatusValue(StatusName.Recharging) * 3;
         Managers.GetPlayer().StatusManager.DeleteStatus(StatusName.Recharging);
-        Managers.GetPlayer().Attack(dmg);
+        Managers.GetPlayer().Attack(dmg, IsIncludeKeyword(KeywordType.Penetration));
     }
 
     public override object Clone()
