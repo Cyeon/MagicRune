@@ -360,6 +360,10 @@ public class DialElement : MonoBehaviour
             if (SelectCard.Rune.AbilityCondition())
             {
                 SelectCard.Rune.AbilityAction();
+                if (BattleManager.Instance.Player.StatusManager.IsHaveStatus(StatusName.Heating))
+                {
+                    BattleManager.Instance.Enemy.StatusManager.AddStatus(StatusName.Fire, 1);
+                }
 
                 SelectCard = null;
             }
