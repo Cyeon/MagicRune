@@ -43,7 +43,7 @@ public class BaseRune : Item, ICloneable
     {
         get
         {
-            if(_baseRuneSO != null)
+            if (_baseRuneSO != null)
             {
                 return _baseRuneSO.RuneSprite;
             }
@@ -87,7 +87,7 @@ public class BaseRune : Item, ICloneable
     {
         _coolTime += value;
     }
-    
+
     public void SetIsUsing(bool value)
     {
         _isUsing = value;
@@ -101,7 +101,7 @@ public class BaseRune : Item, ICloneable
 
     public virtual void AbilityAction()
     {
-        if(BattleManager.Instance.Player.StatusManager.IsHaveStatus(StatusName.Heating))
+        if (BattleManager.Instance.Player.StatusManager.IsHaveStatus(StatusName.Heating))
         {
             BattleManager.Instance.Enemy.StatusManager.AddStatus(StatusName.Fire, 1);
         }
@@ -127,7 +127,7 @@ public class BaseRune : Item, ICloneable
         return rune;
     }
 
-    protected bool IsIncludeKeyword(KeywordType keyward)
+    public bool IsIncludeKeyword(KeywordType keyward)
     {
         return _baseRuneSO.KeywardList.Contains(keyward);
     }

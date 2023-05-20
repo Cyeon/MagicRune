@@ -225,9 +225,6 @@ public class Dial : MonoBehaviour
         float offset = _lineDistanceArray[dialFLine] / _lineDistanceArray[dialSLine];
         for (int i = 0; i < _dialElementList[dialFLine].RuneList.Count; i++)
         {
-            // y값이 이상해!
-            //_dialElementList[dialFLine].RuneList[i].transform.DOKill();
-            //_dialElementList[dialFLine].RuneList[i].transform.DOMove(_dialElementList[dialFLine].RuneList[i].transform.position * offset/* + this.transform.position*/, 0.2f);
             _dialElementList[dialFLine].RuneList[i].transform.localScale = new Vector3(0.1f, 0.1f, 1f);
             _dialElementList[dialFLine].RuneList[i].transform.SetParent(_dialElementList[dialFLine].transform);
         }
@@ -235,19 +232,9 @@ public class Dial : MonoBehaviour
         offset = _lineDistanceArray[dialSLine] / _lineDistanceArray[dialFLine];
         for (int i = 0; i < _dialElementList[dialSLine].RuneList.Count; i++)
         {
-            //_dialElementList[dialSLine].RuneList[i].transform.DOKill();
-            //_dialElementList[dialSLine].RuneList[i].transform.DOMove(_dialElementList[dialSLine].RuneList[i].transform.position * offset/* + this.transform.position*/, 0.2f);
             _dialElementList[dialSLine].RuneList[i].transform.localScale = new Vector3(0.1f, 0.1f, 1f);
             _dialElementList[dialSLine].RuneList[i].transform.SetParent(_dialElementList[dialSLine].transform);
         }
-
-        //float zRotate = _dialElementList[dialFLine].transform.rotation.z;
-        //_dialElementList[dialFLine].transform.rotation = Quaternion.Euler(0, 0, _dialElementList[dialSLine].transform.rotation.z);
-        //_dialElementList[dialSLine].transform.rotation = Quaternion.Euler(0, 0, zRotate);
-        //int num = 0 + 1 + 2;
-        //num -= dialFLine;
-        //num -= dialSLine;
-        //_dialElementList[num].transform.rotation = Quaternion.Euler(0, 0, 0);
 
         for (int i = 0; i < _dialElementList.Count; i++)
         {
@@ -255,10 +242,6 @@ public class Dial : MonoBehaviour
         }
 
         RuneSort(true);
-        //for (int i = 1; i <= 3; i++)
-        //{
-        //    RuneMove(i, true);
-        //}
     }
 
     public void RuneMove(int line, bool isTween = false)
@@ -268,16 +251,9 @@ public class Dial : MonoBehaviour
             for (int i = 0; i < _runeDict[line].Count; i++)
             {
                 float fAngle = Mathf.Atan2(_runeDict[line][i].transform.position.y - this.transform.position.y, _runeDict[line][i].transform.position.x - this.transform.position.x)/* * Mathf.Deg2Rad *//*180 / Mathf.PI*/;
-                //if (this.transform.position.x > _runeDict[line][i].transform.position.y)
-                //{
-                //    fAngle = 360 - fAngle;
-                //    // 0~180 도는 구할 수 있지만, y1 > y2 인 경우.. 즉
-                //    // 3사분면 4사분면은 360 - (180~360) 를 해줘서 [0,180]
-                //    // 값으로 보정해준다.
-                //}                                                                                                                                                                                           
-
                 float height = Mathf.Sin((fAngle + 90) * Mathf.Deg2Rad) * _lineDistanceArray[3 - line];
                 float width = Mathf.Cos((fAngle + 90) * Mathf.Deg2Rad) * _lineDistanceArray[3 - line];
+
                 if (isTween)
                 {
                     transform.DOKill();
@@ -391,7 +367,6 @@ public class Dial : MonoBehaviour
         #endregion
 
         RuneSort();
-        //Define.DialScene.CardDescPopup(DialElementList[2].SelectCard.Rune);
     }
 
     public void AddCard(in BaseRuneUI card, in int tier)
@@ -432,14 +407,7 @@ public class Dial : MonoBehaviour
                 float height = Mathf.Sin(radianValue) * _lineDistanceArray[3 - line];
                 float width = Mathf.Cos(radianValue) * _lineDistanceArray[3 - line];
                 Transform tr = _runeDict[line][i].transform;
-                //if (_dialElementList[3 - line].SelectCard != null)
-                //{
-                //    tr = RuneTransformBySelectRune(line, i);
-                //}
-                //else
-                //{
-                //    tr = _runeDict[line][i].transform;
-                //}
+
                 if (isTween)
                 {
                     tr.DOKill();
@@ -546,8 +514,17 @@ public class Dial : MonoBehaviour
                 MagicCircleGlow(i, true);
                 BaseRune rune = _usingDeck.Find(x => x == _dialElementList[i].SelectCard.Rune);
                 _usingDeck.Remove(rune);
-                rune.SetCoolTime();
-                _cooltimeDeck.Add(rune);
+
+                if (rune.IsIncludeKeyword(KeywordType.Consume)) // 소모 룬인지 확인하고 개별 처리 해주는 코드
+                {
+                    _consumeDeck.Add(rune);
+                }
+                else
+                {
+                    rune.SetCoolTime();
+                    _cooltimeDeck.Add(rune);
+                }
+
                 BezierMissile b = Managers.Resource.Instantiate("BezierMissile", this.transform.parent).GetComponent<BezierMissile>();
                 if (_dialElementList[i].SelectCard.Rune.BaseRuneSO.RuneEffect != null)
                 {
