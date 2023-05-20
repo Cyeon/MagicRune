@@ -39,6 +39,7 @@ public class Dial : MonoBehaviour
     private List<BaseRune> _remainingDeck = new List<BaseRune>();
     private List<BaseRune> _usingDeck = new List<BaseRune>();
     private List<BaseRune> _cooltimeDeck = new List<BaseRune>();
+    private List<BaseRune> _consumeDeck = new List<BaseRune>();
     #endregion
 
     #region DialElement Drag
@@ -93,10 +94,10 @@ public class Dial : MonoBehaviour
             _selectDialElement.IsGlow = false;
         }
         _selectDialElement = e;
-        if(_selectDialElement != null)
+        if (_selectDialElement != null)
         {
             _selectDialElement.DialState = DialState.Drag;
-            if(fingerId != -1)
+            if (fingerId != -1)
             {
                 _selectDialElement.FingerID = fingerId;
             }
@@ -104,13 +105,13 @@ public class Dial : MonoBehaviour
             _selectDialElement.IsGlow = true;
         }
 
-        if(e == null)
+        if (e == null)
         {
             _selectIndex = -1;
         }
         else
         {
-            for(int i = 0; i < _dialElementList.Count; i++)
+            for (int i = 0; i < _dialElementList.Count; i++)
             {
                 if (_dialElementList[i] == e)
                 {
@@ -125,7 +126,7 @@ public class Dial : MonoBehaviour
 
     public void SelectDialElement(in int index)
     {
-        if(_selectIndex == index) return;
+        if (_selectIndex == index) return;
 
         //SelectDialElement(_dialElementList[index]);
 
@@ -166,7 +167,7 @@ public class Dial : MonoBehaviour
 
     private void Update()
     {
-        if(_isDialSelect == true && _selectIndex != -1)
+        if (_isDialSelect == true && _selectIndex != -1)
         {
             Debug.Log("Select Dial");
             if (_selectDialElement == null || _selectDialElement.FingerID == -1) return;
@@ -204,7 +205,7 @@ public class Dial : MonoBehaviour
     {
         if (fLine == sLine) return;
 
-        if(_runeDict.ContainsKey(fLine) == false || _runeDict.ContainsKey(sLine) == false)
+        if (_runeDict.ContainsKey(fLine) == false || _runeDict.ContainsKey(sLine) == false)
         {
             Debug.LogWarning("Not have Key");
             return;
@@ -344,7 +345,7 @@ public class Dial : MonoBehaviour
             _cooltimeDeck.Clear();
         }
         #endregion
-    
+
         for (int i = 0; i < _maxRuneCount * 3; i++)
         {
             if (_remainingDeck.Count <= 0)
