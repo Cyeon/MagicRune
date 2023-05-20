@@ -12,7 +12,8 @@ public enum KeywordType
     Chilliness, // 한기
     Ice, // 빙결 
     Consume, // 소모 
-    Penetration // 관통
+    Penetration, // 관통
+    Overheat, // 과열
 }
 
 [Serializable]
