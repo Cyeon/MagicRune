@@ -101,7 +101,10 @@ public class BaseRune : Item, ICloneable
 
     public virtual void AbilityAction()
     {
-        Debug.Log("BaseRune Attack");
+        if(BattleManager.Instance.Player.StatusManager.IsHaveStatus(StatusName.Heating))
+        {
+            BattleManager.Instance.Enemy.StatusManager.AddStatus(StatusName.Fire, 1);
+        }
     }
 
     public float GetAbliltiValaue(EffectType type)
