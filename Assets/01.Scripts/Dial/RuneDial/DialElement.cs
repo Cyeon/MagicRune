@@ -89,9 +89,11 @@ public class DialElement : MonoBehaviour
                 _selectCard.RuneColor(Color.white);
 
             }
+            _selectIndex = _runeList.FindIndex(x => x == _selectCard);
             _dial.CheckResonance();
         }
     }
+    private int _selectIndex = -1;
 
     [SerializeField, Range(0f, 90f)]
     private float _selectOffset;
@@ -209,7 +211,7 @@ public class DialElement : MonoBehaviour
                     //if (SelectCard != _runeList[index])
                     //{
                         SelectCard = _runeList[index];
-                        // 맨 앞에 있는 애릴 맨 뒤로 보낸다.
+                        // 留??욎뿉 ?덈뒗 ?좊┫ 留??ㅻ줈 蹂대궦??
                         //if (index != 0)
                         //{
                         //    BaseRuneUI rune = _runeList[0];
@@ -239,7 +241,7 @@ public class DialElement : MonoBehaviour
                     //if (SelectCard != _runeList[index])
                     //{
                         SelectCard = _runeList[index];
-                        // 맨 뒤에 애를 맨 앞으로 보낸다!
+                        // 留??ㅼ뿉 ?좊? 留??욎쑝濡?蹂대궦??
                         //Debug.Log("Right");
                         //if (index != 0)
                         //{
@@ -478,24 +480,18 @@ public class DialElement : MonoBehaviour
         }
     }
 
-    [Obsolete]
     public void RuneListSort()
     {
-        if (_runeList[0] == _selectCard) return;
-        int count = 0; 
-        for(int i = 0; i < _runeList.Count; i++)
-        {
-            if (_runeList[i] == _selectCard) break;
-            else count++;
-        }
+        if (_selectCard == null) return;
 
-        if (count <= 0) return;
-        for(int i = 0; i < count; i++)
+        while (_runeList[1] != _selectCard)
         {
             BaseRuneUI rune = _runeList[0];
             _runeList.RemoveAt(0);
             _runeList.Add(rune);
-            rune.transform.SetAsLastSibling();
+            _selectIndex = (_selectIndex - 1) % _runeList.Count;
+            SelectCard = _runeList[_selectIndex];
+            InfiniteLoopDetector.Run();
         }
     }
 

@@ -235,24 +235,34 @@ public class Dial : MonoBehaviour
             _dialElementList[dialSLine].RuneList[i].transform.SetParent(_dialElementList[dialSLine].transform);
         }
 
-        //float zRotate = _dialElementList[dialFLine].transform.rotation.eulerAngles.z;
-        //_dialElementList[dialFLine].transform.rotation = Quaternion.Euler(0, 0, _dialElementList[dialSLine].transform.rotation.eulerAngles.z);
-        //_dialElementList[dialSLine].transform.rotation = Quaternion.Euler(0, 0, zRotate);
+
+
         //int num = 0 + 1 + 2;
         //num -= dialFLine;
         //num -= dialSLine;
         //_dialElementList[num].transform.rotation = Quaternion.Euler(0, 0, 0);
 
-        //for (int i = 0; i < _dialElementList.Count; i++)
-        //{
-        //    _dialElementList[i].transform.rotation = Quaternion.Euler(Vector3.zero);
-        //}
 
-        //RuneSort(true);
-        for (int i = 1; i <= 3; i++)
+
+
+        //BaseRuneUI rune = _dialElementList[dialFLine].SelectCard;
+        //_dialElementList[dialFLine].SelectCard = _dialElementList[dialSLine].SelectCard;
+        //_dialElementList[dialSLine].SelectCard = rune;
+
+        //float zRotate = _dialElementList[dialFLine].transform.rotation.eulerAngles.z;
+        //_dialElementList[dialFLine].transform.rotation = Quaternion.Euler(0, 0, _dialElementList[dialSLine].transform.rotation.eulerAngles.z);
+        //_dialElementList[dialSLine].transform.rotation = Quaternion.Euler(0, 0, zRotate);
+
+        for (int i = 0; i < _dialElementList.Count; i++)
         {
-            RuneMove(i, true);
+            _dialElementList[i].transform.rotation = Quaternion.Euler(Vector3.zero);
         }
+
+        //for (int i = 1; i <= 3; i++)
+        //{
+        //    RuneMove(i, true);
+        //}
+        RuneSort(true);
     }
 
     public float GetAngleRadian(float dx, float dy)
