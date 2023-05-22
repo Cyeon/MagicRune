@@ -22,11 +22,6 @@ public class DialScene : BaseScene
     private TextMeshPro _statusDescName;
     private TextMeshPro _statusDescInfo;
 
-    private Slider hSlider = null;
-    private Slider sSlider = null;
-    private Slider hfSlider = null;
-    private TextMeshProUGUI hText = null;
-
     [SerializeField]
     private RewardUI _rewardUI;
     public RewardUI RewardUI => _rewardUI;
@@ -47,12 +42,6 @@ public class DialScene : BaseScene
 
         Managers.UI.Bind<Image>("P StatusPanel", Managers.Canvas.GetCanvas("Main").gameObject);
         Managers.UI.Bind<Image>("E StatusPanel", Managers.Canvas.GetCanvas("Main").gameObject);
-
-        Managers.UI.Bind<Slider>("P HealthBar", Managers.Canvas.GetCanvas("Main").gameObject);
-        Managers.UI.Bind<Slider>("P ShieldBar", Managers.Canvas.GetCanvas("Main").gameObject);
-        Managers.UI.Bind<TextMeshProUGUI>("P HealthText", Managers.Canvas.GetCanvas("Main").gameObject);
-        Managers.UI.Bind<Slider>("P HealthFeedbackBar", Managers.Canvas.GetCanvas("Main").gameObject);
-        Managers.UI.Bind<TextMeshProUGUI>("P Shield Value", Managers.Canvas.GetCanvas("Main").gameObject);
 
         Managers.UI.Bind<Button>("Restart Btn", Managers.Canvas.GetCanvas("Popup").gameObject);
         Managers.UI.Bind<Button>("Quit Btn", Managers.Canvas.GetCanvas("Popup").gameObject);
@@ -321,94 +310,6 @@ public class DialScene : BaseScene
     }
 
     #endregion
-
-    #region Health Bar
-
-    public void SliderInit(bool isPlayer)
-    {
-        if (isPlayer)
-        {
-            hSlider = Managers.UI.Get<Slider>("P HealthBar");
-            sSlider = Managers.UI.Get<Slider>("P ShieldBar");
-            hText = Managers.UI.Get<TextMeshProUGUI>("P HealthText");
-            hfSlider = Managers.UI.Get<Slider>("P HealthFeedbackBar");
-        }
-        else
-        {
-            hSlider = Managers.UI.Get<Slider>("E HealthBar");
-            sSlider = Managers.UI.Get<Slider>("E ShieldBar");
-            hText = Managers.UI.Get<TextMeshProUGUI>("E HealthText");
-            hfSlider = Managers.UI.Get<Slider>("E HealthFeedbackBar");
-        }
-    }
-
-    public void HealthbarInit(bool isPlayer, float health, float maxHealth = 0)
-    {
-        SliderInit(isPlayer);
-
-        if (maxHealth == 0)
-            maxHealth = health;
-
-        hSlider.maxValue = maxHealth;
-        hSlider.value = health;
-        hText.text = string.Format("{0} / {1}", health, maxHealth);
-
-        sSlider.maxValue = maxHealth;
-        sSlider.value = 0;
-
-        hfSlider.maxValue = maxHealth;
-        hfSlider.value = 0;
-    }
-
-    public void UpdateHealthbar(bool isPlayer)
-    {
-        SliderInit(isPlayer);
-        Unit unit = isPlayer ? BattleManager.Instance.Player : BattleManager.Instance.Enemy;
-        if (unit == null) return;
-
-        if (unit.Shield > 0)
-        {
-            if (unit.HP + unit.Shield > unit.MaxHP)
-                hfSlider.value = hSlider.maxValue = sSlider.maxValue = hfSlider.maxValue = unit.HP + unit.Shield;
-            else
-                hSlider.maxValue = sSlider.maxValue = hfSlider.maxValue = unit.MaxHP;
-
-            hfSlider.value = hSlider.value;
-            hSlider.value = unit.HP;
-            sSlider.value = unit.HP + unit.Shield;
-            hText.text = string.Format("{0} / {1}", hSlider.value, unit.MaxHP);
-        }
-        else
-        {
-            hSlider.maxValue = sSlider.maxValue = hfSlider.maxValue = unit.MaxHP;
-            sSlider.value = 0;
-            hSlider.value = unit.HP;
-            hText.text = string.Format("{0} / {1}", hSlider.value, unit.MaxHP);
-        }
-
-        Sequence seq = DOTween.Sequence();
-        seq.AppendInterval(0.5f);
-        seq.Append(hfSlider.DOValue(unit.HP, 0.2f));
-
-        Sequence vibrateSeq = DOTween.Sequence();
-        vibrateSeq.Append(hSlider.transform.parent.DOShakeScale(0.1f));
-        vibrateSeq.Append(hSlider.transform.parent.DOScale(1f, 0));
-    }
-    #endregion
-
-
-    public void UpdateShieldText(float shield)
-    {
-        TextMeshProUGUI playerShieldText = Managers.UI.Get<TextMeshProUGUI>("P Shield Value");
-
-        playerShieldText.SetText(shield.ToString());
-
-        Sequence seq = DOTween.Sequence();
-        seq.Append(playerShieldText.transform.parent.DOScale(1.4f, 0.1f));
-        seq.Append(playerShieldText.transform.parent.DOScale(1f, 0.1f));
-
-        UpdateHealthbar(true);
-    }
 
     public override void Clear()
     {

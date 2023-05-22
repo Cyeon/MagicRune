@@ -1099,6 +1099,13 @@ MonoBehaviour:
   currentDmg: 0
   attackSound: {fileID: 8300000, guid: 14b13d596957d594ea53e14e0773678d, type: 3}
   isTurnSkip: 0
+  userInfoUI: {fileID: 0}
+  _healthBar: {fileID: 681292266}
+  _shieldBar: {fileID: 592089526}
+  _healthFeedbackBar: {fileID: 2050084801}
+  _shieldIcon: {fileID: 5366149141605548615}
+  _healthText: {fileID: 2112612399}
+  _shieldText: {fileID: 8465185380246577905}
   <OnTakeDamage>k__BackingField:
     m_PersistentCalls:
       m_Calls: []
@@ -1125,16 +1132,10 @@ MonoBehaviour:
   _hitMat: {fileID: 2100000, guid: fcaf6d7d3ad6d5e47896eac99588c7cf, type: 2}
   _hitShaker: {fileID: 9157689870176339690}
   enemyName: "\uB208\uBB49\uCE58"
-  enemyTag: 0
+  enemyType: 0
   isEnter: 0
   enemyScaleVec: {x: 1, y: 1, z: 1}
   spriteRenderer: {fileID: 3535539594128554667}
-  _healthBar: {fileID: 681292266}
-  _shieldBar: {fileID: 592089526}
-  _healthFeedbackBar: {fileID: 2050084801}
-  _shieldIcon: {fileID: 5366149141605548615}
-  _enemyHealthText: {fileID: 2112612399}
-  _shieldText: {fileID: 8465185380246577905}
 --- !u!114 &8728774325472003506
 MonoBehaviour:
   m_ObjectHideFlags: 0

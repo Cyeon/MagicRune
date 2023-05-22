@@ -50,10 +50,10 @@ MonoBehaviour:
   iconSize: {x: 0.5, y: 0.5, z: 1}
   desc: 
   isIncluding: 1
-  startPattern:
+  startPatternAction: []
+  turnPatternAction:
   - {fileID: 1318501583068510468}
-  turnPattern: []
-  endPattern: []
+  endPatternAction: []
   transitions: []
 --- !u!114 &1318501583068510468
 MonoBehaviour:
@@ -120,10 +120,10 @@ MonoBehaviour:
   iconSize: {x: 0.5, y: 0.5, z: 1}
   desc: 
   isIncluding: 1
-  startPattern: []
-  turnPattern:
+  startPatternAction: []
+  turnPatternAction:
   - {fileID: 9179320034245226693}
-  endPattern: []
+  endPatternAction: []
   transitions: []
 --- !u!114 &9179320034245226693
 MonoBehaviour:
@@ -188,11 +188,11 @@ MonoBehaviour:
   iconSize: {x: 0.5, y: 0.5, z: 1}
   desc: 10
   isIncluding: 1
-  startPattern: []
-  turnPattern:
+  startPatternAction: []
+  turnPatternAction:
   - {fileID: 3066012335656631679}
   - {fileID: 8285775420851267876}
-  endPattern: []
+  endPatternAction: []
   transitions: []
 --- !u!114 &3066012335656631679
 MonoBehaviour:
@@ -323,6 +323,10 @@ PrefabInstance:
     - target: {fileID: 8949788419246248273, guid: f1a706a7f0436ee45869c5f1ea4fc0b1, type: 3}
       propertyPath: enemyName
       value: "\uBD88 \uC2AC\uB77C\uC784"
+      objectReference: {fileID: 0}
+    - target: {fileID: 8949788419246248273, guid: f1a706a7f0436ee45869c5f1ea4fc0b1, type: 3}
+      propertyPath: enemyType
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8949788419246248273, guid: f1a706a7f0436ee45869c5f1ea4fc0b1, type: 3}
       propertyPath: _maxHealth

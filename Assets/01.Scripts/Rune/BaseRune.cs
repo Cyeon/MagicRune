@@ -95,7 +95,7 @@ public class BaseRune : Item, ICloneable
 
     public virtual bool AbilityCondition()
     {
-        Debug.Log("BaseRune Condition");
+        //Debug.Log("BaseRune Condition");
         return true;
     }
 

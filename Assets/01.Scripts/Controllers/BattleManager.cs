@@ -1,4 +1,4 @@
-﻿using DG.Tweening;
+using DG.Tweening;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -49,12 +49,11 @@ public class BattleManager : MonoSingleton<BattleManager>
         Managers.Enemy.BattleSetting();
 
         Player.StatusManager.Reset();
-        Player.SliderInit();
+        Player.SetUIActive(true);
+        Player.UISetting();
 
         Player.OnDieEvent.RemoveAllListeners();
         Player.OnDieEvent.AddListener(() => { Define.DialScene?.RewardUI.DefeatPanelPopup(); });
-
-        Define.DialScene?.HealthbarInit(true, Player.HP, Player.MaxHP);
 
         TurnChange();
 
@@ -161,11 +160,7 @@ public class BattleManager : MonoSingleton<BattleManager>
 
                 Managers.Sound.PlaySound(_turnChangeSound, SoundType.Effect);
 
-                if (Player.Shield > 0)
-                {
-                    Player.ResetShield();
-                    Define.DialScene?.UpdateHealthbar(true);
-                }
+                if (Player.Shield > 0) Player.ResetShield();
 
                 Define.DialScene?.Turn("Player Turn");
                 Define.DialScene?.Dial?.ResetDial();

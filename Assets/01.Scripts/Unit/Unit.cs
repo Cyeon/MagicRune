@@ -51,12 +51,16 @@ public class Unit : MonoBehaviour
     public AudioClip attackSound = null;
     [HideInInspector] public bool isTurnSkip = false;
 
-    #region UI
-    protected Slider _healthSlider;
-    protected Slider _shieldSlider;
-    protected Slider _healthFeedbackSlider;
-    protected TextMeshProUGUI _healthText;
     public UserInfoUI userInfoUI;
+
+    #region UI
+    [Header("UI")]
+    [SerializeField] protected Transform _healthBar;
+    [SerializeField] protected Transform _shieldBar;
+    [SerializeField] protected Transform _healthFeedbackBar;
+    [SerializeField] protected Transform _shieldIcon;
+    [SerializeField] protected TextMeshPro _healthText;
+    [SerializeField] protected TextMeshPro _shieldText;
     #endregion
 
     protected bool _isDie = false;
@@ -163,6 +167,7 @@ public class Unit : MonoBehaviour
         }
     }
 
+    #region health & shield
     public bool IsHealthAmount(float amount, ComparisonType type)
     {
         switch (type)
@@ -242,6 +247,7 @@ public class Unit : MonoBehaviour
         _isDie = false;
         _health = _maxHealth;
     }
+    #endregion
 
     public virtual void Die()
     {
@@ -250,14 +256,72 @@ public class Unit : MonoBehaviour
         OnDieEvent?.Invoke();
     }
 
+    public void UISetting()
+    {
+        _healthBar.DOScaleX(HP / MaxHP, 0);
+        _healthFeedbackBar.DOScaleX(0, 0);
+        _healthText.text = string.Format("{0}/{1}", HP.ToString(), MaxHP.ToString());
+
+        _shieldBar.DOScaleX(0, 0);
+        _shieldIcon.gameObject.SetActive(false);
+    }
+
     public virtual void UpdateHealthUI()
     {
-        Define.DialScene?.UpdateHealthbar(true);
+        _healthFeedbackBar.DOScaleX(_healthBar.localScale.x, 0);
+        _healthBar.DOScaleX((float)HP / MaxHP, 0);
+
+        _healthText.text = string.Format("{0}/{1}", HP.ToString(), MaxHP.ToString());
+
+        if (Shield > 0)
+        {
+            if (HP + Shield > MaxHP)
+            {
+                _shieldBar.DOScaleX(1, 0);
+                _healthBar.DOScaleX((float)HP / (MaxHP + Shield), 0);
+            }
+            else
+            {
+                _shieldBar.DOScaleX((float)(HP + Shield) / MaxHP, 0);
+            }
+        }
+        else
+        {
+            _shieldBar.DOScaleX(0, 0);
+        }
+
+        Sequence seq = DOTween.Sequence();
+        seq.AppendInterval(0.5f);
+        seq.Append(_healthFeedbackBar.DOScaleX((float)HP / MaxHP, 0.2f));
+
+        Sequence vibrateSeq = DOTween.Sequence();
+        vibrateSeq.Append(_healthFeedbackBar.parent.DOShakeScale(0.1f));
+        vibrateSeq.Append(_healthFeedbackBar.parent.DOScale(1f, 0));
     }
 
     public virtual void UpdateShieldUI()
     {
-        Define.DialScene?.UpdateShieldText(Shield);
+        if(_shield <= 0)
+        {
+            if(_shieldIcon.gameObject.activeSelf)
+            {
+                _shieldIcon.gameObject.SetActive(false);
+                _shieldBar.localScale = Vector3.zero;
+                UpdateHealthUI();
+            }
+            return;
+        }
+        else if(!_shieldIcon.gameObject.activeSelf)
+        {
+            _shieldIcon.gameObject.SetActive(true);
+        }
+
+        _shieldText.SetText(Shield.ToString());
+        UpdateHealthUI();
+
+        Sequence seq = DOTween.Sequence();
+        seq.Append(_shieldText.transform.parent.DOScale(1.2f, 0.1f));
+        seq.Append(_shieldText.transform.parent.DOScale(1f, 0.1f));
     }
 
 }
