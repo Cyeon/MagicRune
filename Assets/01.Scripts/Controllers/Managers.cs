@@ -107,7 +107,7 @@ public class Managers : MonoBehaviour
         {
             if (_preparedToQuit == false)
             {
-                AndroidToast.Instance.ShowToastMessage("占쌘로곤옙占쏙옙 占쏙옙튼占쏙옙 占쏙옙 占쏙옙 占쏙옙 占쏙옙占쏙옙占시몌옙 占쏙옙占쏙옙占쌌니댐옙.");
+                AndroidToast.Instance.ShowToastMessage("?좎뙓濡쒓낀?쇿뜝?숈삕 ?좎룞?숉듉?좎룞???좎룞???좎룞???좎룞???좎룞?쇿뜝?숈삕?좎떆紐뚯삕 ?좎룞?쇿뜝?숈삕?좎뙆?덈뙋??");
                 PreparedToQuit();
             }
             else

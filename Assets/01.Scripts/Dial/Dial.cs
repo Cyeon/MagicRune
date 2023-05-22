@@ -7,8 +7,8 @@ using UnityEngine;
 /// <summary>
 /// 
 /// </summary>
-/// <typeparam name="T1">?ㅼ씠???먯떇?쇰줈 ?덉쓣 紐⑤끂鍮꾪뿤?대퉬??ex) BaseRuneUI</typeparam>
-/// <typeparam name="T2">T1???곗씠??ex) BaseRune</typeparam>
+/// <typeparam name="T1">??쇱뵠???癒?뻼??곗쨮 ??됱뱽 筌뤴뫀?귡뜮袁る엘?????ex) BaseRuneUI</typeparam>
+/// <typeparam name="T2">T1???怨쀬뵠??ex) BaseRune</typeparam>
 public class Dial<T1, T2> : MonoBehaviour where T1 : MonoBehaviour where T2 : class
 {
     #region Rotate Parameta
@@ -24,7 +24,7 @@ public class Dial<T1, T2> : MonoBehaviour where T1 : MonoBehaviour where T2 : cl
 
     #region Parameta
     [SerializeField]
-    private int _copyCount = 2;
+    protected int _copyCount = 2;
 
     [SerializeField]
     private float[] _lineDistanceArray = new float[3];
@@ -49,26 +49,18 @@ public class Dial<T1, T2> : MonoBehaviour where T1 : MonoBehaviour where T2 : cl
     #endregion
 
     protected bool _isAttack;
-    protected Resonance _resonance;
+    protected bool _isAttackCondition = false;
 
-    private void Awake()
+    protected virtual void Awake()
     {
         #region Initialization 
-        _resonance = GetComponent<Resonance>();
-
         _runeDict = new Dictionary<int, List<T1>>(3);
         for (int i = 1; i <= 3; i++)
         {
             _runeDict.Add(i, new List<T1>());
         }
         _dialElementList = new List<DialElement<T1, T2>>();
-        #endregion
 
-        _isAttack = false;
-    }
-
-    private void Start()
-    {
         for (int i = 0; i < 3; i++)
         {
             DialElement<T1, T2> d = this.transform.GetChild(i).GetComponent<DialElement<T1, T2>>();
@@ -76,7 +68,13 @@ public class Dial<T1, T2> : MonoBehaviour where T1 : MonoBehaviour where T2 : cl
 
             _dialElementList.Add(d);
         }
+        #endregion
 
+        _isAttack = false;
+    }
+
+    protected virtual void Start()
+    {
         SettingDialRune(true);
     }
 
@@ -168,7 +166,6 @@ public class Dial<T1, T2> : MonoBehaviour where T1 : MonoBehaviour where T2 : cl
     {
         if (_isDialSelect == true && _selectIndex != -1 && _selectDialElement.IsUsingLineSwap == true)
         {
-            Debug.Log("Select Dial");
             if (_selectDialElement == null || _selectDialElement.FingerID == -1) return;
             Touch touch = Input.GetTouch(_selectDialElement.FingerID);
 
@@ -177,7 +174,7 @@ public class Dial<T1, T2> : MonoBehaviour where T1 : MonoBehaviour where T2 : cl
                 case TouchPhase.Moved:
                     float distance = Mathf.Abs(Vector2.Distance(transform.position, Define.MainCam.ScreenToWorldPoint(touch.position)));
 
-                    // 예외처리 해야할 듯
+                    // ?덉쇅泥섎━ ?댁빞????
                     if (_dialElementList[2].InDistance <= distance)
                     {
                         for (int i = _dialElementList.Count - 1; i >= 0; i--)
@@ -454,7 +451,7 @@ public class Dial<T1, T2> : MonoBehaviour where T1 : MonoBehaviour where T2 : cl
         if (MagicEmpty() == true) return;
 
         if (_isAttack == true) return;
-        if (BattleManager.Instance.GameTurn == GameTurn.Player) // ?嫄댁쓣 遺덈┛ 蹂?ㅻ줈 ?댁꽌 ?꾨옒???ъ젙???????덇쾶
+        if (_isAttackCondition)
         {
             _isAttack = true;
 
@@ -479,30 +476,5 @@ public class Dial<T1, T2> : MonoBehaviour where T1 : MonoBehaviour where T2 : cl
     public void MagicCircleGlow(int index, bool value)
     {
         _dialElementList[index].IsGlow = value;
-    }
-
-    public void CheckResonance()
-    {
-        if (MagicEmpty(false))
-        {
-            _resonance.ActiveAllEffectObject(false);
-        }
-        else
-        {
-            AttributeType criterionType = _dialElementList[0].SelectElement.Rune.BaseRuneSO.AttributeType;
-            bool isSame = true;
-
-            for (int i = 1; i < _dialElementList.Count; i++)
-            {
-                isSame = criterionType == _dialElementList[i].SelectElement.Rune.BaseRuneSO.AttributeType;
-                if (!isSame)
-                    break;
-            }
-
-            if (isSame)
-                _resonance.ResonanceEffect(criterionType);
-            else
-                _resonance.ActiveAllEffectObject(false);
-        }
     }
 }

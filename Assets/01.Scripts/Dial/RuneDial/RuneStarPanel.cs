@@ -4,143 +4,74 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class RuneStarPanel : MonoBehaviour
+public class RuneStarPanel : StarPanel<BaseRuneUI, BaseRune>
 {
-    private SpriteRenderer _spriteRenderer;
-
-    [SerializeField]
-    private RuneDial _dial;
-
-    #region Swipe Parameta
-    private Vector2 _touchBeganPos;
-    private Vector2 _touchEndedPos;
-    private Vector2 _touchDif;
-    [SerializeField]
-    private float _swipeSensitivity = 450;
-    #endregion
-
-    [SerializeField]
-    private float _inDistance;
-    [SerializeField]
-    private float _outDistance;
-
-    private void Start()
+    protected override void Start()
     {
-        _spriteRenderer = GetComponent<SpriteRenderer>();
-        //_image.alphaHitTestMinimumThreshold = 0.1f;
-    }
+        base.Start();
 
-    private void Update()
-    {
-        Swipe1();
-    }
-
-    public void Swipe1()
-    {
-        if (Input.touchCount > 0)
+        #region Add Event
+        Managers.Swipe.AddAction(SwipeType.TouchMove, (touch) =>
         {
-            Touch touch = Input.GetTouch(0);
-
-            
-
-            if (touch.phase == TouchPhase.Began)
+            if (Mathf.Abs(Vector2.Distance(transform.position, Define.MainCam.ScreenToWorldPoint(Managers.Swipe.TouchBeganPos))) <= _outDistance)
             {
-                _touchBeganPos = touch.position;
-            }
-            if (touch.phase == TouchPhase.Moved)
-            {
-                if (Mathf.Abs(Vector2.Distance(transform.position, Define.MainCam.ScreenToWorldPoint(_touchBeganPos))) <= _outDistance)
+                for (int i = 0; i < _dial.DialElementList.Count; i++)
                 {
-                    for (int i = 0; i < _dial.DialElementList.Count; i++)
-                    {
-                        if (_dial.DialElementList[i].DialState == DialState.Drag)
-                        {
-                            _dial.AllMagicCircleGlow(false);
-                            return;
-                        }
-                    }
-
-                    _touchDif = (touch.position - _touchBeganPos);
-
-                    int count = (int)(Mathf.Abs(_touchDif.y) / (_swipeSensitivity / 3));
-                    count = Mathf.Min(count, 3);
-
-                    for (int i = 0; i < 3; i++)
-                    {
-                        if (i < count)
-                        {
-                            _dial.MagicCircleGlow(2 - i, true);
-                        }
-                        else
-                        {
-                            _dial.MagicCircleGlow(2 - i, false);
-                        }
-                    }
-
-                    if (_touchDif.y < 0)
+                    if (_dial.DialElementList[i].DialState == DialState.Drag)
                     {
                         _dial.AllMagicCircleGlow(false);
-                        //return;
+                        return;
                     }
                 }
-            }
-            if (touch.phase == TouchPhase.Ended)
-            {
-                _touchEndedPos = touch.position;
-                _touchDif = (_touchEndedPos - _touchBeganPos);
 
-                //��������. ��ġ�� x�̵��Ÿ��� y�̵��Ÿ��� �ΰ������� ũ��
-                if (Mathf.Abs(_touchDif.y) > _swipeSensitivity || Mathf.Abs(_touchDif.x) > _swipeSensitivity)
+                Vector2 touchDif = (touch.position - Managers.Swipe.TouchBeganPos);
+
+                int count = (int)(Mathf.Abs(Managers.Swipe.TouchDif.y) / (Managers.Swipe.SwipeSensitivity / 3));
+                count = Mathf.Min(count, 3);
+
+                for (int i = 0; i < 3; i++)
                 {
-                    if (_touchDif.y > 0 && Mathf.Abs(_touchDif.y) > Mathf.Abs(_touchDif.x))
+                    if (i < count)
                     {
-                        //Debug.Log("up");
-
-                        float distance = Vector2.Distance(Define.MainCam.ScreenToWorldPoint(_touchBeganPos), (Vector2)transform.position);
-                        if(distance >= _inDistance && distance <= _outDistance)
-                        {
-                            _dial.Attack();
-                        }
-                        else
-                        {
-                            _dial.AllMagicCircleGlow(false);
-                        }
+                        _dial.MagicCircleGlow(2 - i, true);
                     }
-                    else if (_touchDif.y < 0 && Mathf.Abs(_touchDif.y) > Mathf.Abs(_touchDif.x))
+                    else
                     {
-                        //Debug.Log("down");
-                        _dial.AllMagicCircleGlow(false);
-                    }
-                    else if (_touchDif.x > 0 && Mathf.Abs(_touchDif.y) < Mathf.Abs(_touchDif.x))
-                    {
-                        //Debug.Log("right");
-                    }
-                    else if (_touchDif.x < 0 && Mathf.Abs(_touchDif.y) < Mathf.Abs(_touchDif.x))
-                    {
-                        //Debug.Log("Left");
+                        _dial.MagicCircleGlow(2 - i, false);
                     }
                 }
-                //��ġ.
-                else
+
+                if (Managers.Swipe.TouchDif.y < 0)
                 {
-                    //Debug.Log("touch");
-                    if (Vector2.Distance(transform.position, Define.MainCam.ScreenToWorldPoint(_touchEndedPos)) <= _outDistance)
-                    {
-                        Define.DialScene?.AllCardDescPopup();
-                    }
                     _dial.AllMagicCircleGlow(false);
+                    //return;
                 }
             }
-        }
+        });
+        Managers.Swipe.AddAction(SwipeType.UpSwipe, (touch) =>
+        {
+            float distance = Vector2.Distance(Define.MainCam.ScreenToWorldPoint(Managers.Swipe.TouchBeganPos), (Vector2)transform.position);
+            if (distance >= _inDistance && distance <= _outDistance)
+            {
+                _dial.Attack();
+            }
+            else
+            {
+                _dial.AllMagicCircleGlow(false);
+            }
+        });
+        Managers.Swipe.AddAction(SwipeType.DownSwipe, (touch) =>
+        {
+            _dial.AllMagicCircleGlow(false);
+        });
+        Managers.Swipe.AddAction(SwipeType.Touch, (touch) =>
+        {
+            if (Vector2.Distance(transform.position, Define.MainCam.ScreenToWorldPoint(Managers.Swipe.TouchEndedPos)) <= _outDistance)
+            {
+                Define.DialScene?.AllCardDescPopup();
+            }
+            _dial.AllMagicCircleGlow(false);
+        });
+        #endregion
     }
-
-#if UNITY_EDITOR
-    private void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(this.transform.position, _inDistance);
-        Gizmos.DrawWireSphere(this.transform.position, _outDistance);
-        Gizmos.color = Color.white;
-    }
-#endif
 }

@@ -11,6 +11,16 @@ using Random = UnityEngine.Random;
 
 public class RuneDial : Dial<BaseRuneUI, BaseRune>
 {
+    private Resonance _resonance;
+
+    protected override void Awake()
+    {
+        base.Awake();
+        _resonance = GetComponent<Resonance>();
+
+        _isAttackCondition = BattleManager.Instance.GameTurn == GameTurn.Player;
+    }
+
     public override void SettingDialRune(bool isReset)
     {
         #region Clear
@@ -186,8 +196,6 @@ public class RuneDial : Dial<BaseRuneUI, BaseRune>
 
     public void AllMagicSetCoolTime()
     {
-        Debug.Log("????볧꼤???????ル봿????");
-
         for (int i = 0; i < _cooltimeDeck.Count; i++)
         {
             if (_cooltimeDeck[i].IsCoolTime == true)
@@ -205,12 +213,12 @@ public class RuneDial : Dial<BaseRuneUI, BaseRune>
         }
         else
         {
-            AttributeType criterionType = _dialElementList[0].SelectCard.Rune.BaseRuneSO.AttributeType;
+            AttributeType criterionType = _dialElementList[0].SelectElement.Rune.BaseRuneSO.AttributeType;
             bool isSame = true;
 
             for (int i = 1; i < _dialElementList.Count; i++)
             {
-                isSame = criterionType == _dialElementList[i].SelectCard.Rune.BaseRuneSO.AttributeType;
+                isSame = criterionType == _dialElementList[i].SelectElement.Rune.BaseRuneSO.AttributeType;
                 if (!isSame)
                     break;
             }

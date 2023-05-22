@@ -30,7 +30,7 @@ public class SwipeManager
     #endregion
 
     #region Actions
-    private Dictionary<SwipeType, Action> _swipeDict = new Dictionary<SwipeType, Action>();
+    private Dictionary<SwipeType, Action<Touch>> _swipeDict = new Dictionary<SwipeType, Action<Touch>>();
     #endregion
 
     public void Init()
@@ -49,7 +49,7 @@ public class SwipeManager
         _swipeSensitivity = value;
     }
 
-    public void AddAction(SwipeType swipeType, Action action)
+    public void AddAction(SwipeType swipeType, Action<Touch> action)
     {
         if (_swipeDict.ContainsKey(swipeType) == true)
         {
@@ -77,46 +77,46 @@ public class SwipeManager
             {
                 _touchBeganPos = touch.position;
 
-                _swipeDict[SwipeType.TouchBegan]?.Invoke();
+                _swipeDict[SwipeType.TouchBegan]?.Invoke(touch);
             }
             if (touch.phase == TouchPhase.Moved)
             {
-                _swipeDict[SwipeType.TouchMove]?.Invoke();
+                _swipeDict[SwipeType.TouchMove]?.Invoke(touch);
             }
             if (touch.phase == TouchPhase.Ended)
             {
                 _touchEndedPos = touch.position;
                 _touchDif = (_touchEndedPos - _touchBeganPos);
 
-                _swipeDict[SwipeType.TouchEnd]?.Invoke();
+                _swipeDict[SwipeType.TouchEnd]?.Invoke(touch);
 
                 if (Mathf.Abs(_touchDif.y) > _swipeSensitivity || Mathf.Abs(_touchDif.x) > _swipeSensitivity)
                 {
                     if (_touchDif.y > 0 && Mathf.Abs(_touchDif.y) > Mathf.Abs(_touchDif.x))
                     {
                         //Debug.Log("up");
-                        _swipeDict[SwipeType.UpSwipe]?.Invoke();
+                        _swipeDict[SwipeType.UpSwipe]?.Invoke(touch);
                     }
                     else if (_touchDif.y < 0 && Mathf.Abs(_touchDif.y) > Mathf.Abs(_touchDif.x))
                     {
                         //Debug.Log("down");
-                        _swipeDict[SwipeType.DownSwipe]?.Invoke();
+                        _swipeDict[SwipeType.DownSwipe]?.Invoke(touch);
                     }
                     else if (_touchDif.x > 0 && Mathf.Abs(_touchDif.y) < Mathf.Abs(_touchDif.x))
                     {
                         //Debug.Log("right");
-                        _swipeDict[SwipeType.RightSwipe]?.Invoke();
+                        _swipeDict[SwipeType.RightSwipe]?.Invoke(touch);
                     }
                     else if (_touchDif.x < 0 && Mathf.Abs(_touchDif.y) < Mathf.Abs(_touchDif.x))
                     {
                         //Debug.Log("Left");
-                        _swipeDict[SwipeType.LeftSwipe]?.Invoke();
+                        _swipeDict[SwipeType.LeftSwipe]?.Invoke(touch);
                     }
                 }
                 else
                 {
                     //Debug.Log("touch");
-                    _swipeDict[SwipeType.Touch]?.Invoke();
+                    _swipeDict[SwipeType.Touch]?.Invoke(touch);
                 }
             }
         }
