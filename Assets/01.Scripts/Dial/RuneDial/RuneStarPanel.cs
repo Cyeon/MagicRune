@@ -4,12 +4,12 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class StarPanel : MonoBehaviour
+public class RuneStarPanel : MonoBehaviour
 {
     private SpriteRenderer _spriteRenderer;
 
     [SerializeField]
-    private Dial _dial;
+    private RuneDial _dial;
 
     #region Swipe Parameta
     private Vector2 _touchBeganPos;

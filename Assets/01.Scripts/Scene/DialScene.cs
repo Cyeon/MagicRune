@@ -1,4 +1,4 @@
-using DG.Tweening;
+﻿using DG.Tweening;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -11,8 +11,8 @@ using Sequence = DG.Tweening.Sequence;
 public class DialScene : BaseScene
 {
     [SerializeField]
-    private Dial _dial;
-    public Dial Dial => _dial;
+    private RuneDial _dial;
+    public RuneDial Dial => _dial;
 
     [SerializeField]
     private ExplainPanel _cardDescPanel = null;
@@ -412,7 +412,7 @@ public class DialScene : BaseScene
 
     public override void Clear()
     {
-        // �� Ŭ����
+        // 占쏙옙 클占쏙옙占쏙옙
     }
 
     public void ChooseRuneUISetUp()

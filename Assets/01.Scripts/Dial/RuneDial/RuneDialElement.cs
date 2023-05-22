@@ -5,16 +5,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public enum DialState
+public class RuneDialElement : MonoBehaviour
 {
-    None,
-    Rotate,
-    Drag,
-}
-
-public class DialElement : MonoBehaviour
-{
-    private Dial _dial;
+    private RuneDial _dial;
     private SpriteRenderer _lineSpriteRenderer;
     private SpriteRenderer _textSpriteRenderer;
     [SerializeField]
@@ -124,7 +117,7 @@ public class DialElement : MonoBehaviour
 
     private void Awake()
     {
-        _dial = GetComponentInParent<Dial>();
+        _dial = GetComponentInParent<RuneDial>();
         _lineSpriteRenderer = transform.Find("LineVisualSprite").GetComponent<SpriteRenderer>();
         _textSpriteRenderer = transform.Find("TextVisualSprite").GetComponent<SpriteRenderer>();
         _runeList = new List<BaseRuneUI>();
@@ -211,7 +204,7 @@ public class DialElement : MonoBehaviour
                     //if (SelectCard != _runeList[index])
                     //{
                         SelectCard = _runeList[index];
-                        // 留??욎뿉 ?덈뒗 ?좊┫ 留??ㅻ줈 蹂대궦??
+                        // 嶺???濡ロ뱺 ???덈츎 ??ル벣逾?嶺????댁Ŧ ?곌랜?亦??
                         //if (index != 0)
                         //{
                         //    BaseRuneUI rune = _runeList[0];
@@ -241,7 +234,7 @@ public class DialElement : MonoBehaviour
                     //if (SelectCard != _runeList[index])
                     //{
                         SelectCard = _runeList[index];
-                        // 留??ㅼ뿉 ?좊? 留??욎쑝濡?蹂대궦??
+                        // 嶺????고뱺 ??? 嶺???濡?さ???곌랜?亦??
                         //Debug.Log("Right");
                         //if (index != 0)
                         //{
