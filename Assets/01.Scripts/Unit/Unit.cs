@@ -30,7 +30,7 @@ public class Unit : MonoBehaviour
             if (_health > _maxHealth) _health = _maxHealth;
 
             if (Managers.Scene.CurrentScene == Define.DialScene) UpdateHealthUI();
-            if(this is Player) userInfoUI.UpdateHealthText();
+            if (this is Player) userInfoUI.UpdateHealthText();
 
             if (_health == 0) Die();
         }
@@ -51,12 +51,16 @@ public class Unit : MonoBehaviour
     public AudioClip attackSound = null;
     [HideInInspector] public bool isTurnSkip = false;
 
-    #region UI
-    protected Slider _healthSlider;
-    protected Slider _shieldSlider;
-    protected Slider _healthFeedbackSlider;
-    protected TextMeshProUGUI _healthText;
     public UserInfoUI userInfoUI;
+
+    #region UI
+    [Header("UI")]
+    [SerializeField] protected Transform _healthBar;
+    [SerializeField] protected Transform _shieldBar;
+    [SerializeField] protected Transform _healthFeedbackBar;
+    [SerializeField] protected Transform _shieldIcon;
+    [SerializeField] protected TextMeshPro _healthText;
+    [SerializeField] protected TextMeshPro _shieldText;
     #endregion
 
     protected bool _isDie = false;
@@ -82,7 +86,7 @@ public class Unit : MonoBehaviour
 
     private Coroutine _hitCoroutine;
 
-    [SerializeField] private MMPositionShaker _hitShaker; 
+    [SerializeField] private MMPositionShaker _hitShaker;
 
     private void Start()
     {
@@ -90,7 +94,7 @@ public class Unit : MonoBehaviour
         statusTrm = transform.Find("Status");
         _statusManager.Reset();
 
-        if(_spriteRenderer != null)
+        if (_spriteRenderer != null)
         {
             _defaultMat = _spriteRenderer.material;
         }
@@ -119,14 +123,14 @@ public class Unit : MonoBehaviour
         else
             HP -= currentDmg;
 
-        if(isTrueDamage == false)
+        if (isTrueDamage == false)
             OnTakeDamage?.Invoke(currentDmg);
         OnTakeDamageFeedback?.Invoke();
 
         if (this is Enemy)
         {
             Define.DialScene?.DamageUIPopup(currentDmg, Define.MainCam.WorldToScreenPoint(transform.position), status);
-            if(_hitCoroutine != null)
+            if (_hitCoroutine != null)
             {
                 StopCoroutine(_hitCoroutine);
             }
@@ -150,13 +154,20 @@ public class Unit : MonoBehaviour
         _spriteRenderer.material = _defaultMat;
     }
 
-    public virtual void Attack(float danage)
+    public virtual void Attack(float damage, bool isTrueDamage = false)
     {
-        currentDmg = danage.RoundToInt();
+        currentDmg = damage.RoundToInt();
         StatusManager.OnAttack();
         Managers.Sound.PlaySound(attackSound, SoundType.Effect);
+
+        if (StatusManager.IsHaveStatus(StatusName.Penetration))
+        {
+            StatusManager.DeleteStatus(StatusName.Penetration);
+            isTrueDamage = true;
+        }
     }
 
+    #region health & shield
     public bool IsHealthAmount(float amount, ComparisonType type)
     {
         switch (type)
@@ -190,7 +201,7 @@ public class Unit : MonoBehaviour
 
     public void RemTrueHP(float value)
     {
-        if(_isDie == false)
+        if (_isDie == false)
         {
             HP -= value.RoundToInt();
         }
@@ -217,7 +228,7 @@ public class Unit : MonoBehaviour
     {
         if (_isDie == false)
         {
-            Shield += value.RoundToInt(); 
+            Shield += value.RoundToInt();
         }
     }
 
@@ -236,6 +247,7 @@ public class Unit : MonoBehaviour
         _isDie = false;
         _health = _maxHealth;
     }
+    #endregion
 
     public virtual void Die()
     {
@@ -244,14 +256,72 @@ public class Unit : MonoBehaviour
         OnDieEvent?.Invoke();
     }
 
+    public void UISetting()
+    {
+        _healthBar.DOScaleX(HP / MaxHP, 0);
+        _healthFeedbackBar.DOScaleX(0, 0);
+        _healthText.text = string.Format("{0}/{1}", HP.ToString(), MaxHP.ToString());
+
+        _shieldBar.DOScaleX(0, 0);
+        _shieldIcon.gameObject.SetActive(false);
+    }
+
     public virtual void UpdateHealthUI()
     {
-        Define.DialScene?.UpdateHealthbar(true);
+        _healthFeedbackBar.DOScaleX(_healthBar.localScale.x, 0);
+        _healthBar.DOScaleX((float)HP / MaxHP, 0);
+
+        _healthText.text = string.Format("{0}/{1}", HP.ToString(), MaxHP.ToString());
+
+        if (Shield > 0)
+        {
+            if (HP + Shield > MaxHP)
+            {
+                _shieldBar.DOScaleX(1, 0);
+                _healthBar.DOScaleX((float)HP / (MaxHP + Shield), 0);
+            }
+            else
+            {
+                _shieldBar.DOScaleX((float)(HP + Shield) / MaxHP, 0);
+            }
+        }
+        else
+        {
+            _shieldBar.DOScaleX(0, 0);
+        }
+
+        Sequence seq = DOTween.Sequence();
+        seq.AppendInterval(0.5f);
+        seq.Append(_healthFeedbackBar.DOScaleX((float)HP / MaxHP, 0.2f));
+
+        Sequence vibrateSeq = DOTween.Sequence();
+        vibrateSeq.Append(_healthFeedbackBar.parent.DOShakeScale(0.1f));
+        vibrateSeq.Append(_healthFeedbackBar.parent.DOScale(1f, 0));
     }
 
     public virtual void UpdateShieldUI()
     {
-        Define.DialScene?.UpdateShieldText(Shield);
+        if(_shield <= 0)
+        {
+            if(_shieldIcon.gameObject.activeSelf)
+            {
+                _shieldIcon.gameObject.SetActive(false);
+                _shieldBar.localScale = Vector3.zero;
+                UpdateHealthUI();
+            }
+            return;
+        }
+        else if(!_shieldIcon.gameObject.activeSelf)
+        {
+            _shieldIcon.gameObject.SetActive(true);
+        }
+
+        _shieldText.SetText(Shield.ToString());
+        UpdateHealthUI();
+
+        Sequence seq = DOTween.Sequence();
+        seq.Append(_shieldText.transform.parent.DOScale(1.2f, 0.1f));
+        seq.Append(_shieldText.transform.parent.DOScale(1f, 0.1f));
     }
 
 }

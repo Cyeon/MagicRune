@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -62,6 +62,7 @@ public class RuneListViewUI : MonoBehaviour
             RuneViewPanelUI panel = Managers.Pool.Pop(_runeTemplate).GetComponent<RuneViewPanelUI>();
             panel.SetUI(baseRuneList[i], isCoolTIme);
             panel.transform.SetParent(_content);
+            panel.transform.localScale = Vector3.one;
             _usingPanelList.Add(panel.GetComponent<Poolable>());
         }
     }

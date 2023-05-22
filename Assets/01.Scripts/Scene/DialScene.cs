@@ -15,18 +15,12 @@ public class DialScene : BaseScene
     public Dial Dial => _dial;
 
     [SerializeField]
-    private GameObject _cardDescPanel;
-    private ExplainPanelList _cardDescPanelList;
+    private ExplainPanel _cardDescPanel = null;
 
     [SerializeField]
     private GameObject _statusDescPanel;
     private TextMeshPro _statusDescName;
     private TextMeshPro _statusDescInfo;
-
-    private Slider hSlider = null;
-    private Slider sSlider = null;
-    private Slider hfSlider = null;
-    private TextMeshProUGUI hText = null;
 
     [SerializeField]
     private RewardUI _rewardUI;
@@ -45,15 +39,9 @@ public class DialScene : BaseScene
 
         Managers.UI.Bind<Image>("TurnBackground", Managers.Canvas.GetCanvas("Popup").gameObject);
         Managers.UI.Bind<TextMeshProUGUI>("TurnText", Managers.Canvas.GetCanvas("Popup").gameObject);
-            
+
         Managers.UI.Bind<Image>("P StatusPanel", Managers.Canvas.GetCanvas("Main").gameObject);
         Managers.UI.Bind<Image>("E StatusPanel", Managers.Canvas.GetCanvas("Main").gameObject);
-
-        Managers.UI.Bind<Slider>("P HealthBar", Managers.Canvas.GetCanvas("Main").gameObject);
-        Managers.UI .Bind<Slider>("P ShieldBar", Managers.Canvas.GetCanvas("Main").gameObject);
-        Managers.UI.Bind<TextMeshProUGUI>("P HealthText", Managers.Canvas.GetCanvas("Main").gameObject);
-        Managers.UI.Bind<Slider>("P HealthFeedbackBar", Managers.Canvas.GetCanvas("Main").gameObject);
-        Managers.UI.Bind<TextMeshProUGUI>("P Shield Value", Managers.Canvas.GetCanvas("Main").gameObject);
 
         Managers.UI.Bind<Button>("Restart Btn", Managers.Canvas.GetCanvas("Popup").gameObject);
         Managers.UI.Bind<Button>("Quit Btn", Managers.Canvas.GetCanvas("Popup").gameObject);
@@ -80,8 +68,6 @@ public class DialScene : BaseScene
         //});
         Managers.UI.Get<Button>("Quit Btn").onClick.RemoveAllListeners();
         Managers.UI.Get<Button>("Quit Btn").onClick.AddListener(() => Managers.GameQuit());
-
-        _cardDescPanelList = _cardDescPanel.GetComponent<ExplainPanelList>();
 
         Managers.Sound.PlaySound("BGM/DialSceneBGM", SoundType.Bgm, true, 1.0f);
 
@@ -143,7 +129,7 @@ public class DialScene : BaseScene
     public void ClearStatusPanel(Unit unit)
     {
         Transform trm = GetStatusTrm(unit);
-        for(int i = trm.childCount - 1; i >= 0; --i)
+        for (int i = trm.childCount - 1; i >= 0; --i)
         {
             Destroy(trm.GetChild(i).gameObject);
         }
@@ -260,48 +246,51 @@ public class DialScene : BaseScene
 
     public void CardDescPopup(BaseRune rune)
     {
-        if(rune == null)
-        {
-            CardDescDown();
-        }
-        else
-        {
-            _cardDescPanel.SetActive(true);
-            if (_cardDescPanelList == null)
-            {
-                _cardDescPanelList = _cardDescPanel.GetComponent<ExplainPanelList>();
-            }
-
-            _cardDescPanelList.OpenPanel(0, rune);
-            _cardDescPanelList.ClosePanel(1);
-            _cardDescPanelList.ClosePanel(2);
-        }
+        _cardDescPanel.SetUI(rune);
+        //if (rune == null)
+        //{
+        //    CardDescDown();
+        //    _cardDescPanel.SetUI(null, true);
+        //}
+        //else
+        //{
+        //    //_cardDescPanel.SetActive(true);
+        //    //if (_cardDescPanelList == null)
+        //    //{
+        //    //    _cardDescPanelList = _cardDescPanel.GetComponent<ExplainPanelList>();
+        //    //}
+        //    //_cardDescPanelList.OpenPanel(0, rune);s
+        //    //_cardDescPanelList.ClosePanel(1);
+        //    //_cardDescPanelList.ClosePanel(2);
+        //}
     }
 
     public void AllCardDescPopup()
     {
-        _cardDescPanel.SetActive(true);
-        if (_cardDescPanelList == null)
-        {
-            _cardDescPanelList = _cardDescPanel.GetComponent<ExplainPanelList>();
-        }
+        //_cardDescPanel.SetActive(true);
+        //if (_cardDescPanelList == null)
+        //{
+        //    _cardDescPanelList = _cardDescPanel.GetComponent<ExplainPanelList>();
+        //}
 
-        for (int i = 0; i < _dial.DialElementList.Count; i++)
-        {
-            if (_dial.DialElementList[i].SelectCard != null)
-            {
-                _cardDescPanelList.OpenPanel(_dial.DialElementList.Count - 1 - i, _dial.DialElementList[i].SelectCard.Rune);
-            }
-            else
-            {
-                _cardDescPanelList.ClosePanel(i);
-            }
-        }
+        //for (int i = 0; i < _dial.DialElementList.Count; i++)
+        //{
+        //    if (_dial.DialElementList[i].SelectCard != null)
+        //    {
+        //        _cardDescPanelList.OpenPanel(_dial.DialElementList.Count - 1 - i, _dial.DialElementList[i].SelectCard.Rune);
+        //    }
+        //    else
+        //    {
+        //        _cardDescPanelList.ClosePanel(i);
+        //    }
+        //}
     }
 
     public void CardDescDown()
     {
-        _cardDescPanel.SetActive(false);
+        BaseRune rune = null;
+        _cardDescPanel.SetUI(rune);
+        //_cardDescPanel.SetActive(false);
     }
 
     public void StatusDescPopup(Status status, Vector3 pos, bool isDown = true)
@@ -322,99 +311,11 @@ public class DialScene : BaseScene
 
     #endregion
 
-    #region Health Bar
-
-    public void SliderInit(bool isPlayer)
-    {
-        if (isPlayer)
-        {
-            hSlider = Managers.UI.Get<Slider>("P HealthBar");
-            sSlider = Managers.UI.Get<Slider>("P ShieldBar");
-            hText = Managers.UI.Get<TextMeshProUGUI>("P HealthText");
-            hfSlider = Managers.UI.Get<Slider>("P HealthFeedbackBar");
-        }
-        else
-        {
-            hSlider = Managers.UI.Get<Slider>("E HealthBar");
-            sSlider = Managers.UI.Get<Slider>("E ShieldBar");
-            hText = Managers.UI.Get<TextMeshProUGUI>("E HealthText");
-            hfSlider = Managers.UI.Get<Slider>("E HealthFeedbackBar");
-        }
-    }
-
-    public void HealthbarInit(bool isPlayer, float health, float maxHealth = 0)
-    {
-        SliderInit(isPlayer);
-
-        if (maxHealth == 0)
-            maxHealth = health;
-
-        hSlider.maxValue = maxHealth;
-        hSlider.value = health;
-        hText.text = string.Format("{0} / {1}", health, maxHealth);
-
-        sSlider.maxValue = maxHealth;
-        sSlider.value = 0;
-
-        hfSlider.maxValue = maxHealth;
-        hfSlider.value = 0;
-    }
-
-    public void UpdateHealthbar(bool isPlayer)
-    {
-        SliderInit(isPlayer);
-        Unit unit = isPlayer ? BattleManager.Instance.Player : BattleManager.Instance.Enemy;
-        if (unit == null) return;
-
-        if (unit.Shield > 0)
-        {
-            if (unit.HP + unit.Shield > unit.MaxHP)
-                hfSlider.value = hSlider.maxValue = sSlider.maxValue = hfSlider.maxValue = unit.HP + unit.Shield;
-            else
-                hSlider.maxValue = sSlider.maxValue = hfSlider.maxValue = unit.MaxHP;
-
-            hfSlider.value = hSlider.value;
-            hSlider.value = unit.HP;
-            sSlider.value = unit.HP + unit.Shield;
-            hText.text = string.Format("{0} / {1}", hSlider.value, unit.MaxHP);
-        }
-        else
-        {
-            hSlider.maxValue = sSlider.maxValue = hfSlider.maxValue = unit.MaxHP;
-            sSlider.value = 0;
-            hSlider.value = unit.HP;
-            hText.text = string.Format("{0} / {1}", hSlider.value, unit.MaxHP);
-        }
-
-        Sequence seq = DOTween.Sequence();
-        seq.AppendInterval(0.5f);
-        seq.Append(hfSlider.DOValue(unit.HP, 0.2f));
-
-        Sequence vibrateSeq = DOTween.Sequence();
-        vibrateSeq.Append(hSlider.transform.parent.DOShakeScale(0.1f));
-        vibrateSeq.Append(hSlider.transform.parent.DOScale(1f, 0));
-    }
-    #endregion
-
-
-    public void UpdateShieldText(float shield)
-    {
-        TextMeshProUGUI playerShieldText = Managers.UI.Get<TextMeshProUGUI>("P Shield Value");
-
-        playerShieldText.SetText(shield.ToString());
-
-        Sequence seq = DOTween.Sequence();
-        seq.Append(playerShieldText.transform.parent.DOScale(1.4f, 0.1f));
-        seq.Append(playerShieldText.transform.parent.DOScale(1f, 0.1f));
-
-        UpdateHealthbar(true);
-    }
-
     public override void Clear()
     {
         // �� Ŭ����
     }
-    
+
     public void ChooseRuneUISetUp()
     {
         _chooseRuneUI.gameObject.SetActive(true);

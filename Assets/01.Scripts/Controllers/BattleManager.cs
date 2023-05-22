@@ -1,4 +1,4 @@
-﻿using DG.Tweening;
+using DG.Tweening;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -49,14 +49,15 @@ public class BattleManager : MonoSingleton<BattleManager>
         Managers.Enemy.BattleSetting();
 
         Player.StatusManager.Reset();
-        Player.SliderInit();
+        Player.SetUIActive(true);
+        Player.UISetting();
 
         Player.OnDieEvent.RemoveAllListeners();
         Player.OnDieEvent.AddListener(() => { Define.DialScene?.RewardUI.DefeatPanelPopup(); });
 
-        Define.DialScene?.HealthbarInit(true, Player.HP, Player.MaxHP);
-
         TurnChange();
+
+        //Define.DialScene?.CardDescPopup(Define.DialScene?.Dial?.DialElementList[2].SelectCard.Rune);
     }
 
     private void OnPlayerTurn()
@@ -143,6 +144,7 @@ public class BattleManager : MonoSingleton<BattleManager>
 
             case GameTurn.PlayerEnd:
                 //Enemy.StopIdle();
+                Define.DialScene?.CardDescDown();
                 OnMonsterTurn();
                 break;
 
@@ -158,18 +160,14 @@ public class BattleManager : MonoSingleton<BattleManager>
 
                 Managers.Sound.PlaySound(_turnChangeSound, SoundType.Effect);
 
-                if (Player.Shield > 0)
-                {
-                    Player.ResetShield();
-                    Define.DialScene?.UpdateHealthbar(true);
-                }
+                if (Player.Shield > 0) Player.ResetShield();
 
                 Define.DialScene?.Turn("Player Turn");
                 Define.DialScene?.Dial?.ResetDial();
                 Define.DialScene?.Dial?.AllMagicCircleGlow(false);
                 Define.DialScene?.Dial?.AllMagicSetCoolTime();
                 Define.DialScene?.Dial?.SettingDialRune(false);
-                Define.DialScene?.AllCardDescPopup();
+                //Define.DialScene?.CardDescPopup(Define.DialScene?.Dial?.DialElementList[2].SelectCard.Rune);
                 _gameTurn = GameTurn.EnemyEnd;
                 break;
 

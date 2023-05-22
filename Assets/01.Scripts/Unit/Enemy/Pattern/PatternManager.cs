@@ -1,4 +1,4 @@
-﻿using DG.Tweening;
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -106,7 +106,7 @@ public class PatternManager : MonoBehaviour
         if (BattleManager.Instance.Enemy.isTurnSkip) return;
         if (BattleManager.Instance.Enemy.IsDie) return;
 
-        isPatternActioning = true;
+        isPatternActioning = !(BattleManager.Instance.Enemy.PatternManager.CurrentPattern.turnPatternAction.Count == 0);
         _isEffecting = true;
         _currentPattern.TurnAction();
         StartCoroutine(PatternEffectCoroutine());

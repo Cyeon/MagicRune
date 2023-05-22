@@ -28,9 +28,21 @@ public class ExplainPanel : MonoBehaviour
 
     public virtual void SetUI(BaseRune rune, bool isReward = true)
     {
+        if (rune == null)
+        {
+            _rune = null;
+            _nameText.SetText("");
+            _runeImage.enabled = false;
+            _coolTimeText.SetText("");
+            _descText.SetText("");
+            ClearKeyward();
+            return;
+        }
+
         _rune = rune;
 
         _nameText.SetText(rune.BaseRuneSO.RuneName);
+        _runeImage.enabled = true;
         _runeImage.sprite = rune.BaseRuneSO.RuneSprite;
         _coolTimeText.SetText(rune.BaseRuneSO.CoolTime.ToString());
         _descText.SetText(rune.BaseRuneSO.RuneDescription);
@@ -75,6 +87,7 @@ public class ExplainPanel : MonoBehaviour
         for (int i = 0; i < rune.KeywardList.Length; i++)
         {
             KeywardPanel panel = Managers.Resource.Instantiate("UI/KeywardPanel", _keywardArea).GetComponent<KeywardPanel>();
+            panel.transform.localScale = Vector3.one;
             panel.SetKeyward(Managers.Keyward.GetKeyward(rune.KeywardList[i]));
             _keywardPanelList.Add(panel);
         }

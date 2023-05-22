@@ -10,7 +10,7 @@ public class FirePunch : BaseRune
     }
     public override void AbilityAction()
     {
-        Managers.GetPlayer().Attack(GetAbliltiValaue(EffectType.Attack));
+        Managers.GetPlayer().Attack(GetAbliltiValaue(EffectType.Attack), IsIncludeKeyword(KeywordType.Penetration));
         BattleManager.Instance.Enemy.StatusManager.AddStatus(StatusName.Fire, 4);
     }
 

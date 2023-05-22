@@ -30,7 +30,7 @@ public class LobbyBGUI : MonoBehaviour
     private void Start()
     {
         _scrollSnap.OnSelectionPageChangedEvent.AddListener(ChangeIndex);
-        MoveSelectPanel(_scrollSnap.CurrentPage);
+        MoveSelectPanel(_scrollSnap.StartingScreen);
     }
 
     public void ChangeIndex(int index)
@@ -49,7 +49,7 @@ public class LobbyBGUI : MonoBehaviour
     [Obsolete]
     public void MoveBG(int leftRightToMain)
     {
-        _index = leftRightToMain;
+        //_index = leftRightToMain;
         _scrollSnap.ChangePage(leftRightToMain);
     }
 

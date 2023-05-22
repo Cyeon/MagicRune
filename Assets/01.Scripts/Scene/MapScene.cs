@@ -11,6 +11,9 @@ public class MapScene : BaseScene
 
     private UserInfoUI _userInfoUI;
 
+    [SerializeField]
+    private List<AudioClip> _bgmList = new List<AudioClip>(); 
+
     protected override void Init()
     {
         base.Init();
@@ -30,6 +33,10 @@ public class MapScene : BaseScene
 
         SceneType = Define.Scene.MapScene;
         Managers.Map.MapInit();
+
+        Managers.Sound.PlaySound(_bgmList[Managers.Map.Chapter - 1], SoundType.Bgm, true);
+
+        Managers.GetPlayer().SetUIActive(false);
     }
 
     public override void Clear()

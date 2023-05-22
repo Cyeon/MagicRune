@@ -12,7 +12,7 @@ public class GoldManager
 
     public void Init()
     {
-        _gold = 100;
+        ResetGoldAmount();
         
         UpdateGoldAction?.Invoke();
     }
@@ -21,5 +21,10 @@ public class GoldManager
     {
         _gold = Mathf.Clamp(_gold + amount, 0, int.MaxValue);
         UpdateGoldAction?.Invoke();
+    }
+
+    public void ResetGoldAmount()
+    {
+        _gold = 100;
     }
 }

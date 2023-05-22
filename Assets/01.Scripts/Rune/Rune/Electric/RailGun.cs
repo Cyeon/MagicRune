@@ -8,6 +8,7 @@ public class RailGun : BaseRune
     {
         _baseRuneSO = Managers.Resource.Load<BaseRuneSO>("SO/Rune/Electric/" + typeof(RailGun).Name);
     }
+
     public override bool AbilityCondition()
     {
         float statusValue = Managers.GetPlayer().StatusManager.GetStatusValue(StatusName.Recharging);
@@ -17,7 +18,7 @@ public class RailGun : BaseRune
 
     public override void AbilityAction()
     {
-        Managers.GetPlayer().Attack(GetAbliltiValaue(EffectType.Attack));
+        Managers.GetPlayer().Attack(GetAbliltiValaue(EffectType.Attack), IsIncludeKeyword(KeywordType.Penetration));
         Managers.GetPlayer().StatusManager.RemoveStatus(StatusName.Recharging, 10);
     }
 

@@ -131,6 +131,7 @@ public class RestDial : MonoBehaviour
     {
         GameObject effect = Managers.Resource.Instantiate("Effects/HealthParticle", Managers.Canvas.GetCanvas("Rest").transform);
         Managers.GetPlayer().AddHPPercent(25);
+        Managers.Sound.PlaySound("SFX/Healing", SoundType.Effect);
         yield return new WaitForSeconds(1.5f);
         _restUI.NextStage();
     }

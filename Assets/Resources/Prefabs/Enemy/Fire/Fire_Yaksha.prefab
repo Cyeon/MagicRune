@@ -50,11 +50,9 @@ MonoBehaviour:
   iconSize: {x: 1, y: 1, z: 1}
   desc: 
   isIncluding: 1
-  startPattern:
-  - {fileID: 7394207690442371198}
-  turnPattern: []
-  endPattern:
-  - {fileID: 7394207690442371198}
+  startPatternAction: []
+  turnPatternAction: []
+  endPatternAction: []
   transitions: []
 --- !u!114 &7394207690442371198
 MonoBehaviour:
@@ -118,10 +116,9 @@ MonoBehaviour:
   iconSize: {x: 1, y: 1, z: 1}
   desc: 5X4
   isIncluding: 1
-  startPattern: []
-  turnPattern:
-  - {fileID: 305205884266686413}
-  endPattern: []
+  startPatternAction: []
+  turnPatternAction: []
+  endPatternAction: []
   transitions: []
 --- !u!114 &305205884266686413
 MonoBehaviour:
@@ -187,10 +184,9 @@ MonoBehaviour:
   iconSize: {x: 1, y: 1, z: 1}
   desc: 10
   isIncluding: 1
-  startPattern: []
-  turnPattern:
-  - {fileID: 2551560772075343848}
-  endPattern: []
+  startPatternAction: []
+  turnPatternAction: []
+  endPatternAction: []
   transitions: []
 --- !u!114 &2551560772075343848
 MonoBehaviour:
@@ -237,6 +233,10 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: 240dee992873044498ef45b9bac0535b, type: 3}
+    - target: {fileID: 3535539594128554667, guid: f1a706a7f0436ee45869c5f1ea4fc0b1, type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3535539594408076956, guid: f1a706a7f0436ee45869c5f1ea4fc0b1, type: 3}
       propertyPath: m_Name
       value: Fire_Yaksha
@@ -304,6 +304,10 @@ PrefabInstance:
     - target: {fileID: 8949788419246248273, guid: f1a706a7f0436ee45869c5f1ea4fc0b1, type: 3}
       propertyPath: enemyName
       value: "\uBD88 \uC57C\uCC28"
+      objectReference: {fileID: 0}
+    - target: {fileID: 8949788419246248273, guid: f1a706a7f0436ee45869c5f1ea4fc0b1, type: 3}
+      propertyPath: enemyType
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8949788419246248273, guid: f1a706a7f0436ee45869c5f1ea4fc0b1, type: 3}
       propertyPath: _maxHealth

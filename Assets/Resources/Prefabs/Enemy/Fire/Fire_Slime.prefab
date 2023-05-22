@@ -47,13 +47,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   patternName: "\uD761\uC218"
   icon: {fileID: 21300000, guid: 6907bb716a4b54f478c2090c2d86b3e5, type: 3}
-  iconSize: {x: 1, y: 1, z: 1}
+  iconSize: {x: 0.5, y: 0.5, z: 1}
   desc: 
   isIncluding: 1
-  startPattern:
+  startPatternAction: []
+  turnPatternAction:
   - {fileID: 1318501583068510468}
-  turnPattern: []
-  endPattern: []
+  endPatternAction: []
   transitions: []
 --- !u!114 &1318501583068510468
 MonoBehaviour:
@@ -116,14 +116,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   patternName: "\uBC29\uCD9C"
-  icon: {fileID: 0}
-  iconSize: {x: 1, y: 1, z: 1}
+  icon: {fileID: 21300000, guid: 393c8c4ee07a4fa40ab37ad98e7288f3, type: 3}
+  iconSize: {x: 0.5, y: 0.5, z: 1}
   desc: 
   isIncluding: 1
-  startPattern: []
-  turnPattern:
+  startPatternAction: []
+  turnPatternAction:
   - {fileID: 9179320034245226693}
-  endPattern: []
+  endPatternAction: []
   transitions: []
 --- !u!114 &9179320034245226693
 MonoBehaviour:
@@ -185,14 +185,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   patternName: Attack&Defence
   icon: {fileID: 21300000, guid: c3caf916f86c3964b8774884d2fff514, type: 3}
-  iconSize: {x: 1, y: 1, z: 1}
+  iconSize: {x: 0.5, y: 0.5, z: 1}
   desc: 10
   isIncluding: 1
-  startPattern: []
-  turnPattern:
+  startPatternAction: []
+  turnPatternAction:
   - {fileID: 3066012335656631679}
   - {fileID: 8285775420851267876}
-  endPattern: []
+  endPatternAction: []
   transitions: []
 --- !u!114 &3066012335656631679
 MonoBehaviour:
@@ -252,6 +252,10 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: f54da2e6b49c25c439788be8b5f6bb27, type: 3}
+    - target: {fileID: 3535539594128554667, guid: f1a706a7f0436ee45869c5f1ea4fc0b1, type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3535539594408076956, guid: f1a706a7f0436ee45869c5f1ea4fc0b1, type: 3}
       propertyPath: m_Name
       value: Fire_Slime
@@ -319,6 +323,10 @@ PrefabInstance:
     - target: {fileID: 8949788419246248273, guid: f1a706a7f0436ee45869c5f1ea4fc0b1, type: 3}
       propertyPath: enemyName
       value: "\uBD88 \uC2AC\uB77C\uC784"
+      objectReference: {fileID: 0}
+    - target: {fileID: 8949788419246248273, guid: f1a706a7f0436ee45869c5f1ea4fc0b1, type: 3}
+      propertyPath: enemyType
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8949788419246248273, guid: f1a706a7f0436ee45869c5f1ea4fc0b1, type: 3}
       propertyPath: _maxHealth

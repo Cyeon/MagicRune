@@ -43,7 +43,7 @@ public class BaseRune : Item, ICloneable
     {
         get
         {
-            if(_baseRuneSO != null)
+            if (_baseRuneSO != null)
             {
                 return _baseRuneSO.RuneSprite;
             }
@@ -87,7 +87,7 @@ public class BaseRune : Item, ICloneable
     {
         _coolTime += value;
     }
-    
+
     public void SetIsUsing(bool value)
     {
         _isUsing = value;
@@ -95,13 +95,12 @@ public class BaseRune : Item, ICloneable
 
     public virtual bool AbilityCondition()
     {
-        Debug.Log("BaseRune Condition");
+        //Debug.Log("BaseRune Condition");
         return true;
     }
 
     public virtual void AbilityAction()
     {
-        Debug.Log("BaseRune Attack");
     }
 
     public float GetAbliltiValaue(EffectType type)
@@ -122,5 +121,10 @@ public class BaseRune : Item, ICloneable
     {
         BaseRune rune = new BaseRune();
         return rune;
+    }
+
+    public bool IsIncludeKeyword(KeywordType keyward)
+    {
+        return _baseRuneSO.KeywardList.Contains(keyward);
     }
 }

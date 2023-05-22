@@ -3,27 +3,30 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum KeywardType
+public enum KeywordType
 {
     None,
-    Charge,
-    Fire,
-    Impact,
-    Chilliness,
-    Ice
+    Charge, // 충전
+    Fire, // 화상 
+    Impact, // 충격 
+    Chilliness, // 한기
+    Ice, // 빙결 
+    Consume, // 소모 
+    Penetration, // 관통
+    Overheat, // 과열
 }
 
 [Serializable]
 public class Keyward
 {
     public string KeywardName;
-    public KeywardType TypeName;
+    public KeywordType TypeName;
     public string KeywardDescription;
 
     public Keyward()
     {
         KeywardName = "";
-        TypeName = KeywardType.None;
+        TypeName = KeywordType.None;
         KeywardDescription = "";
     }
 }

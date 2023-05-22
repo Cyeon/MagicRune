@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5736046982554988565}
   - component: {fileID: 5014004267170453785}
-  - component: {fileID: 5245228119652113654}
   - component: {fileID: 6624801315935031120}
   m_Layer: 0
   m_Name: Status_Chilliness
@@ -48,38 +47,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   debugName: "\uD55C\uAE30"
   statusName: 5
-  information: "\uACF5\uACA9\uB825\uC774 25% \uAC10\uC18C\uD569\uB2C8\uB2E4.\n5\uC2A4\uD0DD
-    \uC911\uCCA9 \uC2DC \uD55C\uAE30\uB97C \uBAA8\uB450 \uC0AD\uC81C\uD558\uACE0
-    \uBE59\uACB0\uC774 \uBD80\uC5EC\uB429\uB2C8\uB2E4."
+  information: "10\uC2A4\uD0DD \uC911\uCCA9 \uC2DC \uD55C\uAE30\uB97C \uBAA8\uB450
+    \uC0AD\uC81C\uD558\uACE0 \uBE59\uACB0\uC774 \uBD80\uC5EC\uB429\uB2C8\uB2E4."
   textColor: {r: 1, g: 1, b: 1, a: 1}
   type: 0
-  isTurnRemove: 1
+  isTurnRemove: 0
   OnAddStatus:
   - {fileID: 6624801315935031120}
   OnTurnStart: []
   OnAttack:
-  - {fileID: 5245228119652113654}
+  - {fileID: 0}
   OnGetDamage: []
   OnTurnEnd: []
   OnRemoveStatus: []
   icon: {fileID: 21300000, guid: 2df241202ecb59640a064b1fdd36365c, type: 3}
   color: {r: 1, g: 1, b: 1, a: 1}
+  sound: {fileID: 0}
   unit: {fileID: 0}
---- !u!114 &5245228119652113654
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8378743581122507794}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2cc6ca6799dc8b04cb8c236c78eb46ca, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  removeType: 1
-  _percent: 25
-  _value: 0
 --- !u!114 &6624801315935031120
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -93,5 +77,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _conditionStatus: 5
-  _conditionCount: 5
+  _conditionCount: 10
   _addStatus: 2
