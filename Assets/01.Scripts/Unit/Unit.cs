@@ -306,7 +306,7 @@ public class Unit : MonoBehaviour
             if(_shieldIcon.gameObject.activeSelf)
             {
                 _shieldIcon.gameObject.SetActive(false);
-                _shieldBar.localScale = Vector3.zero;
+                _shieldBar.DOScaleX(0, 0);
                 UpdateHealthUI();
             }
             return;
