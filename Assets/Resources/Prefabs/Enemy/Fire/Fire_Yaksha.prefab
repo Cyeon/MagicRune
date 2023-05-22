@@ -50,9 +50,11 @@ MonoBehaviour:
   iconSize: {x: 1, y: 1, z: 1}
   desc: 
   isIncluding: 1
-  startPatternAction: []
+  startPatternAction:
+  - {fileID: 7394207690442371198}
   turnPatternAction: []
-  endPatternAction: []
+  endPatternAction:
+  - {fileID: 7394207690442371198}
   transitions: []
 --- !u!114 &7394207690442371198
 MonoBehaviour:
@@ -117,7 +119,8 @@ MonoBehaviour:
   desc: 5X4
   isIncluding: 1
   startPatternAction: []
-  turnPatternAction: []
+  turnPatternAction:
+  - {fileID: 305205884266686413}
   endPatternAction: []
   transitions: []
 --- !u!114 &305205884266686413
@@ -185,7 +188,8 @@ MonoBehaviour:
   desc: 10
   isIncluding: 1
   startPatternAction: []
-  turnPatternAction: []
+  turnPatternAction:
+  - {fileID: 2551560772075343848}
   endPatternAction: []
   transitions: []
 --- !u!114 &2551560772075343848
