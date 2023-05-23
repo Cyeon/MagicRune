@@ -31,7 +31,7 @@ public class BattleManager : MonoSingleton<BattleManager>
     [SerializeField]
     private AudioClip _turnChangeSound = null;
 
-    private void Awake()
+    private void Start()
     {
         Managers.UI.Bind<Image>("Background", Managers.Canvas.GetCanvas("BG").gameObject);
         BattleStart();
@@ -45,7 +45,7 @@ public class BattleManager : MonoSingleton<BattleManager>
     public void BattleStart()
     {
         Managers.UI.Get<Image>("Background").sprite = Managers.Map.CurrentChapter.background;
-
+        
         Managers.Enemy.BattleSetting();
 
         Player.StatusManager.Reset();
@@ -184,7 +184,7 @@ public class BattleManager : MonoSingleton<BattleManager>
     }
 
     /// <summary>
-    /// 미사일 공격이 끝날떄 발동되는 함수 (모든 공격이 다 들어간 후에 턴이 체인지 되도록 만듬)
+    /// 誘몄궗??怨듦꺽???앸궇??諛쒕룞?섎뒗 ?⑥닔 (紐⑤뱺 怨듦꺽?????ㅼ뼱媛??꾩뿉 ?댁씠 泥댁씤吏 ?섎룄濡?留뚮벉)
     /// </summary>
     public void MissileAttackEnd()
     {

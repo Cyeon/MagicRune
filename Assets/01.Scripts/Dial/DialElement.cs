@@ -14,8 +14,8 @@ public enum DialState
 /// <summary>
 /// 
 /// </summary>
-/// <typeparam name="T1">???깅턄?????六??怨쀬Ŧ ???깅굵 嶺뚮ㅄ維?洹〓쑏熬곥굥???????ex) BaseRuneUI</typeparam>
-/// <typeparam name="T2">T1????⑥щ턄??ex) BaseRune</typeparam>
+/// <typeparam name="T1">???源낇꼧?????筌???⑥?????源낃도 癲ル슢?꾤땟??域밤볦몡?ш낄援???????ex) BaseRuneUI</typeparam>
+/// <typeparam name="T2">T1?????Β????ex) BaseRune</typeparam>
 public class DialElement<T1, T2> : MonoBehaviour where T1 : MonoBehaviour where T2 : class
 {
     protected Dial<T1, T2> _dial;
@@ -91,8 +91,8 @@ public class DialElement<T1, T2> : MonoBehaviour where T1 : MonoBehaviour where 
         }
     }
 
-    protected bool _isAttackCondition = true;
-    protected bool _isRotateAdditionalCondition = true;
+    protected virtual bool _isAttackCondition { get; }
+    protected virtual bool _isRotateAdditionalCondition { get; }
 
     public Action OnSelectElementAction = null;
 

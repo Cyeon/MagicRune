@@ -26,7 +26,7 @@ public class RuneStarPanel : StarPanel<BaseRuneUI, BaseRune>
 
                 Vector2 touchDif = (touch.position - Managers.Swipe.TouchBeganPos);
 
-                int count = (int)(Mathf.Abs(Managers.Swipe.TouchDif.y) / (Managers.Swipe.SwipeSensitivity / 3));
+                int count = (int)(Mathf.Abs(touchDif.y) / (Managers.Swipe.SwipeSensitivity / 3));
                 count = Mathf.Min(count, 3);
 
                 for (int i = 0; i < 3; i++)

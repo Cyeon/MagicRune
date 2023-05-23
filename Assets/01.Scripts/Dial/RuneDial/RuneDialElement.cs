@@ -11,8 +11,6 @@ public class RuneDialElement : DialElement<BaseRuneUI, BaseRune>
     {
         get
         {
-            //if (_selectCard == null)
-            //    _selectCard = _runeList[0];
             return _selectElement;
         }
         set
@@ -44,15 +42,15 @@ public class RuneDialElement : DialElement<BaseRuneUI, BaseRune>
         }
     }
 
+    protected override bool _isAttackCondition => BattleManager.Instance.Enemy.IsDie == false && _selectElement != null;
+    protected override bool _isRotateAdditionalCondition => BattleManager.Instance.IsPlayerTurn();
+
     protected override void Start()
     {
         base.Start();
 
         OnSelectElementAction -= () => Define.DialScene?.CardDescPopup(SelectElement == null ? null : SelectElement.Rune);
         OnSelectElementAction += () => Define.DialScene?.CardDescPopup(SelectElement == null ? null : SelectElement.Rune);
-
-        _isAttackCondition = BattleManager.Instance.Enemy.IsDie == false && _selectElement != null;
-        _isRotateAdditionalCondition = BattleManager.Instance.IsPlayerTurn();
     }
 
     protected override void ChangeSelectElement(int index)
