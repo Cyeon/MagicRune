@@ -14,8 +14,8 @@ public enum DialState
 /// <summary>
 /// 
 /// </summary>
-/// <typeparam name="T1">???源낇꼧?????筌???⑥?????源낃도 癲ル슢?꾤땟??域밤볦몡?ш낄援???????ex) BaseRuneUI</typeparam>
-/// <typeparam name="T2">T1?????Β????ex) BaseRune</typeparam>
+/// <typeparam name="T1">???繹먮굟瑗?????嶺????Β?????繹먮굛???꿔꺂??袁ㅻ븶???잙갇?蹂?ぁ???꾣뤃???????ex) BaseRuneUI</typeparam>
+/// <typeparam name="T2">T1???????????ex) BaseRune</typeparam>
 public class DialElement<T1, T2> : MonoBehaviour where T1 : MonoBehaviour where T2 : class
 {
     protected Dial<T1, T2> _dial;
@@ -34,10 +34,10 @@ public class DialElement<T1, T2> : MonoBehaviour where T1 : MonoBehaviour where 
     protected bool _isUseRotateOffset;
 
     [SerializeField]
-    private float _inDistance;
+    protected float _inDistance;
     public float InDistance => _inDistance;
     [SerializeField]
-    private float _outDistance;
+    protected float _outDistance;
     public float OutDistance => _outDistance;
     #endregion
 
@@ -91,10 +91,8 @@ public class DialElement<T1, T2> : MonoBehaviour where T1 : MonoBehaviour where 
         }
     }
 
-    protected virtual bool _isAttackCondition { get; }
-    protected virtual bool _isRotateAdditionalCondition { get; }
-
-    public Action OnSelectElementAction = null;
+    protected virtual bool _isAttackCondition { get; } = true;
+    protected virtual bool _isRotateAdditionalCondition { get; } = true;
 
     protected virtual void Awake()
     {
@@ -237,10 +235,7 @@ public class DialElement<T1, T2> : MonoBehaviour where T1 : MonoBehaviour where 
                 ChangeSelectElement(-1);
                 if (_isTouchDown == true)
                 {
-                    // SelectElement == null ? null : SelectElement.Rune
-                    OnSelectElementAction?.Invoke();
-                    //BaseRune rune = SelectElement == null ? null : SelectElement.Rune;
-                    //Define.DialScene?.CardDescPopup(SelectElement == null ? null : SelectElement.Rune);
+                    OnSelectElementAction();
                 }
             }
         }
@@ -358,7 +353,7 @@ public class DialElement<T1, T2> : MonoBehaviour where T1 : MonoBehaviour where 
                     {
                         if (_selectElement != null)
                         {
-                            OnSelectElementAction?.Invoke();
+                            OnSelectElementAction();
                             //Define.DialScene?.CardDescPopup(_selectElement.Rune);
                         }
                     });
@@ -376,7 +371,7 @@ public class DialElement<T1, T2> : MonoBehaviour where T1 : MonoBehaviour where 
                     {
                         if (_selectElement != null)
                         {
-                            OnSelectElementAction?.Invoke();
+                            OnSelectElementAction();
                             //Define.DialScene?.CardDescPopup(_selectElement.Rune);
                         }
                     });
@@ -395,7 +390,7 @@ public class DialElement<T1, T2> : MonoBehaviour where T1 : MonoBehaviour where 
                         {
                             if (_selectElement != null)
                             {
-                                OnSelectElementAction?.Invoke();
+                                OnSelectElementAction();
                                 //Define.DialScene?.CardDescPopup(_selectElement.Rune);
                             }
                         });
@@ -408,13 +403,18 @@ public class DialElement<T1, T2> : MonoBehaviour where T1 : MonoBehaviour where 
 
                             if (_selectElement != null)
                             {
-                                OnSelectElementAction?.Invoke();
+                                OnSelectElementAction();
                                 //Define.DialScene?.CardDescPopup(_selectElement.Rune);
                             }
                         });
                 }
             }
         }
+    }
+
+    protected virtual void OnSelectElementAction()
+    {
+
     }
 
     public void ElementListSort()

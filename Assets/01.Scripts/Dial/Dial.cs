@@ -7,8 +7,8 @@ using UnityEngine;
 /// <summary>
 /// 
 /// </summary>
-/// <typeparam name="T1">???깅턄?????六??怨쀬Ŧ ???깅굵 嶺뚮ㅄ維?洹〓쑏熬곥굥???????ex) BaseRuneUI</typeparam>
-/// <typeparam name="T2">T1????⑥щ턄??ex) BaseRune</typeparam>
+/// <typeparam name="T1">???源낇꼧?????筌???⑥?????源낃도 癲ル슢?꾤땟??域밤볦몡?ш낄援???????ex) BaseRuneUI</typeparam>
+/// <typeparam name="T2">T1?????Β????ex) BaseRune</typeparam>
 public class Dial<T1, T2> : MonoBehaviour where T1 : MonoBehaviour where T2 : class
 {
     #region Rotate Parameta
@@ -174,7 +174,7 @@ public class Dial<T1, T2> : MonoBehaviour where T1 : MonoBehaviour where T2 : cl
                 case TouchPhase.Moved:
                     float distance = Mathf.Abs(Vector2.Distance(transform.position, Define.MainCam.ScreenToWorldPoint(touch.position)));
 
-                    // ??됱뇚筌ｌ꼶????곷튊????
+                    // ???깅뇶嶺뚳퐣瑗????怨룻뒍????
                     if (_dialElementList[2].InDistance <= distance)
                     {
                         for (int i = _dialElementList.Count - 1; i >= 0; i--)
@@ -446,7 +446,7 @@ public class Dial<T1, T2> : MonoBehaviour where T1 : MonoBehaviour where T2 : cl
     }
 
 
-    public void Attack()
+    public virtual void Attack()
     {
         if (MagicEmpty() == true) return;
 

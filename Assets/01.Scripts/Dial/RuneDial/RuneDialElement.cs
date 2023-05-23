@@ -45,14 +45,6 @@ public class RuneDialElement : DialElement<BaseRuneUI, BaseRune>
     protected override bool _isAttackCondition => BattleManager.Instance.Enemy.IsDie == false && _selectElement != null;
     protected override bool _isRotateAdditionalCondition => BattleManager.Instance.IsPlayerTurn();
 
-    protected override void Start()
-    {
-        base.Start();
-
-        OnSelectElementAction -= () => Define.DialScene?.CardDescPopup(SelectElement == null ? null : SelectElement.Rune);
-        OnSelectElementAction += () => Define.DialScene?.CardDescPopup(SelectElement == null ? null : SelectElement.Rune);
-    }
-
     protected override void ChangeSelectElement(int index)
     {
         if (index == -1)
@@ -69,12 +61,17 @@ public class RuneDialElement : DialElement<BaseRuneUI, BaseRune>
                 {
                     if (_selectElement != null)
                     {
-                        OnSelectElementAction?.Invoke();
+                        OnSelectElementAction();
                         //Define.DialScene?.CardDescPopup(_selectElement.Rune);
                     }
                 }
             }
         }
+    }
+
+    protected override void OnSelectElementAction()
+    {
+        Define.DialScene?.CardDescPopup(SelectElement == null ? null : SelectElement.Rune);
     }
 
     public override void Attack()

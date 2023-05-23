@@ -6,79 +6,32 @@ using UnityEngine;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
-public class RestDial : MonoBehaviour
+public class RestDial : Dial<RestRuneUI, RestRuneUI>
 {
-    #region Rotate Parameta
-    [SerializeField]
-    private int _maxRuneCount = 3;
-    [SerializeField, Range(90f, 360f)]
-    private float _runeAngle = 180f;
-    public float RuneAngle => _runeAngle;
-    [SerializeField, Range(0f, 360f)]
-    private float _startAngle = 180;
-    public float StartAngle => _startAngle;
-    #endregion
-
-    #region Rune Parameta
-    [SerializeField]
-    private int _copyCount = 2;
-
-    [SerializeField]
-    private float[] _lineDistanceArray = new float[3];
-    public float[] LineDistanceArray => _lineDistanceArray;
-    #endregion
-
-    #region Rune Container
-    private Dictionary<int, List<RestRuneUI>> _runeDict;
-    private List<RestDialElement> _dialElementList;
-    public List<RestDialElement> DialElementList => _dialElementList;
-
-    #endregion
-
     [SerializeField]
     private Sprite[] _restSpriteArray = new Sprite[3];
-
-    private bool _isAttack;
 
     private RestUI _restUI;
 
     [SerializeField]
     private TextMeshProUGUI _descText;
 
-    private void Awake()
+    protected override void Start()
     {
-        #region Initialization 
+        base.Start();
 
-        _runeDict = new Dictionary<int, List<RestRuneUI>>(3);
-        for (int i = 1; i <= _lineDistanceArray.Length; i++)
-        {
-            _runeDict.Add(i, new List<RestRuneUI>());
-        }
-        _dialElementList = new List<RestDialElement>();
-        #endregion
-
-        _isAttack = false;
+        _restUI = Managers.Canvas.GetCanvas("Rest").GetComponent<RestUI>();
     }
 
-    private void Start()
+    public override void SettingDialRune(bool isReset)
     {
-        _restUI = Managers.Canvas.GetCanvas("Rest").GetComponent<RestUI>();
-
-        for (int i = 0; i < _lineDistanceArray.Length; i++)
-        {
-            RestDialElement d = this.transform.GetChild(i).GetComponent<RestDialElement>();
-            d.SetLineID(_lineDistanceArray.Length - i);
-
-            _dialElementList.Add(d);
-        }
-
         RestRuneUI restRune = Managers.Resource.Instantiate("Rune/" + typeof(RestRuneUI).Name, _dialElementList[0].transform).GetComponent<RestRuneUI>();
         restRune.transform.localScale = new Vector3(0.1f, 0.1f, 1f);
         restRune.SetInfo(_restSpriteArray[1], () =>
         {
-            // È¸º¹
+            // íšŒë³µ
             StartCoroutine(RestActionCoroutine());
-        }, "ÃÖ´ë Ã¼·ÂÀÇ\n25%¸¦ È¸º¹ÇÑ´Ù.");
+        }, "ìµœëŒ€ ì²´ë ¥ì˜\n25%ë¥¼ íšŒë³µí•œë‹¤.");
         _dialElementList[0].AddRuneList(restRune);
         AddCard(restRune, 3);
 
@@ -86,12 +39,12 @@ public class RestDial : MonoBehaviour
         enhanceRune1.transform.localScale = new Vector3(0.1f, 0.1f, 1f);
         enhanceRune1.SetInfo(_restSpriteArray[0], () =>
         {
-            // ±ëÈ¸ 1
-            // ¸Â´Â UI ¶ç¿ö¤ÃÁÖ±â
+            // ê¹…íšŒ 1
+            // ë§ëŠ” UI ë„ì›Œã…“ì£¼ê¸°
             PopupText text = Managers.Resource.Instantiate("UI/PopupText").GetComponent<PopupText>();
-            text.SetText("°³¹ß ÁßÀÎ ±â´ÉÀÔ´Ï´Ù.");
-            Debug.Log("°­È­1");
-        }, "°°Àº µî±ŞÀÇ\n´Ù¸¥ ·éÀ¸·Î ¹Ù²Û´Ù.");
+            text.SetText("ê°œë°œ ì¤‘ì¸ ê¸°ëŠ¥ì…ë‹ˆë‹¤.");
+            Debug.Log("ê°•í™”1");
+        }, "ê°™ì€ ë“±ê¸‰ì˜\në‹¤ë¥¸ ë£¬ìœ¼ë¡œ ë°”ê¾¼ë‹¤.");
         _dialElementList[0].AddRuneList(enhanceRune1);
         AddCard(enhanceRune1, 3);
 
@@ -99,17 +52,17 @@ public class RestDial : MonoBehaviour
         enhanceRune2.transform.localScale = new Vector3(0.1f, 0.1f, 1f);
         enhanceRune2.SetInfo(_restSpriteArray[2], () =>
         {
-            // ±ëÈ¸ 2
-            // ¸Â´Â UI ¶ç¿ö¤ÃÁÖ±â
-            Debug.Log("°­È­2");
+            // ê¹…íšŒ 2
+            // ë§ëŠ” UI ë„ì›Œã…“ì£¼ê¸°
+            Debug.Log("ê°•í™”2");
             PopupText text = Managers.Resource.Instantiate("UI/PopupText").GetComponent<PopupText>();
-            text.SetText("°³¹ß ÁßÀÎ ±â´ÉÀÔ´Ï´Ù.");
-        }, "¿©·¯°³ÀÇ ·éÀ» ¹ÙÃÄ\n´õ ³ôÀº µî±ŞÀÇ\n·éÀ» ¾ò´Â´Ù.");
+            text.SetText("ê°œë°œ ì¤‘ì¸ ê¸°ëŠ¥ì…ë‹ˆë‹¤.");
+        }, "ì—¬ëŸ¬ê°œì˜ ë£¬ì„ ë°”ì³\në” ë†’ì€ ë“±ê¸‰ì˜\në£¬ì„ ì–»ëŠ”ë‹¤.");
         _dialElementList[0].AddRuneList(enhanceRune2);
         AddCard(enhanceRune2, 3);
 
         #region COPY
-        for(int i = 0; i < _restSpriteArray.Length; i++)
+        for (int i = 0; i < _restSpriteArray.Length; i++)
         {
             RestRuneUI rune = Managers.Resource.Instantiate("Rune/" + typeof(RestRuneUI).Name, _dialElementList[0].transform).GetComponent<RestRuneUI>();
             rune.transform.localScale = new Vector3(0.1f, 0.1f, 1f);
@@ -136,136 +89,29 @@ public class RestDial : MonoBehaviour
         _restUI.NextStage();
     }
 
-    public void AddCard(RestRuneUI card, int tier)
-    {
-        if (card != null)
-        {
-            if (_runeDict.ContainsKey(tier))
-            {
-                _runeDict[tier].Add(card);
-            }
-            else
-            {
-                _runeDict.Add(tier, new List<RestRuneUI> { card });
-            }
-
-            RuneSort();
-        }
-    }
-
-    private void RuneSort()
-    {
-        for (int i = 1; i <= 3; i++)
-        {
-            LineCardSort(i);
-        }
-    }
-
-    public void LineCardSort(int line)
-    {
-        if (_runeDict.ContainsKey(line))
-        {
-            float angle = -1 * _runeAngle / _runeDict[line].Count * Mathf.Deg2Rad;
-
-            for (int i = 0; i < _runeDict[line].Count; i++)
-            {
-                float radianValue = angle * i + (_startAngle * Mathf.Deg2Rad);
-
-                float height = Mathf.Sin(radianValue) * _lineDistanceArray[3 - line];
-                float width = Mathf.Cos(radianValue) * _lineDistanceArray[3 - line];
-                _runeDict[line][i].transform.position = new Vector3(width + this.transform.position.x, height + this.transform.position.y, 0);
-
-                Vector2 direction = new Vector2(
-                    _runeDict[line][i].transform.position.x - transform.position.x,
-                    _runeDict[line][i].transform.position.y - transform.position.y
-                );
-
-                float ang = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-                Quaternion angleAxis = Quaternion.AngleAxis(ang - 90f, Vector3.forward);
-                _runeDict[line][i].transform.rotation = angleAxis;
-            }
-        }
-    }
-
     public void Clear()
     {
         for(int i = 0; i < _runeDict[3].Count; i++)
         {
             Managers.Resource.Destroy(_runeDict[3][i].gameObject);
         }
-        _dialElementList[0].SelectCard = null;
-        _dialElementList[0].Clear();
+        _dialElementList[0].SelectElement = null;
+        _dialElementList.Clear();
         _runeDict.Clear();
     }
 
-    public void ResetDial()
+    public override void Attack()
     {
-        for (int i = 0; i < _dialElementList.Count; i++)
-        {
-            _dialElementList[i].transform.eulerAngles = Vector3.zero;
-        }
-    }
-
-    public void PanelUI()
-    {
-
-    }
-
-    public void AllMagicActive(bool value)
-    {
-        for (int i = 1; i <= 3; i++)
-        {
-            if (_runeDict.ContainsKey(i))
-            {
-                for (int j = 0; j < _runeDict[i].Count; j++)
-                {
-                    _runeDict[3][j].gameObject.SetActive(false);
-                }
-            }
-        }
-    }
-
-    public void MagicCircleGlow(int index, bool value)
-    {
-        _dialElementList[index].IsGlow = value;
-    }
-
-    public bool MagicEmpty()
-    {
-        return _dialElementList[0].SelectCard == null && _dialElementList[1].SelectCard == null && _dialElementList[2].SelectCard == null;
-    }
-
-    public void Attack()
-    {
-        if (_dialElementList[0].SelectCard == null) return;
+        if (_dialElementList[0].SelectElement == null) return;
 
         if (_isAttack == true) return;
         _isAttack = true;
 
         Define.DialScene?.CardDescDown();
 
-        _dialElementList[0].SelectCard.ClickAction()?.Invoke();
+        _dialElementList[0].SelectElement.ClickAction()?.Invoke();
+
+        AllMagicCircleGlow(false);
         _isAttack = false;
     }
-
-    public void AllMagicCircleGlow(bool value)
-    {
-        for (int i = 0; i < _dialElementList.Count; i++)
-        {
-            _dialElementList[i].IsGlow = value;
-        }
-    }
-
-    //public void AllMagicSetCoolTime()
-    //{
-    //    Debug.Log("ÄğÅ¸ÀÓ °¨¼Ò");
-
-    //    for (int i = 0; i < _cooltimeDeck.Count; i++)
-    //    {
-    //        if (_cooltimeDeck[i].IsCoolTime == true)
-    //        {
-    //            _cooltimeDeck[i].AddCoolTime(-1);
-    //        }
-    //    }
-    //}
 }
