@@ -6,6 +6,14 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
+public enum StatusSoundType
+{
+    None,
+    Main,
+    Positive,
+    Negative 
+}
+
 public enum StatusType
 {
     Stack,
@@ -65,6 +73,7 @@ public class Status : MonoBehaviour
     [Header("Resource")]
     [ShowAssetPreview(32, 32)] public Sprite icon;
     public Color color = Color.white;
+    public StatusSoundType statusSoundType = StatusSoundType.None;
     public AudioClip sound = null;
     [HideInInspector] public Unit unit;
 

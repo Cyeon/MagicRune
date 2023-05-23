@@ -44,10 +44,21 @@ public class StatusManager
             _statusList.Add(status);
         }
 
-        if (status.sound == null)
-            Managers.Sound.PlaySound("SFX/State", SoundType.Effect);
-        else
-            Managers.Sound.PlaySound(status.sound, SoundType.Effect);
+        switch (status.statusSoundType)
+        {
+            case StatusSoundType.Main:
+                Managers.Sound.PlaySound(status.sound, SoundType.Effect);
+                break;
+            case StatusSoundType.Positive:
+                Managers.Sound.PlaySound("SFX/PositiveStatusSound", SoundType.Effect);
+                break;
+            case StatusSoundType.Negative:
+                Managers.Sound.PlaySound("SFX/NegativeStatusSound", SoundType.Effect);
+                break;
+            case StatusSoundType.None:
+            default:
+                break;
+        }
 
         if (status.OnAddStatus.Count > 0)
             status.OnAddStatus.ForEach(x => x.Invoke());
