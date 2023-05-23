@@ -47,13 +47,16 @@ public class StatusManager
         switch (status.statusSoundType)
         {
             case StatusSoundType.Main:
-                Managers.Sound.PlaySound(status.sound, SoundType.Effect);
+                if (status.sound != null)
+                    Managers.Sound.PlaySound(status.sound, SoundType.Effect);
+                else
+                    Debug.LogError($"{status.statusName}'s AudioClip is NULL");
                 break;
             case StatusSoundType.Positive:
-                Managers.Sound.PlaySound("SFX/PositiveStatusSound", SoundType.Effect);
+                Managers.Sound.PlaySound("SFX/PositiveStatus", SoundType.Effect);
                 break;
             case StatusSoundType.Negative:
-                Managers.Sound.PlaySound("SFX/NegativeStatusSound", SoundType.Effect);
+                Managers.Sound.PlaySound("SFX/NegativeStatus", SoundType.Effect);
                 break;
             case StatusSoundType.None:
             default:
