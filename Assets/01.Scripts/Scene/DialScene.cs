@@ -1,4 +1,5 @@
 using DG.Tweening;
+using MyBox;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -14,19 +15,24 @@ public class DialScene : BaseScene
     private Dial _dial;
     public Dial Dial => _dial;
 
+    // 카드 설명 패널
     [SerializeField]
     private ExplainPanel _cardDescPanel = null;
 
+    // 상태이상 설명 패널
     [SerializeField]
     private GameObject _statusDescPanel;
-    private TextMeshPro _statusDescName;
-    private TextMeshPro _statusDescInfo;
+    private TextMeshProUGUI _statusDescName;
+    private TextMeshProUGUI _statusDescInfo;
+    private RectTransform _statusDescPanelRectTrm;
 
+    // 전투 후 보상
     [SerializeField]
     private RewardUI _rewardUI;
     public RewardUI RewardUI => _rewardUI;
     private ChooseRuneUI _chooseRuneUI;
 
+    // 유저 상단바
     private UserInfoUI _userInfoUI;
 
     protected override void Init()
@@ -46,8 +52,8 @@ public class DialScene : BaseScene
         Managers.UI.Bind<Button>("Restart Btn", Managers.Canvas.GetCanvas("Popup").gameObject);
         Managers.UI.Bind<Button>("Quit Btn", Managers.Canvas.GetCanvas("Popup").gameObject);
 
-        Managers.UI.Bind<TextMeshPro>("Status_Name_Text", Managers.Canvas.GetCanvas("Popup").gameObject);
-        Managers.UI.Bind<TextMeshPro>("Status_Infomation_Text", Managers.Canvas.GetCanvas("Popup").gameObject);
+        Managers.UI.Bind<TextMeshProUGUI>("Status_Name_Text", Managers.Canvas.GetCanvas("Popup").gameObject);
+        Managers.UI.Bind<TextMeshProUGUI>("Status_Desc_Text", Managers.Canvas.GetCanvas("Popup").gameObject);
 
         Managers.UI.Bind<ChooseRuneUI>("ChooseRuneUI", Managers.Canvas.GetCanvas("Popup").gameObject);
 
@@ -55,8 +61,9 @@ public class DialScene : BaseScene
 
         #endregion
 
-        _statusDescName = Managers.UI.Get<TextMeshPro>("Status_Name_Text");
-        _statusDescInfo = Managers.UI.Get<TextMeshPro>("Status_Infomation_Text");
+        _statusDescPanelRectTrm = _statusDescPanel.transform.Find("Panel").GetComponent<RectTransform>();
+        _statusDescName = Managers.UI.Get<TextMeshProUGUI>("Status_Name_Text");
+        _statusDescInfo = Managers.UI.Get<TextMeshProUGUI>("Status_Desc_Text");
 
         _chooseRuneUI = Managers.UI.Get<ChooseRuneUI>("ChooseRuneUI").GetComponent<ChooseRuneUI>();
 
@@ -293,20 +300,28 @@ public class DialScene : BaseScene
         //_cardDescPanel.SetActive(false);
     }
 
-    public void StatusDescPopup(Status status, Vector3 pos, bool isDown = true)
+    public void StatusDescPopup(Status status, Vector3 pos)
     {
-        if (isDown == false)
-        {
-            _statusDescPanel.SetActive(false);
-            return;
-        }
-
         _statusDescPanel.SetActive(true);
-        _statusDescPanel.transform.position = pos + new Vector3(0, 2, 0);
+        _statusDescPanel.transform.position = pos + new Vector3(0, 20, 0);
         _statusDescPanel.transform.DOMoveZ(-1, 0);
+
+        if (pos.x < Screen.width / 2 && _statusDescPanelRectTrm.localPosition.x < 0)
+        {
+            _statusDescPanelRectTrm.DOLocalMoveX(-_statusDescPanelRectTrm.localPosition.x, 0);
+        }
+        else if(pos.x >= Screen.width / 2 && _statusDescPanelRectTrm.localPosition.x > 0)
+        {
+            _statusDescPanelRectTrm.DOLocalMoveX(-_statusDescPanelRectTrm.localPosition.x, 0);
+        }
 
         _statusDescName.text = status.debugName;
         _statusDescInfo.text = status.information;
+    }
+
+    public void CloseStatusDescPanel()
+    {
+        _statusDescPanel.SetActive(false);
     }
 
     #endregion
