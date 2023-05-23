@@ -125,5 +125,13 @@ public class SwipeManager
     public void Clear()
     {
         _swipeDict.Clear();
+
+        if (_swipeDict == null || _swipeDict.Count == 0)
+        {
+            for (int i = 0; i < (int)SwipeType.MAX_COUNT; i++)
+            {
+                _swipeDict.Add((SwipeType)i, null);
+            }
+        }
     }
 }

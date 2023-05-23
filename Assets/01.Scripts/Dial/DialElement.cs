@@ -14,8 +14,8 @@ public enum DialState
 /// <summary>
 /// 
 /// </summary>
-/// <typeparam name="T1">??쇱뵠???癒?뻼??곗쨮 ??됱뱽 筌뤴뫀?귡뜮袁る엘?????ex) BaseRuneUI</typeparam>
-/// <typeparam name="T2">T1???怨쀬뵠??ex) BaseRune</typeparam>
+/// <typeparam name="T1">???깅턄?????六??怨쀬Ŧ ???깅굵 嶺뚮ㅄ維?洹〓쑏熬곥굥???????ex) BaseRuneUI</typeparam>
+/// <typeparam name="T2">T1????⑥щ턄??ex) BaseRune</typeparam>
 public class DialElement<T1, T2> : MonoBehaviour where T1 : MonoBehaviour where T2 : class
 {
     protected Dial<T1, T2> _dial;
@@ -103,6 +103,12 @@ public class DialElement<T1, T2> : MonoBehaviour where T1 : MonoBehaviour where 
         _textSpriteRenderer = transform.Find("TextVisualSprite").GetComponent<SpriteRenderer>();
         _elementList = new List<T1>();
 
+        transform.rotation = Quaternion.Euler(Vector3.zero);
+        IsGlow = false;
+    }
+
+    protected virtual void Start()
+    {
         #region Add Event
         Managers.Swipe.AddAction(SwipeType.TouchBegan, (touch) =>
         {
@@ -148,12 +154,6 @@ public class DialElement<T1, T2> : MonoBehaviour where T1 : MonoBehaviour where 
             }
         });
         #endregion
-    }
-
-    protected virtual void Start()
-    {
-        transform.rotation = Quaternion.Euler(Vector3.zero);
-        IsGlow = false;
     }
 
     protected virtual void Update()

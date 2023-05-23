@@ -23,35 +23,36 @@ public class RuneDialElement : DialElement<BaseRuneUI, BaseRune>
                 {
                     //_selectCard.SetActiveOutline(OutlineType.Default);
                     _selectElement.RuneColor(new Color(0.26f, 0.26f, 0.26f, 1f));
-                    _selectElement = value;
                 }
-                else
-                {
-                    if (_selectElement != null)
-                    {
-                        //_selectCard.SetActiveOutline(OutlineType.Default);
-                        _selectElement.RuneColor(new Color(0.26f, 0.26f, 0.26f, 1f));
-                    }
-
-                    _selectElement = value;
-
-                    //_selectElement.SetActiveOutline(OutlineType.Cyan);
-                    _selectElement.RuneColor(Color.white);
-
-                }
-                _selectIndex = _elementList.FindIndex(x => x == _selectElement);
-                (_dial as RuneDial).CheckResonance();
+                _selectElement = value;
             }
+            else
+            {
+                if (_selectElement != null)
+                {
+                    //_selectCard.SetActiveOutline(OutlineType.Default);
+                    _selectElement.RuneColor(new Color(0.26f, 0.26f, 0.26f, 1f));
+                }
+
+                _selectElement = value;
+                
+                //_selectCard.SetActiveOutline(OutlineType.Cyan);
+                _selectElement.RuneColor(Color.white);
+
+            }
+            (_dial as RuneDial).CheckResonance();
         }
     }
 
-    protected override void Awake()
+    protected override void Start()
     {
-        base.Awake();
-        _isAttackCondition = BattleManager.Instance.Enemy.IsDie == false && _selectElement != null;
-        _isRotateAdditionalCondition = BattleManager.Instance.IsPlayerTurn();
+        base.Start();
+
         OnSelectElementAction -= () => Define.DialScene?.CardDescPopup(SelectElement == null ? null : SelectElement.Rune);
         OnSelectElementAction += () => Define.DialScene?.CardDescPopup(SelectElement == null ? null : SelectElement.Rune);
+
+        _isAttackCondition = BattleManager.Instance.Enemy.IsDie == false && _selectElement != null;
+        _isRotateAdditionalCondition = BattleManager.Instance.IsPlayerTurn();
     }
 
     protected override void ChangeSelectElement(int index)

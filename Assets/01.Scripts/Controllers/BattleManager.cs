@@ -1,4 +1,4 @@
-﻿using DG.Tweening;
+using DG.Tweening;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -31,7 +31,7 @@ public class BattleManager : MonoSingleton<BattleManager>
     [SerializeField]
     private AudioClip _turnChangeSound = null;
 
-    private void Start()
+    private void Awake()
     {
         Managers.UI.Bind<Image>("Background", Managers.Canvas.GetCanvas("BG").gameObject);
         BattleStart();
