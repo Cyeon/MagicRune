@@ -50,7 +50,7 @@ public class RuneStarPanel : StarPanel<BaseRuneUI, BaseRune>
         });
         Managers.Swipe.AddAction(SwipeType.UpSwipe, (touch) =>
         {
-            float distance = Vector2.Distance(Define.MainCam.ScreenToWorldPoint(Managers.Swipe.TouchBeganPos), (Vector2)transform.position);
+            float distance = Vector2.Distance(Define.MainCam.ScreenToWorldPoint(Managers.Swipe.TouchBeganPos), (Vector2)this.transform.position);
             if (distance >= _inDistance && distance <= _outDistance)
             {
                 _dial.Attack();

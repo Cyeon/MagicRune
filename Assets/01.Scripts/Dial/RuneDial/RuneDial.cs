@@ -11,14 +11,14 @@ using Random = UnityEngine.Random;
 
 public class RuneDial : Dial<BaseRuneUI, BaseRune>
 {
+    protected override bool _isAttackCondition => BattleManager.Instance.GameTurn == GameTurn.Player;
+
     private Resonance _resonance;
 
     protected override void Awake()
     {
         base.Awake();
         _resonance = GetComponent<Resonance>();
-
-        _isAttackCondition = BattleManager.Instance.GameTurn == GameTurn.Player;
     }
 
     public override void SettingDialRune(bool isReset)
