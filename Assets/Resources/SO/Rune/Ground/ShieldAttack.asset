@@ -14,8 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   RuneName: "\uBC29\uC5B4 \uD0C0\uACA9"
   RuneSprite: {fileID: 21300000, guid: f60b5dcde7344524e96c42649a92cc5e, type: 3}
-  RuneDescription: "5\uBC29\uC5B4\uB97C \uD68D\uB4DD\uD558\uACE0, 1\uCDA9\uACA9\uC744
-    \uBD80\uC5EC\uD55C\uB2E4."
+  _runeDescription: "(def)\uB97C \uD68D\uB4DD\uD558\uACE0, (status)\uC744 \uBD80\uC5EC\uD55C\uB2E4."
   AttributeType: 5
   RuneEffect: {fileID: 5122234373132822427, guid: b9244a59aea12c34b95d41d70dcb34eb, type: 3}
   Rarity: 1
@@ -25,6 +24,8 @@ MonoBehaviour:
   AbilityList:
   - EffectType: 1
     Value: 5
+    StatusName: 0
   - EffectType: 0
-    Value: 3
+    Value: 1
+    StatusName: 7
   KeywardList: 03000000
