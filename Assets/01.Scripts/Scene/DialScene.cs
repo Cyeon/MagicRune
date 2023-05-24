@@ -88,6 +88,8 @@ public class DialScene : BaseScene
         Managers.Gold.UpdateGoldAction += _userInfoUI.UpdateGoldText;
 
         Managers.GetPlayer().userInfoUI = _userInfoUI;
+
+        Managers.StatModifier.Init();
     }
 
     public void Turn(string text)
