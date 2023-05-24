@@ -17,15 +17,24 @@ public class SERemoveDamage : StatusEvent
     [SerializeField, ConditionalField(nameof(removeType), false, RemoveType.Int)]
     private int _value = 0;
 
+    [SerializeField] private bool _isSelf = false;
+
     public override void Invoke()
     {
-        if(removeType == RemoveType.Percent)
+        Unit unit = _unit;
+        if (!_isSelf)
         {
-            _unit.currentDmg -= (int)(_unit.currentDmg * (0.01f * _percent));
+            if (_unit == Managers.GetPlayer()) unit = BattleManager.Instance.Enemy;
+            else unit = Managers.GetPlayer();
+        }
+
+        if (removeType == RemoveType.Percent)
+        {
+            unit.currentDmg -= (int)(unit.currentDmg * (0.01f * _percent));
         }
         else
         {
-            _unit.currentDmg -= _value;
+            unit.currentDmg -= _value;
         }
     }
 }

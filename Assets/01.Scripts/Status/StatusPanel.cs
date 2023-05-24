@@ -49,13 +49,12 @@ public class StatusPanel : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        Vector3 pos = Define.MainCam.ScreenToWorldPoint(eventData.position);
-        Define.DialScene?.StatusDescPopup(_status, pos);
+        Define.DialScene?.StatusDescPopup(_status, eventData.position);
     }
 
     public void OnPointerUp(PointerEventData eventData)
     {
-        Define.DialScene?.StatusDescPopup(null, Vector3.zero, false);
+        Define.DialScene?.CloseStatusDescPanel();
     }
 
     public void UpdateDurationText()

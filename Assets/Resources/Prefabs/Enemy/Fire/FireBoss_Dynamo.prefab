@@ -50,10 +50,9 @@ MonoBehaviour:
   iconSize: {x: 1, y: 1, z: 1}
   desc: 
   isIncluding: 1
-  startPattern: []
-  turnPattern:
-  - {fileID: 5031034252845625290}
-  endPattern: []
+  startPatternAction: []
+  turnPatternAction: []
+  endPatternAction: []
   transitions: []
 --- !u!114 &5031034252845625290
 MonoBehaviour:
@@ -118,10 +117,9 @@ MonoBehaviour:
   iconSize: {x: 1, y: 1, z: 1}
   desc: 
   isIncluding: 1
-  startPattern: []
-  turnPattern:
-  - {fileID: 914159359137388316}
-  endPattern: []
+  startPatternAction: []
+  turnPatternAction: []
+  endPatternAction: []
   transitions: []
 --- !u!114 &914159359137388316
 MonoBehaviour:
@@ -186,10 +184,9 @@ MonoBehaviour:
   iconSize: {x: 1, y: 1, z: 1}
   desc: 30
   isIncluding: 1
-  startPattern: []
-  turnPattern:
-  - {fileID: 2516715109570472970}
-  endPattern: []
+  startPatternAction: []
+  turnPatternAction: []
+  endPatternAction: []
   transitions: []
 --- !u!114 &2516715109570472970
 MonoBehaviour:
@@ -255,10 +252,9 @@ MonoBehaviour:
   iconSize: {x: 3, y: 3, z: 1}
   desc: 20
   isIncluding: 1
-  startPattern: []
-  turnPattern:
-  - {fileID: 7946552405374310545}
-  endPattern: []
+  startPatternAction: []
+  turnPatternAction: []
+  endPatternAction: []
   transitions: []
 --- !u!114 &7946552405374310545
 MonoBehaviour:
@@ -360,10 +356,9 @@ MonoBehaviour:
   iconSize: {x: 1, y: 1, z: 1}
   desc: 6X5
   isIncluding: 1
-  startPattern: []
-  turnPattern:
-  - {fileID: 2883418681239350274}
-  endPattern: []
+  startPatternAction: []
+  turnPatternAction: []
+  endPatternAction: []
   transitions: []
 --- !u!114 &2883418681239350274
 MonoBehaviour:
@@ -429,10 +424,9 @@ MonoBehaviour:
   iconSize: {x: 3, y: 3, z: 1}
   desc: 15
   isIncluding: 1
-  startPattern: []
-  turnPattern:
-  - {fileID: 6300778652001562025}
-  endPattern: []
+  startPatternAction: []
+  turnPatternAction: []
+  endPatternAction: []
   transitions: []
 --- !u!114 &6300778652001562025
 MonoBehaviour:
@@ -497,10 +491,9 @@ MonoBehaviour:
   iconSize: {x: 1, y: 1, z: 1}
   desc: 2
   isIncluding: 1
-  startPattern: []
-  turnPattern:
-  - {fileID: 4631996937711827485}
-  endPattern: []
+  startPatternAction: []
+  turnPatternAction: []
+  endPatternAction: []
   transitions: []
 --- !u!114 &4631996937711827485
 MonoBehaviour:
@@ -567,10 +560,9 @@ MonoBehaviour:
   iconSize: {x: 1, y: 1, z: 1}
   desc: 20
   isIncluding: 1
-  startPattern: []
-  turnPattern:
-  - {fileID: 5509333850945047438}
-  endPattern: []
+  startPatternAction: []
+  turnPatternAction: []
+  endPatternAction: []
   transitions: []
 --- !u!114 &5509333850945047438
 MonoBehaviour:
@@ -636,10 +628,9 @@ MonoBehaviour:
   iconSize: {x: 1, y: 1, z: 1}
   desc: 
   isIncluding: 1
-  startPattern: []
-  turnPattern:
-  - {fileID: 2992447083617115107}
-  endPattern: []
+  startPatternAction: []
+  turnPatternAction: []
+  endPatternAction: []
   transitions: []
 --- !u!114 &2992447083617115107
 MonoBehaviour:
@@ -703,10 +694,9 @@ MonoBehaviour:
   iconSize: {x: 3, y: 3, z: 1}
   desc: 20
   isIncluding: 1
-  startPattern: []
-  turnPattern:
-  - {fileID: 7166178400642599129}
-  endPattern: []
+  startPatternAction: []
+  turnPatternAction: []
+  endPatternAction: []
   transitions: []
 --- !u!114 &7166178400642599129
 MonoBehaviour:
@@ -771,10 +761,9 @@ MonoBehaviour:
   iconSize: {x: 1, y: 1, z: 1}
   desc: 15
   isIncluding: 1
-  startPattern: []
-  turnPattern:
-  - {fileID: 114484980980410719}
-  endPattern: []
+  startPatternAction: []
+  turnPatternAction: []
+  endPatternAction: []
   transitions: []
 --- !u!114 &114484980980410719
 MonoBehaviour:
@@ -817,6 +806,10 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: 75e1252a99a35574587f25d4d122e308, type: 3}
+    - target: {fileID: 3535539594128554667, guid: 1d902098969ddc24a8a9b824bb9545b3, type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3535539594408076956, guid: 1d902098969ddc24a8a9b824bb9545b3, type: 3}
       propertyPath: m_Name
       value: FireBoss_Dynamo
@@ -880,6 +873,10 @@ PrefabInstance:
     - target: {fileID: 8949788419246248273, guid: 1d902098969ddc24a8a9b824bb9545b3, type: 3}
       propertyPath: enemyName
       value: "\uC9C0\uC625\uC758 \uD328\uC790 \uB2E4\uC774\uB108\uBAA8"
+      objectReference: {fileID: 0}
+    - target: {fileID: 8949788419246248273, guid: 1d902098969ddc24a8a9b824bb9545b3, type: 3}
+      propertyPath: enemyType
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8949788419246248273, guid: 1d902098969ddc24a8a9b824bb9545b3, type: 3}
       propertyPath: _maxHealth

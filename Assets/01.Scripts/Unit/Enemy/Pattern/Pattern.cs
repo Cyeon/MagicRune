@@ -15,9 +15,9 @@ public class Pattern : MonoBehaviour
     public bool isIncluding = true; // 순화되는 패턴 목록에 포함할건가?
 
     [Header("[ Actions ]")]
-    public List<PatternAction> startPattern;
-    public List<PatternAction> turnPattern;
-    public List<PatternAction> endPattern;
+    public List<PatternAction> startPatternAction;
+    public List<PatternAction> turnPatternAction;
+    public List<PatternAction> endPatternAction;
 
     [Header("[ Transition ]")]
     public List<PatternTransition> transitions;
@@ -33,9 +33,9 @@ public class Pattern : MonoBehaviour
     {
         _actionIndex = 0;
         _patternTime = patternInvokeTime.start;
-        if(startPattern.Count > _actionIndex)
+        if(startPatternAction.Count > _actionIndex)
         {
-            startPattern[_actionIndex].StartAction();
+            startPatternAction[_actionIndex].StartAction();
         }
     }
 
@@ -46,9 +46,9 @@ public class Pattern : MonoBehaviour
     {
         _actionIndex = 0;
         _patternTime = patternInvokeTime.turn;
-        if (turnPattern.Count > _actionIndex)
+        if (turnPatternAction.Count > _actionIndex)
         {
-            turnPattern[_actionIndex].TurnAction();
+            turnPatternAction[_actionIndex].TurnAction();
         }
         else
         {
@@ -64,9 +64,9 @@ public class Pattern : MonoBehaviour
     {
         _actionIndex = 0;
         _patternTime = patternInvokeTime.end;
-        if (endPattern.Count > _actionIndex)
+        if (endPatternAction.Count > _actionIndex)
         {
-            endPattern[_actionIndex].EndAction();
+            endPatternAction[_actionIndex].EndAction();
         }
     }
 
@@ -81,7 +81,7 @@ public class Pattern : MonoBehaviour
         switch (_patternTime)
         {
             case patternInvokeTime.start:
-                actions = startPattern;
+                actions = startPatternAction;
                 if (actions.Count > _actionIndex)
                 {
                     actions[_actionIndex].StartAction();
@@ -89,7 +89,7 @@ public class Pattern : MonoBehaviour
                 break;
 
             case patternInvokeTime.turn:
-                actions = turnPattern;
+                actions = turnPatternAction;
                 if (actions.Count <= _actionIndex)
                 {
                     BattleManager.Instance.Enemy.PatternManager.isPatternActioning = false;
@@ -100,7 +100,7 @@ public class Pattern : MonoBehaviour
                 break;
 
             case patternInvokeTime.end:
-                actions = endPattern;
+                actions = endPatternAction;
                 if (actions.Count > _actionIndex)
                 {
                     actions[_actionIndex].EndAction();

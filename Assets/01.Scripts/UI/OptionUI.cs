@@ -68,9 +68,10 @@ public class OptionUI : MonoBehaviour
 
     private void GameGiveUp()
     {
-        Debug.Log("°ÔÀÓ Æ÷±â");
-        // ÀÏ´Ü Áö±İÀº ¾À ÀÌµ¿¸¸ ³Ö¾îµÎÁö¸¸ ³ªÁß¿£ °ÔÀÓ ÃÊ±âÈ­ ÇÏ´Â °Å ³Ö¾îÁÖ°í ÇØ¾ßÇÔ
+        Debug.Log("ê²Œì„ í¬ê¸°");
+
+        Managers.Gold.ResetGoldAmount();
+        Managers.Map.ResetChapter();
         SceneManager.LoadScene("LobbyScene");
     }
-
 }

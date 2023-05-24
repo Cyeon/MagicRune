@@ -48,7 +48,7 @@ public class MapManager
 
     #region Adventure
     private bool _isAdventure = false;
-    public bool IsAdventureWar {get => _isAdventure; set { _isAdventure = value;} }
+    public bool IsAdventureWar { get => _isAdventure; set { _isAdventure = value; } }
     private string _adventureResultText;
     public string AdventureResultText => _adventureResultText;
     #endregion
@@ -137,7 +137,7 @@ public class MapManager
         }
 
         MapSceneUI.StageList.transform.DOLocalMoveX(Stage * -300f, 0);
-        if(_mapScene == null)
+        if (_mapScene == null)
         {
             _mapScene = Managers.Scene.CurrentScene as MapScene;
         }
@@ -164,7 +164,7 @@ public class MapManager
 
     public void NextChapter()
     {
-        if(Chapter < _chapterList.Count)
+        if (Chapter < _chapterList.Count)
         {
             _chapter++;
         }
@@ -177,6 +177,8 @@ public class MapManager
     public void ResetChapter()
     {
         _chapter = 1;
+        _floor = 0;
+        _isFirst = true;
         ChapterInit();
         Managers.GetPlayer().ResetHealth();
     }
