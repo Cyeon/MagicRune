@@ -268,7 +268,7 @@ public class Unit : MonoBehaviour
 
     public virtual void UpdateHealthUI()
     {
-        int _beforeHP = HP;
+        bool isChange = _healthBar.localScale.x != (float)HP / MaxHP;
 
         _healthFeedbackBar.DOScaleX(_healthBar.localScale.x, 0);
         _healthBar.DOScaleX((float)HP / MaxHP, 0);
@@ -296,7 +296,7 @@ public class Unit : MonoBehaviour
         seq.AppendInterval(0.5f);
         seq.Append(_healthFeedbackBar.DOScaleX((float)HP / MaxHP, 0.2f));
 
-        if (HP != _beforeHP)
+        if (isChange)
         {
             Sequence vibrateSeq = DOTween.Sequence();
             vibrateSeq.Append(_healthFeedbackBar.parent.DOShakeScale(0.1f));

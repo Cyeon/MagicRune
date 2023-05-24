@@ -123,6 +123,8 @@ public class BattleManager : MonoSingleton<BattleManager>
                 EventManager.TriggerEvent(Define.ON_START_PLAYER_TURN);
                 Define.DialScene?.Turn("Player Turn");
                 _gameTurn = GameTurn.EnemyEnd;
+                Player.ResetShield();
+                Player.UpdateHealthUI();
                 break;
 
             case GameTurn.Player:
