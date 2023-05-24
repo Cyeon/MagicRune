@@ -24,14 +24,14 @@ public class RuneDial : Dial<BaseRuneUI, BaseRune>
     public override void SettingDialRune(bool isReset)
     {
         #region Clear
-        foreach (var runeList in _runeDict)
+        foreach (var runeList in _elementDict)
         {
             for (int i = 0; i < runeList.Value.Count; i++)
             {
                 Managers.Resource.Destroy(runeList.Value[i].gameObject);
             }
         }
-        _runeDict.Clear();
+        _elementDict.Clear();
 
         for (int i = _usingDeck.Count - 1; i >= 0; i--)
         {
@@ -94,15 +94,15 @@ public class RuneDial : Dial<BaseRuneUI, BaseRune>
         #region Copy
         for (int i = 1; i <= 3; i++)
         {
-            if (_runeDict.ContainsKey(i))
+            if (_elementDict.ContainsKey(i))
             {
-                int count = _runeDict[i].Count;
+                int count = _elementDict[i].Count;
                 for (int k = 0; k < _copyCount; k++)
                 {
                     for (int j = 0; j < count; j++)
                     {
                         BaseRuneUI r = Managers.Resource.Instantiate("Rune/BaseRune", _dialElementList[3 - i].transform).GetComponent<BaseRuneUI>();
-                        r.SetRune(_runeDict[i][j].Rune);
+                        r.SetRune(_elementDict[i][j].Rune);
                         r.transform.localScale = new Vector3(0.1f, 0.1f, 1f);
                         _dialElementList[3 - i].AddRuneList(r);
 

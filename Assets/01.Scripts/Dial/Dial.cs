@@ -7,8 +7,8 @@ using UnityEngine;
 /// <summary>
 /// 
 /// </summary>
-/// <typeparam name="T1">???源낇꼧?????筌???⑥?????源낃도 癲ル슢?꾤땟??域밤볦몡?ш낄援???????ex) BaseRuneUI</typeparam>
-/// <typeparam name="T2">T1?????Β????ex) BaseRune</typeparam>
+/// <typeparam name="T1">???繹먮굟瑗?????嶺????Β?????繹먮굛???꿔꺂??袁ㅻ븶???잙갇?蹂?ぁ???꾣뤃???????ex) BaseRuneUI</typeparam>
+/// <typeparam name="T2">T1???????????ex) BaseRune</typeparam>
 public class Dial<T1, T2> : MonoBehaviour where T1 : MonoBehaviour where T2 : class
 {
     #region Rotate Parameta
@@ -32,7 +32,7 @@ public class Dial<T1, T2> : MonoBehaviour where T1 : MonoBehaviour where T2 : cl
     #endregion
 
     #region Container
-    protected Dictionary<int, List<T1>> _runeDict;
+    protected Dictionary<int, List<T1>> _elementDict;
     protected List<DialElement<T1, T2>> _dialElementList;
     public List<DialElement<T1, T2>> DialElementList => _dialElementList;
 
@@ -54,10 +54,10 @@ public class Dial<T1, T2> : MonoBehaviour where T1 : MonoBehaviour where T2 : cl
     protected virtual void Awake()
     {
         #region Initialization 
-        _runeDict = new Dictionary<int, List<T1>>(3);
+        _elementDict = new Dictionary<int, List<T1>>(3);
         for (int i = 1; i <= 3; i++)
         {
-            _runeDict.Add(i, new List<T1>());
+            _elementDict.Add(i, new List<T1>());
         }
         _dialElementList = new List<DialElement<T1, T2>>();
 
@@ -174,7 +174,7 @@ public class Dial<T1, T2> : MonoBehaviour where T1 : MonoBehaviour where T2 : cl
                 case TouchPhase.Moved:
                     float distance = Mathf.Abs(Vector2.Distance(transform.position, Define.MainCam.ScreenToWorldPoint(touch.position)));
 
-                    // ???깅뇶嶺뚳퐣瑗????怨룻뒍????
+                    // ???源낅눞癲ル슪?ｇ몭?????⑤；?????
                     if (_dialElementList[2].InDistance <= distance)
                     {
                         for (int i = _dialElementList.Count - 1; i >= 0; i--)
@@ -202,22 +202,22 @@ public class Dial<T1, T2> : MonoBehaviour where T1 : MonoBehaviour where T2 : cl
     {
         if (fLine == sLine) return;
 
-        if (_runeDict.ContainsKey(fLine) == false || _runeDict.ContainsKey(sLine) == false)
+        if (_elementDict.ContainsKey(fLine) == false || _elementDict.ContainsKey(sLine) == false)
         {
             Debug.LogWarning("Not have Key");
             return;
         }
 
-        List<T1> newList = new List<T1>(_runeDict[fLine]);
-        _runeDict[fLine].Clear();
-        _runeDict[fLine] = new List<T1>(_runeDict[sLine]);
-        _runeDict[sLine].Clear();
-        _runeDict[sLine] = new List<T1>(newList);
+        List<T1> newList = new List<T1>(_elementDict[fLine]);
+        _elementDict[fLine].Clear();
+        _elementDict[fLine] = new List<T1>(_elementDict[sLine]);
+        _elementDict[sLine].Clear();
+        _elementDict[sLine] = new List<T1>(newList);
 
         int dialFLine = 3 - fLine;
         int dialSLine = 3 - sLine;
-        _dialElementList[dialFLine].SetRuneList(_runeDict[fLine]);
-        _dialElementList[dialSLine].SetRuneList(_runeDict[sLine]);
+        _dialElementList[dialFLine].SetRuneList(_elementDict[fLine]);
+        _dialElementList[dialSLine].SetRuneList(_elementDict[sLine]);
 
         float offset = _lineDistanceArray[dialFLine] / _lineDistanceArray[dialSLine];
         for (int i = 0; i < _dialElementList[dialFLine].ElementList.Count; i++)
@@ -287,12 +287,12 @@ public class Dial<T1, T2> : MonoBehaviour where T1 : MonoBehaviour where T2 : cl
 
     public void RuneLineMove(int line, bool isTween = false)
     {
-        if (_runeDict.ContainsKey(line))
+        if (_elementDict.ContainsKey(line))
         {
-            for (int i = 0; i < _runeDict[line].Count; i++)
+            for (int i = 0; i < _elementDict[line].Count; i++)
             {
-                float dy = _runeDict[line][i].transform.position.y - this.transform.position.y;
-                float dx = _runeDict[line][i].transform.position.x - this.transform.position.x;
+                float dy = _elementDict[line][i].transform.position.y - this.transform.position.y;
+                float dx = _elementDict[line][i].transform.position.x - this.transform.position.x;
 
                 float fAngle = GetAngleRadian(dx, dy);
 
@@ -300,12 +300,12 @@ public class Dial<T1, T2> : MonoBehaviour where T1 : MonoBehaviour where T2 : cl
                 float width = Mathf.Cos(fAngle) * _lineDistanceArray[3 - line];
                 if (isTween)
                 {
-                    _runeDict[line][i].transform.DOKill();
-                    _runeDict[line][i].transform.DOMove(new Vector3(width + this.transform.position.x, height + this.transform.position.y, 0), 0.2f);
+                    _elementDict[line][i].transform.DOKill();
+                    _elementDict[line][i].transform.DOMove(new Vector3(width + this.transform.position.x, height + this.transform.position.y, 0), 0.2f);
                 }
                 else
                 {
-                    _runeDict[line][i].transform.position = new Vector3(width + this.transform.position.x, height + this.transform.position.y, 0);
+                    _elementDict[line][i].transform.position = new Vector3(width + this.transform.position.x, height + this.transform.position.y, 0);
                 }
 
                 Vector2 direction = new Vector2(
@@ -315,7 +315,7 @@ public class Dial<T1, T2> : MonoBehaviour where T1 : MonoBehaviour where T2 : cl
 
                 float ang = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
                 Quaternion angleAxis = Quaternion.AngleAxis(ang - 90f, Vector3.forward);
-                _runeDict[line][i].transform.rotation = angleAxis;
+                _elementDict[line][i].transform.rotation = angleAxis;
             }
         }
     }
@@ -326,13 +326,13 @@ public class Dial<T1, T2> : MonoBehaviour where T1 : MonoBehaviour where T2 : cl
     {
         if (card != null)
         {
-            if (_runeDict.ContainsKey(tier))
+            if (_elementDict.ContainsKey(tier))
             {
-                _runeDict[tier].Add(card);
+                _elementDict[tier].Add(card);
             }
             else
             {
-                _runeDict.Add(tier, new List<T1> { card });
+                _elementDict.Add(tier, new List<T1> { card });
             }
 
             RuneSort();
@@ -349,17 +349,17 @@ public class Dial<T1, T2> : MonoBehaviour where T1 : MonoBehaviour where T2 : cl
 
     public void LineCardSort(int line, bool isTween = false, float tweenDuration = 0.2f)
     {
-        if (_runeDict.ContainsKey(line))
+        if (_elementDict.ContainsKey(line))
         {
-            float angle = -1 * _dialAngle / _runeDict[line].Count * Mathf.Deg2Rad;
+            float angle = -1 * _dialAngle / _elementDict[line].Count * Mathf.Deg2Rad;
 
-            for (int i = 0; i < _runeDict[line].Count; i++)
+            for (int i = 0; i < _elementDict[line].Count; i++)
             {
                 float radianValue = angle * i + (_startAngle * Mathf.Deg2Rad);
 
                 float height = Mathf.Sin(radianValue) * _lineDistanceArray[3 - line];
                 float width = Mathf.Cos(radianValue) * _lineDistanceArray[3 - line];
-                Transform tr = _runeDict[line][i].transform;
+                Transform tr = _elementDict[line][i].transform;
                 //if (_dialElementList[3 - line].SelectCard != null)
                 //{
                 //    tr = RuneTransformBySelectRune(line, i);
@@ -385,7 +385,7 @@ public class Dial<T1, T2> : MonoBehaviour where T1 : MonoBehaviour where T2 : cl
 
                 float ang = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
                 Quaternion angleAxis = Quaternion.AngleAxis(ang - 90f, Vector3.forward);
-                _runeDict[line][i].transform.rotation = angleAxis;
+                _elementDict[line][i].transform.rotation = angleAxis;
             }
         }
     }
@@ -393,7 +393,7 @@ public class Dial<T1, T2> : MonoBehaviour where T1 : MonoBehaviour where T2 : cl
     [Obsolete]
     public Transform RuneTransformBySelectRune(int line, int index)
     {
-        List<T1> newList = new List<T1>(_runeDict[line]);
+        List<T1> newList = new List<T1>(_elementDict[line]);
 
         int count = newList.Count;
         for (int i = 0; i < count; i++)
@@ -423,11 +423,11 @@ public class Dial<T1, T2> : MonoBehaviour where T1 : MonoBehaviour where T2 : cl
     {
         for (int i = 1; i <= 3; i++)
         {
-            if (_runeDict.ContainsKey(i))
+            if (_elementDict.ContainsKey(i))
             {
-                for (int j = 0; j < _runeDict[i].Count; j++)
+                for (int j = 0; j < _elementDict[i].Count; j++)
                 {
-                    _runeDict[i][j].gameObject.SetActive(false);
+                    _elementDict[i][j].gameObject.SetActive(false);
                 }
             }
         }

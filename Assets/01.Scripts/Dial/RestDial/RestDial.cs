@@ -29,9 +29,9 @@ public class RestDial : Dial<RestRuneUI, RestRuneUI>
         restRune.transform.localScale = new Vector3(0.1f, 0.1f, 1f);
         restRune.SetInfo(_restSpriteArray[1], () =>
         {
-            // íšŒë³µ
+            // È¸º¹
             StartCoroutine(RestActionCoroutine());
-        }, "ìµœëŒ€ ì²´ë ¥ì˜\n25%ë¥¼ íšŒë³µí•œë‹¤.");
+        }, "ÃÖ´ë Ã¼·ÂÀÇ\n25%¸¦ È¸º¹ÇÑ´Ù.");
         _dialElementList[0].AddRuneList(restRune);
         AddCard(restRune, 3);
 
@@ -39,12 +39,12 @@ public class RestDial : Dial<RestRuneUI, RestRuneUI>
         enhanceRune1.transform.localScale = new Vector3(0.1f, 0.1f, 1f);
         enhanceRune1.SetInfo(_restSpriteArray[0], () =>
         {
-            // ê¹…íšŒ 1
-            // ë§ëŠ” UI ë„ì›Œã…“ì£¼ê¸°
+            // ±ëÈ¸ 1
+            // ¸Â´Â UI ¶ç¿ö¤ÃÁÖ±â
             PopupText text = Managers.Resource.Instantiate("UI/PopupText").GetComponent<PopupText>();
-            text.SetText("ê°œë°œ ì¤‘ì¸ ê¸°ëŠ¥ì…ë‹ˆë‹¤.");
-            Debug.Log("ê°•í™”1");
-        }, "ê°™ì€ ë“±ê¸‰ì˜\në‹¤ë¥¸ ë£¬ìœ¼ë¡œ ë°”ê¾¼ë‹¤.");
+            text.SetText("°³¹ß ÁßÀÎ ±â´ÉÀÔ´Ï´Ù.");
+            Debug.Log("°­È­1");
+        }, "°°Àº µî±ŞÀÇ\n´Ù¸¥ ·éÀ¸·Î ¹Ù²Û´Ù.");
         _dialElementList[0].AddRuneList(enhanceRune1);
         AddCard(enhanceRune1, 3);
 
@@ -52,12 +52,12 @@ public class RestDial : Dial<RestRuneUI, RestRuneUI>
         enhanceRune2.transform.localScale = new Vector3(0.1f, 0.1f, 1f);
         enhanceRune2.SetInfo(_restSpriteArray[2], () =>
         {
-            // ê¹…íšŒ 2
-            // ë§ëŠ” UI ë„ì›Œã…“ì£¼ê¸°
-            Debug.Log("ê°•í™”2");
+            // ±ëÈ¸ 2
+            // ¸Â´Â UI ¶ç¿ö¤ÃÁÖ±â
+            Debug.Log("°­È­2");
             PopupText text = Managers.Resource.Instantiate("UI/PopupText").GetComponent<PopupText>();
-            text.SetText("ê°œë°œ ì¤‘ì¸ ê¸°ëŠ¥ì…ë‹ˆë‹¤.");
-        }, "ì—¬ëŸ¬ê°œì˜ ë£¬ì„ ë°”ì³\në” ë†’ì€ ë“±ê¸‰ì˜\në£¬ì„ ì–»ëŠ”ë‹¤.");
+            text.SetText("°³¹ß ÁßÀÎ ±â´ÉÀÔ´Ï´Ù.");
+        }, "¿©·¯°³ÀÇ ·éÀ» ¹ÙÃÄ\n´õ ³ôÀº µî±ŞÀÇ\n·éÀ» ¾ò´Â´Ù.");
         _dialElementList[0].AddRuneList(enhanceRune2);
         AddCard(enhanceRune2, 3);
 
@@ -66,7 +66,7 @@ public class RestDial : Dial<RestRuneUI, RestRuneUI>
         {
             RestRuneUI rune = Managers.Resource.Instantiate("Rune/" + typeof(RestRuneUI).Name, _dialElementList[0].transform).GetComponent<RestRuneUI>();
             rune.transform.localScale = new Vector3(0.1f, 0.1f, 1f);
-            rune.SetInfo(_runeDict[3][i].GetSprite(), _runeDict[3][i].ClickAction(), _runeDict[3][i].Desc);
+            rune.SetInfo(_elementDict[3][i].GetSprite(), _elementDict[3][i].ClickAction(), _elementDict[3][i].Desc);
             _dialElementList[0].AddRuneList(rune);
             AddCard(rune, 3);
         }
@@ -91,13 +91,13 @@ public class RestDial : Dial<RestRuneUI, RestRuneUI>
 
     public void Clear()
     {
-        for(int i = 0; i < _runeDict[3].Count; i++)
+        for(int i = 0; i < _elementDict[3].Count; i++)
         {
-            Managers.Resource.Destroy(_runeDict[3][i].gameObject);
+            Managers.Resource.Destroy(_elementDict[3][i].gameObject);
         }
         _dialElementList[0].SelectElement = null;
         _dialElementList.Clear();
-        _runeDict.Clear();
+        _elementDict.Clear();
     }
 
     public override void Attack()
