@@ -31,6 +31,8 @@ public class RuneEffectHandler : MonoBehaviour
 
     public void EditEffect(GameObject effect, int tier)
     {
+        if (_effectDict[tier] == effect) return;
+
         if (_effectDict[tier] != null)
         {
             Managers.Resource.Destroy(_effectDict[tier]);
