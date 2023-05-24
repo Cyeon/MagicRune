@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -116,10 +116,21 @@ public class Resonance : MonoBehaviour
 
     public void ActiveAllEffectObject(bool isActive)
     {
+        if (_particleObjectArr[0] == null || _particleObjectArr[1] == null || _particleObjectArr[2] == null || _particleObjectArr[0].activeSelf == isActive)
+            return;
+
+        if (isActive)
+        {
+            Managers.Sound.PlaySound("SFX/Resonase", SoundType.Effect, true);
+        }
+        else
+        {
+            Managers.Sound.StopSound(SoundType.Effect);
+        }
+
         for (int i = 0; i < _particleObjectArr.Length; i++)
         {
-            if (_particleObjectArr[i] != null)
-                _particleObjectArr[i].SetActive(isActive);
+            _particleObjectArr[i].SetActive(isActive);
         }
     }
 }
