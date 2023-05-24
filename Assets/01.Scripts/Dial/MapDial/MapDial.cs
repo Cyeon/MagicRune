@@ -27,8 +27,9 @@ public class MapDial : Dial<MapRuneUI, MapRuneUI>
         for(int i = 0; i < Managers.Map.CurrentPeriodStageList.Count; i++)
         {
             StageType type = Managers.Map.CurrentPeriodStageList[i];
-            MapRuneUI rune = Managers.Resource.Instantiate("Stage/" + type.ToString() + "Stage", _dialElementList[0].transform).GetComponent<MapRuneUI>();
-            rune.transform.localScale = Vector3.one * 0.1f;
+            MapRuneUI rune = Managers.Map.StageSpawner.SpawnStage(Managers.Map.CurrentPeriodStageList[i]).GetComponent<MapRuneUI>();
+            rune.transform.SetParent(_dialElementList[0].transform);
+            //rune.transform.localScale = Vector3.one * 0.1f;
 
             rune.SetInfo(rune.GetComponent<Stage>().InStage);
             AddCard(rune, 3);
@@ -49,7 +50,9 @@ public class MapDial : Dial<MapRuneUI, MapRuneUI>
         _isAttack = false;
 
         _elementDict[3].Remove(_dialElementList[0].SelectElement);
+        _dialElementList[0].ElementList.Remove(_dialElementList[0].SelectElement);
         Managers.Resource.Destroy(_dialElementList[0].SelectElement.gameObject);
+        _dialElementList[0].SelectElement = null;
         Managers.Map.MapScene.mapDial.gameObject.SetActive(false);
     }
 }

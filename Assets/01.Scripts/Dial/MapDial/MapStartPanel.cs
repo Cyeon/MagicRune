@@ -1,45 +1,21 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MapStartPanel : MonoBehaviour
+public class MapStartPanel : StarPanel<MapRuneUI, MapRuneUI>
 {
-    [SerializeField]
-    private MapDial _dial;
-
-    #region Swipe Parameta
-    private Vector2 touchBeganPos;
-    private Vector2 touchEndedPos;
-    private Vector2 touchDif;
-    [SerializeField]
-    private float swipeSensitivity = 5;
-    #endregion
-
-    [SerializeField]
-    private float _inDistance;
-    [SerializeField]
-    private float _outDistance;
-
-    private void Update()
+    protected override void Start()
     {
-        Swipe1();
-    }
+        base.Start();
 
-    public void Swipe1()
-    {
-        if (Input.touchCount > 0)
+        #region Add Event
+        Managers.Swipe.AddAction(SwipeType.TouchMove, (touch) =>
         {
-            Touch touch = Input.GetTouch(0);
-
-            if (touch.phase == TouchPhase.Began)
+            if (Mathf.Abs(Vector2.Distance(transform.position, Define.MainCam.ScreenToWorldPoint(Managers.Swipe.TouchBeganPos))) <= _outDistance)
             {
-                touchBeganPos = touch.position;
-            }
-            if (touch.phase == TouchPhase.Moved)
-            {
-                touchDif = (touch.position - touchBeganPos);
+                Vector2 touchDif = (touch.position - Managers.Swipe.TouchBeganPos);
 
-                int count = (int)(Mathf.Abs(touchDif.y) / (swipeSensitivity / 3));
+                int count = (int)(Mathf.Abs(touchDif.y) / (Managers.Swipe.SwipeSensitivity / 3));
                 count = Mathf.Min(count, 3);
 
                 for (int i = 0; i < 3; i++)
@@ -60,52 +36,30 @@ public class MapStartPanel : MonoBehaviour
                     //return;
                 }
             }
-            if (touch.phase == TouchPhase.Ended)
+        });
+
+        Managers.Swipe.AddAction(SwipeType.UpSwipe, (touch) =>
+        {
+            float distance = Vector2.Distance(Define.MainCam.ScreenToWorldPoint(Managers.Swipe.TouchBeganPos), (Vector2)transform.position);
+            if (distance >= _inDistance && distance <= _outDistance)
             {
-                touchEndedPos = touch.position;
-                touchDif = (touchEndedPos - touchBeganPos);
-
-                if (Mathf.Abs(touchDif.y) > swipeSensitivity || Mathf.Abs(touchDif.x) > swipeSensitivity)
-                {
-                    if (touchDif.y > 0 && Mathf.Abs(touchDif.y) > Mathf.Abs(touchDif.x))
-                    {
-                        //Debug.Log("up");
-
-                        float distance = Vector2.Distance(Define.MainCam.ScreenToWorldPoint(touchBeganPos), (Vector2)transform.position);
-                        if (distance >= _inDistance && distance <= _outDistance)
-                        {
-                            _dial.Attack();
-                        }
-                        else
-                        {
-                            _dial.AllMagicCircleGlow(false);
-                        }
-                    }
-                    else if (touchDif.y < 0 && Mathf.Abs(touchDif.y) > Mathf.Abs(touchDif.x))
-                    {
-                        //Debug.Log("down");
-                        _dial.AllMagicCircleGlow(false);
-                    }
-                    else if (touchDif.x > 0 && Mathf.Abs(touchDif.y) < Mathf.Abs(touchDif.x))
-                    {
-                        //Debug.Log("right");
-                    }
-                    else if (touchDif.x < 0 && Mathf.Abs(touchDif.y) < Mathf.Abs(touchDif.x))
-                    {
-                        //Debug.Log("Left");
-                    }
-                }
-                //��ġ.
-                else
-                {
-                    //Debug.Log("touch");
-                    if (Vector2.Distance(transform.position, Define.MainCam.ScreenToWorldPoint(touchEndedPos)) <= _outDistance)
-                    {
-                        Define.DialScene?.AllCardDescPopup();
-                    }
-                    _dial.AllMagicCircleGlow(false);
-                }
+                _dial.Attack();
             }
-        }
+            else
+            {
+                _dial.AllMagicCircleGlow(false);
+            }
+        });
+
+        Managers.Swipe.AddAction(SwipeType.DownSwipe, (touch) =>
+        {
+            _dial.AllMagicCircleGlow(false);
+        });
+
+        Managers.Swipe.AddAction(SwipeType.Touch, (touch) =>
+        {
+            _dial.AllMagicCircleGlow(false);
+        });
+        #endregion
     }
 }
