@@ -62,7 +62,7 @@ public class ChapterTransition : MonoBehaviour
 
         _chapterNumberText.gameObject.SetActive(false);
         _chapterNameText.gameObject.SetActive(false);
-        Managers.Map.SpawnPortal();
+        //Managers.Map.SpawnPortal();
     }
 
     private void FadeText(float fade)
