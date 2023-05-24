@@ -47,12 +47,12 @@ public class MapDial : Dial<MapRuneUI, MapRuneUI>
         _isAttack = true;
 
         _dialElementList[0].SelectElement.ClickAction()?.Invoke();
-        _isAttack = false;
 
         _elementDict[3].Remove(_dialElementList[0].SelectElement);
-        _dialElementList[0].ElementList.Remove(_dialElementList[0].SelectElement);
         Managers.Resource.Destroy(_dialElementList[0].SelectElement.gameObject);
-        _dialElementList[0].SelectElement = null;
+        _dialElementList[0].Attack();
+
+        _isAttack = false;
         Managers.Map.MapScene.mapDial.gameObject.SetActive(false);
     }
 }

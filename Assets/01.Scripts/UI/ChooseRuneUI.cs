@@ -27,9 +27,11 @@ public class ChooseRuneUI : MonoBehaviour
     public void Exit()
     {
         gameObject.SetActive(false);
-        if(Managers.Reward.IsHaveNextClickReward())
-        {
-            BattleManager.Instance.NextStage();
-        }
+        BattleManager.Instance.NextStage();
+
+        //if(Managers.Reward.IsHaveNextClickReward())
+        //{
+        //   BattleManager.Instance.NextStage();
+        //}
     }
 }

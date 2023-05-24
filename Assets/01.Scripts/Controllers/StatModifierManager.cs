@@ -1,10 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public enum StatModifierType
 {
-    // ÀÌ ¼ø¼­´ë·Î ¿¬»ê Ã³¸®ÇÔ
+    // ì´ ìˆœì„œëŒ€ë¡œ ì—°ì‚° ì²˜ë¦¬í•¨
 
     Add,
     Subtract,
@@ -27,11 +28,9 @@ public class StatModifierManager
             _statModifierDict.Add((EffectType)i, new Dictionary<StatModifierType, float>());
             for (int j = 0; j < (int)StatModifierType.END; j++)
             {
-                _statModifierDict[(EffectType)i].Add((StatModifierType)j, int.MinValue);
+                _statModifierDict[(EffectType)i].Add((StatModifierType)j, 0);
             }
         }
-
-
     }
 
     public void AddStat(EffectType effectType, StatModifierType type, float value)
@@ -41,9 +40,9 @@ public class StatModifierManager
 
     public void SubtractStat(EffectType effectType, StatModifierType type, float value)
     {
-        if (value == int.MinValue)
+        if (value == 0)
         {
-            _statModifierDict[effectType][type] = int.MinValue;
+            _statModifierDict[effectType][type] = 0;
         }
         else
         {
@@ -53,7 +52,7 @@ public class StatModifierManager
 
     public void RemoveStat(EffectType effectType, StatModifierType type)
     {
-        _statModifierDict[effectType][type] = int.MinValue;
+        _statModifierDict[effectType][type] = 0;
     }
 
     public void GetStatModifierValue(EffectType effectType, ref float? value)
@@ -62,7 +61,7 @@ public class StatModifierManager
         {
             foreach (var stat in _statModifierDict[effectType])
             {
-                if (stat.Value != int.MinValue)
+                if (stat.Value != 0)
                 {
                     switch (stat.Key)
                     {
