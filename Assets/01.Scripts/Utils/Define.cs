@@ -23,7 +23,7 @@ public class EffectObjectPair
 }
 
 /// <summary>
-/// »ó¼ö ¸Å´ÏÀú
+/// ìƒìˆ˜ ë§¤ë‹ˆì €
 /// </summary>
 public class Define
 {
