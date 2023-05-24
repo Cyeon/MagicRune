@@ -6,20 +6,16 @@ using UnityEngine.UI;
 
 public class MapScene : BaseScene
 {
-    private Image _arrowImage;
-    public Image ArrowImage => _arrowImage;
-
     private UserInfoUI _userInfoUI;
 
     [SerializeField]
     private List<AudioClip> _bgmList = new List<AudioClip>(); 
+    [SerializeField]
+    private MapDial mapDial;
 
     protected override void Init()
     {
         base.Init();
-
-        Managers.UI.Bind<Image>("Stage Arrow", Managers.Canvas.GetCanvas("MapUI").gameObject);
-        _arrowImage = Managers.UI.Get<Image>("Stage Arrow");
 
         Managers.UI.Bind<UserInfoUI>("Upper_Frame", Managers.Canvas.GetCanvas("UserInfoPanelCanvas").gameObject);
         _userInfoUI = Managers.UI.Get<UserInfoUI>("Upper_Frame");
@@ -37,6 +33,12 @@ public class MapScene : BaseScene
         Managers.Sound.PlaySound(_bgmList[Managers.Map.Chapter - 1], SoundType.Bgm, true);
 
         Managers.GetPlayer().SetUIActive(false);
+    }
+
+    private void Start()
+    {
+        mapDial.Clear();
+        mapDial.MapStageSpawn();
     }
 
     public override void Clear()

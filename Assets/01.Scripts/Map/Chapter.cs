@@ -10,9 +10,6 @@ public class Chapter
     public int chapter = 0;
     public Sprite background;
 
-    [Range(0, 100)]
-    public float[] eventStagesChance = new float[9];
-
     [Header("몬스터 잡았을 때 지급될 골드")]
     public int minGold = 0;
     public int maxGold = 100;
@@ -33,17 +30,12 @@ public class Chapter
         return enemy;
     }
 
-    public int GetEnemyCount()
-    {
-        return GetEnemyList().Count;
-    }
-
     private List<Enemy> GetEnemyList()
     {
         List<Enemy> enemyList = new List<Enemy>();
         for (int i = 0; i < this.enemyList.Count; ++i)
         {
-            if (this.enemyList[i].minStage <= Managers.Map.Stage && this.enemyList[i].maxStage >= Managers.Map.Stage)
+            if (this.enemyList[i].periodType == Managers.Map.CurrentPeriodType)
             {
                 foreach (var enemy in this.enemyList[i].enemyList)
                 {
