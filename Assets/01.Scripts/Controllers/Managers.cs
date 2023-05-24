@@ -24,6 +24,7 @@ public class Managers : MonoBehaviour
     private RelicManager _relic = new RelicManager();
     private EnemyManager _enemy = new EnemyManager();
     private SoundManager _sound = new SoundManager();
+    private SwipeManager _swipe = new SwipeManager();
     private RewardManager _reward = new RewardManager();
     private CanvasManager _canvas = new CanvasManager();
     private SceneManagerEX _scene = new SceneManagerEX();
@@ -42,6 +43,7 @@ public class Managers : MonoBehaviour
     public static RelicManager Relic => Instance._relic;
     public static EnemyManager Enemy => Instance._enemy;
     public static SoundManager Sound { get { return Instance._sound; } }
+    public static SwipeManager Swipe {  get { return _instance._swipe; } }
     public static RewardManager Reward { get { return Instance._reward; } }
     public static CanvasManager Canvas { get { return Instance._canvas; } }
     public static SceneManagerEX Scene { get { return Instance._scene; } }
@@ -84,7 +86,7 @@ public class Managers : MonoBehaviour
             _instance._deck.Init();
             _instance._gold.Init();
             _instance._keyward.Init();
-
+            _instance._swipe.Init();
         }
 
         if (_player == null)
@@ -96,6 +98,7 @@ public class Managers : MonoBehaviour
     private void Update()
     {
         BackButtonAction();
+        Swipe.Update(Time.deltaTime);
     }
 
     private void BackButtonAction()
@@ -104,7 +107,7 @@ public class Managers : MonoBehaviour
         {
             if (_preparedToQuit == false)
             {
-                AndroidToast.Instance.ShowToastMessage("�ڷΰ��� ��ư�� �� �� �� �����ø� �����մϴ�.");
+                AndroidToast.Instance.ShowToastMessage("?醫롫솓嚥≪뮄???용쐻??덉굲 ?醫롫짗??됰뱣?醫롫짗???醫롫짗???醫롫짗???醫롫짗???醫롫짗??용쐻??덉굲?醫롫뻻筌뤿슣???醫롫짗??용쐻??덉굲?醫롫솁??덈솇??");
                 PreparedToQuit();
             }
             else
@@ -148,5 +151,6 @@ public class Managers : MonoBehaviour
         Canvas.Clear();
         Sound.StopAllSound();
         StatModifier.Clear();
+        Swipe.Clear();
     }
 }

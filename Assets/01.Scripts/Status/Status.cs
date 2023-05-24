@@ -6,6 +6,14 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
+public enum StatusSoundType
+{
+    None,
+    Main,
+    Positive,
+    Negative
+}
+
 public enum StatusType
 {
     Stack,
@@ -65,7 +73,11 @@ public class Status : MonoBehaviour
     [Header("Resource")]
     [ShowAssetPreview(32, 32)] public Sprite icon;
     public Color color = Color.white;
-    public AudioClip sound = null;
+    public StatusSoundType statusSoundType = StatusSoundType.None;
+    [ConditionalField(nameof(statusSoundType), false, StatusSoundType.Main)]
+    public AudioClip getSound = null;
+    [ConditionalField(nameof(statusSoundType), false, StatusSoundType.Main)]
+    public AudioClip activeSound = null;
     [HideInInspector] public Unit unit;
 
     public void AddValue(int count)
@@ -77,8 +89,8 @@ public class Status : MonoBehaviour
     public void RemoveValue(int count)
     {
         _typeValue = Mathf.Clamp(_typeValue - count, 0, _typeValue);
-        if(_typeValue <= 0) 
-        { 
+        if (_typeValue <= 0)
+        {
             unit.StatusManager.DeleteStatus(this);
             return;
         }

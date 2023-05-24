@@ -45,7 +45,7 @@ public class BattleManager : MonoSingleton<BattleManager>
     public void BattleStart()
     {
         Managers.UI.Get<Image>("Background").sprite = Managers.Map.CurrentChapter.background;
-
+        
         Managers.Enemy.BattleSetting();
 
         Player.StatusManager.Reset();
@@ -179,7 +179,7 @@ public class BattleManager : MonoSingleton<BattleManager>
     }
 
     /// <summary>
-    /// 미사일 공격이 끝날떄 발동되는 함수 (모든 공격이 다 들어간 후에 턴이 체인지 되도록 만듬)
+    /// 沃섎챷沅???⑤벀爰????멸텊??獄쏆뮆猷??롫뮉 ??λ땾 (筌뤴뫀諭??⑤벀爰??????쇰선揶??袁⑸퓠 ??곸뵠 筌ｋ똻?ㅿ쭪? ??롫즲嚥?筌띾슢踰?
     /// </summary>
     public void MissileAttackEnd()
     {
