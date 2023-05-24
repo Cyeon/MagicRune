@@ -16,6 +16,7 @@ public class RestStage : Stage
         if(_restUI == null)
             _restUI = Managers.Canvas.GetCanvas("Rest").GetComponent<RestUI>();
         _restUI.Dial.gameObject.SetActive(true);
+        _restUI.Dial.ResetDial();
     }
 
     public override void Init()
