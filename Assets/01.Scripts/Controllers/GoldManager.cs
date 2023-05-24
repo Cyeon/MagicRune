@@ -21,6 +21,8 @@ public class GoldManager
     {
         _gold = Mathf.Clamp(_gold + amount, 0, int.MaxValue);
         UpdateGoldAction?.Invoke();
+        Managers.Sound.StopSound(SoundType.Effect);
+        Managers.Sound.PlaySound("SFX/GoldGetSound", SoundType.Effect);
     }
 
     public void ResetGoldAmount()
