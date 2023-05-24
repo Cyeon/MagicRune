@@ -28,9 +28,6 @@ public class MapScene : BaseScene
         _userInfoUI.UpdateHealthText();
         _userInfoUI.UpdateGoldText();
 
-        Managers.Gold.UpdateGoldAction -= _userInfoUI.UpdateGoldText;
-        Managers.Gold.UpdateGoldAction += _userInfoUI.UpdateGoldText;
-
         SceneType = Define.Scene.MapScene;
         Managers.Map.MapInit();
 

@@ -52,10 +52,6 @@ public class RestStarPanel : StarPanel<RestRuneUI, RestRuneUI>
         });
         Managers.Swipe.AddAction(SwipeType.Touch, (touch) =>
         {
-            if (Vector2.Distance(transform.position, Define.MainCam.ScreenToWorldPoint(Managers.Swipe.TouchEndedPos)) <= _outDistance)
-            {
-                Define.DialScene?.AllCardDescPopup();
-            }
             _dial.AllMagicCircleGlow(false);
         });
         #endregion

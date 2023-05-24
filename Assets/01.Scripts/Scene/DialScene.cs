@@ -35,6 +35,9 @@ public class DialScene : BaseScene
     // ?좎? ?곷떒諛?
     private UserInfoUI _userInfoUI;
 
+    [SerializeField]
+    private TextMeshProUGUI _goldPopupText = null;
+
     protected override void Init()
     {
         base.Init();
@@ -59,6 +62,7 @@ public class DialScene : BaseScene
 
         Managers.UI.Bind<UserInfoUI>("Upper_Frame", Managers.Canvas.GetCanvas("UserInfoPanelCanvas").gameObject);
 
+        Managers.UI.Bind<TextMeshProUGUI>("GoldPopupText", Managers.Canvas.GetCanvas("UserInfoPanelCanvas").gameObject);
         #endregion
 
         _statusDescPanelRectTrm = _statusDescPanel.transform.Find("Panel").GetComponent<RectTransform>();
@@ -84,8 +88,7 @@ public class DialScene : BaseScene
         _userInfoUI.UpdateHealthText();
         _userInfoUI.UpdateGoldText();
 
-        Managers.Gold.UpdateGoldAction -= _userInfoUI.UpdateGoldText;
-        Managers.Gold.UpdateGoldAction += _userInfoUI.UpdateGoldText;
+        _goldPopupText = Managers.UI.Get<TextMeshProUGUI>("GoldPopupText");
 
         Managers.GetPlayer().userInfoUI = _userInfoUI;
     }
@@ -254,50 +257,12 @@ public class DialScene : BaseScene
     public void CardDescPopup(BaseRune rune)
     {
         _cardDescPanel.SetUI(rune);
-        //if (rune == null)
-        //{
-        //    CardDescDown();
-        //    _cardDescPanel.SetUI(null, true);
-        //}
-        //else
-        //{
-        //    //_cardDescPanel.SetActive(true);
-        //    //if (_cardDescPanelList == null)
-        //    //{
-        //    //    _cardDescPanelList = _cardDescPanel.GetComponent<ExplainPanelList>();
-        //    //}
-        //    //_cardDescPanelList.OpenPanel(0, rune);s
-        //    //_cardDescPanelList.ClosePanel(1);
-        //    //_cardDescPanelList.ClosePanel(2);
-        //}
-    }
-
-    public void AllCardDescPopup()
-    {
-        //_cardDescPanel.SetActive(true);
-        //if (_cardDescPanelList == null)
-        //{
-        //    _cardDescPanelList = _cardDescPanel.GetComponent<ExplainPanelList>();
-        //}
-
-        //for (int i = 0; i < _dial.DialElementList.Count; i++)
-        //{
-        //    if (_dial.DialElementList[i].SelectCard != null)
-        //    {
-        //        _cardDescPanelList.OpenPanel(_dial.DialElementList.Count - 1 - i, _dial.DialElementList[i].SelectCard.Rune);
-        //    }
-        //    else
-        //    {
-        //        _cardDescPanelList.ClosePanel(i);
-        //    }
-        //}
     }
 
     public void CardDescDown()
     {
         BaseRune rune = null;
         _cardDescPanel.SetUI(rune);
-        //_cardDescPanel.SetActive(false);
     }
 
     public void StatusDescPopup(Status status, Vector3 pos)
@@ -342,4 +307,19 @@ public class DialScene : BaseScene
         _chooseRuneUI.gameObject.SetActive(false);
     }
 
+    private void GoldPopupDown()
+    {
+        _goldPopupText.SetText("");
+    }
+
+    public void GoldPopUp(int amount)
+    {
+        int flag = amount >= 0 ? 1 : -1;
+        string str = flag == 1 ? "+ " : "- ";
+        str += Mathf.Abs(amount).ToString();
+        _goldPopupText.SetText(str);
+
+        _goldPopupText.GetComponent<RectTransform>().DOAnchorPosY(50f * flag, 1f);
+        Invoke("GoldPopupDown", 1.2f);
+    }
 }
