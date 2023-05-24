@@ -46,6 +46,7 @@ public class RuneDialElement : DialElement<BaseRuneUI, BaseRune>
     protected override bool _isRotateAdditionalCondition => BattleManager.Instance.IsPlayerTurn();
 
     private RuneEffectHandler _effectHandler;
+    public RuneEffectHandler EffectHandler => _effectHandler;
 
     protected override void Awake()
     {
