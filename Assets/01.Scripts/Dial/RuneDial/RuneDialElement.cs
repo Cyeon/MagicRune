@@ -58,13 +58,17 @@ public class RuneDialElement : DialElement<BaseRuneUI, BaseRune>
     {
         if (index == -1)
         {
+            if (SelectElement == null) return;
             SelectElement = null;
+            _effectHandler.EditEffect(null, _lineID);
         }
         else
         {
+            if(SelectElement == _elementList[index]) return;
             if (_elementList[index].Rune.IsCoolTime == false)
             {
                 SelectElement = _elementList[index];
+                _effectHandler.EditEffect(SelectElement.Rune.BaseRuneSO.RuneEffect, _lineID);
 
                 if (_isTouchDown == true)
                 {
@@ -77,7 +81,7 @@ public class RuneDialElement : DialElement<BaseRuneUI, BaseRune>
             }
         }
 
-        _effectHandler.EditEffect(SelectElement == null ? null : SelectElement.Rune.BaseRuneSO.RuneEffect, _lineID);
+        //_effectHandler.EditEffect(SelectElement == null ? null : SelectElement.Rune.BaseRuneSO.RuneEffect, _lineID);
     }
 
     protected override void OnSelectElementAction()

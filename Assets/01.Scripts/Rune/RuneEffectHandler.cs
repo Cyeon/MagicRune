@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -48,39 +49,29 @@ public class RuneEffectHandler : MonoBehaviour
             _effectDict[tier] = null;
         }
 
-        Sort(false);
+        Sort(true);
     }
 
-    public void Sort(bool isReset = false)
+    public void Sort(bool isTween = false)
     {
-        if (isReset)
+        GameObject[] effectArray = _effectDict.Values.ToArray();
+        if (effectArray.Length <= 0) return;
+
+        effectArray = effectArray.Where(x => x != null).ToArray();
+        _oneAngle = 360f / effectArray.Length;
+        Debug.Log(effectArray.Length);
+
+        for (int i = 0; i < effectArray.Length; i++)
         {
-            GameObject[] effectArray = _effectDict.Values.ToArray();
-            if (effectArray.Length <= 0) return;
-
-            effectArray = effectArray.Where(x => x != null).ToArray();
-
-            for (int i = 0; i < effectArray.Length; i++)
+            float width = Mathf.Cos((_oneAngle * i + _startAngle) * Mathf.Deg2Rad) * _distance;
+            float height = Mathf.Sin((_oneAngle * i + _startAngle) * Mathf.Deg2Rad) * _distance;
+            if (isTween)
             {
-                float width = Mathf.Cos(_oneAngle * i * Mathf.Deg2Rad + _startAngle) * _distance;
-                float height = Mathf.Sin(_oneAngle * i * Mathf.Deg2Rad + _startAngle) * _distance;
+                effectArray[i].transform.DOMove(new Vector3(width + this.transform.position.x, height + this.transform.position.y, 0), 0.2f);
             }
-        }
-        else
-        {
-            GameObject[] effectArray = _effectDict.Values.ToArray();
-            if (effectArray.Length <= 0) return;
-
-            effectArray = effectArray.Where(x => x != null).ToArray();
-
-            Vector2 dir = effectArray[0].transform.position - this.transform.position;
-
-            float startAngle = Mathf.Atan2(dir.y, dir.x);
-
-            for (int i = 0; i < effectArray.Length; i++)
+            else
             {
-                float width = Mathf.Cos(_oneAngle * i * Mathf.Deg2Rad + startAngle) * _distance;
-                float height = Mathf.Sin(_oneAngle * i * Mathf.Deg2Rad + startAngle) * _distance;
+                effectArray[i].transform.position = new Vector3(width + this.transform.position.x, height + this.transform.position.y, 0);
             }
         }
     }
