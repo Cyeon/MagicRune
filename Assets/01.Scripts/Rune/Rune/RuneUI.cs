@@ -5,8 +5,8 @@ using UnityEngine;
 
 public class RuneUI : MonoBehaviour
 {
-    public Dial Dial;
-    public DialElement DialElement;
+    public RuneDial Dial;
+    public RuneDialElement DialElement;
 
     private BaseRune _rune;
     public BaseRune Rune => _rune;
