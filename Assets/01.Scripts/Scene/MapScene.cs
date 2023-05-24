@@ -10,8 +10,7 @@ public class MapScene : BaseScene
 
     [SerializeField]
     private List<AudioClip> _bgmList = new List<AudioClip>(); 
-    [SerializeField]
-    private MapDial mapDial;
+    public MapDial mapDial;
 
     protected override void Init()
     {

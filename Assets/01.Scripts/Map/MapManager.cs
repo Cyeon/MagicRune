@@ -25,14 +25,14 @@ public class MapManager
     #endregion
 
     #region Period
-    private List<StageType> _firstPeriodStageList = new List<StageType>(); // 전반부
-    private List<StageType> _secondPeriodStageList = new List<StageType>(); // 후반부
+    private List<StageType> _firstPeriodStageList = new List<StageType>(); // ?꾨컲遺
+    private List<StageType> _secondPeriodStageList = new List<StageType>(); // ?꾨컲遺
 
-    private List<StageType> _currentPeriodStageList = new List<StageType>(); // 현재 단계
+    private List<StageType> _currentPeriodStageList = new List<StageType>(); // ?꾩옱 ?④퀎
     public List<StageType> CurrentPeriodStageList => _currentPeriodStageList;
 
-    private int _periodProgress = 0; // 현재 진행도
-    private int _nextCondition = 4; // 다음 단계로 넘어가는 조건 스테이지 개수
+    private int _periodProgress = 0; // ?꾩옱 吏꾪뻾??
+    private int _nextCondition = 4; // ?ㅼ쓬 ?④퀎濡??섏뼱媛??議곌굔 ?ㅽ뀒?댁? 媛쒖닔
 
     private PeriodType _periodType = PeriodType.None;
     public PeriodType CurrentPeriodType => _periodType;
@@ -121,7 +121,7 @@ public class MapManager
 
         bool isAttack = false;
 
-        // 전반부 세팅
+        // ?꾨컲遺 ?명똿
         _firstPeriodStageList.Add(StageType.Attack);
         _firstPeriodStageList.Add(StageType.Attack);
         _firstPeriodStageList.Add(StageType.Attack);
@@ -146,7 +146,7 @@ public class MapManager
             }
         }
 
-        // 후반부 세팅
+        // ?꾨컲遺 ?명똿
 
         _secondPeriodStageList.Add(StageType.Attack);
         _secondPeriodStageList.Add(StageType.Attack);
@@ -244,7 +244,7 @@ public class MapManager
     }
 
     /// <summary>
-    /// 공격 혹은 모험 스테이지를 넣는다. 공격이면 true 모험이면 false
+    /// 怨듦꺽 ?뱀? 紐⑦뿕 ?ㅽ뀒?댁?瑜??ｋ뒗?? 怨듦꺽?대㈃ true 紐⑦뿕?대㈃ false
     /// </summary>
     /// <param name="period"></param>
     /// <returns></returns>
@@ -280,7 +280,7 @@ public class MapManager
 
 
     /// <summary>
-    /// 50% 확률
+    /// 50% ?뺣쪧
     /// </summary>
     /// <returns></returns>
     private bool IsFiftyChance()
