@@ -65,15 +65,18 @@ public class BaseRuneSO : ScriptableObject
         List<AbilityValue> abilities = AbilityList.Where(x => x.EffectType == type).ToList();
         if (abilities.Count == 0) return "";
 
-        string value = abilities[index].Value.ToString();
+        float? value = abilities[index].Value;
+        Managers.StatModifier.GetStatModifierValue(type, ref value);
+
+        string text = value.ToString();
         if(type == EffectType.Status || type == EffectType.DestroyStatus)
         {
             if (abilities[index].StatusName != StatusName.Null)
             {
-                value += Resources.Load("Prefabs/Status/Status_" + abilities[index].StatusName).GetComponent<Status>().debugName;
+                text += Resources.Load("Prefabs/Status/Status_" + abilities[index].StatusName).GetComponent<Status>().debugName;
             }
         }
 
-        return value;
+        return text;
     }
 }
