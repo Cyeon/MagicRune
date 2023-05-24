@@ -12,27 +12,27 @@ using Sequence = DG.Tweening.Sequence;
 public class DialScene : BaseScene
 {
     [SerializeField]
-    private Dial _dial;
-    public Dial Dial => _dial;
+    private RuneDial _dial;
+    public RuneDial Dial => _dial;
 
-    // 카드 설명 패널
+    // 移대뱶 ?ㅻ챸 ?⑤꼸
     [SerializeField]
     private ExplainPanel _cardDescPanel = null;
 
-    // 상태이상 설명 패널
+    // ?곹깭?댁긽 ?ㅻ챸 ?⑤꼸
     [SerializeField]
     private GameObject _statusDescPanel;
     private TextMeshProUGUI _statusDescName;
     private TextMeshProUGUI _statusDescInfo;
     private RectTransform _statusDescPanelRectTrm;
 
-    // 전투 후 보상
+    // ?꾪닾 ??蹂댁긽
     [SerializeField]
     private RewardUI _rewardUI;
     public RewardUI RewardUI => _rewardUI;
     private ChooseRuneUI _chooseRuneUI;
 
-    // 유저 상단바
+    // ?좎? ?곷떒諛?
     private UserInfoUI _userInfoUI;
 
     protected override void Init()
@@ -328,7 +328,7 @@ public class DialScene : BaseScene
 
     public override void Clear()
     {
-        // �� Ŭ����
+        // 占쏙옙 클占쏙옙占쏙옙
     }
 
     public void ChooseRuneUISetUp()
