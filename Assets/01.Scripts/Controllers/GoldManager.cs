@@ -21,6 +21,7 @@ public class GoldManager
     {
         _gold = Mathf.Clamp(_gold + amount, 0, int.MaxValue);
         Define.DialScene?.GoldPopUp(amount);
+        Define.MapScene?.GoldPopUp(amount);
 
         UpdateGoldAction?.Invoke();
         Managers.Sound.StopSound(SoundType.Effect);

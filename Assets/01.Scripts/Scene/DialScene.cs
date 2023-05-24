@@ -35,7 +35,6 @@ public class DialScene : BaseScene
     // ?좎? ?곷떒諛?
     private UserInfoUI _userInfoUI;
 
-    [SerializeField]
     private TextMeshProUGUI _goldPopupText = null;
 
     protected override void Init()
