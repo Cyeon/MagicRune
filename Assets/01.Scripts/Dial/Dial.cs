@@ -7,7 +7,7 @@ using UnityEngine;
 /// <summary>
 /// 
 /// </summary>
-/// <typeparam name="T1">???繹먮굟瑗?????嶺????Β?????繹먮굛???꿔꺂??袁ㅻ븶???잙갇?蹂?ぁ???꾣뤃???????ex) BaseRuneUI</typeparam>
+/// <typeparam name="T1">???嚥싲갭큔?댁옃紐?????????????????嚥싲갭큔????饔낅떽????ш낄?뉔뇡?????놁퍥???????熬곻퐢夷???????ex) BaseRuneUI</typeparam>
 /// <typeparam name="T2">T1???????????ex) BaseRune</typeparam>
 public class Dial<T1, T2> : MonoBehaviour where T1 : MonoBehaviour where T2 : class
 {
@@ -174,7 +174,7 @@ public class Dial<T1, T2> : MonoBehaviour where T1 : MonoBehaviour where T2 : cl
                 case TouchPhase.Moved:
                     float distance = Mathf.Abs(Vector2.Distance(transform.position, Define.MainCam.ScreenToWorldPoint(touch.position)));
 
-                    // ???源낅눞癲ル슪?ｇ몭?????⑤；?????
+                    // ???濚밸Ŧ援??낆녇??щ뮦?影?뽧걤???????욱룕?????
                     if (_dialElementList[2].InDistance <= distance)
                     {
                         for (int i = _dialElementList.Count - 1; i >= 0; i--)
@@ -351,14 +351,14 @@ public class Dial<T1, T2> : MonoBehaviour where T1 : MonoBehaviour where T2 : cl
     {
         if (_elementDict.ContainsKey(line))
         {
-            float angle = -1 * _dialAngle / _elementDict[line].Count * Mathf.Deg2Rad;
+            float angle = -1 * _dialAngle / _elementDict[line].Count;
 
             for (int i = 0; i < _elementDict[line].Count; i++)
             {
-                float radianValue = angle * i + (_startAngle * Mathf.Deg2Rad);
+                float radianValue = angle * i + _startAngle;
 
-                float height = Mathf.Sin(radianValue) * _lineDistanceArray[3 - line];
-                float width = Mathf.Cos(radianValue) * _lineDistanceArray[3 - line];
+                float height = Mathf.Sin(radianValue * Mathf.Deg2Rad) * _lineDistanceArray[3 - line];
+                float width = Mathf.Cos(radianValue * Mathf.Deg2Rad) * _lineDistanceArray[3 - line];
                 Transform tr = _elementDict[line][i].transform;
                 //if (_dialElementList[3 - line].SelectCard != null)
                 //{
@@ -413,6 +413,8 @@ public class Dial<T1, T2> : MonoBehaviour where T1 : MonoBehaviour where T2 : cl
 
     public void ResetDial()
     {
+        if (_dialElementList == null) return;
+
         for (int i = 0; i < _dialElementList.Count; i++)
         {
             _dialElementList[i].transform.eulerAngles = Vector3.zero;

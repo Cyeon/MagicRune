@@ -19,7 +19,7 @@ public class ElectricBarrier : BaseRune
     public override void AbilityAction()
     {
         Managers.GetPlayer().AddShield(GetAbliltiValaue(EffectType.Defence));
-        Managers.GetPlayer().StatusManager.RemoveStatus(StatusName.Recharging, 5);
+        Managers.GetPlayer().StatusManager.RemoveStatus(StatusName.Recharging, (int)GetAbliltiValaue(EffectType.DestroyStatus));
     }
 
     public override object Clone()

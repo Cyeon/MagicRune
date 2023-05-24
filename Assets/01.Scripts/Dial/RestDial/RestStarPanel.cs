@@ -11,27 +11,30 @@ public class RestStarPanel : StarPanel<RestRuneUI, RestRuneUI>
         #region Add Event
         Managers.Swipe.AddAction(SwipeType.TouchMove, (touch) =>
         {
-            Vector2 touchDif = (touch.position - Managers.Swipe.TouchBeganPos);
-
-            int count = (int)(Mathf.Abs(touchDif.y) / (Managers.Swipe.SwipeSensitivity / 3));
-            count = Mathf.Min(count, 3);
-
-            for (int i = 0; i < 3; i++)
+            if (Mathf.Abs(Vector2.Distance(transform.position, Define.MainCam.ScreenToWorldPoint(Managers.Swipe.TouchBeganPos))) <= _outDistance)
             {
-                if (i < count)
-                {
-                    _dial.MagicCircleGlow(2 - i, true);
-                }
-                else
-                {
-                    _dial.MagicCircleGlow(2 - i, false);
-                }
-            }
+                Vector2 touchDif = (touch.position - Managers.Swipe.TouchBeganPos);
 
-            if (touchDif.y < 0)
-            {
-                _dial.AllMagicCircleGlow(false);
-                //return;
+                int count = (int)(Mathf.Abs(touchDif.y) / (Managers.Swipe.SwipeSensitivity / 3));
+                count = Mathf.Min(count, 3);
+
+                for (int i = 0; i < 3; i++)
+                {
+                    if (i < count)
+                    {
+                        _dial.MagicCircleGlow(2 - i, true);
+                    }
+                    else
+                    {
+                        _dial.MagicCircleGlow(2 - i, false);
+                    }
+                }
+
+                if (touchDif.y < 0)
+                {
+                    _dial.AllMagicCircleGlow(false);
+                    //return;
+                }
             }
         });
         Managers.Swipe.AddAction(SwipeType.UpSwipe, (touch) =>

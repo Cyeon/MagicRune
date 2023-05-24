@@ -90,6 +90,8 @@ public class DialScene : BaseScene
         _goldPopupText = Managers.UI.Get<TextMeshProUGUI>("GoldPopupText");
 
         Managers.GetPlayer().userInfoUI = _userInfoUI;
+
+        Managers.StatModifier.Init();
     }
 
     public void Turn(string text)

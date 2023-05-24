@@ -3,6 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using DG.Tweening;
+using Unity.VisualScripting;
+
+public enum PeriodType
+{
+    None,
+    First,
+    Second,
+    Boss
+}
 
 public class MapManager
 {
@@ -15,21 +24,25 @@ public class MapManager
     public Chapter CurrentChapter => _currentChapter;
     #endregion
 
-    #region Stage
-    private List<Stage> _stageList = new List<Stage>();
+    #region Period
+    private List<StageType> _firstPeriodStageList = new List<StageType>(); // ?袁⑥뺘?봔
+    private List<StageType> _secondPeriodStageList = new List<StageType>(); // ?袁⑥뺘?봔
 
-    public int Stage => Floor - ((this.Chapter - 1) * 9);
+    private List<StageType> _currentPeriodStageList = new List<StageType>(); // ?袁⑹삺 ??ｍ?
+    public List<StageType> CurrentPeriodStageList => _currentPeriodStageList;
+
+    private int _periodProgress = 0; // ?袁⑹삺 筌욊쑵六??
+    private int _nextCondition = 4; // ??쇱벉 ??ｍ롦에???뤿선揶쎛??鈺곌퀗援???쎈??? 揶쏆뮇??
+
+    private PeriodType _periodType = PeriodType.None;
+    public PeriodType CurrentPeriodType => _periodType;
+    #endregion
 
     private int _floor = 0;
     public int Floor => _floor;
-    #endregion
 
-    private PortalSpawner _portalSpawner;
-    public PortalSpawner PortalSpawner => _portalSpawner;
-
-    public Sprite selectPortalSprite;
-
-    private bool _isFirst = true;
+    private StageSpawner _stageSpawner;
+    public StageSpawner StageSpawner => _stageSpawner;
 
     private MapUI _mapSceneUI;
     public MapUI MapSceneUI
@@ -45,6 +58,19 @@ public class MapManager
     }
 
     private MapScene _mapScene;
+    public MapScene MapScene
+    {
+        get
+        {
+            if (_mapScene == null)
+            {
+                _mapScene = Managers.Scene.CurrentScene as MapScene;
+            }
+            return _mapScene;
+        }
+    }
+
+    private bool _isFirst = true;
 
     #region Adventure
     private bool _isAdventure = false;
@@ -53,16 +79,17 @@ public class MapManager
     public string AdventureResultText => _adventureResultText;
     #endregion
 
+    #region Init
     public void MapInit()
     {
         _mapSceneUI = Managers.Canvas.GetCanvas("MapUI").GetComponent<MapUI>();
         _chapterList = new List<Chapter>(Managers.Resource.Load<ChapterListSO>("SO/" + typeof(ChapterListSO).Name).chapterList);
 
-        if (_portalSpawner == null)
+        if (_stageSpawner == null)
         {
-            PortalSpawner portalSpawner = Managers.Resource.Instantiate(typeof(PortalSpawner).Name, Managers.Scene.CurrentScene.transform).GetComponent<PortalSpawner>();
+            StageSpawner portalSpawner = Managers.Resource.Instantiate(typeof(StageSpawner).Name, Managers.Scene.CurrentScene.transform).GetComponent<StageSpawner>();
             portalSpawner.transform.SetParent(null);
-            _portalSpawner = portalSpawner;
+            _stageSpawner = portalSpawner;
         }
 
         Managers.Reward.ImageLoad();
@@ -85,83 +112,71 @@ public class MapManager
         }
     }
 
-    public void SpawnPortal()
-    {
-        PortalSpawner.SpawnPortal(_stageList[Stage].type);
-    }
-
     private void ChapterInit()
     {
-        _stageList.Clear();
+        _currentPeriodStageList.Clear();
         _currentChapter = _chapterList[Chapter - 1];
 
-        int idx = 0;
-        foreach (var chance in _currentChapter.eventStagesChance)
+        _periodType = PeriodType.None;
+
+        bool isAttack = false;
+
+        // ?袁⑥뺘?봔 ?紐낅샒
+        _firstPeriodStageList.Add(StageType.Attack);
+        _firstPeriodStageList.Add(StageType.Attack);
+        _firstPeriodStageList.Add(StageType.Attack);
+        _firstPeriodStageList.Add(StageType.Adventure);
+        _firstPeriodStageList.Add(StageType.Adventure);
+
+        if (IsFiftyChance())
         {
-            Stage stage = new Stage();
-            int random = Random.Range(1, 100);
-
-            stage.Init(random <= chance ? StageType.Event : StageType.Attack, MapSceneUI.Stages[idx], idx);
-            _stageList.Add(stage);
-
-            idx++;
+            _firstPeriodStageList.Add(IsFiftyChance() ? StageType.Shop : StageType.Rest);
+            isAttack = AttackOrAdventure(_firstPeriodStageList);
+        }
+        else
+        {
+            isAttack = AttackOrAdventure(_firstPeriodStageList);
+            if (IsFiftyChance())
+            {
+                _firstPeriodStageList.Add(IsFiftyChance() ? StageType.Shop : StageType.Rest);
+            }
+            else
+            {
+                isAttack = AttackOrAdventure(_firstPeriodStageList);
+            }
         }
 
-        Stage bossStage = new Stage();
-        bossStage.Init(StageType.Boss, MapSceneUI.Stages[9], 9);
-        _stageList.Add(bossStage);
+        // ?袁⑥뺘?봔 ?紐낅샒
 
-        _stageList[0].ChangeResource(Color.white);
+        _secondPeriodStageList.Add(StageType.Attack);
+        _secondPeriodStageList.Add(StageType.Attack);
+        _secondPeriodStageList.Add(StageType.Attack);
+        _secondPeriodStageList.Add(StageType.Adventure);
+        _secondPeriodStageList.Add(StageType.Adventure);
+        
+        if(!_firstPeriodStageList.Contains(StageType.Rest) && !_firstPeriodStageList.Contains(StageType.Shop))
+        {
+            _secondPeriodStageList.Add(StageType.Rest);
+            _secondPeriodStageList.Add(StageType.Shop);
+        }
+        else
+        {
+            if(_firstPeriodStageList.Contains(StageType.Rest))
+            {
+                _secondPeriodStageList.Add(StageType.Shop);
+            }
+            else
+            {
+                _secondPeriodStageList.Add(StageType.Rest);
+            }
+
+            _secondPeriodStageList.Add(isAttack ? StageType.Adventure : StageType.Attack);
+        }
+        NextPeriod();
     }
+    #endregion
 
-    public void NextStage()
-    {
-        if (Managers.GetPlayer() != null && Managers.GetPlayer().IsDie == true)
-        {
-            ResetChapter();
-        }
-
-        #region 초기화
-        for (int i = 0; i < _stageList.Count; ++i)
-        {
-            MapSceneUI.Stages[i].sprite = _stageList[i].icon;
-            MapSceneUI.Stages[i].color = _stageList[i].color;
-        }
-        Managers.Enemy.ResetEnemy();
-        #endregion
-
-        if (_stageList[Stage].type == StageType.Boss)
-        {
-            NextChapter();
-            return;
-        }
-
-        MapSceneUI.StageList.transform.DOLocalMoveX(Stage * -300f, 0);
-        if (_mapScene == null)
-        {
-            _mapScene = Managers.Scene.CurrentScene as MapScene;
-        }
-
-        if (_mapScene != null)
-        {
-            _mapScene?.ArrowImage.transform.SetParent(MapSceneUI.StageList.GetChild(Stage + 1));
-            _mapScene.ArrowImage.transform.localPosition = new Vector3(0, _mapScene.ArrowImage.transform.localPosition.y, 0);
-        }
-        _stageList[Stage].ChangeResource(Color.white, selectPortalSprite);
-        _floor += 1;
-
-        Sequence seq = DOTween.Sequence();
-        seq.AppendInterval(0.5f);
-        if (Stage < MapSceneUI.StageList.childCount - 2)
-            seq.Append(MapSceneUI.StageList.transform.DOLocalMoveX(Stage * -300f, 0.5f));
-        seq.Append(MapSceneUI.Stages[Stage].DOColor(Color.white, 0.25f));
-        seq.AppendCallback(() =>
-        {
-            _stageList[Stage].color = Color.white;
-            _portalSpawner.SpawnPortal(_stageList[Stage].type);
-        });
-    }
-
+    #region Next
     public void NextChapter()
     {
         if (Chapter < _chapterList.Count)
@@ -173,6 +188,80 @@ public class MapManager
         _mapSceneUI.ChangeBackground();
         _mapSceneUI.ChapterTransition.Transition();
     }
+
+    public void NextStage()
+    {
+        MapScene.mapDial.gameObject.SetActive(true);
+
+        MapScene.mapDial.Clear();
+        MapScene.mapDial.MapStageSpawn();
+
+        if (Managers.GetPlayer() != null && Managers.GetPlayer().IsDie == true)
+        {
+            ResetChapter();
+        }
+
+        Managers.Enemy.ResetEnemy();
+
+        if (CurrentPeriodType == PeriodType.Boss)
+        {
+            NextChapter();
+            return;
+        }
+
+        _floor++;
+
+        _periodProgress++;
+        if(_periodProgress == _nextCondition)
+        {
+            NextPeriod();
+        }
+    }
+    #endregion
+
+    #region Period
+    public void NextPeriod()
+    {
+        _currentPeriodStageList.Clear();
+
+        _periodProgress = 0;
+        _periodType++;
+
+        switch (CurrentPeriodType)
+        {
+            case PeriodType.First:
+                _currentPeriodStageList = _firstPeriodStageList;
+                break;
+
+            case PeriodType.Second:
+                _currentPeriodStageList = _secondPeriodStageList;
+                break;
+
+            case PeriodType.Boss:
+                _currentPeriodStageList.Add(StageType.Boss);
+                break;
+        }
+    }
+
+    /// <summary>
+    /// ?⑤벀爰??諭? 筌뤴뫂肉???쎈??????節뗫뮉?? ?⑤벀爰????true 筌뤴뫂肉????false
+    /// </summary>
+    /// <param name="period"></param>
+    /// <returns></returns>
+    private bool AttackOrAdventure(List<StageType> period)
+    {
+        if (IsFiftyChance())
+        {
+            period.Add(StageType.Attack);
+            return true;
+        }
+        else
+        {
+            period.Add(StageType.Adventure);
+            return false;
+        }
+    }
+    #endregion
 
     public void ResetChapter()
     {
@@ -187,5 +276,15 @@ public class MapManager
     {
         _isAdventure = true;
         _adventureResultText = text;
+    }
+
+
+    /// <summary>
+    /// 50% ?類ｌぇ
+    /// </summary>
+    /// <returns></returns>
+    private bool IsFiftyChance()
+    {
+        return Random.Range(0, 2) == 0;
     }
 }
