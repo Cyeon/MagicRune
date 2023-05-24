@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -28,6 +28,7 @@ public class REGold : Reward
 
         BezierMissile missle = Managers.Resource.Instantiate("UI/GoldBezier", ui.transform).GetComponent<BezierMissile>();
 
+        Managers.Sound.PlaySound("SFX/GoldMoveSound", SoundType.Effect);
         missle.Init(pos1, pos2, pos3, pos4, 1.5f, null, () => Managers.Gold.AddGold(_gold));
     }
 

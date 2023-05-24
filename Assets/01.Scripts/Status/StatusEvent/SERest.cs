@@ -7,6 +7,7 @@ public class SERest : StatusEvent
     public override void Invoke()
     {
         _unit.isTurnSkip = true;
+        Managers.Sound.PlaySound(_status.activeSound, SoundType.Effect);
         StartCoroutine(TurnChange());
     }
 
