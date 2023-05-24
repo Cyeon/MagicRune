@@ -11,6 +11,13 @@ public class SEFire : StatusEvent
         if (BattleManager.Instance.GameTurn == _turnType)
         {
             _unit.TakeDamage(_status.TypeValue, true, _status);
+            
+            if(_status.TypeValue / 2 == 0)
+            {
+                _unit.StatusManager.DeleteStatus(_status);
+                return;
+            }
+            
             _unit.StatusManager.RemoveStatus(_status.statusName, _status.TypeValue / 2);
         }
     }
