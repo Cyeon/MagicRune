@@ -1,7 +1,10 @@
+using MyBox;
 using NaughtyAttributes;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 [Serializable]
@@ -9,6 +12,9 @@ public class AbilityValue
 {
     public EffectType EffectType;
     public int Value;
+
+    [ConditionalField(nameof(EffectType), false, EffectType.Status)]
+    public StatusName StatusName;
 }
 
 public enum EffectDirection
@@ -23,8 +29,20 @@ public class BaseRuneSO : ScriptableObject
     public string RuneName;
     [ShowAssetPreview(32, 32)]
     public Sprite RuneSprite;
-    [ResizableTextArea]
-    public string RuneDescription; // ÇÊ¿äÇÑ°¡..?
+    [ResizableTextArea, SerializeField]
+    private string _runeDescription;
+
+    public string RuneDescription
+    {
+        get
+        {
+            string desc = _runeDescription;
+            desc = desc.Replace("(dmg)", GetAbillityValue(EffectType.Attack) + "ë°ë¯¸ì§€");
+            desc = desc.Replace("(status)", GetAbillityValue(EffectType.Status));
+            return desc;
+        }
+    }
+
     public AttributeType AttributeType;
     public GameObject RuneEffect;
     public RuneRarity Rarity;
@@ -34,9 +52,26 @@ public class BaseRuneSO : ScriptableObject
 
     // Ability Parameta
 
-    // ÁøÂ¥ °£´ÜÇÏ°Ô ´É·ÂÄ¡ Á¤ÀÇ. Á¶°Ç ´Ù ÇÊ¿ä¾ø¾î ¾î¶»°Å ³ª°¡´ÂÁö¸¸ ÁøÂ¥
-    // °ø°İ 5, ºù°á 2, ¹æ¾î 10 ÀÌ·¸°Ô¸¸. ÁøÂ¥ ´É·ÂÄ¡¸¸
+    // ì§„ì§œ ê°„ë‹¨í•˜ê²Œ ëŠ¥ë ¥ì¹˜ ì •ì˜. ì¡°ê±´ ë‹¤ í•„ìš”ì—†ì–´ ì–´ë–»ê±° ë‚˜ê°€ëŠ”ì§€ë§Œ ì§„ì§œ
+    // ê³µê²© 5, ë¹™ê²° 2, ë°©ì–´ 10 ì´ë ‡ê²Œë§Œ. ì§„ì§œ ëŠ¥ë ¥ì¹˜ë§Œ
     public List<AbilityValue> AbilityList;
 
     public KeywordType[] KeywardList;
+
+    public string GetAbillityValue(EffectType type, int index = 0)
+    {
+        List<AbilityValue> abilities = AbilityList.Where(x => x.EffectType == type).ToList();
+        if (abilities.Count == 0) return "";
+
+        string value = abilities[index].Value.ToString();
+        if(type == EffectType.Status)
+        {
+            if (abilities[index].StatusName != StatusName.Null)
+            {
+                value += Resources.Load("Prefabs/Status/Status_" + abilities[index].StatusName).GetComponent<Status>().debugName;
+            }
+        }
+
+        return value;
+    }
 }
