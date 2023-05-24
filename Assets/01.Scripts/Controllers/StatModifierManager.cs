@@ -61,7 +61,6 @@ public class StatModifierManager
         {
             foreach (var stat in _statModifierDict[effectType])
             {
-                Debug.Log(effectType + ", " + stat.Key + "," + stat.Value);
                 if (stat.Value != 0)
                 {
                     switch (stat.Key)
@@ -89,7 +88,6 @@ public class StatModifierManager
 
     public void Clear()
     {
-        Debug.Log("초기화");
         _statModifierDict.Clear();
     }
 }
