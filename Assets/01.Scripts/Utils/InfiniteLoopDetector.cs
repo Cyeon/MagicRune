@@ -1,7 +1,7 @@
 using UnityEngine;
 using System;
 
-/// <summary> 무한 루프 간편 탐색 및 방지 </summary>
+/// <summary> 臾댄븳 猷⑦봽 媛꾪렪 ?먯깋 諛?諛⑹? </summary>
 public static class InfiniteLoopDetector
 {
     private static string prevPoint = "";
