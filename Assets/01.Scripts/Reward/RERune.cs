@@ -7,7 +7,8 @@ public class RERune : Reward
     public override void AddRewardList()
     {
         rewardIcon = Managers.Reward.GetRewardIcon(RewardType.Rune);
-        desc = "·é Ãß°¡ÇÏ±â";
+        desc = "ë£¬ ì¶”ê°€í•˜ê¸°";
+        isAuto = true;
         Managers.Reward.AddRewardList(this);
     }
 
