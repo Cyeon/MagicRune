@@ -11,8 +11,8 @@ public class IceShield : BaseRune
     }
     public override void AbilityAction()
     {
-        Managers.GetPlayer().AddShield(GetAbliltiValaue(EffectType.Defence));
-        Managers.GetPlayer().StatusManager.AddStatus(StatusName.IceShield, GetAbliltiValaue(EffectType.Status).RoundToInt());
+        Managers.GetPlayer().AddShield(GetAbliltiValue(EffectType.Defence));
+        Managers.GetPlayer().StatusManager.AddStatus(StatusName.IceShield, GetAbliltiValue(EffectType.Status).RoundToInt());
     }
 
     public override object Clone()

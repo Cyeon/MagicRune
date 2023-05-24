@@ -18,7 +18,7 @@ public class IceSmash : BaseRune
     public override void AbilityAction()
     {
         BattleManager.Instance.Enemy.StatusManager.DeleteStatus(StatusName.Ice);
-        Managers.GetPlayer().Attack(GetAbliltiValaue(EffectType.Attack),IsIncludeKeyword(KeywordType.Penetration));
+        Managers.GetPlayer().Attack(GetAbliltiValue(EffectType.Attack),IsIncludeKeyword(KeywordType.Penetration));
     }
 
     public override object Clone()

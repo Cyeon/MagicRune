@@ -12,7 +12,7 @@ public class Bouncing : BaseRune
 
     public override void AbilityAction()
     {
-        Managers.GetPlayer().StatusManager.AddStatus(StatusName.Bouncing, GetAbliltiValaue(EffectType.Status).RoundToInt());
+        Managers.GetPlayer().StatusManager.AddStatus(StatusName.Bouncing, GetAbliltiValue(EffectType.Status).RoundToInt());
     }
 
     public override object Clone()

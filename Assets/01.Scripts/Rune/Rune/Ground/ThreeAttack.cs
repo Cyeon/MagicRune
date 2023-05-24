@@ -14,7 +14,7 @@ public class ThreeAttack : BaseRune
     {
         for(int i = 0; i < 3; i++)
         {
-            BattleManager.Instance.Enemy.StatusManager.AddStatus(StatusName.Impact, GetAbliltiValaue(EffectType.Status).RoundToInt());
+            BattleManager.Instance.Enemy.StatusManager.AddStatus(StatusName.Impact, GetAbliltiValue(EffectType.Status).RoundToInt());
         }
     }
 

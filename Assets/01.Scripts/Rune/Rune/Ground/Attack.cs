@@ -12,7 +12,7 @@ public class Attack : BaseRune
 
     public override void AbilityAction()
     {
-        BattleManager.Instance.Enemy.StatusManager.AddStatus(StatusName.Impact, GetAbliltiValaue(EffectType.Status).RoundToInt());
+        BattleManager.Instance.Enemy.StatusManager.AddStatus(StatusName.Impact, GetAbliltiValue(EffectType.Status).RoundToInt());
     }
 
     public override object Clone()

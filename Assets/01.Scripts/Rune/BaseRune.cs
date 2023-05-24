@@ -103,7 +103,7 @@ public class BaseRune : Item, ICloneable
     {
     }
 
-    public float GetAbliltiValaue(EffectType type)
+    public float GetAbliltiValue(EffectType type)
     {
         float? value = _baseRuneSO.AbilityList.Where(x => x.EffectType == type).Select(x => x.Value).FirstOrDefault();
 
@@ -114,7 +114,7 @@ public class BaseRune : Item, ICloneable
             return value.Value;
         }
 
-        return int.MinValue;
+        return 0;
     }
 
     public virtual object Clone()

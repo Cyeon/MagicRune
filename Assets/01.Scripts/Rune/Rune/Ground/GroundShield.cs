@@ -10,7 +10,7 @@ public class GroundShield : BaseRune
     }
     public override void AbilityAction()
     {
-        Managers.GetPlayer().AddShield(GetAbliltiValaue(EffectType.Defence));
+        Managers.GetPlayer().AddShield(GetAbliltiValue(EffectType.Defence));
     }
 
     public override object Clone()

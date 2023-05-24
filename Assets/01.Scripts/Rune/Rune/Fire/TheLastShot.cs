@@ -11,8 +11,8 @@ public class TheLastShot : BaseRune
 
     public override void AbilityAction()
     {
-        BattleManager.Instance.Player.Attack(GetAbliltiValaue(EffectType.Attack), false);
-        BattleManager.Instance.Player.StatusManager.AddStatus(StatusName.OverHeat, (int)GetAbliltiValaue(EffectType.Status));
+        BattleManager.Instance.Player.Attack(GetAbliltiValue(EffectType.Attack), false);
+        BattleManager.Instance.Player.StatusManager.AddStatus(StatusName.OverHeat, (int)GetAbliltiValue(EffectType.Status));
     }
 
     public override object Clone()

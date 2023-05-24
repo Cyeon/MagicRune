@@ -12,8 +12,8 @@ public class LightingRod : BaseRune
 
     public override void AbilityAction()
     {
-        Managers.GetPlayer().StatusManager.AddStatus(StatusName.Recharging, GetAbliltiValaue(EffectType.Status).RoundToInt());
-        Managers.GetPlayer().TakeDamage(GetAbliltiValaue(EffectType.Attack));
+        Managers.GetPlayer().StatusManager.AddStatus(StatusName.Recharging, GetAbliltiValue(EffectType.Status).RoundToInt());
+        Managers.GetPlayer().TakeDamage(GetAbliltiValue(EffectType.Attack));
     }
 
     public override object Clone()
