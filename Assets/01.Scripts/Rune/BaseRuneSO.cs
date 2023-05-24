@@ -13,7 +13,7 @@ public class AbilityValue
     public EffectType EffectType;
     public int Value;
 
-    [ConditionalField(nameof(EffectType), false, EffectType.Status)]
+    [ConditionalField(nameof(EffectType), false, EffectType.Status, EffectType.DestroyStatus)]
     public StatusName StatusName;
 }
 
@@ -39,6 +39,8 @@ public class BaseRuneSO : ScriptableObject
             string desc = _runeDescription;
             desc = desc.Replace("(dmg)", GetAbillityValue(EffectType.Attack) + "데미지");
             desc = desc.Replace("(status)", GetAbillityValue(EffectType.Status));
+            desc = desc.Replace("(def)", GetAbillityValue(EffectType.Defence) + "방어");
+            desc = desc.Replace("(dStatus)", GetAbillityValue(EffectType.DestroyStatus));
             return desc;
         }
     }
@@ -64,7 +66,7 @@ public class BaseRuneSO : ScriptableObject
         if (abilities.Count == 0) return "";
 
         string value = abilities[index].Value.ToString();
-        if(type == EffectType.Status)
+        if(type == EffectType.Status || type == EffectType.DestroyStatus)
         {
             if (abilities[index].StatusName != StatusName.Null)
             {
