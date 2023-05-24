@@ -11,6 +11,7 @@ public class SEFire : StatusEvent
         if (BattleManager.Instance.GameTurn == _turnType)
         {
             _unit.TakeDamage(_status.TypeValue, true, _status);
+            Managers.Sound.PlaySound(_status.activeSound, SoundType.Effect);
             
             if(_status.TypeValue / 2 == 0)
             {

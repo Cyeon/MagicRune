@@ -11,7 +11,7 @@ public enum StatusSoundType
     None,
     Main,
     Positive,
-    Negative 
+    Negative
 }
 
 public enum StatusType
@@ -74,7 +74,10 @@ public class Status : MonoBehaviour
     [ShowAssetPreview(32, 32)] public Sprite icon;
     public Color color = Color.white;
     public StatusSoundType statusSoundType = StatusSoundType.None;
-    public AudioClip sound = null;
+    [ConditionalField(nameof(statusSoundType), false, StatusSoundType.Main)]
+    public AudioClip getSound = null;
+    [ConditionalField(nameof(statusSoundType), false, StatusSoundType.Main)]
+    public AudioClip activeSound = null;
     [HideInInspector] public Unit unit;
 
     public void AddValue(int count)
@@ -86,8 +89,8 @@ public class Status : MonoBehaviour
     public void RemoveValue(int count)
     {
         _typeValue = Mathf.Clamp(_typeValue - count, 0, _typeValue);
-        if(_typeValue <= 0) 
-        { 
+        if (_typeValue <= 0)
+        {
             unit.StatusManager.DeleteStatus(this);
             return;
         }

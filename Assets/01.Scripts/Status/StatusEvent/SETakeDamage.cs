@@ -24,7 +24,7 @@ public class SETakeDamage : StatusEvent
         {
             _damage = _status.TypeValue;
         }
-
+        Managers.Sound.PlaySound(_status.activeSound, SoundType.Effect);
         _unit.TakeDamage(_damage, _isTrueDamage, _status);
     }
 }

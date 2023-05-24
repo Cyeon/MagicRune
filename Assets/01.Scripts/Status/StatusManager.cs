@@ -47,8 +47,8 @@ public class StatusManager
         switch (status.statusSoundType)
         {
             case StatusSoundType.Main:
-                if (status.sound != null)
-                    Managers.Sound.PlaySound(status.sound, SoundType.Effect);
+                if (status.getSound != null)
+                    Managers.Sound.PlaySound(status.getSound, SoundType.Effect);
                 else
                     Debug.LogError($"{status.statusName}'s AudioClip is NULL");
                 break;
