@@ -25,14 +25,14 @@ public class MapManager
     #endregion
 
     #region Period
-    private List<StageType> _firstPeriodStageList = new List<StageType>(); // ?꾨컲遺
-    private List<StageType> _secondPeriodStageList = new List<StageType>(); // ?꾨컲遺
+    private List<StageType> _firstPeriodStageList = new List<StageType>(); // ?袁⑥뺘?봔
+    private List<StageType> _secondPeriodStageList = new List<StageType>(); // ?袁⑥뺘?봔
 
-    private List<StageType> _currentPeriodStageList = new List<StageType>(); // ?꾩옱 ?④퀎
+    private List<StageType> _currentPeriodStageList = new List<StageType>(); // ?袁⑹삺 ??ｍ?
     public List<StageType> CurrentPeriodStageList => _currentPeriodStageList;
 
-    private int _periodProgress = 0; // ?꾩옱 吏꾪뻾??
-    private int _nextCondition = 4; // ?ㅼ쓬 ?④퀎濡??섏뼱媛??議곌굔 ?ㅽ뀒?댁? 媛쒖닔
+    private int _periodProgress = 0; // ?袁⑹삺 筌욊쑵六??
+    private int _nextCondition = 4; // ??쇱벉 ??ｍ롦에???뤿선揶쎛??鈺곌퀗援???쎈??? 揶쏆뮇??
 
     private PeriodType _periodType = PeriodType.None;
     public PeriodType CurrentPeriodType => _periodType;
@@ -121,7 +121,7 @@ public class MapManager
 
         bool isAttack = false;
 
-        // ?꾨컲遺 ?명똿
+        // ?袁⑥뺘?봔 ?紐낅샒
         _firstPeriodStageList.Add(StageType.Attack);
         _firstPeriodStageList.Add(StageType.Attack);
         _firstPeriodStageList.Add(StageType.Attack);
@@ -146,7 +146,7 @@ public class MapManager
             }
         }
 
-        // ?꾨컲遺 ?명똿
+        // ?袁⑥뺘?봔 ?紐낅샒
 
         _secondPeriodStageList.Add(StageType.Attack);
         _secondPeriodStageList.Add(StageType.Attack);
@@ -244,7 +244,7 @@ public class MapManager
     }
 
     /// <summary>
-    /// 怨듦꺽 ?뱀? 紐⑦뿕 ?ㅽ뀒?댁?瑜??ｋ뒗?? 怨듦꺽?대㈃ true 紐⑦뿕?대㈃ false
+    /// ?⑤벀爰??諭? 筌뤴뫂肉???쎈??????節뗫뮉?? ?⑤벀爰????true 筌뤴뫂肉????false
     /// </summary>
     /// <param name="period"></param>
     /// <returns></returns>
@@ -280,7 +280,7 @@ public class MapManager
 
 
     /// <summary>
-    /// 50% ?뺣쪧
+    /// 50% ?類ｌぇ
     /// </summary>
     /// <returns></returns>
     private bool IsFiftyChance()

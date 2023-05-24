@@ -42,4 +42,10 @@ public class MapDialElement : DialElement<MapRuneUI, MapRuneUI>
             _selectElement = _elementList[index];
         }
     }
+
+    public override void Attack()
+    {
+        _elementList.Remove(SelectElement);
+        SelectElement = null;
+    }
 }
