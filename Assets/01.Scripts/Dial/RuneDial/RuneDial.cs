@@ -118,6 +118,7 @@ public class RuneDial : Dial<BaseRuneUI, BaseRune>
 
     protected override IEnumerator AttackCoroutine()
     {
+        Managers.GetPlayer().PlayAnimation(Managers.GetPlayer().HashAttack);
         AttributeType compareAttributeType = _dialElementList[0].SelectElement.Rune.BaseRuneSO.AttributeType;
         bool isResonanceCheck = true;
         for (int i = _dialElementList.Count - 1; i >= 0; i--)

@@ -87,6 +87,13 @@ public class Unit : MonoBehaviour
     private Coroutine _hitCoroutine;
 
     [SerializeField] private MMPositionShaker _hitShaker;
+    [SerializeField]
+    private Animator _animator;
+
+    #region Animation Name
+    public readonly string HashAttack = "Attack";
+    public readonly string HashHit = "Hit";
+    #endregion
 
     private void Start()
     {
@@ -126,6 +133,7 @@ public class Unit : MonoBehaviour
         if (isTrueDamage == false)
             OnTakeDamage?.Invoke(currentDmg);
         OnTakeDamageFeedback?.Invoke();
+        PlayAnimation(HashHit);
 
         if (this is Enemy)
         {
@@ -329,4 +337,11 @@ public class Unit : MonoBehaviour
         seq.Append(_shieldText.transform.parent.DOScale(1f, 0.1f));
     }
 
+    public void PlayAnimation(string name)
+    {
+        if(_animator != null)
+        {
+            _animator.Play(name);
+        }
+    }
 }
