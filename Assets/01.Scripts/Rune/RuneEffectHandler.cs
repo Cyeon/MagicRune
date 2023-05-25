@@ -37,10 +37,10 @@ public class RuneEffectHandler : MonoBehaviour
     {
         transform.DOKill();
 
-        if (_effectDict[tier] == effect) return;
 
         if (_effectDict[tier] != null)
         {
+            if (_effectDict[tier] == effect) return;
             Managers.Resource.Destroy(_effectDict[tier]);
         }
 

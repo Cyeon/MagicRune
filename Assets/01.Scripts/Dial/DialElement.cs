@@ -216,7 +216,7 @@ public class DialElement<T1, T2> : MonoBehaviour where T1 : MonoBehaviour where 
         }
     }
 
-    private void UpdateSelectElement()
+    public void UpdateSelectElement()
     {
         if (_elementList.Count > 0 && _isRotateAdditionalCondition)
         {
@@ -350,6 +350,7 @@ public class DialElement<T1, T2> : MonoBehaviour where T1 : MonoBehaviour where 
                 if (inBoolean)
                 {
                     int index = (int)(transform.eulerAngles.z / oneDinstance) % (_elementList.Count);
+                    transform.DOKill();
                     DOTween.To(() => transform.eulerAngles, x => transform.eulerAngles = x,
                         new Vector3(0, 0, ((int)(transform.eulerAngles.z / oneDinstance)) * oneDinstance),
                         0.3f
@@ -366,6 +367,7 @@ public class DialElement<T1, T2> : MonoBehaviour where T1 : MonoBehaviour where 
                 {
                     int index = ((int)(transform.eulerAngles.z / oneDinstance) + 1) % (_elementList.Count);
                     index = (index + 1) % _elementList.Count;
+                    transform.DOKill();
                     DOTween.To(
                         () => transform.eulerAngles,
                         x => transform.eulerAngles = x,
@@ -389,6 +391,7 @@ public class DialElement<T1, T2> : MonoBehaviour where T1 : MonoBehaviour where 
                 float distance = transform.eulerAngles.z % oneDinstance;
                 if (distance >= oneDinstance / 2f)
                 {
+                    transform.DOKill();
                     transform.DORotate(new Vector3(0, 0, ((index + 1) % _elementList.Count * oneDinstance)), 0.3f, RotateMode.Fast)
                         .OnComplete(() =>
                         {
@@ -401,6 +404,7 @@ public class DialElement<T1, T2> : MonoBehaviour where T1 : MonoBehaviour where 
                 }
                 else
                 {
+                    transform.DOKill();
                     transform.DORotate(new Vector3(0, 0, ((index) * oneDinstance)), 0.3f, RotateMode.Fast)
                         .OnComplete(() =>
                         {
