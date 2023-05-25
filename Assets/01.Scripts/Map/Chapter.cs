@@ -1,4 +1,4 @@
-﻿using MyBox;
+using MyBox;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -8,9 +8,11 @@ public class Chapter
 {
     public string chapterName = "";
     public int chapter = 0;
+
+    [Header("Background Image")]
     public Sprite background;
 
-    [Header("몬스터 잡았을 때 지급될 골드")]
+    [Header("Reward Gold")]
     public int minGold = 0;
     public int maxGold = 100;
     public int Gold => Random.Range(minGold, maxGold);

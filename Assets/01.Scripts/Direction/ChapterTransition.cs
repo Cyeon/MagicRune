@@ -3,72 +3,50 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using DG.Tweening;
-using Cinemachine;
-using System;
-using System.Diagnostics.CodeAnalysis;
-
+using UnityEngine.UI;
 public class ChapterTransition : MonoBehaviour
 {
-    private TextMeshProUGUI _chapterNumberText = null;
+    //private TextMeshProUGUI _chapterNumberText = null;
     private TextMeshProUGUI _chapterNameText = null;
+    private GameObject _chapterNameTextFadeObj;
 
-    private CinemachineStoryboard _storyboard = null;
-
-    private float _wipeSpeed = 0.5f;
-    private float _fadeSpeed = 0.5f;
+    private Image _backgroundImage;
+    private Image _fadeImage;
 
     public void Init()
     {
-        _storyboard = FindObjectOfType<CinemachineStoryboard>();
-        _chapterNumberText = transform.Find("ChapterNumberText").GetComponent<TextMeshProUGUI>();
+        Managers.Canvas.GetCanvas("ChapterTransition").enabled = false;
+
+        //_chapterNumberText = transform.Find("ChapterNumberText").GetComponent<TextMeshProUGUI>();
         _chapterNameText = transform.Find("ChapterNameText").GetComponent<TextMeshProUGUI>();
+        _chapterNameTextFadeObj = _chapterNameText.transform.Find("Fade").gameObject;
 
-        _chapterNumberText.gameObject.SetActive(false);
-        _chapterNameText.gameObject.SetActive(false);
-
+        _backgroundImage = transform.Find("Background").GetComponent<Image>();
+        _fadeImage = transform.Find("FadeImage").GetComponent<Image>();
     }
 
     public void Transition()
     {
-        _chapterNumberText.gameObject.SetActive(true);
-        _chapterNameText.gameObject.SetActive(true);
+        Managers.Canvas.GetCanvas("ChapterTransition").enabled = true;
 
-        _chapterNumberText.SetText("Chapter " + Managers.Map.Chapter.ToString());
+        _backgroundImage.sprite = Resources.Load<Sprite>("Sprite/MapBg_" + Managers.Map.Chapter.ToString());
         _chapterNameText.SetText(Managers.Map.CurrentChapter.chapterName);
 
-        StartCoroutine(Wipe());
-    }
-
-    private IEnumerator Wipe()
-    {
-        _storyboard.m_SplitView = 1;
-        while (_storyboard.m_SplitView > 0)
-        {
-            _storyboard.m_SplitView -= _wipeSpeed * Time.deltaTime;
-            if (_storyboard.m_SplitView < 0) _storyboard.m_SplitView = 0;
-            yield return new WaitForEndOfFrame();
-        }
-
-        FadeText(1f);
-        yield return new WaitForSeconds(1f + _fadeSpeed);
-        FadeText(0f);
-        yield return new WaitForSeconds(_fadeSpeed);
-
-        while (_storyboard.m_SplitView >= -1)
-        {
-            _storyboard.m_SplitView -= _wipeSpeed * Time.deltaTime;
-            yield return new WaitForEndOfFrame();
-        }
-
-        _chapterNumberText.gameObject.SetActive(false);
-        _chapterNameText.gameObject.SetActive(false);
-        //Managers.Map.SpawnPortal();
-    }
-
-    private void FadeText(float fade)
-    {
         Sequence seq = DOTween.Sequence();
-        seq.Append(_chapterNameText.DOFade(fade, _fadeSpeed));
-        seq.Join(_chapterNumberText.DOFade(fade, _fadeSpeed));
+        seq.Append(_fadeImage.DOFade(0, 0.7f));
+        seq.Append(_chapterNameTextFadeObj.transform.DOScaleX(1, 1f));
+        seq.Append(_chapterNameTextFadeObj.transform.DOScaleX(0, 1f));
+        seq.Join(_backgroundImage.DOFade(0, 1f));
+        seq.AppendCallback(() =>
+        {
+            Reset();
+            Managers.Canvas.GetCanvas("ChapterTransition").enabled = false;
+        });
+    }
+
+    public void Reset()
+    {
+        _backgroundImage.DOFade(1, 0);
+        _fadeImage.DOFade(1, 0);
     }
 }
