@@ -8,12 +8,14 @@ using UnityEngine.UI;
 public class ShopUI : MonoBehaviour
 {
     private Transform _storeShelf;
-    private ShopItemPanelUI _shopItemPanel;
+    private ExplainPanel _explainPanel;
+    private ShopItemPanelUI _selectItem;
     [SerializeField] private GameObject _buyCheck;
 
     private void Start()
     {
         _storeShelf = transform.Find("StoreShelf");
+        _explainPanel = transform.Find("Explain_Panel").GetComponent<ExplainPanel>();
 
         Managers.Canvas.GetCanvas("Shop").enabled = false;
     }
@@ -36,18 +38,28 @@ public class ShopUI : MonoBehaviour
 
     public void RuneItemProduct(Item item)
     {
-        ShopItemPanelUI ui = Managers.Resource.Instantiate("ItemPanel", _storeShelf).GetComponent<ShopItemPanelUI>();
-        ui.Init(item, BuyCheck);
+        ShopItemPanelUI ui = Managers.Resource.Instantiate("NewItemPanel", _storeShelf).GetComponent<ShopItemPanelUI>();
+        ui.Init(item, SelectItem);
     }
 
-    private void BuyCheck(ShopItemPanelUI shopItem)
+    // ÏÑ†ÌÉù
+    private void SelectItem(ShopItemPanelUI shopItem)
     {
-        _shopItemPanel = shopItem;
+        _selectItem = shopItem;
 
-        if(Managers.Gold.Gold < _shopItemPanel.item.Gold)
+        _explainPanel.SetUI(_selectItem.item.Rune.BaseRuneSO);
+    }
+
+    public void BuyCheck()
+    {
+        //_shopItemPanel = shopItem;
+
+        if (_selectItem == null) return;
+
+        if(Managers.Gold.Gold < _selectItem.item.Gold)
         {
             InfoMessage message = Managers.Resource.Instantiate("InfoMessage", transform).GetComponent<InfoMessage>();
-            message.Setup("µ∑¿Ã ∫Œ¡∑«’¥œ¥Ÿ.", Input.GetTouch(0).position);
+            message.Setup("ÎèàÏù¥ Î∂ÄÏ°±Ìï©ÎãàÎã§.", Input.GetTouch(0).position);
             return;
         }
 
@@ -58,11 +70,15 @@ public class ShopUI : MonoBehaviour
     {
         _buyCheck.SetActive(false);
 
-        Managers.Gold.AddGold(-_shopItemPanel.item.Gold);
+        Managers.Gold.AddGold(-_selectItem.item.Gold);
         Managers.Sound.PlaySound("SFX/Buy", SoundType.Effect);
-        _shopItemPanel.item.Execute();
+        _selectItem.item.Execute();
 
-        Managers.Resource.Destroy(_shopItemPanel.gameObject);
+        Managers.Resource.Destroy(_selectItem.gameObject);
+
+        _selectItem = null;
+        BaseRune nullRune = null;
+        _explainPanel.SetUI(nullRune);
 
         _storeShelf.transform.GetComponentsInChildren<ShopItemPanelUI>().ForEach(x => x.GoldTextColorUpdate());
     }

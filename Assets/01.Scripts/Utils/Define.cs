@@ -77,6 +77,21 @@ public class Define
         }
     }
 
+    private static MapScene _mapScene;
+    public static MapScene MapScene
+    {
+        get
+        {
+            if (_mapScene == null)
+            {
+                _mapScene = Managers.Scene.CurrentScene as MapScene;
+            }
+
+            return _mapScene;
+        }
+    }
+
+
     public enum Scene
     {
         Unknown,

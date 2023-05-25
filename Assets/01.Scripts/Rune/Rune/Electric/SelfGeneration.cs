@@ -12,7 +12,7 @@ public class SelfGeneration : BaseRune
 
     public override void AbilityAction()
     {
-        Managers.GetPlayer().StatusManager.AddStatus(StatusName.SelfGeneration, GetAbliltiValaue(EffectType.Status).RoundToInt());
+        Managers.GetPlayer().StatusManager.AddStatus(StatusName.SelfGeneration, GetAbliltiValue(EffectType.Status).RoundToInt());
     }
 
     public override object Clone()

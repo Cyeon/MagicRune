@@ -13,10 +13,10 @@ public class RapidFire : BaseRune
     {
         for(int i = 0; i < 3; i++)
         {
-            BattleManager.Instance.Player.Attack(GetAbliltiValaue(EffectType.Attack), false);
+            BattleManager.Instance.Player.Attack(GetAbliltiValue(EffectType.Attack), false);
         }
 
-        BattleManager.Instance.Player.StatusManager.AddStatus(StatusName.OverHeat, (int)GetAbliltiValaue(EffectType.Status));
+        BattleManager.Instance.Player.StatusManager.AddStatus(StatusName.OverHeat, (int)GetAbliltiValue(EffectType.Status));
     }
 
     public override object Clone()

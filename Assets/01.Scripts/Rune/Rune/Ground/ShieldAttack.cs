@@ -11,8 +11,8 @@ public class ShieldAttack : BaseRune
     }
     public override void AbilityAction()
     {
-        Managers.GetPlayer().AddShield(GetAbliltiValaue(EffectType.Defence));
-        BattleManager.Instance.Enemy.StatusManager.AddStatus(StatusName.Impact, GetAbliltiValaue(EffectType.Status).RoundToInt());
+        Managers.GetPlayer().AddShield(GetAbliltiValue(EffectType.Defence));
+        BattleManager.Instance.Enemy.StatusManager.AddStatus(StatusName.Impact, GetAbliltiValue(EffectType.Status).RoundToInt());
     }
 
     public override object Clone()

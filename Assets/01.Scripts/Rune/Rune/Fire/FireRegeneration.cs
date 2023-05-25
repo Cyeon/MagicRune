@@ -12,8 +12,8 @@ public class FireRegeneration : BaseRune
 
     public override void AbilityAction()
     {
-        Managers.GetPlayer().AddHP(GetAbliltiValaue(EffectType.Etc));
-        Managers.GetPlayer().StatusManager.AddStatus(StatusName.Fire, GetAbliltiValaue(EffectType.Status).RoundToInt());
+        Managers.GetPlayer().AddHP(GetAbliltiValue(EffectType.Etc));
+        Managers.GetPlayer().StatusManager.AddStatus(StatusName.Fire, GetAbliltiValue(EffectType.Status).RoundToInt());
     }
 
     public override object Clone()
