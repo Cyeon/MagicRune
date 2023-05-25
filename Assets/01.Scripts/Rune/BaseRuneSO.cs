@@ -37,10 +37,19 @@ public class BaseRuneSO : ScriptableObject
         get
         {
             string desc = _runeDescription;
-            desc = desc.Replace("(dmg)", GetAbillityValue(EffectType.Attack) + "데미지");
+            desc = desc.Replace("(dmg)", GetAbillityValue(EffectType.Attack) + " 데미지");
             desc = desc.Replace("(status)", GetAbillityValue(EffectType.Status));
-            desc = desc.Replace("(def)", GetAbillityValue(EffectType.Defence) + "방어");
+            desc = desc.Replace("(def)", GetAbillityValue(EffectType.Defence) + " 방어");
             desc = desc.Replace("(dStatus)", GetAbillityValue(EffectType.DestroyStatus));
+
+            for(int i = 0; i < KeywardList.Length; i++)
+            {
+                if(Managers.Keyward.GetKeyward(KeywardList[i]).IsAddDesc)
+                {
+                    desc += " <color=#FFE951>" + Managers.Keyward.GetKeyward(KeywardList[i]).KeywardName + "</color>";
+                }
+            }
+
             return desc;
         }
     }
@@ -73,7 +82,8 @@ public class BaseRuneSO : ScriptableObject
         {
             if (abilities[index].StatusName != StatusName.Null)
             {
-                text += Resources.Load("Prefabs/Status/Status_" + abilities[index].StatusName).GetComponent<Status>().debugName;
+                string status = Resources.Load("Prefabs/Status/Status_" + abilities[index].StatusName).GetComponent<Status>().debugName;
+                text = value.ToString() + " <color=#FFE951>" + status + "</color>";
             }
         }
 

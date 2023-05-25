@@ -23,7 +23,6 @@ public class Enemy : Unit
     #region UI
 
     [Header("UI")]
-    public Vector3 enemyScaleVec = Vector3.one;
     public SpriteRenderer spriteRenderer;
     #endregion
 
@@ -35,7 +34,6 @@ public class Enemy : Unit
         _patternManager.Init();
         UISetting();
 
-        enemyScaleVec = spriteRenderer.transform.localScale;
         transform.localPosition = new Vector3(2.5f, 4.5f, 0);
     }
 
