@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
+using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -165,7 +167,9 @@ public class StatusManager
         {
             if (_statusList[i] != null && _statusList[i].OnAttack.Count > 0)
             {
-                _statusList[i].OnAttack.ForEach(x => x.Invoke());
+                _statusList[i].OnAttack.ForEach(x => {
+                    if (!_unit.IsDie) x.Invoke();
+                    });
             }
         }
     }
