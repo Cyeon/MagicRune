@@ -15,6 +15,8 @@ public class MapScene : BaseScene
     private List<AudioClip> _bgmList = new List<AudioClip>(); 
     public MapDial mapDial;
 
+    private Image _compousProgress;
+
     protected override void Init()
     {
         base.Init();
@@ -22,6 +24,9 @@ public class MapScene : BaseScene
         Managers.UI.Bind<UserInfoUI>("Upper_Frame", Managers.Canvas.GetCanvas("UserInfoPanelCanvas").gameObject);
         _userInfoUI = Managers.UI.Get<UserInfoUI>("Upper_Frame");
         Managers.GetPlayer().userInfoUI = _userInfoUI;
+
+        Managers.UI.Bind<Image>("Progress", Managers.Canvas.GetCanvas("CompousProgressCanvas").gameObject);
+        _compousProgress = Managers.UI.Get<Image>("Progress");
 
         Managers.UI.Bind<TextMeshProUGUI>("GoldPopupText", Managers.Canvas.GetCanvas("UserInfoPanelCanvas").gameObject);
         _goldPopupText = Managers.UI.Get<TextMeshProUGUI>("GoldPopupText");
@@ -65,5 +70,10 @@ public class MapScene : BaseScene
 
         _goldPopupText.GetComponent<RectTransform>().DOAnchorPosY(50f * flag, 1f);
         Invoke("GoldPopupDown", 1.2f);
+    }
+
+    public void CompousProgress(float amount)
+    {
+        _compousProgress.DOFillAmount(amount, 0.25f);
     }
 }

@@ -4,6 +4,7 @@ using System.Linq;
 using UnityEngine;
 using DG.Tweening;
 using Unity.VisualScripting;
+using MyBox;
 
 public enum PeriodType
 {
@@ -121,7 +122,7 @@ public class MapManager
 
         bool isAttack = false;
 
-        // ?熬곣뫁類?遊붋 ?筌뤿굝??
+        // 전반부
         _firstPeriodStageList.Add(StageType.Attack);
         _firstPeriodStageList.Add(StageType.Attack);
         _firstPeriodStageList.Add(StageType.Attack);
@@ -145,9 +146,9 @@ public class MapManager
                 isAttack = AttackOrAdventure(_firstPeriodStageList);
             }
         }
+        _firstPeriodStageList.Shuffle();
 
-        // ?熬곣뫁類?遊붋 ?筌뤿굝??
-
+        // 후반부
         _secondPeriodStageList.Add(StageType.Attack);
         _secondPeriodStageList.Add(StageType.Attack);
         _secondPeriodStageList.Add(StageType.Attack);
@@ -172,6 +173,8 @@ public class MapManager
 
             _secondPeriodStageList.Add(isAttack ? StageType.Adventure : StageType.Attack);
         }
+        _secondPeriodStageList.Shuffle();
+
         NextPeriod();
     }
     #endregion
@@ -191,6 +194,7 @@ public class MapManager
 
     public void NextStage()
     {
+        Managers.Canvas.GetCanvas("CompousProgress").enabled = true;
         MapScene.mapDial.gameObject.SetActive(true);
 
         MapScene.mapDial.Clear();
@@ -212,9 +216,13 @@ public class MapManager
         _floor++;
 
         _periodProgress++;
+        MapScene.CompousProgress((float)_periodProgress / _nextCondition);
+
         if(_periodProgress == _nextCondition)
         {
             NextPeriod();
+            MapScene.mapDial.Clear();
+            MapScene.mapDial.MapStageSpawn();
         }
     }
     #endregion
@@ -226,6 +234,8 @@ public class MapManager
 
         _periodProgress = 0;
         _periodType++;
+
+        MapScene.CompousProgress(0);
 
         switch (CurrentPeriodType)
         {

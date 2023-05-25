@@ -1,4 +1,4 @@
-﻿    using System.Collections;
+    using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -23,6 +23,7 @@ public class Stage : MonoBehaviour
     public virtual void InStage()
     {
         Managers.Map.CurrentPeriodStageList.Remove(type);
+        Managers.Canvas.GetCanvas("CompousProgress").enabled = false;
     }
 
     public virtual void Init()
