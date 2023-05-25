@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Data;
+using System.Runtime.InteropServices;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -12,7 +13,7 @@ public class ShopItem
     public int Gold;
     public ShopItemType Type;
 
-    // Áö±İÀº ÀÌ·¸°Ô ÇÏ°í ³ªÁß¿¡´Â ·éÀÌ³ª À¯¹° °°Àº ¾Öµé¿¡ ºÎ¸ğ Å¬·¡½º¸¦ Á¤ÀÇÇØ¼­ °ü¸®ÇÏ´Â ½ÄÀ¸·Î
+    // ì§€ê¸ˆì€ ì´ë ‡ê²Œ í•˜ê³  ë‚˜ì¤‘ì—ëŠ” ë£¬ì´ë‚˜ ìœ ë¬¼ ê°™ì€ ì• ë“¤ì— ë¶€ëª¨ í´ë˜ìŠ¤ë¥¼ ì •ì˜í•´ì„œ ê´€ë¦¬í•˜ëŠ” ì‹ìœ¼ë¡œ
     public RuneSO Item;
 }
 
@@ -20,25 +21,30 @@ public class ShopItemPanelUI : MonoBehaviour
 {
     [SerializeField] private Image _icon;
     [SerializeField] private TextMeshProUGUI _goldText;
-    [SerializeField] private TextMeshProUGUI _runeNameText;
-    [SerializeField] private TextMeshProUGUI _runeDescText;
+    [SerializeField] private Image _selectImage;
+    //[SerializeField] private TextMeshProUGUI _runeNameText;
+    //[SerializeField] private TextMeshProUGUI _runeDescText;
+
+
+    // ì„¤ëª…ì€ ë°‘ì— ì„¤ëª… ì°½ì´ ë„ì›Œì¤„ ê±°ì„
 
     public Item item;
 
     /// <summary>
-    /// ¾ÆÀÌÅÛÀ» »òÀ»¶§ÀÇ Çàµ¿À» ÀÌ°É·Î ³Ñ±æ·ÁÇß´Âµ¥ ÇÊ¿ä¾ø¾îÁü. È¤½Ã ¸ğ¸£´Ï±î ³²°ÜµÒ
+    /// ì•„ì´í…œì„ ìƒ€ì„ë•Œì˜ í–‰ë™ì„ ì´ê±¸ë¡œ ë„˜ê¸¸ë ¤í–ˆëŠ”ë° í•„ìš”ì—†ì–´ì§. í˜¹ì‹œ ëª¨ë¥´ë‹ˆê¹Œ ë‚¨ê²¨ë‘ 
     /// </summary>
     private Action<ShopItemPanelUI> _buyAction;
+    private Action<ShopItemPanelUI> _selectAction;
 
     public void Init(Item item, Action<ShopItemPanelUI> action = null)
     {
         this.item = item;
         _buyAction = action;
 
-        _icon.sprite = this.item.Icon;
+        _icon.sprite = this.item.Rune.Icon;
         _goldText.SetText(this.item.Gold.ToString());
-        _runeNameText.SetText(this.item.Rune.BaseRuneSO.RuneName);
-        _runeDescText.SetText(this.item.Rune.BaseRuneSO.RuneDescription);
+        //_runeNameText.SetText(this.item.Rune.BaseRuneSO.RuneName);
+        //_runeDescText.SetText(this.item.Rune.BaseRuneSO.RuneDescription);
         GoldTextColorUpdate();
 
         transform.localScale = Vector3.one * 0.8f;
@@ -46,7 +52,7 @@ public class ShopItemPanelUI : MonoBehaviour
 
     public void BuyCheck()
     {
-        //  ´Ü¼ø °ñµå ºñ±³¸é ÀÌ°Å¸é ÃæºĞ. ÇÏÁö¸¸ ´Ù¸¥ Á¶°ÇÀÌ ºÙÀ¸¸é ÇÔ¼öÇÏ³ª Á¤À¸ÇØ¾ßÇÒ µí
+        //  ë‹¨ìˆœ ê³¨ë“œ ë¹„êµë©´ ì´ê±°ë©´ ì¶©ë¶„. í•˜ì§€ë§Œ ë‹¤ë¥¸ ì¡°ê±´ì´ ë¶™ìœ¼ë©´ í•¨ìˆ˜í•˜ë‚˜ ì •ìœ¼í•´ì•¼í•  ë“¯
         _buyAction?.Invoke(this);
     }
 
