@@ -4,7 +4,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using static UnityEditor.PlayerSettings;
 
 public class RuneEffectHandler : MonoBehaviour
 {
@@ -36,6 +35,8 @@ public class RuneEffectHandler : MonoBehaviour
 
     public void EditEffect(GameObject effect, int tier)
     {
+        transform.DOKill();
+
         if (_effectDict[tier] == effect) return;
 
         if (_effectDict[tier] != null)
@@ -71,6 +72,7 @@ public class RuneEffectHandler : MonoBehaviour
             float height = Mathf.Sin((_oneAngle * i + _startAngle) * Mathf.Deg2Rad) * _distance;
             if (isTween)
             {
+                transform.DOKill();
                 effectArray[i].transform.DOMove(new Vector3(width + this.transform.position.x, height + this.transform.position.y, 0), 0.2f);
             }
             else

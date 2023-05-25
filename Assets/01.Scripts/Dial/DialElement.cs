@@ -14,7 +14,7 @@ public enum DialState
 /// <summary>
 /// 
 /// </summary>
-/// <typeparam name="T1">???嚥싲갭큔?댁옃紐?????????????????嚥싲갭큔????饔낅떽????ш낄?뉔뇡?????놁퍥???????熬곻퐢夷???????ex) BaseRuneUI</typeparam>
+/// <typeparam name="T1">????μ떜媛?걫??곸쁼筌??????????????????μ떜媛?걫????耀붾굝?????????붾눀??????곹뜢????????ш내?℡ㅇ???????ex) BaseRuneUI</typeparam>
 /// <typeparam name="T2">T1???????????ex) BaseRune</typeparam>
 public class DialElement<T1, T2> : MonoBehaviour where T1 : MonoBehaviour where T2 : class
 {
@@ -47,7 +47,7 @@ public class DialElement<T1, T2> : MonoBehaviour where T1 : MonoBehaviour where 
     protected int _lineID = -1;
 
     #region Element Parameta
-    protected List<T1> _elementList;
+    protected List<T1> _elementList = new List<T1>();
     public List<T1> ElementList => _elementList;
     protected T1 _selectElement;
     public virtual T1 SelectElement
@@ -99,7 +99,6 @@ public class DialElement<T1, T2> : MonoBehaviour where T1 : MonoBehaviour where 
         _dial = GetComponentInParent<Dial<T1, T2>>();
         _lineSpriteRenderer = transform.Find("LineVisualSprite").GetComponent<SpriteRenderer>();
         _textSpriteRenderer = transform.Find("TextVisualSprite").GetComponent<SpriteRenderer>();
-        _elementList = new List<T1>();
 
         transform.rotation = Quaternion.Euler(Vector3.zero);
         IsGlow = false;

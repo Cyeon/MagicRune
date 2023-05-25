@@ -25,14 +25,14 @@ public class MapManager
     #endregion
 
     #region Period
-    private List<StageType> _firstPeriodStageList = new List<StageType>(); // ?袁⑥뺘?봔
-    private List<StageType> _secondPeriodStageList = new List<StageType>(); // ?袁⑥뺘?봔
+    private List<StageType> _firstPeriodStageList = new List<StageType>(); // ?熬곣뫁類?遊붋
+    private List<StageType> _secondPeriodStageList = new List<StageType>(); // ?熬곣뫁類?遊붋
 
-    private List<StageType> _currentPeriodStageList = new List<StageType>(); // ?袁⑹삺 ??ｍ?
+    private List<StageType> _currentPeriodStageList = new List<StageType>(); // ?熬곣뫗????節띉?
     public List<StageType> CurrentPeriodStageList => _currentPeriodStageList;
 
-    private int _periodProgress = 0; // ?袁⑹삺 筌욊쑵六??
-    private int _nextCondition = 4; // ??쇱벉 ??ｍ롦에???뤿선揶쎛??鈺곌퀗援???쎈??? 揶쏆뮇??
+    private int _periodProgress = 0; // ?熬곣뫗??嶺뚯쉳?듸쭛??
+    private int _nextCondition = 4; // ???깅쾳 ??節띉濡?뿉???琉우꽑?띠럾????브퀗?쀦뤃????댟??? ?띠룇裕??
 
     private PeriodType _periodType = PeriodType.None;
     public PeriodType CurrentPeriodType => _periodType;
@@ -121,7 +121,7 @@ public class MapManager
 
         bool isAttack = false;
 
-        // ?袁⑥뺘?봔 ?紐낅샒
+        // ?熬곣뫁類?遊붋 ?筌뤿굝??
         _firstPeriodStageList.Add(StageType.Attack);
         _firstPeriodStageList.Add(StageType.Attack);
         _firstPeriodStageList.Add(StageType.Attack);
@@ -146,7 +146,7 @@ public class MapManager
             }
         }
 
-        // ?袁⑥뺘?봔 ?紐낅샒
+        // ?熬곣뫁類?遊붋 ?筌뤿굝??
 
         _secondPeriodStageList.Add(StageType.Attack);
         _secondPeriodStageList.Add(StageType.Attack);
@@ -244,7 +244,7 @@ public class MapManager
     }
 
     /// <summary>
-    /// ?⑤벀爰??諭? 筌뤴뫂肉???쎈??????節뗫뮉?? ?⑤벀爰????true 筌뤴뫂肉????false
+    /// ??ㅻ????獄?? 嶺뚮ㅄ維귟굢????댟??????影?ル츎?? ??ㅻ???????true 嶺뚮ㅄ維귟굢?????false
     /// </summary>
     /// <param name="period"></param>
     /// <returns></returns>
@@ -280,7 +280,7 @@ public class MapManager
 
 
     /// <summary>
-    /// 50% ?類ｌぇ
+    /// 50% ?筌먲퐣??
     /// </summary>
     /// <returns></returns>
     private bool IsFiftyChance()

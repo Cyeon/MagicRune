@@ -15,8 +15,15 @@ public class MapDial : Dial<MapRuneUI, MapRuneUI>
                 Managers.Resource.Destroy(_elementDict[3][i].gameObject);
         }
 
-        _dialElementList[0].SelectElement = null;
-        _dialElementList[0].ElementList.Clear();
+        if (_dialElementList != null || _dialElementList[0] != null)
+        {
+            _dialElementList[0].SelectElement = null;
+            if (_dialElementList[0].ElementList != null)
+            {
+                _dialElementList[0].ElementList.Clear();
+            }
+        }
+
         _elementDict.Clear();
     }
 
