@@ -7,7 +7,7 @@ using UnityEngine;
 /// <summary>
 /// 
 /// </summary>
-/// <typeparam name="T1">???嚥싲갭큔?댁옃紐?????????????????嚥싲갭큔????饔낅떽????ш낄?뉔뇡?????놁퍥???????熬곻퐢夷???????ex) BaseRuneUI</typeparam>
+/// <typeparam name="T1">????關?쒎첎?嫄??怨몄겮嶺??????????????????關?쒎첎?嫄?????遺얘턁?????????遺얜???????怨밸쑂????????????▲뀋???????ex) BaseRuneUI</typeparam>
 /// <typeparam name="T2">T1???????????ex) BaseRune</typeparam>
 public class Dial<T1, T2> : MonoBehaviour where T1 : MonoBehaviour where T2 : class
 {
@@ -174,7 +174,7 @@ public class Dial<T1, T2> : MonoBehaviour where T1 : MonoBehaviour where T2 : cl
                 case TouchPhase.Moved:
                     float distance = Mathf.Abs(Vector2.Distance(transform.position, Define.MainCam.ScreenToWorldPoint(touch.position)));
 
-                    // ???濚밸Ŧ援??낆녇??щ뮦?影?뽧걤???????욱룕?????
+                    // ????μ떜媛?걫?????용???獒?鶯ㅺ동??筌믡룓愿????????源낆쭍?????
                     if (_dialElementList[2].InDistance <= distance)
                     {
                         for (int i = _dialElementList.Count - 1; i >= 0; i--)
@@ -359,23 +359,14 @@ public class Dial<T1, T2> : MonoBehaviour where T1 : MonoBehaviour where T2 : cl
 
                 float height = Mathf.Sin(radianValue * Mathf.Deg2Rad) * _lineDistanceArray[3 - line];
                 float width = Mathf.Cos(radianValue * Mathf.Deg2Rad) * _lineDistanceArray[3 - line];
-                Transform tr = _elementDict[line][i].transform;
-                //if (_dialElementList[3 - line].SelectCard != null)
-                //{
-                //    tr = RuneTransformBySelectRune(line, i);
-                //}
-                //else
-                //{
-                //    tr = _runeDict[line][i].transform;
-                //}
                 if (isTween)
                 {
-                    tr.DOKill();
-                    tr.DOMove(new Vector3(width + this.transform.position.x, height + this.transform.position.y, 0), tweenDuration);
+                    _elementDict[line][i].transform.DOKill();
+                    _elementDict[line][i].transform.DOMove(new Vector3(width + this.transform.position.x, height + this.transform.position.y, 0), tweenDuration);
                 }
                 else
                 {
-                    tr.position = new Vector3(width + this.transform.position.x, height + this.transform.position.y, 0);
+                    _elementDict[line][i].transform.position = new Vector3(width + this.transform.position.x, height + this.transform.position.y, 0);
                 }
 
                 Vector2 direction = new Vector2(

@@ -9,14 +9,24 @@ public class MapDial : Dial<MapRuneUI, MapRuneUI>
     {
         if (_dialElementList.Count == 0) return;
 
-        for(int i = _elementDict[3].Count - 1; i >= 0; i--)
+        if (_elementDict != null && _elementDict.ContainsKey(3) == true)
         {
-            if (_elementDict[3][i] != null)
-                Managers.Resource.Destroy(_elementDict[3][i].gameObject);
+            for (int i = _elementDict[3].Count - 1; i >= 0; i--)
+            {
+                if (_elementDict[3][i] != null)
+                    Managers.Resource.Destroy(_elementDict[3][i].gameObject);
+            }
         }
 
-        _dialElementList[0].SelectElement = null;
-        _dialElementList[0].ElementList.Clear();
+        if (_dialElementList != null || _dialElementList[0] != null)
+        {
+            _dialElementList[0].SelectElement = null;
+            if (_dialElementList[0].ElementList != null)
+            {
+                _dialElementList[0].ElementList.Clear();
+            }
+        }
+
         _elementDict.Clear();
     }
 

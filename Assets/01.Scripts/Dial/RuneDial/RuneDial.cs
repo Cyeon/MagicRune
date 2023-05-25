@@ -130,60 +130,12 @@ public class RuneDial : Dial<BaseRuneUI, BaseRune>
                 _usingDeck.Remove(rune);
                 rune.SetCoolTime();
                 _cooltimeDeck.Add(rune);
-                BezierMissile b = Managers.Resource.Instantiate("BezierMissile", this.transform.parent).GetComponent<BezierMissile>();
-                if (_dialElementList[i].SelectElement.Rune.BaseRuneSO.RuneEffect != null)
-                {
-                    b.SetEffect(_dialElementList[i].SelectElement.Rune.BaseRuneSO.RuneEffect);
-                }
 
                 if (isResonanceCheck)
                     isResonanceCheck = _dialElementList[i].SelectElement.Rune.BaseRuneSO.AttributeType == compareAttributeType;
 
-                switch (_dialElementList[i].SelectElement.Rune.BaseRuneSO.AttributeType)
-                {
-                    case AttributeType.None:
-                        break;
-                    case AttributeType.NonAttribute:
-                        b.SetTrailColor(Color.gray);
-                        break;
-                    case AttributeType.Fire:
-                        b.SetTrailColor(Color.red);
-                        break;
-                    case AttributeType.Ice:
-                        b.SetTrailColor(Color.cyan);
-                        break;
-                    case AttributeType.Wind:
-                        b.SetTrailColor(new Color(0, 1, 0));
-                        break;
-                    case AttributeType.Ground:
-                        b.SetTrailColor(new Color(0.53f, 0.27f, 0));
-                        break;
-                    case AttributeType.Electric:
-                        b.SetTrailColor(Color.yellow);
-                        break;
-                }
+                (_dialElementList[i] as RuneDialElement).EffectHandler.Attack(3 - i, () => _dialElementList[index].Attack());
 
-                Transform pos = null;
-                float bendValue = 0f;
-                switch (_dialElementList[i].SelectElement.Rune.BaseRuneSO.Direction)
-                {
-                    case EffectDirection.Enemy:
-                        pos = BattleManager.Instance.Enemy.transform;
-                        bendValue = 7f;
-                        break;
-                    case EffectDirection.Player:
-                        pos = this.transform;
-                        bendValue = 15f;
-                        break;
-                }
-                Managers.Sound.PlaySound(_dialElementList[i].SelectElement.Rune.BaseRuneSO.RuneSound, SoundType.Effect);
-                b.Init(_dialElementList[i].SelectElement.transform, pos, 1.5f, bendValue, bendValue, () =>
-                {
-                    _dialElementList[index].Attack();
-                    //_dialElementList[i] = null;
-                });
-
-                BattleManager.Instance.missileCount += 1;
                 yield return new WaitForSeconds(0.1f);
             }
         }

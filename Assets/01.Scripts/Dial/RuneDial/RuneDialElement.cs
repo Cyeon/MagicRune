@@ -45,17 +45,31 @@ public class RuneDialElement : DialElement<BaseRuneUI, BaseRune>
     protected override bool _isAttackCondition => BattleManager.Instance.Enemy.IsDie == false && _selectElement != null;
     protected override bool _isRotateAdditionalCondition => BattleManager.Instance.IsPlayerTurn();
 
+    private RuneEffectHandler _effectHandler;
+    public RuneEffectHandler EffectHandler => _effectHandler;
+
+    protected override void Awake()
+    {
+        base.Awake();
+
+        _effectHandler = Managers.GetPlayer().GetComponentInChildren<RuneEffectHandler>();
+    }
+
     protected override void ChangeSelectElement(int index)
     {
         if (index == -1)
         {
+            if (SelectElement == null) return;
             SelectElement = null;
+            _effectHandler.EditEffect(null, _lineID);
         }
         else
         {
+            if(SelectElement == _elementList[index]) return;
             if (_elementList[index].Rune.IsCoolTime == false)
             {
                 SelectElement = _elementList[index];
+                _effectHandler.EditEffect(SelectElement.Rune.BaseRuneSO.RuneEffect, _lineID);
 
                 if (_isTouchDown == true)
                 {
@@ -67,6 +81,8 @@ public class RuneDialElement : DialElement<BaseRuneUI, BaseRune>
                 }
             }
         }
+
+        //_effectHandler.EditEffect(SelectElement == null ? null : SelectElement.Rune.BaseRuneSO.RuneEffect, _lineID);
     }
 
     protected override void OnSelectElementAction()

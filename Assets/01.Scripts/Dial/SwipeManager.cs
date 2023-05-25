@@ -69,7 +69,7 @@ public class SwipeManager
 
     public void Swipe()
     {
-        if (Input.touchCount > 0)
+        if (Input.touchCount > 0 && _swipeDict != null)
         {
             Touch touch = Input.GetTouch(0);
 
@@ -77,46 +77,70 @@ public class SwipeManager
             {
                 _touchBeganPos = touch.position;
 
-                _swipeDict[SwipeType.TouchBegan]?.Invoke(touch);
+                if(_swipeDict.ContainsKey(SwipeType.TouchBegan) == true)
+                {
+                    _swipeDict[SwipeType.TouchBegan]?.Invoke(touch);
+                }
             }
             if (touch.phase == TouchPhase.Moved)
             {
-                _swipeDict[SwipeType.TouchMove]?.Invoke(touch);
+                if (_swipeDict.ContainsKey(SwipeType.TouchMove) == true)
+                {
+                    _swipeDict[SwipeType.TouchMove]?.Invoke(touch);
+                }
             }
             if (touch.phase == TouchPhase.Ended)
             {
                 _touchEndedPos = touch.position;
                 _touchDif = (_touchEndedPos - _touchBeganPos);
 
-                _swipeDict[SwipeType.TouchEnd]?.Invoke(touch);
+                if (_swipeDict.ContainsKey(SwipeType.TouchEnd) == true)
+                {
+                    _swipeDict[SwipeType.TouchEnd]?.Invoke(touch);
+                }
 
                 if (Mathf.Abs(_touchDif.y) > _swipeSensitivity || Mathf.Abs(_touchDif.x) > _swipeSensitivity)
                 {
                     if (_touchDif.y > 0 && Mathf.Abs(_touchDif.y) > Mathf.Abs(_touchDif.x))
                     {
                         //Debug.Log("up");
-                        _swipeDict[SwipeType.UpSwipe]?.Invoke(touch);
+                        if (_swipeDict.ContainsKey(SwipeType.UpSwipe) == true)
+                        {
+                            _swipeDict[SwipeType.UpSwipe]?.Invoke(touch);
+                        }
                     }
                     else if (_touchDif.y < 0 && Mathf.Abs(_touchDif.y) > Mathf.Abs(_touchDif.x))
                     {
                         //Debug.Log("down");
-                        _swipeDict[SwipeType.DownSwipe]?.Invoke(touch);
+                        if (_swipeDict.ContainsKey(SwipeType.DownSwipe) == true)
+                        {
+                            _swipeDict[SwipeType.DownSwipe]?.Invoke(touch);
+                        }
                     }
                     else if (_touchDif.x > 0 && Mathf.Abs(_touchDif.y) < Mathf.Abs(_touchDif.x))
                     {
                         //Debug.Log("right");
-                        _swipeDict[SwipeType.RightSwipe]?.Invoke(touch);
+                        if (_swipeDict.ContainsKey(SwipeType.RightSwipe) == true)
+                        {
+                            _swipeDict[SwipeType.RightSwipe]?.Invoke(touch);
+                        }
                     }
                     else if (_touchDif.x < 0 && Mathf.Abs(_touchDif.y) < Mathf.Abs(_touchDif.x))
                     {
                         //Debug.Log("Left");
-                        _swipeDict[SwipeType.LeftSwipe]?.Invoke(touch);
+                        if (_swipeDict.ContainsKey(SwipeType.LeftSwipe) == true)
+                        {
+                            _swipeDict[SwipeType.LeftSwipe]?.Invoke(touch);
+                        }
                     }
                 }
                 else
                 {
                     //Debug.Log("touch");
-                    _swipeDict[SwipeType.Touch]?.Invoke(touch);
+                    if (_swipeDict.ContainsKey(SwipeType.Touch) == true)
+                    {
+                        _swipeDict[SwipeType.Touch]?.Invoke(touch);
+                    }
                 }
             }
         }
@@ -126,12 +150,6 @@ public class SwipeManager
     {
         _swipeDict.Clear();
 
-        if (_swipeDict == null || _swipeDict.Count == 0)
-        {
-            for (int i = 0; i < (int)SwipeType.MAX_COUNT; i++)
-            {
-                _swipeDict.Add((SwipeType)i, null);
-            }
-        }
+        Init();
     }
 }
