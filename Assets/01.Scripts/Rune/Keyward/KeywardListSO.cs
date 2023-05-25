@@ -22,6 +22,7 @@ public class Keyward
     public string KeywardName;
     public KeywordType TypeName;
     public string KeywardDescription;
+    public bool IsAddDesc = false;
 
     public Keyward()
     {
