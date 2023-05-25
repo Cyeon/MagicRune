@@ -127,4 +127,12 @@ public class RuneEffectHandler : MonoBehaviour
 
         BattleManager.Instance.missileCount += 1;
     }
+
+    public void Clear()
+    {
+        foreach(var effect in _effectDict)
+        {
+            Managers.Resource.Destroy(effect.Value);
+        }
+    }
 }

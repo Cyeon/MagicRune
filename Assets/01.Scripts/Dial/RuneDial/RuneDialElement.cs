@@ -43,7 +43,7 @@ public class RuneDialElement : DialElement<BaseRuneUI, BaseRune>
     }
 
     protected override bool _isAttackCondition => BattleManager.Instance.Enemy.IsDie == false && _selectElement != null;
-    protected override bool _isRotateAdditionalCondition => BattleManager.Instance.IsPlayerTurn();
+    protected override bool _isRotateAdditionalCondition => BattleManager.Instance.IsPlayerTurn() && _dial.IsAttack == false;
 
     private RuneEffectHandler _effectHandler;
     public RuneEffectHandler EffectHandler => _effectHandler;

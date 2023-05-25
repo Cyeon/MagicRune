@@ -9,34 +9,34 @@ public class MapStartPanel : StarPanel<MapRuneUI, MapRuneUI>
         base.Start();
 
         #region Add Event
-        Managers.Swipe.AddAction(SwipeType.TouchMove, (touch) =>
-        {
-            if (Mathf.Abs(Vector2.Distance(transform.position, Define.MainCam.ScreenToWorldPoint(Managers.Swipe.TouchBeganPos))) <= _outDistance)
-            {
-                Vector2 touchDif = (touch.position - Managers.Swipe.TouchBeganPos);
+        //Managers.Swipe.AddAction(SwipeType.TouchMove, (touch) =>
+        //{
+        //    if (Mathf.Abs(Vector2.Distance(transform.position, Define.MainCam.ScreenToWorldPoint(Managers.Swipe.TouchBeganPos))) <= _outDistance)
+        //    {
+        //        Vector2 touchDif = (touch.position - Managers.Swipe.TouchBeganPos);
 
-                int count = (int)(Mathf.Abs(touchDif.y) / (Managers.Swipe.SwipeSensitivity / 3));
-                count = Mathf.Min(count, 3);
+        //        int count = (int)(Mathf.Abs(touchDif.y) / (Managers.Swipe.SwipeSensitivity / 3));
+        //        count = Mathf.Min(count, 3);
 
-                for (int i = 0; i < _dial.LineDistanceArray.Length; i++)
-                {
-                    if (i < count)
-                    {
-                        _dial.MagicCircleGlow(2 - i, true);
-                    }
-                    else
-                    {
-                        _dial.MagicCircleGlow(2 - i, false);
-                    }
-                }
+        //        for (int i = 0; i < _dial.LineDistanceArray.Length; i++)
+        //        {
+        //            if (i < count)
+        //            {
+        //                _dial.MagicCircleGlow(2 - i, true);
+        //            }
+        //            else
+        //            {
+        //                _dial.MagicCircleGlow(2 - i, false);
+        //            }
+        //        }
 
-                if (touchDif.y < 0)
-                {
-                    _dial.AllMagicCircleGlow(false);
-                    //return;
-                }
-            }
-        });
+        //        if (touchDif.y < 0)
+        //        {
+        //            _dial.AllMagicCircleGlow(false);
+        //            //return;
+        //        }
+        //    }
+        //});
 
         Managers.Swipe.AddAction(SwipeType.UpSwipe, (touch) =>
         {

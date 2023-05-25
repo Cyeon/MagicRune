@@ -49,6 +49,7 @@ public class Dial<T1, T2> : MonoBehaviour where T1 : MonoBehaviour where T2 : cl
     #endregion
 
     protected bool _isAttack;
+    public bool IsAttack => _isAttack;
     protected virtual bool _isAttackCondition { get; }
 
     protected virtual void Awake()
