@@ -18,7 +18,7 @@ public class MapStartPanel : StarPanel<MapRuneUI, MapRuneUI>
                 int count = (int)(Mathf.Abs(touchDif.y) / (Managers.Swipe.SwipeSensitivity / 3));
                 count = Mathf.Min(count, 3);
 
-                for (int i = 0; i < 3; i++)
+                for (int i = 0; i < _dial.LineDistanceArray.Length; i++)
                 {
                     if (i < count)
                     {

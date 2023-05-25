@@ -61,7 +61,7 @@ public class Dial<T1, T2> : MonoBehaviour where T1 : MonoBehaviour where T2 : cl
         }
         _dialElementList = new List<DialElement<T1, T2>>();
 
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < _lineDistanceArray.Length; i++)
         {
             DialElement<T1, T2> d = this.transform.GetChild(i).GetComponent<DialElement<T1, T2>>();
             d.SetLineID(3 - i);

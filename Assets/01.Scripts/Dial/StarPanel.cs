@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class StarPanel<T1, T2> : MonoBehaviour where T1 : MonoBehaviour where T2 : class
 {
-    private SpriteRenderer _spriteRenderer;
-
     [SerializeField]
     protected Dial<T1, T2> _dial;
 
@@ -16,7 +14,7 @@ public class StarPanel<T1, T2> : MonoBehaviour where T1 : MonoBehaviour where T2
 
     protected virtual void Start()
     {
-        _spriteRenderer = GetComponent<SpriteRenderer>();
+
     }
 
 #if UNITY_EDITOR
