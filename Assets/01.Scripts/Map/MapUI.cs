@@ -24,7 +24,7 @@ public class MapUI : MonoBehaviour
 
     private void Start()
     {
-        _mainBackground = transform.Find("Main Background").GetComponent<Image>();
+        _mainBackground = transform.Find("MainBackground").GetComponent<Image>();
         ChangeBackground();
     }
 
