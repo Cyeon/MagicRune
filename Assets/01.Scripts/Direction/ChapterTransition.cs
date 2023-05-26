@@ -36,7 +36,7 @@ public class ChapterTransition : MonoBehaviour
         seq.Append(_fadeImage.DOFade(0, 0.7f));
         seq.Append(_chapterNameTextFadeObj.transform.DOScaleX(1, 1f));
         seq.Append(_chapterNameTextFadeObj.transform.DOScaleX(0, 1f));
-        seq.Join(_backgroundImage.DOFade(0, 1f));
+        seq.Append(_backgroundImage.DOFade(0, 0.2f));
         seq.AppendCallback(() =>
         {
             Reset();
