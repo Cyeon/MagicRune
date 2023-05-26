@@ -24,7 +24,6 @@ public class Stage : MonoBehaviour
     /// </summary>
     public virtual void InStage()
     {
-        Debug.Log(StageType);
         Managers.Map.CurrentPeriodStageList.Remove(StageType);
         Managers.Canvas.GetCanvas("MapDial").enabled = false;
     }
