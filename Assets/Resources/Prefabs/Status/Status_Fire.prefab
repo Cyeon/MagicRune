@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5736046982554988565}
   - component: {fileID: 5014004267170453785}
-  - component: {fileID: 4797063877606698396}
   - component: {fileID: 8381808294418735018}
   m_Layer: 0
   m_Name: Status_Fire
@@ -58,8 +57,7 @@ MonoBehaviour:
   - {fileID: 8381808294418735018}
   OnAttack: []
   OnGetDamage: []
-  OnTurnEnd:
-  - {fileID: 4797063877606698396}
+  OnTurnEnd: []
   OnRemoveStatus: []
   icon: {fileID: 21300000, guid: 7b4de38f1f488c342af446425cf2ccbd, type: 3}
   color: {r: 1, g: 1, b: 1, a: 1}
@@ -67,19 +65,6 @@ MonoBehaviour:
   getSound: {fileID: 8300000, guid: ac189a9c24d96fb459e664151c9b8765, type: 3}
   activeSound: {fileID: 8300000, guid: 840cae5cf5af6b548b07c6bb93c7a151, type: 3}
   unit: {fileID: 0}
---- !u!114 &4797063877606698396
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8378743581122507794}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4ef520f74c6cb274e89fbadc7b050e99, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _turnType: 0
 --- !u!114 &8381808294418735018
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -92,4 +77,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ef520f74c6cb274e89fbadc7b050e99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _turnType: 1

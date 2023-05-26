@@ -194,7 +194,7 @@ public class MapManager
 
     public void NextStage()
     {
-        Managers.Canvas.GetCanvas("CompousProgress").enabled = true;
+        Managers.Canvas.GetCanvas("MapDial").enabled = true;
         MapScene.mapDial.gameObject.SetActive(true);
 
         MapScene.mapDial.Clear();

@@ -2,6 +2,7 @@ using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -15,7 +16,12 @@ public class MapScene : BaseScene
     private List<AudioClip> _bgmList = new List<AudioClip>(); 
     public MapDial mapDial;
 
+    [Header("Map Dial Panel")]
+    [SerializeField] private Transform _mapDialPanel;
     private Image _compousProgress;
+
+    private Image _mapDescIcon;
+    private TextMeshProUGUI _mapDescText;
 
     protected override void Init()
     {
@@ -25,8 +31,16 @@ public class MapScene : BaseScene
         _userInfoUI = Managers.UI.Get<UserInfoUI>("Upper_Frame");
         Managers.GetPlayer().userInfoUI = _userInfoUI;
 
-        Managers.UI.Bind<Image>("Progress", Managers.Canvas.GetCanvas("CompousProgressCanvas").gameObject);
+        Managers.UI.Bind<Image>("Progress", Managers.Canvas.GetCanvas("MapDial").gameObject);
         _compousProgress = Managers.UI.Get<Image>("Progress");
+
+        if(_mapDialPanel == null)
+        {
+            _mapDialPanel = Managers.Canvas.GetCanvas("MapDial").transform.Find("MapDescPanel");
+        }
+
+        _mapDescIcon = _mapDialPanel.Find("IconSlot").Find("MapDescIcon").GetComponent<Image>();
+        _mapDescText = _mapDialPanel.Find("Description").GetComponent<TextMeshProUGUI>();
 
         Managers.UI.Bind<TextMeshProUGUI>("GoldPopupText", Managers.Canvas.GetCanvas("UserInfoPanelCanvas").gameObject);
         _goldPopupText = Managers.UI.Get<TextMeshProUGUI>("GoldPopupText");
@@ -75,5 +89,11 @@ public class MapScene : BaseScene
     public void CompousProgress(float amount)
     {
         _compousProgress.DOFillAmount(amount, 0.25f);
+    }
+
+    public void MapDescChange(MapRuneUI ui)
+    {
+        _mapDescText.SetText(ui.GetComponent<Stage>().StageDesc);
+        _mapDescIcon.sprite = ui.transform.Find("Icon").GetComponent<SpriteRenderer>().sprite;
     }
 }
