@@ -116,6 +116,9 @@ public class MapManager
     private void ChapterInit()
     {
         _currentPeriodStageList.Clear();
+        _firstPeriodStageList.Clear();
+        _secondPeriodStageList.Clear();
+
         _currentChapter = _chapterList[Chapter - 1];
 
         _periodType = PeriodType.None;
