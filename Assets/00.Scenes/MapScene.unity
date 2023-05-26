@@ -1326,7 +1326,7 @@ MonoBehaviour:
   _startAngle: 90
   _copyCount: 0
   _lineDistanceArray:
-  - 3.1
+  - 2.7
 --- !u!1 &694086324
 GameObject:
   m_ObjectHideFlags: 0
@@ -2083,6 +2083,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 3174383918848710593, guid: 20e0315e9523b8840905e37f1b499a65, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 20e0315e9523b8840905e37f1b499a65, type: 3}
 --- !u!1 &805493648
@@ -2164,7 +2168,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
-  m_SortingOrder: 100
+  m_SortingOrder: 90
   m_TargetDisplay: 0
 --- !u!224 &805493652
 RectTransform:
@@ -2458,7 +2462,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 859764951}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 4.82, z: 0}
+  m_LocalPosition: {x: 0, y: 4.13, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3570,7 +3574,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _dial: {fileID: 684116533}
   _inDistance: 0
-  _outDistance: 1.5
+  _outDistance: 1.8
 --- !u!1 &1597921508
 GameObject:
   m_ObjectHideFlags: 0
@@ -3922,7 +3926,7 @@ Transform:
   m_GameObject: {fileID: 2091787806}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 10.5, y: 10.5, z: 1}
+  m_LocalScale: {x: 8, y: 8, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1920746369}
@@ -3945,8 +3949,8 @@ MonoBehaviour:
   _textSprite: {fileID: 21300000, guid: 84c59c04f486be646b5a62c207bc7798, type: 3}
   _glowTextSprite: {fileID: 21300000, guid: 84c59c04f486be646b5a62c207bc7798, type: 3}
   _isUseRotateOffset: 0
-  _inDistance: 1.5
-  _outDistance: 4.6
+  _inDistance: 1.8
+  _outDistance: 3.4
   _selectOffset: 14
   _isUsingLineSwap: 0
   _dragTouchTime: 3
