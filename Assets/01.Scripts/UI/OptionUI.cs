@@ -72,6 +72,6 @@ public class OptionUI : MonoBehaviour
 
         Managers.Gold.ResetGoldAmount();
         Managers.Map.ResetChapter();
-        SceneManager.LoadScene("LobbyScene");
+        Managers.Scene.LoadScene(Define.Scene.LobbyScene);
     }
 }

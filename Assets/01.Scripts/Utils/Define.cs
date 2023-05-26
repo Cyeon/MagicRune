@@ -23,7 +23,7 @@ public class EffectObjectPair
 }
 
 /// <summary>
-/// 상수 매니저
+/// ?怨몃땾 筌띲끇???
 /// </summary>
 public class Define
 {
@@ -95,8 +95,8 @@ public class Define
     public enum Scene
     {
         Unknown,
+        LobbyScene,
         MapScene,
         DialScene,
-        DeckScene,
     }
 }
