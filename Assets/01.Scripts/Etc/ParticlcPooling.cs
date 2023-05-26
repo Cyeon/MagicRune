@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HeathParticle : MonoBehaviour
+public class ParticlcPooling : MonoBehaviour
 {
     private void OnParticleSystemStopped()
     {

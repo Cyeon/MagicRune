@@ -199,11 +199,16 @@ public class Unit : MonoBehaviour
         return HP;
     }
 
-    public void AddHP(float value)
+    public void AddHP(float value, bool isEffect = false)
     {
         if (_isDie == false)
         {
             HP += value.RoundToInt();
+            if (isEffect == true)
+            {
+                GameObject healingEffect = Managers.Resource.Instantiate("Effects/HealingEffect");
+                healingEffect.transform.position = this.transform.position - Vector3.up;
+            }
         }
     }
 

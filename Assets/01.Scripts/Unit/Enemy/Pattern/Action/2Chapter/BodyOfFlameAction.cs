@@ -21,7 +21,7 @@ public class BodyOfFlameAction : PatternAction
     {
         if(status.statusName == StatusName.Fire)
         {
-            BattleManager.Instance.Enemy.AddHP(count);
+            BattleManager.Instance.Enemy.AddHP(count, true);
         }
     }
 }

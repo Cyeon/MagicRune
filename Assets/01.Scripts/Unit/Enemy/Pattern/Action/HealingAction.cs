@@ -8,7 +8,7 @@ public class HealingAction : PatternAction
 
     public override void TurnAction()
     {
-        BattleManager.Instance.Enemy.AddHP(_value);
+        BattleManager.Instance.Enemy.AddHP(_value, true);
         base.TurnAction();
     }
 }

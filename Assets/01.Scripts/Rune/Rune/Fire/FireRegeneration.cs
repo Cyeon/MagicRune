@@ -12,7 +12,7 @@ public class FireRegeneration : BaseRune
 
     public override void AbilityAction()
     {
-        Managers.GetPlayer().AddHP(GetAbliltiValue(EffectType.Etc));
+        Managers.GetPlayer().AddHP(GetAbliltiValue(EffectType.Etc), true);
         Managers.GetPlayer().StatusManager.AddStatus(StatusName.Fire, GetAbliltiValue(EffectType.Status).RoundToInt());
     }
 
