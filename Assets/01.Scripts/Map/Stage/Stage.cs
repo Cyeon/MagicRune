@@ -1,4 +1,4 @@
-﻿    using System.Collections;
+    using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -15,14 +15,17 @@ public enum StageType
 
 public class Stage : MonoBehaviour
 {
-    public StageType type;
+    public StageType StageType;
+    [TextArea(0, 5)]
+    public string StageDesc;
 
     /// <summary>
     /// 스테이지에 들어갈 때 발동되는 함수
     /// </summary>
     public virtual void InStage()
     {
-        Managers.Map.CurrentPeriodStageList.Remove(type);
+        Managers.Map.CurrentPeriodStageList.Remove(StageType);
+        Managers.Canvas.GetCanvas("MapDial").enabled = false;
     }
 
     public virtual void Init()

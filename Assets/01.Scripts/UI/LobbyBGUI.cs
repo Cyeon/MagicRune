@@ -27,6 +27,12 @@ public class LobbyBGUI : MonoBehaviour
 
     private int _index = -1;
 
+    [Header("Menual")]
+    [SerializeField] private GameObject _menualPanel;
+    [SerializeField] private Image _menualImage;
+    [SerializeField] private List<Sprite> _menualImageList = new List<Sprite>();
+    private int _menualIndex = 0;
+
     private void Start()
     {
         _scrollSnap.OnSelectionPageChangedEvent.AddListener(ChangeIndex);
@@ -65,5 +71,34 @@ public class LobbyBGUI : MonoBehaviour
             _panelTextList[i].fontMaterial = _basicFontMaterial;
         }
         _panelTextList[idx].fontMaterial = _activeFontMaterial;
+    }
+
+    public void OpenMenual()
+    {
+        _menualPanel.SetActive(true);
+        _menualImage.sprite = _menualImageList[0];
+        _menualIndex = 0;
+    }
+
+    public void NextMenual()
+    {
+        _menualIndex++;
+        if (_menualIndex >= _menualImageList.Count)
+        {
+            _menualPanel.SetActive(false);
+            return;
+        }
+        _menualImage.sprite = _menualImageList[_menualIndex];
+    }
+
+    public void BackMenual()
+    {
+        _menualIndex--;
+        if(_menualIndex < 0)
+        {
+            _menualPanel.SetActive(false);
+            return;
+        }
+        _menualImage.sprite = _menualImageList[_menualIndex];
     }
 }
