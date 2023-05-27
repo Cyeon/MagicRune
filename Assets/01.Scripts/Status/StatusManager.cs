@@ -167,8 +167,8 @@ public class StatusManager
         {
             if (_statusList[i] != null && _statusList[i].OnAttack.Count > 0)
             {
-                _statusList[i].OnAttack.ForEach(x => {
-                    if (!_unit.IsDie) x.Invoke();
+                _statusList[i]?.OnAttack?.ForEach(x => {
+                    if (!_unit.IsDie) x?.Invoke();
                     });
             }
         }
