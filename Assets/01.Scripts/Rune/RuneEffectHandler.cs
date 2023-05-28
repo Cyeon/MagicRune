@@ -37,11 +37,12 @@ public class RuneEffectHandler : MonoBehaviour
     {
         transform.DOKill();
 
-
+        bool isEdit = false;
         if (_effectDict[tier] != null)
         {
             if (_effectDict[tier] == effect) return;
             Managers.Resource.Destroy(_effectDict[tier]);
+            isEdit = true;
         }
 
         if (effect != null)
@@ -54,7 +55,7 @@ public class RuneEffectHandler : MonoBehaviour
             _effectDict[tier] = null;
         }
 
-        Sort(true);
+        Sort(!isEdit);
     }
 
     public void Sort(bool isTween = false)
@@ -73,7 +74,7 @@ public class RuneEffectHandler : MonoBehaviour
             if (isTween)
             {
                 transform.DOKill();
-                effectArray[i].transform.DOMove(new Vector3(width + this.transform.position.x, height + this.transform.position.y, 0), 0.2f);
+                effectArray[i]?.transform.DOMove(new Vector3(width + this.transform.position.x, height + this.transform.position.y, 0), 0.2f);
             }
             else
             {

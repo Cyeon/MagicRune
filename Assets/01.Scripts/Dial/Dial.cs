@@ -7,7 +7,7 @@ using UnityEngine;
 /// <summary>
 /// 
 /// </summary>
-/// <typeparam name="T1">????關?쒎첎?嫄??怨몄겮嶺??????????????????關?쒎첎?嫄?????遺얘턁?????????遺얜???????怨밸쑂????????????▲뀋???????ex) BaseRuneUI</typeparam>
+/// <typeparam name="T1">???????롮쾸?椰???⑤챷寃?┼?????????????????????롮쾸?椰???????븐뼐???????????븐뼔????????⑤갭??????????????뀀???????ex) BaseRuneUI</typeparam>
 /// <typeparam name="T2">T1???????????ex) BaseRune</typeparam>
 public class Dial<T1, T2> : MonoBehaviour where T1 : MonoBehaviour where T2 : class
 {
@@ -175,7 +175,7 @@ public class Dial<T1, T2> : MonoBehaviour where T1 : MonoBehaviour where T2 : cl
                 case TouchPhase.Moved:
                     float distance = Mathf.Abs(Vector2.Distance(transform.position, Define.MainCam.ScreenToWorldPoint(touch.position)));
 
-                    // ????μ떜媛?걫?????용???獒?鶯ㅺ동??筌믡룓愿????????源낆쭍?????
+                    // ????關?쒎첎?嫄??????㈑?????傭?끆???嶺뚮?猷볠꽴????????繹먮굞彛?????
                     if (_dialElementList[2].InDistance <= distance)
                     {
                         for (int i = _dialElementList.Count - 1; i >= 0; i--)
@@ -217,26 +217,32 @@ public class Dial<T1, T2> : MonoBehaviour where T1 : MonoBehaviour where T2 : cl
 
         int dialFLine = 3 - fLine;
         int dialSLine = 3 - sLine;
-        _dialElementList[dialFLine].SetRuneList(_elementDict[fLine]);
-        _dialElementList[dialSLine].SetRuneList(_elementDict[sLine]);
+        _dialElementList[dialFLine]?.SetRuneList(_elementDict[fLine]);
+        _dialElementList[dialSLine]?.SetRuneList(_elementDict[sLine]);
 
         float offset = _lineDistanceArray[dialFLine] / _lineDistanceArray[dialSLine];
         for (int i = 0; i < _dialElementList[dialFLine].ElementList.Count; i++)
         {
-            _dialElementList[dialFLine].ElementList[i].transform.localScale = new Vector3(0.1f, 0.1f, 1f);
-            _dialElementList[dialFLine].ElementList[i].transform.SetParent(_dialElementList[dialFLine].transform);
+            if (_dialElementList[dialFLine] != null && _dialElementList[dialFLine].ElementList[i] != null)
+            {
+                _dialElementList[dialFLine].ElementList[i].transform.localScale = new Vector3(0.1f, 0.1f, 1f);
+                _dialElementList[dialFLine].ElementList[i].transform.SetParent(_dialElementList[dialFLine].transform);
+            }
         }
 
         offset = _lineDistanceArray[dialSLine] / _lineDistanceArray[dialFLine];
         for (int i = 0; i < _dialElementList[dialSLine].ElementList.Count; i++)
         {
-            _dialElementList[dialSLine].ElementList[i].transform.localScale = new Vector3(0.1f, 0.1f, 1f);
-            _dialElementList[dialSLine].ElementList[i].transform.SetParent(_dialElementList[dialSLine].transform);
+            if (_dialElementList[dialSLine] != null && _dialElementList[dialSLine].ElementList[i] != null)
+            {
+                _dialElementList[dialSLine].ElementList[i].transform.localScale = new Vector3(0.1f, 0.1f, 1f);
+                _dialElementList[dialSLine].ElementList[i].transform.SetParent(_dialElementList[dialSLine].transform);
+            }
         }
 
-        //BaseRuneUI rune = _dialElementList[dialFLine].SelectCard;
-        //_dialElementList[dialFLine].SelectCard = _dialElementList[dialSLine].SelectCard;
-        //_dialElementList[dialSLine].SelectCard = rune;
+        T1 rune = _dialElementList[dialFLine].SelectElement;
+        _dialElementList[dialFLine].SelectElement = _dialElementList[dialSLine].SelectElement;
+        _dialElementList[dialSLine].SelectElement = rune;
 
         //float zRotate = _dialElementList[dialFLine].transform.rotation.eulerAngles.z;
         //_dialElementList[dialFLine].transform.rotation = Quaternion.Euler(0, 0, _dialElementList[dialSLine].transform.rotation.eulerAngles.z);
@@ -362,8 +368,8 @@ public class Dial<T1, T2> : MonoBehaviour where T1 : MonoBehaviour where T2 : cl
                 float width = Mathf.Cos(radianValue * Mathf.Deg2Rad) * _lineDistanceArray[3 - line];
                 if (isTween)
                 {
-                    _elementDict[line][i].transform.DOKill();
-                    _elementDict[line][i].transform.DOMove(new Vector3(width + this.transform.position.x, height + this.transform.position.y, 0), tweenDuration);
+                    _elementDict[line][i]?.transform.DOKill();
+                    _elementDict[line][i]?.transform.DOMove(new Vector3(width + this.transform.position.x, height + this.transform.position.y, 0), tweenDuration);
                 }
                 else
                 {
