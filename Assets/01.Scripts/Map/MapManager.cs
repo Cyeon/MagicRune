@@ -26,14 +26,14 @@ public class MapManager
     #endregion
 
     #region Period
-    private List<StageType> _firstPeriodStageList = new List<StageType>(); // ?熬곣뫁類?遊붋
-    private List<StageType> _secondPeriodStageList = new List<StageType>(); // ?熬곣뫁類?遊붋
+    private List<StageType> _firstPeriodStageList = new List<StageType>(); // ??ш끽維곻쭚??딅텑?
+    private List<StageType> _secondPeriodStageList = new List<StageType>(); // ??ш끽維곻쭚??딅텑?
 
-    private List<StageType> _currentPeriodStageList = new List<StageType>(); // ?熬곣뫗????節띉?
+    private List<StageType> _currentPeriodStageList = new List<StageType>(); // ??ш끽維????影?됀?
     public List<StageType> CurrentPeriodStageList => _currentPeriodStageList;
 
-    private int _periodProgress = 0; // ?熬곣뫗??嶺뚯쉳?듸쭛??
-    private int _nextCondition = 4; // ???깅쾳 ??節띉濡?뿉???琉우꽑?띠럾????브퀗?쀦뤃????댟??? ?띠룇裕??
+    private int _periodProgress = 0; // ??ш끽維??癲ル슣???몄춿??
+    private int _nextCondition = 4; // ???源낆쓱 ??影?됀嚥?肉???筌뚯슦苑??좊읈????釉뚰???쨨?????읐??? ??좊즵獒??
 
     private PeriodType _periodType = PeriodType.None;
     public PeriodType CurrentPeriodType => _periodType;
@@ -125,7 +125,7 @@ public class MapManager
 
         bool isAttack = false;
 
-        // 전반부
+        // ?꾨컲遺
         _firstPeriodStageList.Add(StageType.Attack);
         _firstPeriodStageList.Add(StageType.Attack);
         _firstPeriodStageList.Add(StageType.Attack);
@@ -151,7 +151,7 @@ public class MapManager
         }
         _firstPeriodStageList.Shuffle();
 
-        // 후반부
+        // ?꾨컲遺
         _secondPeriodStageList.Add(StageType.Attack);
         _secondPeriodStageList.Add(StageType.Attack);
         _secondPeriodStageList.Add(StageType.Attack);
@@ -238,7 +238,7 @@ public class MapManager
         _periodProgress = 0;
         _periodType++;
 
-        MapScene.CompousProgress(0);
+        MapScene?.CompousProgress(0);
 
         switch (CurrentPeriodType)
         {
@@ -257,7 +257,7 @@ public class MapManager
     }
 
     /// <summary>
-    /// ??ㅻ????獄?? 嶺뚮ㅄ維귟굢????댟??????影?ル츎?? ??ㅻ???????true 嶺뚮ㅄ維귟굢?????false
+    /// ??????????? 癲ル슢?꾤땟洹잕덩?????읐??????壤굿??レ툗?? ??????????true 癲ル슢?꾤땟洹잕덩?????false
     /// </summary>
     /// <param name="period"></param>
     /// <returns></returns>
@@ -293,7 +293,7 @@ public class MapManager
 
 
     /// <summary>
-    /// 50% ?筌먲퐣??
+    /// 50% ?嶺뚮㉡???
     /// </summary>
     /// <returns></returns>
     private bool IsFiftyChance()

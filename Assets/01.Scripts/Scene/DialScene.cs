@@ -15,24 +15,24 @@ public class DialScene : BaseScene
     private RuneDial _dial;
     public RuneDial Dial => _dial;
 
-    // 移대뱶 ?ㅻ챸 ?⑤꼸
+    // 燁삳?諭???살구 ??ㅺ섯
     [SerializeField]
     private ExplainPanel _cardDescPanel = null;
 
-    // ?곹깭?댁긽 ?ㅻ챸 ?⑤꼸
+    // ?怨밴묶??곴맒 ??살구 ??ㅺ섯
     [SerializeField]
     private GameObject _statusDescPanel;
     private TextMeshProUGUI _statusDescName;
     private TextMeshProUGUI _statusDescInfo;
     private RectTransform _statusDescPanelRectTrm;
 
-    // ?꾪닾 ??蹂댁긽
+    // ?袁る떮 ??癰귣똻湲?
     [SerializeField]
     private RewardUI _rewardUI;
     public RewardUI RewardUI => _rewardUI;
     private ChooseRuneUI _chooseRuneUI;
 
-    // ?좎? ?곷떒諛?
+    // ?醫? ?怨룸뼊獄?
     private UserInfoUI _userInfoUI;
 
     private TextMeshProUGUI _goldPopupText = null;
@@ -92,6 +92,7 @@ public class DialScene : BaseScene
         Managers.GetPlayer().userInfoUI = _userInfoUI;
 
         Managers.StatModifier.Init();
+
     }
 
     public void Turn(string text)
@@ -294,7 +295,17 @@ public class DialScene : BaseScene
 
     public override void Clear()
     {
-        // 占쏙옙 클占쏙옙占쏙옙
+        // ?좎룞???닷뜝?숈삕?좎룞??
+
+        // 이펙트 클리어 코드.
+        // 근데 나중에 없애도 될 듯
+        for(int i = 0; i < _dial.DialElementList.Count; i++)
+        {
+            if(_dial.DialElementList[i] != null)
+            {
+                (_dial.DialElementList[i] as RuneDialElement).EffectHandler.Clear();
+            }
+        }
     }
 
     public void ChooseRuneUISetUp()
