@@ -60,6 +60,7 @@ public class ExplainPanel : MonoBehaviour
         //_rune = rune;
 
         _nameText.SetText(rune.RuneName);
+        _runeImage.enabled = true;
         _runeImage.sprite = rune.RuneSprite;
         _coolTimeText.SetText(rune.CoolTime.ToString());
         _descText.SetText(rune.RuneDescription);
