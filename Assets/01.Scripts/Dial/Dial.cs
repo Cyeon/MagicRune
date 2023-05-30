@@ -7,7 +7,7 @@ using UnityEngine;
 /// <summary>
 /// 
 /// </summary>
-/// <typeparam name="T1">???????롮쾸?椰???⑤챷寃?┼?????????????????????롮쾸?椰???????븐뼐???????????븐뼔????????⑤갭??????????????뀀???????ex) BaseRuneUI</typeparam>
+/// <typeparam name="T1">???????濡?씀?濾????ㅼ굣野???????????????????????濡?씀?濾???????釉먮폁???????????釉먮폇?????????ㅺ강???????????????????????ex) BaseRuneUI</typeparam>
 /// <typeparam name="T2">T1???????????ex) BaseRune</typeparam>
 public class Dial<T1, T2> : MonoBehaviour where T1 : MonoBehaviour where T2 : class
 {
@@ -175,7 +175,7 @@ public class Dial<T1, T2> : MonoBehaviour where T1 : MonoBehaviour where T2 : cl
                 case TouchPhase.Moved:
                     float distance = Mathf.Abs(Vector2.Distance(transform.position, Define.MainCam.ScreenToWorldPoint(touch.position)));
 
-                    // ????關?쒎첎?嫄??????㈑?????傭?끆???嶺뚮?猷볠꽴????????繹먮굞彛?????
+                    // ???????롮쾸?椰???????뫢???????????癲ル슢??룸퀬苑????????濚밸Ŧ援욃퐲?????
                     if (_dialElementList[2].InDistance <= distance)
                     {
                         for (int i = _dialElementList.Count - 1; i >= 0; i--)
@@ -240,14 +240,6 @@ public class Dial<T1, T2> : MonoBehaviour where T1 : MonoBehaviour where T2 : cl
             }
         }
 
-        T1 rune = _dialElementList[dialFLine].SelectElement;
-        _dialElementList[dialFLine].SelectElement = _dialElementList[dialSLine].SelectElement;
-        _dialElementList[dialSLine].SelectElement = rune;
-
-        //float zRotate = _dialElementList[dialFLine].transform.rotation.eulerAngles.z;
-        //_dialElementList[dialFLine].transform.rotation = Quaternion.Euler(0, 0, _dialElementList[dialSLine].transform.rotation.eulerAngles.z);
-        //_dialElementList[dialSLine].transform.rotation = Quaternion.Euler(0, 0, zRotate);
-
         for (int i = 0; i < _dialElementList.Count; i++)
         {
             _dialElementList[i].transform.rotation = Quaternion.Euler(Vector3.zero);
@@ -258,6 +250,15 @@ public class Dial<T1, T2> : MonoBehaviour where T1 : MonoBehaviour where T2 : cl
         //    RuneLineMove(i, true);
         //}
         RuneSort(true);
+
+        for (int i = 0; i < _dialElementList.Count; i++)
+        {
+            _dialElementList[i].SelectElement = _dialElementList[i].SelectElement;
+        }
+
+        //T1 rune = _dialElementList[dialFLine].SelectElement;
+        //_dialElementList[dialFLine].SelectElement = _dialElementList[dialSLine].SelectElement;
+        //_dialElementList[dialSLine].SelectElement = rune;
     }
 
     public float GetAngleRadian(float dx, float dy)
@@ -369,7 +370,13 @@ public class Dial<T1, T2> : MonoBehaviour where T1 : MonoBehaviour where T2 : cl
                 if (isTween)
                 {
                     _elementDict[line][i]?.transform.DOKill();
-                    _elementDict[line][i]?.transform.DOMove(new Vector3(width + this.transform.position.x, height + this.transform.position.y, 0), tweenDuration);
+                    _elementDict[line][i]?.transform.DOMove(new Vector3(width + this.transform.position.x, height + this.transform.position.y, 0), tweenDuration).OnComplete(() =>
+                    {
+                        for (int i = 0; i < _dialElementList.Count; i++)
+                        {
+                            _dialElementList[i].SelectElement = _dialElementList[i].SelectElement;
+                        }
+                    });
                 }
                 else
                 {
@@ -384,6 +391,11 @@ public class Dial<T1, T2> : MonoBehaviour where T1 : MonoBehaviour where T2 : cl
                 float ang = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
                 Quaternion angleAxis = Quaternion.AngleAxis(ang - 90f, Vector3.forward);
                 _elementDict[line][i].transform.rotation = angleAxis;
+            }
+
+            for (int i = 0; i < _dialElementList.Count; i++)
+            {
+                _dialElementList[i].SelectElement = _dialElementList[i].SelectElement;
             }
         }
     }

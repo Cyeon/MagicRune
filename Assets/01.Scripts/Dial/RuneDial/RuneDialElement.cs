@@ -15,28 +15,16 @@ public class RuneDialElement : DialElement<BaseRuneUI, BaseRune>
         }
         set
         {
-            if (value == null)
+            if (_selectElement != null)
             {
-                if (_selectElement != null)
-                {
-                    //_selectCard.SetActiveOutline(OutlineType.Default);
-                    _selectElement.RuneColor(new Color(0.26f, 0.26f, 0.26f, 1f));
-                }
-                _selectElement = value;
+                //_selectCard.SetActiveOutline(OutlineType.Default);
+                _selectElement.RuneColor(new Color(0.26f, 0.26f, 0.26f, 1f));
             }
-            else
+            _selectElement = value;
+            if (value != null)
             {
-                if (_selectElement != null)
-                {
-                    //_selectCard.SetActiveOutline(OutlineType.Default);
-                    _selectElement.RuneColor(new Color(0.26f, 0.26f, 0.26f, 1f));
-                }
-
-                _selectElement = value;
-                
                 //_selectCard.SetActiveOutline(OutlineType.Cyan);
                 _selectElement.RuneColor(Color.white);
-
             }
             (_dial as RuneDial).CheckResonance();
         }
@@ -73,10 +61,10 @@ public class RuneDialElement : DialElement<BaseRuneUI, BaseRune>
 
                 if (_isTouchDown == true)
                 {
-                    if (_selectElement != null)
+                    if (SelectElement != null)
                     {
                         OnSelectElementAction();
-                        //Define.DialScene?.CardDescPopup(_selectElement.Rune);
+                        //Define.DialScene?.CardDescPopup(SelectElement.Rune);
                     }
                 }
             }

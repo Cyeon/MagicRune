@@ -14,7 +14,7 @@ public enum DialState
 /// <summary>
 /// 
 /// </summary>
-/// <typeparam name="T1">????關?쒎첎?嫄??怨몄겮嶺??????????????????關?쒎첎?嫄?????遺얘턁?????????遺얜???????怨밸쑂????????????▲뀋???????ex) BaseRuneUI</typeparam>
+/// <typeparam name="T1">???????롮쾸?椰???⑤챷寃?┼?????????????????????롮쾸?椰???????븐뼐???????????븐뼔????????⑤갭??????????????뀀???????ex) BaseRuneUI</typeparam>
 /// <typeparam name="T2">T1???????????ex) BaseRune</typeparam>
 public class DialElement<T1, T2> : MonoBehaviour where T1 : MonoBehaviour where T2 : class
 {
@@ -178,7 +178,7 @@ public class DialElement<T1, T2> : MonoBehaviour where T1 : MonoBehaviour where 
 
     private void RotateMagicCircle()
     {
-        if (_isTouchDown && _isRotateAdditionalCondition)
+        if (_isTouchDown && _isRotateAdditionalCondition && _fingerID >= 0)
         {
             _offset = ((Vector3)Input.GetTouch(_fingerID).position - _touchPos);
 
@@ -359,7 +359,6 @@ public class DialElement<T1, T2> : MonoBehaviour where T1 : MonoBehaviour where 
                         if (_selectElement != null)
                         {
                             OnSelectElementAction();
-                            //Define.DialScene?.CardDescPopup(_selectElement.Rune);
                         }
                     });
                 }
@@ -378,7 +377,6 @@ public class DialElement<T1, T2> : MonoBehaviour where T1 : MonoBehaviour where 
                         if (_selectElement != null)
                         {
                             OnSelectElementAction();
-                            //Define.DialScene?.CardDescPopup(_selectElement.Rune);
                         }
                     });
                 }
@@ -398,7 +396,6 @@ public class DialElement<T1, T2> : MonoBehaviour where T1 : MonoBehaviour where 
                             if (_selectElement != null)
                             {
                                 OnSelectElementAction();
-                                //Define.DialScene?.CardDescPopup(_selectElement.Rune);
                             }
                         });
                 }
@@ -412,7 +409,6 @@ public class DialElement<T1, T2> : MonoBehaviour where T1 : MonoBehaviour where 
                             if (_selectElement != null)
                             {
                                 OnSelectElementAction();
-                                //Define.DialScene?.CardDescPopup(_selectElement.Rune);
                             }
                         });
                 }
