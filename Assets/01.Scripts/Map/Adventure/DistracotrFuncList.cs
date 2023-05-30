@@ -29,10 +29,10 @@ public class DistracotrFuncList : MonoBehaviour
     private float _index;
 
     /// <summary>
-    /// Healing, IncreaseMaxHp »ç¿ë Àü Amount·Î ´õÇØÁÙÁö percent·Î °è»êÇØ¼­ ´õÇØÁÙÁö °áÁ¤ ÇØÁÖ±â 
+    /// Healing, IncreaseMaxHp ì‚¬ìš© ì „ Amountë¡œ ë”í•´ì¤„ì§€ percentë¡œ ê³„ì‚°í•´ì„œ ë”í•´ì¤„ì§€ ê²°ì • í•´ì£¼ê¸° 
     /// </summary>
     /// <param name="num">0->Amount, 1->Percent</param>
-    public void SetMode(int num) // Inspector¿¡¼­ »ç¿ëÇÏ±â À§ÇØ enumÀÌ ¾Æ´Ñ int Çü
+    public void SetMode(int num) // Inspectorì—ì„œ ì‚¬ìš©í•˜ê¸° ìœ„í•´ enumì´ ì•„ë‹Œ int í˜•
     {
         Debug.Log($"Set IncreaseMode {(IncreaseMode)num}");
         increaseMode = (IncreaseMode)num;
@@ -69,9 +69,9 @@ public class DistracotrFuncList : MonoBehaviour
         _index = index;
     }
 
-    public void BattleEnemy(Enemy enemy)
+    public void RandomBattleEnemy()
     {
-        Managers.Enemy.AddEnemy(enemy);
+        Managers.Enemy.AddEnemy(Managers.Map.CurrentChapter.GetEnemy());
         Managers.Scene.LoadScene(Define.Scene.DialScene);
     }
 
