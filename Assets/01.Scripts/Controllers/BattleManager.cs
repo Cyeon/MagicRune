@@ -48,8 +48,8 @@ public class BattleManager : MonoSingleton<BattleManager>
         
         Managers.Enemy.BattleSetting();
 
-        Managers.GetPlayer().VisualInit(FindObjectOfType<VisualPlayer>());
-        Managers.GetPlayer().Visual.UISetting();
+        Player.VisualInit(FindObjectOfType<VisualPlayer>());
+        Player.Visual.UISetting();
 
         Player.StatusManager.Reset();
         Player.UISetting();
