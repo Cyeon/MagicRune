@@ -911,19 +911,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1520652532682514480}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: RuneListViewUI, Assembly-CSharp
-        m_MethodName: SetAllRunes
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!1 &4599039246972968472
 GameObject:
   m_ObjectHideFlags: 0
@@ -935,7 +923,6 @@ GameObject:
   - component: {fileID: 2396831105654304434}
   - component: {fileID: 5174076154984041397}
   - component: {fileID: 3332741734355313060}
-  - component: {fileID: 1470198833156178216}
   m_Layer: 5
   m_Name: GoldPopupText
   m_TagString: Untagged
@@ -1060,20 +1047,6 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!114 &1470198833156178216
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4599039246972968472}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 905d28d314ec9c9439570eaa0efe7002, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _text: {fileID: 0}
-  _rectTransform: {fileID: 0}
 --- !u!1001 &730681686798279769
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1318,6 +1291,18 @@ PrefabInstance:
     - target: {fileID: 4056931234466445669, guid: 8851da7ad3d23aa49ba29ebf4654b673, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4056931234551866476, guid: 8851da7ad3d23aa49ba29ebf4654b673, type: 3}
+      propertyPath: m_Value
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4056931234551866476, guid: 8851da7ad3d23aa49ba29ebf4654b673, type: 3}
+      propertyPath: m_MaxValue
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4056931234551866476, guid: 8851da7ad3d23aa49ba29ebf4654b673, type: 3}
+      propertyPath: m_MinValue
+      value: -40
       objectReference: {fileID: 0}
     - target: {fileID: 4056931234772982402, guid: 8851da7ad3d23aa49ba29ebf4654b673, type: 3}
       propertyPath: m_AnchorMax.x
