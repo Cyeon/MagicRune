@@ -55,8 +55,6 @@ public class MapScene : BaseScene
         Managers.Map.MapInit();
 
         Managers.Sound.PlaySound(_bgmList[Managers.Map.Chapter - 1], SoundType.Bgm, true);
-
-        Managers.GetPlayer().SetUIActive(false);
     }
 
     private void Start()

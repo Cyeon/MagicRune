@@ -10,7 +10,8 @@ public class Player : Unit
     [HideInInspector]
     public Transform relicTrm;
 
-    [SerializeField] private Transform _uiTrm;
+    private VisualPlayer _visual;
+    public VisualPlayer Visual => _visual;
 
     private void Awake()
     {
@@ -29,8 +30,18 @@ public class Player : Unit
         BattleManager.Instance.Enemy.TakeDamage(currentDmg, isTrueDamage);
     }
 
-    public void SetUIActive(bool active)
+    public void VisualInit(VisualPlayer vp)
     {
-        _uiTrm.gameObject.SetActive(active);
+        _visual = vp;
+    }
+
+    public void UISetting(Transform health, Transform shield, Transform healthFeedback, Transform shieldIcon, TextMeshPro healthText, TextMeshPro shieldText)
+    {
+        _healthBar = health;
+        _shieldBar = shield;
+        _healthFeedbackBar = healthFeedback;
+        _shieldIcon = shieldIcon;
+        _healthText = healthText;
+        _shieldText = shieldText;
     }
 }

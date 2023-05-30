@@ -51,12 +51,15 @@ public class RuneDialElement : DialElement<BaseRuneUI, BaseRune>
     protected override void Awake()
     {
         base.Awake();
-
-        _effectHandler = Managers.GetPlayer().GetComponentInChildren<RuneEffectHandler>();
     }
 
     protected override void ChangeSelectElement(int index)
     {
+        if(_effectHandler == null)
+        {
+            _effectHandler = Managers.GetPlayer().Visual.GetComponentInChildren<RuneEffectHandler>();
+        }
+
         if (index == -1)
         {
             if (SelectElement == null) return;
