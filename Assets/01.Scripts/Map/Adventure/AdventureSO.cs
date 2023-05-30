@@ -10,10 +10,13 @@ public class AdventureSO : ScriptableObject
     public string adventureName;
     public Sprite image;
 
-    [Tooltip("¸ğÇè ½ºÅä¸®")]
+    [Tooltip("ëª¨í—˜ ìŠ¤í† ë¦¬")]
     [TextArea(0, 10)]
     public string message;
 
-    [Tooltip("¼±ÅÃÁö")]
+    [Tooltip("ì„ íƒì§€")]
     public List<Distractor> distractors = new List<Distractor>();
+
+    //[HideInInspector]
+    public bool isEnter = false;
 }

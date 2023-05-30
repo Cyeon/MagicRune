@@ -1,5 +1,7 @@
+using MyBox;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class AdventureStage : Stage
@@ -19,7 +21,17 @@ public class AdventureStage : Stage
     {
         if (_adventureList.Count == 0) return null;
 
-        int cnt = _adventureList.Count;
-        return _adventureList[Random.Range(0, cnt)];
+        List<AdventureSO> enterAdventureList = _adventureList.Where(x => x.isEnter == false).ToList();
+
+        if (enterAdventureList.Count == 0)
+        {
+            _adventureList.ForEach(x => x.isEnter = false);
+            enterAdventureList = _adventureList;
+        }
+
+        AdventureSO so = enterAdventureList.GetRandom();
+        so.isEnter = true;
+
+        return so;
     }
 }
