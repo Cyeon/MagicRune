@@ -17,6 +17,6 @@ public class AdventureSO : ScriptableObject
     [Tooltip("선택지")]
     public List<Distractor> distractors = new List<Distractor>();
 
-    //[HideInInspector]
+    [HideInInspector]
     public bool isEnter = false;
 }

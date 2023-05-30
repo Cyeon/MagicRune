@@ -15,9 +15,8 @@ public class StageSpawner : MonoBehaviour
         switch(type)
         {
             case StageType.Attack:
-                Enemy enemy = Managers.Map.CurrentChapter.GetEnemy();
                 AttackStage atkStage = Managers.Resource.Instantiate("Stage/" + typeof(AttackStage).Name, transform).GetComponent<AttackStage>();
-                atkStage.Init(enemy);
+                atkStage.Init();
                 return atkStage;
 
             case StageType.Boss:
