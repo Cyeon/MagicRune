@@ -5,6 +5,8 @@ using DG.Tweening;
 
 public class LobbyScene : BaseScene
 {
+    [SerializeField] private LoadScene _loadScene;
+
     protected override void Init()
     {
         SceneType = Define.Scene.LobbyScene;
@@ -15,5 +17,10 @@ public class LobbyScene : BaseScene
     public override void Clear()
     {
 
+    }
+
+    public void GameStart()
+    {
+        StartCoroutine(_loadScene.LoadSceneCoroutine("MapScene"));
     }
 }
