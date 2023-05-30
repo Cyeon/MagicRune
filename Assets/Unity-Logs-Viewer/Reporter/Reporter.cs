@@ -304,14 +304,14 @@ public class Reporter : MonoBehaviour
 			Initialize();
 
 #if UNITY_CHANGE3
-        SceneManager.sceneLoaded += _OnLevelWasLoaded;
+        //SceneManager.sceneLoaded += _OnLevelWasLoaded;
 #endif
     }
 
     private void OnDestroy()
     {
 #if UNITY_CHANGE3
-        SceneManager.sceneLoaded -= _OnLevelWasLoaded;
+        //SceneManager.sceneLoaded -= _OnLevelWasLoaded;
 #endif
     }
 

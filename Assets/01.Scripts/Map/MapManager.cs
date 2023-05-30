@@ -243,17 +243,18 @@ public class MapManager
         switch (CurrentPeriodType)
         {
             case PeriodType.First:
-                _currentPeriodStageList = _firstPeriodStageList;
+                _currentPeriodStageList = _firstPeriodStageList.ToList();
                 break;
 
             case PeriodType.Second:
-                _currentPeriodStageList = _secondPeriodStageList;
+                _currentPeriodStageList = _secondPeriodStageList.ToList();
                 break;
 
             case PeriodType.Boss:
                 _currentPeriodStageList.Add(StageType.Boss);
                 break;
         }
+
     }
 
     /// <summary>
