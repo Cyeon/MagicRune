@@ -14,10 +14,26 @@ public class RestUI : MonoBehaviour
     private RestDial _dial;
     public RestDial Dial => _dial;
 
+    [SerializeField]
+    private ExplainPanel _explainPanel;
+    [SerializeField]
+    private EnhancePanel _enhancePanel;
+
     private void Start()
     {
         GetComponent<Canvas>().enabled = false;
+    }
 
+    public void SetActiveExplainPanel(bool active)
+    {
+        _explainPanel.gameObject.SetActive(active);
+    }
+
+    public void SetActiveEnhancePanel(bool active)
+    {
+        _enhancePanel.gameObject.SetActive(active);
+        if(active == true)
+            _enhancePanel.CreateRune();
     }
 
     public void NextStage()

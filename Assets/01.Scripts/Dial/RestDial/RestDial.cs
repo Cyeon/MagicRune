@@ -39,27 +39,12 @@ public class RestDial : Dial<RestRuneUI, RestRuneUI>
         enhanceRune1.transform.localScale = new Vector3(0.1f, 0.1f, 1f);
         enhanceRune1.SetInfo(_restSpriteArray[0], () =>
         {
-            // 깅회 1
-            // 맞는 UI 띄워ㅓ주기
-            PopupText text = Managers.Resource.Instantiate("UI/PopupText").GetComponent<PopupText>();
-            text.SetText("개발 중인 기능입니다.");
-            Debug.Log("강화1");
-        }, "같은 등급의\n다른 룬으로 바꾼다.");
+            _restUI.SetActiveExplainPanel(false);
+            _restUI.SetActiveEnhancePanel(true);
+            _restUI.Dial.gameObject.SetActive(false);
+        }, "룬 하나를 강화한다.");
         _dialElementList[0].AddRuneList(enhanceRune1);
         AddCard(enhanceRune1, 3);
-
-        RestRuneUI enhanceRune2 = Managers.Resource.Instantiate("Rune/" + typeof(RestRuneUI).Name, _dialElementList[0].transform).GetComponent<RestRuneUI>();
-        enhanceRune2.transform.localScale = new Vector3(0.1f, 0.1f, 1f);
-        enhanceRune2.SetInfo(_restSpriteArray[2], () =>
-        {
-            // 깅회 2
-            // 맞는 UI 띄워ㅓ주기
-            Debug.Log("강화2");
-            PopupText text = Managers.Resource.Instantiate("UI/PopupText").GetComponent<PopupText>();
-            text.SetText("개발 중인 기능입니다.");
-        }, "여러개의 룬을 바쳐\n더 높은 등급의\n룬을 얻는다.");
-        _dialElementList[0].AddRuneList(enhanceRune2);
-        AddCard(enhanceRune2, 3);
 
         #region COPY
         for (int i = 0; i < _restSpriteArray.Length; i++)

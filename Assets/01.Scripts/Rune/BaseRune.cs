@@ -36,6 +36,9 @@ public class BaseRune : Item, ICloneable
 
     private bool _isUsing = false;
     public bool IsUsing => _isUsing;
+
+    private bool _isEnhanced = false;
+    public bool IsEnhanced => _isEnhanced;
     #endregion
 
     #region Item Interface
@@ -93,9 +96,13 @@ public class BaseRune : Item, ICloneable
         _isUsing = value;
     }
 
+    public void Enhance()
+    {
+        _isEnhanced = true;
+    }
+
     public virtual bool AbilityCondition()
     {
-        //Debug.Log("BaseRune Condition");
         return true;
     }
 
@@ -105,7 +112,7 @@ public class BaseRune : Item, ICloneable
 
     public float GetAbliltiValue(EffectType type)
     {
-        float? value = _baseRuneSO.AbilityList.Where(x => x.EffectType == type).Select(x => x.Value).FirstOrDefault();
+        float? value = (_isEnhanced ? _baseRuneSO.EnhancedAbilityList : _baseRuneSO.AbilityList).Where(x => x.EffectType == type).Select(x => x.Value).FirstOrDefault();
 
         if (value.HasValue)
         {
@@ -120,6 +127,7 @@ public class BaseRune : Item, ICloneable
     public virtual object Clone()
     {
         BaseRune rune = new BaseRune();
+        rune.Init();
         return rune;
     }
 

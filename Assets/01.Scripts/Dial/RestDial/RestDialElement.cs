@@ -11,24 +11,14 @@ public class RestDialElement : DialElement<RestRuneUI, RestRuneUI>
         get => _selectElement;
         set
         {
-            if (value == null)
+            if (_selectElement != null)
             {
-                if (_selectElement != null)
-                {
-                    //_selectCard.SetActiveOutline(OutlineType.Default);
-                    _selectElement.RuneColor(new Color(0.26f, 0.26f, 0.26f, 1f));
-                }
-                _selectElement = value;
+                //_selectCard.SetActiveOutline(OutlineType.Default);
+                _selectElement.RuneColor(new Color(0.26f, 0.26f, 0.26f, 1f));
             }
-            else
+            _selectElement = value;
+            if (value != null)
             {
-                if (_selectElement != null)
-                {
-                    //_selectCard.SetActiveOutline(OutlineType.Default);
-                    _selectElement.RuneColor(new Color(0.26f, 0.26f, 0.26f, 1f));
-                }
-                _selectElement = value;
-                //_selectCard.SetActiveOutline(OutlineType.Cyan);
                 _selectElement.RuneColor(Color.white);
             }
         }
@@ -45,10 +35,7 @@ public class RestDialElement : DialElement<RestRuneUI, RestRuneUI>
             SelectElement = _elementList[index];
             if (_isTouchDown == true)
             {
-                if (_selectElement != null)
-                {
-                    (_dial as RestDial).EditText(_selectElement.Desc);
-                }
+                OnSelectElementAction();
             }
         }
     }

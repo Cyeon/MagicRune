@@ -26,7 +26,7 @@ public class ExplainPanel : MonoBehaviour
 
     private List<KeywardPanel> _keywardPanelList = new List<KeywardPanel>();
 
-    public virtual void SetUI(BaseRune rune, bool isReward = true)
+    public virtual void SetUI(BaseRune rune, bool isEnhance = false, bool isReward = true)
     {
         if (rune == null)
         {

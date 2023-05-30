@@ -9,7 +9,6 @@ using Random = UnityEngine.Random;
 public class RuneManager
 {
     private List<BaseRune> _runeHandler = new List<BaseRune>();
-    private Dictionary<string, BaseRune> _runeNameDict = new Dictionary<string, BaseRune>();
 
     public void Init()
     {
@@ -44,13 +43,12 @@ public class RuneManager
         for (int i = 0; i < _runeHandler.Count; i++)
         {
             _runeHandler[i].Init();
-            //_runeNameDict.Add(_runeHandler[i].GetType().Name, _runeHandler[i]);
         }
+    }
 
-        foreach (var list in _runeNameDict)
-        {
-            Debug.Log($"{list.Key}, {list.Value}");
-        }
+    public List<BaseRune> GetRuneList()
+    {
+        return _runeHandler;
     }
 
     public BaseRune GetRandomRuneOfRarity(RuneRarity rarity, List<BaseRune> ignoreRuneList = null)

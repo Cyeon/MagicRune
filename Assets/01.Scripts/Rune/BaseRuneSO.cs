@@ -37,9 +37,9 @@ public class BaseRuneSO : ScriptableObject
         get
         {
             string desc = _runeDescription;
-            desc = desc.Replace("(dmg)", GetAbillityValue(EffectType.Attack) + " 데미지");
+            desc = desc.Replace("(dmg)", GetAbillityValue(EffectType.Attack) + " ?곕?吏");
             desc = desc.Replace("(status)", GetAbillityValue(EffectType.Status));
-            desc = desc.Replace("(def)", GetAbillityValue(EffectType.Defence) + " 방어");
+            desc = desc.Replace("(def)", GetAbillityValue(EffectType.Defence) + " 諛⑹뼱");
             desc = desc.Replace("(dStatus)", GetAbillityValue(EffectType.DestroyStatus));
 
             for(int i = 0; i < KeywardList.Length; i++)
@@ -63,9 +63,10 @@ public class BaseRuneSO : ScriptableObject
 
     // Ability Parameta
 
-    // 진짜 간단하게 능력치 정의. 조건 다 필요없어 어떻거 나가는지만 진짜
-    // 공격 5, 빙결 2, 방어 10 이렇게만. 진짜 능력치만
+    // 吏꾩쭨 媛꾨떒?섍쾶 ?λ젰移??뺤쓽. 議곌굔 ???꾩슂?놁뼱 ?대뼸嫄??섍??붿?留?吏꾩쭨
+    // 怨듦꺽 5, 鍮숆껐 2, 諛⑹뼱 10 ?대젃寃뚮쭔. 吏꾩쭨 ?λ젰移섎쭔
     public List<AbilityValue> AbilityList;
+    public List<AbilityValue> EnhancedAbilityList;
 
     public KeywordType[] KeywardList;
 
