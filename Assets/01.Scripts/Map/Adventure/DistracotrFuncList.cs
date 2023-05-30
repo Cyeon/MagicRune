@@ -71,7 +71,9 @@ public class DistracotrFuncList : MonoBehaviour
 
     public void RandomBattleEnemy()
     {
-        Managers.Enemy.AddEnemy(Managers.Map.CurrentChapter.GetEnemy());
+        Enemy enemy = Managers.Map.CurrentChapter. GetEnemy();
+        enemy.isEnter = false;
+        Managers.Enemy.AddEnemy(enemy);
         Managers.Scene.LoadScene(Define.Scene.DialScene);
     }
 
