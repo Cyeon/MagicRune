@@ -37,6 +37,23 @@ public class EnhancePanel : MonoBehaviour
         });
     }
 
+    public IEnumerator EnhanceCoroutine()
+    {
+        // 강화 이펙트 생성
+        // 이펙트 시간뒤에 강화하기
+        yield return new WaitForSeconds(1f);
+
+        _selectRune.Enhance();
+        _selectRune = null;
+        
+        // 화면 터치하면 다음 스테이지로
+
+        _restUI.SetActiveExplainPanel(true);
+        _restUI.SetActiveEnhancePanel(false);
+        _restUI.Dial.gameObject.SetActive(true);
+        _restUI.NextStage();
+    }
+
     public void CreateRune()
     {
         Clear();
@@ -55,7 +72,7 @@ public class EnhancePanel : MonoBehaviour
 
     public void Clear()
     {
-        for(int i = _runeList.Count - 1; i >= 0; i++)
+        for(int i = _runeList.Count - 1; i >= 0; i--)
         {
             Managers.Resource.Destroy(_runeList[i].gameObject);
         }

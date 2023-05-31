@@ -42,6 +42,7 @@ public class RestDial : Dial<RestRuneUI, RestRuneUI>
             _restUI.SetActiveExplainPanel(false);
             _restUI.SetActiveEnhancePanel(true);
             _restUI.Dial.gameObject.SetActive(false);
+            Debug.Log("히히 강화창 열기");
         }, "룬 하나를 강화한다.");
         _dialElementList[0].AddRuneList(enhanceRune1);
         AddCard(enhanceRune1, 3);
