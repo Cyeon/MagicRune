@@ -17,21 +17,28 @@ public class StatusPanel : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     private Image _effectImage;
     private Sequence _effectSeq;
 
-    private void OnEnable()
+    private void Awake()
     {
         _image = GetComponent<Image>();
         _duration = GetComponentInChildren<TextMeshProUGUI>();
 
         _effectImage = transform.Find("Effect").GetComponent<Image>();
-        _effectImage.DOFade(0, 0);
+    }
 
-        _effectSeq = DOTween.Sequence();
-        _effectSeq.Append(_effectImage.transform.DOScale(Vector2.one * 2, 0));
-        _effectSeq.Join(_effectImage.DOFade(0.5f, 0));
-        _effectSeq.AppendInterval(0.1f);
-        _effectSeq.Append(_effectImage.DOFade(0.1f, 0.5f));
-        _effectSeq.Join(_effectImage.transform.DOScale(Vector2.one, 0.5f));
-        _effectSeq.Append(_effectImage.DOFade(0, 0));
+    private void OnEnable()
+    {
+        _effectImage.color = new Color(1, 1, 1, 0);
+
+        if (_effectImage != null)
+        {
+            _effectSeq = DOTween.Sequence();
+            _effectSeq.Append(_effectImage?.transform.DOScale(Vector2.one * 2, 0));
+            _effectSeq.Join(_effectImage?.DOFade(0.5f, 0));
+            _effectSeq.AppendInterval(0.1f);
+            _effectSeq.Append(_effectImage?.DOFade(0.1f, 0.5f));
+            _effectSeq.Join(_effectImage?.transform.DOScale(Vector2.one, 0.5f));
+            _effectSeq.Append(_effectImage?.DOFade(0, 0));
+        }
     }
 
     public void Init(Status status)

@@ -1,10 +1,12 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class ExplainPanel : MonoBehaviour
+public class ExplainPanel : MonoBehaviour, IPointerClickHandler
 {
     #region UI Parameter
 
@@ -23,8 +25,11 @@ public class ExplainPanel : MonoBehaviour
     #endregion
 
     protected BaseRune _rune;
+    public BaseRune Rune => _rune;
 
     private List<KeywardPanel> _keywardPanelList = new List<KeywardPanel>();
+
+    private Action _action;
 
     public virtual void SetUI(BaseRune rune, bool isEnhance = false, bool isReward = true)
     {
@@ -53,6 +58,11 @@ public class ExplainPanel : MonoBehaviour
 
             SetKeyward(rune.BaseRuneSO);
         }
+    }
+
+    public void SetAction(Action action)
+    {
+        _action = action;
     }
 
     public void SetUI(BaseRuneSO rune, bool isReward = true)
@@ -92,5 +102,10 @@ public class ExplainPanel : MonoBehaviour
             panel.SetKeyward(Managers.Keyward.GetKeyward(rune.KeywardList[i]));
             _keywardPanelList.Add(panel);
         }
+    }
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        
     }
 }
