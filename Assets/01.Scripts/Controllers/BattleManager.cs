@@ -48,8 +48,10 @@ public class BattleManager : MonoSingleton<BattleManager>
         
         Managers.Enemy.BattleSetting();
 
+        Player.VisualInit(FindObjectOfType<VisualPlayer>());
+        Player.Visual.UISetting();
+
         Player.StatusManager.Reset();
-        Player.SetUIActive(true);
         Player.UISetting();
 
         Player.OnDieEvent.RemoveAllListeners();
