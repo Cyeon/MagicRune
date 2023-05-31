@@ -37,9 +37,9 @@ public class BaseRuneSO : ScriptableObject
         get
         {
             string desc = _runeDescription;
-            desc = desc.Replace("(dmg)", GetAbillityValue(EffectType.Attack) + " ?곕?吏");
+            desc = desc.Replace("(dmg)", GetAbillityValue(EffectType.Attack) + "데미지");
             desc = desc.Replace("(status)", GetAbillityValue(EffectType.Status));
-            desc = desc.Replace("(def)", GetAbillityValue(EffectType.Defence) + " 諛⑹뼱");
+            desc = desc.Replace("(def)", GetAbillityValue(EffectType.Defence) + " 방어");
             desc = desc.Replace("(dStatus)", GetAbillityValue(EffectType.DestroyStatus));
 
             for(int i = 0; i < KeywardList.Length; i++)
