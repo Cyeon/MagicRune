@@ -2,6 +2,7 @@ using DG.Tweening;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public enum DialState
@@ -185,6 +186,11 @@ public class DialElement<T1, T2> : MonoBehaviour where T1 : MonoBehaviour where 
             Vector3 rot = transform.eulerAngles;
 
             float temp = Input.GetTouch(_fingerID).position.x > Screen.width / 2 ? _offset.x - _offset.y : _offset.x + _offset.y;
+            
+            if(temp < 0)
+            {
+                temp *= -1;
+            }
 
             if (Mathf.Abs(_offset.x) > Mathf.Abs(_offset.y))
             {
@@ -201,7 +207,9 @@ public class DialElement<T1, T2> : MonoBehaviour where T1 : MonoBehaviour where 
                     temp = Mathf.Clamp(temp, _offset.y, -_offset.y);
             }
 
-            rot.z += -1 * temp / _rotDamp;
+            float result = temp / _rotDamp;
+            if (result == 0) result = 2;
+            rot.z += -1 * result;
 
             transform.rotation = Quaternion.Euler(rot);
             _touchPos = Input.GetTouch(_fingerID).position;
