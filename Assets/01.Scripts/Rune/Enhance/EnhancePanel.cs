@@ -20,6 +20,12 @@ public class EnhancePanel : MonoBehaviour
 
     private RestUI _restUI;
 
+    private void OnEnable()
+    {
+        _beforeRune.SetUI(null, false, false);
+        _afterRune.SetUI(null, false, false);
+    }
+
     void Start()
     {
         _restUI = Managers.Canvas.GetCanvas("Rest").GetComponent<RestUI>();
@@ -61,6 +67,8 @@ public class EnhancePanel : MonoBehaviour
 
     public void CreateRune()
     {
+        Debug.Log("Create Rune!");
+
         Clear();
 
         BaseRune[] notEnhanceRuneArray = Managers.Deck.Deck.Where(x => x.IsEnhanced == false).ToArray();
@@ -70,6 +78,7 @@ public class EnhancePanel : MonoBehaviour
             ExplainPanel panel = Managers.Resource.Instantiate("UI/Explain_Panel", _runeArea).GetComponent<ExplainPanel>();
             panel.SetUI(notEnhanceRuneArray[i], isReward: false);
             panel.GetComponent<RectTransform>().localScale = Vector3.one;
+            panel.GetComponent<RectTransform>().anchoredPosition3D = Vector3.zero;
             panel.SetAction(() => SetSelectRune(_runeList[index].Rune));
             _runeList.Add(panel);
         }
