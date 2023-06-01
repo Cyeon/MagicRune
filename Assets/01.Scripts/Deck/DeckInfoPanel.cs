@@ -57,6 +57,7 @@ public class DeckInfoPanel : MonoBehaviour
         for(int i = 0; i < _deckSO.RuneList.Count; i++)
         {
             ExplainPanel panel = Managers.Resource.Instantiate("UI/Explain_Panel", _content).GetComponent<ExplainPanel>();
+            panel.transform.localScale = Vector3.one;
             panel.SetUI(_deckSO.RuneList[i], false);
         }
     }
@@ -86,12 +87,12 @@ public class DeckInfoPanel : MonoBehaviour
         if (value == true)
         {
             _selectButton.color = Color.gray;
-            _selectText.SetText("º±≈√µ ");
+            _selectText.SetText("ÏÑ†ÌÉùÎê®");
         }
         else
         {
             _selectButton.color = Color.white;
-            _selectText.SetText("º±≈√");
+            _selectText.SetText("ÏÑ†ÌÉù");
         }
     }
 }
