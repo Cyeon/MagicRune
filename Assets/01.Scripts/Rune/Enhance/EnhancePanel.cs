@@ -13,7 +13,9 @@ public class EnhancePanel : MonoBehaviour
     private Transform _runeArea;
     private List<ExplainPanel> _runeList = new List<ExplainPanel>();
 
+    [SerializeField]
     private ExplainPanel _beforeRune;
+    [SerializeField]
     private ExplainPanel _afterRune;
 
     private RestUI _restUI;
@@ -25,7 +27,10 @@ public class EnhancePanel : MonoBehaviour
         Managers.UI.Bind<Button>("EnhanceBtn", this.gameObject);
         Managers.UI.Bind<Button>("ExitBtn", this.gameObject);
 
-        Managers.UI.Get<Button>("EnhanceBtn").onClick.AddListener(() => Debug.Log("Enhance Click"));
+        Managers.UI.Get<Button>("EnhanceBtn").onClick.AddListener(() =>
+        {
+            StartCoroutine(EnhanceCoroutine());
+        });
         Managers.UI.Get<Button>("ExitBtn").onClick.AddListener(() =>
         {
             _selectRune = null;
@@ -65,8 +70,8 @@ public class EnhancePanel : MonoBehaviour
             ExplainPanel panel = Managers.Resource.Instantiate("UI/Explain_Panel", _runeArea).GetComponent<ExplainPanel>();
             panel.SetUI(notEnhanceRuneArray[i], isReward: false);
             panel.GetComponent<RectTransform>().localScale = Vector3.one;
-            _runeList.Add(panel);
             panel.SetAction(() => SetSelectRune(_runeList[index].Rune));
+            _runeList.Add(panel);
         }
     }
 
@@ -84,8 +89,8 @@ public class EnhancePanel : MonoBehaviour
     {
         _selectRune = rune;
 
-        _beforeRune.SetUI(rune);
-        _beforeRune.SetUI(rune, true);
+        _beforeRune.SetUI(rune, false, false);
+        _afterRune.SetUI(rune, true, false);
     }
 
     public void Enhace()

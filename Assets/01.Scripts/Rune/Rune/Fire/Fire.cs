@@ -11,7 +11,7 @@ public class Fire : BaseRune
 
     public override void AbilityAction()
     {
-        BattleManager.Instance.Enemy.StatusManager.AddStatus(StatusName.Fire, 5);
+        BattleManager.Instance.Enemy.StatusManager.AddStatus(StatusName.Fire, (int)GetAbliltiValue(EffectType.Status));
     }
 
     public override object Clone()

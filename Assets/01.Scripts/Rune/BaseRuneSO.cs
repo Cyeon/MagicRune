@@ -32,26 +32,23 @@ public class BaseRuneSO : ScriptableObject
     [ResizableTextArea, SerializeField]
     private string _runeDescription;
 
-    public string RuneDescription
+    public string RuneDescription(bool isEnhance = false)
     {
-        get
+        string desc = _runeDescription;
+        desc = desc.Replace("(dmg)", GetAbillityValue(EffectType.Attack, isEnhance:isEnhance) + " 데미지");
+        desc = desc.Replace("(status)", GetAbillityValue(EffectType.Status, isEnhance: isEnhance));
+        desc = desc.Replace("(def)", GetAbillityValue(EffectType.Defence, isEnhance: isEnhance) + " 방어");
+        desc = desc.Replace("(dStatus)", GetAbillityValue(EffectType.DestroyStatus, isEnhance: isEnhance));
+
+        for (int i = 0; i < KeywardList.Length; i++)
         {
-            string desc = _runeDescription;
-            desc = desc.Replace("(dmg)", GetAbillityValue(EffectType.Attack) + " ?곕?吏");
-            desc = desc.Replace("(status)", GetAbillityValue(EffectType.Status));
-            desc = desc.Replace("(def)", GetAbillityValue(EffectType.Defence) + " 諛⑹뼱");
-            desc = desc.Replace("(dStatus)", GetAbillityValue(EffectType.DestroyStatus));
-
-            for(int i = 0; i < KeywardList.Length; i++)
+            if (Managers.Keyward.GetKeyward(KeywardList[i]).IsAddDesc)
             {
-                if(Managers.Keyward.GetKeyward(KeywardList[i]).IsAddDesc)
-                {
-                    desc += " <color=#FFE951>" + Managers.Keyward.GetKeyward(KeywardList[i]).KeywardName + "</color>";
-                }
+                desc += " <color=#FFE951>" + Managers.Keyward.GetKeyward(KeywardList[i]).KeywardName + "</color>";
             }
-
-            return desc;
         }
+
+        return desc;
     }
 
     public AttributeType AttributeType;
@@ -70,16 +67,16 @@ public class BaseRuneSO : ScriptableObject
 
     public KeywordType[] KeywardList;
 
-    public string GetAbillityValue(EffectType type, int index = 0)
+    public string GetAbillityValue(EffectType type, int index = 0, bool isEnhance = false)
     {
-        List<AbilityValue> abilities = AbilityList.Where(x => x.EffectType == type).ToList();
+        List<AbilityValue> abilities = (isEnhance ? EnhancedAbilityList : AbilityList).Where(x => x.EffectType == type).ToList();
         if (abilities.Count == 0) return "";
 
         float? value = abilities[index].Value;
         Managers.StatModifier.GetStatModifierValue(type, ref value);
 
         string text = value.ToString();
-        if(type == EffectType.Status || type == EffectType.DestroyStatus)
+        if (type == EffectType.Status || type == EffectType.DestroyStatus)
         {
             if (abilities[index].StatusName != StatusName.Null)
             {
