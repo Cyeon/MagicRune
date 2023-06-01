@@ -12,6 +12,8 @@ public class ShopUI : MonoBehaviour
     private ShopItemPanelUI _selectItem;
     [SerializeField] private GameObject _buyCheck;
 
+    private ShopItemPanelUI _beforeSelectItem;
+
     private void Start()
     {
         _storeShelf = transform.Find("StoreShelf");
@@ -45,7 +47,11 @@ public class ShopUI : MonoBehaviour
     // 선택
     private void SelectItem(ShopItemPanelUI shopItem)
     {
+        _beforeSelectItem = _selectItem;
+        _beforeSelectItem?.SetActiveSelectPanel(false);
+
         _selectItem = shopItem;
+        _selectItem.SetActiveSelectPanel(true);
 
         _explainPanel.SetUI(_selectItem.item.Rune.BaseRuneSO);
     }

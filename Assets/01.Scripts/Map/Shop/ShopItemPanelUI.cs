@@ -66,5 +66,11 @@ public class ShopItemPanelUI : MonoBehaviour
     public void SoldOut()
     {
         _soldOutPanel.SetActive(true);
+        SetActiveSelectPanel(false);
+    }
+
+    public void SetActiveSelectPanel(bool active)
+    {
+        _selectImage.gameObject.SetActive(active);
     }
 }
