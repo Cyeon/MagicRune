@@ -74,7 +74,7 @@ public class ShopUI : MonoBehaviour
         Managers.Sound.PlaySound("SFX/Buy", SoundType.Effect);
         _selectItem.item.Execute();
 
-        Managers.Resource.Destroy(_selectItem.gameObject);
+        _selectItem.SoldOut();
 
         _selectItem = null;
         BaseRune nullRune = null;
