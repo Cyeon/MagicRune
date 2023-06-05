@@ -42,7 +42,13 @@ public class BaseRuneSO : ScriptableObject
 
         for (int i = 0; i < KeywardList.Length; i++)
         {
-            if (Managers.Keyward.GetKeyward(KeywardList[i]).IsAddDesc)
+            string desc = _runeDescription;
+            desc = desc.Replace("(dmg)", GetAbillityValue(EffectType.Attack) + "데미지");
+            desc = desc.Replace("(status)", GetAbillityValue(EffectType.Status));
+            desc = desc.Replace("(def)", GetAbillityValue(EffectType.Defence) + " 방어");
+            desc = desc.Replace("(dStatus)", GetAbillityValue(EffectType.DestroyStatus));
+
+            for(int i = 0; i < KeywardList.Length; i++)
             {
                 desc += " <color=#FFE951>" + Managers.Keyward.GetKeyward(KeywardList[i]).KeywardName + "</color>";
             }

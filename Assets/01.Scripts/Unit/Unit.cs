@@ -173,10 +173,6 @@ public class Unit : MonoBehaviour
             StatusManager.DeleteStatus(StatusName.Penetration);
             isTrueDamage = true;
         }
-        else
-        {
-            StatusManager.Reset();
-        }
     }
 
     #region health & shield

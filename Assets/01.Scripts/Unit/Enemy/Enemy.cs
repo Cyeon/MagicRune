@@ -49,7 +49,7 @@ public class Enemy : Unit
 
         Sequence seq = DOTween.Sequence();
         seq.Append(spriteRenderer.DOFade(0, 0.75f));
-        seq.Join(transform.DOMoveY(transform.position.y - 1f, 0.75f));
+        seq.Join(spriteRenderer.transform.DOMoveY(spriteRenderer.transform.position.y - 1f, 0.75f));
         seq.AppendInterval(0.5f);
         seq.AppendCallback(() =>
         {
