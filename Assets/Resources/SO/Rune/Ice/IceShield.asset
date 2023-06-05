@@ -15,8 +15,7 @@ MonoBehaviour:
   RuneName: "\uC5BC\uC74C \uBCF4\uD638\uB9C9"
   RuneSprite: {fileID: 21300000, guid: e0bec1c616fe711459ca3b1a813fe84e, type: 3}
   _runeDescription: "(def)\uB97C \uD68D\uB4DD\uD558\uACE0, \uC774\uBC88\uD134\uC5D0
-    \uC801\uC774 \uACF5\uACA9\uD560 \uB54C \uB9C8\uB2E4 \uC801\uC5D0\uAC8C (status)\uB97C
-    \uBD80\uC5EC\uD55C\uB2E4."
+    \uC801\uC774 \uACF5\uACA9\uD560 \uB54C \uB9C8\uB2E4 (status)\uB97C \uBD80\uC5EC\uD55C\uB2E4."
   AttributeType: 3
   RuneEffect: {fileID: 124842, guid: 16378541428887043a2d2ba231613bb9, type: 3}
   Rarity: 1
@@ -26,6 +25,13 @@ MonoBehaviour:
   AbilityList:
   - EffectType: 1
     Value: 5
+    StatusName: 0
+  - EffectType: 0
+    Value: 1
+    StatusName: 5
+  EnhancedAbilityList:
+  - EffectType: 1
+    Value: 8
     StatusName: 0
   - EffectType: 0
     Value: 1
