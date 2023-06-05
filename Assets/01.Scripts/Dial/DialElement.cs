@@ -208,7 +208,7 @@ public class DialElement<T1, T2> : MonoBehaviour where T1 : MonoBehaviour where 
             }
 
             float result = temp / _rotDamp;
-            if (result == 0) result = 2;
+            if (result == 0) result = 3;
             rot.z += -1 * result;
 
             transform.rotation = Quaternion.Euler(rot);
