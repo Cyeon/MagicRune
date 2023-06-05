@@ -186,11 +186,6 @@ public class DialElement<T1, T2> : MonoBehaviour where T1 : MonoBehaviour where 
             Vector3 rot = transform.eulerAngles;
 
             float temp = Input.GetTouch(_fingerID).position.x > Screen.width / 2 ? _offset.x - _offset.y : _offset.x + _offset.y;
-            
-            if(temp < 0)
-            {
-                temp *= -1;
-            }
 
             if (Mathf.Abs(_offset.x) > Mathf.Abs(_offset.y))
             {
@@ -208,7 +203,6 @@ public class DialElement<T1, T2> : MonoBehaviour where T1 : MonoBehaviour where 
             }
 
             float result = temp / _rotDamp;
-            if (result == 0) result = 3;
             rot.z += -1 * result;
 
             transform.rotation = Quaternion.Euler(rot);

@@ -170,7 +170,7 @@ public class RuneDial : Dial<BaseRuneUI, BaseRune>
         }
     }
 
-    public void ChckResonance()
+    public void CheckResonance()
     {
         if (MagicEmpty(false))
         {
