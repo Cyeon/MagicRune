@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class VisualPlayer : MonoBehaviour
 {
@@ -12,6 +13,9 @@ public class VisualPlayer : MonoBehaviour
     [SerializeField] protected Transform _shieldIcon;
     [SerializeField] protected TextMeshPro _healthText;
     [SerializeField] protected TextMeshPro _shieldText;
+
+    [Header("Feedback")]
+    public UnityEvent OnTakeDamageEvent;
 
     public void UISetting()
     {

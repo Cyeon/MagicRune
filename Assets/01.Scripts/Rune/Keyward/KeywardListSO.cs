@@ -21,6 +21,7 @@ public class Keyward
 {
     public string KeywardName;
     public KeywordType TypeName;
+    [TextArea(1, 10)]
     public string KeywardDescription;
     public bool IsAddDesc = false;
 

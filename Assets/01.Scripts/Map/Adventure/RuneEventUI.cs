@@ -79,6 +79,7 @@ public class RuneEventUI : MonoBehaviour
         _runeDescText.SetText(rune.BaseRuneSO.RuneDescription());
 
         _selectedRuneObject.SetActive(true);
+        _selectedRuneObject.transform.localScale = Vector3.one;
     }
 
     /// <summary>
