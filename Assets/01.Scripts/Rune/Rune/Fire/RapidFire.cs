@@ -23,6 +23,7 @@ public class RapidFire : BaseRune
     {
         RapidFire fire = new RapidFire();
         fire.Init();
+        fire.UnEnhance();
         return fire;
     }
 }

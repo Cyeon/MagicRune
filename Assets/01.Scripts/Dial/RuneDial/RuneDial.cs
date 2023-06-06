@@ -11,6 +11,7 @@ using Random = UnityEngine.Random;
 
 public class RuneDial : Dial<BaseRuneUI, BaseRune>
 {
+    private List<BaseRune> _consumeDeck = new List<BaseRune>();
     protected override bool _isAttackCondition => BattleManager.Instance.GameTurn == GameTurn.Player;
 
     private Resonance _resonance;
@@ -129,8 +130,16 @@ public class RuneDial : Dial<BaseRuneUI, BaseRune>
                 MagicCircleGlow(i, true);
                 BaseRune rune = _usingDeck.Find(x => x == _dialElementList[i].SelectElement.Rune);
                 _usingDeck.Remove(rune);
-                rune.SetCoolTime();
-                _cooltimeDeck.Add(rune);
+
+                if (rune.IsIncludeKeyword(KeywordType.Consume))
+                {
+                    _consumeDeck.Add(rune);
+                }
+                else
+                {
+                    rune.SetCoolTime();
+                    _cooltimeDeck.Add(rune);
+                }
 
                 if (isResonanceCheck)
                     isResonanceCheck = _dialElementList[i].SelectElement.Rune.BaseRuneSO.AttributeType == compareAttributeType;

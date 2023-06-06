@@ -18,6 +18,7 @@ public class DiamondBody : BaseRune
     {
         DiamondBody diamondBody = new DiamondBody();
         diamondBody.Init();
+        diamondBody.UnEnhance();
         return diamondBody;
     }
 }

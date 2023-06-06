@@ -19,6 +19,7 @@ public class GroundBeat : BaseRune
     {
         GroundBeat groundBeat = new GroundBeat();
         groundBeat.Init();
+        groundBeat.UnEnhance();
         return groundBeat;
     }
 }

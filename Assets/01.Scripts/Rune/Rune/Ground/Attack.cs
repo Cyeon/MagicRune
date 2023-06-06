@@ -19,6 +19,7 @@ public class Attack : BaseRune
     {
         Attack attack = new Attack();
         attack.Init();
+        attack.UnEnhance();
         return attack;
     }
 }

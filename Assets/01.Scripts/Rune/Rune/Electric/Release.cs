@@ -13,6 +13,7 @@ public class Release : BaseRune
     {
         float dmg = Managers.GetPlayer().StatusManager.GetStatusValue(StatusName.Recharging) * 3;
         Managers.GetPlayer().StatusManager.DeleteStatus(StatusName.Recharging);
+        if (dmg == 0) return;
         Managers.GetPlayer().Attack(dmg, IsIncludeKeyword(KeywordType.Penetration));
     }
 
@@ -20,6 +21,7 @@ public class Release : BaseRune
     {
         Release release = new Release();
         release.Init();
+        release.UnEnhance();
         return release;
     }
 }

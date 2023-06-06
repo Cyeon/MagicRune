@@ -18,6 +18,7 @@ public class BreathOfIceDragon : BaseRune
     {
         BreathOfIceDragon rune = new BreathOfIceDragon();
         rune.Init();
+        rune.UnEnhance();
         return rune;
     }
 }

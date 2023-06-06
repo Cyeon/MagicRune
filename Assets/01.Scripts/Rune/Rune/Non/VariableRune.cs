@@ -28,6 +28,7 @@ public class VariableRune : BaseRune
     {
         VariableRune variableRune = new VariableRune();
         variableRune.Init();
+        variableRune.UnEnhance();
         return variableRune;
     }
 }

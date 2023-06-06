@@ -19,6 +19,7 @@ public class IceHeart : BaseRune
     {
         IceHeart rune = new IceHeart();
         rune.Init();
+        rune.UnEnhance();
         return rune;
     }
 }

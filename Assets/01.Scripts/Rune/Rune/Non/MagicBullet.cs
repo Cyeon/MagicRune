@@ -17,6 +17,7 @@ public class MagicBullet : BaseRune
     {
         MagicBullet magicBullet = new MagicBullet();
         magicBullet.Init();
+        magicBullet.UnEnhance();
         return magicBullet;
     }
 }

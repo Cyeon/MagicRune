@@ -22,6 +22,7 @@ public class ThreeAttack : BaseRune
     {
         ThreeAttack threeAttack = new ThreeAttack();
         threeAttack.Init();
+        threeAttack.UnEnhance();
         return threeAttack;
     }
 }

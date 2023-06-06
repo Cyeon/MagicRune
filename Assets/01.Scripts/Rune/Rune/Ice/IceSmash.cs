@@ -25,6 +25,7 @@ public class IceSmash : BaseRune
     {
         IceSmash iceSmash = new IceSmash();
         iceSmash.Init();
+        iceSmash.UnEnhance();
         return iceSmash;
     }
 }

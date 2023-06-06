@@ -17,6 +17,7 @@ public class GroundShield : BaseRune
     {
         GroundShield groundShield = new GroundShield();
         groundShield.Init();
+        groundShield.UnEnhance();
         return groundShield;
     }
 }

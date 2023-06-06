@@ -20,6 +20,7 @@ public class LightingRod : BaseRune
     {
         LightingRod lightingRod = new LightingRod();
         lightingRod.Init();
+        lightingRod.UnEnhance();
         return lightingRod;
     }
 }

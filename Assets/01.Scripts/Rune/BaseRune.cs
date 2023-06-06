@@ -101,6 +101,11 @@ public class BaseRune : Item, ICloneable
         _isEnhanced = true;
     }
 
+    public void UnEnhance()
+    {
+        _isEnhanced = false;
+    }
+
     public virtual bool AbilityCondition()
     {
         return true;
@@ -128,6 +133,7 @@ public class BaseRune : Item, ICloneable
     {
         BaseRune rune = new BaseRune();
         rune.Init();
+        rune._isEnhanced = false;
         return rune;
     }
 

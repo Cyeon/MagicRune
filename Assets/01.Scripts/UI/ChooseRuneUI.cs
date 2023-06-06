@@ -20,7 +20,7 @@ public class ChooseRuneUI : MonoBehaviour
         foreach(var panel  in _crPanelList)
         {
             BaseRune rune = Managers.Rune.GetRandomRune();
-            panel.SetUI(rune);
+            panel.SetUI(rune, isEnhance:false);
         }
     }
 

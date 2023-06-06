@@ -19,6 +19,7 @@ public class Reload : BaseRune
     {
         Reload reload = new Reload();
         reload.Init();
+        reload.UnEnhance();
         return reload;
     }
 }
