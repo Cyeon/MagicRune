@@ -1617,12 +1617,32 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1520652532682514446, guid: e60d79253b863a044b25c0ee098ce978, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1520652532682514446, guid: e60d79253b863a044b25c0ee098ce978, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1520652532682514446, guid: e60d79253b863a044b25c0ee098ce978, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
+      objectReference: {fileID: 5776346204812725430}
+    - target: {fileID: 1520652532682514446, guid: e60d79253b863a044b25c0ee098ce978, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1520652532682514446, guid: e60d79253b863a044b25c0ee098ce978, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: ActiveUI
+      value: SetAllRunes
+      objectReference: {fileID: 0}
+    - target: {fileID: 1520652532682514446, guid: e60d79253b863a044b25c0ee098ce978, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: RuneListViewUI, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 1520652532682514446, guid: e60d79253b863a044b25c0ee098ce978, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e60d79253b863a044b25c0ee098ce978, type: 3}
@@ -4402,27 +4422,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5913240716637553048, guid: c9c061cadaf70d543aa959ab7f02a80f, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5913240716637553048, guid: c9c061cadaf70d543aa959ab7f02a80f, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5913240717230422712, guid: c9c061cadaf70d543aa959ab7f02a80f, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5913240717230422712, guid: c9c061cadaf70d543aa959ab7f02a80f, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5913240717230422712, guid: c9c061cadaf70d543aa959ab7f02a80f, type: 3}
       propertyPath: m_SizeDelta.x
-      value: -17
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5913240717642822422, guid: c9c061cadaf70d543aa959ab7f02a80f, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 145
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6579790604943984345, guid: c9c061cadaf70d543aa959ab7f02a80f, type: 3}
       propertyPath: m_SizeDelta.y
@@ -4518,7 +4538,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8978150480661185253, guid: c9c061cadaf70d543aa959ab7f02a80f, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c9c061cadaf70d543aa959ab7f02a80f, type: 3}
+--- !u!114 &5776346204812725430 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6050775472000259577, guid: c9c061cadaf70d543aa959ab7f02a80f, type: 3}
+  m_PrefabInstance: {fileID: 5776346204812725429}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70854faa74a09ed4eb75f7d4d72f97af, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
