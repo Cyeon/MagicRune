@@ -26,6 +26,7 @@ public class ElectricBarrier : BaseRune
     {
         ElectricBarrier electricBarrier = new ElectricBarrier();
         electricBarrier.Init();
+        electricBarrier.UnEnhance();
         return electricBarrier;
     }
 }

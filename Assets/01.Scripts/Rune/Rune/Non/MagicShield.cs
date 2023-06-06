@@ -18,6 +18,7 @@ public class MagicShield : BaseRune
     {
         MagicShield magicShield = new MagicShield();
         magicShield.Init();
+        magicShield.UnEnhance();
         return magicShield;
     }
 }

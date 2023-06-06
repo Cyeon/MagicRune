@@ -18,7 +18,7 @@ public class Charge : BaseRune
     {
         Charge charge = new Charge();
         charge.Init();
-
+        charge.UnEnhance();
         return charge;
     }
 }

@@ -17,6 +17,7 @@ public class Ice : BaseRune
     {
         Ice ice = new Ice();
         ice.Init();
+        ice.UnEnhance();
         return ice;
     }
 }

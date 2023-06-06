@@ -19,6 +19,7 @@ public class TheLastShot : BaseRune
     {
         TheLastShot fire = new TheLastShot();
         fire.Init();
+        fire.UnEnhance();
         return fire;
     }
 }

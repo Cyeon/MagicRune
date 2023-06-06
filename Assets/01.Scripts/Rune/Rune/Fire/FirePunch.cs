@@ -18,6 +18,7 @@ public class FirePunch : BaseRune
     {
         FirePunch firePunch = new FirePunch();
         firePunch.Init();
+        firePunch.UnEnhance();
         return firePunch;
     }
 }

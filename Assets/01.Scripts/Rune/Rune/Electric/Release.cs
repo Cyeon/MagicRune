@@ -20,6 +20,7 @@ public class Release : BaseRune
     {
         Release release = new Release();
         release.Init();
+        release.UnEnhance();
         return release;
     }
 }

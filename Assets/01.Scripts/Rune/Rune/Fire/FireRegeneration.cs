@@ -20,6 +20,7 @@ public class FireRegeneration : BaseRune
     {
         FireRegeneration fireRegeneration = new FireRegeneration();
         fireRegeneration.Init();
+        fireRegeneration.UnEnhance();
         return fireRegeneration;
     }
 }

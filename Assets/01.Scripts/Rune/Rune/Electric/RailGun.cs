@@ -26,6 +26,7 @@ public class RailGun : BaseRune
     {
         RailGun railGun = new RailGun();
         railGun.Init();
+        railGun.UnEnhance();
         return railGun;
     }
 }

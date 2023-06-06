@@ -22,6 +22,7 @@ public class FireBreath : BaseRune
     {
         FireBreath fireBreath = new FireBreath();
         fireBreath.Init();
+        fireBreath.UnEnhance();
         return fireBreath;
     }
 }

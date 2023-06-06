@@ -18,6 +18,7 @@ public class SnowBall : BaseRune
     {
         SnowBall snowBall = new SnowBall();
         snowBall.Init();
+        snowBall.UnEnhance();
         return snowBall;
     }
 }

@@ -20,6 +20,7 @@ public class ElectricAbsorption : BaseRune
     {
         ElectricAbsorption electricAbsorption = new ElectricAbsorption();
         electricAbsorption.Init();
+        electricAbsorption.UnEnhance();
         return electricAbsorption;
     }
 }

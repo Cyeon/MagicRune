@@ -19,6 +19,7 @@ public class IceShield : BaseRune
     {
         IceShield iceShield = new IceShield();
         iceShield.Init();
+        iceShield.UnEnhance();
         return iceShield;
     }
 }

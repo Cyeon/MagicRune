@@ -20,6 +20,7 @@ public class AbsorptionChilliness : BaseRune
     {
         AbsorptionChilliness rune = new AbsorptionChilliness();
         rune.Init();
+        rune.UnEnhance();
         return rune;
     }
 }

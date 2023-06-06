@@ -19,6 +19,7 @@ public class Bouncing : BaseRune
     {
         Bouncing bouncing = new Bouncing();
         bouncing.Init();
+        bouncing.UnEnhance();
         return bouncing;
     }
 }

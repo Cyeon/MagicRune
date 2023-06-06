@@ -18,6 +18,7 @@ public class MagicSpree : BaseRune
     {
         MagicSpree magicSpreee = new MagicSpree();
         magicSpreee.Init();
+        magicSpreee.UnEnhance();
         return magicSpreee;
     }
 }

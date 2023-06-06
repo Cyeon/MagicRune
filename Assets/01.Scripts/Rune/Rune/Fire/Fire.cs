@@ -18,6 +18,7 @@ public class Fire : BaseRune
     {
         Fire fire = new Fire();
         fire.Init();
+        fire.UnEnhance();
         return fire;
     }
 }

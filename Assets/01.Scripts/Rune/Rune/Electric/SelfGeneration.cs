@@ -19,6 +19,7 @@ public class SelfGeneration : BaseRune
     {
         SelfGeneration selfGeneration = new SelfGeneration();
         selfGeneration.Init();
+        selfGeneration.UnEnhance();
         return selfGeneration;
     }
 }
