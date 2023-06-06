@@ -33,6 +33,7 @@ public class Player : Unit
     public void VisualInit(VisualPlayer vp)
     {
         _visual = vp;
+        OnTakeDamageFeedback = vp.OnTakeDamageEvent;
     }
 
     public void UISetting(Transform health, Transform shield, Transform healthFeedback, Transform shieldIcon, TextMeshPro healthText, TextMeshPro shieldText)
