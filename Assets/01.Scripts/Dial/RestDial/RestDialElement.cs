@@ -33,10 +33,7 @@ public class RestDialElement : DialElement<RestRuneUI, RestRuneUI>
         else
         {
             SelectElement = _elementList[index];
-            if (_isTouchDown == true)
-            {
-                OnSelectElementAction();
-            }
+           OnSelectElementAction();
         }
     }
 
