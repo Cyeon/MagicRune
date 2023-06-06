@@ -494,7 +494,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   patternName: "\uC6A9\uC554\uAC11\uC637 \uBD80\uC5EC"
   icon: {fileID: 21300000, guid: e68108daea5ddf945a6935551f31960e, type: 3}
-  iconSize: {x: 1, y: 1, z: 1}
+  iconSize: {x: 0.3, y: 0.3, z: 1}
   desc: 2
   isIncluding: 1
   startPatternAction: []
@@ -633,7 +633,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   patternName: "\uD654\uC5FC\uC815\uD654"
   icon: {fileID: 21300000, guid: 03fa3f79c79669e4192ccd59157677ff, type: 3}
-  iconSize: {x: 1, y: 1, z: 1}
+  iconSize: {x: 0.5, y: 0.5, z: 1}
   desc: 
   isIncluding: 1
   startPatternAction: []
@@ -797,6 +797,30 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 34976971, guid: 1d902098969ddc24a8a9b824bb9545b3, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 34976971, guid: 1d902098969ddc24a8a9b824bb9545b3, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 34976972, guid: 1d902098969ddc24a8a9b824bb9545b3, type: 3}
+      propertyPath: m_Size.x
+      value: 10.24
+      objectReference: {fileID: 0}
+    - target: {fileID: 34976972, guid: 1d902098969ddc24a8a9b824bb9545b3, type: 3}
+      propertyPath: m_Size.y
+      value: 10.24
+      objectReference: {fileID: 0}
+    - target: {fileID: 34976972, guid: 1d902098969ddc24a8a9b824bb9545b3, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 34976972, guid: 1d902098969ddc24a8a9b824bb9545b3, type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1869906943, guid: 1d902098969ddc24a8a9b824bb9545b3, type: 3}
       propertyPath: m_LocalPosition.y
       value: -3.26
