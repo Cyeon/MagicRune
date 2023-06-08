@@ -71,7 +71,7 @@ public class EnhancePanel : MonoBehaviour
 
         Clear();
 
-        BaseRune[] notEnhanceRuneArray = Managers.Deck.Deck.Where(x => x.IsEnhanced == false).ToArray();
+        BaseRune[] notEnhanceRuneArray = Managers.Deck.Deck.Where(x => x.IsEnhanced == false && x.IsIncludeKeyword(KeywordType.CantEnhance) == false).ToArray();
         for(int i = 0; i < notEnhanceRuneArray.Length; i++)
         {
             int index = i;
