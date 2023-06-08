@@ -5,7 +5,6 @@ using System.Linq;
 using MyBox;
 using System;
 using Random = UnityEngine.Random;
-using Unity.VisualScripting;
 
 [Serializable]
 public class BaseRune : Item, ICloneable
@@ -39,6 +38,8 @@ public class BaseRune : Item, ICloneable
 
     private bool _isEnhanced = false;
     public bool IsEnhanced => _isEnhanced;
+
+    protected List<KeywordType> _keywordList = new List<KeywordType>();
     #endregion
 
     #region Item Interface
@@ -62,7 +63,7 @@ public class BaseRune : Item, ICloneable
 
     public virtual void Init()
     {
-
+        _keywordList = _baseRuneSO.KeywardList.ToList();
     }
 
 
@@ -96,12 +97,12 @@ public class BaseRune : Item, ICloneable
         _isUsing = value;
     }
 
-    public void Enhance()
+    public virtual void Enhance()
     {
         _isEnhanced = true;
     }
 
-    public void UnEnhance()
+    public virtual void UnEnhance()
     {
         _isEnhanced = false;
     }
@@ -113,11 +114,20 @@ public class BaseRune : Item, ICloneable
 
     public virtual void AbilityAction()
     {
+
     }
 
-    public float GetAbliltiValue(EffectType type)
+    public float GetAbliltiValue(EffectType type, StatusName status = StatusName.Null)
     {
-        float? value = (_isEnhanced ? _baseRuneSO.EnhancedAbilityList : _baseRuneSO.AbilityList).Where(x => x.EffectType == type).Select(x => x.Value).FirstOrDefault();
+        float? value = 0;
+        if(status == StatusName.Null)
+        {
+            value = (_isEnhanced ? _baseRuneSO.EnhancedAbilityList : _baseRuneSO.AbilityList).Where(x => x.EffectType == type).Select(x => x.Value).FirstOrDefault();
+        }
+        else
+        {
+            value = (_isEnhanced ? _baseRuneSO.EnhancedAbilityList : _baseRuneSO.AbilityList).Where(x => x.EffectType == type && x.StatusName == status).Select(x => x.Value).FirstOrDefault();
+        }
 
         if (value.HasValue)
         {
@@ -139,6 +149,6 @@ public class BaseRune : Item, ICloneable
 
     public bool IsIncludeKeyword(KeywordType keyward)
     {
-        return _baseRuneSO.KeywardList.Contains(keyward);
+        return _keywordList.Contains(keyward);
     }
 }

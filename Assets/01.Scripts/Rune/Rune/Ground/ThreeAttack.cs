@@ -7,12 +7,14 @@ public class ThreeAttack : BaseRune
 {
     public override void Init()
     {
+        base.Init();
         _baseRuneSO = Managers.Resource.Load<BaseRuneSO>("SO/Rune/Ground/" + typeof(ThreeAttack).Name);
     }
 
     public override void AbilityAction()
     {
-        for(int i = 0; i < 3; i++)
+        int count = IsEnhanced ? 4 : 3;
+        for(int i = 0; i < count; i++)
         {
             BattleManager.Instance.Enemy.StatusManager.AddStatus(StatusName.Impact, GetAbliltiValue(EffectType.Status).RoundToInt());
         }

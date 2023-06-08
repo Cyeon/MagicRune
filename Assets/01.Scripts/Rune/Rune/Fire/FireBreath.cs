@@ -7,6 +7,7 @@ public class FireBreath : BaseRune
 {
     public override void Init()
     {
+        base.Init();
         _baseRuneSO = Managers.Resource.Load<BaseRuneSO>("SO/Rune/Fire/" + typeof(FireBreath).Name);
     }
 
@@ -14,7 +15,7 @@ public class FireBreath : BaseRune
     {
         for(int i = 0; i < 3; i++)
         {
-            BattleManager.Instance.Enemy.StatusManager.AddStatus(StatusName.Fire, GetAbliltiValue(EffectType.Status).RoundToInt());
+            BattleManager.Instance.Enemy.StatusManager.AddStatus(StatusName.Fire, GetAbliltiValue(EffectType.Status, StatusName.Fire).RoundToInt());
         }
     }
 

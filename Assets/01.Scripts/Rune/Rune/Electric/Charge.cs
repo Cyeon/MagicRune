@@ -1,3 +1,4 @@
+using MyBox;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,7 +12,7 @@ public class Charge : BaseRune
 
     public override void AbilityAction()
     {
-        Managers.GetPlayer().StatusManager.AddStatus(StatusName.Recharging, 5);
+        Managers.GetPlayer().StatusManager.AddStatus(StatusName.Recharging, GetAbliltiValue(EffectType.Status, StatusName.Recharging).RoundToInt());
     }
 
     public override object Clone()

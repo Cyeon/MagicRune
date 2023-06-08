@@ -12,7 +12,7 @@ public class LightingRod : BaseRune
 
     public override void AbilityAction()
     {
-        Managers.GetPlayer().StatusManager.AddStatus(StatusName.Recharging, GetAbliltiValue(EffectType.Status).RoundToInt());
+        Managers.GetPlayer().StatusManager.AddStatus(StatusName.Recharging, GetAbliltiValue(EffectType.Status, StatusName.Recharging).RoundToInt());
         Managers.GetPlayer().TakeDamage(GetAbliltiValue(EffectType.Attack));
     }
 

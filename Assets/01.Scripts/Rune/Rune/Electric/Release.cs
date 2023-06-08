@@ -11,7 +11,7 @@ public class Release : BaseRune
 
     public override void AbilityAction()
     {
-        float dmg = Managers.GetPlayer().StatusManager.GetStatusValue(StatusName.Recharging) * 3;
+        float dmg = Managers.GetPlayer().StatusManager.GetStatusValue(StatusName.Recharging) * (IsEnhanced ? 4 : 3);
         Managers.GetPlayer().StatusManager.DeleteStatus(StatusName.Recharging);
         if (dmg == 0) return;
         Managers.GetPlayer().Attack(dmg, IsIncludeKeyword(KeywordType.Penetration));

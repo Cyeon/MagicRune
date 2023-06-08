@@ -7,11 +7,12 @@ public class BreathOfIceDragon : BaseRune
 {
     public override void Init()
     {
+        base.Init();
         _baseRuneSO = Managers.Resource.Load<BaseRuneSO>("SO/Rune/Ice/" + typeof(BreathOfIceDragon).Name);
     }
     public override void AbilityAction()
     {
-        BattleManager.Instance.Enemy.StatusManager.AddStatus(StatusName.Ice, GetAbliltiValue(EffectType.Status).RoundToInt());
+        BattleManager.Instance.Enemy.StatusManager.AddStatus(StatusName.Ice, GetAbliltiValue(EffectType.Status, StatusName.Ice).RoundToInt());
     }
 
     public override object Clone()

@@ -14,6 +14,7 @@ public enum KeywordType
     Consume, // 소모 
     Penetration, // 관통
     Overheat, // 과열
+    CantEnhance, // 강화불과
 }
 
 [Serializable]
