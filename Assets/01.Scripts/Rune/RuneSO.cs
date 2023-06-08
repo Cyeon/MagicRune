@@ -7,30 +7,30 @@ using MyBox;
 using MinValue = NaughtyAttributes.MinValueAttribute;
 
 /// <summary>
-/// ¼Ó¼º Enum
+/// ì†ì„± Enum
 /// </summary>
 public enum AttributeType
 {
-    None, // ¾øÀ½
-    NonAttribute, // ¹«¼Ó¼º
-    Fire, // ºÒ
-    Ice, // ¾óÀ½
-    Wind, // ¹Ù¶÷
-    Ground, // ¶¥
-    Electric, // Àü±â
+    None, // ì—†ìŒ
+    NonAttribute, // ë¬´ì†ì„±
+    Fire, // ë¶ˆ
+    Ice, // ì–¼ìŒ
+    Wind, // ë°”ëŒ
+    Ground, // ë•…
+    Electric, // ì „ê¸°
 }
 
 /// <summary>
-/// Çàµ¿ À¯Çü, ÀÌ ¼ø¼­´ë·Î Çàµ¿ÀÌ ³ª°¡´Ï±î ¼ø¼­ Áß¿ä!
+/// í–‰ë™ ìœ í˜•, ì´ ìˆœì„œëŒ€ë¡œ í–‰ë™ì´ ë‚˜ê°€ë‹ˆê¹Œ ìˆœì„œ ì¤‘ìš”!
 /// </summary>
 public enum EffectType
 {
     Status,
-    Defence, // ¹æ¾îÇÏ´Â°Å ¿¹) 5¹æ¾î
-    Attack, // °ø°İÇÏ´Â°Å ¿¹) 5µ¥¹ÌÁö
+    Defence, // ë°©ì–´í•˜ëŠ”ê±° ì˜ˆ) 5ë°©ì–´
+    Attack, // ê³µê²©í•˜ëŠ”ê±° ì˜ˆ) 5ë°ë¯¸ì§€
     DestroyStatus,
     Draw,
-    Etc, // ±âÅ¸ È¿°ú ¿¹) 1Àå µå·Î¿ì, È­»óÈ¿°ú ºÎ¿© µî...
+    Etc, // ê¸°íƒ€ íš¨ê³¼ ì˜ˆ) 1ì¥ ë“œë¡œìš°, í™”ìƒíš¨ê³¼ ë¶€ì—¬ ë“±...
 }
 
 public enum ConditionType
@@ -44,8 +44,8 @@ public enum ConditionType
 
 public enum ComparisonType
 {
-    MoreThan, // ÀÌ»ó
-    LessThan, // ÀÌÇÏ
+    MoreThan, // ì´ìƒ
+    LessThan, // ì´í•˜
 }
 
 public enum AttackType
@@ -78,7 +78,7 @@ public class Condition
     [ConditionalField(nameof(ConditionType), false, ConditionType.StatusComparison)]
     public StatusName StatusType;
 
-    // true : ÀûÀÌ´Ù, ¸ŞÀÎ ·éÀÌ´Ù, false : ³ª´Ù, º¸Á¶·éÀÌ´Ù. 
+    // true : ì ì´ë‹¤, ë©”ì¸ ë£¬ì´ë‹¤, false : ë‚˜ë‹¤, ë³´ì¡°ë£¬ì´ë‹¤. 
     [ConditionalField(nameof(ConditionType), false, ConditionType.HeathComparison, ConditionType.AttributeComparison, ConditionType.StatusComparison)]
     public ComparisonType ComparisonType;
     [MinValue(0f), ConditionalField(nameof(ConditionType), false, ConditionType.HeathComparison, ConditionType.AttributeComparison, ConditionType.StatusComparison, ConditionType.AssistRuneCount)]
@@ -103,13 +103,13 @@ public class Condition
 [Serializable]
 public class Pair
 {
-    [Tooltip("Á¶°Ç")]
+    [Tooltip("ì¡°ê±´")]
     public Condition Condition;
-    [Tooltip("È¿°ú °£´Ü ¼Ó¼º?")]
+    [Tooltip("íš¨ê³¼ ê°„ë‹¨ ì†ì„±?")]
     public EffectType EffectType;
-    [Tooltip("»óÅÂÀÌ»ó ¼Ó¼º, EffectType == Status¸é »ç¿ë"), ConditionalField(nameof(EffectType), false, EffectType.Status, EffectType.DestroyStatus)]
+    [Tooltip("ìƒíƒœì´ìƒ ì†ì„±, EffectType == Statusë©´ ì‚¬ìš©"), ConditionalField(nameof(EffectType), false, EffectType.Status, EffectType.DestroyStatus)]
     public StatusName StatusType;
-    [Tooltip("true¸é Àû, false¸é ³ªÇÑÅÂ ¾¸"), ConditionalField(nameof(EffectType), false, EffectType.Attack, EffectType.Status, EffectType.DestroyStatus)]
+    [Tooltip("trueë©´ ì , falseë©´ ë‚˜í•œíƒœ ì”€"), ConditionalField(nameof(EffectType), false, EffectType.Attack, EffectType.Status, EffectType.DestroyStatus)]
     public bool IsEnemy = true;
     [ConditionalField(nameof(EffectType), true, EffectType.DestroyStatus, EffectType.Draw)]
     public AttackType AttackType;
@@ -120,7 +120,7 @@ public class Pair
     public CountType CountType;
 
     [ConditionalField(nameof(CountType), true, CountType.All)]
-    [Tooltip("Ä«µå È¿°ú ¹ë·ù")]
+    [Tooltip("ì¹´ë“œ íš¨ê³¼ ë°¸ë¥˜")]
     public float Effect;
 
     public Pair(Condition condition, EffectType effectType = EffectType.Attack,
@@ -140,34 +140,32 @@ public class Pair
 }
 
 /// <summary>
-/// ·é Á¤º¸ Å¬·¡½º
+/// ë£¬ ì •ë³´ í´ë˜ìŠ¤
 /// </summary>
 [Serializable]
 public class RuneProperty
 {
     
-    [Tooltip("È¿°ú ¼³¸í"), TextArea]
+    [Tooltip("íš¨ê³¼ ì„¤ëª…"), TextArea]
     public string CardDescription;
-    // À¯Çü Enum ? ÇÊ¿äÇÑ°¡?
+    // ìœ í˜• Enum ? í•„ìš”í•œê°€?
     public List<Pair> EffectDescription;
-    [Tooltip("¼Ó¼º")]
+    [Tooltip("ì†ì„±")]
     public AttributeType Attribute;
 }
 
 [CreateAssetMenu(menuName = "SO/Rune/Rune")]
 public class RuneSO : ScriptableObject
 {
-    [Tooltip("Ä«µå ÀÌ¸§")]
+    [Tooltip("ì¹´ë“œ ì´ë¦„")]
     public string Name;
-    [ShowAssetPreview(32, 32), Tooltip("¸¶¹ıÁø¿¡ µé¾î°¥ ·é ÀÌ¹ÌÁö")]
+    [ShowAssetPreview(32, 32), Tooltip("ë§ˆë²•ì§„ì— ë“¤ì–´ê°ˆ ë£¬ ì´ë¯¸ì§€")]
     public Sprite RuneImage;
-    [ShowAssetPreview(32, 32), Tooltip("¸¶¹ıÁø À§¿¡ ¶ç¿ï ÀÌÆåÆ®")]
+    [ShowAssetPreview(32, 32), Tooltip("ë§ˆë²•ì§„ ìœ„ì— ë„ìš¸ ì´í™íŠ¸")]
     public GameObject RuneEffect;
-    [Min(0), Tooltip("Àç»ç¿ë °¡´É ÅÏ")]
-    public int CoolTime; // Àç»ç¿ë °¡´É
+    [Min(0), Tooltip("ì¬ì‚¬ìš© ê°€ëŠ¥ í„´")]
+    public int CoolTime; // ì¬ì‚¬ìš© ê°€ëŠ¥
     public RuneRarity Rarity;
-    [Tooltip("¸ŞÀÎ ·éÀÇ ¼Ó¼º")]
+    [Tooltip("ë©”ì¸ ë£¬ì˜ ì†ì„±")]
     public RuneProperty MainRune;
-
-    public List<keywordEnum> keywordList = new List<keywordEnum>();
 }
