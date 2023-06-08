@@ -40,7 +40,16 @@ public class RuneViewPanelUI : MonoBehaviour
         }
 
         _runeImage.sprite = baseRune.BaseRuneSO.RuneSprite;
-        _runeNameText.SetText(baseRune.BaseRuneSO.RuneName);
+        if (baseRune.IsEnhanced == false)
+        {
+            _runeNameText.color = Color.white;
+            _runeNameText.SetText(baseRune.BaseRuneSO.RuneName);
+        }
+        else
+        {
+            _runeNameText.color = Color.green;
+            _runeNameText.SetText(baseRune.BaseRuneSO.RuneName + "+");
+        }
         _runeDescText.SetText(baseRune.BaseRuneSO.RuneDescription(baseRune.IsEnhanced));
         _runeCoolTimeText.SetText(baseRune.BaseRuneSO.CoolTime.ToString());
         _grayRuneCoolTimeText.SetText(baseRune.BaseRuneSO.CoolTime.ToString());

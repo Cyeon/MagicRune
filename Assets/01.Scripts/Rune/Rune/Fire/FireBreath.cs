@@ -7,8 +7,8 @@ public class FireBreath : BaseRune
 {
     public override void Init()
     {
-        base.Init();
         _baseRuneSO = Managers.Resource.Load<BaseRuneSO>("SO/Rune/Fire/" + typeof(FireBreath).Name);
+        base.Init();
     }
 
     public override void AbilityAction()

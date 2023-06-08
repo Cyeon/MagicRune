@@ -7,8 +7,8 @@ public class BreathOfIceDragon : BaseRune
 {
     public override void Init()
     {
-        base.Init();
         _baseRuneSO = Managers.Resource.Load<BaseRuneSO>("SO/Rune/Ice/" + typeof(BreathOfIceDragon).Name);
+        base.Init();
     }
     public override void AbilityAction()
     {

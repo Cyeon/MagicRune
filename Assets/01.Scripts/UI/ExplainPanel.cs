@@ -45,8 +45,17 @@ public class ExplainPanel : MonoBehaviour, IPointerClickHandler
         }
 
         _rune = rune;
-
-        _nameText.SetText(rune.BaseRuneSO.RuneName);
+        
+        if(isEnhance == false)
+        {
+            _nameText.color = Color.white;
+            _nameText.SetText(rune.BaseRuneSO.RuneName);
+        }
+        else
+        {
+            _nameText.color = Color.green;
+            _nameText.SetText(_rune.BaseRuneSO.RuneName + "+");
+        }
         _runeImage.enabled = true;
         _runeImage.sprite = rune.BaseRuneSO.RuneSprite;
         _coolTimeText.SetText(rune.BaseRuneSO.CoolTime.ToString());

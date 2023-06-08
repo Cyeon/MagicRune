@@ -8,6 +8,7 @@ public class LightingRod : BaseRune
     public override void Init()
     {
         _baseRuneSO = Managers.Resource.Load<BaseRuneSO>("SO/Rune/Electric/" + typeof(LightingRod).Name);
+        base.Init();
     }
 
     public override void AbilityAction()

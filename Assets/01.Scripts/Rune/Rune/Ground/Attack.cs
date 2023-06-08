@@ -7,8 +7,8 @@ public class Attack : BaseRune
 {
     public override void Init()
     {
-        base.Init();
         _baseRuneSO = Managers.Resource.Load<BaseRuneSO>("SO/Rune/Ground/" + typeof(Attack).Name);
+        base.Init();
     }
 
     public override void AbilityAction()

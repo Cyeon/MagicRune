@@ -7,6 +7,7 @@ public class RailGun : BaseRune
     public override void Init()
     {
         _baseRuneSO = Managers.Resource.Load<BaseRuneSO>("SO/Rune/Electric/" + typeof(RailGun).Name);
+        base.Init();
     }
 
     public override bool AbilityCondition()

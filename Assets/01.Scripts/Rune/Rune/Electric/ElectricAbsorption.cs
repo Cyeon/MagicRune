@@ -8,6 +8,7 @@ public class ElectricAbsorption : BaseRune
     public override void Init()
     {
         _baseRuneSO = Managers.Resource.Load<BaseRuneSO>("SO/Rune/Electric/" + typeof(ElectricAbsorption).Name);
+        base.Init();
     }
 
     public override void AbilityAction()

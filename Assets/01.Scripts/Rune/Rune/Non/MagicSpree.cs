@@ -6,8 +6,8 @@ public class MagicSpree : BaseRune
 {
     public override void Init()
     {
-        base.Init();
         _baseRuneSO = Managers.Resource.Load<BaseRuneSO>("SO/Rune/Non/" + typeof(MagicSpree).Name);
+        base.Init();
     }
 
     public override void AbilityAction()

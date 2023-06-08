@@ -6,8 +6,8 @@ public class Fire : BaseRune
 {
     public override void Init()
     {
-        base.Init();
         _baseRuneSO = Managers.Resource.Load<BaseRuneSO>("SO/Rune/Fire/" + typeof(Fire).Name);
+        base.Init();
     }
 
     public override void AbilityAction()

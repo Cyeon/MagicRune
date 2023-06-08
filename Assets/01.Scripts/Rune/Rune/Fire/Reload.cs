@@ -7,8 +7,8 @@ public class Reload : BaseRune
 {
     public override void Init()
     {
-        base.Init();
         _baseRuneSO = Managers.Resource.Load<BaseRuneSO>("SO/Rune/Fire/" + typeof(Reload).Name);
+        base.Init();
     }
 
     public override void Enhance()

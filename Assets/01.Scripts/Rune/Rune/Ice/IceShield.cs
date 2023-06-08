@@ -7,8 +7,8 @@ public class IceShield : BaseRune
 {
     public override void Init()
     {
-        base.Init();
         _baseRuneSO = Managers.Resource.Load<BaseRuneSO>("SO/Rune/Ice/" + typeof(IceShield).Name);
+        base.Init();
     }
     public override void AbilityAction()
     {
