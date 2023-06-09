@@ -20,5 +20,6 @@ public class ChooseRunePanel : ExplainPanel
     {
         base.SetUI(rune, isEnhance, isReward);
         _rune = rune;
+
     }
 }

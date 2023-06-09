@@ -407,7 +407,6 @@ public class DialElement<T1, T2> : MonoBehaviour where T1 : MonoBehaviour where 
                     transform.DORotate(new Vector3(0, 0, ((index) * oneDinstance)), 0.3f, RotateMode.Fast)
                         .OnComplete(() =>
                         {
-
                             if (_selectElement != null)
                             {
                                 OnSelectElementAction();
