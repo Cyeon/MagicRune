@@ -23,6 +23,9 @@ public class MapScene : BaseScene
     private Image _mapDescIcon;
     private TextMeshProUGUI _mapDescText;
 
+    [Header("Tutorial")]
+    private Image _tutorialImage;
+
     protected override void Init()
     {
         base.Init();
@@ -55,12 +58,19 @@ public class MapScene : BaseScene
         Managers.Map.MapInit();
 
         Managers.Sound.PlaySound(_bgmList[Managers.Map.Chapter - 1], SoundType.Bgm, true);
+
+        Managers.UI.Bind<Image>("TutorialImage", Managers.Canvas.GetCanvas("TutorialCanvas").gameObject);
+        Managers.Canvas.GetCanvas("TutorialCanvas").enabled = false;
+        _tutorialImage = Managers.UI.Get<Image>("TutorialImage");
     }
 
     private void Start()
     {
         mapDial.Clear();
         mapDial.MapStageSpawn();
+
+        if(Managers.Map.isTutorial)
+            Invoke("Tutorial", 1f);
     }
 
     public override void Clear()
@@ -93,5 +103,12 @@ public class MapScene : BaseScene
     {
         _mapDescText.SetText(ui.GetComponent<Stage>().StageDesc);
         _mapDescIcon.sprite = ui.transform.Find("Icon").GetComponent<SpriteRenderer>().sprite;
+    }
+
+    public void Tutorial()
+    {
+        Managers.Canvas.GetCanvas("TutorialCanvas").enabled = true;
+        _tutorialImage.sprite = Resources.Load<Sprite>("Tutorial/MapDial");
+        mapDial.DialElementList[0].IsDialLock = true;
     }
 }

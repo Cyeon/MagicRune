@@ -77,6 +77,8 @@ public class DialElement<T1, T2> : MonoBehaviour where T1 : MonoBehaviour where 
     protected float _touchDownTimer = 0f;
     #endregion
 
+    public bool IsDialLock = false;
+
     public bool IsGlow
     {
         set
@@ -179,7 +181,7 @@ public class DialElement<T1, T2> : MonoBehaviour where T1 : MonoBehaviour where 
 
     private void RotateMagicCircle()
     {
-        if (_isTouchDown && _isRotateAdditionalCondition && _fingerID >= 0)
+        if (_isTouchDown && _isRotateAdditionalCondition && _fingerID >= 0 && !IsDialLock)
         {
             _offset = ((Vector3)Input.GetTouch(_fingerID).position - _touchPos);
 
