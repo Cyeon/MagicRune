@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 5736046982554988565}
   - component: {fileID: 5014004267170453785}
   - component: {fileID: -2393211191559622298}
+  - component: {fileID: -4746811393546434561}
   m_Layer: 0
   m_Name: Status_SelfGeneration
   m_TagString: Untagged
@@ -63,7 +64,8 @@ MonoBehaviour:
   icon: {fileID: 21300000, guid: b3e575d1fe90cac45892f0e1e8fbb19d, type: 3}
   color: {r: 1, g: 1, b: 1, a: 1}
   statusSoundType: 2
-  sound: {fileID: 0}
+  getSound: {fileID: 0}
+  activeSound: {fileID: 0}
   unit: {fileID: 0}
 --- !u!114 &-2393211191559622298
 MonoBehaviour:
@@ -81,3 +83,16 @@ MonoBehaviour:
   _addStackType: 0
   _value: 1
   _isSelf: 1
+--- !u!114 &-4746811393546434561
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8378743581122507794}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1fb6d3b2c3d3fa04d9ffb5368660f72f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isUsing: 0

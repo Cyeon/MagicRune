@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1452730459305271956}
   - component: {fileID: 7943584752646257219}
+  - component: {fileID: -6074912729443217306}
   m_Layer: 0
   m_Name: StageSpawner
   m_TagString: Untagged
@@ -44,8 +45,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ff70c2ed76fe3d4db37d47e3194a4ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _attackStage: {fileID: 346561872717215599, guid: a61563b774c641641826f057d2557e61, type: 3}
-  _bossStage: {fileID: 4724844631875330336, guid: 1ec61ea22b92f7f419404167ffc1e95c, type: 3}
-  _restStage: {fileID: 5878158945824730282, guid: 379d01283c344cf4aad3241bd8af1e58, type: 3}
-  _shopStage: {fileID: 7152767293793830051, guid: 69dee55f59762cc4cab4625c39f787ca, type: 3}
-  _adventureStage: {fileID: 6436854204465521624, guid: 68902f14c488130428d1349d2854345f, type: 3}
+--- !u!114 &-6074912729443217306
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1452730459305271959}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1fb6d3b2c3d3fa04d9ffb5368660f72f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isUsing: 0

@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5736046982554988565}
   - component: {fileID: 5014004267170453785}
+  - component: {fileID: 5205929634625313972}
   m_Layer: 0
   m_Name: Status_Penetration
   m_TagString: Untagged
@@ -60,5 +61,19 @@ MonoBehaviour:
   icon: {fileID: 21300000, guid: 393c8c4ee07a4fa40ab37ad98e7288f3, type: 3}
   color: {r: 1, g: 1, b: 1, a: 1}
   statusSoundType: 2
-  sound: {fileID: 0}
+  getSound: {fileID: 0}
+  activeSound: {fileID: 0}
   unit: {fileID: 0}
+--- !u!114 &5205929634625313972
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8378743581122507794}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1fb6d3b2c3d3fa04d9ffb5368660f72f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isUsing: 0
