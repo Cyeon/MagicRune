@@ -68,9 +68,6 @@ public class MapScene : BaseScene
     {
         mapDial.Clear();
         mapDial.MapStageSpawn();
-
-        if(Managers.Map.isTutorial)
-            Invoke("Tutorial", 1f);
     }
 
     public override void Clear()
@@ -105,10 +102,16 @@ public class MapScene : BaseScene
         _mapDescIcon.sprite = ui.transform.Find("Icon").GetComponent<SpriteRenderer>().sprite;
     }
 
-    public void Tutorial()
+    public void Tutorial(string imageName)
     {
         Managers.Canvas.GetCanvas("TutorialCanvas").enabled = true;
-        _tutorialImage.sprite = Resources.Load<Sprite>("Tutorial/MapDial");
+        _tutorialImage.sprite = Resources.Load<Sprite>("Tutorial/" + imageName);
         mapDial.DialElementList[0].IsDialLock = true;
+    }
+
+    public void TutorialEnd()
+    {
+        Managers.Canvas.GetCanvas("TutorialCanvas").enabled = false;
+        mapDial.DialElementList[0].IsDialLock = false;
     }
 }

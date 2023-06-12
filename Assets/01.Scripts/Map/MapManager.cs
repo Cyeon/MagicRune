@@ -128,10 +128,10 @@ public class MapManager
 
         if(isTutorial)
         {
-            _firstPeriodStageList.Add(StageType.Attack);
-            _firstPeriodStageList.Add(StageType.Attack);
-            _firstPeriodStageList.Add(StageType.Attack);
-            _firstPeriodStageList.Add(StageType.Attack);
+            _firstPeriodStageList.Add(StageType.Tutorial);
+            _firstPeriodStageList.Add(StageType.Tutorial);
+            _firstPeriodStageList.Add(StageType.Tutorial);
+            _firstPeriodStageList.Add(StageType.Tutorial);
             NextPeriod();
             return;
         }

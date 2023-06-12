@@ -41,6 +41,8 @@ public class ChapterTransition : MonoBehaviour
         {
             Reset();
             Managers.Canvas.GetCanvas("ChapterTransition").enabled = false;
+            if(Managers.Map.isTutorial)
+                (Managers.Scene.CurrentScene as MapScene).Tutorial("MapDial");
         });
     }
 
