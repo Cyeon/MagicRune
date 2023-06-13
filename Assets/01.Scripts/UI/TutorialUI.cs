@@ -11,13 +11,16 @@ public class TutorialUI : MonoBehaviour
 
     private int _index = 1;
 
-    private void Start()
+    private void Awake()
     {
         _tutorialCanvas = GetComponent<Canvas>();
         _tutorialImage = GetComponentInChildren<Image>();
 
         _tutorialCanvas.enabled = false;
+    }
 
+    private void Start()
+    {
         if(Managers.Scene.CurrentScene is DialScene)
         {
             Managers.UI.Bind<Image>("AttackTutorialImage", Managers.Canvas.GetCanvas("Popup").gameObject);
