@@ -293,7 +293,6 @@ public class MapManager
         _chapter = 1;
         _floor = 0;
         _isFirst = true;
-        isTutorial = true;
         ChapterInit();
         Managers.GetPlayer().ResetHealth();
     }

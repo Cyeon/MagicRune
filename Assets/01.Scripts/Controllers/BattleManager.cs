@@ -214,6 +214,11 @@ public class BattleManager : MonoSingleton<BattleManager>
     {
         Managers.Reward.ResetRewardList();
         Managers.Scene.LoadScene(Define.Scene.MapScene);
+        if(Managers.Map.isTutorial)
+        {
+            Managers.Map.isTutorial = false;
+            Managers.Map.ResetChapter();
+        }
     }
 
 }
