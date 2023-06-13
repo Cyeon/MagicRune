@@ -4,6 +4,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -120,7 +121,17 @@ public class RuneDial : Dial<BaseRuneUI, BaseRune>
     protected override IEnumerator AttackCoroutine()
     {
         Managers.GetPlayer().PlayAnimation(Managers.GetPlayer().HashAttack);
-        AttributeType compareAttributeType = _dialElementList[0].SelectElement.Rune.BaseRuneSO.AttributeType;
+        int outRuneIndex = -1;
+        for(int i = 0; i < _dialElementList.Count; i++)
+        {
+            if (_dialElementList[i].SelectElement != null)
+            {
+                outRuneIndex = i;
+                break;
+            }
+        }
+        if (outRuneIndex == -1) yield return null;
+        AttributeType compareAttributeType = _dialElementList[outRuneIndex].SelectElement.Rune.BaseRuneSO.AttributeType;
         bool isResonanceCheck = true;
         for (int i = _dialElementList.Count - 1; i >= 0; i--)
         {

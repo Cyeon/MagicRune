@@ -39,6 +39,8 @@ public class RuneManager
 
         _runeHandler.Add(new MagicBullet());
         _runeHandler.Add(new MagicShield());
+        _runeHandler.Add(new MagicSpree());
+        _runeHandler.Add(new VariableRune());
 
         for (int i = 0; i < _runeHandler.Count; i++)
         {

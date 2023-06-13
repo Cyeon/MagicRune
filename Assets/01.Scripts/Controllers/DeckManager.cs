@@ -6,20 +6,20 @@ using MyBox;
 
 public class DeckManager
 {
-    private List<BaseRune> _defaultRune = new List<BaseRune>(20); // 초기 기본 지급 룬
+    private List<BaseRune> _defaultRune = new List<BaseRune>(20); // 珥덇린 湲곕낯 吏湲?猷?
     public List<BaseRune> DefaultRune => _defaultRune;
 
-    public const int FIRST_DIAL_DECK_MAX_COUNT = 3; // 첫번째 다이얼 덱 최대 개수
+    public const int FIRST_DIAL_DECK_MAX_COUNT = 3; // 泥ル쾲吏??ㅼ씠????理쒕? 媛쒖닔
 
-    //private List<BaseRune> _firstDialDeck = new List<BaseRune>(3); // 사전에 설정해둔 다이얼 안쪽의 1번째 줄 덱.
+    //private List<BaseRune> _firstDialDeck = new List<BaseRune>(3); // ?ъ쟾???ㅼ젙?대몦 ?ㅼ씠???덉そ??1踰덉㎏ 以???
     //public List<BaseRune> FirstDialDeck => _firstDialDeck;
 
-    private List<BaseRune> _deck = new List<BaseRune>(12); // 소지하고 있는 모든 룬
+    private List<BaseRune> _deck = new List<BaseRune>(12); // ?뚯??섍퀬 ?덈뒗 紐⑤뱺 猷?
     public List<BaseRune> Deck => _deck;
 
     public void Init()
     {
-        // 나중에 Json 저장하면 여기서 불러오기 등을 하겠지...
+        SetDefaultDeck(Managers.Resource.Load<DeckSO>("SO/Deck/DefaultDeck").RuneList);
     }
 
     public void SetDefaultDeck(List<BaseRune> runeList)
@@ -34,12 +34,13 @@ public class DeckManager
         RuneInit();
     }
 
-    public void SetDefaultDeck(List<BaseRuneSO> runeList)
+    public void SetDefaultDeck(in List<BaseRuneSO> runeList)
     {
         _deck.Clear();
 
         for (int i = 0; i < runeList.Count; i++)
         {
+            Debug.Log(Managers.Rune.GetRune(runeList[i]));
             AddRune(Managers.Rune.GetRune(runeList[i]));
         }
 
@@ -54,25 +55,25 @@ public class DeckManager
         }
     }
 
-    /// <summary> Deck에 룬 추가 </summary>
+    /// <summary> Deck??猷?異붽? </summary>
     public void AddRune(BaseRune rune)
     {
         _deck.Add(rune);
     }
 
-    /// <summary> Deck에서 룬 지우기 </summary>
+    /// <summary> Deck?먯꽌 猷?吏?곌린 </summary>
     public void RemoveDeck(BaseRune rune)
     {
         _deck.Remove(rune);
     }
 
-    ///// <summary> FirstDialDeck에 룬 추가 </summary>
+    ///// <summary> FirstDialDeck??猷?異붽? </summary>
     //public void AddRuneFirstDeck(BaseRune rune)
     //{
     //    _firstDialDeck.Add(rune);
     //}
 
-    ///// <summary> FistDialDeck에서 룬 지우기 </summary>
+    ///// <summary> FistDialDeck?먯꽌 猷?吏?곌린 </summary>
     //public void RemoveFirstDeck(BaseRune rune)
     //{
     //    _firstDialDeck.Remove(rune);

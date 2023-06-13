@@ -10,7 +10,6 @@ public class LobbyScene : BaseScene
     protected override void Init()
     {
         SceneType = Define.Scene.LobbyScene;
-
         Managers.Sound.PlaySound("BGM/LOOP_Battle for Peace", SoundType.Bgm, true);
     }
 
