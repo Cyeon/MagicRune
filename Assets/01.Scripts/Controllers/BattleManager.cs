@@ -57,6 +57,11 @@ public class BattleManager : MonoSingleton<BattleManager>
         Player.OnDieEvent.RemoveAllListeners();
         Player.OnDieEvent.AddListener(() => { Define.DialScene?.RewardUI.DefeatPanelPopup(); });
 
+        if(Managers.Map.isTutorial)
+        {
+            Managers.Canvas.GetCanvas("Tutorial").GetComponent<TutorialUI>().Tutorial("AttackRule1");
+            return;
+        }
         TurnChange();
 
         //Define.DialScene?.CardDescPopup(Define.DialScene?.Dial?.DialElementList[2].SelectCard.Rune);
@@ -208,6 +213,14 @@ public class BattleManager : MonoSingleton<BattleManager>
     public void NextStage()
     {
         Managers.Reward.ResetRewardList();
+        if (Managers.Map.isTutorial)
+        {
+            Managers.Map.isTutorial = false;
+            Managers.Map.ResetChapter();
+            Managers.Scene.LoadScene(Define.Scene.LobbyScene);
+            return;
+        }
+
         Managers.Scene.LoadScene(Define.Scene.MapScene);
     }
 

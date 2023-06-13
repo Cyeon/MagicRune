@@ -38,6 +38,11 @@ public class StageSpawner : MonoBehaviour
                 ShopStage shopStage = Managers.Resource.Instantiate("Stage/" + typeof(ShopStage).Name, transform).GetComponent<ShopStage>();
                 shopStage.Init();
                 return shopStage;
+
+            case StageType.Tutorial:
+                TutorialStage tutorialStage = Managers.Resource.Instantiate("Stage/" + typeof(TutorialStage).Name, transform).GetComponent<TutorialStage>();
+                tutorialStage.Init();
+                return tutorialStage;
         }
 
         return null;

@@ -51,7 +51,7 @@ public class MapDial : Dial<MapRuneUI, MapRuneUI>
 
     public override void Attack()
     {
-        if (_dialElementList[0].SelectElement == null) return;
+        if (_dialElementList[0].SelectElement == null || _dialElementList[0].IsDialLock) return;
 
         if (_isAttack == true) return;
         _isAttack = true;

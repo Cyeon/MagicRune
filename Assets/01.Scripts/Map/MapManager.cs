@@ -72,6 +72,7 @@ public class MapManager
     }
 
     private bool _isFirst = true;
+    public bool isTutorial = true;
 
     #region Adventure
     private bool _isAdventure = false;
@@ -125,7 +126,17 @@ public class MapManager
 
         bool isAttack = false;
 
-        // ?꾨컲遺
+        if(isTutorial)
+        {
+            _firstPeriodStageList.Add(StageType.Tutorial);
+            _firstPeriodStageList.Add(StageType.Tutorial);
+            _firstPeriodStageList.Add(StageType.Tutorial);
+            _firstPeriodStageList.Add(StageType.Tutorial);
+            NextPeriod();
+            return;
+        }
+
+        // First Period
         _firstPeriodStageList.Add(StageType.Attack);
         _firstPeriodStageList.Add(StageType.Attack);
         _firstPeriodStageList.Add(StageType.Attack);
@@ -151,7 +162,7 @@ public class MapManager
         }
         _firstPeriodStageList.Shuffle();
 
-        // ?꾨컲遺
+        // Second Period
         _secondPeriodStageList.Add(StageType.Attack);
         _secondPeriodStageList.Add(StageType.Attack);
         _secondPeriodStageList.Add(StageType.Attack);
