@@ -22,7 +22,10 @@ public class SETakeDamage : StatusEvent
     {
         if(_damageType == DamageType.StackDmg)
         {
-            _damage = _status.TypeValue;
+            if (_status != null)
+            {
+                _damage = _status.TypeValue;
+            }
         }
         Managers.Sound.PlaySound(_status.activeSound, SoundType.Effect);
         _unit.TakeDamage(_damage, _isTrueDamage, _status);

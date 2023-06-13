@@ -14,11 +14,16 @@ public class ChooseRunePanel : ExplainPanel
         Managers.Deck.AddRune(Managers.Rune.GetRune(_rune));
         Define.DialScene?.HideChooseRuneUI();
 
-        // 이펙트 생성
-        // 이펙트가 도착하면 아래 코드를 작동
-        BezierMissile b = Managers.Resource.Instantiate("BezierMissile").GetComponent<BezierMissile>();
+        UserInfoUI ui = Managers.UI.Get<UserInfoUI>("Upper_Frame");
+
+        Vector3 pos1 = this.transform.position;
+        //pos1.z = 100;
+        Vector3 pos2 = ui.transform.Find("DeckButton").position;
+        //pos1.z = 100;
+
+        BezierMissile b = Managers.Resource.Instantiate("BezierMissile", ui.transform).GetComponent<BezierMissile>();
         b.SetEffect(_effect);
-        b.Init(Define.MainCam.ScreenToWorldPoint(GetComponent<RectTransform>().anchoredPosition3D + new Vector3(1440f, 2960f) / 2), (Define.MainCam.ScreenToWorldPoint(new Vector3(1440f, 2960f) - _deckRectPos.anchoredPosition3D)), 0.8f, 1, 1, () =>
+        b.Init(pos1, pos2, 0.8f, 2, 2, () =>
         {
             if (Managers.Reward.IsHaveNextClickReward())
             {

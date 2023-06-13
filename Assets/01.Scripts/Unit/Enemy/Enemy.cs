@@ -34,6 +34,8 @@ public class Enemy : Unit
         _patternManager.Init();
         UISetting();
 
+        Animator = transform.Find("UI/Sprite").GetComponent<Animator>();
+
         transform.localPosition = new Vector3(2.5f, 5.5f, 0);
     }
 

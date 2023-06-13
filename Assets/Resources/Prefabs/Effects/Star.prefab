@@ -8,7 +8,7 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 6509218544265302339}
+  - component: {fileID: 7058438960161989667}
   - component: {fileID: 6509218544265302336}
   - component: {fileID: 6509218544265302337}
   - component: {fileID: 7849446656375198818}
@@ -19,8 +19,8 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &6509218544265302339
-Transform:
+--- !u!224 &7058438960161989667
+RectTransform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -36,6 +36,11 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!198 &6509218544265302336
 ParticleSystem:
   m_ObjectHideFlags: 0
@@ -4833,7 +4838,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 6509218544265302339}
+    m_TransformParent: {fileID: 7058438960161989667}
     m_Modifications:
     - target: {fileID: 158008, guid: 4d7cade01d366e7458905879e0874956, type: 3}
       propertyPath: m_Name
@@ -4939,7 +4944,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 6509218544265302339}
+    m_TransformParent: {fileID: 7058438960161989667}
     m_Modifications:
     - target: {fileID: 107166, guid: 847bc0ce7577e6a4992fb57041d6294b, type: 3}
       propertyPath: m_Name

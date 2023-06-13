@@ -19,6 +19,7 @@ public class ShieldAttack : BaseRune
     public override object Clone()
     {
         ShieldAttack shieldAttack = new ShieldAttack();
+        shieldAttack.Init();
         shieldAttack.UnEnhance();
         return shieldAttack;
     }

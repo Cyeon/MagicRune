@@ -87,8 +87,7 @@ public class Unit : MonoBehaviour
     private Coroutine _hitCoroutine;
 
     [SerializeField] private MMPositionShaker _hitShaker;
-    [SerializeField]
-    private Animator _animator;
+    public Animator Animator;
 
     #region Animation Name
     public readonly string HashAttack = "Attack";
@@ -344,9 +343,9 @@ public class Unit : MonoBehaviour
 
     public void PlayAnimation(string name)
     {
-        if(_animator != null)
+        if(Animator != null)
         {
-            _animator.Play(name);
+            Animator.Play(name);
         }
     }
 }
