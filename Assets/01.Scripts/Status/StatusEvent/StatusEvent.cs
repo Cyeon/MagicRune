@@ -9,7 +9,7 @@ public abstract class StatusEvent : MonoBehaviour
 
     private void Awake()
     {
-        _unit = transform.parent.parent.GetComponent<Unit>();
+        _unit = Managers.GetPlayer().GetComponent<Unit>();
         _status = GetComponent<Status>();
     }
 
