@@ -5,7 +5,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class TutorialBettleManager : MonoBehaviour
+public class TutorialBettleManager : MonoSingleton<TutorialBettleManager>
 {
     [SerializeField]
     private GameTurn _gameTurn = GameTurn.Ready;
@@ -22,7 +22,7 @@ public class TutorialBettleManager : MonoBehaviour
     private void Start()
     {
         Managers.UI.Bind<Image>("Background", Managers.Canvas.GetCanvas("BG").gameObject);
-        Managers.Enemy.AddEnemy(Resources.Load("Prefabs/Enemy/Ice/Ice_Ball").GetComponent<Enemy>());
+        Managers.Enemy.AddEnemy(Resources.Load("Prefabs/Enemy/Ice/Ice_Turtle").GetComponent<Enemy>());
         BattleStart();
     }
 
@@ -46,9 +46,7 @@ public class TutorialBettleManager : MonoBehaviour
         Player.OnDieEvent.RemoveAllListeners();
         Player.OnDieEvent.AddListener(() => { Define.DialScene?.RewardUI.DefeatPanelPopup(); });
 
-        TurnChange();
-
-        //Define.DialScene?.CardDescPopup(Define.DialScene?.Dial?.DialElementList[2].SelectCard.Rune);
+        Managers.Canvas.GetCanvas("Tutorial").GetComponent<TutorialUI>().Tutorial("AttackRule1");
     }
 
     private void OnPlayerTurn()
