@@ -213,12 +213,15 @@ public class BattleManager : MonoSingleton<BattleManager>
     public void NextStage()
     {
         Managers.Reward.ResetRewardList();
-        Managers.Scene.LoadScene(Define.Scene.MapScene);
-        if(Managers.Map.isTutorial)
+        if (Managers.Map.isTutorial)
         {
             Managers.Map.isTutorial = false;
             Managers.Map.ResetChapter();
+            Managers.Scene.LoadScene(Define.Scene.LobbyScene);
+            return;
         }
+
+        Managers.Scene.LoadScene(Define.Scene.MapScene);
     }
 
 }
