@@ -57,6 +57,11 @@ public class BattleManager : MonoSingleton<BattleManager>
         Player.OnDieEvent.RemoveAllListeners();
         Player.OnDieEvent.AddListener(() => { Define.DialScene?.RewardUI.DefeatPanelPopup(); });
 
+        if(Managers.Map.isTutorial)
+        {
+            Managers.Canvas.GetCanvas("Tutorial").GetComponent<TutorialUI>().Tutorial("AttackRule1");
+            return;
+        }
         TurnChange();
 
         //Define.DialScene?.CardDescPopup(Define.DialScene?.Dial?.DialElementList[2].SelectCard.Rune);

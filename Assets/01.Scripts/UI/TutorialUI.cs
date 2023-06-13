@@ -44,7 +44,7 @@ public class TutorialUI : MonoBehaviour
             Managers.Canvas.GetCanvas("Main").enabled = true;
             Managers.Canvas.GetCanvas("Popup").enabled = true;
             Define.DialScene.Dial.DialElementList.ForEach(x => x.IsDialLock = false);
-            TutorialBettleManager.Instance.TurnChange();
+            BattleManager.Instance.TurnChange();
         }
     }
 

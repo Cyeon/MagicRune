@@ -2813,7 +2813,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1018659703}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cf11e1388b913b748999f9c2fb11027b, type: 3}
+  m_Script: {fileID: 11500000, guid: d6c56095b31cbc9439a2e698da204317, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _gameTurn: 4
@@ -4374,7 +4374,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1671816844}
-  - component: {fileID: 1671816843}
+  - component: {fileID: 1671816845}
   m_Layer: 0
   m_Name: '@Scene'
   m_TagString: Untagged
@@ -4382,22 +4382,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1671816843
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1671816842}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ad2eae2edce06104dab0406c90cdb779, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _dial: {fileID: 6047878870979582954}
-  _cardDescPanel: {fileID: 8227251370138338799}
-  _statusDescPanel: {fileID: 35130150}
-  _rewardUI: {fileID: 8337651338890638072}
 --- !u!4 &1671816844
 Transform:
   m_ObjectHideFlags: 0
@@ -4413,6 +4397,22 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1671816845
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1671816842}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad2eae2edce06104dab0406c90cdb779, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _dial: {fileID: 6047878870979582954}
+  _cardDescPanel: {fileID: 8227251370138338799}
+  _statusDescPanel: {fileID: 35130150}
+  _rewardUI: {fileID: 8337651338890638072}
 --- !u!1 &1679534862
 GameObject:
   m_ObjectHideFlags: 0
