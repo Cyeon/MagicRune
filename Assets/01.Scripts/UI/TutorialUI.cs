@@ -7,6 +7,7 @@ public class TutorialUI : MonoBehaviour
 {
     private Canvas _tutorialCanvas;
     private Image _tutorialImage;
+    private Image _attackTutorialImage;
 
     private int _index = 1;
 
@@ -16,6 +17,13 @@ public class TutorialUI : MonoBehaviour
         _tutorialImage = GetComponentInChildren<Image>();
 
         _tutorialCanvas.enabled = false;
+
+        if(Managers.Scene.CurrentScene is DialScene)
+        {
+            Managers.UI.Bind<Image>("AttackTutorialImage", Managers.Canvas.GetCanvas("Popup").gameObject);
+            _attackTutorialImage = Managers.UI.Get<Image>("AttackTutorialImage");
+            _attackTutorialImage.enabled = false;
+        }
     }
 
     public void Tutorial(string imageName)
@@ -45,6 +53,9 @@ public class TutorialUI : MonoBehaviour
             Managers.Canvas.GetCanvas("Popup").enabled = true;
             Define.DialScene.Dial.DialElementList.ForEach(x => x.IsDialLock = false);
             BattleManager.Instance.TurnChange();
+
+            _attackTutorialImage.enabled = true;
+            Define.DialScene.Dial.OnDialAttack += AttackTutorialImageDown;
         }
     }
 
@@ -55,5 +66,11 @@ public class TutorialUI : MonoBehaviour
         {
             TutorialEnd();
         }
+    }
+
+    public void AttackTutorialImageDown()
+    {
+        _attackTutorialImage.enabled = false;
+        Define.DialScene.Dial.OnDialAttack -= AttackTutorialImageDown;
     }
 }

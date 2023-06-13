@@ -16,6 +16,8 @@ public class RuneDial : Dial<BaseRuneUI, BaseRune>
 
     private Resonance _resonance;
 
+    public Action OnDialAttack;
+
     protected override void Awake()
     {
         base.Awake();
@@ -151,6 +153,7 @@ public class RuneDial : Dial<BaseRuneUI, BaseRune>
                         (_dialElementList[index].SelectElement.Rune as VariableRune).nextRune = _dialElementList[index].SelectElement.Rune;
                     }
                     _dialElementList[index].Attack();
+                    OnDialAttack?.Invoke();
 
                     if (i == _dialElementList.Count - 1)
                     {
