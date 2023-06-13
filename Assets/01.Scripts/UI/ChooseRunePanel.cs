@@ -14,22 +14,10 @@ public class ChooseRunePanel : ExplainPanel
         Managers.Deck.AddRune(Managers.Rune.GetRune(_rune));
         Define.DialScene?.HideChooseRuneUI();
 
-        UserInfoUI ui = Managers.UI.Get<UserInfoUI>("Upper_Frame");
-
-        Vector3 pos1 = this.transform.position;
-        //pos1.z = 100;
-        Vector3 pos2 = ui.transform.Find("DeckButton").position;
-        //pos1.z = 100;
-
-        BezierMissile b = Managers.Resource.Instantiate("BezierMissile", ui.transform).GetComponent<BezierMissile>();
-        b.SetEffect(_effect);
-        b.Init(pos1, pos2, 0.8f, 2, 2, () =>
+        if (Managers.Reward.IsHaveNextClickReward())
         {
-            if (Managers.Reward.IsHaveNextClickReward())
-            {
-                BattleManager.Instance.NextStage();
-            }
-        });
+            BattleManager.Instance.NextStage();
+        }
     }
 
     public override void SetUI(BaseRune rune, bool isEnhance = true, bool isReward = true)
