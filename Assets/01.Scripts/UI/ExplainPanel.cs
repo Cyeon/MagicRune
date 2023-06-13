@@ -49,7 +49,7 @@ public class ExplainPanel : MonoBehaviour, IPointerClickHandler
         if(isEnhance == false)
         {
             _nameText.color = Color.white;
-            _nameText.SetText(rune.BaseRuneSO.RuneName);
+            _nameText.SetText(_rune.BaseRuneSO.RuneName);
         }
         else
         {
@@ -57,9 +57,9 @@ public class ExplainPanel : MonoBehaviour, IPointerClickHandler
             _nameText.SetText(_rune.BaseRuneSO.RuneName + "+");
         }
         _runeImage.enabled = true;
-        _runeImage.sprite = rune.BaseRuneSO.RuneSprite;
-        _coolTimeText.SetText(rune.BaseRuneSO.CoolTime.ToString());
-        _descText.SetText(rune.BaseRuneSO.RuneDescription(isEnhance));
+        _runeImage.sprite = _rune.BaseRuneSO.RuneSprite;
+        _coolTimeText.SetText(_rune.BaseRuneSO.CoolTime.ToString());
+        _descText.SetText(_rune.BaseRuneSO.RuneDescription(isEnhance));
 
         ClearKeyward();
         if (isReward == true)

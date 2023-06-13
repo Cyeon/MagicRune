@@ -23,10 +23,10 @@ public class ChooseRuneUI : MonoBehaviour
         //    panel.SetUI(rune, isEnhance:false);
         //}
 
-        BaseRune[] rune = Managers.Rune.GetRandomRune(_crPanelList.Count).ToArray();
+        BaseRune[] rune = Managers.Rune.GetRandomRune(3).ToArray();
         for(int i = 0; i < rune.Length; i++)
         {
-            _crPanelList[i].SetUI(rune[i], isEnhance:false);
+            _crPanelList[i].SetUI(rune[i], isEnhance:false, isReward:false);
         }
     }
 
