@@ -58,6 +58,7 @@ public class DeckManager
     public void AddRune(BaseRune rune)
     {
         _deck.Add(rune);
+        DeckSort();
     }
 
     /// <summary> Deck에서 룬 지우기 </summary>
@@ -121,5 +122,10 @@ public class DeckManager
         }
         int idx = Random.Range(0, newRuneList.Count);
         return newRuneList[idx];
+    }
+
+    public void DeckSort()
+    {
+        _deck = _deck.OrderBy(x => x.BaseRuneSO.AttributeType).ThenBy(x => x.BaseRuneSO.CoolTime).ToList();
     }
 }

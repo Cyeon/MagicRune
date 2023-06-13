@@ -51,6 +51,8 @@ public class RuneListViewUI : MonoBehaviour
 
     private void SettingPanels(List<BaseRune> baseRuneList, bool isCoolTIme = false)
     {
+        ReturnPanels();
+
         for (int i = 0; i < baseRuneList.Count; i++)
         {
             RuneViewPanelUI panel = Managers.Resource.Instantiate("UI/RuneTemplate", _content).GetComponent<RuneViewPanelUI>();

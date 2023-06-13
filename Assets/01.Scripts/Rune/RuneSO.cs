@@ -15,9 +15,9 @@ public enum AttributeType
     NonAttribute, // 무속성
     Fire, // 불
     Ice, // 얼음
-    Wind, // 바람
-    Ground, // 땅
     Electric, // 전기
+    Ground, // 땅
+    Wind, // 바람
 }
 
 /// <summary>
