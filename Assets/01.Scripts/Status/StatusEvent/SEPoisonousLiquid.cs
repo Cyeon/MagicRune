@@ -6,12 +6,14 @@ public class SEPoisonousLiquid : StatusEvent
 {
     public override void Invoke()
     {
+        base.Invoke();
+
         _unit.OnTakeDamage.AddListener(x => TurnSkip(x));
     }
 
     public void TurnSkip(float dmg)
     {
-        if(dmg >0)
+        if (dmg >0)
         {
             _unit.isTurnSkip = true;
         }

@@ -6,6 +6,7 @@ public class SEPosionousLiquidEnd : StatusEvent
 {
     public override void Invoke()
     {
+        base.Invoke();
         _unit.OnTakeDamage.RemoveListener(x => TurnSkip(x));
     }
 

@@ -18,6 +18,8 @@ public class SEAddDamage : StatusEvent
 
     public override void Invoke()
     {
+        base.Invoke();
+
         if(_addDamageType == AddDamageType.Stack)
         {
             _damage = _status.TypeValue * _stackMultipleValue;

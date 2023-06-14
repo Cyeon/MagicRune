@@ -9,6 +9,8 @@ public class SEOverheat : StatusEvent
 
     public override void Invoke()
     {
+        base.Invoke();
+
         if (_status.TypeValue >= _overstackConditionCount)
         {
             _unit.StatusManager.AddStatus(StatusName.Fire, _status.TypeValue / 2);

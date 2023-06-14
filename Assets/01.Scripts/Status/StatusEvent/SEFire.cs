@@ -6,6 +6,8 @@ public class SEFire : StatusEvent
 {
     public override void Invoke()
     {
+        base.Invoke();
+
         _unit.TakeDamage(_status.TypeValue, true, _status);
         Managers.Sound.PlaySound(_status.activeSound, SoundType.Effect);
 
