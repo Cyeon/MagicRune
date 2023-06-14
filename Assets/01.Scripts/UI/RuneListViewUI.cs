@@ -58,7 +58,8 @@ public class RuneListViewUI : MonoBehaviour
 
         for (int i = 0; i < baseRuneList.Count; i++)
         {
-            if (ignoreRuneList.Contains(baseRuneList[i])) { continue; }
+            if (ignoreRuneList != null)
+                if (ignoreRuneList.Contains(baseRuneList[i])) { continue; }
             RuneViewPanelUI panel = Managers.Resource.Instantiate("UI/RuneTemplate", _content).GetComponent<RuneViewPanelUI>();
             panel.SetUI(baseRuneList[i], isCoolTIme);
             panel.transform.localScale = Vector3.one;
