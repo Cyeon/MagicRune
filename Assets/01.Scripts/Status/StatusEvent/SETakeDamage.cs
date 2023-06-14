@@ -20,7 +20,9 @@ public class SETakeDamage : StatusEvent
 
     public override void Invoke()
     {
-        if(_damageType == DamageType.StackDmg)
+        base.Invoke();
+
+        if (_damageType == DamageType.StackDmg)
         {
             if (_status != null)
             {

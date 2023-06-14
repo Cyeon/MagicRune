@@ -18,7 +18,9 @@ public class SERemoveStatus : StatusEvent
 
     public override void Invoke()
     {
-        if(_remStackType == RemStackType.Dmg)
+        base.Invoke();
+
+        if (_remStackType == RemStackType.Dmg)
         {
             _value = Mathf.FloorToInt(_unit.currentDmg);
         }
