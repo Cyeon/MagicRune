@@ -5,6 +5,7 @@ using UnityEngine;
 using DG.Tweening;
 using Unity.VisualScripting;
 using MyBox;
+using System;
 
 public enum PeriodType
 {
@@ -96,6 +97,8 @@ public class MapManager
 
         Managers.Reward.ImageLoad();
         _mapSceneUI.ChapterTransition.Init();
+
+        isTutorial = Convert.ToBoolean(PlayerPrefs.GetInt("Tutorial", 1));
 
         if (_isFirst)
         {
@@ -310,6 +313,6 @@ public class MapManager
     /// <returns></returns>
     private bool IsFiftyChance()
     {
-        return Random.Range(0, 2) == 0;
+        return UnityEngine.Random.Range(0, 2) == 0;
     }
 }
