@@ -15,6 +15,7 @@ public class VariableRune : BaseRune
 
     public override void AbilityAction()
     {
+        Debug.Log(nextRune);
         if(nextRune.GetAbliltiValue(EffectType.Attack) != 0)
         {
             Managers.GetPlayer().Attack(GetAbliltiValue(EffectType.Attack), false);
