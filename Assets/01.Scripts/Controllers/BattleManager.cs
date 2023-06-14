@@ -216,6 +216,7 @@ public class BattleManager : MonoSingleton<BattleManager>
         if (Managers.Map.isTutorial)
         {
             Managers.Map.isTutorial = false;
+            PlayerPrefs.SetInt("Tutorial", 0);
             Managers.Map.ResetChapter();
             Managers.Scene.LoadScene(Define.Scene.LobbyScene);
             return;
