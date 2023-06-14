@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 777df8c134fdc9843b8fb874038466f3, type: 3}
   m_Name: ThreeAttack
   m_EditorClassIdentifier: 
-  RuneName: "\uC0BC\uC5F0\uD0C0"
+  RuneName: "\uC5F0\uD0C0"
   RuneSprite: {fileID: 21300000, guid: 1006ab5680f1dab45b92df4625fb8079, type: 3}
   _runeDescription: "(status)\uC744 3\uBC88 \uBD80\uC5EC\uD55C\uB2E4."
   AttributeType: 5
@@ -22,6 +22,10 @@ MonoBehaviour:
   Direction: 0
   RuneSound: {fileID: 8300000, guid: 98971d03f9612b243b3cc9895d5befbd, type: 3}
   AbilityList:
+  - EffectType: 0
+    Value: 1
+    StatusName: 7
+  EnhancedAbilityList:
   - EffectType: 0
     Value: 1
     StatusName: 7

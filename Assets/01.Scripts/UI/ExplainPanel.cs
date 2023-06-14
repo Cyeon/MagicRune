@@ -1,10 +1,12 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class ExplainPanel : MonoBehaviour
+public class ExplainPanel : MonoBehaviour, IPointerClickHandler
 {
     #region UI Parameter
 
@@ -20,11 +22,21 @@ public class ExplainPanel : MonoBehaviour
     [SerializeField]
     private Transform _keywardArea;
 
+    private RectTransform _keywardRect;
     #endregion
 
     protected BaseRune _rune;
+    public BaseRune Rune => _rune;
 
     private List<KeywardPanel> _keywardPanelList = new List<KeywardPanel>();
+
+    private Action _action;
+
+    private void Start()
+    {
+        if (_keywardArea != null)
+            _keywardRect = _keywardArea?.GetComponent<RectTransform>();
+    }
 
     public virtual void SetUI(BaseRune rune, bool isEnhance = false, bool isReward = true)
     {
@@ -41,18 +53,31 @@ public class ExplainPanel : MonoBehaviour
 
         _rune = rune;
 
-        _nameText.SetText(rune.BaseRuneSO.RuneName);
+        if (isEnhance == false)
+        {
+            _nameText.color = Color.white;
+            _nameText.SetText(_rune.BaseRuneSO.RuneName);
+        }
+        else
+        {
+            _nameText.color = Color.green;
+            _nameText.SetText(_rune.BaseRuneSO.RuneName + "+");
+        }
         _runeImage.enabled = true;
-        _runeImage.sprite = rune.BaseRuneSO.RuneSprite;
-        _coolTimeText.SetText(rune.BaseRuneSO.CoolTime.ToString());
-        _descText.SetText(rune.BaseRuneSO.RuneDescription);
+        _runeImage.sprite = _rune.BaseRuneSO.RuneSprite;
+        _coolTimeText.SetText(_rune.BaseRuneSO.CoolTime.ToString());
+        _descText.SetText(_rune.BaseRuneSO.RuneDescription(isEnhance));
 
+        ClearKeyward();
         if (isReward == true)
         {
-            ClearKeyward();
-
             SetKeyward(rune.BaseRuneSO);
         }
+    }
+
+    public void SetAction(Action action)
+    {
+        _action = action;
     }
 
     public void SetUI(BaseRuneSO rune, bool isReward = true)
@@ -63,12 +88,11 @@ public class ExplainPanel : MonoBehaviour
         _runeImage.enabled = true;
         _runeImage.sprite = rune.RuneSprite;
         _coolTimeText.SetText(rune.CoolTime.ToString());
-        _descText.SetText(rune.RuneDescription);
+        _descText.SetText(rune.RuneDescription());
 
+        ClearKeyward();
         if (isReward == true)
         {
-            ClearKeyward();
-
             SetKeyward(rune);
         }
     }
@@ -79,6 +103,7 @@ public class ExplainPanel : MonoBehaviour
         {
             Managers.Resource.Destroy(_keywardPanelList[i].gameObject);
         }
+        _keywardPanelList.Clear();
     }
 
     public void SetKeyward(BaseRuneSO rune)
@@ -92,5 +117,12 @@ public class ExplainPanel : MonoBehaviour
             panel.SetKeyward(Managers.Keyward.GetKeyward(rune.KeywardList[i]));
             _keywardPanelList.Add(panel);
         }
+
+        LayoutRebuilder.ForceRebuildLayoutImmediate(_keywardRect);
+    }
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        _action?.Invoke();
     }
 }

@@ -8,6 +8,7 @@ public class IceSmash : BaseRune
     public override void Init()
     {
         _baseRuneSO = Managers.Resource.Load<BaseRuneSO>("SO/Rune/Ice/" + typeof(IceSmash).Name);
+        base.Init();
     }
 
     public override bool AbilityCondition()
@@ -25,6 +26,7 @@ public class IceSmash : BaseRune
     {
         IceSmash iceSmash = new IceSmash();
         iceSmash.Init();
+        iceSmash.UnEnhance();
         return iceSmash;
     }
 }

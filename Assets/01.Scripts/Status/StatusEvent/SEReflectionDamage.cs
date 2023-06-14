@@ -8,6 +8,8 @@ public class SEReflectionDamage : StatusEvent
 
     public override void Invoke()
     {
+        base.Invoke();
+
         float dmg = _unit.currentDmg * (_percent * 0.01f);
         _unit.Attack(dmg);
     }

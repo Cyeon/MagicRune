@@ -55,6 +55,9 @@ public class MapScene : BaseScene
         Managers.Map.MapInit();
 
         Managers.Sound.PlaySound(_bgmList[Managers.Map.Chapter - 1], SoundType.Bgm, true);
+
+        Managers.UI.Bind<Image>("TutorialImage", Managers.Canvas.GetCanvas("TutorialCanvas").gameObject);
+        Managers.Canvas.GetCanvas("TutorialCanvas").enabled = false;
     }
 
     private void Start()

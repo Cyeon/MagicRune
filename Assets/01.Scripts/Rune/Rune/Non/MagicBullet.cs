@@ -7,6 +7,7 @@ public class MagicBullet : BaseRune
     public override void Init()
     {
         _baseRuneSO = Managers.Resource.Load<BaseRuneSO>("SO/Rune/Non/" + typeof(MagicBullet).Name);
+        base.Init();
     }
     public override void AbilityAction()
     {
@@ -17,6 +18,7 @@ public class MagicBullet : BaseRune
     {
         MagicBullet magicBullet = new MagicBullet();
         magicBullet.Init();
+        magicBullet.UnEnhance();
         return magicBullet;
     }
 }

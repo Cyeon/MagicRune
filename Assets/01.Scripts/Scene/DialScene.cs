@@ -258,7 +258,7 @@ public class DialScene : BaseScene
 
     public void CardDescPopup(BaseRune rune)
     {
-        _cardDescPanel.SetUI(rune);
+        _cardDescPanel.SetUI(rune, rune != null ? rune.IsEnhanced : false);
     }
 
     public void CardDescDown()

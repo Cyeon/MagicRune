@@ -22,7 +22,7 @@ public class EnemyManager
         }
 
         _enemyList = spawnEnemyList;
-        _currentEnemy = _enemyList.GetRandom();
+        _currentEnemy = _enemyList.GetRandom(); 
     }
 
     public void ResetEnemy()

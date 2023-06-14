@@ -8,6 +8,7 @@ public class IceHeart : BaseRune
     public override void Init()
     {
         _baseRuneSO = Managers.Resource.Load<BaseRuneSO>("SO/Rune/Ice/" + typeof(IceHeart).Name);
+        base.Init();
     }
     public override void AbilityAction()
     {
@@ -19,6 +20,7 @@ public class IceHeart : BaseRune
     {
         IceHeart rune = new IceHeart();
         rune.Init();
+        rune.UnEnhance();
         return rune;
     }
 }

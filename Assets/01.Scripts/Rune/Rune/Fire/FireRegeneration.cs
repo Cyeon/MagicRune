@@ -8,6 +8,7 @@ public class FireRegeneration : BaseRune
     public override void Init()
     {
         _baseRuneSO = Managers.Resource.Load<BaseRuneSO>("SO/Rune/Fire/" + typeof(FireRegeneration).Name);
+        base.Init();
     }
 
     public override void AbilityAction()
@@ -20,6 +21,7 @@ public class FireRegeneration : BaseRune
     {
         FireRegeneration fireRegeneration = new FireRegeneration();
         fireRegeneration.Init();
+        fireRegeneration.UnEnhance();
         return fireRegeneration;
     }
 }

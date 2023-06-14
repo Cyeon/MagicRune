@@ -7,6 +7,7 @@ public class Ice : BaseRune
     public override void Init()
     {
         _baseRuneSO = Managers.Resource.Load<BaseRuneSO>("SO/Rune/Ice/" + typeof(Ice).Name);
+        base.Init();
     }
     public override void AbilityAction()
     {
@@ -17,6 +18,7 @@ public class Ice : BaseRune
     {
         Ice ice = new Ice();
         ice.Init();
+        ice.UnEnhance();
         return ice;
     }
 }

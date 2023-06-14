@@ -14,6 +14,7 @@ public enum KeywordType
     Consume, // 소모 
     Penetration, // 관통
     Overheat, // 과열
+    CantEnhance, // 강화불과
 }
 
 [Serializable]
@@ -21,6 +22,7 @@ public class Keyward
 {
     public string KeywardName;
     public KeywordType TypeName;
+    [TextArea(1, 10)]
     public string KeywardDescription;
     public bool IsAddDesc = false;
 

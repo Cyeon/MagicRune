@@ -7,6 +7,7 @@ public class DiamondBody : BaseRune
     public override void Init()
     {
         _baseRuneSO = Managers.Resource.Load<BaseRuneSO>("SO/Rune/Ground/" + typeof(DiamondBody).Name);
+        base.Init();
     }
 
     public override void AbilityAction()
@@ -18,6 +19,7 @@ public class DiamondBody : BaseRune
     {
         DiamondBody diamondBody = new DiamondBody();
         diamondBody.Init();
+        diamondBody.UnEnhance();
         return diamondBody;
     }
 }

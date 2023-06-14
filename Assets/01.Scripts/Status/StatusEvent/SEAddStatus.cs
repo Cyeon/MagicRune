@@ -19,6 +19,8 @@ public class SEAddStatus : StatusEvent
 
     public override void Invoke()
     {
+        base.Invoke();
+
         Unit unit = _unit;
         if(!_isSelf)
         {

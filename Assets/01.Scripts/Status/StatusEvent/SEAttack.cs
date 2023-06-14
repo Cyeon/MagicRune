@@ -8,6 +8,7 @@ public class SEAttack : StatusEvent
 
     public override void Invoke()
     {
+        base.Invoke();
         _unit.Attack(_damage);
     }
 }

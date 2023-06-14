@@ -33,10 +33,20 @@ public class LobbyBGUI : MonoBehaviour
     [SerializeField] private List<Sprite> _menualImageList = new List<Sprite>();
     private int _menualIndex = 0;
 
+    [SerializeField] private Transform _menualProcessTrm;
+    private List<GameObject> _menualProcess = new List<GameObject>();
+
     private void Start()
     {
         _scrollSnap.OnSelectionPageChangedEvent.AddListener(ChangeIndex);
         MoveSelectPanel(_scrollSnap.StartingScreen);
+
+        for(int i = 0;  i < _menualImageList.Count; ++i)
+        {
+            GameObject process = Managers.Resource.Instantiate("UI/MenualProcess", _menualProcessTrm).transform.GetChild(0).gameObject;
+            _menualProcess.Add(process);
+        }
+
     }
 
     public void ChangeIndex(int index)
@@ -78,10 +88,18 @@ public class LobbyBGUI : MonoBehaviour
         _menualPanel.SetActive(true);
         _menualImage.sprite = _menualImageList[0];
         _menualIndex = 0;
+        _menualProcess[0].SetActive(true);
+    }
+
+    public void CloseMenual()
+    {
+        _menualPanel.SetActive(false);
+        _menualProcess[_menualIndex].SetActive(false);
     }
 
     public void NextMenual()
     {
+        _menualProcess[_menualIndex].SetActive(false);
         _menualIndex++;
         if (_menualIndex >= _menualImageList.Count)
         {
@@ -89,10 +107,12 @@ public class LobbyBGUI : MonoBehaviour
             return;
         }
         _menualImage.sprite = _menualImageList[_menualIndex];
+        _menualProcess[_menualIndex].SetActive(true);
     }
 
     public void BackMenual()
     {
+        _menualProcess[_menualIndex].SetActive(false);
         _menualIndex--;
         if(_menualIndex < 0)
         {
@@ -100,5 +120,6 @@ public class LobbyBGUI : MonoBehaviour
             return;
         }
         _menualImage.sprite = _menualImageList[_menualIndex];
+        _menualProcess[_menualIndex].SetActive(true);
     }
 }

@@ -20,9 +20,14 @@ public class SETakeDamage : StatusEvent
 
     public override void Invoke()
     {
-        if(_damageType == DamageType.StackDmg)
+        base.Invoke();
+
+        if (_damageType == DamageType.StackDmg)
         {
-            _damage = _status.TypeValue;
+            if (_status != null)
+            {
+                _damage = _status.TypeValue;
+            }
         }
         Managers.Sound.PlaySound(_status.activeSound, SoundType.Effect);
         _unit.TakeDamage(_damage, _isTrueDamage, _status);

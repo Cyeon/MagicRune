@@ -7,6 +7,7 @@ public class TheLastShot : BaseRune
     public override void Init()
     {
         _baseRuneSO = Managers.Resource.Load<BaseRuneSO>("SO/Rune/Fire/" + typeof(TheLastShot).Name);
+        base.Init();
     }
 
     public override void AbilityAction()
@@ -19,6 +20,7 @@ public class TheLastShot : BaseRune
     {
         TheLastShot fire = new TheLastShot();
         fire.Init();
+        fire.UnEnhance();
         return fire;
     }
 }

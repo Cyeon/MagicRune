@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -76,9 +76,10 @@ public class RuneEventUI : MonoBehaviour
     {
         _runeSpriteImage.sprite = rune.BaseRuneSO.RuneSprite;
         _runeNameText.SetText(rune.BaseRuneSO.RuneName);
-        _runeDescText.SetText(rune.BaseRuneSO.RuneDescription);
+        _runeDescText.SetText(rune.BaseRuneSO.RuneDescription());
 
         _selectedRuneObject.SetActive(true);
+        _selectedRuneObject.transform.localScale = Vector3.one;
     }
 
     /// <summary>

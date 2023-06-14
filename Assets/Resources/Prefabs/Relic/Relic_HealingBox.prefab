@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 774103070240817096}
   - component: {fileID: 774103070240817103}
+  - component: {fileID: -7253776628779658939}
   m_Layer: 0
   m_Name: Relic_HealingBox
   m_TagString: Untagged
@@ -45,8 +46,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   debugName: "\uAD6C\uAE09\uC0C1\uC790"
-  relicName: HealingBox
+  relicName: 0
   desc: "\uCCB4\uB825 25 \uD68C\uBCF5\uD569\uB2C8\uB2E4."
   icon: {fileID: 0}
   relicType: 0
   healingValue: 25
+--- !u!114 &-7253776628779658939
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 774103070240817097}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1fb6d3b2c3d3fa04d9ffb5368660f72f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isUsing: 0

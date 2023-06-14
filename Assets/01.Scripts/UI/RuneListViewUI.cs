@@ -5,23 +5,20 @@ using UnityEngine.UI;
 
 public class RuneListViewUI : MonoBehaviour
 {
-    private GameObject _runeTemplate = null;
-
     private GameObject _backgroundPanel = null;
     private GameObject _scrollView = null;
 
     private Transform _content = null;
-    private List<Poolable> _usingPanelList = new List<Poolable>();
+    private List<GameObject> _usingPanelList = new List<GameObject>();
+
+    private RuneDial _dial = null;
 
     private void Start()
     {
         _backgroundPanel = transform.Find("RuneListView_BGPanel").gameObject;
         _scrollView = transform.Find("RuneListView_ScrollView").gameObject;
         _content = _scrollView.transform.GetChild(0).GetChild(0).transform;
-
-        _runeTemplate = transform.Find("RuneTemplate").gameObject;
-        Managers.Pool.CreatePool(_runeTemplate, 20);
-        _runeTemplate.SetActive(false);
+        _dial = FindObjectOfType<RuneDial>();
 
         ActiveUI(false);
 
@@ -45,7 +42,7 @@ public class RuneListViewUI : MonoBehaviour
     /// </summary>
     public void SetUseRunes()
     {
-        SettingPanels(Managers.Deck.Deck.FindAll(x => x.IsCoolTime == false));
+        SettingPanels(Managers.Deck.Deck.FindAll(x => x.IsCoolTime == false), false, _dial.ConsumeDeck);
         ActiveUI(true);
     }
 
@@ -55,23 +52,26 @@ public class RuneListViewUI : MonoBehaviour
         ActiveUI(true);
     }
 
-    private void SettingPanels(List<BaseRune> baseRuneList, bool isCoolTIme = false)
+    private void SettingPanels(List<BaseRune> baseRuneList, bool isCoolTIme = false, List<BaseRune> ignoreRuneList = null)
     {
+        ReturnPanels();
+
         for (int i = 0; i < baseRuneList.Count; i++)
         {
-            RuneViewPanelUI panel = Managers.Pool.Pop(_runeTemplate).GetComponent<RuneViewPanelUI>();
+            if (ignoreRuneList != null)
+                if (ignoreRuneList.Contains(baseRuneList[i])) { continue; }
+            RuneViewPanelUI panel = Managers.Resource.Instantiate("UI/RuneTemplate", _content).GetComponent<RuneViewPanelUI>();
             panel.SetUI(baseRuneList[i], isCoolTIme);
-            panel.transform.SetParent(_content);
             panel.transform.localScale = Vector3.one;
-            _usingPanelList.Add(panel.GetComponent<Poolable>());
+            _usingPanelList.Add(panel.gameObject);
         }
     }
 
     public void ReturnPanels()
     {
-        foreach (Poolable poolable in _usingPanelList)
+        foreach (GameObject obj in _usingPanelList)
         {
-            Managers.Pool.Push(poolable);
+            Managers.Resource.Destroy(obj);
         }
         _usingPanelList.Clear();
     }

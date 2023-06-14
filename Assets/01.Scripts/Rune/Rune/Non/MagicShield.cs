@@ -7,6 +7,7 @@ public class MagicShield : BaseRune
     public override void Init()
     {
         _baseRuneSO = Managers.Resource.Load<BaseRuneSO>("SO/Rune/Non/" + typeof(MagicShield).Name);
+        base.Init();
     }
 
     public override void AbilityAction()
@@ -18,6 +19,7 @@ public class MagicShield : BaseRune
     {
         MagicShield magicShield = new MagicShield();
         magicShield.Init();
+        magicShield.UnEnhance();
         return magicShield;
     }
 }

@@ -34,12 +34,12 @@ public class MapDial : Dial<MapRuneUI, MapRuneUI>
     {
         if (_dialElementList.Count == 0) return;
 
-        for(int i = 0; i < Managers.Map.CurrentPeriodStageList.Count; i++)
+        for (int i = 0; i < Managers.Map.CurrentPeriodStageList.Count; i++)
         {
             StageType type = Managers.Map.CurrentPeriodStageList[i];
             MapRuneUI rune = Managers.Map.StageSpawner.SpawnStage(Managers.Map.CurrentPeriodStageList[i]).GetComponent<MapRuneUI>();
             rune.transform.SetParent(_dialElementList[0].transform);
-
+            rune.transform.localScale = Vector3.one * 0.16f;
 
             rune.SetInfo(rune.GetComponent<Stage>().InStage);
             AddCard(rune, 3);
@@ -51,7 +51,7 @@ public class MapDial : Dial<MapRuneUI, MapRuneUI>
 
     public override void Attack()
     {
-        if (_dialElementList[0].SelectElement == null) return;
+        if (_dialElementList[0].SelectElement == null || _dialElementList[0].IsDialLock) return;
 
         if (_isAttack == true) return;
         _isAttack = true;

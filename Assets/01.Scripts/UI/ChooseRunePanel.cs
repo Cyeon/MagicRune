@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class ChooseRunePanel : ExplainPanel
 {
+    [SerializeField]
+    private RectTransform _deckRectPos;
+    [SerializeField]
+    private GameObject _effect;
     public void ChooseRune()
     {
         //Managers.Deck.AddRune(_rune);
@@ -20,5 +24,6 @@ public class ChooseRunePanel : ExplainPanel
     {
         base.SetUI(rune, isEnhance, isReward);
         _rune = rune;
+
     }
 }

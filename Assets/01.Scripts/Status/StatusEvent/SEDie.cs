@@ -6,6 +6,7 @@ public class SEDie : StatusEvent
 {
     public override void Invoke()
     {
+        base.Invoke();
         _unit.Die();
     }
 }

@@ -8,12 +8,12 @@ using UnityEngine.UI;
 public enum RuneSelectMode
 {
     None, // Default
-    Delete, // ¼±ÅÃ ·é »èÁ¦
-    Copy, // ¼±ÅÃ ·é º¹Á¦ 
-    Enforce // ¼±ÅÃ ·é °­È­ 
+    Delete, // ì„ íƒ ë£¬ ì‚­ì œ
+    Copy, // ì„ íƒ ë£¬ ë³µì œ 
+    Enforce // ì„ íƒ ë£¬ ê°•í™” 
 }
 /// <summary>
-/// Scroll View¾È¿¡ µé¾î°¥ °³¹ú ·é Panel¿¡ ºÙ¾î ÀÖ´Â ½ºÅ©¸³Æ®
+/// Scroll Viewì•ˆì— ë“¤ì–´ê°ˆ ê°œë²Œ ë£¬ Panelì— ë¶™ì–´ ìˆëŠ” ìŠ¤í¬ë¦½íŠ¸
 /// </summary>
 public class RuneSelectPanelUI : MonoBehaviour, IPointerClickHandler
 {
@@ -61,13 +61,13 @@ public class RuneSelectPanelUI : MonoBehaviour, IPointerClickHandler
 
         _runeImage.sprite = _baseRune.BaseRuneSO.RuneSprite;
         _runeNameText.SetText(_baseRune.BaseRuneSO.RuneName);
-        _runeDescText.SetText(_baseRune.BaseRuneSO.RuneDescription);
+        _runeDescText.SetText(_baseRune.BaseRuneSO.RuneDescription());
         _runeCoolTimeText.SetText(_baseRune.BaseRuneSO.CoolTime.ToString());
     }
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        switch (_selectMode) // ¸ğµå¿¡ µû¶ó ´Ù¸¥ ±â´É ÇØÁÜ 
+        switch (_selectMode) // ëª¨ë“œì— ë”°ë¼ ë‹¤ë¥¸ ê¸°ëŠ¥ í•´ì¤Œ 
         {
             case RuneSelectMode.Delete:
                 Managers.Deck.RemoveDeck(_baseRune);
@@ -76,13 +76,13 @@ public class RuneSelectPanelUI : MonoBehaviour, IPointerClickHandler
                 Managers.Deck.AddRune(Managers.Rune.GetRune(_baseRune));
                 break;
             case RuneSelectMode.Enforce:
-                //°­È­ÇÏ´Â °Å »ı±â¸é ±×°Å ÇÔ¼ö ³Ö¾îÁÖ¸é µÊ  
+                //ê°•í™”í•˜ëŠ” ê±° ìƒê¸°ë©´ ê·¸ê±° í•¨ìˆ˜ ë„£ì–´ì£¼ë©´ ë¨  
                 break;
             case RuneSelectMode.None:
             default:
                 break;
         }
 
-        EventManager<BaseRune>.TriggerEvent(Define.SELECT_RUNE_EVENT, _baseRune); // RuneEventUI ÂÊ¿¡¼­ UI Ã³¸® ÇØÁÜ 
+        EventManager<BaseRune>.TriggerEvent(Define.SELECT_RUNE_EVENT, _baseRune); // RuneEventUI ìª½ì—ì„œ UI ì²˜ë¦¬ í•´ì¤Œ 
     }
 }

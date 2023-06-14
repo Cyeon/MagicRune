@@ -8,6 +8,25 @@ public class Reload : BaseRune
     public override void Init()
     {
         _baseRuneSO = Managers.Resource.Load<BaseRuneSO>("SO/Rune/Fire/" + typeof(Reload).Name);
+        base.Init();
+    }
+
+    public override void Enhance()
+    {
+        base.Enhance();
+        if (_keywordList.Contains(KeywordType.Consume))
+        {
+            _keywordList.Remove(KeywordType.Consume);
+        }
+    }
+
+    public override void UnEnhance()
+    {
+        base.UnEnhance();
+        if (_keywordList.Contains(KeywordType.Consume) == false)
+        {
+            _keywordList.Add(KeywordType.Consume);
+        }
     }
 
     public override void AbilityAction()
@@ -19,6 +38,7 @@ public class Reload : BaseRune
     {
         Reload reload = new Reload();
         reload.Init();
+        reload.UnEnhance();
         return reload;
     }
 }

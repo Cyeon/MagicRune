@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 5736046982554988565}
   - component: {fileID: 5014004267170453785}
   - component: {fileID: 6624801315935031120}
+  - component: {fileID: -8674149872480728983}
   m_Layer: 0
   m_Name: Status_Chilliness
   m_TagString: Untagged
@@ -55,8 +56,7 @@ MonoBehaviour:
   OnAddStatus:
   - {fileID: 6624801315935031120}
   OnTurnStart: []
-  OnAttack:
-  - {fileID: 0}
+  OnAttack: []
   OnGetDamage: []
   OnTurnEnd: []
   OnRemoveStatus: []
@@ -81,3 +81,16 @@ MonoBehaviour:
   _conditionStatus: 5
   _conditionCount: 10
   _addStatus: 2
+--- !u!114 &-8674149872480728983
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8378743581122507794}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1fb6d3b2c3d3fa04d9ffb5368660f72f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isUsing: 0

@@ -7,6 +7,7 @@ public class GroundShield : BaseRune
     public override void Init()
     {
         _baseRuneSO = Managers.Resource.Load<BaseRuneSO>("SO/Rune/Ground/" + typeof(GroundShield).Name);
+        base.Init();
     }
     public override void AbilityAction()
     {
@@ -17,6 +18,7 @@ public class GroundShield : BaseRune
     {
         GroundShield groundShield = new GroundShield();
         groundShield.Init();
+        groundShield.UnEnhance();
         return groundShield;
     }
 }

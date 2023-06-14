@@ -4,6 +4,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -11,9 +12,13 @@ using Random = UnityEngine.Random;
 
 public class RuneDial : Dial<BaseRuneUI, BaseRune>
 {
+    private List<BaseRune> _consumeDeck = new List<BaseRune>();
+    public List<BaseRune> ConsumeDeck => _consumeDeck;
     protected override bool _isAttackCondition => BattleManager.Instance.GameTurn == GameTurn.Player;
 
     private Resonance _resonance;
+
+    public Action OnDialAttack;
 
     protected override void Awake()
     {
@@ -119,7 +124,17 @@ public class RuneDial : Dial<BaseRuneUI, BaseRune>
     protected override IEnumerator AttackCoroutine()
     {
         Managers.GetPlayer().PlayAnimation(Managers.GetPlayer().HashAttack);
-        AttributeType compareAttributeType = _dialElementList[0].SelectElement.Rune.BaseRuneSO.AttributeType;
+        int outRuneIndex = -1;
+        for(int i = 0; i < _dialElementList.Count; i++)
+        {
+            if (_dialElementList[i].SelectElement != null)
+            {
+                outRuneIndex = i;
+                break;
+            }
+        }
+        if (outRuneIndex == -1) yield return null;
+        AttributeType compareAttributeType = _dialElementList[outRuneIndex].SelectElement.Rune.BaseRuneSO.AttributeType;
         bool isResonanceCheck = true;
         for (int i = _dialElementList.Count - 1; i >= 0; i--)
         {
@@ -129,15 +144,28 @@ public class RuneDial : Dial<BaseRuneUI, BaseRune>
                 MagicCircleGlow(i, true);
                 BaseRune rune = _usingDeck.Find(x => x == _dialElementList[i].SelectElement.Rune);
                 _usingDeck.Remove(rune);
-                rune.SetCoolTime();
-                _cooltimeDeck.Add(rune);
+
+                if (rune.IsIncludeKeyword(KeywordType.Consume))
+                {
+                    _consumeDeck.Add(rune);
+                }
+                else
+                {
+                    rune.SetCoolTime();
+                    _cooltimeDeck.Add(rune);
+                }
 
                 if (isResonanceCheck)
                     isResonanceCheck = _dialElementList[i].SelectElement.Rune.BaseRuneSO.AttributeType == compareAttributeType;
 
                 (_dialElementList[i] as RuneDialElement).EffectHandler.Attack(3 - i, () =>
                 {
+                    if (_dialElementList[index].SelectElement.Rune is VariableRune && index < _dialElementList.Count)
+                    {
+                        (_dialElementList[index].SelectElement.Rune as VariableRune).nextRune = _dialElementList[index].SelectElement.Rune;
+                    }
                     _dialElementList[index].Attack();
+                    OnDialAttack?.Invoke();
 
                     if (i == _dialElementList.Count - 1)
                     {

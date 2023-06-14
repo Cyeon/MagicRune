@@ -34,7 +34,9 @@ public class Enemy : Unit
         _patternManager.Init();
         UISetting();
 
-        transform.localPosition = new Vector3(2.5f, 4.5f, 0);
+        Animator = transform.Find("UI/Sprite").GetComponent<Animator>();
+
+        transform.localPosition = new Vector3(2.5f, 5.5f, 0);
     }
 
     public override void Attack(float damage, bool isTrueDamage = false)
@@ -54,8 +56,8 @@ public class Enemy : Unit
         seq.AppendCallback(() =>
         {
             OnDieEvent?.Invoke();
-            Managers.Resource.Destroy(gameObject);
             StopAllCoroutines();
+            Managers.Resource.Destroy(gameObject);
         });
 
     }

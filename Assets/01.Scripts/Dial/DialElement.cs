@@ -2,6 +2,7 @@ using DG.Tweening;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public enum DialState
@@ -75,6 +76,8 @@ public class DialElement<T1, T2> : MonoBehaviour where T1 : MonoBehaviour where 
 
     protected float _touchDownTimer = 0f;
     #endregion
+
+    public bool IsDialLock = false;
 
     public bool IsGlow
     {
@@ -178,7 +181,7 @@ public class DialElement<T1, T2> : MonoBehaviour where T1 : MonoBehaviour where 
 
     private void RotateMagicCircle()
     {
-        if (_isTouchDown && _isRotateAdditionalCondition && _fingerID >= 0)
+        if (_isTouchDown && _isRotateAdditionalCondition && _fingerID >= 0 && !IsDialLock)
         {
             _offset = ((Vector3)Input.GetTouch(_fingerID).position - _touchPos);
 
@@ -201,7 +204,8 @@ public class DialElement<T1, T2> : MonoBehaviour where T1 : MonoBehaviour where 
                     temp = Mathf.Clamp(temp, _offset.y, -_offset.y);
             }
 
-            rot.z += -1 * temp / _rotDamp;
+            float result = temp / _rotDamp;
+            rot.z += -1 * result;
 
             transform.rotation = Quaternion.Euler(rot);
             _touchPos = Input.GetTouch(_fingerID).position;
@@ -405,7 +409,6 @@ public class DialElement<T1, T2> : MonoBehaviour where T1 : MonoBehaviour where 
                     transform.DORotate(new Vector3(0, 0, ((index) * oneDinstance)), 0.3f, RotateMode.Fast)
                         .OnComplete(() =>
                         {
-
                             if (_selectElement != null)
                             {
                                 OnSelectElementAction();

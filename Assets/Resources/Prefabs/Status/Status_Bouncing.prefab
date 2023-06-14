@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5014004267170453785}
   - component: {fileID: 5830830326784178238}
   - component: {fileID: -7903199030799029218}
+  - component: {fileID: 524087912400577584}
   m_Layer: 0
   m_Name: Status_Bouncing
   m_TagString: Untagged
@@ -64,7 +65,8 @@ MonoBehaviour:
   icon: {fileID: 21300000, guid: de5a40a376b3bcc44a461ae37441507b, type: 3}
   color: {r: 1, g: 1, b: 1, a: 1}
   statusSoundType: 2
-  sound: {fileID: 0}
+  getSound: {fileID: 0}
+  activeSound: {fileID: 0}
   unit: {fileID: 0}
 --- !u!114 &5830830326784178238
 MonoBehaviour:
@@ -80,7 +82,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _statusName: 7
   _addStackType: 0
-  _value: 5
+  _value: 4
   _isSelf: 0
 --- !u!114 &-7903199030799029218
 MonoBehaviour:
@@ -96,3 +98,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _remStackType: 0
   _value: 1
+--- !u!114 &524087912400577584
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8378743581122507794}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1fb6d3b2c3d3fa04d9ffb5368660f72f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isUsing: 0

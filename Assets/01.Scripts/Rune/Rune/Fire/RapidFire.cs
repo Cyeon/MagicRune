@@ -7,6 +7,7 @@ public class RapidFire : BaseRune
     public override void Init()
     {
         _baseRuneSO = Managers.Resource.Load<BaseRuneSO>("SO/Rune/Fire/" + typeof(RapidFire).Name);
+        base.Init();
     }
 
     public override void AbilityAction()
@@ -23,6 +24,7 @@ public class RapidFire : BaseRune
     {
         RapidFire fire = new RapidFire();
         fire.Init();
+        fire.UnEnhance();
         return fire;
     }
 }

@@ -7,6 +7,7 @@ public class SnowBall : BaseRune
     public override void Init()
     {
         _baseRuneSO = Managers.Resource.Load<BaseRuneSO>("SO/Rune/Ice/" + typeof(SnowBall).Name);
+        base.Init();
     }
     public override void AbilityAction()
     {
@@ -18,6 +19,7 @@ public class SnowBall : BaseRune
     {
         SnowBall snowBall = new SnowBall();
         snowBall.Init();
+        snowBall.UnEnhance();
         return snowBall;
     }
 }

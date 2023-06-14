@@ -25,6 +25,7 @@ public class ShopItemPanelUI : MonoBehaviour
     //[SerializeField] private TextMeshProUGUI _runeNameText;
     //[SerializeField] private TextMeshProUGUI _runeDescText;
 
+    [SerializeField] private GameObject _soldOutPanel;
 
     // 설명은 밑에 설명 창이 띄워줄 거임
 
@@ -48,6 +49,7 @@ public class ShopItemPanelUI : MonoBehaviour
         GoldTextColorUpdate();
 
         transform.localScale = Vector3.one * 0.8f;
+        _soldOutPanel.SetActive(false);
     }
 
     public void BuyCheck()
@@ -59,5 +61,16 @@ public class ShopItemPanelUI : MonoBehaviour
     public void GoldTextColorUpdate()
     {
         _goldText.color = Managers.Gold.Gold < item.Gold ? Color.red : Color.white;
+    }
+
+    public void SoldOut()
+    {
+        _soldOutPanel.SetActive(true);
+        SetActiveSelectPanel(false);
+    }
+
+    public void SetActiveSelectPanel(bool active)
+    {
+        _selectImage.gameObject.SetActive(active);
     }
 }
