@@ -34,7 +34,8 @@ public class ExplainPanel : MonoBehaviour, IPointerClickHandler
 
     private void Start()
     {
-        _keywardRect = _keywardArea.GetComponent<RectTransform>();
+        if (_keywardArea != null)
+            _keywardRect = _keywardArea?.GetComponent<RectTransform>();
     }
 
     public virtual void SetUI(BaseRune rune, bool isEnhance = false, bool isReward = true)
@@ -51,8 +52,8 @@ public class ExplainPanel : MonoBehaviour, IPointerClickHandler
         }
 
         _rune = rune;
-        
-        if(isEnhance == false)
+
+        if (isEnhance == false)
         {
             _nameText.color = Color.white;
             _nameText.SetText(_rune.BaseRuneSO.RuneName);
