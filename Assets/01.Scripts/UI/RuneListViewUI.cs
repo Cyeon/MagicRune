@@ -11,11 +11,14 @@ public class RuneListViewUI : MonoBehaviour
     private Transform _content = null;
     private List<GameObject> _usingPanelList = new List<GameObject>();
 
+    private RuneDial _dial = null;
+
     private void Start()
     {
         _backgroundPanel = transform.Find("RuneListView_BGPanel").gameObject;
         _scrollView = transform.Find("RuneListView_ScrollView").gameObject;
         _content = _scrollView.transform.GetChild(0).GetChild(0).transform;
+        _dial = FindObjectOfType<RuneDial>();
 
         ActiveUI(false);
 
@@ -39,7 +42,7 @@ public class RuneListViewUI : MonoBehaviour
     /// </summary>
     public void SetUseRunes()
     {
-        SettingPanels(Managers.Deck.Deck.FindAll(x => x.IsCoolTime == false));
+        SettingPanels(Managers.Deck.Deck.FindAll(x => x.IsCoolTime == false), false, _dial.ConsumeDeck);
         ActiveUI(true);
     }
 
@@ -49,12 +52,14 @@ public class RuneListViewUI : MonoBehaviour
         ActiveUI(true);
     }
 
-    private void SettingPanels(List<BaseRune> baseRuneList, bool isCoolTIme = false)
+    private void SettingPanels(List<BaseRune> baseRuneList, bool isCoolTIme = false, List<BaseRune> ignoreRuneList = null)
     {
         ReturnPanels();
 
         for (int i = 0; i < baseRuneList.Count; i++)
         {
+            if (ignoreRuneList != null)
+                if (ignoreRuneList.Contains(baseRuneList[i])) { continue; }
             RuneViewPanelUI panel = Managers.Resource.Instantiate("UI/RuneTemplate", _content).GetComponent<RuneViewPanelUI>();
             panel.SetUI(baseRuneList[i], isCoolTIme);
             panel.transform.localScale = Vector3.one;

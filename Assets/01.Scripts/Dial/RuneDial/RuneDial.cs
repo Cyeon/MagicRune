@@ -13,6 +13,7 @@ using Random = UnityEngine.Random;
 public class RuneDial : Dial<BaseRuneUI, BaseRune>
 {
     private List<BaseRune> _consumeDeck = new List<BaseRune>();
+    public List<BaseRune> ConsumeDeck => _consumeDeck;
     protected override bool _isAttackCondition => BattleManager.Instance.GameTurn == GameTurn.Player;
 
     private Resonance _resonance;

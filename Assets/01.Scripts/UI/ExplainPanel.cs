@@ -22,6 +22,7 @@ public class ExplainPanel : MonoBehaviour, IPointerClickHandler
     [SerializeField]
     private Transform _keywardArea;
 
+    private RectTransform _keywardRect;
     #endregion
 
     protected BaseRune _rune;
@@ -30,6 +31,12 @@ public class ExplainPanel : MonoBehaviour, IPointerClickHandler
     private List<KeywardPanel> _keywardPanelList = new List<KeywardPanel>();
 
     private Action _action;
+
+    private void Start()
+    {
+        if (_keywardArea != null)
+            _keywardRect = _keywardArea?.GetComponent<RectTransform>();
+    }
 
     public virtual void SetUI(BaseRune rune, bool isEnhance = false, bool isReward = true)
     {
@@ -45,8 +52,8 @@ public class ExplainPanel : MonoBehaviour, IPointerClickHandler
         }
 
         _rune = rune;
-        
-        if(isEnhance == false)
+
+        if (isEnhance == false)
         {
             _nameText.color = Color.white;
             _nameText.SetText(_rune.BaseRuneSO.RuneName);
@@ -110,6 +117,8 @@ public class ExplainPanel : MonoBehaviour, IPointerClickHandler
             panel.SetKeyward(Managers.Keyward.GetKeyward(rune.KeywardList[i]));
             _keywardPanelList.Add(panel);
         }
+
+        LayoutRebuilder.ForceRebuildLayoutImmediate(_keywardRect);
     }
 
     public void OnPointerClick(PointerEventData eventData)
