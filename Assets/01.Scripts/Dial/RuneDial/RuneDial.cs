@@ -158,7 +158,7 @@ public class RuneDial : Dial<BaseRuneUI, BaseRune>
                 if (isResonanceCheck)
                     isResonanceCheck = _dialElementList[i].SelectElement.Rune.BaseRuneSO.AttributeType == compareAttributeType;
 
-                (_dialElementList[i] as RuneDialElement).EffectHandler.Attack(3 - i, () =>
+                (_dialElementList[i] as RuneDialElement).EffectHandler.Attack(3 - index, () =>
                 {
                     if (_dialElementList[index].SelectElement.Rune is VariableRune && index - 1 >= 0)
                     {
@@ -167,9 +167,9 @@ public class RuneDial : Dial<BaseRuneUI, BaseRune>
                     _dialElementList[index].Attack();
                     OnDialAttack?.Invoke();
 
-                    if (i == _dialElementList.Count - 1)
+                    if (index == _dialElementList.Count - 1)
                     {
-                        (_dialElementList[i] as RuneDialElement).EffectHandler.Clear();
+                        (_dialElementList[index] as RuneDialElement).EffectHandler.Clear();
                     }
                 });
 
