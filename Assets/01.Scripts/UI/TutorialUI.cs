@@ -7,7 +7,7 @@ public class TutorialUI : MonoBehaviour
 {
     private Canvas _tutorialCanvas;
     private Image _tutorialImage;
-    private Image _attackTutorialImage;
+    private GameObject _attackTutorialImage;
 
     private int _index = 1;
     private string _imageName;
@@ -24,9 +24,8 @@ public class TutorialUI : MonoBehaviour
     {
         if(Managers.Scene.CurrentScene is DialScene)
         {
-            Managers.UI.Bind<Image>("AttackTutorialImage", Managers.Canvas.GetCanvas("Popup").gameObject);
-            _attackTutorialImage = Managers.UI.Get<Image>("AttackTutorialImage");
-            _attackTutorialImage.enabled = false;
+            _attackTutorialImage = Managers.Canvas.GetCanvas("Popup").transform.Find("AttackTutorial").gameObject;
+            _attackTutorialImage.SetActive(false);
         }
     }
 
@@ -71,7 +70,7 @@ public class TutorialUI : MonoBehaviour
             if(isFirst)
             {
                 BattleManager.Instance.TurnChange();
-                _attackTutorialImage.enabled = true;
+                _attackTutorialImage.SetActive(true);
                 Define.DialScene.Dial.OnDialAttack += AttackTutorialImageDown;
             }
         }
@@ -88,6 +87,7 @@ public class TutorialUI : MonoBehaviour
             {
                 TutorialEnd();
                 Define.DialScene?.Turn("Enemy Turn");
+                Managers.Map.isTutorial = false;
             }
             else
                 TutorialEnd();
@@ -96,7 +96,7 @@ public class TutorialUI : MonoBehaviour
 
     public void AttackTutorialImageDown()
     {
-        _attackTutorialImage.enabled = false;
+        _attackTutorialImage.SetActive(false);
         Define.DialScene.Dial.OnDialAttack -= AttackTutorialImageDown;
 
         Tutorial("DeckRule", _index);

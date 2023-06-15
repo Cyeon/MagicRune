@@ -62,6 +62,12 @@ public class BattleManager : MonoSingleton<BattleManager>
             TutorialUI ui = Managers.Canvas.GetCanvas("Tutorial").GetComponent<TutorialUI>();
             ui.Tutorial("AttackRule", 1);
             ui.CanvasOff();
+
+            Enemy.OnDieEvent.AddListener(() =>
+            {
+                ui.Tutorial("RewardRule", 1);
+                Managers.Map.isTutorial = true;
+            });
             return;
         }
         TurnChange();
