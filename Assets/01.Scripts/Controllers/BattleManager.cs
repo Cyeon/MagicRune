@@ -59,7 +59,15 @@ public class BattleManager : MonoSingleton<BattleManager>
 
         if(Managers.Map.isTutorial)
         {
-            Managers.Canvas.GetCanvas("Tutorial").GetComponent<TutorialUI>().Tutorial("AttackRule1");
+            TutorialUI ui = Managers.Canvas.GetCanvas("Tutorial").GetComponent<TutorialUI>();
+            ui.Tutorial("AttackRule", 1);
+            ui.CanvasOff();
+
+            Enemy.OnDieEvent.AddListener(() =>
+            {
+                ui.Tutorial("RewardRule", 1);
+                Managers.Map.isTutorial = true;
+            });
             return;
         }
         TurnChange();
@@ -147,8 +155,10 @@ public class BattleManager : MonoSingleton<BattleManager>
                     Enemy.UpdateHealthUI();
                 }
 
-                Define.DialScene?.Turn("Enemy Turn");
                 _gameTurn = GameTurn.PlayerEnd;
+                if (Managers.Map.isTutorial) return;
+
+                Define.DialScene?.Turn("Enemy Turn");
                 break;
 
             case GameTurn.PlayerEnd:

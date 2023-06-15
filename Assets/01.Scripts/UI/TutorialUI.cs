@@ -7,9 +7,10 @@ public class TutorialUI : MonoBehaviour
 {
     private Canvas _tutorialCanvas;
     private Image _tutorialImage;
-    private Image _attackTutorialImage;
+    private GameObject _attackTutorialImage;
 
     private int _index = 1;
+    private string _imageName;
 
     private void Awake()
     {
@@ -23,30 +24,40 @@ public class TutorialUI : MonoBehaviour
     {
         if(Managers.Scene.CurrentScene is DialScene)
         {
-            Managers.UI.Bind<Image>("AttackTutorialImage", Managers.Canvas.GetCanvas("Popup").gameObject);
-            _attackTutorialImage = Managers.UI.Get<Image>("AttackTutorialImage");
-            _attackTutorialImage.enabled = false;
+            _attackTutorialImage = Managers.Canvas.GetCanvas("Popup").transform.Find("AttackTutorial").gameObject;
+            _attackTutorialImage.SetActive(false);
         }
     }
 
-    public void Tutorial(string imageName)
+    public void Tutorial(string imageName, int index = 0)
     {
+        _imageName = imageName;
+
         _tutorialCanvas.enabled = true;
+        if (index > 0)
+        {
+            imageName += index.ToString();
+        }
         _tutorialImage.sprite = Resources.Load<Sprite>("Tutorial/" + imageName);
 
         if(Managers.Scene.CurrentScene is MapScene)
             Define.MapScene.mapDial.DialElementList[0].IsDialLock = true;
         else if(Managers.Scene.CurrentScene is DialScene)
         {
-            Managers.Canvas.GetCanvas("Main").enabled = false;
-            Managers.Canvas.GetCanvas("Popup").enabled = false;
             Define.DialScene.Dial.DialElementList.ForEach(x => x.IsDialLock = true);
         }
     }
 
-    public void TutorialEnd()
+    public void CanvasOff()
+    {
+        Managers.Canvas.GetCanvas("Main").enabled = false;
+        Managers.Canvas.GetCanvas("Popup").enabled = false;
+    }
+
+    public void TutorialEnd(bool isFirst = false)
     {
         _tutorialCanvas.enabled = false;
+        _index = 1;
 
         if (Managers.Scene.CurrentScene is MapScene)
             Define.MapScene.mapDial.DialElementList[0].IsDialLock = false;
@@ -55,25 +66,40 @@ public class TutorialUI : MonoBehaviour
             Managers.Canvas.GetCanvas("Main").enabled = true;
             Managers.Canvas.GetCanvas("Popup").enabled = true;
             Define.DialScene.Dial.DialElementList.ForEach(x => x.IsDialLock = false);
-            BattleManager.Instance.TurnChange();
 
-            _attackTutorialImage.enabled = true;
-            Define.DialScene.Dial.OnDialAttack += AttackTutorialImageDown;
+            if(isFirst)
+            {
+                BattleManager.Instance.TurnChange();
+                _attackTutorialImage.SetActive(true);
+                Define.DialScene.Dial.OnDialAttack += AttackTutorialImageDown;
+            }
         }
     }
 
     public void NextTutorial()
     {
-        Tutorial("AttackRule" +  ++_index);
+        Tutorial(_imageName, ++_index);
         if(_tutorialImage.sprite == null)
         {
-            TutorialEnd();
+            if (_imageName == "AttackRule")
+                TutorialEnd(true);
+            else if (_imageName == "DeckRule")
+            {
+                TutorialEnd();
+                Define.DialScene?.Turn("Enemy Turn");
+                Managers.Map.isTutorial = false;
+            }
+            else
+                TutorialEnd();
         }
     }
 
     public void AttackTutorialImageDown()
     {
-        _attackTutorialImage.enabled = false;
+        _attackTutorialImage.SetActive(false);
         Define.DialScene.Dial.OnDialAttack -= AttackTutorialImageDown;
+
+        Tutorial("DeckRule", _index);
+        Managers.Canvas.GetCanvas("Main").enabled = true;
     }
 }

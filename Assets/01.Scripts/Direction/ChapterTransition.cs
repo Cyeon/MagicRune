@@ -31,6 +31,8 @@ public class ChapterTransition : MonoBehaviour
 
         _backgroundImage.sprite = Resources.Load<Sprite>("Sprite/MapBg_" + Managers.Map.Chapter.ToString());
         _chapterNameText.SetText(Managers.Map.CurrentChapter.chapterName);
+        if (Managers.Map.isTutorial)
+            _chapterNameText.SetText("튜토리얼");
 
         Sequence seq = DOTween.Sequence();
         seq.Append(_fadeImage.DOFade(0, 0.7f));
