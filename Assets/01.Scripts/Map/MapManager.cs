@@ -99,7 +99,7 @@ public class MapManager
         _mapSceneUI.ChapterTransition.Init();
 
         isTutorial = Convert.ToBoolean(PlayerPrefs.GetInt("Tutorial", 1));
-        //isTutorial = true;
+        isTutorial = true;
 
         if (_isFirst)
         {
