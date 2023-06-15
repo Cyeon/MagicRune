@@ -4141,7 +4141,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1679534863
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6985,9 +6985,17 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2241751355012336786, guid: d97cab570bc02de4f9f2a665ef076cc9, type: 3}
+      propertyPath: _dragTouchTime
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 3927215673085548357, guid: d97cab570bc02de4f9f2a665ef076cc9, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5196605230884093729, guid: d97cab570bc02de4f9f2a665ef076cc9, type: 3}
+      propertyPath: _dragTouchTime
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 6047878870039173919, guid: d97cab570bc02de4f9f2a665ef076cc9, type: 3}
       propertyPath: m_IsActive
@@ -7060,6 +7068,10 @@ PrefabInstance:
     - target: {fileID: 6738287192194539990, guid: d97cab570bc02de4f9f2a665ef076cc9, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6807585757765107001, guid: d97cab570bc02de4f9f2a665ef076cc9, type: 3}
+      propertyPath: _dragTouchTime
+      value: 0.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d97cab570bc02de4f9f2a665ef076cc9, type: 3}
