@@ -15,24 +15,24 @@ public class DialScene : BaseScene
     private RuneDial _dial;
     public RuneDial Dial => _dial;
 
-    // 燁삳?諭???살구 ??ㅺ섯
+    // ?곸궠?獄????닿뎄 ???븐꽢
     [SerializeField]
     private ExplainPanel _cardDescPanel = null;
 
-    // ?怨밴묶??곴맒 ??살구 ??ㅺ섯
+    // ??⑤객臾??怨대쭜 ???닿뎄 ???븐꽢
     [SerializeField]
     private GameObject _statusDescPanel;
     private TextMeshProUGUI _statusDescName;
     private TextMeshProUGUI _statusDescInfo;
     private RectTransform _statusDescPanelRectTrm;
 
-    // ?袁る떮 ??癰귣똻湲?
+    // ?熬곥굥?????곌랜?삥묾?
     [SerializeField]
     private RewardUI _rewardUI;
     public RewardUI RewardUI => _rewardUI;
     private ChooseRuneUI _chooseRuneUI;
 
-    // ?醫? ?怨룸뼊獄?
+    // ??? ??⑤８堉딁뛾?
     private UserInfoUI _userInfoUI;
 
     private TextMeshProUGUI _goldPopupText = null;
@@ -189,6 +189,11 @@ public class DialScene : BaseScene
             return;
         }
 
+        if(_statusDescName.text == obj.GetComponent<StatusPanel>().Status.debugName)
+        {
+            CloseStatusDescPanel();
+        }
+
         Managers.Resource.Destroy(obj);
     }
 
@@ -282,8 +287,8 @@ public class DialScene : BaseScene
             _statusDescPanelRectTrm.DOLocalMoveX(-_statusDescPanelRectTrm.localPosition.x, 0);
         }
 
-        _statusDescName.text = status.debugName;
-        _statusDescInfo.text = status.information;
+        _statusDescName.SetText(status.debugName);
+        _statusDescInfo.SetText(status.information);
     }
 
     public void CloseStatusDescPanel()
@@ -295,10 +300,10 @@ public class DialScene : BaseScene
 
     public override void Clear()
     {
-        // ?좎룞???닷뜝?숈삕?좎룞??
+        // ?醫롫짗????룸쐻??덉굲?醫롫짗??
 
-        // 이펙트 클리어 코드.
-        // 근데 나중에 없애도 될 듯
+        // ?댄럺???대━??肄붾뱶.
+        // 洹쇰뜲 ?섏쨷???놁븷??????
         for(int i = 0; i < _dial.DialElementList.Count; i++)
         {
             if(_dial.DialElementList[i] != null)
