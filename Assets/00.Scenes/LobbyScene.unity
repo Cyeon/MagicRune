@@ -1075,19 +1075,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 580583159}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 513021383}
-        m_TargetAssemblyTypeName: LobbyBGUI, Assembly-CSharp
-        m_MethodName: MoveBG
-        m_Mode: 3
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 2
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &580583159
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1108,7 +1096,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: b995b4656e7ca4733bf6415b6daf6df2, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 6b403180430f292418953b2148dc9ad2, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -2015,8 +2003,8 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1382241859}
-  m_Father: {fileID: 1309232487}
-  m_RootOrder: 2
+  m_Father: {fileID: 1196337520}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -3223,6 +3211,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1309232487}
+  - {fileID: 855209939}
   m_Father: {fileID: 513021382}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3554,7 +3543,6 @@ RectTransform:
   m_Children:
   - {fileID: 504262911}
   - {fileID: 350229377}
-  - {fileID: 855209939}
   m_Father: {fileID: 1196337520}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
