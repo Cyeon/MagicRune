@@ -15,6 +15,8 @@ public enum KeywordType
     Penetration, // 관통
     Overheat, // 과열
     CantEnhance, // 강화불과
+    GroundBeat, // 땅울림
+    SelfGeneration // 자가발전
 }
 
 [Serializable]
