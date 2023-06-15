@@ -23,6 +23,7 @@ public class MapScene : BaseScene
     private Image _mapDescIcon;
     private TextMeshProUGUI _mapDescText;
 
+
     protected override void Init()
     {
         base.Init();
