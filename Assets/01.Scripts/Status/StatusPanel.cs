@@ -9,6 +9,7 @@ using DG.Tweening;
 public class StatusPanel : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
     private Status _status;
+    public Status Status => _status;
     private Image _image;
     private TextMeshProUGUI _duration;
 
