@@ -203,11 +203,14 @@ public class MapManager
         if (Chapter < _chapterList.Count)
         {
             _chapter++;
+            ChapterInit();
+            _mapSceneUI.ChangeBackground();
+            _mapSceneUI.ChapterTransition.Transition();
         }
-
-        ChapterInit();
-        _mapSceneUI.ChangeBackground();
-        _mapSceneUI.ChapterTransition.Transition();
+        else
+        {
+            _mapSceneUI.EndGame();
+        }
     }
 
     public void NextStage()
