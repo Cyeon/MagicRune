@@ -18,9 +18,11 @@ public class ElectricOrb : MonoBehaviour
     {
         if (!_isShield)
         {
-            if(_enemy.HP / _enemy.MaxHP <= 0.5f)
+            float hp = _enemy.HP;
+            float maxHp = _enemy.MaxHP;
+
+            if (hp / maxHp <= 0.5f)
             {
-                Debug.Log("쉴드!");
                 _isShield = true;
                 _enemy.AddShield(20);
                 _enemy.OnGetDamage -= Shield;
