@@ -40,11 +40,12 @@ public enum StatusName
     Absorption,         // ?≪닔
     GroundBeat,         // ?낆슱由?
     Bouncing,           // 泥숇젰
-    DiamondBody,        // 湲덇컯遺덇눼
-    SelfGeneration,     // ?먭?諛쒖쟾
-    OverHeat,           // 怨쇱뿴
-    Heating,            // 諛쒖뿴
-    Penetration,        // 愿??
+    DiamondBody,        // 
+    SelfGeneration,     // 자가발전
+    OverHeat,           // 
+    Heating,            // 
+    Penetration,        // 
+    Ghost,                // 유체화
     COUNT
 }
 
