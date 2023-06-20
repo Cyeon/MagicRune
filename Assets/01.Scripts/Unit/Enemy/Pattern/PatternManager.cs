@@ -144,6 +144,8 @@ public class PatternManager : MonoBehaviour
             SpriteRenderer sprite = Managers.Resource.Instantiate("UI/PatternIcon", trm).GetComponent<SpriteRenderer>();
             sprite.sprite = _currentPattern.icon;
 
+            sprite.transform.localPosition = Vector2.zero;
+
             Sequence seq = DOTween.Sequence();
             seq.Append(sprite.transform.DOScale(_currentPattern.iconSize * 3, 0.3f));
             seq.Join(sprite.DOFade(0, 0.3f));
