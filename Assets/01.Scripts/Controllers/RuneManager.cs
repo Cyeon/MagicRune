@@ -187,14 +187,14 @@ public class RuneManager
         RuneRarity[] rarityArray = Enum.GetValues(typeof(RuneRarity)).Cast<RuneRarity>().ToArray();
 
         int rarityMaxValue = 0;
-        for (int i = 0; i < rarityArray.Length; i++)
+        for (int i = rarityArray.Length - 1; i >= 1 ; i--)
         {
             rarityMaxValue += (int)rarityArray[i];
         }
 
         int rarityValue = Random.Range(1, rarityMaxValue + 1);
         int rarityMinValue = 0;
-        for (int i = 0; i < rarityArray.Length; i++)
+        for (int i = rarityArray.Length - 1; i >= 1; i--)
         {
             if (rarityMinValue <= rarityValue && rarityValue >= (int)rarityArray[i + 1])
             {
@@ -220,7 +220,7 @@ public class RuneManager
         {
             if (numberList.Count <= 0) break;
             int randomIndex = Random.Range(0, numberList.Count);
-            runeList.Add(newRuneList[numberList[randomIndex]].Clone() as BaseRune);
+            runeList.Add(newRuneList[numberList[randomIndex]]);
             numberList.RemoveAt(randomIndex);
         }
 
