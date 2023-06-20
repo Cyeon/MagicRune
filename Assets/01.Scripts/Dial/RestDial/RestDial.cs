@@ -68,6 +68,8 @@ public class RestDial : Dial<RestRuneUI, RestRuneUI>
     private IEnumerator RestActionCoroutine()
     {
         GameObject effect = Managers.Resource.Instantiate("Effects/HealthParticle", Managers.Canvas.GetCanvas("Rest").transform);
+        effect.transform.localScale = Vector3.one;
+        effect.transform.GetComponent<RectTransform>().anchoredPosition3D = Vector3.zero;
         Managers.GetPlayer().AddHPPercent(25);
         Managers.Sound.PlaySound("SFX/Healing", SoundType.Effect);
         yield return new WaitForSeconds(1.5f);

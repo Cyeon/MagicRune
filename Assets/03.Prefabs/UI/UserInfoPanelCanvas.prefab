@@ -911,7 +911,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1520652532682514480}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: RuneListViewUI, Assembly-CSharp
+        m_MethodName: SetAllRunes
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &4599039246972968472
 GameObject:
   m_ObjectHideFlags: 0
@@ -1316,6 +1328,14 @@ PrefabInstance:
       propertyPath: m_AnchorMin.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4056931235406678885, guid: 8851da7ad3d23aa49ba29ebf4654b673, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: c1c5b0962253f1d4c962f711a931e80f, type: 3}
+    - target: {fileID: 4056931235406678885, guid: 8851da7ad3d23aa49ba29ebf4654b673, type: 3}
+      propertyPath: m_PixelsPerUnitMultiplier
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 4056931235464166325, guid: 8851da7ad3d23aa49ba29ebf4654b673, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -1350,7 +1370,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4056931235464166325, guid: 8851da7ad3d23aa49ba29ebf4654b673, type: 3}
       propertyPath: m_SizeDelta.y
-      value: -160
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4056931235464166325, guid: 8851da7ad3d23aa49ba29ebf4654b673, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1386,7 +1406,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4056931235464166325, guid: 8851da7ad3d23aa49ba29ebf4654b673, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -80
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4056931235464166325, guid: 8851da7ad3d23aa49ba29ebf4654b673, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x

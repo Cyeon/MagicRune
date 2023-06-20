@@ -53,6 +53,7 @@ public class RuneManager
         return _runeHandler;
     }
 
+    [Obsolete]
     public BaseRune GetRandomRuneOfRarity(RuneRarity rarity, List<BaseRune> ignoreRuneList = null)
     {
         List<BaseRune> newRuneList = new List<BaseRune>(_runeHandler);
@@ -73,6 +74,12 @@ public class RuneManager
         return newRuneList[idx].Clone() as BaseRune;
     }
 
+    [Obsolete]
+    public List<BaseRune> GetRandomRuneOfRarity(int count, RuneRarity rarity, List<BaseRune> ignoreRuneList = null)
+    {
+        return null;
+    }
+
     public BaseRune GetRandomRune(List<BaseRune> ignoreRuneList = null)
     {
         List<BaseRune> newRuneList = new List<BaseRune>(_runeHandler);
@@ -87,6 +94,54 @@ public class RuneManager
                 }
             }
         }
+
+        #region Set Attribute
+        AttributeType attributeType = AttributeType.None;
+        int attributeMaxValue = 0;
+        for(int i = 1; i < (int)AttributeType.MAX_COUNT; i++)
+        {
+            // 만약 선택 룬 속성이라면 10이 아니라 더 큰 수를 더하면 됨
+            attributeMaxValue += 10;
+        }
+        int attributeValue = Random.Range(0, attributeMaxValue + 1);
+        for(int i = 1; i < (int)AttributeType.MAX_COUNT; i++)
+        {
+            if((i - 1) * 10 <= attributeValue && i * 10 >= attributeValue)
+            {
+                attributeType = (AttributeType)i;
+                break;
+            }
+        }
+        #endregion
+
+        #region Set Rarity
+        RuneRarity rarity = RuneRarity.Normal;
+        RuneRarity[] rarityArray = Enum.GetValues(typeof(RuneRarity)).Cast<RuneRarity>().ToArray();
+
+        int rarityMaxValue = 0;
+        for(int i = 0; i < rarityArray.Length; i++)
+        {
+            rarityMaxValue += (int)rarityArray[i];
+        }
+
+        int rarityValue = Random.Range(1, rarityMaxValue + 1);
+        int rarityMinValue = 0;
+        for(int i = 0; i < rarityArray.Length; i++)
+        {
+            if(rarityMinValue <= rarityValue && rarityValue >= (int)rarityArray[i + 1])
+            {
+                rarity = rarityArray[i];
+                break;
+            }
+            else
+            {
+                rarityMinValue += (int)rarityArray[i + 1];
+            }
+        }
+        #endregion
+
+        newRuneList = newRuneList.Where(x => x.BaseRuneSO.AttributeType == attributeType && x.BaseRuneSO.Rarity == rarity).ToList();
+
         int idx = Random.Range(0, newRuneList.Count);
         return newRuneList[idx].Clone() as BaseRune;
     }
@@ -108,18 +163,76 @@ public class RuneManager
             }
         }
 
-        List<int> numberList = new List<int>();
-        for (int i = 0; i < newRuneList.Count; i++)
-        {
-            numberList.Add(i);
-        }
+        Debug.ClearDeveloperConsole();
 
-        for (int i = 0; i < count; i++)
+        while (runeList.Count < count)
         {
-            if (numberList.Count <= 0) break;
-            int randomIndex = Random.Range(0, numberList.Count);
-            runeList.Add(newRuneList[numberList[randomIndex]].Clone() as BaseRune);
-            numberList.RemoveAt(randomIndex);
+            #region Set Attribute
+            AttributeType attributeType = AttributeType.None;
+            int attributeMaxValue = 0;
+            for (int i = 1; i < (int)AttributeType.MAX_COUNT; i++)
+            {
+                // 만약 선택 룬 속성이라면 10이 아니라 더 큰 수를 더하면 됨
+                attributeMaxValue += 10;
+            }
+            int attributeValue = Random.Range(0, attributeMaxValue + 1);
+            for (int i = 1; i < (int)AttributeType.MAX_COUNT; i++)
+            {
+                // 위에꺼 하면 이쪽 로직도 수정해야 함
+                if ((i - 1) * 10 <= attributeValue && i * 10 >= attributeValue)
+                {
+                    attributeType = (AttributeType)i;
+                    break;
+                }
+            }
+            #endregion
+
+            #region Set Rarity
+            RuneRarity rarity = RuneRarity.Normal;
+            RuneRarity[] rarityArray = Enum.GetValues(typeof(RuneRarity)).Cast<RuneRarity>().ToArray();
+            Array.Reverse(rarityArray);
+
+            int rarityMaxValue = 0;
+            for (int i = 0; i < rarityArray.Length - 1; i++)
+            {
+                rarityMaxValue += (int)rarityArray[i];
+            }
+
+            int rarityValue = Random.Range(1, rarityMaxValue + 1);
+            int rarityMinValue = 0;
+            for (int i = 0; i < rarityArray.Length - 1; i++)
+            {
+                if (rarityMinValue <= rarityValue && rarityValue <= (int)rarityArray[i + 1] + rarityMinValue)
+                {
+                    rarity = rarityArray[i];
+                    break;
+                }
+                else
+                {
+                    rarityMinValue += (int)rarityArray[i + 1];
+                }
+            }
+            #endregion
+
+            Debug.Log($"{attributeType}, {rarity}");
+
+            List<BaseRune> list = new List<BaseRune>(newRuneList.Where(x => x.BaseRuneSO.AttributeType == attributeType && x.BaseRuneSO.Rarity == rarity));
+            BaseRune rune = list[Random.Range(0, list.Count)];
+
+            bool isIn = false;
+            for (int i = 0; i < runeList.Count; i++)
+            {
+                if (runeList[i].BaseRuneSO == rune.BaseRuneSO)
+                {
+                    isIn = true;
+                    break;
+                }
+            }
+
+            if (isIn == false)
+            {
+                runeList.Add(rune.Clone() as BaseRune);
+            }
         }
 
         return runeList;
