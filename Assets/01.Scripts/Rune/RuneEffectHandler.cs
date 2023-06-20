@@ -100,9 +100,9 @@ public class RuneEffectHandler : MonoBehaviour
             case AttributeType.Ice:
                 b.SetTrailColor(Color.cyan);
                 break;
-            case AttributeType.Wind:
-                b.SetTrailColor(new Color(0, 1, 0));
-                break;
+            //case AttributeType.Wind:
+            //    b.SetTrailColor(new Color(0, 1, 0));
+            //    break;
             case AttributeType.Ground:
                 b.SetTrailColor(new Color(0.53f, 0.27f, 0));
                 break;
