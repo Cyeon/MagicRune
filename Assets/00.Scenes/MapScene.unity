@@ -198,10 +198,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1899449069439450314, guid: ce4924ad682723f42a6d2f3e4ca49dde, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 1899449069439450315, guid: ce4924ad682723f42a6d2f3e4ca49dde, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -1359,14 +1355,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1850931375, guid: eebf2187c1ebbb64eb3d5350c7ed0042, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: -17
-      objectReference: {fileID: 0}
-    - target: {fileID: 1850931375, guid: eebf2187c1ebbb64eb3d5350c7ed0042, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -17
-      objectReference: {fileID: 0}
     - target: {fileID: 1024362844060943371, guid: eebf2187c1ebbb64eb3d5350c7ed0042, type: 3}
       propertyPath: m_Name
       value: RestCanvas
@@ -1682,22 +1670,6 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 762516290182109320, guid: e60d79253b863a044b25c0ee098ce978, type: 3}
-      propertyPath: m_fontColor.b
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 762516290182109320, guid: e60d79253b863a044b25c0ee098ce978, type: 3}
-      propertyPath: m_fontColor.g
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 762516290182109320, guid: e60d79253b863a044b25c0ee098ce978, type: 3}
-      propertyPath: m_fontColor.r
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 762516290182109320, guid: e60d79253b863a044b25c0ee098ce978, type: 3}
-      propertyPath: m_fontColor32.rgba
-      value: 4294967295
-      objectReference: {fileID: 0}
     - target: {fileID: 762516290231072508, guid: e60d79253b863a044b25c0ee098ce978, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -1830,46 +1802,10 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 762516291228791852, guid: e60d79253b863a044b25c0ee098ce978, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 762516291228791852, guid: e60d79253b863a044b25c0ee098ce978, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 762516291228791855, guid: e60d79253b863a044b25c0ee098ce978, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1520652532682514446, guid: e60d79253b863a044b25c0ee098ce978, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1520652532682514446, guid: e60d79253b863a044b25c0ee098ce978, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 1520652532682514446, guid: e60d79253b863a044b25c0ee098ce978, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 5776346204812725430}
-    - target: {fileID: 1520652532682514446, guid: e60d79253b863a044b25c0ee098ce978, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 1520652532682514446, guid: e60d79253b863a044b25c0ee098ce978, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: SetAllRunes
-      objectReference: {fileID: 0}
-    - target: {fileID: 1520652532682514446, guid: e60d79253b863a044b25c0ee098ce978, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: RuneListViewUI, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 1520652532682514446, guid: e60d79253b863a044b25c0ee098ce978, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e60d79253b863a044b25c0ee098ce978, type: 3}
 --- !u!1 &769812172
@@ -4847,6 +4783,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: TutorialCanvas
       objectReference: {fileID: 0}
+    - target: {fileID: 2406639655609974203, guid: 402cfde011a63e94d950fe1b6baabc98, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2406639655609974207, guid: 402cfde011a63e94d950fe1b6baabc98, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -4929,14 +4869,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2406639655609974207, guid: 402cfde011a63e94d950fe1b6baabc98, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2406639656172503218, guid: 402cfde011a63e94d950fe1b6baabc98, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 2406639656172503218, guid: 402cfde011a63e94d950fe1b6baabc98, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_BoolArgument
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -5116,30 +5048,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 5289232, guid: c9c061cadaf70d543aa959ab7f02a80f, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1019158843, guid: c9c061cadaf70d543aa959ab7f02a80f, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1019158843, guid: c9c061cadaf70d543aa959ab7f02a80f, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1665875105045390882, guid: c9c061cadaf70d543aa959ab7f02a80f, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1665875105045390882, guid: c9c061cadaf70d543aa959ab7f02a80f, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5174346469897725999, guid: c9c061cadaf70d543aa959ab7f02a80f, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 5913240716637553048, guid: c9c061cadaf70d543aa959ab7f02a80f, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -5163,10 +5071,6 @@ PrefabInstance:
     - target: {fileID: 5913240717642822422, guid: c9c061cadaf70d543aa959ab7f02a80f, type: 3}
       propertyPath: m_SizeDelta.y
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6579790604943984345, guid: c9c061cadaf70d543aa959ab7f02a80f, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 45
       objectReference: {fileID: 0}
     - target: {fileID: 8978150480661185248, guid: c9c061cadaf70d543aa959ab7f02a80f, type: 3}
       propertyPath: m_Camera
@@ -5259,10 +5163,6 @@ PrefabInstance:
     - target: {fileID: 8978150480661185253, guid: c9c061cadaf70d543aa959ab7f02a80f, type: 3}
       propertyPath: m_Name
       value: Deck Canvas
-      objectReference: {fileID: 0}
-    - target: {fileID: 8978150480661185253, guid: c9c061cadaf70d543aa959ab7f02a80f, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c9c061cadaf70d543aa959ab7f02a80f, type: 3}
