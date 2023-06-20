@@ -18,6 +18,7 @@ public enum AttributeType
     Electric, // 전기
     Ground, // 땅
     Wind, // 바람
+    MAX_COUNT,
 }
 
 /// <summary>
@@ -57,10 +58,13 @@ public enum AttackType
 
 public enum RuneRarity
 {
-    Normal,
-    Rare,
-    Epic,
-    Legendary,
+    // 다합쳐서 100되게
+    Normal = 50,
+    Rare = 35,
+    Epic = 15,
+
+    // 앤 뺴고
+    Legendary = 0, // 맨 마지막으로
 }
 
 public enum CountType
