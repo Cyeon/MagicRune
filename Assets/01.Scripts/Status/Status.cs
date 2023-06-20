@@ -1,3 +1,4 @@
+using MoreMountains.FeedbacksForThirdParty;
 using MyBox;
 using NaughtyAttributes;
 using System.Collections;
@@ -78,12 +79,20 @@ public class Status : MonoBehaviour
     public AudioClip getSound = null;
     [ConditionalField(nameof(statusSoundType), false, StatusSoundType.Main)]
     public AudioClip activeSound = null;
-    [HideInInspector] public Unit unit;
+    
+    private Unit _unit;
+
+    public void Init(Unit unit)
+    {
+        _unit = unit;
+        _typeValue = 0;
+        Define.DialScene?.AddStatus(_unit, this);
+    }
 
     public void AddValue(int count)
     {
         _typeValue += count;
-        Define.DialScene?.ReloadStatusPanel(unit, this);
+        Define.DialScene?.ReloadStatusPanel(_unit, this);
     }
 
     public void RemoveValue(int count)
@@ -91,10 +100,10 @@ public class Status : MonoBehaviour
         _typeValue = Mathf.Clamp(_typeValue - count, 0, _typeValue);
         if (_typeValue <= 0)
         {
-            unit.StatusManager.DeleteStatus(this);
+            _unit.StatusManager.DeleteStatus(this);
             return;
         }
 
-        Define.DialScene?.ReloadStatusPanel(unit, this);
+        Define.DialScene?.ReloadStatusPanel(_unit, this);
     }
 }
