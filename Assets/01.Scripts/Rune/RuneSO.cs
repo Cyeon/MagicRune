@@ -17,7 +17,7 @@ public enum AttributeType
     Ice, // 얼음
     Electric, // 전기
     Ground, // 땅
-    Wind, // 바람
+    //Wind, // 바람
     MAX_COUNT,
 }
 

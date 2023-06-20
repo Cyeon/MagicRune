@@ -18,11 +18,11 @@ public class ShopStage : Stage
 
         _shopUI.Open();
 
+        BaseRune[] rune = Managers.Rune.GetRandomRune(4).ToArray();
         for (int i = 0; i < 4; i++)
         {
-            BaseRune rune = Managers.Rune.GetRandomRune();
-            rune.SetRandomGold(50, 100);
-            _shopUI.RuneItemProduct(rune);
+            rune[i].SetRandomGold(50, 100);
+            _shopUI.RuneItemProduct(rune[i]);
         }
     }
 
