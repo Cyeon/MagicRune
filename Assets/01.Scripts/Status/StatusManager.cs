@@ -139,7 +139,7 @@ public class StatusManager
         return null;
     }
 
-    public float GetStatusValue(StatusName status)
+    public int GetStatusValue(StatusName status)
     {
         if (GetStatus(status) == null) return 0;
 

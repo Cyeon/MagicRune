@@ -4,6 +4,8 @@ using UnityEngine;
 
 public  class PatternAction : MonoBehaviour
 {
+    protected Enemy Enemy => BattleManager.Instance.Enemy;
+
     public virtual void StartAction()
     {
         BattleManager.Instance.Enemy.PatternManager.CurrentPattern.NextAction();
