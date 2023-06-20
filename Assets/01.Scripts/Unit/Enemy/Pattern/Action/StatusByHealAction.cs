@@ -5,7 +5,7 @@ using UnityEngine;
 public class StatusByHealAction : PatternAction
 {
     [SerializeField] private StatusName _status;
-    private bool _isRemoveStack;
+    [SerializeField] private bool _isRemoveStack = true;
 
     public override void TurnAction()
     {
