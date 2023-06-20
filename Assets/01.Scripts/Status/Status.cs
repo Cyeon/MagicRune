@@ -1,3 +1,4 @@
+using MoreMountains.FeedbacksForThirdParty;
 using MyBox;
 using NaughtyAttributes;
 using System.Collections;
@@ -39,11 +40,13 @@ public enum StatusName
     Absorption,         // ?≪닔
     GroundBeat,         // ?낆슱由?
     Bouncing,           // 泥숇젰
-    DiamondBody,        // 湲덇컯遺덇눼
-    SelfGeneration,     // ?먭?諛쒖쟾
-    OverHeat,           // 怨쇱뿴
-    Heating,            // 諛쒖뿴
-    Penetration,        // 愿??
+    DiamondBody,     // 
+    SelfGeneration,   // 자가발전
+    OverHeat,          // 
+    Heating,             // 
+    Penetration,       // 
+    Ghost,               // 유체화
+    Strength,           // 힘
     COUNT
 }
 
@@ -78,12 +81,20 @@ public class Status : MonoBehaviour
     public AudioClip getSound = null;
     [ConditionalField(nameof(statusSoundType), false, StatusSoundType.Main)]
     public AudioClip activeSound = null;
-    [HideInInspector] public Unit unit;
+    
+    private Unit _unit;
+
+    public void Init(Unit unit)
+    {
+        _unit = unit;
+        _typeValue = 0;
+        Define.DialScene?.AddStatus(_unit, this);
+    }
 
     public void AddValue(int count)
     {
         _typeValue += count;
-        Define.DialScene?.ReloadStatusPanel(unit, this);
+        Define.DialScene?.ReloadStatusPanel(_unit, this);
     }
 
     public void RemoveValue(int count)
@@ -91,10 +102,10 @@ public class Status : MonoBehaviour
         _typeValue = Mathf.Clamp(_typeValue - count, 0, _typeValue);
         if (_typeValue <= 0)
         {
-            unit.StatusManager.DeleteStatus(this);
+            _unit.StatusManager.DeleteStatus(this);
             return;
         }
 
-        Define.DialScene?.ReloadStatusPanel(unit, this);
+        Define.DialScene?.ReloadStatusPanel(_unit, this);
     }
 }

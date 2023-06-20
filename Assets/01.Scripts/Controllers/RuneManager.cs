@@ -9,6 +9,7 @@ using Random = UnityEngine.Random;
 public class RuneManager
 {
     private List<BaseRune> _runeHandler = new List<BaseRune>();
+    private AttributeType _selectAttributeType = AttributeType.None;
 
     public void Init()
     {
@@ -46,6 +47,11 @@ public class RuneManager
         {
             _runeHandler[i].Init();
         }
+    }
+
+    public void SetSelectAttribute(AttributeType type)
+    {
+        _selectAttributeType = type;
     }
 
     public List<BaseRune> GetRuneList()
@@ -100,16 +106,27 @@ public class RuneManager
         int attributeMaxValue = 0;
         for(int i = 1; i < (int)AttributeType.MAX_COUNT; i++)
         {
-            // 만약 선택 룬 속성이라면 10이 아니라 더 큰 수를 더하면 됨
-            attributeMaxValue += 10;
+            if (_selectAttributeType == (AttributeType)i)
+            {
+                attributeMaxValue += 30;
+            }
+            else
+            {
+                attributeMaxValue += 10;
+            }
         }
         int attributeValue = Random.Range(0, attributeMaxValue + 1);
+        int attributeMinValue = 0;
         for(int i = 1; i < (int)AttributeType.MAX_COUNT; i++)
         {
-            if((i - 1) * 10 <= attributeValue && i * 10 >= attributeValue)
+            if(attributeMinValue <= attributeValue && ((AttributeType)i == _selectAttributeType ? 30 : 10) + attributeMinValue >= attributeValue)
             {
                 attributeType = (AttributeType)i;
                 break;
+            }
+            else
+            {
+                attributeMinValue += (AttributeType)i == _selectAttributeType ? 30 : 10;
             }
         }
         #endregion
@@ -172,17 +189,27 @@ public class RuneManager
             int attributeMaxValue = 0;
             for (int i = 1; i < (int)AttributeType.MAX_COUNT; i++)
             {
-                // 만약 선택 룬 속성이라면 10이 아니라 더 큰 수를 더하면 됨
-                attributeMaxValue += 10;
+                if (_selectAttributeType == (AttributeType)i)
+                {
+                    attributeMaxValue += 30;
+                }
+                else
+                {
+                    attributeMaxValue += 10;
+                }
             }
             int attributeValue = Random.Range(0, attributeMaxValue + 1);
+            int attributeMinValue = 0;
             for (int i = 1; i < (int)AttributeType.MAX_COUNT; i++)
             {
-                // 위에꺼 하면 이쪽 로직도 수정해야 함
-                if ((i - 1) * 10 <= attributeValue && i * 10 >= attributeValue)
+                if (attributeMinValue <= attributeValue && ((AttributeType)i == _selectAttributeType ? 30 : 10) + attributeMinValue >= attributeValue)
                 {
                     attributeType = (AttributeType)i;
                     break;
+                }
+                else
+                {
+                    attributeMinValue += (AttributeType)i == _selectAttributeType ? 30 : 10;
                 }
             }
             #endregion

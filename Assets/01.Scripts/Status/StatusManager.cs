@@ -40,10 +40,11 @@ public class StatusManager
         else
         {
             status = Managers.Resource.Instantiate("Status/Status_" + statusName, _unit.statusTrm).GetComponent<Status>();
-            status.unit = _unit;
-            status.AddValue(count);
-            Define.DialScene?.AddStatus(_unit, status);
+
+            status.Init(_unit);
             _statusList.Add(status);
+
+            status.AddValue(count);
         }
 
         switch (status.statusSoundType)
@@ -91,7 +92,7 @@ public class StatusManager
     {
         if (status == null) return;
         if (_unit.IsDie || IsHaveStatus(status.statusName) == false) return;
-
+        
         _statusList.Remove(status);
         Define.DialScene?.RemoveStatusPanel(_unit, status.statusName);
 
@@ -139,7 +140,7 @@ public class StatusManager
         return null;
     }
 
-    public float GetStatusValue(StatusName status)
+    public int GetStatusValue(StatusName status)
     {
         if (GetStatus(status) == null) return 0;
 

@@ -8,7 +8,8 @@ public class Enemy : Unit
     public enum EnemyType
     {
         Ice,
-        Fire
+        Fire,
+        Electric
     }
 
     [Header("Enemy Info")]

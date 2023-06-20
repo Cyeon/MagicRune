@@ -12,7 +12,7 @@ public class AbsorptionChilliness : BaseRune
     }
     public override void AbilityAction()
     {
-        int cnt = BattleManager.Instance.Enemy.StatusManager.GetStatusValue(StatusName.Chilliness).RoundToInt();
+        int cnt = BattleManager.Instance.Enemy.StatusManager.GetStatusValue(StatusName.Chilliness);
         BattleManager.Instance.Enemy.StatusManager.DeleteStatus(StatusName.Chilliness);
         Managers.GetPlayer().AddShield(cnt * GetAbliltiValue(EffectType.Status).RoundToInt());
     }
