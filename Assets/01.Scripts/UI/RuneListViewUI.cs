@@ -17,7 +17,7 @@ public class RuneListViewUI : MonoBehaviour
     {
         _backgroundPanel = transform.Find("RuneListView_BGPanel").gameObject;
         _scrollView = transform.Find("RuneListView_ScrollView").gameObject;
-        _content = _scrollView.transform.GetChild(0).GetChild(0).transform;
+        _content = _scrollView.transform.Find("Viewport").GetChild(0).transform;
         _dial = FindObjectOfType<RuneDial>();
 
         ActiveUI(false);
