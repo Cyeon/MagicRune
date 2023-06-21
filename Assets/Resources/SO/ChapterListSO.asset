@@ -13,6 +13,23 @@ MonoBehaviour:
   m_Name: ChapterListSO
   m_EditorClassIdentifier: 
   chapterList:
+  - chapterName: "\uC804\uAE30\uC758 \uB300\uC9C0"
+    chapter: 3
+    background: {fileID: 21300000, guid: 4e8218c476b985248a82e79dbad02319, type: 3}
+    minGold: 100
+    maxGold: 150
+    boss: {fileID: 5475244823323083153, guid: ad1cdcaaa49cd5348b0bd8606ab08f40, type: 3}
+    defaultEnemy: {fileID: 8448848783833791957, guid: 31626804d4d69f6428d0e276b67a6f76, type: 3}
+    enemyList:
+    - periodType: 1
+      enemyList:
+      - {fileID: 8448848783833791957, guid: 31626804d4d69f6428d0e276b67a6f76, type: 3}
+      - {fileID: 8448848783833791957, guid: 391ddf3a114f3b1418071f34c134cb22, type: 3}
+      - {fileID: 8448848783833791957, guid: c7bbe946771abc74b8f3df6749fe96b3, type: 3}
+    - periodType: 2
+      enemyList:
+      - {fileID: 8448848783833791957, guid: 178d169439305ec44bc1837c95f56acf, type: 3}
+      - {fileID: 8448848783833791957, guid: 2dcb6309a414ea04eb27d208bc170c83, type: 3}
   - chapterName: "\uB208\uC758 \uB300\uC9C0"
     chapter: 1
     background: {fileID: 21300000, guid: 3d675f80edceb684ea695886c6e12515, type: 3}
@@ -48,19 +65,3 @@ MonoBehaviour:
       enemyList:
       - {fileID: 5383020803786264790, guid: 32272b46329d0804aba5136ae6128147, type: 3}
       - {fileID: 5383020803786264790, guid: afc08dcb646d04641885cdabadc34e73, type: 3}
-  - chapterName: "\uC804\uAE30\uC758 \uB300\uC9C0"
-    chapter: 3
-    background: {fileID: 21300000, guid: 4e8218c476b985248a82e79dbad02319, type: 3}
-    minGold: 100
-    maxGold: 150
-    boss: {fileID: 5475244823323083153, guid: ad1cdcaaa49cd5348b0bd8606ab08f40, type: 3}
-    defaultEnemy: {fileID: 8448848783833791957, guid: 31626804d4d69f6428d0e276b67a6f76, type: 3}
-    enemyList:
-    - periodType: 1
-      enemyList:
-      - {fileID: 8448848783833791957, guid: 31626804d4d69f6428d0e276b67a6f76, type: 3}
-      - {fileID: 8448848783833791957, guid: c7bbe946771abc74b8f3df6749fe96b3, type: 3}
-      - {fileID: 8448848783833791957, guid: 391ddf3a114f3b1418071f34c134cb22, type: 3}
-    - periodType: 2
-      enemyList:
-      - {fileID: 8448848783833791957, guid: 178d169439305ec44bc1837c95f56acf, type: 3}
