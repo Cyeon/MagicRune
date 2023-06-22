@@ -12,8 +12,77 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 785ffbcf96aa1424782615e0a3087e7e, type: 3}
   m_Name: Spelling Breaker
   m_EditorClassIdentifier: 
-  adventureName: 
-  image: {fileID: 0}
-  message: 
-  distractors: []
+  adventureName: "\uB9DB\uCDA4\uBEE1 \uD30C\uAD34\uC790 "
+  image: {fileID: 21300000, guid: b38f47129cd86574fbabf7e06ead49c0, type: 3}
+  message: "\uBA38\uB9AC\uAC00 \uBD95 \uB72C \uC218\uC0C1\uD55C \uC0AC\uB78C\uC774
+    \uB2E4\uAC00\uC640 \uB2F9\uC2E0\uC5D0\uAC8C \uD45C\uC9C0\uD310\uC744 \uBCF4\uC5EC\uC90D\uB2C8\uB2E4.
+    '\uC67C\uCABD\uC774\uB791 \uC624\uB978\uCABD. \uC5B4\uB514\uB85C \uAC00\uBA74
+    \uB418?'\r"
+  distractors:
+  - distractorText: "[\uC67C\uCABD\uC73C\uB85C \uAC00\uBA74 \uB418] \uBB34\uC5B8\uAC00
+      \uC77C\uC774 \uC0DD\uAE41\uB2C8\uB2E4.\r"
+    resultText: "\"\uD788\uD788 \uACE0\uB9C8\uC6CC\"  \uC218\uC0C1\uD55C \uC0AC\uB78C\uC774
+      \uAC10\uC0AC\uC758 \uD45C\uC2DC\uB85C \uAE08\uD654 \uBA87 \uAC1C\uB97C \uC8FC\uACE0
+      \uB5A0\uB0A9\uB2C8\uB2E4. \u2026\uADF8\uB7EC\uACE0\uBCF4\uB2C8 \uC67C\uCABD
+      \uAE38\uC5D0\uB294 \uBAAC\uC2A4\uD130\uAC00 \uB9CE\uC740\uB370. \uAD1C\uCC2E\uACA0\uC8E0?\r"
+    function:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 896080243694524714, guid: 224f0ca2aa1150447ad34e73a82c6cf7, type: 3}
+          m_TargetAssemblyTypeName: DistracotrFuncList, Assembly-CSharp
+          m_MethodName: AddGold
+          m_Mode: 3
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 15
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - distractorText: "[\uADFC\uB370 \uB418 \uC544\uB2C8\uACE0 \uB3FC\u2026] \uBB34\uC5B8\uAC00
+      \uC77C\uC774 \uC0DD\uAE41\uB2C8\uB2E4.\r"
+    resultText: "\"\uD5C9!\" \uC218\uC0C1\uD55C \uC0AC\uB78C\uC774 \uC9C0\uC801\uC744
+      \uBC1B\uC790 \uBD80\uB044\uB7EC\uC6B4\uC9C0 \uB3C4\uB9DD\uCE69\uB2C8\uB2E4.
+      \uC640\uC911\uC5D0 \uB2F9\uC2E0\uACFC \uBD80\uB52A\uD600 \uADF8\uB9CC \uAE08\uD654
+      \uC8FC\uBA38\uB2C8\uB97C \uB5A8\uAD6C\uACE0 \uB9D0\uC558\uB124\uC694. \uC800\uB7F0!\r"
+    function:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 896080243694524714, guid: 224f0ca2aa1150447ad34e73a82c6cf7, type: 3}
+          m_TargetAssemblyTypeName: DistracotrFuncList, Assembly-CSharp
+          m_MethodName: SetMode
+          m_Mode: 3
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 896080243694524714, guid: 224f0ca2aa1150447ad34e73a82c6cf7, type: 3}
+          m_TargetAssemblyTypeName: DistracotrFuncList, Assembly-CSharp
+          m_MethodName: AddHp
+          m_Mode: 3
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: -10
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 896080243694524714, guid: 224f0ca2aa1150447ad34e73a82c6cf7, type: 3}
+          m_TargetAssemblyTypeName: DistracotrFuncList, Assembly-CSharp
+          m_MethodName: AddGold
+          m_Mode: 3
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 50
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
   isEnter: 0

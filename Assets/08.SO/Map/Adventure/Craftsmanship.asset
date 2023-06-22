@@ -12,8 +12,75 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 785ffbcf96aa1424782615e0a3087e7e, type: 3}
   m_Name: Craftsmanship
   m_EditorClassIdentifier: 
-  adventureName: 
-  image: {fileID: 0}
-  message: 
-  distractors: []
+  adventureName: "\uC7A5\uC778 \uC815\uC2E0 "
+  image: {fileID: 21300000, guid: b38f47129cd86574fbabf7e06ead49c0, type: 3}
+  message: "\"\uC544! \uC774\uAC70 \uC544\uB2C8\uC57C!\" \uC18C\uB9AC\uCE58\uB294
+    \uB0A8\uC790\uAC00 \uBCF4\uC5EC \uB2E4\uAC00\uAC14\uB354\uB2C8, \uB0A8\uC790\uAC00
+    \uAC11\uC790\uAE30 \uB2F9\uC2E0\uC744 \uBD99\uC7A1\uC2B5\uB2C8\uB2E4. \"\uADF8\uB798.
+    \uADF8\uAC70\uC57C! \uB124\uAC00 \uAC00\uC9C4 \uADF8 \uB8EC\uC744 \uB118\uACA8!\"\r"
+  distractors:
+  - distractorText: "[\uB8EC\uC744 \uB118\uAE34\uB2E4] \uB79C\uB364\uD55C \uB8EC\uC744
+      \uC783\uACE0, \uC77C\uC815\uB7C9\uC758 \uAE08\uD654\uB97C \uC5BB\uC2B5\uB2C8\uB2E4.\r"
+    resultText: "\"\uB0B4\uAC00 \uC7A0\uC2DC \uD765\uBD84\uD588\uC5C8\uB124\u2026
+      \uC0AC\uACFC\uD558\uC9C0.\" \uB0A8\uC790\uAC00 \uBBF8\uC548\uD558\uB2E4\uBA70
+      \uB8EC\uC758 \uAC12\uC73C\uB85C \uAE08\uD654 \uC8FC\uBA38\uB2C8\uB97C \uB118\uAE41\uB2C8\uB2E4.
+      \r"
+    function:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 896080243694524714, guid: 224f0ca2aa1150447ad34e73a82c6cf7, type: 3}
+          m_TargetAssemblyTypeName: DistracotrFuncList, Assembly-CSharp
+          m_MethodName: RandomRuneDelete
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 896080243694524714, guid: 224f0ca2aa1150447ad34e73a82c6cf7, type: 3}
+          m_TargetAssemblyTypeName: DistracotrFuncList, Assembly-CSharp
+          m_MethodName: AddRandomGold
+          m_Mode: 5
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 70~101
+            m_BoolArgument: 0
+          m_CallState: 2
+  - distractorText: "[\uB3C4\uB9DD\uAC04\uB2E4] \uCCB4\uB825\uC744 5 \uC783\uC2B5\uB2C8\uB2E4.\r"
+    resultText: "\uB2F9\uC2E0\uC740 \uCD08\uC778\uC801\uC778 \uD798\uC744 \uBC1C\uD718\uD574
+      \uB0A8\uC790\uC5D0\uAC8C\uC11C \uBC97\uC5B4\uB098 \uB3C4\uB9DD\uCE69\uB2C8\uB2E4.
+      \uC815\uB9D0 \uC774\uC0C1\uD55C \uC0AC\uB78C\uC774\uC5C8\uB124\uC694.\r"
+    function:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 896080243694524714, guid: 224f0ca2aa1150447ad34e73a82c6cf7, type: 3}
+          m_TargetAssemblyTypeName: DistracotrFuncList, Assembly-CSharp
+          m_MethodName: SetMode
+          m_Mode: 3
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 896080243694524714, guid: 224f0ca2aa1150447ad34e73a82c6cf7, type: 3}
+          m_TargetAssemblyTypeName: DistracotrFuncList, Assembly-CSharp
+          m_MethodName: AddHp
+          m_Mode: 3
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: -5
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
   isEnter: 0
