@@ -16,7 +16,7 @@ public class KeywardManager
         }
     }
 
-    public Keyward GetKeyward(KeywordType typeName)
+    public Keyward GetKeyward(KeywordName typeName)
     {
         Keyward keyward = _keywardList.Find(x => x.TypeName == typeName);
         if(keyward == null)

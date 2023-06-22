@@ -1,0 +1,73 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 785ffbcf96aa1424782615e0a3087e7e, type: 3}
+  m_Name: Mysterious Tangerine Boy
+  m_EditorClassIdentifier: 
+  adventureName: "\uC758\uBB38\uC758 \uADE4 \uC18C\uB144 "
+  image: {fileID: 21300000, guid: b38f47129cd86574fbabf7e06ead49c0, type: 3}
+  message: "\"\uADE4 \uC0AC\uC138\uC694, \uADE4 \uC0AC\uC138\uC694.\" \uD55C \uC18C\uB144\uC774
+    \uADE4 \uBC14\uAD6C\uB2C8\uB97C \uB4E4\uACE0 \uC9C0\uB098\uAC00\uB294 \uC5EC\uD589\uAC1D\uB4E4\uC5D0\uAC8C
+    \uADE4\uC744 \uD314\uACE0 \uC788\uC2B5\uB2C8\uB2E4.\r"
+  distractors:
+  - distractorText: "[\uAD6C\uB9E4\uD55C\uB2E4] \uAE08\uD654\uB97C 5 \uC783\uACE0
+      \uCCB4\uB825\uC744 7 \uD68C\uBCF5\uD569\uB2C8\uB2E4.\r"
+    resultText: "\"\uAC10\uC0AC\uD569\uB2C8\uB2E4!\" \uC18C\uB144\uC774 \uAE08\uD654\uB97C
+      \uBC1B\uACE0 \uB2F9\uC2E0\uC5D0\uAC8C \uADE4\uC744 \uAC74\uB0C5\uB2C8\uB2E4.
+      \uD5A5\uC774 \uC544\uC8FC \uC0C1\uD07C\uD558\uB2C8 \uB9DB\uC788\uAC8C \uC0DD\uAE34
+      \uADE4\uC774\uB124\uC694! \r"
+    function:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 896080243694524714, guid: 224f0ca2aa1150447ad34e73a82c6cf7, type: 3}
+          m_TargetAssemblyTypeName: DistracotrFuncList, Assembly-CSharp
+          m_MethodName: AddGold
+          m_Mode: 3
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: -5
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 896080243694524714, guid: 224f0ca2aa1150447ad34e73a82c6cf7, type: 3}
+          m_TargetAssemblyTypeName: DistracotrFuncList, Assembly-CSharp
+          m_MethodName: SetMode
+          m_Mode: 3
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 896080243694524714, guid: 224f0ca2aa1150447ad34e73a82c6cf7, type: 3}
+          m_TargetAssemblyTypeName: DistracotrFuncList, Assembly-CSharp
+          m_MethodName: AddHp
+          m_Mode: 3
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 7
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - distractorText: "[\uC9C0\uB098\uCE5C\uB2E4]\r"
+    resultText: "\uC18C\uB144\uC774 \uBD88\uC30D\uD55C \uD45C\uC815\uC73C\uB85C \uB2F9\uC2E0\uC744
+      \uBC14\uB77C\uBCF4\uC9C0\uB9CC \uB2F9\uC2E0\uC740 \uC18C\uB144\uC744 \uC9C0\uB098\uCCD0
+      \uAC78\uC5B4\uAC11\uB2C8\uB2E4.\r\n"
+    function:
+      m_PersistentCalls:
+        m_Calls: []
+  isEnter: 0

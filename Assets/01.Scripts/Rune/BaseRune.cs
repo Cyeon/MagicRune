@@ -39,7 +39,7 @@ public class BaseRune : Item, ICloneable
     private bool _isEnhanced = false;
     public bool IsEnhanced => _isEnhanced;
 
-    protected List<KeywordType> _keywordList = new List<KeywordType>();
+    protected List<KeywordName> _keywordList = new List<KeywordName>();
     #endregion
 
     #region Item Interface
@@ -147,7 +147,7 @@ public class BaseRune : Item, ICloneable
         return rune;
     }
 
-    public bool IsIncludeKeyword(KeywordType keyward)
+    public bool IsIncludeKeyword(KeywordName keyward)
     {
         return _keywordList.Contains(keyward);
     }

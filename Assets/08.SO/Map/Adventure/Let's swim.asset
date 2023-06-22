@@ -1,0 +1,73 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 785ffbcf96aa1424782615e0a3087e7e, type: 3}
+  m_Name: Let's swim
+  m_EditorClassIdentifier: 
+  adventureName: "\uC6B4\uB3D9\u2026 \uD574\uC57C\uACA0\uC9C0? "
+  image: {fileID: 21300000, guid: b38f47129cd86574fbabf7e06ead49c0, type: 3}
+  message: "\uC5F0\uBABB\uC5D0\uC11C \uC218\uC601\uC744 \uD558\uACE0 \uC788\uB294
+    \uB0A8\uC790\uB97C \uBC1C\uACAC\uD588\uC2B5\uB2C8\uB2E4. \uB0A8\uC790\uAC00 \uB2F9\uC2E0\uACFC
+    \uB208\uC774 \uB9C8\uC8FC\uCE58\uB354\uB2C8, \uAC19\uC774 \uC218\uC601\uC744
+    \uD558\uC790\uB294\uB4EF \uC190\uC9D3\uD569\uB2C8\uB2E4.\r"
+  distractors:
+  - distractorText: "[\uB6F0\uC5B4\uB4E0\uB2E4] \uCD5C\uB300 \uCCB4\uB825\uC774 10
+      \uC99D\uAC00\uD558\uACE0, \uCD94\uAC00\uB85C \uCCB4\uB825\uC744 5 \uD68C\uBCF5\uD569\uB2C8\uB2E4.
+      \r\n"
+    resultText: "\uC218\uC601\uC744 \uD588\uB354\uB2C8 \uBAB8\uC774 \uD2BC\uD2BC\uD574\uC9C4
+      \uAC83 \uAC19\uC2B5\uB2C8\uB2E4!\r"
+    function:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 896080243694524714, guid: 224f0ca2aa1150447ad34e73a82c6cf7, type: 3}
+          m_TargetAssemblyTypeName: DistracotrFuncList, Assembly-CSharp
+          m_MethodName: AddMaxHp
+          m_Mode: 3
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 10
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 896080243694524714, guid: 224f0ca2aa1150447ad34e73a82c6cf7, type: 3}
+          m_TargetAssemblyTypeName: DistracotrFuncList, Assembly-CSharp
+          m_MethodName: SetMode
+          m_Mode: 3
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 896080243694524714, guid: 224f0ca2aa1150447ad34e73a82c6cf7, type: 3}
+          m_TargetAssemblyTypeName: DistracotrFuncList, Assembly-CSharp
+          m_MethodName: AddHp
+          m_Mode: 3
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 15
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - distractorText: "[\uB3C4\uB9DD\uAC04\uB2E4]\r"
+    resultText: "\"\uC5B4? \uB3C4\uB9DD\uAC00\uC9C0 \uB9C8!\" \uB0A8\uC790\uAC00
+      \uB2F9\uC2E0\uC744 \uCAD3\uC544\uC624\uC9C0\uB9CC \uB2F9\uC2E0\uC740 \uBB34\uC0AC\uD788
+      \uB3C4\uB9DD\uCCE4\uC2B5\uB2C8\uB2E4. \uD734!\r"
+    function:
+      m_PersistentCalls:
+        m_Calls: []
+  isEnter: 0
