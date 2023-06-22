@@ -17,11 +17,17 @@ public class RuneManager
         _runeHandler.Add(new FirePunch());
         _runeHandler.Add(new FireRegeneration());
         _runeHandler.Add(new FireBreath());
+        _runeHandler.Add(new RapidFire());
+        _runeHandler.Add(new Reload());
+        _runeHandler.Add(new TheLastShot());
 
         _runeHandler.Add(new Ice());
         _runeHandler.Add(new SnowBall());
         _runeHandler.Add(new IceShield());
         _runeHandler.Add(new IceSmash());
+        _runeHandler.Add(new IceHeart());
+        _runeHandler.Add(new AbsorptionChilliness());
+        _runeHandler.Add(new BreathOfIceDragon());
 
         _runeHandler.Add(new ShieldAttack());
         _runeHandler.Add(new Attack());
@@ -29,6 +35,7 @@ public class RuneManager
         _runeHandler.Add(new GroundShield());
         _runeHandler.Add(new GroundBeat());
         _runeHandler.Add(new Bouncing());
+        _runeHandler.Add(new DiamondBody());
 
         _runeHandler.Add(new Charge());
         _runeHandler.Add(new RailGun());

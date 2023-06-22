@@ -19,7 +19,7 @@ public class RailGun : BaseRune
 
     public override void AbilityAction()
     {
-        Managers.GetPlayer().Attack(GetAbliltiValue(EffectType.Attack), IsIncludeKeyword(KeywordType.Penetration));
+        Managers.GetPlayer().Attack(GetAbliltiValue(EffectType.Attack), IsIncludeKeyword(KeywordName.Penetration));
         Managers.GetPlayer().StatusManager.RemoveStatus(StatusName.Recharging, 10);
     }
 
