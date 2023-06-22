@@ -12,6 +12,8 @@ public class Pattern : MonoBehaviour
     public Sprite icon;
     public Vector3 iconSize = Vector3.one;
     public string desc ="";
+    [TextArea(1, 10)]
+    public string PatternDescription = "";
     public bool isIncluding = true; // 순화되는 패턴 목록에 포함할건가?
 
     [Header("[ Actions ]")]
