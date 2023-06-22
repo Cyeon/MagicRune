@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 public enum IncreaseMode
 {
@@ -71,7 +73,7 @@ public class DistracotrFuncList : MonoBehaviour
 
     public void RandomBattleEnemy()
     {
-        Enemy enemy = Managers.Map.CurrentChapter. GetEnemy();
+        Enemy enemy = Managers.Map.CurrentChapter.GetEnemy();
         enemy.isEnter = false;
         Managers.Enemy.AddEnemy(enemy);
         Managers.Scene.LoadScene(Define.Scene.DialScene);
@@ -85,8 +87,28 @@ public class DistracotrFuncList : MonoBehaviour
         EventManager<BaseRune>.TriggerEvent(Define.SELECT_RUNE_EVENT, baseRune);
     }
 
+    public void RandomRuneDelete()
+    {
+        BaseRune baseRune = Managers.Deck.GetRandomRune();
+        Managers.Deck.RemoveDeck(baseRune);
+
+        EventManager<BaseRune>.TriggerEvent(Define.SELECT_RUNE_EVENT, baseRune);
+    }
+
     public void DeleteRune()
     {
         EventManager<RuneSelectMode>.TriggerEvent(Define.RUNE_EVENT_SETTING, RuneSelectMode.Delete);
+    }
+
+    public void EnhanceRune()
+    {
+        EventManager<RuneSelectMode>.TriggerEvent(Define.RUNE_EVENT_SETTING, RuneSelectMode.Enhance);
+    }
+
+    public void AddRandomGold(string range)
+    {
+        string[] ranges = range.Split('~', StringSplitOptions.RemoveEmptyEntries);
+        int amount = Random.Range(Convert.ToInt32(ranges[0]), Convert.ToInt32(ranges[1]));
+        Managers.Gold.AddGold(amount);
     }
 }

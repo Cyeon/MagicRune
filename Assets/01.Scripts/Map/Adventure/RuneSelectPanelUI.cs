@@ -10,7 +10,7 @@ public enum RuneSelectMode
     None, // Default
     Delete, // 선택 룬 삭제
     Copy, // 선택 룬 복제 
-    Enforce // 선택 룬 강화 
+    Enhance // 선택 룬 강화 
 }
 /// <summary>
 /// Scroll View안에 들어갈 개벌 룬 Panel에 붙어 있는 스크립트
@@ -75,8 +75,8 @@ public class RuneSelectPanelUI : MonoBehaviour, IPointerClickHandler
             case RuneSelectMode.Copy:
                 Managers.Deck.AddRune(Managers.Rune.GetRune(_baseRune));
                 break;
-            case RuneSelectMode.Enforce:
-                //강화하는 거 생기면 그거 함수 넣어주면 됨  
+            case RuneSelectMode.Enhance:
+                _baseRune.Enhance();
                 break;
             case RuneSelectMode.None:
             default:
