@@ -1,9 +1,10 @@
+using MyBox;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum KeywordType
+public enum KeywordName
 {
     None,
     Charge, // 충전
@@ -19,19 +20,32 @@ public enum KeywordType
     SelfGeneration // 자가발전
 }
 
+public enum KeywardType
+{
+    Status,
+    Noraml
+}
+
 [Serializable]
 public class Keyward
 {
     public string KeywardName;
-    public KeywordType TypeName;
-    [TextArea(1, 10)]
-    public string KeywardDescription;
+    public KeywordName TypeName;
+    public KeywardType KeywardType;
+
+    [ConditionalField(nameof(KeywardType), false, KeywardType.Noraml)]
     public bool IsAddDesc = false;
+    [ConditionalField(nameof(KeywardType), false, KeywardType.Noraml)]
+    public string KeywardDescription;
+
+    [ConditionalField(nameof(KeywardType), false, KeywardType.Status)]
+    public StatusName KeywardStatus;
 
     public Keyward()
     {
         KeywardName = "";
-        TypeName = KeywordType.None;
+        TypeName = KeywordName.None;
+        KeywardType = KeywardType.Status;
         KeywardDescription = "";
     }
 }

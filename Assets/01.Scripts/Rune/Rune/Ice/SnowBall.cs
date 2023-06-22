@@ -11,7 +11,7 @@ public class SnowBall : BaseRune
     }
     public override void AbilityAction()
     {
-        Managers.GetPlayer().Attack(GetAbliltiValue(EffectType.Attack), IsIncludeKeyword(KeywordType.Penetration));
+        Managers.GetPlayer().Attack(GetAbliltiValue(EffectType.Attack), IsIncludeKeyword(KeywordName.Penetration));
         BattleManager.Instance.Enemy.StatusManager.AddStatus(StatusName.Chilliness, 2);
     }
 
