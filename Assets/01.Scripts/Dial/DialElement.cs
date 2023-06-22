@@ -94,6 +94,14 @@ public class DialElement<T1, T2> : MonoBehaviour where T1 : MonoBehaviour where 
         }
     }
 
+    public bool IsRotate
+    {
+        get
+        {
+            return ((int)transform.eulerAngles.z % (int)(360f / _elementList.Count)) != 0;
+        }
+    }
+
     protected virtual bool _isAttackCondition { get; } = true;
     protected virtual bool _isRotateAdditionalCondition { get; } = true;
 
@@ -167,7 +175,7 @@ public class DialElement<T1, T2> : MonoBehaviour where T1 : MonoBehaviour where 
 
         //RotateMagicCircle();
 
-        if (_isTouchDown == true && _isUsingLineSwap == true)
+        if (_isTouchDown == true && _isUsingLineSwap == true && IsRotate == false)
         {
             _touchDownTimer += Time.deltaTime;
 

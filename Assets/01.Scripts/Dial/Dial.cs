@@ -220,13 +220,24 @@ public class Dial<T1, T2> : MonoBehaviour where T1 : MonoBehaviour where T2 : cl
         _dialElementList[dialFLine]?.SetRuneList(_elementDict[fLine]);
         _dialElementList[dialSLine]?.SetRuneList(_elementDict[sLine]);
 
+        _dialElementList[dialFLine].transform.rotation = _dialElementList[dialSLine].transform.rotation;
+        Quaternion rot = _dialElementList[dialFLine].transform.rotation;
+        _dialElementList[dialSLine].transform.rotation = rot;
+
+        //T1 rune = _dialElementList[dialFLine].SelectElement;
+        //_dialElementList[dialFLine].SelectElement = _dialElementList[dialSLine].SelectElement;
+        //_dialElementList[dialSLine].SelectElement = rune;
+
         float offset = _lineDistanceArray[dialFLine] / _lineDistanceArray[dialSLine];
         for (int i = 0; i < _dialElementList[dialFLine].ElementList.Count; i++)
         {
             if (_dialElementList[dialFLine] != null && _dialElementList[dialFLine].ElementList[i] != null)
             {
-                _dialElementList[dialFLine].ElementList[i].transform.localScale = new Vector3(0.1f, 0.1f, 1f);
                 _dialElementList[dialFLine].ElementList[i].transform.SetParent(_dialElementList[dialFLine].transform);
+                _dialElementList[dialFLine].ElementList[i].transform.localScale = new Vector3(0.1f, 0.1f, 1f);
+                _dialElementList[dialFLine].ElementList[i].transform.DOComplete();
+                
+                _dialElementList[dialFLine].ElementList[i].transform.DOLocalMove(_dialElementList[dialFLine].ElementList[i].transform.localPosition * offset, 0.2f);
             }
         }
 
@@ -235,30 +246,30 @@ public class Dial<T1, T2> : MonoBehaviour where T1 : MonoBehaviour where T2 : cl
         {
             if (_dialElementList[dialSLine] != null && _dialElementList[dialSLine].ElementList[i] != null)
             {
-                _dialElementList[dialSLine].ElementList[i].transform.localScale = new Vector3(0.1f, 0.1f, 1f);
                 _dialElementList[dialSLine].ElementList[i].transform.SetParent(_dialElementList[dialSLine].transform);
+                _dialElementList[dialSLine].ElementList[i].transform.localScale = new Vector3(0.1f, 0.1f, 1f);
+                _dialElementList[dialSLine].ElementList[i].transform.DOComplete();
+                _dialElementList[dialSLine].ElementList[i].transform.DOLocalMove(_dialElementList[dialSLine].ElementList[i].transform.localPosition * offset, 0.2f);
             }
         }
 
-        for (int i = 0; i < _dialElementList.Count; i++)
-        {
-            _dialElementList[i].transform.rotation = Quaternion.Euler(Vector3.zero);
-        }
+
+        //RuneSort(true);
+
+        //for (int i = 0; i < _dialElementList.Count; i++)
+        //{
+        //    _dialElementList[i].transform.rotation = Quaternion.Euler(Vector3.zero);
+        //}
 
         //for (int i = 1; i <= 3; i++)
         //{
         //    RuneLineMove(i, true);
         //}
-        RuneSort(true);
 
         for (int i = 0; i < _dialElementList.Count; i++)
         {
-            _dialElementList[i].SelectElement = _dialElementList[i].SelectElement;
+            _dialElementList[i].SelectElement = null;
         }
-
-        //T1 rune = _dialElementList[dialFLine].SelectElement;
-        //_dialElementList[dialFLine].SelectElement = _dialElementList[dialSLine].SelectElement;
-        //_dialElementList[dialSLine].SelectElement = rune;
     }
 
     public float GetAngleRadian(float dx, float dy)
@@ -369,7 +380,7 @@ public class Dial<T1, T2> : MonoBehaviour where T1 : MonoBehaviour where T2 : cl
                 float width = Mathf.Cos(radianValue * Mathf.Deg2Rad) * _lineDistanceArray[3 - line];
                 if (isTween)
                 {
-                    _elementDict[line][i]?.transform.DOKill();
+                    _elementDict[line][i]?.transform.DOComplete();
                     _elementDict[line][i]?.transform.DOMove(new Vector3(width + this.transform.position.x, height + this.transform.position.y, 0), tweenDuration).OnComplete(() =>
                     {
                         for (int i = 0; i < _dialElementList.Count; i++)
