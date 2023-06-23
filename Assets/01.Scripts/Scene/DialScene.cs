@@ -87,6 +87,9 @@ public class DialScene : BaseScene
         _userInfoUI.UpdateHealthText();
         _userInfoUI.UpdateGoldText();
 
+        Managers.Gold.UpdateGoldAction -= _userInfoUI.UpdateGoldText;
+        Managers.Gold.UpdateGoldAction += _userInfoUI.UpdateGoldText;
+
         _goldPopupText = Managers.UI.Get<TextMeshProUGUI>("GoldPopupText");
 
         Managers.GetPlayer().userInfoUI = _userInfoUI;
