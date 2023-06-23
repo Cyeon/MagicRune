@@ -60,7 +60,7 @@ public class Status : MonoBehaviour
 
     [Header("Type")]
     public StatusType type = StatusType.Stack;
-    private int _typeValue = 0;
+    private int _typeValue = 0; 
     public int TypeValue => _typeValue;
     [ConditionalField(nameof(type), false, StatusType.Stack)]
     public bool isTurnRemove = false;

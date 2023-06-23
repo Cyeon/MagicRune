@@ -145,7 +145,7 @@ public class RuneDial : Dial<BaseRuneUI, BaseRune>
                 BaseRune rune = _usingDeck.Find(x => x == _dialElementList[i].SelectElement.Rune);
                 _usingDeck.Remove(rune);
 
-                if (rune.IsIncludeKeyword(KeywordType.Consume))
+                if (rune.IsIncludeKeyword(KeywordName.Consume))
                 {
                     _consumeDeck.Add(rune);
                 }

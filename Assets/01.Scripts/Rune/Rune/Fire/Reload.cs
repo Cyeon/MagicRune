@@ -14,18 +14,18 @@ public class Reload : BaseRune
     public override void Enhance()
     {
         base.Enhance();
-        if (_keywordList.Contains(KeywordType.Consume))
+        if (_keywordList.Contains(KeywordName.Consume))
         {
-            _keywordList.Remove(KeywordType.Consume);
+            _keywordList.Remove(KeywordName.Consume);
         }
     }
 
     public override void UnEnhance()
     {
         base.UnEnhance();
-        if (_keywordList.Contains(KeywordType.Consume) == false)
+        if (_keywordList.Contains(KeywordName.Consume) == false)
         {
-            _keywordList.Add(KeywordType.Consume);
+            _keywordList.Add(KeywordName.Consume);
         }
     }
 

@@ -34,7 +34,7 @@ public class MapManager
     public List<StageType> CurrentPeriodStageList => _currentPeriodStageList;
 
     private int _periodProgress = 0; // ??ш끽維??癲ル슣???몄춿??
-    private int _nextCondition = 4; // ???源낆쓱 ??影?됀嚥?肉???筌뚯슦苑??좊읈????釉뚰???쨨?????읐??? ??좊즵獒??
+    private int _nextCondition = 7; // 전반/후반부 전환 되려면 몇 개의 스테이지를 클리어 해야하는지 
 
     private PeriodType _periodType = PeriodType.None;
     public PeriodType CurrentPeriodType => _periodType;
@@ -144,8 +144,11 @@ public class MapManager
         _firstPeriodStageList.Add(StageType.Attack);
         _firstPeriodStageList.Add(StageType.Attack);
         _firstPeriodStageList.Add(StageType.Attack);
+        _firstPeriodStageList.Add(StageType.Attack); // 나중에 엘리트 방으로 변경 
         _firstPeriodStageList.Add(StageType.Adventure);
         _firstPeriodStageList.Add(StageType.Adventure);
+        _firstPeriodStageList.Add(StageType.Adventure);
+        _firstPeriodStageList.Add(StageType.Rest);
 
         if (IsFiftyChance())
         {
@@ -170,10 +173,13 @@ public class MapManager
         _secondPeriodStageList.Add(StageType.Attack);
         _secondPeriodStageList.Add(StageType.Attack);
         _secondPeriodStageList.Add(StageType.Attack);
+        _secondPeriodStageList.Add(StageType.Attack); // 나중에 엘리트 방으로 변경
         _secondPeriodStageList.Add(StageType.Adventure);
         _secondPeriodStageList.Add(StageType.Adventure);
-        
-        if(!_firstPeriodStageList.Contains(StageType.Rest) && !_firstPeriodStageList.Contains(StageType.Shop))
+        _secondPeriodStageList.Add(StageType.Adventure);
+        _secondPeriodStageList.Add(StageType.Rest);
+
+        if (!_firstPeriodStageList.Contains(StageType.Rest) && !_firstPeriodStageList.Contains(StageType.Shop))
         {
             _secondPeriodStageList.Add(StageType.Rest);
             _secondPeriodStageList.Add(StageType.Shop);

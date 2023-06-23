@@ -63,7 +63,7 @@ public class BaseRuneSO : ScriptableObject
     public List<AbilityValue> AbilityList;
     public List<AbilityValue> EnhancedAbilityList;
 
-    public KeywordType[] KeywardList;
+    public KeywordName[] KeywardList;
 
     public string GetAbillityValue(EffectType type, int index = 0, bool isEnhance = false)
     {
