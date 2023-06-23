@@ -54,18 +54,23 @@ public class DistracotrFuncList : MonoBehaviour
             Managers.GetPlayer().AddHP(amount);
         else if (increaseMode == IncreaseMode.Percent)
             Managers.GetPlayer().AddHPPercent(amount);
+
+        //GameObject effect = Managers.Resource.Instantiate("Effects/HealthParticle", Managers.Canvas.GetCanvas("AdventureCanvas").transform);
+        //effect.transform.localScale = Vector3.one;
+        //effect.transform.GetComponent<RectTransform>().anchoredPosition3D = Vector3.zero;
+        Managers.Sound.PlaySound("SFX/Healing", SoundType.Effect);
     }
 
     public void AddHPOfAmout(int amount)
     {
         increaseMode = IncreaseMode.Amount;
-        Managers.GetPlayer().AddHP(amount);
+        AddHp(amount);
     }
 
     public void AddHPOfPercent(int percet)
     {
         increaseMode = IncreaseMode.Percent;
-        Managers.GetPlayer().AddHPPercent(percet);
+        AddHp(percet);
     }
 
     public void AddMaxHp(int amount)
