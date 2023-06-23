@@ -2,31 +2,47 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
-public class PatternPopup : MonoBehaviour
+public class PatternPopup : MonoBehaviour, IPointerUpHandler, IPointerDownHandler
 {
     bool _isPoup = false;
     [SerializeField] private GameObject _patternPopupObj;
 
-    private TextMeshPro _patternNameText;
-    private TextMeshPro _patternDescText;
+    private TextMeshProUGUI _patternNameText;
+    private TextMeshProUGUI _patternDescText;
 
     private void Awake()
     {
-        _patternNameText = _patternPopupObj.transform.Find("NameText").GetComponent<TextMeshPro>();
-        _patternDescText = _patternPopupObj.transform.Find("DescText").GetComponent<TextMeshPro>();
+        _patternNameText = _patternPopupObj.transform.Find("NameText").GetComponent<TextMeshProUGUI>();
+        _patternDescText = _patternPopupObj.transform.Find("DescText").GetComponent<TextMeshProUGUI>();
     }
 
-    public void Popup()
+    private void Start()
     {
-        _isPoup = !_isPoup;
+        _patternPopupObj.SetActive(false);
+    }
+
+    public void Popup(bool active)
+    {
+        _isPoup = active;
         _patternPopupObj.SetActive(_isPoup);
 
-        if(_isPoup)
+        if (_isPoup)
         {
-            Pattern pattern = transform.parent.parent.GetComponent<Enemy>().PatternManager.CurrentPattern;
+            Pattern pattern = BattleManager.Instance.Enemy.PatternManager.CurrentPattern;
             _patternNameText.text = pattern.name;
             _patternDescText.text = pattern.PatternDescription;
         }
+    }
+
+    public void OnPointerUp(PointerEventData eventData)
+    {
+        Popup(false);
+    }
+
+    public void OnPointerDown(PointerEventData eventData)
+    {
+        Popup(true);
     }
 }
