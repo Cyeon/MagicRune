@@ -2,6 +2,7 @@ using MyBox;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -20,49 +21,61 @@ public class EnhancePanel : MonoBehaviour
 
     private RestUI _restUI;
 
+    [SerializeField]
+    private Button _enhanceBtn;
+    [SerializeField]
+    private Button _exitBtn;
+
     private void OnEnable()
     {
         _beforeRune.SetUI(null, false, false);
         _afterRune.SetUI(null, false, false);
+
+        _restUI = Managers.Canvas.GetCanvas("Rest").GetComponent<RestUI>();
+
+        _enhanceBtn.onClick.RemoveAllListeners();
+        _enhanceBtn.onClick.AddListener(() =>
+        {
+            StartCoroutine(EnhanceCoroutine());
+        });
+        _exitBtn.onClick.RemoveAllListeners();
+        _exitBtn.onClick.AddListener(() =>
+        {
+            _selectRune = null;
+
+            //_restUI.SetActiveExplainPanel(true);
+            //_restUI.SetActiveEnhancePanel(false);
+            //_restUI.Dial.gameObject.SetActive(true);
+            //_restUI.NextStage();
+
+            //Managers.Map.NextStage();
+            Managers.Resource.Destroy(this.gameObject);
+        });
     }
 
     void Start()
     {
-        _restUI = Managers.Canvas.GetCanvas("Rest").GetComponent<RestUI>();
-
-        Managers.UI.Bind<Button>("EnhanceBtn", this.gameObject);
-        Managers.UI.Bind<Button>("ExitBtn", this.gameObject);
-
-        Managers.UI.Get<Button>("EnhanceBtn").onClick.AddListener(() =>
-        {
-            StartCoroutine(EnhanceCoroutine());
-        });
-        Managers.UI.Get<Button>("ExitBtn").onClick.AddListener(() =>
-        {
-            _selectRune = null;
-
-            _restUI.SetActiveExplainPanel(true);
-            _restUI.SetActiveEnhancePanel(false);
-            _restUI.Dial.gameObject.SetActive(true);
-            _restUI.NextStage();
-        });
+       
     }
 
     public IEnumerator EnhanceCoroutine()
     {
+        if (_selectRune == null) yield break;
+
         // 강화 이펙트 생성
         // 이펙트 시간뒤에 강화하기
         yield return new WaitForSeconds(1f);
 
         _selectRune.Enhance();
         _selectRune = null;
-        
+
         // 화면 터치하면 다음 스테이지로
 
         //_restUI.SetActiveExplainPanel(true);
         //_restUI.SetActiveEnhancePanel(false);
         //_restUI.Dial.gameObject.SetActive(true);
-        _restUI.NextStage();
+
+        //Managers.Map.NextStage();
         Managers.Resource.Destroy(this.gameObject);
     }
 

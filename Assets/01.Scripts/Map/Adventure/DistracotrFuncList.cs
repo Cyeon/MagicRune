@@ -119,7 +119,8 @@ public class DistracotrFuncList : MonoBehaviour
 
     public void EnhanceRunePanel()
     {
-        Managers.Resource.Instantiate("UI/EnhancePanel", Managers.Canvas.GetCanvas("AdventureCanvas").transform);
+        EnhancePanel panel = Managers.Resource.Instantiate("UI/EnhancePanel", Managers.Canvas.GetCanvas("AdventureCanvas").transform).GetComponent<EnhancePanel>();
+        panel.CreateRune();
     }
 
     public void AddRandomGold(string range)
