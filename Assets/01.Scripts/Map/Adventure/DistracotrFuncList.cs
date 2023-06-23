@@ -56,6 +56,18 @@ public class DistracotrFuncList : MonoBehaviour
             Managers.GetPlayer().AddHPPercent(amount);
     }
 
+    public void AddHPOfAmout(int amount)
+    {
+        increaseMode = IncreaseMode.Amount;
+        Managers.GetPlayer().AddHP(amount);
+    }
+
+    public void AddHPOfPercent(int percet)
+    {
+        increaseMode = IncreaseMode.Percent;
+        Managers.GetPlayer().AddHPPercent(percet);
+    }
+
     public void AddMaxHp(int amount)
     {
         Managers.GetPlayer().AddMaxHp(amount);
@@ -103,6 +115,11 @@ public class DistracotrFuncList : MonoBehaviour
     public void EnhanceRune()
     {
         EventManager<RuneSelectMode>.TriggerEvent(Define.RUNE_EVENT_SETTING, RuneSelectMode.Enhance);
+    }
+
+    public void EnhanceRunePanel()
+    {
+        Managers.Resource.Instantiate("UI/EnhancePanel", Managers.Canvas.GetCanvas("AdventureCanvas").transform);
     }
 
     public void AddRandomGold(string range)

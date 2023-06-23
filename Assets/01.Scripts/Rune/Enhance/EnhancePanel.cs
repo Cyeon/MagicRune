@@ -59,16 +59,15 @@ public class EnhancePanel : MonoBehaviour
         
         // 화면 터치하면 다음 스테이지로
 
-        _restUI.SetActiveExplainPanel(true);
-        _restUI.SetActiveEnhancePanel(false);
-        _restUI.Dial.gameObject.SetActive(true);
+        //_restUI.SetActiveExplainPanel(true);
+        //_restUI.SetActiveEnhancePanel(false);
+        //_restUI.Dial.gameObject.SetActive(true);
         _restUI.NextStage();
+        Managers.Resource.Destroy(this.gameObject);
     }
 
     public void CreateRune()
     {
-        Debug.Log("Create Rune!");
-
         Clear();
 
         BaseRune[] notEnhanceRuneArray = Managers.Deck.Deck.Where(x => x.IsEnhanced == false && x.IsIncludeKeyword(KeywordName.CantEnhance) == false).ToArray();

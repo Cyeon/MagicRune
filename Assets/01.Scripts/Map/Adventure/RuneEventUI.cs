@@ -92,7 +92,7 @@ public class RuneEventUI : MonoBehaviour
 
         foreach (BaseRune rune in Managers.Deck.Deck)
         {
-            RuneSelectPanelUI selectPanel = Managers.Pool.Pop(_runePanelTemplate).GetComponent<RuneSelectPanelUI>();
+            RuneSelectPanelUI selectPanel = Managers.Resource.Instantiate(_runePanelTemplate).GetComponent<RuneSelectPanelUI>();
 
             if (selectPanel != null)
             {
@@ -116,7 +116,7 @@ public class RuneEventUI : MonoBehaviour
     {
         for (int i = 0; i < _runePanelList.Count; i++)
         {
-            Managers.Pool.Push(_runePanelList[i].GetComponent<Poolable>());
+            Managers.Resource.Destroy(_runePanelList[i]);
         }
 
         _runePanelList.Clear();
