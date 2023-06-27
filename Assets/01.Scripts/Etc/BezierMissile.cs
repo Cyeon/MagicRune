@@ -52,25 +52,25 @@ public class BezierMissile : MonoBehaviour
 
         m_speed = _speed;
 
-        // ³¡¿¡ µµÂøÇÒ ½Ã°£À» ·£´ıÀ¸·Î ÁÜ.
+        // ëì— ë„ì°©í•  ì‹œê°„ì„ ëœë¤ìœ¼ë¡œ ì¤Œ.
         m_timerMax = Random.Range(0.8f, 1.0f);
 
-        // ½ÃÀÛ ÁöÁ¡.
+        // ì‹œì‘ ì§€ì .
         m_points[0] = _startTr.position;
 
-        // ½ÃÀÛ ÁöÁ¡À» ±âÁØÀ¸·Î ·£´ı Æ÷ÀÎÆ® ÁöÁ¤.
+        // ì‹œì‘ ì§€ì ì„ ê¸°ì¤€ìœ¼ë¡œ ëœë¤ í¬ì¸íŠ¸ ì§€ì •.
         m_points[1] = _startTr.position +
-            (_newPointDistanceFromStartTr * Random.Range(-1.0f, 1.0f) * _startTr.right) + // X (ÁÂ, ¿ì ÀüÃ¼)
-            (_newPointDistanceFromStartTr * Random.Range(-0.15f, 1.0f) * _startTr.up);  // Y (¾Æ·¡ÂÊ Á¶±İ, À§ÂÊ ÀüÃ¼)
-            //(_newPointDistanceFromStartTr * Random.Range(-1.0f, -0.8f) * _startTr.forward); // Z (µÚ ÂÊ¸¸)
+            (_newPointDistanceFromStartTr * Random.Range(-1.0f, 1.0f) * _startTr.right) + // X (ì¢Œ, ìš° ì „ì²´)
+            (_newPointDistanceFromStartTr * Random.Range(-0.15f, 1.0f) * _startTr.up);  // Y (ì•„ë˜ìª½ ì¡°ê¸ˆ, ìœ„ìª½ ì „ì²´)
+            //(_newPointDistanceFromStartTr * Random.Range(-1.0f, -0.8f) * _startTr.forward); // Z (ë’¤ ìª½ë§Œ)
 
-        // µµÂø ÁöÁ¡À» ±âÁØÀ¸·Î ·£´ı Æ÷ÀÎÆ® ÁöÁ¤.
+        // ë„ì°© ì§€ì ì„ ê¸°ì¤€ìœ¼ë¡œ ëœë¤ í¬ì¸íŠ¸ ì§€ì •.
         m_points[2] = _endTr.position +
-            (_newPointDistanceFromEndTr * Random.Range(-1.0f, 1.0f) * _endTr.right) + // X (ÁÂ, ¿ì ÀüÃ¼)
-            (_newPointDistanceFromEndTr * Random.Range(-1.0f, 1.0f) * _endTr.up); // Y (À§, ¾Æ·¡ ÀüÃ¼)
-            //(_newPointDistanceFromEndTr * Random.Range(0.8f, 1.0f) * _endTr.forward); // Z (¾Õ ÂÊ¸¸)
+            (_newPointDistanceFromEndTr * Random.Range(-1.0f, 1.0f) * _endTr.right) + // X (ì¢Œ, ìš° ì „ì²´)
+            (_newPointDistanceFromEndTr * Random.Range(-1.0f, 1.0f) * _endTr.up); // Y (ìœ„, ì•„ë˜ ì „ì²´)
+            //(_newPointDistanceFromEndTr * Random.Range(0.8f, 1.0f) * _endTr.forward); // Z (ì• ìª½ë§Œ)
 
-        // µµÂø ÁöÁ¡.
+        // ë„ì°© ì§€ì .
         m_points[3] = _endTr.position;
 
         _transform.position = _startTr.position;
@@ -89,25 +89,25 @@ public class BezierMissile : MonoBehaviour
 
         m_speed = _speed;
 
-        // ³¡¿¡ µµÂøÇÒ ½Ã°£À» ·£´ıÀ¸·Î ÁÜ.
+        // ëì— ë„ì°©í•  ì‹œê°„ì„ ëœë¤ìœ¼ë¡œ ì¤Œ.
         m_timerMax = Random.Range(0.8f, 1.0f);
 
-        // ½ÃÀÛ ÁöÁ¡.
+        // ì‹œì‘ ì§€ì .
         m_points[0] = _startTr;
 
-        // ½ÃÀÛ ÁöÁ¡À» ±âÁØÀ¸·Î ·£´ı Æ÷ÀÎÆ® ÁöÁ¤.
+        // ì‹œì‘ ì§€ì ì„ ê¸°ì¤€ìœ¼ë¡œ ëœë¤ í¬ì¸íŠ¸ ì§€ì •.
         m_points[1] = _startTr +
-            (_newPointDistanceFromStartTr * Random.Range(-1.0f, 1.0f) * new Vector2(_startTr.x, 0)) + // X (ÁÂ, ¿ì ÀüÃ¼)
-            (_newPointDistanceFromStartTr * Random.Range(-0.15f, 1.0f) * new Vector2(0, _startTr.y));  // Y (¾Æ·¡ÂÊ Á¶±İ, À§ÂÊ ÀüÃ¼)
-                                                                                        //(_newPointDistanceFromStartTr * Random.Range(-1.0f, -0.8f) * _startTr.forward); // Z (µÚ ÂÊ¸¸)
+            (_newPointDistanceFromStartTr * Random.Range(-1.0f, 1.0f) * new Vector2(_startTr.x, 0)) + // X (ì¢Œ, ìš° ì „ì²´)
+            (_newPointDistanceFromStartTr * Random.Range(-0.15f, 1.0f) * new Vector2(0, _startTr.y));  // Y (ì•„ë˜ìª½ ì¡°ê¸ˆ, ìœ„ìª½ ì „ì²´)
+                                                                                        //(_newPointDistanceFromStartTr * Random.Range(-1.0f, -0.8f) * _startTr.forward); // Z (ë’¤ ìª½ë§Œ)
 
-        // µµÂø ÁöÁ¡À» ±âÁØÀ¸·Î ·£´ı Æ÷ÀÎÆ® ÁöÁ¤.
+        // ë„ì°© ì§€ì ì„ ê¸°ì¤€ìœ¼ë¡œ ëœë¤ í¬ì¸íŠ¸ ì§€ì •.
         m_points[2] = _endTr +
-            (_newPointDistanceFromEndTr * Random.Range(-1.0f, 1.0f) * new Vector2(_endTr.x, 0)) + // X (ÁÂ, ¿ì ÀüÃ¼)
-            (_newPointDistanceFromEndTr * Random.Range(-1.0f, 1.0f) * new Vector2(0, _endTr.y)); // Y (À§, ¾Æ·¡ ÀüÃ¼)
-                                                                                  //(_newPointDistanceFromEndTr * Random.Range(0.8f, 1.0f) * _endTr.forward); // Z (¾Õ ÂÊ¸¸)
+            (_newPointDistanceFromEndTr * Random.Range(-1.0f, 1.0f) * new Vector2(_endTr.x, 0)) + // X (ì¢Œ, ìš° ì „ì²´)
+            (_newPointDistanceFromEndTr * Random.Range(-1.0f, 1.0f) * new Vector2(0, _endTr.y)); // Y (ìœ„, ì•„ë˜ ì „ì²´)
+                                                                                  //(_newPointDistanceFromEndTr * Random.Range(0.8f, 1.0f) * _endTr.forward); // Z (ì• ìª½ë§Œ)
 
-        // µµÂø ÁöÁ¡.
+        // ë„ì°© ì§€ì .
         m_points[3] = _endTr;
 
         _transform.position = _startTr;
@@ -120,7 +120,7 @@ public class BezierMissile : MonoBehaviour
         m_timerCurrent = 0f;
         m_speed = _speed;
 
-        // ³¡¿¡ µµÂøÇÒ ½Ã°£À» ·£´ıÀ¸·Î ÁÜ.
+        // ëì— ë„ì°©í•  ì‹œê°„ì„ ëœë¤ìœ¼ë¡œ ì¤Œ.
         m_timerMax = Random.Range(0.8f, 1.0f);
 
         m_points[0] = p1;
@@ -189,50 +189,50 @@ public class BezierMissile : MonoBehaviour
             return;
         }
 
-        // °æ°ú ½Ã°£ °è»ê.
+        // ê²½ê³¼ ì‹œê°„ ê³„ì‚°.
         m_timerCurrent += Time.deltaTime * m_speed;
 
-        // º£Áö¾î °î¼±À¸·Î X,Y,Z ÁÂÇ¥ ¾ò±â.
+        // ë² ì§€ì–´ ê³¡ì„ ìœ¼ë¡œ X,Y,Z ì¢Œí‘œ ì–»ê¸°.
         _transform.position = new Vector2(
             CubicBezierCurve(m_points[0].x, m_points[1].x, m_points[2].x, m_points[3].x),
             CubicBezierCurve(m_points[0].y, m_points[1].y, m_points[2].y, m_points[3].y)
             //CubicBezierCurve(m_points[0].z, m_points[1].z, m_points[2].z, m_points[3].z)
         );
 
-        // µµÂøÇÑ°ÅÀÓ
+        // ë„ì°©í•œê±°ì„
         if((Vector2)_transform.position == m_points[3])
         {
             Managers.Resource.Destroy(_effect);
             _effect = null;
 
             _goldGiveAction?.Invoke();
-            // ÇÚµ¿ÇÏ°í
-            if(BattleManager.Instance.Enemy.IsDie == false)
-            {
-                _endAction?.Invoke();
-            }
+            // í•¸ë™í•˜ê³ 
+            //if(BattleManager.Instance.Enemy.IsDie == false)
+            //{
+            //}
+            _endAction?.Invoke();
 
             m_timerCurrent = 0;
-            // Ç®¸µ
+            // í’€ë§
             BattleManager.Instance.MissileAttackEnd();
             Managers.Resource.Destroy(this.gameObject);
         }
     }
 
     /// <summary>
-    /// 3Â÷ º£Áö¾î °î¼±.
+    /// 3ì°¨ ë² ì§€ì–´ ê³¡ì„ .
     /// </summary>
-    /// <param name="start">½ÃÀÛ À§Ä¡</param>
-    /// <param name="startOffset">½ÃÀÛ À§Ä¡¿¡¼­ ¾ó¸¶³ª ²ªÀÏ Áö Á¤ÇÏ´Â À§Ä¡</param>
-    /// <param name="endOffset">µµÂø À§Ä¡¿¡¼­ ¾ó¸¶³ª ²ªÀÏ Áö Á¤ÇÏ´Â À§Ä¡</param>
-    /// <param name="end">µµÂø À§Ä¡</param>
+    /// <param name="start">ì‹œì‘ ìœ„ì¹˜</param>
+    /// <param name="startOffset">ì‹œì‘ ìœ„ì¹˜ì—ì„œ ì–¼ë§ˆë‚˜ êº¾ì¼ ì§€ ì •í•˜ëŠ” ìœ„ì¹˜</param>
+    /// <param name="endOffset">ë„ì°© ìœ„ì¹˜ì—ì„œ ì–¼ë§ˆë‚˜ êº¾ì¼ ì§€ ì •í•˜ëŠ” ìœ„ì¹˜</param>
+    /// <param name="end">ë„ì°© ìœ„ì¹˜</param>
     /// <returns></returns>
     private float CubicBezierCurve(float start, float startOffset, float endOffset, float end)
     {
-        // (0~1)ÀÇ °ª¿¡ µû¶ó º£Áö¾î °î¼± °ªÀ» ±¸ÇÏ±â ¶§¹®¿¡, ºñÀ²¿¡ µû¸¥ ½Ã°£À» ±¸Çß´Ù.
-        float t = m_timerCurrent / m_timerMax; // (ÇöÀç °æ°ú ½Ã°£ / ÃÖ´ë ½Ã°£)
+        // (0~1)ì˜ ê°’ì— ë”°ë¼ ë² ì§€ì–´ ê³¡ì„  ê°’ì„ êµ¬í•˜ê¸° ë•Œë¬¸ì—, ë¹„ìœ¨ì— ë”°ë¥¸ ì‹œê°„ì„ êµ¬í–ˆë‹¤.
+        float t = m_timerCurrent / m_timerMax; // (í˜„ì¬ ê²½ê³¼ ì‹œê°„ / ìµœëŒ€ ì‹œê°„)
 
-        // ¹æÁ¤½Ä.
+        // ë°©ì •ì‹.
         /*
         return Mathf.Pow((1 - t), 3) * a
             + Mathf.Pow((1 - t), 2) * 3 * t * b
@@ -240,7 +240,7 @@ public class BezierMissile : MonoBehaviour
             + Mathf.Pow(t, 3) * d;
         */
 
-        // ÀÌÇØÇÑ´ë·Î ÆíÇÏ°Ô ¾²¸é.
+        // ì´í•´í•œëŒ€ë¡œ í¸í•˜ê²Œ ì“°ë©´.
         float startLerp = Mathf.Lerp(start, startOffset, t);
         float offsetLerp = Mathf.Lerp(startOffset, endOffset, t);
         float endLerp = Mathf.Lerp(endOffset, end, t);
