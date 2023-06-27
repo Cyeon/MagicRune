@@ -59,7 +59,7 @@ public class BattleManager : MonoSingleton<BattleManager>
         Player.OnDieEvent.RemoveAllListeners();
         Player.OnDieEvent.AddListener(() => { Define.DialScene?.RewardUI.DefeatPanelPopup(); });
 
-        if(Managers.Map.isTutorial)
+        if(Managers.Map.SaveData.IsTutorial)
         {
             TutorialUI ui = Managers.Canvas.GetCanvas("Tutorial").GetComponent<TutorialUI>();
             ui.Tutorial("AttackRule", 1);
@@ -68,7 +68,7 @@ public class BattleManager : MonoSingleton<BattleManager>
             Enemy.OnDieEvent.AddListener(() =>
             {
                 ui.Tutorial("RewardRule", 1);
-                Managers.Map.isTutorial = true;
+                Managers.Map.SaveData.IsTutorial = true;
             });
 
             _tutorialEndPanel = Managers.Canvas.GetCanvas("Popup").transform.Find("TutorialEndPanel").gameObject;
@@ -161,7 +161,7 @@ public class BattleManager : MonoSingleton<BattleManager>
                 }
 
                 _gameTurn = GameTurn.PlayerEnd;
-                if (Managers.Map.isTutorial) return;
+                if (Managers.Map.SaveData.IsTutorial) return;
 
                 Define.DialScene?.Turn("Enemy Turn");
                 break;
@@ -228,10 +228,10 @@ public class BattleManager : MonoSingleton<BattleManager>
     public void NextStage()
     {
         Managers.Reward.ResetRewardList();
-        if (Managers.Map.isTutorial)
+        if (Managers.Map.SaveData.IsTutorial)
         {
-            Managers.Map.isTutorial = false;
-            PlayerPrefs.SetInt("Tutorial", 0);
+            Managers.Map.SaveData.IsTutorial = false;
+            Managers.Json.SaveJson<SaveData>("SaveData", Managers.Map.SaveData);
             Managers.Map.ResetChapter();
             Define.DialScene?.HideChooseRuneUI();
             _tutorialEndPanel.SetActive(true);

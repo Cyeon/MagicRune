@@ -87,7 +87,7 @@ public class TutorialUI : MonoBehaviour
             {
                 TutorialEnd();
                 Define.DialScene?.Turn("Enemy Turn");
-                Managers.Map.isTutorial = false;
+                Managers.Map.SaveData.IsTutorial = false;
             }
             else
                 TutorialEnd();
