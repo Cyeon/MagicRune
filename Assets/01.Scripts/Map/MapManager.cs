@@ -73,7 +73,7 @@ public class MapManager
     }
 
     private bool _isFirst = true;
-    public bool isTutorial = true;
+    public SaveData SaveData;
 
     #region Adventure
     private bool _isAdventure = false;
@@ -98,7 +98,7 @@ public class MapManager
         Managers.Reward.ImageLoad();
         _mapSceneUI.ChapterTransition.Init();
 
-        isTutorial = Convert.ToBoolean(PlayerPrefs.GetInt("Tutorial", 1));
+        SaveData = Managers.Json.LoadJsonFile<SaveData>("SaveData");
         //isTutorial = true;
 
         if (_isFirst)
@@ -130,7 +130,7 @@ public class MapManager
 
         bool isAttack = false;
 
-        if(isTutorial)
+        if(SaveData.IsTutorial)
         {
             _firstPeriodStageList.Add(StageType.Tutorial);
             _firstPeriodStageList.Add(StageType.Tutorial);

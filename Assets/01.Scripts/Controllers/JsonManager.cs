@@ -4,6 +4,11 @@ using UnityEngine;
 using System.IO;
 using System.Text;
 
+public class SaveData
+{
+    public bool IsTutorial = true;
+}
+
 public class JsonManager
 {
     public class FileName

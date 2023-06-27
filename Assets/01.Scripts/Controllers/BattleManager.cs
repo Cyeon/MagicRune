@@ -1,9 +1,6 @@
 using DG.Tweening;
 using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Security.Cryptography;
-using System.Xml.Schema;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -31,6 +28,8 @@ public class BattleManager : MonoSingleton<BattleManager>
     [SerializeField]
     private AudioClip _turnChangeSound = null;
 
+    private GameObject _tutorialEndPanel;
+
     private void Start()
     {
         Managers.UI.Bind<Image>("Background", Managers.Canvas.GetCanvas("BG").gameObject);
@@ -57,7 +56,7 @@ public class BattleManager : MonoSingleton<BattleManager>
         Player.OnDieEvent.RemoveAllListeners();
         Player.OnDieEvent.AddListener(() => { Define.DialScene?.RewardUI.DefeatPanelPopup(); });
 
-        if(Managers.Map.isTutorial)
+        if(Managers.Map.SaveData.IsTutorial)
         {
             TutorialUI ui = Managers.Canvas.GetCanvas("Tutorial").GetComponent<TutorialUI>();
             ui.Tutorial("AttackRule", 1);
@@ -66,8 +65,11 @@ public class BattleManager : MonoSingleton<BattleManager>
             Enemy.OnDieEvent.AddListener(() =>
             {
                 ui.Tutorial("RewardRule", 1);
-                Managers.Map.isTutorial = true;
+                Managers.Map.SaveData.IsTutorial = true;
             });
+
+            _tutorialEndPanel = Managers.Canvas.GetCanvas("Popup").transform.Find("TutorialEndPanel").gameObject;
+            _tutorialEndPanel.SetActive(false);
             return;
         }
         TurnChange();
@@ -139,7 +141,7 @@ public class BattleManager : MonoSingleton<BattleManager>
                 Define.DialScene?.Turn("Player Turn");
                 _gameTurn = GameTurn.EnemyEnd;
                 Player.ResetShield();
-                Player.UpdateHealthUI();
+                //Player.UpdateHealthUI();
                 break;
 
             case GameTurn.Player:
@@ -156,7 +158,7 @@ public class BattleManager : MonoSingleton<BattleManager>
                 }
 
                 _gameTurn = GameTurn.PlayerEnd;
-                if (Managers.Map.isTutorial) return;
+                if (Managers.Map.SaveData.IsTutorial) return;
 
                 Define.DialScene?.Turn("Enemy Turn");
                 break;
@@ -223,12 +225,21 @@ public class BattleManager : MonoSingleton<BattleManager>
     public void NextStage()
     {
         Managers.Reward.ResetRewardList();
-        if (Managers.Map.isTutorial)
+        if (Managers.Map.SaveData.IsTutorial)
         {
-            Managers.Map.isTutorial = false;
-            PlayerPrefs.SetInt("Tutorial", 0);
+            Managers.Map.SaveData.IsTutorial = false;
+            Managers.Json.SaveJson<SaveData>("SaveData", Managers.Map.SaveData);
             Managers.Map.ResetChapter();
-            Managers.Scene.LoadScene(Define.Scene.LobbyScene);
+            Define.DialScene?.HideChooseRuneUI();
+
+            _tutorialEndPanel.SetActive(true);
+
+            Transform panelTrm = _tutorialEndPanel.transform.Find("Panel");
+            panelTrm.localScale = Vector3.zero;
+            Sequence seq = DOTween.Sequence();
+            seq.Append(panelTrm.DOScale(Vector3.one * 1.2f, 0.3f));
+            seq.Append(panelTrm.DOScale(Vector3.one, 0.1f));
+
             return;
         }
 
