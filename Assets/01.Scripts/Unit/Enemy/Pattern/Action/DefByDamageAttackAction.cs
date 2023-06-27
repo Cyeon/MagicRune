@@ -7,6 +7,7 @@ public class DefByDamageAttackAction : AttackAction
     public override void StartAction()
     {
         Enemy.PatternManager.CurrentPattern.desc = Mathf.FloorToInt(Enemy.Shield).ToString();
+        Enemy.PatternManager.UpdatePatternUI();
 
         base.StartAction();
     }
