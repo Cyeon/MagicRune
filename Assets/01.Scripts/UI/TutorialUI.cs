@@ -102,4 +102,9 @@ public class TutorialUI : MonoBehaviour
         Tutorial("DeckRule", _index);
         Managers.Canvas.GetCanvas("Main").enabled = true;
     }
+
+    public void LobbyScene()
+    {
+        Managers.Scene.LoadScene(Define.Scene.LobbyScene);
+    }
 }

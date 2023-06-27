@@ -31,6 +31,8 @@ public class BattleManager : MonoSingleton<BattleManager>
     [SerializeField]
     private AudioClip _turnChangeSound = null;
 
+    private GameObject _tutorialEndPanel;
+
     private void Start()
     {
         Managers.UI.Bind<Image>("Background", Managers.Canvas.GetCanvas("BG").gameObject);
@@ -68,6 +70,9 @@ public class BattleManager : MonoSingleton<BattleManager>
                 ui.Tutorial("RewardRule", 1);
                 Managers.Map.isTutorial = true;
             });
+
+            _tutorialEndPanel = Managers.Canvas.GetCanvas("Popup").transform.Find("TutorialEndPanel").gameObject;
+            _tutorialEndPanel.SetActive(false);
             return;
         }
         TurnChange();
@@ -228,7 +233,8 @@ public class BattleManager : MonoSingleton<BattleManager>
             Managers.Map.isTutorial = false;
             PlayerPrefs.SetInt("Tutorial", 0);
             Managers.Map.ResetChapter();
-            Managers.Scene.LoadScene(Define.Scene.LobbyScene);
+            Define.DialScene?.HideChooseRuneUI();
+            _tutorialEndPanel.SetActive(true);
             return;
         }
 
