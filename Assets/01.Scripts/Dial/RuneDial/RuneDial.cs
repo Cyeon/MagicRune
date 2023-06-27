@@ -123,6 +123,7 @@ public class RuneDial : Dial<BaseRuneUI, BaseRune>
 
     protected override IEnumerator AttackCoroutine()
     {
+        _isAttack = true;
         Managers.GetPlayer().PlayAnimation(Managers.GetPlayer().HashAttack);
         int outRuneIndex = -1;
         for(int i = 0; i < _dialElementList.Count; i++)
@@ -141,8 +142,8 @@ public class RuneDial : Dial<BaseRuneUI, BaseRune>
             if (_dialElementList[i].SelectElement != null)
             {
                 int index = i;
-                MagicCircleGlow(i, true);
-                BaseRune rune = _usingDeck.Find(x => x == _dialElementList[i].SelectElement.Rune);
+                MagicCircleGlow(index, true);
+                BaseRune rune = _usingDeck.Find(x => x == _dialElementList[index].SelectElement.Rune);
                 _usingDeck.Remove(rune);
 
                 if (rune.IsIncludeKeyword(KeywordName.Consume))
@@ -156,9 +157,9 @@ public class RuneDial : Dial<BaseRuneUI, BaseRune>
                 }
 
                 if (isResonanceCheck)
-                    isResonanceCheck = _dialElementList[i].SelectElement.Rune.BaseRuneSO.AttributeType == compareAttributeType;
+                    isResonanceCheck = _dialElementList[index].SelectElement.Rune.BaseRuneSO.AttributeType == compareAttributeType;
 
-                (_dialElementList[i] as RuneDialElement).EffectHandler.Attack(3 - index, () =>
+                (_dialElementList[index] as RuneDialElement).EffectHandler.Attack(3 - index, () =>
                 {
                     if (_dialElementList[index].SelectElement.Rune is VariableRune && index - 1 >= 0)
                     {
@@ -167,10 +168,11 @@ public class RuneDial : Dial<BaseRuneUI, BaseRune>
                     _dialElementList[index].Attack();
                     OnDialAttack?.Invoke();
 
-                    if (index == _dialElementList.Count - 1)
-                    {
-                        (_dialElementList[index] as RuneDialElement).EffectHandler.Clear();
-                    }
+                    //if (index == 0)
+                    //{
+                    //    (_dialElementList[index] as RuneDialElement).EffectHandler.Clear();
+                    //    _isAttack = false;
+                    //}
                 });
 
                 yield return new WaitForSeconds(0.1f);
@@ -181,6 +183,7 @@ public class RuneDial : Dial<BaseRuneUI, BaseRune>
         {
             _resonance.Invocation(compareAttributeType);
         }
+        //_isAttack = false;
     }
 
     public void AllMagicSetCoolTime()
