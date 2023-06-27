@@ -34,7 +34,7 @@ public class MapManager
     public List<StageType> CurrentPeriodStageList => _currentPeriodStageList;
 
     private int _periodProgress = 0; // ??ш끽維??癲ル슣???몄춿??
-    private int _nextCondition = 7; // 전반/후반부 전환 되려면 몇 개의 스테이지를 클리어 해야하는지 
+    private int _nextCondition = 1; // 전반/후반부 전환 되려면 몇 개의 스테이지를 클리어 해야하는지 
 
     private PeriodType _periodType = PeriodType.None;
     public PeriodType CurrentPeriodType => _periodType;
