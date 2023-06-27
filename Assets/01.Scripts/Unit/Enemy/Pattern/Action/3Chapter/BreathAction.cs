@@ -11,6 +11,7 @@ public class BreathAction : PatternAction
     {
         _damage = 50;
         Enemy.PatternManager.CurrentPattern.desc = _damage.ToString();
+        Enemy.PatternManager.UpdatePatternUI();
 
         Enemy.OnTakeDamage.AddListener(ReduceDamage);
         base.StartAction();

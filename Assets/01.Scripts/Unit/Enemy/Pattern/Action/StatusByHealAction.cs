@@ -7,9 +7,18 @@ public class StatusByHealAction : PatternAction
     [SerializeField] private StatusName _status;
     [SerializeField] private bool _isRemoveStack = true;
 
+    private int _value = 0;
+
+    private void Start()
+    {
+        _value = Enemy.StatusManager.GetStatusValue(_status) / 2;
+        Enemy.PatternManager.CurrentPattern.desc = _value.ToString();
+        Enemy.PatternManager.UpdatePatternUI();
+    }
+
     public override void TurnAction()
     {
-        Enemy.AddHP(Enemy.StatusManager.GetStatusValue(_status) / 2);
+        Enemy.AddHP(_value);
         if (_isRemoveStack)
             Enemy.StatusManager.DeleteStatus(_status);
 

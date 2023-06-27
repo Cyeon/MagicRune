@@ -11,7 +11,7 @@ public class TutorialStage : Stage
 
     public override void InStage()
     {
-        Managers.Enemy.AddEnemy(Resources.Load<Enemy>("Prefabs/Enemy/Ice/Ice_Turtle"));
+        Managers.Enemy.AddEnemy(Resources.Load<Enemy>("Prefabs/Enemy/None/TutorialEnemy"));
         Managers.Scene.LoadScene("DialTutorialScene");
     }
 }

@@ -10,6 +10,7 @@ public class CounterAction : PatternAction
     {
         _damage = Enemy.PatternManager.BeforePattern.GetComponent<CombitReadinessAction>().absorbDamage;
         Enemy.PatternManager.CurrentPattern.desc = _damage.ToString();
+        Enemy.PatternManager.UpdatePatternUI();
 
         base.StartAction();
     }
