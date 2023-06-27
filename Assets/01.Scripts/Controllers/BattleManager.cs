@@ -1,9 +1,6 @@
 using DG.Tweening;
 using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Security.Cryptography;
-using System.Xml.Schema;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -234,7 +231,15 @@ public class BattleManager : MonoSingleton<BattleManager>
             Managers.Json.SaveJson<SaveData>("SaveData", Managers.Map.SaveData);
             Managers.Map.ResetChapter();
             Define.DialScene?.HideChooseRuneUI();
+
             _tutorialEndPanel.SetActive(true);
+
+            Transform panelTrm = _tutorialEndPanel.transform.Find("Panel");
+            panelTrm.localScale = Vector3.zero;
+            Sequence seq = DOTween.Sequence();
+            seq.Append(panelTrm.DOScale(Vector3.one * 1.2f, 0.3f));
+            seq.Append(panelTrm.DOScale(Vector3.one, 0.1f));
+
             return;
         }
 
