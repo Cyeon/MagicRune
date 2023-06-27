@@ -49,6 +49,7 @@ MonoBehaviour:
   icon: {fileID: 21300000, guid: 6907bb716a4b54f478c2090c2d86b3e5, type: 3}
   iconSize: {x: 0.5, y: 0.5, z: 1}
   desc: 
+  PatternDescription: "\uB370\uBBF8\uC9C0\uB97C \uD761\uC218\uD558\uACE0 \uC788\uC2B5\uB2C8\uB2E4."
   isIncluding: 1
   startPatternAction:
   - {fileID: 1318501583068510468}
@@ -80,7 +81,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8766423570204140604}
   - component: {fileID: 9211995483824698919}
-  - component: {fileID: 9179320034245226693}
+  - component: {fileID: 1883609311096935811}
   m_Layer: 0
   m_Name: Emission
   m_TagString: Untagged
@@ -119,13 +120,15 @@ MonoBehaviour:
   icon: {fileID: 21300000, guid: 393c8c4ee07a4fa40ab37ad98e7288f3, type: 3}
   iconSize: {x: 0.5, y: 0.5, z: 1}
   desc: 
+  PatternDescription: "\uD761\uC218\uD55C \uB370\uBBF8\uC9C0\uB9CC\uD07C \uACF5\uACA9\uD569\uB2C8\uB2E4."
   isIncluding: 1
-  startPatternAction: []
+  startPatternAction:
+  - {fileID: 1883609311096935811}
   turnPatternAction:
-  - {fileID: 9179320034245226693}
+  - {fileID: 1883609311096935811}
   endPatternAction: []
   transitions: []
---- !u!114 &9179320034245226693
+--- !u!114 &1883609311096935811
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -134,9 +137,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 5320256324158273165}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 669832926032e4a468f39e58bb7e60cd, type: 3}
+  m_Script: {fileID: 11500000, guid: cf2a2ff1b0a40e04c9a7894969d37288, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _status: 14
 --- !u!1 &6792092608420542882
 GameObject:
   m_ObjectHideFlags: 0
@@ -187,6 +191,8 @@ MonoBehaviour:
   icon: {fileID: 21300000, guid: c3caf916f86c3964b8774884d2fff514, type: 3}
   iconSize: {x: 0.5, y: 0.5, z: 1}
   desc: 10
+  PatternDescription: "\uACF5\uACA9 \uD6C4 \uBC29\uC5B4\uB97C \uD560\uB824\uACE0
+    \uD569\uB2C8\uB2E4."
   isIncluding: 1
   startPatternAction: []
   turnPatternAction:

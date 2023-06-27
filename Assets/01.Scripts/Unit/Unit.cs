@@ -17,7 +17,7 @@ public class Unit : MonoBehaviour
     public int MaxHP => _maxHealth;
 
     [SerializeField] private int _health = 10;
-    public int HP
+    public int HP 
     {
         get => _health;
         protected set
@@ -46,6 +46,7 @@ public class Unit : MonoBehaviour
             UpdateShieldUI();
         }
     }
+    public bool IsShiledReset = true;
 
     public int currentDmg = 0;
     public AudioClip attackSound = null;
@@ -251,7 +252,8 @@ public class Unit : MonoBehaviour
 
     public void ResetShield()
     {
-        Shield = 0;
+        if(IsShiledReset)
+            Shield = 0;
     }
 
     public void ResetHealth()
@@ -270,7 +272,7 @@ public class Unit : MonoBehaviour
 
     public void UISetting()
     {
-        _healthBar.DOScaleX(HP / MaxHP, 0);
+        _healthBar.DOScaleX((float)HP / MaxHP, 0);
         _healthFeedbackBar.DOScaleX(0, 0);
         _healthText.text = string.Format("{0}/{1}", HP.ToString(), MaxHP.ToString());
 

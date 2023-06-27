@@ -34,6 +34,8 @@ public class MapUI : MonoBehaviour
     private void Start()
     {
         ChangeBackground();
+
+        _endGamePanel.SetActive(false);
     }
 
     public void ChangeBackground()

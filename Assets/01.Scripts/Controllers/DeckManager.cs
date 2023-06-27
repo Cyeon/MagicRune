@@ -127,6 +127,6 @@ public class DeckManager
 
     public void DeckSort()
     {
-        _deck = _deck.OrderBy(x => x.BaseRuneSO.AttributeType).ThenBy(x => x.BaseRuneSO.CoolTime).ToList();
+        _deck = _deck.OrderByDescending(x => x.BaseRuneSO.AttributeType).ThenBy(x => x.BaseRuneSO.CoolTime).ToList();
     }
 }

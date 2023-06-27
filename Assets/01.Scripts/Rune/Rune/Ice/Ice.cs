@@ -1,3 +1,4 @@
+using MyBox;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,7 +12,7 @@ public class Ice : BaseRune
     }
     public override void AbilityAction()
     {
-        BattleManager.Instance.Enemy.StatusManager.AddStatus(StatusName.Chilliness, 3);
+        BattleManager.Instance.Enemy.StatusManager.AddStatus(StatusName.Chilliness, GetAbliltiValue(EffectType.Status).RoundToInt());
     }
 
     public override object Clone()

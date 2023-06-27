@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,12 +9,12 @@ public class StackDebufferThreeToOneAction : StatusAction
 
     public override void TurnAction()
     {
-        if(BattleManager.Instance.Enemy.StatusManager.GetStatus(_checkStatusName) != null)
+        if (Enemy.StatusManager.GetStatus(_checkStatusName) != null)
         {
-            value = Mathf.RoundToInt(BattleManager.Instance.Enemy.StatusManager.GetStatus(_checkStatusName).TypeValue * 0.3f) + 1;
-            BattleManager.Instance.Enemy.StatusManager.DeleteStatus(_checkStatusName);
+            value = Mathf.RoundToInt((float)Enemy.StatusManager.GetStatus(_checkStatusName).TypeValue * 0.3f);
+            if (value > 0) value++;
         }
-
+        Enemy.StatusManager.DeleteStatus(_checkStatusName);
         base.TurnAction();
     }
 }

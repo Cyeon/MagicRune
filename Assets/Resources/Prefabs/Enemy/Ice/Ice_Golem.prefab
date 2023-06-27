@@ -49,7 +49,7 @@ MonoBehaviour:
   icon: {fileID: 21300000, guid: 58e34beeedd86b949a99957c020d7050, type: 3}
   iconSize: {x: 1, y: 1, z: 1}
   desc: 
-  PatternDescription: 
+  PatternDescription: "\uC544\uBB34\uB7F0 \uD589\uB3D9\uC744 \uD558\uC9C0 \uC54A\uC2B5\uB2C8\uB2E4."
   isIncluding: 1
   startPatternAction: []
   turnPatternAction:
@@ -79,6 +79,7 @@ GameObject:
   - component: {fileID: 5878196070432266977}
   - component: {fileID: 6754013480354361722}
   - component: {fileID: 3280770894385780156}
+  - component: {fileID: 5720437938011589260}
   m_Layer: 0
   m_Name: DEF(30)
   m_TagString: Untagged
@@ -117,9 +118,10 @@ MonoBehaviour:
   icon: {fileID: 21300000, guid: a73a585ed1e79044cb3db5b656893459, type: 3}
   iconSize: {x: 3, y: 3, z: 1}
   desc: 30
-  PatternDescription: 
+  PatternDescription: "\uBC29\uC5B4\uB97C \uD560\uB824\uACE0 \uD569\uB2C8\uB2E4."
   isIncluding: 1
-  startPatternAction: []
+  startPatternAction:
+  - {fileID: 5720437938011589260}
   turnPatternAction:
   - {fileID: 3280770894385780156}
   endPatternAction: []
@@ -137,6 +139,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   amount: 30
+--- !u!114 &5720437938011589260
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 56541621051137843}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 076d8b01cdc866545af5e87b974bf98a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &924762419497149712
 GameObject:
   m_ObjectHideFlags: 0
@@ -148,6 +162,7 @@ GameObject:
   - component: {fileID: 3604265262739870735}
   - component: {fileID: 2505434558584147097}
   - component: {fileID: 9013268665869361177}
+  - component: {fileID: 2134067165665729161}
   m_Layer: 0
   m_Name: ATK(DEF)
   m_TagString: Untagged
@@ -186,12 +201,14 @@ MonoBehaviour:
   icon: {fileID: 21300000, guid: 0ba7bc4db41d35e4099b792db367a0fa, type: 3}
   iconSize: {x: 1, y: 1, z: 1}
   desc: 
-  PatternDescription: 
+  PatternDescription: "\uACF5\uACA9\uC744 \uD560\uB824\uACE0 \uD569\uB2C8\uB2E4."
   isIncluding: 1
-  startPatternAction: []
+  startPatternAction:
+  - {fileID: 9013268665869361177}
   turnPatternAction:
   - {fileID: 9013268665869361177}
-  endPatternAction: []
+  endPatternAction:
+  - {fileID: 2134067165665729161}
   transitions: []
 --- !u!114 &9013268665869361177
 MonoBehaviour:
@@ -207,6 +224,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 0
   count: 0
+--- !u!114 &2134067165665729161
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 924762419497149712}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 076d8b01cdc866545af5e87b974bf98a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &7860790110442942031
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -9,7 +9,8 @@ public class Enemy : Unit
     {
         Ice,
         Fire,
-        Electric
+        Electric,
+        None
     }
 
     [Header("Enemy Info")]

@@ -47,6 +47,8 @@ public class ShopUI : MonoBehaviour
     // 선택
     private void SelectItem(ShopItemPanelUI shopItem)
     {
+        if (_buyCheck.activeSelf == true) return;
+
         _beforeSelectItem = _selectItem;
         _beforeSelectItem?.SetActiveSelectPanel(false);
 

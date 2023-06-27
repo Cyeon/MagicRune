@@ -87,7 +87,7 @@ public class TutorialUI : MonoBehaviour
             {
                 TutorialEnd();
                 Define.DialScene?.Turn("Enemy Turn");
-                Managers.Map.isTutorial = false;
+                Managers.Map.SaveData.IsTutorial = false;
             }
             else
                 TutorialEnd();
@@ -101,5 +101,10 @@ public class TutorialUI : MonoBehaviour
 
         Tutorial("DeckRule", _index);
         Managers.Canvas.GetCanvas("Main").enabled = true;
+    }
+
+    public void LobbyScene()
+    {
+        Managers.Scene.LoadScene(Define.Scene.LobbyScene);
     }
 }
