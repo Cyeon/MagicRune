@@ -151,11 +151,7 @@ public class BattleManager : MonoSingleton<BattleManager>
 
                 Player?.StatusManager.OnTurnEnd();
 
-                if (Enemy.Shield > 0)
-                {
-                    Enemy.ResetShield();
-                    Enemy.UpdateHealthUI();
-                }
+                if (Enemy.Shield > 0) Enemy.ResetShield();
 
                 _gameTurn = GameTurn.PlayerEnd;
                 if (Managers.Map.SaveData.IsTutorial) return;
