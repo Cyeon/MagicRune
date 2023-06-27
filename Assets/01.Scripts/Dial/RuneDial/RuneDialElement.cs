@@ -30,7 +30,7 @@ public class RuneDialElement : DialElement<BaseRuneUI, BaseRune>
         }
     }
 
-    protected override bool _isAttackCondition => BattleManager.Instance.Enemy.IsDie == false && _selectElement != null;
+    protected override bool _isAttackCondition => /*BattleManager.Instance.Enemy.IsDie == false && */_selectElement != null;
     protected override bool _isRotateAdditionalCondition => BattleManager.Instance.IsPlayerTurn() && _dial.IsAttack == false;
 
     private RuneEffectHandler _effectHandler;
@@ -43,6 +43,8 @@ public class RuneDialElement : DialElement<BaseRuneUI, BaseRune>
 
     protected override void ChangeSelectElement(int index)
     {
+        if (_dial.IsAttack == true) return;
+
         if(_effectHandler == null)
         {
             _effectHandler = Managers.GetPlayer().Visual.GetComponentInChildren<RuneEffectHandler>();
