@@ -79,6 +79,7 @@ GameObject:
   - component: {fileID: 5878196070432266977}
   - component: {fileID: 6754013480354361722}
   - component: {fileID: 3280770894385780156}
+  - component: {fileID: 5720437938011589260}
   m_Layer: 0
   m_Name: DEF(30)
   m_TagString: Untagged
@@ -119,7 +120,8 @@ MonoBehaviour:
   desc: 30
   PatternDescription: "\uBC29\uC5B4\uB97C \uD560\uB824\uACE0 \uD569\uB2C8\uB2E4."
   isIncluding: 1
-  startPatternAction: []
+  startPatternAction:
+  - {fileID: 5720437938011589260}
   turnPatternAction:
   - {fileID: 3280770894385780156}
   endPatternAction: []
@@ -137,6 +139,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   amount: 30
+--- !u!114 &5720437938011589260
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 56541621051137843}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 076d8b01cdc866545af5e87b974bf98a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &924762419497149712
 GameObject:
   m_ObjectHideFlags: 0
@@ -148,6 +162,7 @@ GameObject:
   - component: {fileID: 3604265262739870735}
   - component: {fileID: 2505434558584147097}
   - component: {fileID: 9013268665869361177}
+  - component: {fileID: 2134067165665729161}
   m_Layer: 0
   m_Name: ATK(DEF)
   m_TagString: Untagged
@@ -192,7 +207,8 @@ MonoBehaviour:
   - {fileID: 9013268665869361177}
   turnPatternAction:
   - {fileID: 9013268665869361177}
-  endPatternAction: []
+  endPatternAction:
+  - {fileID: 2134067165665729161}
   transitions: []
 --- !u!114 &9013268665869361177
 MonoBehaviour:
@@ -208,6 +224,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 0
   count: 0
+--- !u!114 &2134067165665729161
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 924762419497149712}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 076d8b01cdc866545af5e87b974bf98a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &7860790110442942031
 PrefabInstance:
   m_ObjectHideFlags: 0
