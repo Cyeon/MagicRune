@@ -141,7 +141,7 @@ public class BattleManager : MonoSingleton<BattleManager>
                 Define.DialScene?.Turn("Player Turn");
                 _gameTurn = GameTurn.EnemyEnd;
                 Player.ResetShield();
-                Player.UpdateHealthUI();
+                //Player.UpdateHealthUI();
                 break;
 
             case GameTurn.Player:
