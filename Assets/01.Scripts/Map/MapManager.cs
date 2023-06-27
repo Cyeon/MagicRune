@@ -120,6 +120,8 @@ public class MapManager
 
     private void ChapterInit()
     {
+        Managers.GetPlayer().ResetHealth();
+
         _currentPeriodStageList.Clear();
         _firstPeriodStageList.Clear();
         _secondPeriodStageList.Clear();
