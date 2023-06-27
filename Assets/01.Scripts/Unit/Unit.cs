@@ -46,6 +46,7 @@ public class Unit : MonoBehaviour
             UpdateShieldUI();
         }
     }
+    public bool IsShiledReset = true;
 
     public int currentDmg = 0;
     public AudioClip attackSound = null;
@@ -251,7 +252,8 @@ public class Unit : MonoBehaviour
 
     public void ResetShield()
     {
-        Shield = 0;
+        if(IsShiledReset)
+            Shield = 0;
     }
 
     public void ResetHealth()
