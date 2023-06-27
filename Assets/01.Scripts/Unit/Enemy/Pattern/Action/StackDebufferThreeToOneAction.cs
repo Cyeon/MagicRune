@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,14 +7,21 @@ public class StackDebufferThreeToOneAction : StatusAction
     [Header("Condition 조건")]
     [SerializeField] private StatusName _checkStatusName = StatusName.ChillinessZip;
 
-    public override void TurnAction()
+    public override void StartAction()
     {
-        if(BattleManager.Instance.Enemy.StatusManager.GetStatus(_checkStatusName) != null)
+        if(Enemy.StatusManager.GetStatus(_checkStatusName) != null)
         {
-            value = Mathf.RoundToInt(BattleManager.Instance.Enemy.StatusManager.GetStatus(_checkStatusName).TypeValue * 0.3f) + 1;
-            BattleManager.Instance.Enemy.StatusManager.DeleteStatus(_checkStatusName);
+            value = Mathf.RoundToInt(Enemy.StatusManager.GetStatus(_checkStatusName).TypeValue * 0.3f) + 1;
+            Enemy.PatternManager.CurrentPattern.desc = value.ToString();
+            Enemy.PatternManager.UpdatePatternUI();
         }
 
+        base.StartAction();
+    }
+
+    public override void TurnAction()
+    {
+        Enemy.StatusManager.DeleteStatus(_checkStatusName);
         base.TurnAction();
     }
 }
