@@ -183,7 +183,8 @@ public class RuneDial : Dial<BaseRuneUI, BaseRune>
         {
             _resonance.Invocation(compareAttributeType);
         }
-        //_isAttack = false;
+        //yield return new WaitUntil(() => BattleManager.Instance.GameTurn == GameTurn.Enemy);
+        _isAttack = false;
     }
 
     public void AllMagicSetCoolTime()
