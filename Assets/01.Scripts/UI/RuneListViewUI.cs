@@ -88,4 +88,9 @@ public class RuneListViewUI : MonoBehaviour
         SettingPanels(Managers.Deck.Deck.FindAll(x => x.IsCoolTime == true), true);
         EventManager.StopListening(Define.ON_START_PLAYER_TURN, UpdateCoolTime);
     }
+
+    public bool GetUIActive()
+    {
+        return _backgroundPanel.activeSelf;
+    }
 }

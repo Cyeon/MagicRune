@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -12,10 +13,14 @@ public class PatternPopup : MonoBehaviour, IPointerUpHandler, IPointerDownHandle
     private TextMeshProUGUI _patternNameText;
     private TextMeshProUGUI _patternDescText;
 
+    private RuneListViewUI _runeListViewUI;
+
     private void Awake()
     {
         _patternNameText = _patternPopupObj.transform.Find("NameText").GetComponent<TextMeshProUGUI>();
         _patternDescText = _patternPopupObj.transform.Find("DescText").GetComponent<TextMeshProUGUI>();
+
+        _runeListViewUI = Managers.Canvas.GetCanvas("Popup").transform.GetComponentInChildren<RuneListViewUI>();
     }
 
     private void Start()
@@ -43,6 +48,7 @@ public class PatternPopup : MonoBehaviour, IPointerUpHandler, IPointerDownHandle
 
     public void OnPointerDown(PointerEventData eventData)
     {
+        if (_runeListViewUI.GetUIActive()) return;
         Popup(true);
     }
 }
