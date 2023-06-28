@@ -39,6 +39,7 @@ public class BaseRuneSO : ScriptableObject
         desc = desc.Replace("(status)", GetAbillityValue(EffectType.Status, isEnhance: isEnhance));
         desc = desc.Replace("(def)", GetAbillityValue(EffectType.Defence, isEnhance: isEnhance) + " 방어");
         desc = desc.Replace("(dStatus)", GetAbillityValue(EffectType.DestroyStatus, isEnhance: isEnhance));
+        desc = desc.Replace("(etc)", GetAbillityValue(EffectType.Etc, isEnhance: isEnhance));
 
         for (int i = 0; i < KeywardList.Length; i++)
         {
