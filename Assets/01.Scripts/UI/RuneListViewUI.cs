@@ -63,6 +63,7 @@ public class RuneListViewUI : MonoBehaviour
             RuneViewPanelUI panel = Managers.Resource.Instantiate("UI/RuneTemplate", _content).GetComponent<RuneViewPanelUI>();
             panel.SetUI(baseRuneList[i], isCoolTIme);
             panel.transform.localScale = Vector3.one;
+            panel.transform.position = new Vector3(panel.transform.position.x, panel.transform.position.y, 0);
             _usingPanelList.Add(panel.gameObject);
         }
     }
