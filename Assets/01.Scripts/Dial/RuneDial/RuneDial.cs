@@ -183,7 +183,12 @@ public class RuneDial : Dial<BaseRuneUI, BaseRune>
         {
             _resonance.Invocation(compareAttributeType);
         }
-        //yield return new WaitUntil(() => BattleManager.Instance.GameTurn == GameTurn.Enemy);
+        yield return new WaitUntil(() => BattleManager.Instance.missileCount <= 0);
+        (_dialElementList[outRuneIndex] as RuneDialElement).EffectHandler.Clear();
+        for (int i = 0; i < _dialElementList.Count; i++)
+        {
+            _dialElementList[i].SelectElement = null;
+        }
         _isAttack = false;
     }
 
