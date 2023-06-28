@@ -195,31 +195,38 @@ public class DialElement<T1, T2> : MonoBehaviour where T1 : MonoBehaviour where 
 
             Vector3 rot = transform.eulerAngles;
 
-            float temp = Input.GetTouch(_fingerID).position.x > Screen.width / 2 ? _offset.x - _offset.y : _offset.x + _offset.y;
+            float tempX = Input.GetTouch(_fingerID).position.x > Screen.width / 2 ? _offset.x - _offset.y : _offset.x + _offset.y;
 
             if (Mathf.Abs(_offset.x) > Mathf.Abs(_offset.y))
             {
                 if (_offset.x > 0)
-                    temp = Mathf.Clamp(temp, 0, _offset.x);
-                else
-                    temp = Mathf.Clamp(temp, _offset.x, 0);
+                    tempX = Mathf.Clamp(tempX, 0, _offset.x);
+                //else
+                //    tempX = Mathf.Clamp(tempX, _offset.x, 0);
+
+                Vector3 a = 
+                    Define.MainCam.ScreenToWorldPoint(
+                        Input.GetTouch(_fingerID).position, Camera.MonoOrStereoscopicEye.Mono);
+
+                if (a.y < transform.position.y)
+                    tempX *= -1;
             }
             else
             {
                 if (_offset.y > 0)
-                    temp = Mathf.Clamp(temp, -_offset.y, _offset.y);
-                else
-                    temp = Mathf.Clamp(temp, _offset.y, -_offset.y);
+                    tempX = Mathf.Clamp(tempX, -_offset.y, _offset.y);
+                //else
+                //    tempX = Mathf.Clamp(tempX, _offset.y, -_offset.y);
             }
 
-            float result = temp / _rotDamp;
+            float result = tempX / _rotDamp;
             rot.z += -1 * result;
 
             transform.rotation = Quaternion.Euler(rot);
             _touchPos = Input.GetTouch(_fingerID).position;
 
             //Debug.Log(temp / _rotDamp);
-            if (Mathf.Abs(temp / _rotDamp) >= 3F)
+            if (Mathf.Abs(tempX / _rotDamp) >= 3F)
             {
                 _touchDownTimer = 0f;
             }

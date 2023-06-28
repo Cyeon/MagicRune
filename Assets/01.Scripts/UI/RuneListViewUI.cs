@@ -63,6 +63,7 @@ public class RuneListViewUI : MonoBehaviour
             RuneViewPanelUI panel = Managers.Resource.Instantiate("UI/RuneTemplate", _content).GetComponent<RuneViewPanelUI>();
             panel.SetUI(baseRuneList[i], isCoolTIme);
             panel.transform.localScale = Vector3.one;
+            panel.transform.position = new Vector3(panel.transform.position.x, panel.transform.position.y, 0);
             _usingPanelList.Add(panel.gameObject);
         }
     }
@@ -87,5 +88,10 @@ public class RuneListViewUI : MonoBehaviour
         ReturnPanels();
         SettingPanels(Managers.Deck.Deck.FindAll(x => x.IsCoolTime == true), true);
         EventManager.StopListening(Define.ON_START_PLAYER_TURN, UpdateCoolTime);
+    }
+
+    public bool GetUIActive()
+    {
+        return _backgroundPanel.activeSelf;
     }
 }
