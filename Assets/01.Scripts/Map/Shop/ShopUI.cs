@@ -1,3 +1,4 @@
+using DG.Tweening;
 using MyBox;
 using System.Collections;
 using System.Collections.Generic;
@@ -72,11 +73,20 @@ public class ShopUI : MonoBehaviour
         }
 
         _buyCheck.SetActive(true);
+        _buyCheck.transform.localScale = Vector3.zero;
+
+        Sequence seq = DOTween.Sequence();
+        seq.Append(_buyCheck.transform.DOScale(1.2f, 0.2f));
+        seq.Append(_buyCheck.transform.DOScale(1f, 0.1f));
     }
 
     public void Buy()
     {
-        _buyCheck.SetActive(false);
+
+        Sequence seq = DOTween.Sequence();
+        seq.Append(_buyCheck.transform.DOScale(1.2f, 0.1f));
+        seq.Append(_buyCheck.transform.DOScale(0, 0.2f));
+        seq.AppendCallback(() => _buyCheck.SetActive(false));
 
         Managers.Gold.AddGold(-_selectItem.item.Gold);
         Managers.Sound.PlaySound("SFX/Buy", SoundType.Effect);

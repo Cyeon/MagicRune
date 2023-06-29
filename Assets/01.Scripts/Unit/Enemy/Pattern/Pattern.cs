@@ -38,7 +38,9 @@ public class Pattern : MonoBehaviour
     public void StartAction()
     {
         _actionIndex = 0;
-        _patternTime = patternInvokeTime.start;                                                                                                               
+        _patternTime = patternInvokeTime.start;
+
+        if (startPatternAction.Count > _actionIndex)
         {
             startPatternAction[_actionIndex].StartAction();
         }

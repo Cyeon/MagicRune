@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -47,7 +48,12 @@ public class RuneEventUI : MonoBehaviour
         Managers.UI.Get<Button>("NextStageButton_Button").onClick.AddListener(() =>
         {
             _scrollView.SetActive(false);
-            _selectedRuneObject.SetActive(false);
+
+            Sequence seq = DOTween.Sequence();
+            seq.Append(_selectedRuneObject.transform.DOScale(1.2f, 0.1f));
+            seq.Append(_selectedRuneObject.transform.DOScale(0, 0.2f));
+            seq.AppendCallback(() => _selectedRuneObject.SetActive(false));
+
             ReturnRunePanels();
             //DistracotrFuncList.NextStage(); // 전투 씬에서 작동시키면 이거 때문에 버그 날 수도 있을듯? 일단 메모 
         });
@@ -79,7 +85,11 @@ public class RuneEventUI : MonoBehaviour
         _runeDescText.SetText(rune.BaseRuneSO.RuneDescription());
 
         _selectedRuneObject.SetActive(true);
-        _selectedRuneObject.transform.localScale = Vector3.one;
+        _selectedRuneObject.transform.localScale = Vector3.zero;
+
+        Sequence seq = DOTween.Sequence();
+        seq.Append(_selectedRuneObject.transform.DOScale(1.2f, 0.2f));
+        seq.Append(_selectedRuneObject.transform.DOScale(1f, 0.1f));
     }
 
     /// <summary>
