@@ -61,6 +61,11 @@ public class RuneManager
         _selectAttributeType = type;
     }
 
+    public AttributeType GetSelectAttribute()
+    {
+        return _selectAttributeType;
+    }
+
     public List<BaseRune> GetRuneList()
     {
         return _runeHandler;

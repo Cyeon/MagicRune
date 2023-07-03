@@ -13,8 +13,15 @@ public class AttributeSpecialization : MonoBehaviour
     [SerializeField] private Sprite groundAttribute;
     [SerializeField] private Sprite electricAttribute;
 
+    private void Start()
+    {
+        ChangeImage(Managers.Rune.GetSelectAttribute());
+    }
+
     public void ChangeImage(AttributeType attributeType)
     {
+        if (attributeType == AttributeType.None) return;
+
         attributeImage.gameObject.SetActive(true);
         switch (attributeType)
         {
