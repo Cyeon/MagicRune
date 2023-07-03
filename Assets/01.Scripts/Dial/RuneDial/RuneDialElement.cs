@@ -21,7 +21,7 @@ public class RuneDialElement : DialElement<BaseRuneUI, BaseRune>
                 _selectElement.RuneColor(new Color(0.26f, 0.26f, 0.26f, 1f));
             }
             _selectElement = value;
-            if (value != null)
+            if (_selectElement != null)
             {
                 //_selectCard.SetActiveOutline(OutlineType.Cyan);
                 _selectElement.RuneColor(Color.white);

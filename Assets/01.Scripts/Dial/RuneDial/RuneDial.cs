@@ -144,6 +144,7 @@ public class RuneDial : Dial<BaseRuneUI, BaseRune>
                 int index = i;
                 MagicCircleGlow(index, true);
                 BaseRune rune = _usingDeck.Find(x => x == _dialElementList[index].SelectElement.Rune);
+                // 룬 널 체크
                 _usingDeck.Remove(rune);
 
                 if (rune.IsIncludeKeyword(KeywordName.Consume))
@@ -184,6 +185,7 @@ public class RuneDial : Dial<BaseRuneUI, BaseRune>
             _resonance.Invocation(compareAttributeType);
         }
         yield return new WaitUntil(() => BattleManager.Instance.missileCount <= 0);
+        yield return new WaitForSeconds(0.1f);
         (_dialElementList[outRuneIndex] as RuneDialElement).EffectHandler.Clear();
         for (int i = 0; i < _dialElementList.Count; i++)
         {

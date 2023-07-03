@@ -15,7 +15,7 @@ public enum DialState
 /// <summary>
 /// 
 /// </summary>
-/// <typeparam name="T1">???????롮쾸?椰???⑤챷寃?┼?????????????????????롮쾸?椰???????븐뼐???????????븐뼔????????⑤갭??????????????뀀???????ex) BaseRuneUI</typeparam>
+/// <typeparam name="T1">???????濡?씀?濾????ㅼ굣野???????????????????????濡?씀?濾???????釉먮폁???????????釉먮폇?????????ㅺ강???????????????????????ex) BaseRuneUI</typeparam>
 /// <typeparam name="T2">T1???????????ex) BaseRune</typeparam>
 public class DialElement<T1, T2> : MonoBehaviour where T1 : MonoBehaviour where T2 : class
 {
@@ -175,12 +175,14 @@ public class DialElement<T1, T2> : MonoBehaviour where T1 : MonoBehaviour where 
 
         //RotateMagicCircle();
 
-        if (_isTouchDown == true && _isUsingLineSwap == true && IsRotate == false)
+        if (_isTouchDown == true && _isUsingLineSwap == true && _selectElement != null)
         {
             _touchDownTimer += Time.deltaTime;
 
             if (_touchDownTimer > _dragTouchTime)
             {
+                //ElementMoveInLine();
+
                 _dialState = DialState.Drag;
                 _dial.SelectDialElement(this);
             }
@@ -204,7 +206,7 @@ public class DialElement<T1, T2> : MonoBehaviour where T1 : MonoBehaviour where 
                 //else
                 //    tempX = Mathf.Clamp(tempX, _offset.x, 0);
 
-                Vector3 a = 
+                Vector3 a =
                     Define.MainCam.ScreenToWorldPoint(
                         Input.GetTouch(_fingerID).position, Camera.MonoOrStereoscopicEye.Mono);
 
@@ -226,12 +228,12 @@ public class DialElement<T1, T2> : MonoBehaviour where T1 : MonoBehaviour where 
             _touchPos = Input.GetTouch(_fingerID).position;
 
             //Debug.Log(temp / _rotDamp);
-            if (Mathf.Abs(tempX / _rotDamp) >= 3F)
+            if (Mathf.Abs(tempX / _rotDamp) >= 5f)
             {
                 _touchDownTimer = 0f;
             }
 
-            _dial.SelectDialElement(null);
+            //_dial.SelectDialElement(null);
         }
     }
 
@@ -266,7 +268,7 @@ public class DialElement<T1, T2> : MonoBehaviour where T1 : MonoBehaviour where 
 
     protected virtual void ChangeSelectElement(int index)
     {
-        
+
     }
 
     [Obsolete]
@@ -373,10 +375,13 @@ public class DialElement<T1, T2> : MonoBehaviour where T1 : MonoBehaviour where 
                     DOTween.To(() => transform.eulerAngles, x => transform.eulerAngles = x,
                         new Vector3(0, 0, ((int)(transform.eulerAngles.z / oneDinstance)) * oneDinstance),
                         0.3f
-                    ).OnComplete(() =>
+                    )
+                        .OnComplete(() =>
                     {
                         if (_selectElement != null)
                         {
+                            //UpdateSelectElement();
+                            //SelectElement = SelectElement;
                             OnSelectElementAction();
                         }
                     });
@@ -391,10 +396,13 @@ public class DialElement<T1, T2> : MonoBehaviour where T1 : MonoBehaviour where 
                         x => transform.eulerAngles = x,
                         new Vector3(0, 0, ((int)(transform.eulerAngles.z / oneDinstance)) * oneDinstance + _dial.StartAngle),
                         0.3f
-                    ).OnComplete(() =>
+                    )
+                        .OnComplete(() =>
                     {
                         if (_selectElement != null)
                         {
+                            //UpdateSelectElement();
+                            //SelectElement = SelectElement;
                             OnSelectElementAction();
                         }
                     });
@@ -414,6 +422,8 @@ public class DialElement<T1, T2> : MonoBehaviour where T1 : MonoBehaviour where 
                         {
                             if (_selectElement != null)
                             {
+                                //UpdateSelectElement();
+                                //SelectElement = SelectElement;
                                 OnSelectElementAction();
                             }
                         });
@@ -426,6 +436,8 @@ public class DialElement<T1, T2> : MonoBehaviour where T1 : MonoBehaviour where 
                         {
                             if (_selectElement != null)
                             {
+                                //UpdateSelectElement();
+                                //SelectElement = SelectElement;
                                 OnSelectElementAction();
                             }
                         });

@@ -204,6 +204,7 @@ public class BattleManager : MonoSingleton<BattleManager>
         if (_gameTurn == GameTurn.Player && missileCount <= 0)
         {
             missileCount = 0;
+            //(Define.DialScene?.Dial).IsAttack = false;
             TurnChange();
         }
     }

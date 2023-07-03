@@ -248,8 +248,6 @@ public class RuneManager
             }
             #endregion
 
-            Debug.Log($"{attributeType}, {rarity}");
-
             List<BaseRune> list = new List<BaseRune>(newRuneList.Where(x => x.BaseRuneSO.AttributeType == attributeType && x.BaseRuneSO.Rarity == rarity));
             BaseRune rune = list[Random.Range(0, list.Count)];
 
