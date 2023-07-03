@@ -8,12 +8,12 @@ using UnityEngine.UI;
 public enum RuneSelectMode
 {
     None, // Default
-    Delete, // 선택 룬 삭제
-    Copy, // 선택 룬 복제 
-    Enhance // 선택 룬 강화 
+    Delete, // ?좏깮 猷???젣
+    Copy, // ?좏깮 猷?蹂듭젣 
+    Enhance // ?좏깮 猷?媛뺥솕 
 }
 /// <summary>
-/// Scroll View안에 들어갈 개벌 룬 Panel에 붙어 있는 스크립트
+/// Scroll View?덉뿉 ?ㅼ뼱媛?媛쒕쾶 猷?Panel??遺숈뼱 ?덈뒗 ?ㅽ겕由쏀듃
 /// </summary>
 public class RuneSelectPanelUI : MonoBehaviour, IPointerClickHandler
 {
@@ -61,13 +61,13 @@ public class RuneSelectPanelUI : MonoBehaviour, IPointerClickHandler
 
         _runeImage.sprite = _baseRune.BaseRuneSO.RuneSprite;
         _runeNameText.SetText(_baseRune.BaseRuneSO.RuneName);
-        _runeDescText.SetText(_baseRune.BaseRuneSO.RuneDescription());
+        _runeDescText.SetText(_baseRune.BaseRuneSO.RuneDescription(_baseRune.KeywordList));
         _runeCoolTimeText.SetText(_baseRune.BaseRuneSO.CoolTime.ToString());
     }
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        switch (_selectMode) // 모드에 따라 다른 기능 해줌 
+        switch (_selectMode) // 紐⑤뱶???곕씪 ?ㅻⅨ 湲곕뒫 ?댁쨲 
         {
             case RuneSelectMode.Delete:
                 Managers.Deck.RemoveDeck(_baseRune);
@@ -83,6 +83,6 @@ public class RuneSelectPanelUI : MonoBehaviour, IPointerClickHandler
                 break;
         }
 
-        EventManager<BaseRune>.TriggerEvent(Define.SELECT_RUNE_EVENT, _baseRune); // RuneEventUI 쪽에서 UI 처리 해줌 
+        EventManager<BaseRune>.TriggerEvent(Define.SELECT_RUNE_EVENT, _baseRune); // RuneEventUI 履쎌뿉??UI 泥섎━ ?댁쨲 
     }
 }

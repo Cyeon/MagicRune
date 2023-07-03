@@ -39,7 +39,7 @@ public class BaseRune : Item, ICloneable
     private bool _isEnhanced = false;
     public bool IsEnhanced => _isEnhanced;
 
-    protected List<KeywordName> _keywordList = new List<KeywordName>();
+    public KeywordName[] KeywordList => (_isEnhanced ? _baseRuneSO.EnhancedKeywardList : _baseRuneSO.KeywardList);
     #endregion
 
     #region Item Interface
@@ -63,7 +63,7 @@ public class BaseRune : Item, ICloneable
 
     public virtual void Init()
     {
-        _keywordList = _baseRuneSO.KeywardList.ToList();
+
     }
 
 
@@ -149,6 +149,6 @@ public class BaseRune : Item, ICloneable
 
     public bool IsIncludeKeyword(KeywordName keyward)
     {
-        return _keywordList.Contains(keyward);
+        return KeywordList.Contains(keyward);
     }
 }

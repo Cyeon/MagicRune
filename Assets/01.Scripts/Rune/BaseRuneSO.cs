@@ -32,7 +32,7 @@ public class BaseRuneSO : ScriptableObject
     [ResizableTextArea, SerializeField]
     private string _runeDescription;
 
-    public string RuneDescription(bool isEnhance = false)
+    public string RuneDescription(in KeywordName[] keywordList, bool isEnhance = false)
     {
         string desc = _runeDescription;
         desc = desc.Replace("(dmg)", GetAbillityValue(EffectType.Attack, isEnhance:isEnhance) + " 데미지");
@@ -40,10 +40,10 @@ public class BaseRuneSO : ScriptableObject
         desc = desc.Replace("(def)", GetAbillityValue(EffectType.Defence, isEnhance: isEnhance) + " 방어");
         desc = desc.Replace("(dStatus)", GetAbillityValue(EffectType.DestroyStatus, isEnhance: isEnhance));
 
-        for (int i = 0; i < KeywardList.Length; i++)
+        for (int i = 0; i < keywordList.Length; i++)
         {
             if (Managers.Keyward.GetKeyward(KeywardList[i]).IsAddDesc)
-                desc += " <color=#FFE951>" + Managers.Keyward.GetKeyward(KeywardList[i]).KeywardName + "</color>";
+                desc += " <color=#FFE951>" + Managers.Keyward.GetKeyward(keywordList[i]).KeywardName + "</color>";
         }
 
         return desc;
@@ -64,6 +64,7 @@ public class BaseRuneSO : ScriptableObject
     public List<AbilityValue> EnhancedAbilityList;
 
     public KeywordName[] KeywardList;
+    public KeywordName[] EnhancedKeywardList;
 
     public string GetAbillityValue(EffectType type, int index = 0, bool isEnhance = false)
     {

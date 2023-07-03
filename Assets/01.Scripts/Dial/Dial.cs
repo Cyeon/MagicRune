@@ -220,9 +220,9 @@ public class Dial<T1, T2> : MonoBehaviour where T1 : MonoBehaviour where T2 : cl
         _dialElementList[dialFLine]?.SetRuneList(_elementDict[fLine]);
         _dialElementList[dialSLine]?.SetRuneList(_elementDict[sLine]);
 
-        _dialElementList[dialFLine].transform.rotation = _dialElementList[dialSLine].transform.rotation;
-        Quaternion rot = _dialElementList[dialFLine].transform.rotation;
-        _dialElementList[dialSLine].transform.rotation = rot;
+        Vector3 rot = _dialElementList[dialFLine].transform.eulerAngles;
+        _dialElementList[dialFLine].transform.eulerAngles = _dialElementList[dialSLine].transform.eulerAngles;
+        _dialElementList[dialSLine].transform.eulerAngles = rot;
 
         //T1 rune = _dialElementList[dialFLine].SelectElement;
         //_dialElementList[dialFLine].SelectElement = _dialElementList[dialSLine].SelectElement;

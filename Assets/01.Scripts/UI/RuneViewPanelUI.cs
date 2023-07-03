@@ -50,7 +50,7 @@ public class RuneViewPanelUI : MonoBehaviour
             _runeNameText.color = Color.green;
             _runeNameText.SetText(baseRune.BaseRuneSO.RuneName + "+");
         }
-        _runeDescText.SetText(baseRune.BaseRuneSO.RuneDescription(baseRune.IsEnhanced));
+        _runeDescText.SetText(baseRune.BaseRuneSO.RuneDescription(baseRune.KeywordList, baseRune.IsEnhanced));
         _runeCoolTimeText.SetText(baseRune.BaseRuneSO.CoolTime.ToString());
         _grayRuneCoolTimeText.SetText(baseRune.BaseRuneSO.CoolTime.ToString());
 

@@ -66,7 +66,7 @@ public class ExplainPanel : MonoBehaviour, IPointerClickHandler
         _runeImage.enabled = true;
         _runeImage.sprite = _rune.BaseRuneSO.RuneSprite;
         _coolTimeText.SetText(_rune.BaseRuneSO.CoolTime.ToString());
-        _descText.SetText(_rune.BaseRuneSO.RuneDescription(isEnhance));
+        _descText.SetText(_rune.BaseRuneSO.RuneDescription(isEnhance ? _rune.BaseRuneSO.EnhancedKeywardList : _rune.BaseRuneSO.KeywardList, isEnhance));
 
         ClearKeyward();
         if (isReward == true)
@@ -88,7 +88,7 @@ public class ExplainPanel : MonoBehaviour, IPointerClickHandler
         _runeImage.enabled = true;
         _runeImage.sprite = rune.RuneSprite;
         _coolTimeText.SetText(rune.CoolTime.ToString());
-        _descText.SetText(rune.RuneDescription());
+        _descText.SetText(rune.RuneDescription(rune.KeywardList));
 
         ClearKeyward();
         if (isReward == true)
