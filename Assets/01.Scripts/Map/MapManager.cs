@@ -99,7 +99,7 @@ public class MapManager
         _mapSceneUI.ChapterTransition.Init();
 
         SaveData = Managers.Json.LoadJsonFile<SaveData>("SaveData");
-        //SaveData.IsTutorialz= true;
+        //SaveData.IsTutorial = true;
 
         if (_isFirst)
         {

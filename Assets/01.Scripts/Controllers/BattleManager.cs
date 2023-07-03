@@ -233,8 +233,8 @@ public class BattleManager : MonoSingleton<BattleManager>
             Transform panelTrm = _tutorialEndPanel.transform.Find("Panel");
             panelTrm.localScale = Vector3.zero;
             Sequence seq = DOTween.Sequence();
-            seq.Append(panelTrm.DOScale(Vector3.one * 1.2f, 0.3f));
-            seq.Append(panelTrm.DOScale(Vector3.one, 0.1f));
+            seq.Append(panelTrm.DOScale(Vector3.one * 1.2f, 0.2f));
+            seq.Append(panelTrm.DOScale(Vector3.one, 0.05f));
 
             return;
         }
