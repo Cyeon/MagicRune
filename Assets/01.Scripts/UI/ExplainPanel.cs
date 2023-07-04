@@ -23,6 +23,9 @@ public class ExplainPanel : MonoBehaviour, IPointerClickHandler
     private Transform _keywardArea;
 
     private RectTransform _keywardRect;
+
+    [SerializeField]
+    private Image _rankIcon;
     #endregion
 
     protected BaseRune _rune;
@@ -67,6 +70,11 @@ public class ExplainPanel : MonoBehaviour, IPointerClickHandler
         _runeImage.sprite = _rune.BaseRuneSO.RuneSprite;
         _coolTimeText.SetText(_rune.BaseRuneSO.CoolTime.ToString());
         _descText.SetText(_rune.BaseRuneSO.RuneDescription(isEnhance));
+
+        if(_rankIcon != null)
+        {
+            _rankIcon.sprite = Resources.Load<Sprite>("Sprite/RankIcon/" + rune.BaseRuneSO.Rarity.ToString());
+        }
 
         ClearKeyward();
         if (isReward == true)

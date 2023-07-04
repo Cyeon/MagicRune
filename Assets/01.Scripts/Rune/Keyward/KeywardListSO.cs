@@ -17,7 +17,8 @@ public enum KeywordName
     Overheat, // 과열
     CantEnhance, // 강화불과
     GroundBeat, // 땅울림
-    SelfGeneration // 자가발전
+    SelfGeneration, // 자가발전
+    Bouncing // 척력
 }
 
 public enum KeywardType

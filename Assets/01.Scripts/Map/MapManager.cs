@@ -327,4 +327,13 @@ public class MapManager
     {
         return UnityEngine.Random.Range(0, 2) == 0;
     }
+
+    public void Tutorial()
+    {
+        SaveData.IsTutorial = true;
+        ChapterInit();
+        _isFirst = false;
+        _chapterList.ForEach(x => x.EnemyReset());
+        _mapSceneUI.ChapterTransition.Transition();
+    }
 }
