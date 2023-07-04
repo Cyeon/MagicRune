@@ -13,10 +13,9 @@ public class ThreeAttack : BaseRune
 
     public override void AbilityAction()
     {
-        int count = IsEnhanced ? 4 : 3;
-        for(int i = 0; i < count; i++)
+        for(int i = 0; i < GetValue(EffectType.Status); i++)
         {
-            BattleManager.Instance.Enemy.StatusManager.AddStatus(StatusName.Impact, GetAbliltiValue(EffectType.Status).RoundToInt());
+            BattleManager.Instance.Enemy.StatusManager.AddStatus(StatusName.Impact, GetAbliltiValue(EffectType.Status, value:(GetValue(EffectType.Status) / GetValue(EffectType.Status))).RoundToInt());
         }
     }
 

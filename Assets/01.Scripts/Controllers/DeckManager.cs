@@ -40,7 +40,6 @@ public class DeckManager
 
         for (int i = 0; i < runeList.Count; i++)
         {
-            Debug.Log(Managers.Rune.GetRune(runeList[i]));
             AddRune(Managers.Rune.GetRune(runeList[i]));
         }
 
