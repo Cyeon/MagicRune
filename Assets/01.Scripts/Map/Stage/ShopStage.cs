@@ -18,7 +18,7 @@ public class ShopStage : Stage
 
         _shopUI.Open();
 
-        BaseRune[] rune = Managers.Rune.GetRandomRune(4).ToArray();
+        BaseRune[] rune = Managers.Rune.GetRandomRune(4,Managers.Deck.DefaultRune).ToArray();
         for (int i = 0; i < 4; i++)
         {
             rune[i].SetRandomGold(50, 100);

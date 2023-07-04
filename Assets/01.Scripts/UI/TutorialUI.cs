@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,7 +10,9 @@ public class TutorialUI : MonoBehaviour
     private Image _tutorialImage;
     private GameObject _attackTutorialImage;
 
-    private int _index = 1;
+    private TextMeshProUGUI _tutorialMessage;
+
+    private int _index = 1; 
     private string _imageName;
 
     private void Awake()
@@ -26,6 +29,10 @@ public class TutorialUI : MonoBehaviour
         {
             _attackTutorialImage = Managers.Canvas.GetCanvas("Popup").transform.Find("AttackTutorial").gameObject;
             _attackTutorialImage.SetActive(false);
+
+            _tutorialMessage = Managers.Canvas.GetCanvas("Popup").transform.Find("TutorialMessage").GetComponent<TextMeshProUGUI>();
+            _tutorialMessage.enabled = false;
+
         }
     }
 
@@ -71,6 +78,7 @@ public class TutorialUI : MonoBehaviour
             {
                 BattleManager.Instance.TurnChange();
                 _attackTutorialImage.SetActive(true);
+                TutorialMessage("다이얼을 위로 드래그하여\n공격을 해보세요!");
                 Define.DialScene.Dial.OnDialAttack += AttackTutorialImageDown;
             }
         }
@@ -88,6 +96,8 @@ public class TutorialUI : MonoBehaviour
                 TutorialEnd();
                 Define.DialScene?.Turn("Enemy Turn");
                 Managers.Map.SaveData.IsTutorial = false;
+                TutorialMessage("자유롭게 다이얼을 조작하여\n적을 처치하세요!");
+                BattleManager.Instance.Enemy.OnDieEvent.AddListener(() => _tutorialMessage.enabled = false);
             }
             else
                 TutorialEnd();
@@ -97,6 +107,8 @@ public class TutorialUI : MonoBehaviour
     public void AttackTutorialImageDown()
     {
         _attackTutorialImage.SetActive(false);
+        _tutorialMessage.enabled = false;
+
         Define.DialScene.Dial.OnDialAttack -= AttackTutorialImageDown;
 
         Tutorial("DeckRule", _index);
@@ -106,5 +118,11 @@ public class TutorialUI : MonoBehaviour
     public void LobbyScene()
     {
         Managers.Scene.LoadScene(Define.Scene.LobbyScene);
+    }
+
+    private void TutorialMessage(string message)
+    {
+        _tutorialMessage.SetText(message);
+        _tutorialMessage.enabled=true;
     }
 }
