@@ -9,29 +9,12 @@ public class DeckManager
     private List<BaseRune> _defaultRune = new List<BaseRune>(20); // 珥덇린 湲곕낯 吏湲?猷?
     public List<BaseRune> DefaultRune => _defaultRune;
 
-    public const int FIRST_DIAL_DECK_MAX_COUNT = 3; // 泥ル쾲吏??ㅼ씠????理쒕? 媛쒖닔
-
-    //private List<BaseRune> _firstDialDeck = new List<BaseRune>(3); // ?ъ쟾???ㅼ젙?대몦 ?ㅼ씠???덉そ??1踰덉㎏ 以???
-    //public List<BaseRune> FirstDialDeck => _firstDialDeck;
-
     private List<BaseRune> _deck = new List<BaseRune>(12); // ?뚯??섍퀬 ?덈뒗 紐⑤뱺 猷?
     public List<BaseRune> Deck => _deck;
 
     public void Init()
     {
         SetDefaultDeck(Managers.Resource.Load<DeckSO>("SO/Deck/DefaultDeck").RuneList);
-    }
-
-    public void SetDefaultDeck(List<BaseRune> runeList)
-    {
-        _deck.Clear();
-
-        for(int i = 0; i < runeList.Count; i++)
-        {
-            AddRune(runeList[i]);
-        }
-
-        RuneInit();
     }
 
     public void SetDefaultDeck(in List<BaseRuneSO> runeList)
@@ -41,6 +24,10 @@ public class DeckManager
         for (int i = 0; i < runeList.Count; i++)
         {
             Debug.Log(Managers.Rune.GetRune(runeList[i]));
+            if (_defaultRune.Contains(Managers.Rune.GetRune(runeList[i])) == false)
+            {
+                _defaultRune.Add(Managers.Rune.GetRune(runeList[i]));
+            }
             AddRune(Managers.Rune.GetRune(runeList[i]));
         }
 
@@ -68,18 +55,6 @@ public class DeckManager
         _deck.Remove(rune);
     }
 
-    ///// <summary> FirstDialDeck??猷?異붽? </summary>
-    //public void AddRuneFirstDeck(BaseRune rune)
-    //{
-    //    _firstDialDeck.Add(rune);
-    //}
-
-    ///// <summary> FistDialDeck?먯꽌 猷?吏?곌린 </summary>
-    //public void RemoveFirstDeck(BaseRune rune)
-    //{
-    //    _firstDialDeck.Remove(rune);
-    //}
-
     public void RuneSwap(int fIndex, int sIndex)
     {
         if (fIndex == sIndex) return;
@@ -99,7 +74,7 @@ public class DeckManager
     public int GetUsingRuneCount()
     {
         int count = 0;
-        for(int i = 0; i < _deck.Count; i++)
+        for (int i = 0; i < _deck.Count; i++)
         {
             if (_deck[i].IsCoolTime == false && _deck[i].IsUsing == false)
             {

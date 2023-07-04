@@ -17,19 +17,7 @@ public class ChooseRuneUI : MonoBehaviour
 
     public void SetUp()
     {
-        //foreach(var panel  in _crPanelList)
-        //{
-        //    BaseRune rune = Managers.Rune.GetRandomRune();
-        //    panel.SetUI(rune, isEnhance:false);
-        //}
-
-        //for(int i = 0; i < 3; i++)
-        //{
-        //    BaseRune rune = Managers.Rune.GetRandomRune();
-        //    _crPanelList[i].SetUI(rune, isEnhance:false, isReward:false);
-        //}
-
-        BaseRune[] rune = Managers.Rune.GetRandomRune(3).ToArray();
+        BaseRune[] rune = Managers.Rune.GetRandomRune(3,Managers.Deck.DefaultRune).ToArray();
         for(int i = 0; i < rune.Length; i++)
         {
             _crPanelList[i].SetUI(rune[i], isEnhance: false, isReward: false);
