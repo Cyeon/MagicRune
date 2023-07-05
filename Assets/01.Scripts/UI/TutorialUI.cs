@@ -89,18 +89,30 @@ public class TutorialUI : MonoBehaviour
         Tutorial(_imageName, ++_index);
         if(_tutorialImage.sprite == null)
         {
-            if (_imageName == "AttackRule")
-                TutorialEnd(true);
-            else if (_imageName == "DeckRule")
+            Debug.Log(_imageName);
+            switch(_imageName)
             {
-                TutorialEnd();
-                Define.DialScene?.Turn("Enemy Turn");
-                Managers.Map.SaveData.IsTutorial = false;
-                TutorialMessage("자유롭게 다이얼을 조작하여\n적을 처치하세요!");
-                BattleManager.Instance.Enemy.OnDieEvent.AddListener(() => _tutorialMessage.enabled = false);
+                case "AttackRule":
+                    TutorialEnd(true);
+                    break;
+
+                case "LineChange":
+                    _index = 1;
+                    Tutorial("RuneCycle", _index);
+                    break;
+
+                case "RuneCycle":
+                    TutorialEnd();
+                    Define.DialScene?.Turn("Enemy Turn");
+                    Managers.Map.SaveData.IsTutorial = false;
+                    TutorialMessage("자유롭게 다이얼을 조작하여\n적을 처치하세요!");
+                    BattleManager.Instance.Enemy.OnDieEvent.AddListener(() => _tutorialMessage.enabled = false);
+                    break;
+
+                default:
+                    TutorialEnd();
+                    break;
             }
-            else
-                TutorialEnd();
         }
     }
 
@@ -111,7 +123,7 @@ public class TutorialUI : MonoBehaviour
 
         Define.DialScene.Dial.OnDialAttack -= AttackTutorialImageDown;
 
-        Tutorial("DeckRule", _index);
+        Tutorial("LineChange", _index);
         Managers.Canvas.GetCanvas("Main").enabled = true;
     }
 
