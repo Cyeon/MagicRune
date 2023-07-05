@@ -59,7 +59,7 @@ public class BattleManager : MonoSingleton<BattleManager>
         if(Managers.Map.SaveData.IsTutorial)
         {
             TutorialUI ui = Managers.Canvas.GetCanvas("Tutorial").GetComponent<TutorialUI>();
-            ui.Tutorial("AttackRule", 1);
+            ui.Tutorial("Tutorial", 1);
             ui.CanvasOff();
 
             Enemy.OnDieEvent.AddListener(() =>
@@ -221,6 +221,7 @@ public class BattleManager : MonoSingleton<BattleManager>
     public void NextStage()
     {
         Managers.Reward.ResetRewardList();
+
         if (Managers.Map.SaveData.IsTutorial)
         {
             Managers.Map.SaveData.IsTutorial = false;
@@ -228,13 +229,7 @@ public class BattleManager : MonoSingleton<BattleManager>
             Managers.Map.ResetChapter();
             Define.DialScene?.HideChooseRuneUI();
 
-            _tutorialEndPanel.SetActive(true);
-
-            Transform panelTrm = _tutorialEndPanel.transform.Find("Panel");
-            panelTrm.localScale = Vector3.zero;
-            Sequence seq = DOTween.Sequence();
-            seq.Append(panelTrm.DOScale(Vector3.one * 1.2f, 0.2f));
-            seq.Append(panelTrm.DOScale(Vector3.one, 0.05f));
+            Managers.Canvas.GetCanvas("TutorialCanvas").GetComponent<TutorialUI>().Tutorial("Deck_Explain", 1);
 
             return;
         }
@@ -242,4 +237,14 @@ public class BattleManager : MonoSingleton<BattleManager>
         Managers.Scene.LoadScene(Define.Scene.MapScene);
     }
 
+    public void TutorialEnd()
+    {
+        _tutorialEndPanel.SetActive(true);
+
+        Transform panelTrm = _tutorialEndPanel.transform.Find("Panel");
+        panelTrm.localScale = Vector3.zero;
+        Sequence seq = DOTween.Sequence();
+        seq.Append(panelTrm.DOScale(Vector3.one * 1.2f, 0.2f));
+        seq.Append(panelTrm.DOScale(Vector3.one, 0.05f));
+    }
 }
