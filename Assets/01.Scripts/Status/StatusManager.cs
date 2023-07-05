@@ -67,7 +67,7 @@ public class StatusManager
         }
 
         if (status.OnAddStatus.Count > 0)
-            status.OnAddStatus.ForEach(x => x.Invoke());
+            status.OnAddStatus.ForEach(x => x?.Invoke());
 
         if (_unit is Enemy)
             Define.DialScene?.AddStatusEffect(_unit, status);
@@ -97,7 +97,7 @@ public class StatusManager
         Define.DialScene?.RemoveStatusPanel(_unit, status.statusName);
 
         if (status.OnRemoveStatus.Count > 0)
-            status.OnRemoveStatus.ForEach(x => x.Invoke());
+            status.OnRemoveStatus.ForEach(x => x?.Invoke());
 
         for (int i = 0; i < _unit.statusTrm.childCount; ++i)
         {
@@ -155,7 +155,7 @@ public class StatusManager
         {
             if (_statusList[i] != null && _statusList[i].OnTurnStart.Count > 0)
             {
-                _statusList[i].OnTurnStart.ForEach(x => x.Invoke());
+                _statusList[i].OnTurnStart.ForEach(x => x?.Invoke());
             }
         }
     }
@@ -183,7 +183,7 @@ public class StatusManager
         {
             if (_statusList[i] != null && _statusList[i].OnGetDamage.Count > 0)
             {
-                _statusList[i].OnGetDamage.ForEach(x => x.Invoke());
+                _statusList[i].OnGetDamage.ForEach(x => x?.Invoke());
             }
         }
     }
@@ -196,7 +196,7 @@ public class StatusManager
         {
             if (_statusList[i] != null && _statusList[i].OnTurnEnd.Count > 0)
             {
-                _statusList[i].OnTurnEnd.ForEach(x => x.Invoke());
+                _statusList[i].OnTurnEnd.ForEach(x => x?.Invoke());
             }
         }
     }

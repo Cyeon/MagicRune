@@ -1,4 +1,4 @@
-﻿///Credit ChoMPHi
+///Credit ChoMPHi
 ///Sourced from - http://forum.unity3d.com/threads/accordion-type-layout.271818/
 
 using UnityEngine.Events;
