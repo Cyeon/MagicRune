@@ -6,8 +6,8 @@ using MyBox;
 
 public class DeckManager
 {
-    private List<BaseRune> _defaultRune = new List<BaseRune>(20); // 珥덇린 湲곕낯 吏湲?猷?
-    public List<BaseRune> DefaultRune => _defaultRune;
+    private List<BaseRuneSO> _defaultRune = new List<BaseRuneSO>(20); // 珥덇린 湲곕낯 吏湲?猷?
+    public List<BaseRuneSO> DefaultRune => _defaultRune;
 
     private List<BaseRune> _deck = new List<BaseRune>(12); // ?뚯??섍퀬 ?덈뒗 紐⑤뱺 猷?
     public List<BaseRune> Deck => _deck;
@@ -24,9 +24,9 @@ public class DeckManager
         for (int i = 0; i < runeList.Count; i++)
         {
             Debug.Log(Managers.Rune.GetRune(runeList[i]));
-            if (_defaultRune.Contains(Managers.Rune.GetRune(runeList[i])) == false)
+            if (_defaultRune.Contains(runeList[i]) == false)
             {
-                _defaultRune.Add(Managers.Rune.GetRune(runeList[i]));
+                _defaultRune.Add(runeList[i]);
             }
             AddRune(Managers.Rune.GetRune(runeList[i]));
         }
