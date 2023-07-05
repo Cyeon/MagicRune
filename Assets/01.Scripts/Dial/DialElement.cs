@@ -181,7 +181,7 @@ public class DialElement<T1, T2> : MonoBehaviour where T1 : MonoBehaviour where 
 
             if (_touchDownTimer > _dragTouchTime)
             {
-                //ElementMoveInLine();
+                ElementMoveInLine();
 
                 _dialState = DialState.Drag;
                 _dial.SelectDialElement(this);

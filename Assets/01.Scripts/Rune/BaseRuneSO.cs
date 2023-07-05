@@ -32,12 +32,18 @@ public class BaseRuneSO : ScriptableObject
     [ResizableTextArea, SerializeField]
     private string _runeDescription;
 
+    public bool IsUseEnhancedDesc = false;
+    [ConditionalField(nameof(IsUseEnhancedDesc))]
+    public string EnhancedRuneDescription;
+
+    public bool IsSeeAbilityValue = true;
+
     public string RuneDescription(in KeywordName[] keywordList, bool isEnhance = false)
     {
-        string desc = _runeDescription;
+        string desc = IsUseEnhancedDesc ? isEnhance ? EnhancedRuneDescription : _runeDescription : _runeDescription;
         desc = desc.Replace("(dmg)", GetAbillityValue(EffectType.Attack, isEnhance:isEnhance) + " 데미지");
         desc = desc.Replace("(status)", GetAbillityValue(EffectType.Status, isEnhance: isEnhance));
-        desc = desc.Replace("(def)", GetAbillityValue(EffectType.Defence, isEnhance: isEnhance) + " 방어");
+        desc = desc.Replace("(def)", GetAbillityValue(EffectType.Defence, isEnhance: isEnhance)+ " 방어");
         desc = desc.Replace("(dStatus)", GetAbillityValue(EffectType.DestroyStatus, isEnhance: isEnhance));
 
         for (int i = 0; i < keywordList.Length; i++)
@@ -80,7 +86,7 @@ public class BaseRuneSO : ScriptableObject
             if (abilities[index].StatusName != StatusName.Null)
             {
                 string status = Resources.Load("Prefabs/Status/Status_" + abilities[index].StatusName).GetComponent<Status>().debugName;
-                text = value.ToString() + " <color=#FFE951>" + status + "</color>";
+                text = (IsSeeAbilityValue ? value.ToString() : "") + " <color=#FFE951>" + status + "</color>";
             }
         }
 
