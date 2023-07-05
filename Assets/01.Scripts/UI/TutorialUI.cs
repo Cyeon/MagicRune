@@ -89,10 +89,9 @@ public class TutorialUI : MonoBehaviour
         Tutorial(_imageName, ++_index);
         if(_tutorialImage.sprite == null)
         {
-            Debug.Log(_imageName);
             switch(_imageName)
             {
-                case "AttackRule":
+                case "Tutorial":
                     TutorialEnd(true);
                     break;
 
@@ -101,12 +100,22 @@ public class TutorialUI : MonoBehaviour
                     Tutorial("RuneCycle", _index);
                     break;
 
+                case "Deck_Explain":
+                    _index = 1;
+                    Tutorial("Attribute_Select", _index);
+                    break;
+
                 case "RuneCycle":
                     TutorialEnd();
                     Define.DialScene?.Turn("Enemy Turn");
                     Managers.Map.SaveData.IsTutorial = false;
                     TutorialMessage("자유롭게 다이얼을 조작하여\n적을 처치하세요!");
                     BattleManager.Instance.Enemy.OnDieEvent.AddListener(() => _tutorialMessage.enabled = false);
+                    break;
+
+                case "Attribute_Select":
+                    TutorialEnd();
+                    BattleManager.Instance.TutorialEnd();
                     break;
 
                 default:

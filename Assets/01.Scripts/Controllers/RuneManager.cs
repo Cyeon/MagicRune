@@ -72,19 +72,28 @@ public class RuneManager
     }
 
     [Obsolete]
-    public BaseRune GetRandomRuneOfRarity(RuneRarity rarity, List<BaseRune> ignoreRuneList = null)
+    public BaseRune GetRandomRuneOfRarity(RuneRarity rarity, List<BaseRuneSO> ignoreRuneList = null)
     {
+        List<BaseRune> runeList = new List<BaseRune>();
         List<BaseRune> newRuneList = new List<BaseRune>(_runeHandler);
+
         if (ignoreRuneList != null)
         {
-            for (int i = 0; i < ignoreRuneList.Count; i++)
+            foreach (BaseRune item in newRuneList)
             {
-                if (newRuneList.Contains(ignoreRuneList[i]) == true)
+                if (ignoreRuneList.Contains(item.BaseRuneSO))
                 {
-                    newRuneList.Remove(ignoreRuneList[i]);
+                    runeList.Add(item);
                 }
             }
         }
+
+        for (int i = 0; i < runeList.Count; i++)
+        {
+            newRuneList.Remove(runeList[i]);
+        }
+
+        runeList.Clear();
 
         newRuneList = newRuneList.Where(x => x.BaseRuneSO.Rarity == rarity).ToList();
 
@@ -98,25 +107,33 @@ public class RuneManager
         return null;
     }
 
-    public BaseRune GetRandomRune(List<BaseRune> ignoreRuneList = null)
+    public BaseRune GetRandomRune(List<BaseRuneSO> ignoreRuneList = null)
     {
         List<BaseRune> newRuneList = new List<BaseRune>(_runeHandler);
+        List<BaseRune> runeList = new List<BaseRune>();
 
         if (ignoreRuneList != null)
         {
-            for (int i = 0; i < ignoreRuneList.Count; i++)
+            foreach (BaseRune item in newRuneList)
             {
-                if (newRuneList.Contains(ignoreRuneList[i]) == true)
+                if (ignoreRuneList.Contains(item.BaseRuneSO))
                 {
-                    newRuneList.Remove(ignoreRuneList[i]);
+                    runeList.Add(item);
                 }
             }
         }
 
+        for (int i = 0; i < runeList.Count; i++)
+        {
+            newRuneList.Remove(runeList[i]);
+        }
+
+        runeList.Clear();
+
         #region Set Attribute
         AttributeType attributeType = AttributeType.None;
         int attributeMaxValue = 0;
-        for(int i = 1; i < (int)AttributeType.MAX_COUNT; i++)
+        for (int i = 2; i < (int)AttributeType.MAX_COUNT; i++)
         {
             if (_selectAttributeType == (AttributeType)i)
             {
@@ -129,9 +146,9 @@ public class RuneManager
         }
         int attributeValue = Random.Range(0, attributeMaxValue + 1);
         int attributeMinValue = 0;
-        for(int i = 1; i < (int)AttributeType.MAX_COUNT; i++)
+        for (int i = 2; i < (int)AttributeType.MAX_COUNT; i++)
         {
-            if(attributeMinValue <= attributeValue && ((AttributeType)i == _selectAttributeType ? 30 : 10) + attributeMinValue >= attributeValue)
+            if (attributeMinValue <= attributeValue && ((AttributeType)i == _selectAttributeType ? 30 : 10) + attributeMinValue >= attributeValue)
             {
                 attributeType = (AttributeType)i;
                 break;
@@ -148,16 +165,16 @@ public class RuneManager
         RuneRarity[] rarityArray = Enum.GetValues(typeof(RuneRarity)).Cast<RuneRarity>().ToArray();
 
         int rarityMaxValue = 0;
-        for(int i = 0; i < rarityArray.Length; i++)
+        for (int i = 0; i < rarityArray.Length; i++)
         {
             rarityMaxValue += (int)rarityArray[i];
         }
 
         int rarityValue = Random.Range(1, rarityMaxValue + 1);
         int rarityMinValue = 0;
-        for(int i = 0; i < rarityArray.Length; i++)
+        for (int i = 0; i < rarityArray.Length; i++)
         {
-            if(rarityMinValue <= rarityValue && rarityValue >= (int)rarityArray[i + 1])
+            if (rarityMinValue <= rarityValue && rarityValue >= (int)rarityArray[i + 1])
             {
                 rarity = rarityArray[i];
                 break;
@@ -175,7 +192,7 @@ public class RuneManager
         return newRuneList[idx].Clone() as BaseRune;
     }
 
-    public List<BaseRune> GetRandomRune(int count, List<BaseRune> ignoreRuneList = null)
+    public List<BaseRune> GetRandomRune(int count, List<BaseRuneSO> ignoreRuneList = null)
     {
         List<BaseRune> runeList = new List<BaseRune>();
 
@@ -183,14 +200,21 @@ public class RuneManager
 
         if (ignoreRuneList != null)
         {
-            for (int i = 0; i < ignoreRuneList.Count; i++)
+            foreach (BaseRune item in newRuneList)
             {
-                if (newRuneList.Contains(ignoreRuneList[i]))
+                if (ignoreRuneList.Contains(item.BaseRuneSO))
                 {
-                    newRuneList.Remove(ignoreRuneList[i]);
+                    runeList.Add(item);
                 }
             }
         }
+
+        for (int i = 0; i < runeList.Count; i++)
+        {
+            newRuneList.Remove(runeList[i]);
+        }
+
+        runeList.Clear();
 
         Debug.ClearDeveloperConsole();
 
@@ -199,7 +223,7 @@ public class RuneManager
             #region Set Attribute
             AttributeType attributeType = AttributeType.None;
             int attributeMaxValue = 0;
-            for (int i = 1; i < (int)AttributeType.MAX_COUNT; i++)
+            for (int i = 2; i < (int)AttributeType.MAX_COUNT; i++)
             {
                 if (_selectAttributeType == (AttributeType)i)
                 {
@@ -212,7 +236,7 @@ public class RuneManager
             }
             int attributeValue = Random.Range(0, attributeMaxValue + 1);
             int attributeMinValue = 0;
-            for (int i = 1; i < (int)AttributeType.MAX_COUNT; i++)
+            for (int i = 2; i < (int)AttributeType.MAX_COUNT; i++)
             {
                 if (attributeMinValue <= attributeValue && ((AttributeType)i == _selectAttributeType ? 30 : 10) + attributeMinValue >= attributeValue)
                 {
