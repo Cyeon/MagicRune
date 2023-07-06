@@ -148,7 +148,7 @@ public class PatternManager : MonoBehaviour
             sprite.transform.localPosition = Vector2.zero;
 
             Sequence seq = DOTween.Sequence();
-            seq.Append(sprite.transform.DOScale(_currentPattern.iconSize * 2, 0.3f));
+            seq.Append(sprite.transform.DOScale(_currentPattern.iconSize * 1.5f, 0.3f));
             seq.Join(sprite.DOFade(0, 0.3f));
             seq.AppendCallback(()=>Managers.Resource.Destroy(sprite.gameObject));
 

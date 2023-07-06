@@ -67,14 +67,14 @@ public class TutorialUI : MonoBehaviour
         _index = 1;
 
         if (Managers.Scene.CurrentScene is MapScene)
-            Define.MapScene.mapDial.DialElementList[0].IsDialLock = false;
+            Define.MapScene.mapDial.DialUnlock();
         else if (Managers.Scene.CurrentScene is DialScene)
         {
             Managers.Canvas.GetCanvas("Main").enabled = true;
             Managers.Canvas.GetCanvas("Popup").enabled = true;
-            Define.DialScene.Dial.DialElementList.ForEach(x => x.IsDialLock = false);
+            Define.DialScene.Dial.DialUnlock();
 
-            if(isFirst)
+            if (isFirst)
             {
                 BattleManager.Instance.TurnChange();
                 _attackTutorialImage.SetActive(true);

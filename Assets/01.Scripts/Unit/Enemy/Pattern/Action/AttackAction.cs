@@ -24,7 +24,7 @@ public class AttackAction : PatternAction
             BattleManager.Instance.Enemy.Attack(damage);
             yield return new WaitForSeconds(0.2f);
         }
-        BattleManager.Instance.Enemy.spriteRenderer.transform.DOMoveX(BattleManager.Instance.Enemy.spriteRenderer.transform.position.x + 1.5f, 0.1f);
+        BattleManager.Instance.Enemy.spriteRenderer.transform.DOMoveX(0, 0.1f);
         yield return new WaitForSeconds(0.1f);
         base.TurnAction();
     }
