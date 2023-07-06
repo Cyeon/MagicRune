@@ -33,9 +33,9 @@ public class PatternPopup : MonoBehaviour, IPointerUpHandler, IPointerDownHandle
         _isPoup = active;
         _patternPopupObj.SetActive(_isPoup);
 
-        if (_isPoup)
+        Pattern pattern = BattleManager.Instance.Enemy.PatternManager.CurrentPattern;
+        if (_isPoup && pattern != null)
         {
-            Pattern pattern = BattleManager.Instance.Enemy.PatternManager.CurrentPattern;
             _patternNameText.text = pattern.patternName;
             _patternDescText.text = pattern.PatternDescription;
         }
