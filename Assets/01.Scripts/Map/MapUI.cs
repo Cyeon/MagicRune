@@ -47,13 +47,15 @@ public class MapUI : MonoBehaviour
 
     public void EndGame()
     {
-        _endGamePanel.SetActive(true);
         transform.GetComponent<Canvas>().sortingLayerName = "Top";
+        _endGamePanel.SetActive(true);
 
         _endGamePanel.transform.localScale = Vector3.zero;
         Sequence seq = DOTween.Sequence();
+        seq.AppendCallback(() => _endGamePanel.SetActive(true));
         seq.Append(_endGamePanel.transform.DOScale(Vector3.one * 1.2f, 0.2f));
         seq.Append(_endGamePanel.transform.DOScale(Vector3.one, 0.05f));
+        seq.AppendCallback(() => _endGamePanel.SetActive(true));
     }
 
     public void GameExit()
