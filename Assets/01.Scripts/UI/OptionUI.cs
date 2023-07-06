@@ -9,6 +9,9 @@ public class OptionUI : MonoBehaviour
     private GameObject _panels = null;
     private GameObject _warningPanel = null;
 
+    private RuneDial _runeDial = null;
+    private MapDial _mapDial = null;
+
     private void Start()
     {
         _panels = transform.Find("Panels").gameObject;
@@ -38,6 +41,9 @@ public class OptionUI : MonoBehaviour
         Managers.UI.Get<Slider>("Master_Slider").value = Managers.Sound.GetVolume(SoundType.Master);
         Managers.UI.Get<Slider>("BGM_Slider").value = Managers.Sound.GetVolume(SoundType.Bgm);
         Managers.UI.Get<Slider>("Effect_Slider").value = Managers.Sound.GetVolume(SoundType.Effect);
+
+        _mapDial = FindObjectOfType<MapDial>();
+        _runeDial = FindObjectOfType<RuneDial>();
     }
 
     private void Update()
@@ -52,12 +58,34 @@ public class OptionUI : MonoBehaviour
     {
         _isUsing = !_isUsing;
         _panels.SetActive(_isUsing);
+
+        if (_isUsing)
+        {
+            _mapDial?.DialLock();
+            _runeDial?.DialLock();
+        }
+        else
+        {
+            _mapDial?.DialUnlock();
+            _runeDial?.DialUnlock();
+        }
     }
 
-    public void ActiveUI(bool isaActive)
+    public void ActiveUI(bool isActive)
     {
-        _isUsing = isaActive;
-        _panels.SetActive(isaActive);
+        if (isActive)
+        {
+            _mapDial?.DialLock();
+            _runeDial?.DialUnlock();
+        }
+        else
+        {
+            _mapDial?.DialUnlock();
+            _runeDial?.DialUnlock();
+        }
+
+        _isUsing = isActive;
+        _panels.SetActive(isActive);
     }
 
     private void PopupWarning(bool isAcive)

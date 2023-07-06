@@ -11,14 +11,17 @@ public class RuneListViewUI : MonoBehaviour
     private Transform _content = null;
     private List<GameObject> _usingPanelList = new List<GameObject>();
 
-    private RuneDial _dial = null;
+    private RuneDial _runeDial = null;
+    private MapDial _mapDial = null;
 
     private void Start()
     {
         _backgroundPanel = transform.Find("RuneListView_BGPanel").gameObject;
         _scrollView = transform.Find("RuneListView_ScrollView").gameObject;
         _content = _scrollView.transform.Find("Viewport").GetChild(0).transform;
-        _dial = FindObjectOfType<RuneDial>();
+
+        _runeDial = FindObjectOfType<RuneDial>();
+        _mapDial = FindObjectOfType<MapDial>();
 
         ActiveUI(false);
 
@@ -42,7 +45,7 @@ public class RuneListViewUI : MonoBehaviour
     /// </summary>
     public void SetUseRunes()
     {
-        SettingPanels(Managers.Deck.Deck.FindAll(x => x.IsCoolTime == false), false, _dial.ConsumeDeck);
+        SettingPanels(Managers.Deck.Deck.FindAll(x => x.IsCoolTime == false), false, _runeDial.ConsumeDeck);
         ActiveUI(true);
     }
 
@@ -79,6 +82,16 @@ public class RuneListViewUI : MonoBehaviour
 
     private void ActiveUI(bool isActive)
     {
+        if (isActive)
+        {
+            _runeDial?.DialLock();
+            _mapDial?.DialLock();
+        }
+        else
+        {
+            _runeDial?.DialUnlock();
+            _mapDial?.DialUnlock();
+        }
         _backgroundPanel.SetActive(isActive);
         _scrollView.SetActive(isActive);
     }

@@ -5,6 +5,12 @@ using UnityEngine.UI;
 
 public class RuneWeigetPanel : MonoBehaviour
 {
+    #region Dials
+    private MapDial _mapDial = null;
+    private RuneDial _runeDial = null;
+    #endregion
+
+
     [SerializeField]
     private GameObject _parent;
 
@@ -37,6 +43,9 @@ public class RuneWeigetPanel : MonoBehaviour
 
     void Start()
     {
+        _mapDial = FindObjectOfType<MapDial>();
+        _runeDial = FindObjectOfType<RuneDial>();
+
         GetComponentsInChildren<RuneWeiget>(_wegetList);
 
         _select = null;
@@ -52,5 +61,17 @@ public class RuneWeigetPanel : MonoBehaviour
         {
             _parent.gameObject.SetActive(false);
         }
+    }
+
+    public void DialLock()
+    {
+        _mapDial?.DialLock();
+        _runeDial?.DialLock();
+    }
+
+    public void DialUnlock()
+    {
+        _mapDial?.DialUnlock();
+        _runeDial?.DialUnlock();
     }
 }
