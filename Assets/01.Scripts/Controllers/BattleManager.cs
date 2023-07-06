@@ -241,6 +241,9 @@ public class BattleManager : MonoSingleton<BattleManager>
     {
         _tutorialEndPanel.SetActive(true);
 
+        Managers.Gold.ResetGoldAmount();
+        Managers.Deck.Init();
+
         Transform panelTrm = _tutorialEndPanel.transform.Find("Panel");
         panelTrm.localScale = Vector3.zero;
         Sequence seq = DOTween.Sequence();
