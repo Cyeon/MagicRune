@@ -52,12 +52,34 @@ public class OptionUI : MonoBehaviour
     {
         _isUsing = !_isUsing;
         _panels.SetActive(_isUsing);
+
+        if (_isUsing)
+        {
+            Define.MapScene?.mapDial.DialLock();
+            Define.DialScene?.Dial.DialLock();
+        }
+        else
+        {
+            Define.MapScene?.mapDial.DialUnlock();
+            Define.DialScene?.Dial.DialUnlock();
+        }
     }
 
-    public void ActiveUI(bool isaActive)
+    public void ActiveUI(bool isActive)
     {
-        _isUsing = isaActive;
-        _panels.SetActive(isaActive);
+        if (isActive)
+        {
+            Define.MapScene?.mapDial.DialLock();
+            Define.DialScene?.Dial.DialLock();
+        }
+        else
+        {
+            Define.MapScene?.mapDial.DialUnlock();
+            Define.DialScene?.Dial.DialUnlock();
+        }
+
+        _isUsing = isActive;
+        _panels.SetActive(isActive);
     }
 
     private void PopupWarning(bool isAcive)
