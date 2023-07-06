@@ -499,4 +499,14 @@ public class Dial<T1, T2> : MonoBehaviour where T1 : MonoBehaviour where T2 : cl
     {
         _dialElementList[index].IsGlow = value;
     }
+
+    public void DialLock()
+    {
+        _dialElementList.ForEach(x => x.IsDialLock = true);
+    }
+
+    public void DialUnlock()
+    {
+        _dialElementList.ForEach(x => x.IsDialLock = false);
+    }
 }
