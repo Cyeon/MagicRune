@@ -1,0 +1,42 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 785ffbcf96aa1424782615e0a3087e7e, type: 3}
+  m_Name: Scary Slime
+  m_EditorClassIdentifier: 
+  adventureName: "\uCAC4?"
+  image: {fileID: 21300000, guid: be9ed7f37db9a85469190bea971255c8, type: 3}
+  message: "\uAE38\uC744 \uAC00\uB358 \uB3C4\uC911 \uD749\uC545\uD55C \uC2AC\uB77C\uC784\uACFC
+    \uC870\uC6B0\uD588\uC2B5\uB2C8\uB2E4."
+  distractors:
+  - text: "[\uC2F8\uC6B0\uAE30] \uC804\uD22C \uD6C4 \uB79C\uB364\uD55C \uC720\uBB3C\uC744
+      \uD68D\uB4DD\uD569\uB2C8\uB2E4."
+    isNextStage: 0
+    function:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 896080243694524714, guid: 224f0ca2aa1150447ad34e73a82c6cf7, type: 3}
+          m_TargetAssemblyTypeName: DistracotrFuncList, Assembly-CSharp
+          m_MethodName: BattleEnemy
+          m_Mode: 2
+          m_Arguments:
+            m_ObjectArgument: {fileID: 11400000, guid: 86bf330ac11acb9449a85e6c3dc0ed14, type: 2}
+            m_ObjectArgumentAssemblyTypeName: EnemySO, Assembly-CSharp
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - text: "[\uB5A0\uB098\uAE30]"
+    isNextStage: 1
+    function:
+      m_PersistentCalls:
+        m_Calls: []

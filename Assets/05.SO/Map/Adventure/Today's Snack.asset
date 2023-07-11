@@ -1,0 +1,95 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 785ffbcf96aa1424782615e0a3087e7e, type: 3}
+  m_Name: Today's Snack
+  m_EditorClassIdentifier: 
+  adventureName: "\uC624\uB298\uC758 \uAC04\uC2DD"
+  image: {fileID: 21300000, guid: b07ac9d59fd9cf04692ae050841699d3, type: 3}
+  message: "\uC624\uB298\uC758 \uAC04\uC2DD\uC740 \uCE74\uC57C \uC0CC\uB4DC\uC704\uCE58,
+    \uCFE0\uC564\uD06C \uC6B0\uC720 \uC785\uB2C8\uB2E4."
+  distractors:
+  - distractorText: "[\uCE74\uC57C \uC0CC\uB4DC\uC704\uCE58] \uCD5C\uB300 \uCCB4\uB825\uC774
+      5 \uC99D\uAC00\uD569\uB2C8\uB2E4."
+    resultText: "\uC0CC\uB4DC\uC704\uCE58\uB97C \uBA39\uC73C\uB2C8 \uB354 \uB9CE\uC740
+      \uC77C\uC744 \uD560 \uC218 \uC788\uC744 \uAC83 \uAC19\uC740 \uB290\uB08C\uC774
+      \uB4ED\uB2C8\uB2E4!"
+    function:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 896080243694524714, guid: 224f0ca2aa1150447ad34e73a82c6cf7, type: 3}
+          m_TargetAssemblyTypeName: DistracotrFuncList, Assembly-CSharp
+          m_MethodName: SetMode
+          m_Mode: 3
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 896080243694524714, guid: 224f0ca2aa1150447ad34e73a82c6cf7, type: 3}
+          m_TargetAssemblyTypeName: DistracotrFuncList, Assembly-CSharp
+          m_MethodName: AddMaxHp
+          m_Mode: 3
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 5
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 896080243694524714, guid: 224f0ca2aa1150447ad34e73a82c6cf7, type: 3}
+          m_TargetAssemblyTypeName: DistracotrFuncList, Assembly-CSharp
+          m_MethodName: AddHp
+          m_Mode: 3
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 5
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - distractorText: "[\uCFE0\uC564\uD06C \uC6B0\uC720] \uCD5C\uB300 \uCCB4\uB825\uC758
+      20%\uB97C \uD68C\uBCF5\uD569\uB2C8\uB2E4."
+    resultText: "\uC6B0\uC720\uB97C \uB9C8\uC2DC\uB2C8 \uC18D\uC774 \uC870\uAE08
+      \uB354 \uD3B8\uD574\uC84C\uC2B5\uB2C8\uB2E4!"
+    function:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 896080243694524714, guid: 224f0ca2aa1150447ad34e73a82c6cf7, type: 3}
+          m_TargetAssemblyTypeName: DistracotrFuncList, Assembly-CSharp
+          m_MethodName: SetMode
+          m_Mode: 3
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 1
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 896080243694524714, guid: 224f0ca2aa1150447ad34e73a82c6cf7, type: 3}
+          m_TargetAssemblyTypeName: DistracotrFuncList, Assembly-CSharp
+          m_MethodName: AddHp
+          m_Mode: 3
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 20
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  isEnter: 0

@@ -1,0 +1,60 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 785ffbcf96aa1424782615e0a3087e7e, type: 3}
+  m_Name: Copy and Delete
+  m_EditorClassIdentifier: 
+  adventureName: "\uC904\uAE4C \uB9D0\uAE4C \uC904\uAE4C \uB9D0\uAE4C"
+  image: {fileID: 21300000, guid: 473e0d98a4bc22c4bb1e0b4a3ec3a807, type: 3}
+  message: "\uC2E0\uC804\uC5D0 \uB4E4\uC5B4\uC11C\uC790 \uBCF4\uB77C \uBE5B\uC758
+    \uC131\uBB3C\uACFC \uD30C\uB780 \uBE5B\uC758 \uC131\uBB3C\uC744 \uBC1C\uACAC\uD560
+    \uC218 \uC788\uC5C8\uC2B5\uB2C8\uB2E4."
+  distractors:
+  - distractorText: "[\uBCF4\uB77C \uBE5B\uC758 \uC131\uBB3C] \uB79C\uB364\uD55C
+      \uCE74\uB4DC 1\uC7A5\uC774 \uBCF5\uC81C\uB429\uB2C8\uB2E4."
+    resultText: "\uB2F9\uC2E0\uC774 \uBCF4\uB77C \uBE5B\uC758 \uC131\uBB3C\uC5D0
+      \uC190\uC744 \uB300\uC790 \uB2F9\uC2E0\uC758 \uC548\uC5D0\uC11C \uBB34\uC5B8\uAC00\uAC00
+      \uB298\uC5B4\uB09C \uB290\uB08C\uC774 \uB4ED\uB2C8\uB2E4."
+    function:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 896080243694524714, guid: 224f0ca2aa1150447ad34e73a82c6cf7, type: 3}
+          m_TargetAssemblyTypeName: DistracotrFuncList, Assembly-CSharp
+          m_MethodName: RandomRuneCopy
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - distractorText: "[\uD30C\uB780 \uBE5B\uC758 \uC131\uBB3C] \uC120\uD0DD\uD55C
+      \uCE74\uB4DC 1\uC7A5\uC744 \uC81C\uAC70\uD569\uB2C8\uB2E4."
+    resultText: "\uB2F9\uC2E0\uC774 \uD30C\uB780 \uBE5B\uC758 \uC131\uBB3C\uC5D0
+      \uC190\uC744 \uB300\uC790 \uB2F9\uC2E0\uC758 \uC548\uC5D0\uC11C \uBB34\uC5B8\uAC00\uAC00
+      \uC5C6\uC5B4\uC9C4 \uB290\uB08C\uC774 \uB4ED\uB2C8\uB2E4."
+    function:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 896080243694524714, guid: 224f0ca2aa1150447ad34e73a82c6cf7, type: 3}
+          m_TargetAssemblyTypeName: DistracotrFuncList, Assembly-CSharp
+          m_MethodName: DeleteRune
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
