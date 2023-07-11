@@ -19,8 +19,6 @@ public class EnhancePanel : MonoBehaviour
     [SerializeField]
     private ExplainPanel _afterRune;
 
-    private RestUI _restUI;
-
     [SerializeField]
     private Button _enhanceBtn;
     [SerializeField]
@@ -30,8 +28,6 @@ public class EnhancePanel : MonoBehaviour
     {
         _beforeRune.SetUI(null, false, false);
         _afterRune.SetUI(null, false, false);
-
-        _restUI = Managers.Canvas.GetCanvas("Rest").GetComponent<RestUI>();
 
         _enhanceBtn.onClick.RemoveAllListeners();
         _enhanceBtn.onClick.AddListener(() =>
