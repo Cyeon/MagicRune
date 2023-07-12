@@ -40,7 +40,7 @@ public class MapDialElement : DialElement<MapRuneUI, MapRuneUI>
         else
         {
             _selectElement = _elementList[index];
-            Managers.Map.MapScene.MapDescChange(_elementList[index]);
+            Define.MapScene.MapDescChange(_elementList[index]);
         }
     }
 

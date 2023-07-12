@@ -31,7 +31,7 @@ public class ChapterTransition : MonoBehaviour
 
         _backgroundImage.sprite = Resources.Load<Sprite>("Sprite/MapBg_" + Managers.Map.Chapter.ToString());
         _chapterNameText.SetText(Managers.Map.CurrentChapter.chapterName);
-        if (Managers.Map.SaveData.IsTutorial)
+        if (Define.SaveData.IsTutorial)
             _chapterNameText.SetText("튜토리얼");
 
         Sequence seq = DOTween.Sequence();
@@ -43,7 +43,7 @@ public class ChapterTransition : MonoBehaviour
         {
             Reset();
             Managers.Canvas.GetCanvas("ChapterTransition").enabled = false;
-            if (Managers.Map.SaveData.IsTutorial)
+            if (Define.SaveData.IsTutorial)
                 Managers.Canvas.GetCanvas("TutorialCanvas").GetComponent<TutorialUI>().Tutorial("MapDial");
         });
     }

@@ -1,4 +1,5 @@
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 
 [Serializable]
@@ -20,6 +21,11 @@ public class EffectObjectPair
         this.pair = pair;
         this.effect = effect;
     }
+}
+
+public class SaveData
+{
+    public bool IsTutorial = true;
 }
 
 /// <summary>
@@ -49,6 +55,19 @@ public class Define
     public const int RUNE_EVENT_SETTING = 5001;
 
     public const int CLICK_VIEW_UI = 10000;
+
+    private static SaveData _saveData;
+    public static SaveData SaveData
+    {
+        get
+        {
+            if(_saveData == null)
+            {
+                _saveData = Managers.Json.LoadJsonFile<SaveData>("SaveData");
+            }
+            return _saveData;
+        }
+    }
 
     private static Camera _mainCam;
     public static Camera MainCam
