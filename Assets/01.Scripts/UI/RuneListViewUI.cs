@@ -30,7 +30,7 @@ public class RuneListViewUI : MonoBehaviour
     /// </summary>
     public void SetHoldingRunes()
     {
-        SettingPanels(Managers.Deck.Deck.FindAll(x => x.IsCoolTime == true), true);
+        SettingPanels(Managers.Deck.Deck.FindAll(x => x.IsCoolTime == true));
         EventManager.StartListening(Define.ON_START_PLAYER_TURN, UpdateCoolTime);
         ActiveUI(true);
     }
@@ -39,7 +39,7 @@ public class RuneListViewUI : MonoBehaviour
     /// </summary>
     public void SetUseRunes()
     {
-        SettingPanels(Managers.Deck.Deck.FindAll(x => x.IsCoolTime == false), false, Define.DialScene?.Dial.ConsumeDeck);
+        SettingPanels(Managers.Deck.Deck.FindAll(x => x.IsCoolTime == false), Define.DialScene?.Dial.ConsumeDeck);
         ActiveUI(true);
     }
 
@@ -49,7 +49,7 @@ public class RuneListViewUI : MonoBehaviour
         ActiveUI(true);
     }
 
-    private void SettingPanels(List<BaseRune> baseRuneList, bool isCoolTIme = false, List<BaseRune> ignoreRuneList = null)
+    private void SettingPanels(List<BaseRune> baseRuneList, List<BaseRune> ignoreRuneList = null)
     {
         ReturnPanels();
 
@@ -57,9 +57,9 @@ public class RuneListViewUI : MonoBehaviour
         {
             if (ignoreRuneList != null)
                 if (ignoreRuneList.Contains(baseRuneList[i])) { continue; }
-            RuneViewPanelUI panel = Managers.Resource.Instantiate("UI/RuneTemplate", _content).GetComponent<RuneViewPanelUI>();
-            panel.SetUI(baseRuneList[i], isCoolTIme);
-            panel.transform.localScale = Vector3.one;
+            CoolTimeRunePanel panel = Managers.Resource.Instantiate("UI/CoolTimeRunePanel", _content).GetComponent<CoolTimeRunePanel>();
+            panel.SetUI(baseRuneList[i], baseRuneList[i].IsEnhanced);
+            panel.transform.localScale = Vector3.one * 0.9f;
             panel.transform.position = new Vector3(panel.transform.position.x, panel.transform.position.y, 0);
             _usingPanelList.Add(panel.gameObject);
         }
@@ -93,7 +93,7 @@ public class RuneListViewUI : MonoBehaviour
     private void UpdateCoolTime()
     {
         ReturnPanels();
-        SettingPanels(Managers.Deck.Deck.FindAll(x => x.IsCoolTime == true), true);
+        SettingPanels(Managers.Deck.Deck.FindAll(x => x.IsCoolTime == true));
         EventManager.StopListening(Define.ON_START_PLAYER_TURN, UpdateCoolTime);
     }
 

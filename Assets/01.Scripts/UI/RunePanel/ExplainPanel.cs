@@ -30,7 +30,7 @@ public class ExplainPanel : MonoBehaviour, IPointerClickHandler
 
     protected BaseRune _rune;
     public BaseRune Rune => _rune;
-
+    
     private List<KeywardPanel> _keywardPanelList = new List<KeywardPanel>();
 
     private Action _action;
