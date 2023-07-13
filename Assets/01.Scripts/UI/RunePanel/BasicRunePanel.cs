@@ -37,11 +37,15 @@ public class BasicRunePanel : MonoBehaviour, IPointerClickHandler
         {
             _rune = null;
             _nameText.SetText("");
-            _runeIcon.enabled = false;
             _coolTimeText.SetText("");
             _descText.SetText("");
+
+            _runeIcon.enabled = false;
+            _rankIcon.enabled = false;
             return;
         }
+
+        _runeIcon.enabled = true;
 
         _rune = rune;
 
@@ -63,6 +67,7 @@ public class BasicRunePanel : MonoBehaviour, IPointerClickHandler
 
         if (_rankIcon != null)
         {
+            _rankIcon.enabled = true;
             _rankIcon.sprite = Resources.Load<Sprite>("Sprite/RankIcon/" + rune.BaseRuneSO.Rarity.ToString());
         }
     }
