@@ -8,6 +8,7 @@ using UnityEngine;
 public class RuneEffectHandler : MonoBehaviour
 {
     private Dictionary<int, GameObject> _effectDict = new Dictionary<int, GameObject>();
+    public Dictionary<int, GameObject> EffectDict => _effectDict;
 
     [SerializeField, Range(0f, 360f)]
     private float _startAngle = 90f;
@@ -58,6 +59,32 @@ public class RuneEffectHandler : MonoBehaviour
         Sort(!isEdit);
     }
 
+    public void EditEffectScale(int tier, Vector3 scale)
+    {
+        if (_effectDict[tier] != null)
+        {
+            _effectDict[tier].transform.DOScale(scale, 0.25f);
+        }
+    }
+
+    public void EditEffectScale(int tier, float scale)
+    {
+        EditEffectScale(tier, Vector3.one * scale);
+    }
+
+    public void EditAllEffectScale(Vector3 scale)
+    {
+        for(int i = 1; i <= 3; i++)
+        {
+            EditEffectScale(i, scale);
+        }
+    }
+
+    public void EditAllEffectScale(float scale)
+    {
+        EditAllEffectScale(Vector3.one * scale);
+    }
+
     public void Sort(bool isTween = false)
     {
         GameObject[] effectArray = _effectDict.Values.ToArray();
@@ -65,8 +92,7 @@ public class RuneEffectHandler : MonoBehaviour
 
         effectArray = effectArray.Where(x => x != null).ToArray();
         _oneAngle = 360f / effectArray.Length;
-        Debug.Log(effectArray.Length);
-
+         
         for (int i = 0; i < effectArray.Length; i++)
         {
             float width = Mathf.Cos((_oneAngle * i + _startAngle) * Mathf.Deg2Rad) * _distance;
