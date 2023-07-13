@@ -96,7 +96,7 @@ public class RuneEventUI : MonoBehaviour
 
         foreach (BaseRune rune in Managers.Deck.Deck)
         {
-            SelectRunePanel selectPanel = Managers.Resource.Instantiate("UI/SelectRunePanel").GetComponent<SelectRunePanel>();
+            SelectRunePanel selectPanel = Managers.Resource.Instantiate("UI/RunePanel/Select").GetComponent<SelectRunePanel>();
 
             if (selectPanel != null)
             {

@@ -20,4 +20,9 @@ public class CoolTimeRunePanel : BasicRuneAddon
             _coolTimeText.SetText(Basic.Rune.CoolTime.ToString());
         }
     }
+
+    public void CoolTimeOff()
+    {
+        _coolTimePanel.SetActive(false);
+    }
 }

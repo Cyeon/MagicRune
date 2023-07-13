@@ -30,7 +30,7 @@ public class RuneListViewUI : MonoBehaviour
     /// </summary>
     public void SetHoldingRunes()
     {
-        SettingPanels(Managers.Deck.Deck.FindAll(x => x.IsCoolTime == true));
+        SettingPanels(Managers.Deck.Deck.FindAll(x => x.IsCoolTime == true), null, true);
         EventManager.StartListening(Define.ON_START_PLAYER_TURN, UpdateCoolTime);
         ActiveUI(true);
     }
@@ -49,7 +49,7 @@ public class RuneListViewUI : MonoBehaviour
         ActiveUI(true);
     }
 
-    private void SettingPanels(List<BaseRune> baseRuneList, List<BaseRune> ignoreRuneList = null)
+    private void SettingPanels(List<BaseRune> baseRuneList, List<BaseRune> ignoreRuneList = null, bool isCoolTime = false)
     {
         ReturnPanels();
 
@@ -57,11 +57,16 @@ public class RuneListViewUI : MonoBehaviour
         {
             if (ignoreRuneList != null)
                 if (ignoreRuneList.Contains(baseRuneList[i])) { continue; }
-            CoolTimeRunePanel panel = Managers.Resource.Instantiate("UI/CoolTimeRunePanel", _content).GetComponent<CoolTimeRunePanel>();
+            CoolTimeRunePanel panel = Managers.Resource.Instantiate("UI/RunePanel/CoolTime", _content).GetComponent<CoolTimeRunePanel>();
             panel.SetUI(baseRuneList[i], baseRuneList[i].IsEnhanced);
             panel.transform.localScale = Vector3.one * 0.9f;
             panel.transform.position = new Vector3(panel.transform.position.x, panel.transform.position.y, 0);
             _usingPanelList.Add(panel.gameObject);
+
+            if(isCoolTime == false)
+            {
+                panel.CoolTimeOff();
+            }
         }
     }
 
@@ -93,7 +98,7 @@ public class RuneListViewUI : MonoBehaviour
     private void UpdateCoolTime()
     {
         ReturnPanels();
-        SettingPanels(Managers.Deck.Deck.FindAll(x => x.IsCoolTime == true));
+        SettingPanels(Managers.Deck.Deck.FindAll(x => x.IsCoolTime == true), null, true);
         EventManager.StopListening(Define.ON_START_PLAYER_TURN, UpdateCoolTime);
     }
 
