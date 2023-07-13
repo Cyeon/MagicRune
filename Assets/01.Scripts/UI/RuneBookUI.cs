@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 /// <summary>
@@ -10,21 +11,40 @@ public class RuneBookUI : MonoBehaviour
     [SerializeField]
     private RuneBookPanel _template = null;
 
-    private List<BaseRuneSO> _orederList = new List<BaseRuneSO>(); 
+    private List<BaseRuneSO> _orederList = new List<BaseRuneSO>();
+
+    private bool _rarityAscending = true;
+    private bool nameAscending = true;
 
     private void Init()
     {
 
     }
 
-    public void ChangeIndex(AttributeType type, bool rarityAscending = true, bool nameAscending = true)
+    public void ChangeIndex(AttributeType type)
     {
+        _orederList.Clear();
+        _orederList = Managers.Deck.RuneDictionary[type];
 
+        ChangeOrderBy();
     }
 
-    public List<BaseRuneSO> ReturnRunes(AttributeType type)
+    public void ChangeOrderBy()
     {
-        return Managers.Deck.RuneDictionary[type];
+        if (_rarityAscending)
+        {
+            if (nameAscending)
+                _orederList.OrderBy(x => x.Rarity).ThenBy(x => x.RuneName);
+            else
+                _orederList.OrderBy(x => x.Rarity).ThenByDescending(x => x.RuneName);
+        }
+        else
+        {
+            if (nameAscending)
+                _orederList.OrderByDescending(x => x.Rarity).ThenBy(x => x.RuneName);
+            else
+                _orederList.OrderByDescending(x => x.Rarity).ThenByDescending(x => x.RuneName);
+        }
     }
 
     private void ReturnPanels()
