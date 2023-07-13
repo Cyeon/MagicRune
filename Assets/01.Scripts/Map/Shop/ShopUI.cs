@@ -14,7 +14,7 @@ public class ShopUI : MonoBehaviour
     private void Start()
     {
         _storeShelf = transform.Find("StoreShelf");
-        _keywardRunePanel = transform.Find("Keyward").GetComponent<KeywardRunePanel>();
+        _keywardRunePanel = transform.Find("KeywardHorizontal").GetComponent<KeywardRunePanel>();
 
         Managers.Canvas.GetCanvas("Shop").enabled = false;
     }
