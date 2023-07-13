@@ -108,7 +108,7 @@ public class TutorialUI : MonoBehaviour
                 case "RuneCycle":
                     TutorialEnd();
                     Define.DialScene?.Turn("Enemy Turn");
-                    Managers.Map.SaveData.IsTutorial = false;
+                    Define.SaveData.IsTutorial = false;
                     TutorialMessage("자유롭게 다이얼을 조작하여\n적을 처치하세요!");
                     BattleManager.Instance.Enemy.OnDieEvent.AddListener(() => _tutorialMessage.enabled = false);
                     break;
