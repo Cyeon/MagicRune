@@ -22,14 +22,8 @@ public class RuneEventUI : MonoBehaviour
     private Transform _content = null;
     private List<GameObject> _runePanelList = new List<GameObject>();
 
-    [SerializeField]
-    private GameObject _runePanelTemplate = null;
-
     private void Start()
     {
-        if (_runePanelTemplate != null)
-            Managers.Pool.CreatePool(_runePanelTemplate, 30);
-
         _scrollView = transform.Find("Scroll View").gameObject;
         _content = _scrollView.GetComponent<ScrollRect>().content;
 
@@ -102,13 +96,12 @@ public class RuneEventUI : MonoBehaviour
 
         foreach (BaseRune rune in Managers.Deck.Deck)
         {
-            RuneSelectPanelUI selectPanel = Managers.Resource.Instantiate(_runePanelTemplate).GetComponent<RuneSelectPanelUI>();
+            SelectRunePanel selectPanel = Managers.Resource.Instantiate("UI/SelectRunePanel").GetComponent<SelectRunePanel>();
 
             if (selectPanel != null)
             {
+                selectPanel.SetUI(rune, rune.IsEnhanced);
                 selectPanel.SetMode(mode);
-                selectPanel.SetRune(rune);
-                selectPanel.SetUI();
                 selectPanel.transform.localScale = Vector3.one;
 
                 selectPanel.transform.SetParent(_content);
