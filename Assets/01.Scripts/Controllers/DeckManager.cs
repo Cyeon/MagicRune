@@ -12,9 +12,26 @@ public class DeckManager
     private List<BaseRune> _deck = new List<BaseRune>(12); // ?뚯??섍퀬 ?덈뒗 紐⑤뱺 猷?
     public List<BaseRune> Deck => _deck;
 
+    private DeckSO _allRuneSO = null;
+    private Dictionary<AttributeType, List<BaseRuneSO>> _runeDictionary = new Dictionary<AttributeType, List<BaseRuneSO>>();
+    public Dictionary<AttributeType, List<BaseRuneSO>> RuneDictionary => _runeDictionary;
+
     public void Init()
     {
         SetDefaultDeck(Managers.Resource.Load<DeckSO>("SO/Deck/DefaultDeck").RuneList);
+
+        _allRuneSO = Managers.Resource.Load<DeckSO>("SO/Deck/AllRuneDeck");
+
+        for (int i = 0; i < (int)AttributeType.MAX_COUNT; i++)
+        {
+            _runeDictionary.Add((AttributeType)i, new List<BaseRuneSO>()); // 미리 속성 별 리스트 만들어서 할당 시켜놓기 
+        }
+
+        for (int i = 0; i < _allRuneSO.RuneList.Count; i++)
+        {
+            _runeDictionary[AttributeType.None].Add(_allRuneSO.RuneList[i]);    // 전체 리스트에 추가
+            _runeDictionary[_allRuneSO.RuneList[i].AttributeType].Add(_allRuneSO.RuneList[i]); // 각 속성 리스트에 추가
+        }
     }
 
     public void SetDefaultDeck(in List<BaseRuneSO> runeList)
