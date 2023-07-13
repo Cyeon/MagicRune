@@ -59,21 +59,7 @@ public class MapManager
         }
     }
 
-    private MapScene _mapScene;
-    public MapScene MapScene
-    {
-        get
-        {
-            if (_mapScene == null)
-            {
-                _mapScene = Managers.Scene.CurrentScene as MapScene;
-            }
-            return _mapScene;
-        }
-    }
-
     private bool _isFirst = true;
-    public SaveData SaveData;
 
     #region Adventure
     private bool _isAdventure = false;
@@ -97,8 +83,6 @@ public class MapManager
 
         Managers.Reward.ImageLoad();
         _mapSceneUI.ChapterTransition.Init();
-
-        SaveData = Managers.Json.LoadJsonFile<SaveData>("SaveData");
 
         if (_isFirst)
         {
@@ -131,7 +115,7 @@ public class MapManager
 
         bool isAttack = false;
 
-        if(SaveData.IsTutorial)
+        if(Define.SaveData.IsTutorial)
         {
             _firstPeriodStageList.Add(StageType.Tutorial);
             _firstPeriodStageList.Add(StageType.Tutorial);
@@ -223,10 +207,10 @@ public class MapManager
     public void NextStage()
     {
         Managers.Canvas.GetCanvas("MapDial").enabled = true;
-        MapScene.mapDial.gameObject.SetActive(true);
+        Define.MapScene.mapDial.gameObject.SetActive(true);
 
-        MapScene.mapDial.Clear();
-        MapScene.mapDial.MapStageSpawn();
+        Define.MapScene.mapDial.Clear();
+        Define.MapScene.mapDial.MapStageSpawn();
 
         if (Managers.GetPlayer() != null && Managers.GetPlayer().IsDie == true)
         {
@@ -244,13 +228,13 @@ public class MapManager
         _floor++;
 
         _periodProgress++;
-        MapScene.CompousProgress((float)_periodProgress / _nextCondition);
+        Define.MapScene.CompousProgress((float)_periodProgress / _nextCondition);
 
         if(_periodProgress == _nextCondition)
         {
             NextPeriod();
-            MapScene.mapDial.Clear();
-            MapScene.mapDial.MapStageSpawn();
+            Define.MapScene.mapDial.Clear();
+            Define.MapScene.mapDial.MapStageSpawn();
         }
     }
     #endregion
@@ -263,7 +247,7 @@ public class MapManager
         _periodProgress = 0;
         _periodType++;
 
-        MapScene?.CompousProgress(0);
+        Define.MapScene?.CompousProgress(0);
 
         switch (CurrentPeriodType)
         {
@@ -329,7 +313,7 @@ public class MapManager
 
     public void Tutorial()
     {
-        SaveData.IsTutorial = true;
+        Define.SaveData.IsTutorial = true;
         ChapterInit();
         _isFirst = false;
         _chapterList.ForEach(x => x.EnemyReset());
