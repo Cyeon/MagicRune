@@ -45,6 +45,11 @@ public class DeckManager
     /// <summary> Deck??猷?異붽? </summary>
     public void AddRune(BaseRune rune)
     {
+        if (rune.BaseRuneSO.DiscoveryType != DiscoveryType.Known)
+        {
+            rune.BaseRuneSO.DiscoveryType = DiscoveryType.Known;
+        }
+
         _deck.Add(rune);
         DeckSort();
     }
@@ -97,6 +102,12 @@ public class DeckManager
             }
         }
         int idx = Random.Range(0, newRuneList.Count);
+
+        if (newRuneList[idx].BaseRuneSO.DiscoveryType == DiscoveryType.Unknwon)
+        {
+            newRuneList[idx].BaseRuneSO.DiscoveryType = DiscoveryType.Find;
+        }
+
         return newRuneList[idx];
     }
 

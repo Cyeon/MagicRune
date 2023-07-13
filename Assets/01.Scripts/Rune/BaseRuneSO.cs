@@ -23,6 +23,13 @@ public enum EffectDirection
     Player,
 }
 
+public enum DiscoveryType
+{
+    Unknwon,
+    Find,
+    Known
+}
+
 [CreateAssetMenu(menuName = "SO/Rune/BaseRuneSO")]
 public class BaseRuneSO : ScriptableObject
 {
@@ -50,6 +57,7 @@ public class BaseRuneSO : ScriptableObject
         return desc;
     }
 
+    public DiscoveryType DiscoveryType = DiscoveryType.Unknwon;
     public AttributeType AttributeType;
     public GameObject RuneEffect;
     public RuneRarity Rarity;
