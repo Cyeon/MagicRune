@@ -58,12 +58,12 @@ public class RuneListViewUI : MonoBehaviour
             if (ignoreRuneList != null)
                 if (ignoreRuneList.Contains(baseRuneList[i])) { continue; }
             CoolTimeRunePanel panel = Managers.Resource.Instantiate("UI/RunePanel/CoolTime", _content).GetComponent<CoolTimeRunePanel>();
-            panel.SetUI(baseRuneList[i], baseRuneList[i].IsEnhanced);
+            panel.SetUI(baseRuneList[i].BaseRuneSO, baseRuneList[i].IsEnhanced);
             panel.transform.localScale = Vector3.one * 0.9f;
             panel.transform.position = new Vector3(panel.transform.position.x, panel.transform.position.y, 0);
             _usingPanelList.Add(panel.gameObject);
 
-            if(isCoolTime == false)
+            if (isCoolTime == false)
             {
                 panel.CoolTimeOff();
             }

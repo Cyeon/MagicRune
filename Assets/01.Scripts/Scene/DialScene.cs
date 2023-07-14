@@ -266,14 +266,13 @@ public class DialScene : BaseScene
 
     public void CardDescPopup(BaseRune rune)
     {
-        _cardDescPanel.SetUI(rune, rune != null ? rune.IsEnhanced : false);
+        _cardDescPanel.SetUI(rune.BaseRuneSO, rune != null ? rune.IsEnhanced : false);
         _cardDescPanel.KeywardSetting();
     }
 
     public void CardDescDown()
     {
-        BaseRune rune = null;
-        _cardDescPanel.SetUI(rune);
+        _cardDescPanel.SetUI(null);
     }
 
     public void StatusDescPopup(Status status, Vector3 pos)

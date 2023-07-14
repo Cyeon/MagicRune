@@ -77,7 +77,8 @@ public class EnhancePanel : MonoBehaviour
         {
             int index = i;
             BasicRunePanel panel = Managers.Resource.Instantiate("UI/RunePanel/Basic", _runeArea).GetComponent<BasicRunePanel>();
-            panel.SetUI(notEnhanceRuneArray[i], notEnhanceRuneArray[i].IsEnhanced);
+            panel.SetUI(notEnhanceRuneArray[i].BaseRuneSO, notEnhanceRuneArray[i].IsEnhanced);
+            panel.SetRune(notEnhanceRuneArray[i]);
             panel.GetComponent<RectTransform>().localScale = Vector3.one;
             panel.GetComponent<RectTransform>().anchoredPosition3D = Vector3.zero;
             panel.ClickAction += (() => SetSelectRune(_runeList[index].Rune));
@@ -99,8 +100,8 @@ public class EnhancePanel : MonoBehaviour
     {
         _selectRune = rune;
 
-        _beforeRune.SetUI(rune, false);
-        _afterRune.SetUI(rune, true);
+        _beforeRune.SetUI(rune.BaseRuneSO, false);
+        _afterRune.SetUI(rune.BaseRuneSO, true);
     }
 
     public void Enhace()

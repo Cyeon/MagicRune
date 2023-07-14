@@ -15,9 +15,9 @@ public class SelectRunePanel : BasicRuneAddon
 {
     private RuneSelectMode _selectMode = RuneSelectMode.None;
 
-    public override void SetUI(BaseRune rune, bool isEnhance = true)
+    public override void SetRune(BaseRune rune)
     {
-        Basic.SetUI(rune, isEnhance);
+        Basic.SetRune(rune);
         Basic.ClickAction -= RuneClick;
         Basic.ClickAction += RuneClick;
     }

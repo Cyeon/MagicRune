@@ -52,7 +52,7 @@ public class ShopUI : MonoBehaviour
         _selectItem = shopItem;
         _selectItem.SetActiveSelectPanel(true);
 
-        _keywardRunePanel.SetUI(_selectItem.item.Rune, false);
+        _keywardRunePanel.SetUI(_selectItem.item.Rune.BaseRuneSO, false);
         _keywardRunePanel.KeywardSetting();
     }
 
@@ -92,8 +92,7 @@ public class ShopUI : MonoBehaviour
         _selectItem.SoldOut();
 
         _selectItem = null;
-        BaseRune nullRune = null;
-        _keywardRunePanel.SetUI(nullRune);
+        _keywardRunePanel.SetUI(null);
 
         _storeShelf.transform.GetComponentsInChildren<ShopItemPanelUI>().ForEach(x => x.GoldTextColorUpdate());
     }

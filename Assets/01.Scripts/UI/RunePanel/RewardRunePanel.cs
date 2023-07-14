@@ -16,9 +16,14 @@ public class RewardRunePanel : BasicRuneAddon
         }
     }
 
-    public override void SetUI(BaseRune rune, bool isEnhance = true)
+    public override void SetUI(BaseRuneSO baseRuneSO, bool isEnhance = true)
     {
-        Basic.SetUI(rune, isEnhance);
+        Basic.SetUI(baseRuneSO, isEnhance);
+    }
+
+    public override void SetRune(BaseRune rune)
+    {
+        base.SetRune(rune);
         Basic.ClickAction -= ChooseRune;
         Basic.ClickAction += ChooseRune;
     }

@@ -19,7 +19,8 @@ public class ChooseRuneUI : MonoBehaviour
         BaseRune[] rune = Managers.Rune.GetRandomRune(3,Managers.Deck.DefaultRune).ToArray();
         for(int i = 0; i < rune.Length; i++)
         {
-            _rewardPanelList[i].SetUI(rune[i], false);
+            _rewardPanelList[i].SetUI(rune[i].BaseRuneSO, false);
+            _rewardPanelList[i].SetRune(rune[i]);
         }
     }
 

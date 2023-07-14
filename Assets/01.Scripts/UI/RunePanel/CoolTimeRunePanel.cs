@@ -10,11 +10,11 @@ public class CoolTimeRunePanel : BasicRuneAddon
     [SerializeField]
     private TextMeshProUGUI _coolTimeText;
 
-    public override void SetUI(BaseRune rune, bool isEnhance = true)
+    public override void SetUI(BaseRuneSO baseRuneSO, bool isEnhance = true)
     {
-        Basic.SetUI(rune, isEnhance);
+        Basic.SetUI(baseRuneSO, isEnhance);
 
-        if(Basic.Rune.IsCoolTime)
+        if (Basic.Rune.IsCoolTime)
         {
             _coolTimePanel.SetActive(true);
             _coolTimeText.SetText(Basic.Rune.CoolTime.ToString());

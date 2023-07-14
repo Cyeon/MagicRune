@@ -31,7 +31,7 @@ public class RuneEventUI : MonoBehaviour
         Managers.UI.Bind<TextMeshProUGUI>("SelectedRuneName_Text", gameObject);
         Managers.UI.Bind<TextMeshProUGUI>("SelectedRuneDesc_Text", gameObject);
 
-        Managers.UI.Bind<Button>("NextStageButton_Button",gameObject);
+        Managers.UI.Bind<Button>("NextStageButton_Button", gameObject);
 
         _runeSpriteImage = Managers.UI.Get<Image>("SelectedRuneSprite_Image");
         _runeNameText = Managers.UI.Get<TextMeshProUGUI>("SelectedRuneName_Text");
@@ -100,7 +100,8 @@ public class RuneEventUI : MonoBehaviour
 
             if (selectPanel != null)
             {
-                selectPanel.SetUI(rune, rune.IsEnhanced);
+                selectPanel.SetUI(rune.BaseRuneSO, rune.IsEnhanced);
+                selectPanel.SetRune(rune);
                 selectPanel.SetMode(mode);
                 selectPanel.transform.localScale = Vector3.one;
 

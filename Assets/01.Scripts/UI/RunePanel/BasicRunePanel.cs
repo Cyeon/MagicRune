@@ -31,9 +31,9 @@ public class BasicRunePanel : MonoBehaviour, IPointerClickHandler
         ClickAction?.Invoke();
     }
 
-    public virtual void SetUI(BaseRune rune, bool isEnhance = false)
+    public virtual void SetUI(BaseRuneSO runeSO, bool isEnhance = false)
     {
-        if (rune == null)
+        if (runeSO == null)
         {
             _rune = null;
             _nameText.SetText("");
@@ -47,28 +47,32 @@ public class BasicRunePanel : MonoBehaviour, IPointerClickHandler
 
         _runeIcon.enabled = true;
 
-        _rune = rune;
+        //_rune = rune;
 
         if (isEnhance == false)
         {
             _nameText.color = Color.white;
-            _nameText.SetText(_rune.BaseRuneSO.RuneName);
+            _nameText.SetText(runeSO.RuneName);
         }
         else
         {
             _nameText.color = Color.green;
-            _nameText.SetText(_rune.BaseRuneSO.RuneName + "+");
+            _nameText.SetText(runeSO.RuneName + "+");
         }
 
         _runeIcon.enabled = true;
-        _runeIcon.sprite = _rune.BaseRuneSO.RuneSprite;
-        _coolTimeText.SetText(_rune.BaseRuneSO.CoolTime.ToString());
-        _descText.SetText(_rune.BaseRuneSO.RuneDescription(isEnhance));
+        _runeIcon.sprite = runeSO.RuneSprite;
+        _coolTimeText.SetText(runeSO.CoolTime.ToString());
+        _descText.SetText(runeSO.RuneDescription(isEnhance));
 
         if (_rankIcon != null)
         {
             _rankIcon.enabled = true;
-            _rankIcon.sprite = Resources.Load<Sprite>("Sprite/RankIcon/" + rune.BaseRuneSO.Rarity.ToString());
+            _rankIcon.sprite = Resources.Load<Sprite>("Sprite/RankIcon/" + runeSO.Rarity.ToString());
         }
+    }
+    public virtual void SetRune(BaseRune rune)
+    {
+        _rune = rune;
     }
 }

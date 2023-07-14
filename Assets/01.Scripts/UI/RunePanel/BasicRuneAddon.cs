@@ -9,7 +9,7 @@ public abstract class BasicRuneAddon : MonoBehaviour
     {
         get
         {
-            if(_basic == null )
+            if (_basic == null)
             {
                 _basic = GetComponent<BasicRunePanel>();
             }
@@ -17,5 +17,13 @@ public abstract class BasicRuneAddon : MonoBehaviour
         }
     }
 
-    public abstract void SetUI(BaseRune rune, bool isEnhance = true);
+    public virtual void SetUI(BaseRuneSO runeSO, bool isEnhance = true)
+    {
+        Basic.SetUI(runeSO, isEnhance);
+    }
+
+    public virtual void SetRune(BaseRune rune)
+    {
+        Basic.SetRune(rune);
+    }
 }

@@ -18,9 +18,9 @@ public class KeywardRunePanel : BasicRuneAddon
             _keywardRect = _keywardArea?.GetComponent<RectTransform>();
     }
 
-    public override void SetUI(BaseRune rune, bool isEnhance = true)
+    public override void SetUI(BaseRuneSO runeSO = null, bool isEnhance = true)
     {
-        Basic.SetUI(rune, isEnhance);
+        Basic.SetUI(runeSO, isEnhance);
 
         ClearKeyward();
     }
