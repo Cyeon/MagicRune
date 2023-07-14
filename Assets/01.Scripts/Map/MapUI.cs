@@ -28,14 +28,12 @@ public class MapUI : MonoBehaviour
     private void Awake()
     {
         _mainBackground = transform.Find("MainBackground").GetComponent<Image>();
-        _endGamePanel = transform.Find("EndGamePanel").gameObject;
+        _endGamePanel = transform.Find("GameResultPanel").gameObject;
     }
 
     private void Start()
     {
         ChangeBackground();
-
-        _endGamePanel.SetActive(false);
     }
 
     public void ChangeBackground()
@@ -48,14 +46,12 @@ public class MapUI : MonoBehaviour
     public void EndGame()
     {
         transform.GetComponent<Canvas>().sortingLayerName = "Top";
+        transform.GetComponent<Canvas>().sortingOrder = 100;
         _endGamePanel.SetActive(true);
 
-        _endGamePanel.transform.localScale = Vector3.zero;
-        Sequence seq = DOTween.Sequence();
-        seq.AppendCallback(() => _endGamePanel.SetActive(true));
-        seq.Append(_endGamePanel.transform.DOScale(Vector3.one * 1.2f, 0.2f));
-        seq.Append(_endGamePanel.transform.DOScale(Vector3.one, 0.05f));
-        seq.AppendCallback(() => _endGamePanel.SetActive(true));
+        Managers.Canvas.GetCanvas("UserInfoPanel").enabled = false;
+
+        _endGamePanel.GetComponent<GameResultPanel>().Popup();
     }
 
     public void GameExit()
