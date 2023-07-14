@@ -15,9 +15,9 @@ public class EnhancePanel : MonoBehaviour
     private List<BasicRunePanel> _runeList = new List<BasicRunePanel>();
 
     [SerializeField]
-    private ExplainPanel _beforeRune;
+    private BasicRunePanel _beforeRune;
     [SerializeField]
-    private ExplainPanel _afterRune;
+    private BasicRunePanel _afterRune;
 
     [SerializeField]
     private Button _enhanceBtn;
@@ -26,8 +26,8 @@ public class EnhancePanel : MonoBehaviour
 
     private void OnEnable()
     {
-        _beforeRune.SetUI(null, false, false);
-        _afterRune.SetUI(null, false, false);
+        _beforeRune.SetUI(null, false);
+        _afterRune.SetUI(null, false);
 
         _enhanceBtn.onClick.RemoveAllListeners();
         _enhanceBtn.onClick.AddListener(() =>
@@ -38,13 +38,6 @@ public class EnhancePanel : MonoBehaviour
         _exitBtn.onClick.AddListener(() =>
         {
             _selectRune = null;
-
-            //_restUI.SetActiveExplainPanel(true);
-            //_restUI.SetActiveEnhancePanel(false);
-            //_restUI.Dial.gameObject.SetActive(true);
-            //_restUI.NextStage();
-
-            //Managers.Map.NextStage();
             Managers.Resource.Destroy(this.gameObject);
         });
     }
@@ -106,8 +99,8 @@ public class EnhancePanel : MonoBehaviour
     {
         _selectRune = rune;
 
-        _beforeRune.SetUI(rune, false, false);
-        _afterRune.SetUI(rune, true, false);
+        _beforeRune.SetUI(rune, false);
+        _afterRune.SetUI(rune, true);
     }
 
     public void Enhace()
