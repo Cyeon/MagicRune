@@ -5,13 +5,13 @@ using UnityEngine.UI;
 
 public class RuneListViewUI : MonoBehaviour
 {
-    private GameObject _backgroundPanel = null;
-    private GameObject _scrollView = null;
+    protected GameObject _backgroundPanel = null;
+    protected GameObject _scrollView = null;
 
-    private Transform _content = null;
-    private List<GameObject> _usingPanelList = new List<GameObject>();
+    protected Transform _content = null;
+    protected List<GameObject> _usingPanelList = new List<GameObject>();
 
-    private void Start()
+    protected virtual void Start()
     {
         _backgroundPanel = transform.Find("RuneListView_BGPanel").gameObject;
         _scrollView = transform.Find("RuneListView_ScrollView").gameObject;
@@ -79,7 +79,7 @@ public class RuneListViewUI : MonoBehaviour
         _usingPanelList.Clear();
     }
 
-    private void ActiveUI(bool isActive)
+    protected void ActiveUI(bool isActive)
     {
         if (isActive)
         {

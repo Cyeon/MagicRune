@@ -24,6 +24,8 @@ public class DeckManager
 
         for (int i = 0; i < (int)AttributeType.MAX_COUNT; i++)
         {
+            if (_runeDictionary.ContainsKey((AttributeType)i)) // 혹시라도 먼저 만들어져있다면 패스 
+                continue;
             _runeDictionary.Add((AttributeType)i, new List<BaseRuneSO>()); // 미리 속성 별 리스트 만들어서 할당 시켜놓기 
         }
 

@@ -19,6 +19,11 @@ public class BasicRunePanel : MonoBehaviour, IPointerClickHandler
     private TextMeshProUGUI _descText;
     [SerializeField]
     private Image _rankIcon;
+
+    public TextMeshProUGUI NameText => _nameText;
+    public Image RuneIcon { get { return _runeIcon; } set { _runeIcon = value; } }
+    public TextMeshProUGUI CoolTImeText => _coolTimeText;
+    public TextMeshProUGUI DescText => _descText;
     #endregion
 
     private BaseRune _rune;
