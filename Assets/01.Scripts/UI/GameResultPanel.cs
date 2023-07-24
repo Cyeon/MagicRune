@@ -47,6 +47,18 @@ public class GameResultPanel : MonoBehaviour
             seq.AppendCallback(() =>
             {
                 _textList[index].gameObject.SetActive(true);
+                switch(index)
+                {
+                    case 1:
+                        _textList[index].SetText(string.Format("진행도: {0}-{1} 스테이지", Managers.Map.Chapter, Managers.Map.Stage));
+                        break;
+                    case 2:
+                        _textList[index].SetText(string.Format("획득한 총 골드: {0} 골드", Define.SaveData.TotalGold));
+                        break;
+                    case 3:
+                        _textList[index].SetText(string.Format("처치한 적: {0} 마리", Define.SaveData.KillEnemyAmount));
+                        break;
+                }
                 _textList[index].transform.localScale = Vector3.one * 1.2f;
             });
             seq.Append(_textList[index].transform.DOScale(Vector3.one, 0.2f));
