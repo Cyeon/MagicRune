@@ -42,6 +42,7 @@ public class RuneEffectHandler : MonoBehaviour
         if (_effectDict[tier] != null)
         {
             if (_effectDict[tier] == effect) return;
+            _effectDict[tier].transform.DOKill();
             Managers.Resource.Destroy(_effectDict[tier]);
             isEdit = true;
         }
