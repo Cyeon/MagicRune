@@ -100,7 +100,8 @@ public class RuneEffectHandler : MonoBehaviour
             float height = Mathf.Sin((_oneAngle * i + _startAngle) * Mathf.Deg2Rad) * _distance;
             if (isTween)
             {
-                transform.DOKill();
+                //transform.DOKill();
+                effectArray[i]?.transform.DOComplete();
                 effectArray[i]?.transform.DOMove(new Vector3(width + this.transform.position.x, height + this.transform.position.y, 0), 0.2f);
             }
             else
@@ -147,6 +148,7 @@ public class RuneEffectHandler : MonoBehaviour
         }
         Managers.Sound.PlaySound(Define.DialScene.Dial.DialElementList[3 - tier].SelectElement.Rune.BaseRuneSO.RuneSound, SoundType.Effect);
         b.Init(_effectDict[tier].transform, pos, 2f, 10f, 10f, action);
+        _effectDict[tier].transform.DOKill();
         Managers.Resource.Destroy(_effectDict[tier]);
         _effectDict[tier] = null;
 

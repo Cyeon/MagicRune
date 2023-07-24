@@ -209,14 +209,18 @@ public class Dial<T1, T2> : MonoBehaviour where T1 : MonoBehaviour where T2 : cl
             return;
         }
 
+        int dialFLine = 3 - fLine;
+        int dialSLine = 3 - sLine;
+
+        _dialElementList[dialFLine].ElementMoveInLine();
+        _dialElementList[dialSLine].ElementMoveInLine();
+
         List<T1> newList = new List<T1>(_elementDict[fLine]);
         _elementDict[fLine].Clear();
         _elementDict[fLine] = new List<T1>(_elementDict[sLine]);
         _elementDict[sLine].Clear();
         _elementDict[sLine] = new List<T1>(newList);
 
-        int dialFLine = 3 - fLine;
-        int dialSLine = 3 - sLine;
         _dialElementList[dialFLine]?.SetRuneList(_elementDict[fLine]);
         _dialElementList[dialSLine]?.SetRuneList(_elementDict[sLine]);
 
