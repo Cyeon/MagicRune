@@ -26,6 +26,9 @@ public class EffectObjectPair
 public class SaveData
 {
     public bool IsTutorial = true;
+
+    public int TotalGold = 0;
+    public int KillEnemyAmount = 0;
 }
 
 /// <summary>

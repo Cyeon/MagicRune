@@ -23,6 +23,12 @@ public class GoldManager
         Define.DialScene?.GoldPopUp(amount);
         Define.MapScene?.GoldPopUp(amount);
 
+        if(amount >= 0)
+        {
+            Define.SaveData.TotalGold += amount;
+            Managers.Json.SaveJson<SaveData>("SaveData", Define.SaveData);
+        }
+
         UpdateGoldAction?.Invoke();
         Managers.Sound.StopSound(SoundType.Effect);
         Managers.Sound.PlaySound("SFX/GoldGetSound", SoundType.Effect);
@@ -31,5 +37,7 @@ public class GoldManager
     public void ResetGoldAmount()
     {
         _gold = 100;
+        Define.SaveData.TotalGold = _gold;
+        Managers.Json.SaveJson<SaveData>("SaveData", Define.SaveData);
     }
 }
