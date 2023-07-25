@@ -46,7 +46,7 @@ public class LobbyBGUI : MonoBehaviour
         _selectPanel.DOAnchorPosX(_xPosArray[leftRightToMain], moveBGSpeed).SetEase(moveBGEase);
     }
 
-    [Obsolete]
+    //[Obsolete]
     public void MoveBG(int leftRightToMain)
     {
         //_index = leftRightToMain;

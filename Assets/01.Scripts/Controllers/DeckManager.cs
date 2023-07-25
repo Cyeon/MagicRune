@@ -31,8 +31,10 @@ public class DeckManager
 
         for (int i = 0; i < _allRuneSO.RuneList.Count; i++)
         {
-            _runeDictionary[AttributeType.None].Add(_allRuneSO.RuneList[i]);    // 전체 리스트에 추가
-            _runeDictionary[_allRuneSO.RuneList[i].AttributeType].Add(_allRuneSO.RuneList[i]); // 각 속성 리스트에 추가
+            if (!_runeDictionary[AttributeType.None].Contains(_allRuneSO.RuneList[i]))
+                _runeDictionary[AttributeType.None].Add(_allRuneSO.RuneList[i]);    // 전체 리스트에 추가
+            if (!_runeDictionary[_allRuneSO.RuneList[i].AttributeType].Contains(_allRuneSO.RuneList[i]))
+                _runeDictionary[_allRuneSO.RuneList[i].AttributeType].Add(_allRuneSO.RuneList[i]); // 각 속성 리스트에 추가
         }
     }
 

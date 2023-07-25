@@ -19,49 +19,64 @@ public class RuneBookUI : RuneListViewUI
     private RuneBookPanel _template = null;
 
     [SerializeField]
-    private Transform _indexButtons = null;
+    private Transform _orderByButtons = null;
 
     protected override void Start()
     {
-        base.Start();
+        _backgroundPanel = transform.Find("RuneListView_BGPanel").gameObject;
+        _scrollView = transform.Find("RuneListView_ScrollView").gameObject;
+        _content = _scrollView.transform.Find("Viewport").GetChild(0).transform;
+
+        ActiveUI(true);
         _template = Managers.Resource.Load<RuneBookPanel>("Prefabs/UI/RunePanel/RuneBook");
 
-        for (int i = 0; i < _indexButtons.childCount; i++)
+        _orderByButtons.Find("RarityButton").GetComponent<Button>().onClick.AddListener(() =>
         {
-            _indexButtons.GetChild(i).GetComponent<Button>().onClick.AddListener(() => ChangeIndex((AttributeType)i));
-        }
+            _rarityAscending = !_rarityAscending;
+            ArrowFlip(_rarityAscending, _orderByButtons.Find("RarityButton").Find("Image"));
+            ChangeOrderBy();
+        });
+
+        _orderByButtons.Find("NameButton").GetComponent<Button>().onClick.AddListener(() =>
+        {
+            _nameAscending = !_nameAscending;
+            ArrowFlip(_nameAscending, _orderByButtons.Find("NameButton").Find("Image"));
+            ChangeOrderBy();
+        });
     }
 
     private void Init()
     {
-        
+
     }
 
-    public void ChangeIndex(AttributeType type)
+    public void ChangeIndex(int typeIndex)
     {
+        AttributeType type = (AttributeType)typeIndex;
         _orederList.Clear();
-        _orederList = Managers.Deck.RuneDictionary[type];
+        _orederList = Managers.Deck.RuneDictionary[type].ToList();
 
         ChangeOrderBy();
     }
 
     public void ChangeOrderBy()
     {
-        if (_rarityAscending)
+        Debug.Log(_rarityAscending + " , " + _nameAscending);
+        if (_nameAscending)
         {
-            if (_nameAscending)
-                _orederList.OrderBy(x => x.Rarity).ThenBy(x => x.RuneName);
+            if (_rarityAscending)
+                _orederList.OrderBy(x => x.RuneName).ThenBy(x => x.Rarity);
             else
-                _orederList.OrderBy(x => x.Rarity).ThenByDescending(x => x.RuneName);
+                _orederList.OrderBy(x => x.RuneName).ThenByDescending(x => x.Rarity);
         }
         else
         {
-            if (_nameAscending)
-                _orederList.OrderByDescending(x => x.Rarity).ThenBy(x => x.RuneName);
+            if (_rarityAscending)
+                _orederList.OrderByDescending(x => x.RuneName).ThenBy(x => x.Rarity);
             else
-                _orederList.OrderByDescending(x => x.Rarity).ThenByDescending(x => x.RuneName);
+                _orederList.OrderByDescending(x => x.RuneName).ThenByDescending(x => x.Rarity);
         }
-     
+
         SettingPanels();
     }
 
@@ -75,15 +90,27 @@ public class RuneBookUI : RuneListViewUI
             panel.SetUI(_orederList[i], false);
             panel.transform.localScale = Vector3.one * 0.9f;
             panel.transform.position = new Vector3(panel.transform.position.x, panel.transform.position.y, 0);
-            
+
             _usingPanelList.Add(panel.gameObject);
         }
     }
 
     public void SetActiveUIFirst()
     {
-        ChangeIndex(AttributeType.None);
+        ChangeIndex(0);
 
         ActiveUI(true);
+    }
+
+    private void ArrowFlip(bool isAscending, Transform arrow)
+    {
+        Vector3 rotation = arrow.eulerAngles;
+
+        if (isAscending)
+            rotation.z = 90f;
+        else
+            rotation.z = 270f;
+
+        arrow.eulerAngles = rotation;
     }
 }
