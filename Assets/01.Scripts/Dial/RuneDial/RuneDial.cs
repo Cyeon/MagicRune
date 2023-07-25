@@ -33,6 +33,7 @@ public class RuneDial : Dial<BaseRuneUI, BaseRune>
         {
             for (int i = 0; i < runeList.Value.Count; i++)
             {
+                runeList.Value[i].transform.DOKill();
                 Managers.Resource.Destroy(runeList.Value[i].gameObject);
             }
         }

@@ -202,19 +202,25 @@ public class BezierMissile : MonoBehaviour
         // 도착한거임
         if((Vector2)_transform.position == m_points[3])
         {
-            Managers.Resource.Destroy(_effect);
-            _effect = null;
+            if (_effect != null)
+            {
+                _effect.transform.DOKill();
+                Managers.Resource.Destroy(_effect);
+                _effect = null;
+            }
 
             _goldGiveAction?.Invoke();
-            // 핸동하고
-            //if(BattleManager.Instance.Enemy.IsDie == false)
+            //핸동하고
+            //if (BattleManager.Instance.Enemy.IsDie == false)
             //{
+            //    _endAction?.Invoke();
             //}
             _endAction?.Invoke();
 
             m_timerCurrent = 0;
             // 풀링
             BattleManager.Instance.MissileAttackEnd();
+            this.transform.DOKill();
             Managers.Resource.Destroy(this.gameObject);
         }
     }

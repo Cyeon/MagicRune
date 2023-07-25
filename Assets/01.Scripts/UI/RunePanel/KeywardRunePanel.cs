@@ -27,7 +27,8 @@ public class KeywardRunePanel : BasicRuneAddon
 
     public void KeywardSetting()
     {
-        SetKeyward(Basic.Rune.BaseRuneSO);
+        if(Basic.Rune != null)
+            SetKeyward(Basic.Rune.BaseRuneSO);
     }
 
     public void ClearKeyward()

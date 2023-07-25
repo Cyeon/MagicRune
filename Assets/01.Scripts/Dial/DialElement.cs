@@ -175,12 +175,14 @@ public class DialElement<T1, T2> : MonoBehaviour where T1 : MonoBehaviour where 
 
         //RotateMagicCircle();
 
-        if (_isTouchDown == true && _isUsingLineSwap == true && IsRotate == false)
+        if (_isTouchDown == true && _isUsingLineSwap == true && _selectElement != null)
         {
             _touchDownTimer += Time.deltaTime;
 
             if (_touchDownTimer > _dragTouchTime)
             {
+                ElementMoveInLine();
+
                 _dialState = DialState.Drag;
                 _dial.SelectDialElement(this);
             }

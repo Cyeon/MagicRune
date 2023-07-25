@@ -51,6 +51,9 @@ public class Enemy : Unit
     {
         _isDie = true;
 
+        Define.SaveData.KillEnemyAmount++;
+        Managers.Json.SaveJson<SaveData>("SaveData", Define.SaveData);
+
         Sequence seq = DOTween.Sequence();
         seq.Append(spriteRenderer.DOFade(0, 0.75f));
         seq.Join(spriteRenderer.transform.DOMoveY(spriteRenderer.transform.position.y - 1f, 0.75f));

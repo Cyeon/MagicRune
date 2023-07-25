@@ -40,8 +40,8 @@ public class MapManager
     public PeriodType CurrentPeriodType => _periodType;
     #endregion
 
-    private int _floor = 0;
-    public int Floor => _floor;
+    private int _stage = 0;
+    public int Stage => _stage;
 
     private StageSpawner _stageSpawner;
     public StageSpawner StageSpawner => _stageSpawner;
@@ -194,13 +194,14 @@ public class MapManager
         if (Chapter < _chapterList.Count)
         {
             _chapter++;
+            _stage = 0;
             ChapterInit();
             _mapSceneUI.ChangeBackground();
             _mapSceneUI.ChapterTransition.Transition();
         }
         else
         {
-            _mapSceneUI.EndGame();
+            Managers.Scene.LoadScene("EndScene");
         }
     }
 
@@ -225,7 +226,7 @@ public class MapManager
             return;
         }
 
-        _floor++;
+        _stage++;
 
         _periodProgress++;
         Define.MapScene.CompousProgress((float)_periodProgress / _nextCondition);
@@ -236,6 +237,7 @@ public class MapManager
             Define.MapScene.mapDial.Clear();
             Define.MapScene.mapDial.MapStageSpawn();
         }
+
     }
     #endregion
 
@@ -289,7 +291,7 @@ public class MapManager
     public void ResetChapter()
     {
         _chapter = 1;
-        _floor = 0;
+        _stage = 0;
         _isFirst = true;
         ChapterInit();
         Managers.GetPlayer().ResetHealth();
