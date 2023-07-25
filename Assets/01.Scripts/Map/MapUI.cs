@@ -9,9 +9,6 @@ public class MapUI : MonoBehaviour
 {
     private Image _mainBackground = null;
 
-    [Header("End Game")]
-    private GameObject _endGamePanel;
-
     private ChapterTransition _chapterTransition = null;
     public ChapterTransition ChapterTransition
     {
@@ -28,7 +25,6 @@ public class MapUI : MonoBehaviour
     private void Awake()
     {
         _mainBackground = transform.Find("MainBackground").GetComponent<Image>();
-        _endGamePanel = transform.Find("GameResultPanel").gameObject;
     }
 
     private void Start()
@@ -41,17 +37,6 @@ public class MapUI : MonoBehaviour
         string path = "Sprite/MapBg_" + Managers.Map.Chapter.ToString();
         if(_mainBackground != null)
             _mainBackground.sprite = Resources.Load<Sprite>(path);
-    }
-
-    public void EndGame()
-    {
-        transform.GetComponent<Canvas>().sortingLayerName = "Top";
-        transform.GetComponent<Canvas>().sortingOrder = 100;
-        _endGamePanel.SetActive(true);
-
-        Managers.Canvas.GetCanvas("UserInfoPanel").enabled = false;
-
-        _endGamePanel.GetComponent<GameResultPanel>().Popup();
     }
 
     public void GameExit()

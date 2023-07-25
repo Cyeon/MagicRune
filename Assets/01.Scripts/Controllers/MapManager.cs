@@ -201,7 +201,7 @@ public class MapManager
         }
         else
         {
-            _mapSceneUI.EndGame();
+            Managers.Scene.LoadScene("EndScene");
         }
     }
 
@@ -237,6 +237,7 @@ public class MapManager
             Define.MapScene.mapDial.Clear();
             Define.MapScene.mapDial.MapStageSpawn();
         }
+
     }
     #endregion
 

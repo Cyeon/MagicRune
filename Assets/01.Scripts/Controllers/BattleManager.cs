@@ -54,7 +54,10 @@ public class BattleManager : MonoSingleton<BattleManager>
         Player.UISetting();
 
         Player.OnDieEvent.RemoveAllListeners();
-        Player.OnDieEvent.AddListener(() => { Define.DialScene?.RewardUI.DefeatPanelPopup(); });
+        Player.OnDieEvent.AddListener(() =>
+        {
+            Managers.Scene.LoadScene("EndScene");
+        });
 
         if(Define.SaveData.IsTutorial)
         {
