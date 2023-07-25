@@ -75,7 +75,7 @@ public class RuneEffectHandler : MonoBehaviour
 
     public void EditAllEffectScale(Vector3 scale)
     {
-        for(int i = 1; i <= 3; i++)
+        for (int i = 1; i <= 3; i++)
         {
             EditEffectScale(i, scale);
         }
@@ -93,7 +93,7 @@ public class RuneEffectHandler : MonoBehaviour
 
         effectArray = effectArray.Where(x => x != null).ToArray();
         _oneAngle = 360f / effectArray.Length;
-         
+
         for (int i = 0; i < effectArray.Length; i++)
         {
             float width = Mathf.Cos((_oneAngle * i + _startAngle) * Mathf.Deg2Rad) * _distance;
@@ -136,6 +136,7 @@ public class RuneEffectHandler : MonoBehaviour
                 break;
         }
 
+
         Transform pos = null;
         switch (Define.DialScene.Dial.DialElementList[3 - tier].SelectElement.Rune.BaseRuneSO.Direction)
         {
@@ -149,6 +150,7 @@ public class RuneEffectHandler : MonoBehaviour
         Managers.Sound.PlaySound(Define.DialScene.Dial.DialElementList[3 - tier].SelectElement.Rune.BaseRuneSO.RuneSound, SoundType.Effect);
         b.Init(_effectDict[tier].transform, pos, 2f, 10f, 10f, action);
         _effectDict[tier].transform.DOKill();
+        transform.DOKill();
         Managers.Resource.Destroy(_effectDict[tier]);
         _effectDict[tier] = null;
 
@@ -157,9 +159,13 @@ public class RuneEffectHandler : MonoBehaviour
 
     public void Clear()
     {
-        foreach(var effect in _effectDict)
+        foreach (KeyValuePair<int, GameObject> effect in _effectDict)
         {
-            Managers.Resource.Destroy(effect.Value);
+            if (effect.Value != null)
+            {
+                effect.Value.transform.DOKill();
+                Managers.Resource.Destroy(effect.Value);
+            }
         }
     }
 }

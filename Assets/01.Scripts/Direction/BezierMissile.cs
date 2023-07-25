@@ -202,6 +202,7 @@ public class BezierMissile : MonoBehaviour
         // 도착한거임
         if((Vector2)_transform.position == m_points[3])
         {
+            _effect.transform.DOKill();
             Managers.Resource.Destroy(_effect);
             _effect = null;
 
@@ -215,6 +216,7 @@ public class BezierMissile : MonoBehaviour
             m_timerCurrent = 0;
             // 풀링
             BattleManager.Instance.MissileAttackEnd();
+            this.transform.DOKill();
             Managers.Resource.Destroy(this.gameObject);
         }
     }
