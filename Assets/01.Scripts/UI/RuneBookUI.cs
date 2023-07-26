@@ -61,20 +61,19 @@ public class RuneBookUI : RuneListViewUI
 
     public void ChangeOrderBy()
     {
-        Debug.Log(_rarityAscending + " , " + _nameAscending);
-        if (_nameAscending)
+        if (_rarityAscending)
         {
-            if (_rarityAscending)
-                _orederList.OrderBy(x => x.RuneName).ThenBy(x => x.Rarity);
+            if (_nameAscending)
+                _orederList = _orederList.OrderBy(x => x.Rarity).ThenBy(x => x.RuneName).ToList();
             else
-                _orederList.OrderBy(x => x.RuneName).ThenByDescending(x => x.Rarity);
+                _orederList = _orederList.OrderBy(x => x.Rarity).ThenByDescending(x => x.RuneName).ToList();
         }
         else
         {
-            if (_rarityAscending)
-                _orederList.OrderByDescending(x => x.RuneName).ThenBy(x => x.Rarity);
+            if (_nameAscending)
+                _orederList = _orederList.OrderByDescending(x => x.Rarity).ThenBy(x => x.RuneName).ToList();
             else
-                _orederList.OrderByDescending(x => x.RuneName).ThenByDescending(x => x.Rarity);
+                _orederList = _orederList.OrderByDescending(x => x.Rarity).ThenByDescending(x => x.RuneName).ToList();
         }
 
         SettingPanels();
