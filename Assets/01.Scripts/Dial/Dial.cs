@@ -77,6 +77,10 @@ public class Dial<T1, T2> : MonoBehaviour where T1 : MonoBehaviour where T2 : cl
     protected virtual void Start()
     {
         SettingDialRune(true);
+
+        //Debug.Log($"{Quaternion.Euler(new Vector3(0, 0, 60)).eulerAngles}, {Quaternion.Euler(new Vector3(0, 0, 300)).eulerAngles}");
+        //Debug.Log($"{new Quaternion(0, 0, 0.5f, -1).eulerAngles}, {new Quaternion(0, 0, 0.5f, 1).eulerAngles}");
+        //Debug.Log($"{Quaternion.Euler(new Vector3(0, 0, 300))}");
     }
 
     public void SelectDialElement(DialElement<T1, T2> e)
@@ -184,7 +188,7 @@ public class Dial<T1, T2> : MonoBehaviour where T1 : MonoBehaviour where T2 : cl
                             {
                                 int fIndex = 3 - _selectIndex;
                                 int sIndex = 3 - i;
-                                LineSwap(fIndex, sIndex);
+                                StartCoroutine(LineSwap(fIndex, sIndex));
                                 SelectDialElement(i);
                                 break;
                             }
@@ -199,14 +203,14 @@ public class Dial<T1, T2> : MonoBehaviour where T1 : MonoBehaviour where T2 : cl
         }
     }
 
-    public void LineSwap(int fLine, int sLine)
+    public IEnumerator LineSwap(int fLine, int sLine)
     {
-        if (fLine == sLine) return;
+        if (fLine == sLine) yield break;
 
         if (_elementDict.ContainsKey(fLine) == false || _elementDict.ContainsKey(sLine) == false)
         {
-            Debug.LogWarning("Not have Key");
-            return;
+            //Debug.LogWarning("Not have Key");
+            yield break;
         }
 
         int dialFLine = 3 - fLine;
@@ -221,16 +225,24 @@ public class Dial<T1, T2> : MonoBehaviour where T1 : MonoBehaviour where T2 : cl
         _elementDict[sLine].Clear();
         _elementDict[sLine] = new List<T1>(newList);
 
-        _dialElementList[dialFLine]?.SetRuneList(_elementDict[fLine]);
-        _dialElementList[dialSLine]?.SetRuneList(_elementDict[sLine]);
+        
 
-        _dialElementList[dialFLine].transform.rotation = _dialElementList[dialSLine].transform.rotation;
-        Quaternion rot = _dialElementList[dialFLine].transform.rotation;
-        _dialElementList[dialSLine].transform.rotation = rot;
+        Quaternion dialFRot = _dialElementList[dialFLine].transform.localRotation;
+        Quaternion dialSRot = _dialElementList[dialSLine].transform.localRotation;
+
+        //_dialElementList[dialFLine].transform.rotation = _dialElementList[dialSLine].transform.rotation;
+        //Quaternion rot = _dialElementList[dialFLine].transform.rotation;
+        //_dialElementList[dialSLine].transform.rotation = rot;
 
         //T1 rune = _dialElementList[dialFLine].SelectElement;
         //_dialElementList[dialFLine].SelectElement = _dialElementList[dialSLine].SelectElement;
         //_dialElementList[dialSLine].SelectElement = rune;
+
+        _dialElementList[dialFLine].transform.rotation = Quaternion.identity;
+        _dialElementList[dialSLine].transform.rotation = Quaternion.identity;
+
+        _dialElementList[dialFLine]?.SetRuneList(_elementDict[fLine]);
+        _dialElementList[dialSLine]?.SetRuneList(_elementDict[sLine]);
 
         float offset = _lineDistanceArray[dialFLine] / _lineDistanceArray[dialSLine];
         for (int i = 0; i < _dialElementList[dialFLine].ElementList.Count; i++)
@@ -256,6 +268,15 @@ public class Dial<T1, T2> : MonoBehaviour where T1 : MonoBehaviour where T2 : cl
             }
         }
 
+        yield return new WaitForSeconds(0.3f);
+
+        //Debug.Log($"{_dialElementList[dialFLine].transform.eulerAngles}, {dialSRot}, {Quaternion.Euler(dialSRot)}");
+        //_dialElementList[dialFLine].transform.rotation = Quaternion.Euler(0, 0, dialSRot.z > 180 ? 360f - dialSRot.z : dialSRot.z);
+        _dialElementList[dialFLine].transform.localRotation = dialSRot;
+        //Debug.Log($"{_dialElementList[dialFLine].transform.eulerAngles}");
+        //Debug.Log($"{_dialElementList[dialSLine].transform.eulerAngles}, {dialFRot}, {Quaternion.Euler(dialFRot)}");
+        _dialElementList[dialSLine].transform.localRotation = dialFRot;
+        //Debug.Log($"{_dialElementList[dialSLine].transform.eulerAngles}");
 
         //RuneSort(true);
 
