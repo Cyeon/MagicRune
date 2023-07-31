@@ -68,7 +68,7 @@ public class BasicRunePanel : MonoBehaviour, IPointerClickHandler
         _runeIcon.enabled = true;
         _runeIcon.sprite = runeSO.RuneSprite;
         _coolTimeText.SetText(runeSO.CoolTime.ToString());
-        _descText.SetText(runeSO.RuneDescription(isEnhance));
+        _descText.SetText(runeSO.RuneDescription(runeSO.KeywardList, isEnhance));
 
         if (_rankIcon != null)
         {

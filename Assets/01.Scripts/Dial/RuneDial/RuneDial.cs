@@ -95,14 +95,6 @@ public class RuneDial : Dial<BaseRuneUI, BaseRune>
             _remainingDeck.Remove(rune);
             _usingDeck.Add(rune);
         }
-
-        for(int i = 1; i <= 3; i++)
-        {
-            for(int j = 0; j < _maxCount; j++)
-            {
-                _dataDict[i][j] = _elementDict[i][j];
-            }
-        }
         #endregion
 
         #region Copy
