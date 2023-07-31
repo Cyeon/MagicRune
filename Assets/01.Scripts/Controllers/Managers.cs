@@ -99,6 +99,12 @@ public class Managers : MonoBehaviour
     {
         BackButtonAction();
         Swipe.Update(Time.deltaTime);
+
+        if(Define.SaveData.IsTimerPlay)
+        {
+            Define.SaveData.TimerSecond += Time.deltaTime;
+            Managers.Json.SaveJson<SaveData>("SaveData", Define.SaveData);
+        }
     }
 
     private void BackButtonAction()
