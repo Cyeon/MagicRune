@@ -4,35 +4,23 @@ using UnityEngine;
 
 public class ChooseRuneUI : MonoBehaviour
 {
-    private List<ChooseRunePanel> _crPanelList = new List<ChooseRunePanel>();
+    private List<RewardRunePanel> _rewardPanelList = new List<RewardRunePanel>();
 
     private void Awake()
     {
-        Transform trm = transform.Find("ChooseRuneList");
-        for(int i = 0; i <  trm.childCount; i++)
+        for(int i = 0; i <  transform.childCount; i++)
         {
-            _crPanelList.Add(trm.GetChild(i).GetComponent<ChooseRunePanel>());
+            _rewardPanelList.Add(transform.GetChild(i).GetComponent<RewardRunePanel>());
         }
     }
 
     public void SetUp()
     {
-        //foreach(var panel  in _crPanelList)
-        //{
-        //    BaseRune rune = Managers.Rune.GetRandomRune();
-        //    panel.SetUI(rune, isEnhance:false);
-        //}
-
-        //for(int i = 0; i < 3; i++)
-        //{
-        //    BaseRune rune = Managers.Rune.GetRandomRune();
-        //    _crPanelList[i].SetUI(rune, isEnhance:false, isReward:false);
-        //}
-
-        BaseRune[] rune = Managers.Rune.GetRandomRune(3).ToArray();
+        BaseRune[] rune = Managers.Rune.GetRandomRune(3,Managers.Deck.DefaultRune).ToArray();
         for(int i = 0; i < rune.Length; i++)
         {
-            _crPanelList[i].SetUI(rune[i], isEnhance: false, isReward: false);
+            _rewardPanelList[i].SetUI(rune[i].BaseRuneSO, false);
+            _rewardPanelList[i].SetRune(rune[i]);
         }
     }
 
@@ -40,10 +28,5 @@ public class ChooseRuneUI : MonoBehaviour
     {
         gameObject.SetActive(false);
         BattleManager.Instance.NextStage();
-
-        //if(Managers.Reward.IsHaveNextClickReward())
-        //{
-        //   BattleManager.Instance.NextStage();
-        //}
     }
 }

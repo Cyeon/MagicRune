@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,7 +10,9 @@ public class TutorialUI : MonoBehaviour
     private Image _tutorialImage;
     private GameObject _attackTutorialImage;
 
-    private int _index = 1;
+    private TextMeshProUGUI _tutorialMessage;
+
+    private int _index = 1; 
     private string _imageName;
 
     private void Awake()
@@ -26,6 +29,10 @@ public class TutorialUI : MonoBehaviour
         {
             _attackTutorialImage = Managers.Canvas.GetCanvas("Popup").transform.Find("AttackTutorial").gameObject;
             _attackTutorialImage.SetActive(false);
+
+            _tutorialMessage = Managers.Canvas.GetCanvas("Popup").transform.Find("TutorialMessage").GetComponent<TextMeshProUGUI>();
+            _tutorialMessage.enabled = false;
+
         }
     }
 
@@ -60,17 +67,18 @@ public class TutorialUI : MonoBehaviour
         _index = 1;
 
         if (Managers.Scene.CurrentScene is MapScene)
-            Define.MapScene.mapDial.DialElementList[0].IsDialLock = false;
+            Define.MapScene.mapDial.DialUnlock();
         else if (Managers.Scene.CurrentScene is DialScene)
         {
             Managers.Canvas.GetCanvas("Main").enabled = true;
             Managers.Canvas.GetCanvas("Popup").enabled = true;
-            Define.DialScene.Dial.DialElementList.ForEach(x => x.IsDialLock = false);
+            Define.DialScene.Dial.DialUnlock();
 
-            if(isFirst)
+            if (isFirst)
             {
                 BattleManager.Instance.TurnChange();
                 _attackTutorialImage.SetActive(true);
+                TutorialMessage("다이얼을 위로 드래그하여\n공격을 해보세요!");
                 Define.DialScene.Dial.OnDialAttack += AttackTutorialImageDown;
             }
         }
@@ -81,30 +89,61 @@ public class TutorialUI : MonoBehaviour
         Tutorial(_imageName, ++_index);
         if(_tutorialImage.sprite == null)
         {
-            if (_imageName == "AttackRule")
-                TutorialEnd(true);
-            else if (_imageName == "DeckRule")
+            switch(_imageName)
             {
-                TutorialEnd();
-                Define.DialScene?.Turn("Enemy Turn");
-                Managers.Map.SaveData.IsTutorial = false;
+                case "Tutorial":
+                    TutorialEnd(true);
+                    break;
+
+                case "LineChange":
+                    _index = 1;
+                    Tutorial("RuneCycle", _index);
+                    break;
+
+                case "Deck_Explain":
+                    _index = 1;
+                    Tutorial("Attribute_Select", _index);
+                    break;
+
+                case "RuneCycle":
+                    TutorialEnd();
+                    Define.DialScene?.Turn("Enemy Turn");
+                    Define.SaveData.IsTutorial = false;
+                    TutorialMessage("자유롭게 다이얼을 조작하여\n적을 처치하세요!");
+                    BattleManager.Instance.Enemy.OnDieEvent.AddListener(() => _tutorialMessage.enabled = false);
+                    break;
+
+                case "Attribute_Select":
+                    TutorialEnd();
+                    BattleManager.Instance.TutorialEnd();
+                    break;
+
+                default:
+                    TutorialEnd();
+                    break;
             }
-            else
-                TutorialEnd();
         }
     }
 
     public void AttackTutorialImageDown()
     {
         _attackTutorialImage.SetActive(false);
+        _tutorialMessage.enabled = false;
+
         Define.DialScene.Dial.OnDialAttack -= AttackTutorialImageDown;
 
-        Tutorial("DeckRule", _index);
+        Tutorial("LineChange", _index);
         Managers.Canvas.GetCanvas("Main").enabled = true;
     }
 
     public void LobbyScene()
     {
         Managers.Scene.LoadScene(Define.Scene.LobbyScene);
+    }
+
+    private void TutorialMessage(string message)
+    {
+        _tutorialMessage.SetText(message);
+        _tutorialMessage.enabled=true;
     }
 }

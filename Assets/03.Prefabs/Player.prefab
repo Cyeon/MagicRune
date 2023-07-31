@@ -49,6 +49,7 @@ MonoBehaviour:
   _maxHealth: 100
   _health: 100
   _shield: 0
+  IsShiledReset: 1
   currentDmg: 0
   attackSound: {fileID: 8300000, guid: e80bdb09e3ee7274a855277bfed0a493, type: 3}
   isTurnSkip: 0
@@ -84,9 +85,8 @@ MonoBehaviour:
   _spriteRenderer: {fileID: 0}
   _hitMat: {fileID: 2100000, guid: 0b664c11ebc086742b5f1c21ec34f932, type: 2}
   _hitShaker: {fileID: 0}
-  _animator: {fileID: 0}
+  Animator: {fileID: 0}
   relicTrm: {fileID: 0}
-  _uiTrm: {fileID: 0}
 --- !u!1 &1970106384304513732
 GameObject:
   m_ObjectHideFlags: 0

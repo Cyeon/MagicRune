@@ -23,6 +23,13 @@ public enum EffectDirection
     Player,
 }
 
+public enum DiscoveryType
+{
+    Unknwon,
+    Find,
+    Known
+}
+
 [CreateAssetMenu(menuName = "SO/Rune/BaseRuneSO")]
 public class BaseRuneSO : ScriptableObject
 {
@@ -45,6 +52,7 @@ public class BaseRuneSO : ScriptableObject
         desc = desc.Replace("(status)", GetAbillityValue(EffectType.Status, isEnhance: isEnhance));
         desc = desc.Replace("(def)", GetAbillityValue(EffectType.Defence, isEnhance: isEnhance)+ " 방어");
         desc = desc.Replace("(dStatus)", GetAbillityValue(EffectType.DestroyStatus, isEnhance: isEnhance));
+        desc = desc.Replace("(etc)", GetAbillityValue(EffectType.Etc, isEnhance: isEnhance));
 
         for (int i = 0; i < keywordList.Length; i++)
         {
@@ -55,6 +63,7 @@ public class BaseRuneSO : ScriptableObject
         return desc;
     }
 
+    public DiscoveryType DiscoveryType = DiscoveryType.Unknwon;
     public AttributeType AttributeType;
     public GameObject RuneEffect;
     public RuneRarity Rarity;

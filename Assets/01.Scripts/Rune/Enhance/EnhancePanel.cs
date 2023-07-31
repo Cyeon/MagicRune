@@ -12,14 +12,12 @@ public class EnhancePanel : MonoBehaviour
 
     [SerializeField]
     private Transform _runeArea;
-    private List<ExplainPanel> _runeList = new List<ExplainPanel>();
+    private List<BasicRunePanel> _runeList = new List<BasicRunePanel>();
 
     [SerializeField]
-    private ExplainPanel _beforeRune;
+    private BasicRunePanel _beforeRune;
     [SerializeField]
-    private ExplainPanel _afterRune;
-
-    private RestUI _restUI;
+    private BasicRunePanel _afterRune;
 
     [SerializeField]
     private Button _enhanceBtn;
@@ -28,10 +26,8 @@ public class EnhancePanel : MonoBehaviour
 
     private void OnEnable()
     {
-        _beforeRune.SetUI(null, false, false);
-        _afterRune.SetUI(null, false, false);
-
-        _restUI = Managers.Canvas.GetCanvas("Rest").GetComponent<RestUI>();
+        _beforeRune.SetUI(null, false);
+        _afterRune.SetUI(null, false);
 
         _enhanceBtn.onClick.RemoveAllListeners();
         _enhanceBtn.onClick.AddListener(() =>
@@ -42,13 +38,6 @@ public class EnhancePanel : MonoBehaviour
         _exitBtn.onClick.AddListener(() =>
         {
             _selectRune = null;
-
-            //_restUI.SetActiveExplainPanel(true);
-            //_restUI.SetActiveEnhancePanel(false);
-            //_restUI.Dial.gameObject.SetActive(true);
-            //_restUI.NextStage();
-
-            //Managers.Map.NextStage();
             Managers.Resource.Destroy(this.gameObject);
         });
     }
@@ -87,11 +76,12 @@ public class EnhancePanel : MonoBehaviour
         for(int i = 0; i < notEnhanceRuneArray.Length; i++)
         {
             int index = i;
-            ExplainPanel panel = Managers.Resource.Instantiate("UI/Explain_Panel", _runeArea).GetComponent<ExplainPanel>();
-            panel.SetUI(notEnhanceRuneArray[i], isReward: false);
+            BasicRunePanel panel = Managers.Resource.Instantiate("UI/RunePanel/Basic", _runeArea).GetComponent<BasicRunePanel>();
+            panel.SetUI(notEnhanceRuneArray[i].BaseRuneSO, notEnhanceRuneArray[i].IsEnhanced);
+            panel.SetRune(notEnhanceRuneArray[i]);
             panel.GetComponent<RectTransform>().localScale = Vector3.one;
             panel.GetComponent<RectTransform>().anchoredPosition3D = Vector3.zero;
-            panel.SetAction(() => SetSelectRune(_runeList[index].Rune));
+            panel.ClickAction += (() => SetSelectRune(_runeList[index].Rune));
             _runeList.Add(panel);
         }
     }
@@ -110,8 +100,8 @@ public class EnhancePanel : MonoBehaviour
     {
         _selectRune = rune;
 
-        _beforeRune.SetUI(rune, false, false);
-        _afterRune.SetUI(rune, true, false);
+        _beforeRune.SetUI(rune.BaseRuneSO, false);
+        _afterRune.SetUI(rune.BaseRuneSO, true);
     }
 
     public void Enhace()

@@ -1,14 +1,11 @@
+using DG.Tweening;
 using MyBox;
-using System.Collections;
-using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class ShopUI : MonoBehaviour
 {
     private Transform _storeShelf;
-    private ExplainPanel _explainPanel;
+    private KeywardRunePanel _keywardRunePanel;
     private ShopItemPanelUI _selectItem;
     [SerializeField] private GameObject _buyCheck;
 
@@ -17,7 +14,7 @@ public class ShopUI : MonoBehaviour
     private void Start()
     {
         _storeShelf = transform.Find("StoreShelf");
-        _explainPanel = transform.Find("Explain_Panel").GetComponent<ExplainPanel>();
+        _keywardRunePanel = transform.Find("KeywardHorizontal").GetComponent<KeywardRunePanel>();
 
         Managers.Canvas.GetCanvas("Shop").enabled = false;
     }
@@ -55,7 +52,8 @@ public class ShopUI : MonoBehaviour
         _selectItem = shopItem;
         _selectItem.SetActiveSelectPanel(true);
 
-        _explainPanel.SetUI(_selectItem.item.Rune.BaseRuneSO);
+        _keywardRunePanel.SetUI(_selectItem.item.Rune.BaseRuneSO, false);
+        _keywardRunePanel.KeywardSetting();
     }
 
     public void BuyCheck()
@@ -72,11 +70,20 @@ public class ShopUI : MonoBehaviour
         }
 
         _buyCheck.SetActive(true);
+        _buyCheck.transform.localScale = Vector3.zero;
+
+        Sequence seq = DOTween.Sequence();
+        seq.Append(_buyCheck.transform.DOScale(1.2f, 0.2f));
+        seq.Append(_buyCheck.transform.DOScale(1f, 0.1f));
     }
 
     public void Buy()
     {
-        _buyCheck.SetActive(false);
+
+        Sequence seq = DOTween.Sequence();
+        seq.Append(_buyCheck.transform.DOScale(1.2f, 0.1f));
+        seq.Append(_buyCheck.transform.DOScale(0, 0.2f));
+        seq.AppendCallback(() => _buyCheck.SetActive(false));
 
         Managers.Gold.AddGold(-_selectItem.item.Gold);
         Managers.Sound.PlaySound("SFX/Buy", SoundType.Effect);
@@ -85,8 +92,7 @@ public class ShopUI : MonoBehaviour
         _selectItem.SoldOut();
 
         _selectItem = null;
-        BaseRune nullRune = null;
-        _explainPanel.SetUI(nullRune);
+        _keywardRunePanel.SetUI(null);
 
         _storeShelf.transform.GetComponentsInChildren<ShopItemPanelUI>().ForEach(x => x.GoldTextColorUpdate());
     }

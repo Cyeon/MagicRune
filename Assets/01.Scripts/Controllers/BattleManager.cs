@@ -54,18 +54,21 @@ public class BattleManager : MonoSingleton<BattleManager>
         Player.UISetting();
 
         Player.OnDieEvent.RemoveAllListeners();
-        Player.OnDieEvent.AddListener(() => { Define.DialScene?.RewardUI.DefeatPanelPopup(); });
+        Player.OnDieEvent.AddListener(() =>
+        {
+            Managers.Scene.LoadScene("EndScene");
+        });
 
-        if(Managers.Map.SaveData.IsTutorial)
+        if(Define.SaveData.IsTutorial)
         {
             TutorialUI ui = Managers.Canvas.GetCanvas("Tutorial").GetComponent<TutorialUI>();
-            ui.Tutorial("AttackRule", 1);
+            ui.Tutorial("Tutorial", 1);
             ui.CanvasOff();
 
             Enemy.OnDieEvent.AddListener(() =>
             {
                 ui.Tutorial("RewardRule", 1);
-                Managers.Map.SaveData.IsTutorial = true;
+                Define.SaveData.IsTutorial = true;
             });
 
             _tutorialEndPanel = Managers.Canvas.GetCanvas("Popup").transform.Find("TutorialEndPanel").gameObject;
@@ -154,7 +157,7 @@ public class BattleManager : MonoSingleton<BattleManager>
                 if (Enemy.Shield > 0) Enemy.ResetShield();
 
                 _gameTurn = GameTurn.PlayerEnd;
-                if (Managers.Map.SaveData.IsTutorial) return;
+                if (Define.SaveData.IsTutorial) return;
 
                 Define.DialScene?.Turn("Enemy Turn");
                 break;
@@ -222,20 +225,15 @@ public class BattleManager : MonoSingleton<BattleManager>
     public void NextStage()
     {
         Managers.Reward.ResetRewardList();
-        if (Managers.Map.SaveData.IsTutorial)
+
+        if (Define.SaveData.IsTutorial)
         {
-            Managers.Map.SaveData.IsTutorial = false;
-            Managers.Json.SaveJson<SaveData>("SaveData", Managers.Map.SaveData);
+            Define.SaveData.IsTutorial = false;
+            Managers.Json.SaveJson<SaveData>("SaveData", Define.SaveData);
             Managers.Map.ResetChapter();
             Define.DialScene?.HideChooseRuneUI();
 
-            _tutorialEndPanel.SetActive(true);
-
-            Transform panelTrm = _tutorialEndPanel.transform.Find("Panel");
-            panelTrm.localScale = Vector3.zero;
-            Sequence seq = DOTween.Sequence();
-            seq.Append(panelTrm.DOScale(Vector3.one * 1.2f, 0.3f));
-            seq.Append(panelTrm.DOScale(Vector3.one, 0.1f));
+            Managers.Canvas.GetCanvas("TutorialCanvas").GetComponent<TutorialUI>().Tutorial("Deck_Explain", 1);
 
             return;
         }
@@ -243,4 +241,17 @@ public class BattleManager : MonoSingleton<BattleManager>
         Managers.Scene.LoadScene(Define.Scene.MapScene);
     }
 
+    public void TutorialEnd()
+    {
+        _tutorialEndPanel.SetActive(true);
+
+        Managers.Gold.ResetGoldAmount();
+        Managers.Deck.SetDefaultDeck(Managers.Resource.Load<DeckSO>("SO/Deck/DefaultDeck").RuneList);
+
+        Transform panelTrm = _tutorialEndPanel.transform.Find("Panel");
+        panelTrm.localScale = Vector3.zero;
+        Sequence seq = DOTween.Sequence();
+        seq.Append(panelTrm.DOScale(Vector3.one * 1.2f, 0.2f));
+        seq.Append(panelTrm.DOScale(Vector3.one, 0.05f));
+    }
 }

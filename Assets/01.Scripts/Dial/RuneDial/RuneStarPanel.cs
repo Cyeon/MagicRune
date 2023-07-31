@@ -20,6 +20,7 @@ public class RuneStarPanel : StarPanel<BaseRuneUI, BaseRune>
                     if (_dial.DialElementList[i].DialState == DialState.Drag)
                     {
                         _dial.AllMagicCircleGlow(false);
+                        (_dial.DialElementList[2] as RuneDialElement).EffectHandler.EditAllEffectScale(1f);
                         return;
                     }
                 }
@@ -34,16 +35,19 @@ public class RuneStarPanel : StarPanel<BaseRuneUI, BaseRune>
                     if (i < count)
                     {
                         _dial.MagicCircleGlow(2 - i, true);
+                        (_dial.DialElementList[2 - i] as RuneDialElement).EffectHandler.EditEffectScale(3 - i, 1.5f);
                     }
                     else
                     {
                         _dial.MagicCircleGlow(2 - i, false);
+                        (_dial.DialElementList[2 - i] as RuneDialElement).EffectHandler.EditEffectScale(3 - i, 1f);
                     }
                 }
 
                 if (Managers.Swipe.TouchDif.y < 0)
                 {
                     _dial.AllMagicCircleGlow(false);
+                    (_dial.DialElementList[2] as RuneDialElement).EffectHandler.EditAllEffectScale(1f);
                     //return;
                 }
             }
@@ -51,22 +55,25 @@ public class RuneStarPanel : StarPanel<BaseRuneUI, BaseRune>
         Managers.Swipe.AddAction(SwipeType.UpSwipe, (touch) =>
         {
             float distance = Vector2.Distance(Define.MainCam.ScreenToWorldPoint(Managers.Swipe.TouchBeganPos), (Vector2)this.transform.position);
-            if (distance >= _inDistance && distance <= _outDistance)
+            if (distance >= _inDistance && distance <= _outDistance && BattleManager.Instance.Enemy.IsDie == false)
             {
                 _dial.Attack();
             }
             else
             {
                 _dial.AllMagicCircleGlow(false);
+                (_dial.DialElementList[2] as RuneDialElement).EffectHandler.EditAllEffectScale(1f);
             }
         });
         Managers.Swipe.AddAction(SwipeType.DownSwipe, (touch) =>
         {
             _dial.AllMagicCircleGlow(false);
+            (_dial.DialElementList[2] as RuneDialElement).EffectHandler.EditAllEffectScale(1f);
         });
         Managers.Swipe.AddAction(SwipeType.Touch, (touch) =>
         {
             _dial.AllMagicCircleGlow(false);
+            (_dial.DialElementList[2] as RuneDialElement).EffectHandler.EditAllEffectScale(1f);
         });
         #endregion
     }

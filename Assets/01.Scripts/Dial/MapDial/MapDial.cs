@@ -63,6 +63,6 @@ public class MapDial : Dial<MapRuneUI, MapRuneUI>
         _dialElementList[0].Attack();
 
         _isAttack = false;
-        Managers.Map.MapScene.mapDial.gameObject.SetActive(false);
+        Define.MapScene.mapDial.gameObject.SetActive(false);
     }
 }

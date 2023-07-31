@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -21,14 +22,8 @@ public class RuneEventUI : MonoBehaviour
     private Transform _content = null;
     private List<GameObject> _runePanelList = new List<GameObject>();
 
-    [SerializeField]
-    private GameObject _runePanelTemplate = null;
-
     private void Start()
     {
-        if (_runePanelTemplate != null)
-            Managers.Pool.CreatePool(_runePanelTemplate, 30);
-
         _scrollView = transform.Find("Scroll View").gameObject;
         _content = _scrollView.GetComponent<ScrollRect>().content;
 
@@ -36,7 +31,7 @@ public class RuneEventUI : MonoBehaviour
         Managers.UI.Bind<TextMeshProUGUI>("SelectedRuneName_Text", gameObject);
         Managers.UI.Bind<TextMeshProUGUI>("SelectedRuneDesc_Text", gameObject);
 
-        Managers.UI.Bind<Button>("NextStageButton_Button",gameObject);
+        Managers.UI.Bind<Button>("NextStageButton_Button", gameObject);
 
         _runeSpriteImage = Managers.UI.Get<Image>("SelectedRuneSprite_Image");
         _runeNameText = Managers.UI.Get<TextMeshProUGUI>("SelectedRuneName_Text");
@@ -47,7 +42,12 @@ public class RuneEventUI : MonoBehaviour
         Managers.UI.Get<Button>("NextStageButton_Button").onClick.AddListener(() =>
         {
             _scrollView.SetActive(false);
-            _selectedRuneObject.SetActive(false);
+
+            Sequence seq = DOTween.Sequence();
+            seq.Append(_selectedRuneObject.transform.DOScale(1.2f, 0.1f));
+            seq.Append(_selectedRuneObject.transform.DOScale(0, 0.2f));
+            seq.AppendCallback(() => _selectedRuneObject.SetActive(false));
+
             ReturnRunePanels();
             //DistracotrFuncList.NextStage(); // 전투 씬에서 작동시키면 이거 때문에 버그 날 수도 있을듯? 일단 메모 
         });
@@ -79,7 +79,11 @@ public class RuneEventUI : MonoBehaviour
         _runeDescText.SetText(rune.BaseRuneSO.RuneDescription(rune.KeywordList));
 
         _selectedRuneObject.SetActive(true);
-        _selectedRuneObject.transform.localScale = Vector3.one;
+        _selectedRuneObject.transform.localScale = Vector3.zero;
+
+        Sequence seq = DOTween.Sequence();
+        seq.Append(_selectedRuneObject.transform.DOScale(1.2f, 0.2f));
+        seq.Append(_selectedRuneObject.transform.DOScale(1f, 0.1f));
     }
 
     /// <summary>
@@ -92,13 +96,13 @@ public class RuneEventUI : MonoBehaviour
 
         foreach (BaseRune rune in Managers.Deck.Deck)
         {
-            RuneSelectPanelUI selectPanel = Managers.Resource.Instantiate(_runePanelTemplate).GetComponent<RuneSelectPanelUI>();
+            SelectRunePanel selectPanel = Managers.Resource.Instantiate("UI/RunePanel/Select").GetComponent<SelectRunePanel>();
 
             if (selectPanel != null)
             {
-                selectPanel.SetMode(mode);
+                selectPanel.SetUI(rune.BaseRuneSO, rune.IsEnhanced);
                 selectPanel.SetRune(rune);
-                selectPanel.SetUI();
+                selectPanel.SetMode(mode);
                 selectPanel.transform.localScale = Vector3.one;
 
                 selectPanel.transform.SetParent(_content);

@@ -8,20 +8,24 @@ using UnityEngine.Events;
 
 public class Pattern : MonoBehaviour
 {
+    [Header("기본정보")]
     public string patternName;
-    public Sprite icon;
-    public Vector3 iconSize = Vector3.one;
-    public string desc ="";
+    public string desc = "";
     [TextArea(1, 10)]
     public string PatternDescription = "";
-    public bool isIncluding = true; // 순화되는 패턴 목록에 포함할건가?
+    [Tooltip("순환 패턴 목록에 포함되는가?")]
+    public bool isIncluding = true;
 
-    [Header("[ Actions ]")]
+    [Header("패턴 아이콘")]
+    public Sprite icon;
+    public Vector3 iconSize = Vector3.one;
+
+    [Header("패턴 실행 행동들")]
     public List<PatternAction> startPatternAction;
     public List<PatternAction> turnPatternAction;
     public List<PatternAction> endPatternAction;
 
-    [Header("[ Transition ]")]
+    [Header("패턴 조건")]
     public List<PatternTransition> transitions;
 
     private int _actionIndex = 0;
@@ -35,7 +39,8 @@ public class Pattern : MonoBehaviour
     {
         _actionIndex = 0;
         _patternTime = patternInvokeTime.start;
-        if(startPatternAction.Count > _actionIndex)
+
+        if (startPatternAction.Count > _actionIndex)
         {
             startPatternAction[_actionIndex].StartAction();
         }

@@ -21,7 +21,7 @@ public class PoolManager
 
             for (int i = 0; i < count; ++i)
             {
-                // »ý¼º
+                // ìƒì„±
                 Push(Create());
             }
         }
@@ -67,7 +67,7 @@ public class PoolManager
 
             poolable.gameObject.SetActive(true);
 
-            // DontDestroyLoad ÇØÁ¦
+            // DontDestroyLoad í•´ì œ
             if (parent == null)
             {
                 //poolable.transform.parent = SceneManagerEX.Instance.CurrentScene.transform;
@@ -102,7 +102,7 @@ public class PoolManager
 
     public void CreatePool(GameObject original, int count = 5)
     {
-        Pool pool = new Pool();
+         Pool pool = new Pool();
         pool.Init(original, count);
         pool.Root.parent = _root;
 

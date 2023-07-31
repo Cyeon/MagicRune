@@ -6,6 +6,7 @@ public class NotShieldResetAction : PatternAction
 {
     public override void StartAction()
     {
+        Enemy.ResetShield();
         Enemy.IsShiledReset = false;
         base.StartAction();
     }

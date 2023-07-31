@@ -3,6 +3,7 @@ using MyBox;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditor;
 using UnityEngine;
 
 public class Managers : MonoBehaviour
@@ -130,6 +131,7 @@ public class Managers : MonoBehaviour
 
     public static void GameQuit()
     {
+        AssetDatabase.SaveAssets();
 #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
 #else

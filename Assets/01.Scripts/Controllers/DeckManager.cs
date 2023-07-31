@@ -3,35 +3,40 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using MyBox;
+using UnityEditor;
 
 public class DeckManager
 {
-    private List<BaseRune> _defaultRune = new List<BaseRune>(20); // 珥덇린 湲곕낯 吏湲?猷?
-    public List<BaseRune> DefaultRune => _defaultRune;
-
-    public const int FIRST_DIAL_DECK_MAX_COUNT = 3; // 泥ル쾲吏??ㅼ씠????理쒕? 媛쒖닔
-
-    //private List<BaseRune> _firstDialDeck = new List<BaseRune>(3); // ?ъ쟾???ㅼ젙?대몦 ?ㅼ씠???덉そ??1踰덉㎏ 以???
-    //public List<BaseRune> FirstDialDeck => _firstDialDeck;
+    private List<BaseRuneSO> _defaultRune = new List<BaseRuneSO>(20); // 珥덇린 湲곕낯 吏湲?猷?
+    public List<BaseRuneSO> DefaultRune => _defaultRune;
 
     private List<BaseRune> _deck = new List<BaseRune>(12); // ?뚯??섍퀬 ?덈뒗 紐⑤뱺 猷?
     public List<BaseRune> Deck => _deck;
 
+    private DeckSO _allRuneSO = null;
+    private Dictionary<AttributeType, List<BaseRuneSO>> _runeDictionary = new Dictionary<AttributeType, List<BaseRuneSO>>();
+    public Dictionary<AttributeType, List<BaseRuneSO>> RuneDictionary => _runeDictionary;
+
     public void Init()
     {
         SetDefaultDeck(Managers.Resource.Load<DeckSO>("SO/Deck/DefaultDeck").RuneList);
-    }
 
-    public void SetDefaultDeck(List<BaseRune> runeList)
-    {
-        _deck.Clear();
+        _allRuneSO = Managers.Resource.Load<DeckSO>("SO/Deck/AllRuneDeck");
 
-        for(int i = 0; i < runeList.Count; i++)
+        for (int i = 0; i < (int)AttributeType.MAX_COUNT; i++)
         {
-            AddRune(runeList[i]);
+            if (_runeDictionary.ContainsKey((AttributeType)i)) // 혹시라도 먼저 만들어져있다면 패스 
+                continue;
+            _runeDictionary.Add((AttributeType)i, new List<BaseRuneSO>()); // 미리 속성 별 리스트 만들어서 할당 시켜놓기 
         }
 
-        RuneInit();
+        for (int i = 0; i < _allRuneSO.RuneList.Count; i++)
+        {
+            if (!_runeDictionary[AttributeType.None].Contains(_allRuneSO.RuneList[i]))
+                _runeDictionary[AttributeType.None].Add(_allRuneSO.RuneList[i]);    // 전체 리스트에 추가
+            if (!_runeDictionary[_allRuneSO.RuneList[i].AttributeType].Contains(_allRuneSO.RuneList[i]))
+                _runeDictionary[_allRuneSO.RuneList[i].AttributeType].Add(_allRuneSO.RuneList[i]); // 각 속성 리스트에 추가
+        }
     }
 
     public void SetDefaultDeck(in List<BaseRuneSO> runeList)
@@ -40,6 +45,10 @@ public class DeckManager
 
         for (int i = 0; i < runeList.Count; i++)
         {
+            if (_defaultRune.Contains(runeList[i]) == false)
+            {
+                _defaultRune.Add(runeList[i]);
+            }
             AddRune(Managers.Rune.GetRune(runeList[i]));
         }
 
@@ -57,6 +66,14 @@ public class DeckManager
     /// <summary> Deck??猷?異붽? </summary>
     public void AddRune(BaseRune rune)
     {
+        if (rune.BaseRuneSO.DiscoveryType != DiscoveryType.Known)
+        {
+            AssetDatabase.StartAssetEditing();
+            rune.BaseRuneSO.DiscoveryType = DiscoveryType.Known;
+            AssetDatabase.StopAssetEditing();
+            EditorUtility.SetDirty(rune.BaseRuneSO);
+        }
+
         _deck.Add(rune);
         DeckSort();
     }
@@ -66,18 +83,6 @@ public class DeckManager
     {
         _deck.Remove(rune);
     }
-
-    ///// <summary> FirstDialDeck??猷?異붽? </summary>
-    //public void AddRuneFirstDeck(BaseRune rune)
-    //{
-    //    _firstDialDeck.Add(rune);
-    //}
-
-    ///// <summary> FistDialDeck?먯꽌 猷?吏?곌린 </summary>
-    //public void RemoveFirstDeck(BaseRune rune)
-    //{
-    //    _firstDialDeck.Remove(rune);
-    //}
 
     public void RuneSwap(int fIndex, int sIndex)
     {
@@ -98,7 +103,7 @@ public class DeckManager
     public int GetUsingRuneCount()
     {
         int count = 0;
-        for(int i = 0; i < _deck.Count; i++)
+        for (int i = 0; i < _deck.Count; i++)
         {
             if (_deck[i].IsCoolTime == false && _deck[i].IsUsing == false)
             {
@@ -121,6 +126,15 @@ public class DeckManager
             }
         }
         int idx = Random.Range(0, newRuneList.Count);
+
+        if (newRuneList[idx].BaseRuneSO.DiscoveryType == DiscoveryType.Unknwon)
+        {
+            AssetDatabase.StartAssetEditing();
+            newRuneList[idx].BaseRuneSO.DiscoveryType = DiscoveryType.Find;
+            AssetDatabase.StopAssetEditing();
+            EditorUtility.SetDirty(newRuneList[idx].BaseRuneSO);
+        }
+
         return newRuneList[idx];
     }
 
