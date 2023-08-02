@@ -64,6 +64,20 @@ MonoBehaviour:
         m_Value: ServerData/[BuildTarget]
       - m_Id: deeb0a5a159ffc04a96d2ed94766281e
         m_Value: http://[PrivateIpAddress]:[HostingServicePort]
+    - m_InheritedParent: 
+      m_Id: 7e2234d088b81b747934243b0aaac975
+      m_ProfileName: New Profile
+      m_Values:
+      - m_Id: 31ad331895cd15f4cb0388e3bd3b15e9
+        m_Value: '[UnityEditor.EditorUserBuildSettings.activeBuildTarget]'
+      - m_Id: dc83cab4e70db4a49bc9c0249291ad5b
+        m_Value: '[UnityEngine.AddressableAssets.Addressables.BuildPath]/[BuildTarget]'
+      - m_Id: 409ca484f115ab248acb369eed4f3069
+        m_Value: '{UnityEngine.AddressableAssets.Addressables.RuntimePath}/[BuildTarget]'
+      - m_Id: 8d41ce9f59eb4df4aa64d8bbe37756f1
+        m_Value: ServerData/[BuildTarget]
+      - m_Id: deeb0a5a159ffc04a96d2ed94766281e
+        m_Value: http://[PrivateIpAddress]:[HostingServicePort]
     m_ProfileEntryNames:
     - m_Id: 31ad331895cd15f4cb0388e3bd3b15e9
       m_Name: BuildTarget
@@ -84,6 +98,10 @@ MonoBehaviour:
   m_LabelTable:
     m_LabelNames:
     - default
+    - Lobby
+    - Map
+    - Battle
+    - SO
   m_SchemaTemplates: []
   m_GroupTemplateObjects:
   - {fileID: 11400000, guid: 1418e5f7506716b4a92924c04603169f, type: 2}

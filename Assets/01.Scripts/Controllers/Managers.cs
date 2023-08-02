@@ -32,6 +32,7 @@ public class Managers : MonoBehaviour
     private KeywardManager _keyward = new KeywardManager();
     private ResourceManager _resource = new ResourceManager();
     private StatModifierManager _statModifier = new StatModifierManager();
+    private AddressableManager _addressable = new AddressableManager();
 
     public static UIManager UI { get { return Instance._ui; } }
     public static MapManager Map { get { return Instance._map; } }
@@ -51,6 +52,7 @@ public class Managers : MonoBehaviour
     public static KeywardManager Keyward { get { return Instance._keyward; } }
     public static ResourceManager Resource { get { return Instance._resource; } }
     public static StatModifierManager StatModifier { get { return Instance._statModifier; } }
+    public static AddressableManager Addressable { get { return Instance._addressable; } }
     #endregion
 
     private bool _preparedToQuit = false;
@@ -87,6 +89,7 @@ public class Managers : MonoBehaviour
             _instance._gold.Init();
             _instance._keyward.Init();
             _instance._swipe.Init();
+            _instance._addressable.Init();
         }
 
         if (_player == null)
