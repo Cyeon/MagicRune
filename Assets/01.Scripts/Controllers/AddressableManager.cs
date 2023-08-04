@@ -29,20 +29,12 @@ public class AddressableManager
             }
         }
 
-        T result = null;
-
-        Addressables.LoadAssetAsync<T>(path).Completed += (AsyncOperationHandle<T> obj) =>
-        {
-            result = obj.Result;
-        };
-
-
+        return Addressables.LoadAssetAsync<T>(path).Result;
     }
 
     public void UnLoad<T>(string path) where T : Object
     {
         T obj = Load<T>(path);
         Addressables.Release(obj);
-
     }
 }

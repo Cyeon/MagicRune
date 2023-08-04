@@ -9,12 +9,7 @@ public class LightingRod : BaseRune
 {
     public override void Init()
     {
-        Addressables.LoadAssetAsync<BaseRuneSO>("LightingRod").Completed += (AsyncOperationHandle<BaseRuneSO> obj) =>
-        {
-            _baseRuneSO = obj.Result;
-            base.Init();
-        };
-        //_baseRuneSO = Managers.Addressable.Load<BaseRuneSO>("LightingRod");
+         _baseRuneSO = Managers.Addressable.Load<BaseRuneSO>("LightingRod");
     }
 
     public override void AbilityAction()
