@@ -140,7 +140,7 @@ public class Managers : MonoBehaviour
 
     public static void GameQuit()
     {
-        AssetDatabase.SaveAssets();
+        //AssetDatabase.SaveAssets();
 #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
 #else

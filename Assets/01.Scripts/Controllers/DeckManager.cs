@@ -68,10 +68,10 @@ public class DeckManager
     {
         if (rune.BaseRuneSO.DiscoveryType != DiscoveryType.Known)
         {
-            AssetDatabase.StartAssetEditing();
+            //AssetDatabase.StartAssetEditing();
             rune.BaseRuneSO.DiscoveryType = DiscoveryType.Known;
-            AssetDatabase.StopAssetEditing();
-            EditorUtility.SetDirty(rune.BaseRuneSO);
+            //AssetDatabase.StopAssetEditing();
+            //EditorUtility.SetDirty(rune.BaseRuneSO);
         }
 
         _deck.Add(rune);
@@ -129,10 +129,10 @@ public class DeckManager
 
         if (newRuneList[idx].BaseRuneSO.DiscoveryType == DiscoveryType.Unknwon)
         {
-            AssetDatabase.StartAssetEditing();
+            //AssetDatabase.StartAssetEditing();
             newRuneList[idx].BaseRuneSO.DiscoveryType = DiscoveryType.Find;
-            AssetDatabase.StopAssetEditing();
-            EditorUtility.SetDirty(newRuneList[idx].BaseRuneSO);
+            //AssetDatabase.StopAssetEditing();
+            //EditorUtility.SetDirty(newRuneList[idx].BaseRuneSO);
         }
 
         return newRuneList[idx];

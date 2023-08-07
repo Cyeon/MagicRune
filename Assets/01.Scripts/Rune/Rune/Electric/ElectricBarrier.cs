@@ -6,7 +6,7 @@ public class ElectricBarrier : BaseRune
 {
     public override void Init()
     {
-        _baseRuneSO = Managers.Resource.Load<BaseRuneSO>("SO/Rune/Electric/" + typeof(ElectricBarrier).Name);
+        _baseRuneSO = Managers.Addressable.Load<BaseRuneSO>("SO/Rune/Electric/" + typeof(ElectricBarrier).Name);
         base.Init();
     }
 

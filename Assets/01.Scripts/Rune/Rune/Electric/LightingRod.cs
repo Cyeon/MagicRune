@@ -9,7 +9,7 @@ public class LightingRod : BaseRune
 {
     public override void Init()
     {
-         _baseRuneSO = Managers.Addressable.Load<BaseRuneSO>("LightingRod");
+         _baseRuneSO = Managers.Addressable.Load<BaseRuneSO>("SO/Rune/Electric/" + typeof(LightingRod).Name);
     }
 
     public override void AbilityAction()

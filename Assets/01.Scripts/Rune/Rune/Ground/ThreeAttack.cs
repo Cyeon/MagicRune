@@ -7,7 +7,7 @@ public class ThreeAttack : BaseRune
 {
     public override void Init()
     {
-        _baseRuneSO = Managers.Resource.Load<BaseRuneSO>("SO/Rune/Ground/" + typeof(ThreeAttack).Name);
+        _baseRuneSO = Managers.Addressable.Load<BaseRuneSO>("SO/Rune/Ground/" + typeof(ThreeAttack).Name);
         base.Init();
     }
 

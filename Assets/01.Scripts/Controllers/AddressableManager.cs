@@ -13,20 +13,11 @@ public class AddressableManager
 
     public T Load<T>(string path) where T : Object
     {
-        if (typeof(T) == typeof(GameObject))
-        {
-            string name = path;
-            int index = name.LastIndexOf('/');
-            if (index >= 0)
-            {
-                name = name.Substring(index + 1);
-            }
+        path = "Assets/Addressable/" + path;
 
-            GameObject go = Managers.Pool.GetOriginal(name);
-            if (go != null)
-            {
-                return go as T;
-            }
+        if (path.Contains("/SO/"))
+        {
+            path = path + ".asset";
         }
 
         return Addressables.LoadAssetAsync<T>(path).Result;

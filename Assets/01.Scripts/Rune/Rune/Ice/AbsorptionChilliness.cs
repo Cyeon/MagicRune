@@ -7,7 +7,7 @@ public class AbsorptionChilliness : BaseRune
 {
     public override void Init()
     {
-        _baseRuneSO = Managers.Resource.Load<BaseRuneSO>("SO/Rune/Ice/" + typeof(AbsorptionChilliness).Name);
+        _baseRuneSO = Managers.Addressable.Load<BaseRuneSO>("SO/Rune/Ice/" + typeof(AbsorptionChilliness).Name);
         base.Init();
     }
     public override void AbilityAction()
