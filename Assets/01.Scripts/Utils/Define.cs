@@ -1,6 +1,7 @@
 using System;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 [Serializable]
 public class EffectPair
@@ -29,6 +30,19 @@ public class SaveData
 
     public int TotalGold = 0;
     public int KillEnemyAmount = 0;
+
+    public bool IsTimerPlay = false;
+    public float TimerSecond = 0;
+
+    public void Reset()
+    {
+        TotalGold = 0;
+        KillEnemyAmount = 0;
+        IsTimerPlay = false;
+        TimerSecond = 0;
+
+        Managers.Json.SaveJson<SaveData>("SaveData", this);
+    }
 }
 
 /// <summary>

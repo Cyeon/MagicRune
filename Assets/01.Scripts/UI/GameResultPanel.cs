@@ -1,4 +1,5 @@
 using DG.Tweening;
+using System;
 using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting.Antlr3.Runtime.Tree;
@@ -31,6 +32,7 @@ public class GameResultPanel : MonoBehaviour
 
         _textList.ForEach(x => x.gameObject.SetActive(false));
 
+        Define.SaveData.IsTimerPlay = false;
         Popup();
     }
 
@@ -51,6 +53,11 @@ public class GameResultPanel : MonoBehaviour
                 _textList[index].gameObject.SetActive(true);
                 switch(index)
                 {
+                    case 0:
+                        TimeSpan playTimeSpan = TimeSpan.FromSeconds(Define.SaveData.TimerSecond);
+                        string formattedPlayTime = string.Format("{0:D2}:{1:D2}:{2:D2}", playTimeSpan.Hours, playTimeSpan.Minutes, playTimeSpan.Seconds);
+                        _textList[index].SetText(string.Format("플레이 시간: {0}", formattedPlayTime));
+                        break;
                     case 1:
                         _textList[index].SetText(string.Format("진행도: {0}-{1} 스테이지", Managers.Map.Chapter, Managers.Map.Stage + 1));
                         break;

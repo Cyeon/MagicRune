@@ -20,10 +20,8 @@ public class LobbyScene : BaseScene
 
     public void GameStart()
     {
-        Define.SaveData.TotalGold = 0;
-        Define.SaveData.KillEnemyAmount = 0;
-        Managers.Json.SaveJson<SaveData>("SaveData", Define.SaveData);
-
+        Define.SaveData.Reset();
+        Define.SaveData.IsTimerPlay = true;
         StartCoroutine(_loadScene.LoadSceneCoroutine("MapScene"));
     }
 }
