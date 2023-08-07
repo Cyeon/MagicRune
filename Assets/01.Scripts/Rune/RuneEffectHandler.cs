@@ -64,6 +64,7 @@ public class RuneEffectHandler : MonoBehaviour
     {
         if (_effectDict[tier] != null)
         {
+            _effectDict[tier].transform.DOComplete();
             _effectDict[tier].transform.DOScale(scale, 0.25f);
         }
     }
