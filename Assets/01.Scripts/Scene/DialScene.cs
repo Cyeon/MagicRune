@@ -268,6 +268,7 @@ public class DialScene : BaseScene
     {
         if (rune == null) return;
 
+        _cardDescPanel.SetRune(rune);
         _cardDescPanel.SetUI(rune.BaseRuneSO, rune != null ? rune.IsEnhanced : false);
         _cardDescPanel.KeywardSetting();
     }
