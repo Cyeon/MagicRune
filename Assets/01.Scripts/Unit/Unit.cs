@@ -261,7 +261,7 @@ public class Unit : MonoBehaviour
     public void ResetHealth()
     {
         _isDie = false;
-        _health = _maxHealth;
+        HP = _maxHealth;
     }
     #endregion
 
