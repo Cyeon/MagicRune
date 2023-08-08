@@ -9,12 +9,12 @@ public class BaseRuneUI : MonoBehaviour
     private BaseRune _rune;
     public BaseRune Rune => _rune;
 
-    private SpriteRenderer _enhanceSr;
+    private GameObject _enhanceSr;
 
     void Start()
     {
         _runeSpriteRenderer = transform.Find("Sprite").GetComponent<SpriteRenderer>();
-        _enhanceSr = transform.Find("Enhance").GetComponent<SpriteRenderer>();
+        _enhanceSr = transform.Find("Enhance").gameObject;
         //_enhanceSr.gameObject.SetActive(false);
         RuneColor(new Color(0.26f, 0.26f, 0.26f, 1f));
     }
@@ -31,14 +31,13 @@ public class BaseRuneUI : MonoBehaviour
         _runeSpriteRenderer.sprite = _rune.BaseRuneSO.RuneSprite;
         if(_enhanceSr == null)
         {
-            _enhanceSr = transform.Find("Enhance").GetComponent<SpriteRenderer>();
+            _enhanceSr = transform.Find("Enhance").gameObject;
         }
-        _enhanceSr.gameObject.SetActive(rune.IsEnhanced);
+        _enhanceSr.SetActive(rune.IsEnhanced);
     }
 
     public void RuneColor(Color color)
     {
         _runeSpriteRenderer.color = color;
-        _enhanceSr.color = color;
     }
 }
