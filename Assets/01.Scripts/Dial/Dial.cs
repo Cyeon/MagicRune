@@ -7,7 +7,7 @@ using UnityEngine;
 /// <summary>
 /// 
 /// </summary>
-/// <typeparam name="T1">???????????????????⑤뜪???????????????????????????????????????거??????????????거???????????釉뚯뺏????????????????????????ex) BaseRuneUI</typeparam>
+/// <typeparam name="T1">????????????????????ㅻ쑋???????????????????????????????????????嫄??????????????嫄????????????됰슣類????????????????????????ex) BaseRuneUI</typeparam>
 /// <typeparam name="T2">T1???????????ex) BaseRune</typeparam>
 public class Dial<T1, T2> : MonoBehaviour where T1 : MonoBehaviour where T2 : class
 {
@@ -179,7 +179,7 @@ public class Dial<T1, T2> : MonoBehaviour where T1 : MonoBehaviour where T2 : cl
                 case TouchPhase.Moved:
                     float distance = Mathf.Abs(Vector2.Distance(transform.position, Define.MainCam.ScreenToWorldPoint(touch.position)));
 
-                    // ???????嚥???癲???????泳?뿀?????????????轅붽틓????룸챸????????????μ떜媛?걫??곸돥??????
+                    // ????????????????????力?肉?????????????饔낅떽?????猷몄구????????????關?쒎첎?嫄??怨몃룯??????
                     if (_dialElementList[2].InDistance <= distance)
                     {
                         for (int i = _dialElementList.Count - 1; i >= 0; i--)
@@ -398,34 +398,37 @@ public class Dial<T1, T2> : MonoBehaviour where T1 : MonoBehaviour where T2 : cl
 
             for (int i = 0; i < _elementDict[line].Count; i++)
             {
-                float radianValue = angle * i + _startAngle;
-
-                float height = Mathf.Sin(radianValue * Mathf.Deg2Rad) * _lineDistanceArray[3 - line];
-                float width = Mathf.Cos(radianValue * Mathf.Deg2Rad) * _lineDistanceArray[3 - line];
-                if (isTween)
+                if (_elementDict[line][i] != null)
                 {
-                    _elementDict[line][i]?.transform.DOComplete();
-                    _elementDict[line][i]?.transform.DOMove(new Vector3(width + this.transform.position.x, height + this.transform.position.y, 0), tweenDuration).OnComplete(() =>
+                    float radianValue = angle * i + _startAngle;
+
+                    float height = Mathf.Sin(radianValue * Mathf.Deg2Rad) * _lineDistanceArray[3 - line];
+                    float width = Mathf.Cos(radianValue * Mathf.Deg2Rad) * _lineDistanceArray[3 - line];
+                    if (isTween)
                     {
-                        for (int i = 0; i < _dialElementList.Count; i++)
+                        _elementDict[line][i]?.transform.DOComplete();
+                        _elementDict[line][i]?.transform.DOMove(new Vector3(width + this.transform.position.x, height + this.transform.position.y, 0), tweenDuration).OnComplete(() =>
                         {
-                            _dialElementList[i].SelectElement = _dialElementList[i].SelectElement;
-                        }
-                    });
-                }
-                else
-                {
-                    _elementDict[line][i].transform.position = new Vector3(width + this.transform.position.x, height + this.transform.position.y, 0);
-                }
+                            for (int i = 0; i < _dialElementList.Count; i++)
+                            {
+                                _dialElementList[i].SelectElement = _dialElementList[i].SelectElement;
+                            }
+                        });
+                    }
+                    else
+                    {
+                        _elementDict[line][i].transform.position = new Vector3(width + this.transform.position.x, height + this.transform.position.y, 0);
+                    }
 
-                Vector2 direction = new Vector2(
-                    (width + this.transform.position.x) - transform.position.x,
-                    (height + this.transform.position.y) - transform.position.y
-                );
+                    Vector2 direction = new Vector2(
+                        (width + this.transform.position.x) - transform.position.x,
+                        (height + this.transform.position.y) - transform.position.y
+                    );
 
-                float ang = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-                Quaternion angleAxis = Quaternion.AngleAxis(ang - 90f, Vector3.forward);
-                _elementDict[line][i].transform.rotation = angleAxis;
+                    float ang = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+                    Quaternion angleAxis = Quaternion.AngleAxis(ang - 90f, Vector3.forward);
+                    _elementDict[line][i].transform.rotation = angleAxis;
+                }
             }
 
             for (int i = 0; i < _dialElementList.Count; i++)

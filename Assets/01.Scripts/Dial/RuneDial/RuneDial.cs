@@ -33,11 +33,15 @@ public class RuneDial : Dial<BaseRuneUI, BaseRune>
         {
             for (int i = 0; i < runeList.Value.Count; i++)
             {
-                runeList.Value[i].transform.DOKill();
-                Managers.Resource.Destroy(runeList.Value[i].gameObject);
-                runeList.Value[i] = null;
+                if(runeList.Value[i] != null)
+                {
+                    runeList.Value[i].transform.DOKill();
+                    Managers.Resource.Destroy(runeList.Value[i].gameObject);
+                    runeList.Value[i] = null;
+                }
             }
         }
+        _elementDict.Clear();
 
         for (int i = _usingDeck.Count - 1; i >= 0; i--)
         {
@@ -145,7 +149,7 @@ public class RuneDial : Dial<BaseRuneUI, BaseRune>
                 int index = i;
                 MagicCircleGlow(index, true);
                 BaseRune rune = _usingDeck.Find(x => x == _dialElementList[index].SelectElement.Rune);
-                // 猷???泥댄겕
+                // ????筌ｋ똾寃?
                 _usingDeck.Remove(rune);
 
                 if (rune.IsIncludeKeyword(KeywordName.Consume))
