@@ -23,6 +23,21 @@ public class MapScene : BaseScene
     private Image _mapDescIcon;
     private TextMeshProUGUI _mapDescText;
 
+    // Progress
+    private Image _leftLine;
+    private Image _rightLine;
+    private Color _activeLineColor;
+    private Color _inactiveLineColor;
+
+    private GameObject _firstOutline;
+    private TextMeshProUGUI _firstText;
+    private GameObject _secondOutline;
+    private TextMeshProUGUI _secondText;
+    private GameObject _bossOutline;
+    private TextMeshProUGUI _bossText;
+    private Color _activeTextColor;
+    private Color _inactiveTextColor;
+
 
     protected override void Init()
     {
@@ -97,5 +112,71 @@ public class MapScene : BaseScene
     {
         _mapDescText.SetText(ui.GetComponent<Stage>().StageDesc);
         _mapDescIcon.sprite = ui.transform.Find("Icon").GetComponent<SpriteRenderer>().sprite;
+    }
+
+    private void ProgressInit()
+    {
+        Transform progress = Managers.Canvas.GetCanvas("UserInfoPanelCanvas").transform.Find("Progress");
+        _leftLine = progress.Find("LeftLine").GetComponent<Image>();
+        _rightLine = progress.Find("RightLine").GetComponent<Image>();
+        _activeLineColor = _leftLine.color;
+        _inactiveLineColor = _rightLine.color;
+
+        _firstOutline = progress.Find("FirstOutline").gameObject;
+        _firstText = progress.Find("FirstText").GetComponent<TextMeshProUGUI>();
+        _secondOutline = progress.Find("SecondOutline").gameObject;
+        _secondText = progress.Find("SecondText").GetComponent<TextMeshProUGUI>();
+        _bossOutline = progress.Find("BossOutline").gameObject;
+        _bossText = progress.Find("BossText").GetComponent<TextMeshProUGUI>();
+        _activeTextColor = _firstText.color;
+        _inactiveTextColor = _secondText.color;
+    }
+
+    public void FirstProgress()
+    {
+        if (_leftLine == null) ProgressInit();
+
+        _leftLine.color = _activeLineColor;
+        _rightLine.color = _inactiveLineColor;
+
+        _firstOutline.SetActive(true);
+        _secondOutline.SetActive(false);
+        _bossOutline.SetActive(false);
+
+        _firstText.color = _activeTextColor;
+        _secondText.color = _inactiveTextColor;
+        _bossText.color = _inactiveTextColor;
+    }
+
+    public void SecondProgress()
+    {
+        if (_leftLine == null) ProgressInit();
+
+        _leftLine.color = _inactiveLineColor;
+        _rightLine.color = _activeLineColor;
+
+        _firstOutline.SetActive(false);
+        _secondOutline.SetActive(true);
+        _bossOutline.SetActive(false);
+
+        _firstText.color = _inactiveTextColor;
+        _secondText.color = _activeTextColor;
+        _bossText.color = _inactiveTextColor;
+    }
+
+    public void BossProgress()
+    {
+        if (_leftLine == null) ProgressInit();
+
+        _leftLine.color = _inactiveLineColor;
+        _rightLine.color = _inactiveLineColor;
+
+        _firstOutline.SetActive(false);
+        _secondOutline.SetActive(false);
+        _bossOutline.SetActive(true);
+
+        _firstText.color = _inactiveTextColor;
+        _secondText.color = _inactiveTextColor;
+        _bossText.color = _activeTextColor;
     }
 }

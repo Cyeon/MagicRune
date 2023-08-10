@@ -255,14 +255,17 @@ public class MapManager
         {
             case PeriodType.First:
                 _currentPeriodStageList = _firstPeriodStageList.ToList();
+                Define.MapScene?.FirstProgress();
                 break;
 
             case PeriodType.Second:
                 _currentPeriodStageList = _secondPeriodStageList.ToList();
+                Define.MapScene?.SecondProgress();
                 break;
 
             case PeriodType.Boss:
                 _currentPeriodStageList.Add(StageType.Boss);
+                Define.MapScene?.BossProgress();
                 break;
         }
 
