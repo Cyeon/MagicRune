@@ -107,92 +107,7 @@ public class RuneManager
         return null;
     }
 
-    public BaseRune GetRandomRune(List<BaseRuneSO> ignoreRuneList = null)
-    {
-        List<BaseRune> newRuneList = new List<BaseRune>(_runeHandler);
-        List<BaseRune> runeList = new List<BaseRune>();
-
-        if (ignoreRuneList != null)
-        {
-            foreach (BaseRune item in newRuneList)
-            {
-                if (ignoreRuneList.Contains(item.BaseRuneSO))
-                {
-                    runeList.Add(item);
-                }
-            }
-        }
-
-        for (int i = 0; i < runeList.Count; i++)
-        {
-            newRuneList.Remove(runeList[i]);
-        }
-
-        runeList.Clear();
-
-        #region Set Attribute
-        AttributeType attributeType = AttributeType.None;
-        int attributeMaxValue = 0;
-        for (int i = 2; i < (int)AttributeType.MAX_COUNT; i++)
-        {
-            if (_selectAttributeType == (AttributeType)i)
-            {
-                attributeMaxValue += 30;
-            }
-            else
-            {
-                attributeMaxValue += 10;
-            }
-        }
-        int attributeValue = Random.Range(0, attributeMaxValue + 1);
-        int attributeMinValue = 0;
-        for (int i = 2; i < (int)AttributeType.MAX_COUNT; i++)
-        {
-            if (attributeMinValue <= attributeValue && ((AttributeType)i == _selectAttributeType ? 30 : 10) + attributeMinValue >= attributeValue)
-            {
-                attributeType = (AttributeType)i;
-                break;
-            }
-            else
-            {
-                attributeMinValue += (AttributeType)i == _selectAttributeType ? 30 : 10;
-            }
-        }
-        #endregion
-
-        #region Set Rarity
-        RuneRarity rarity = RuneRarity.Normal;
-        RuneRarity[] rarityArray = Enum.GetValues(typeof(RuneRarity)).Cast<RuneRarity>().ToArray();
-
-        int rarityMaxValue = 0;
-        for (int i = 0; i < rarityArray.Length; i++)
-        {
-            rarityMaxValue += (int)rarityArray[i];
-        }
-
-        int rarityValue = Random.Range(1, rarityMaxValue + 1);
-        int rarityMinValue = 0;
-        for (int i = 0; i < rarityArray.Length; i++)
-        {
-            if (rarityMinValue <= rarityValue && rarityValue >= (int)rarityArray[i + 1])
-            {
-                rarity = rarityArray[i];
-                break;
-            }
-            else
-            {
-                rarityMinValue += (int)rarityArray[i + 1];
-            }
-        }
-        #endregion
-
-        newRuneList = newRuneList.Where(x => x.BaseRuneSO.AttributeType == attributeType && x.BaseRuneSO.Rarity == rarity).ToList();
-
-        int idx = Random.Range(0, newRuneList.Count);
-        return newRuneList[idx].Clone() as BaseRune;
-    }
-
-    public List<BaseRune> GetRandomRune(int count, List<BaseRuneSO> ignoreRuneList = null)
+    public List<BaseRune> GetRandomRune(int count, List<BaseRuneSO> ignoreRuneList = null, RuneRarityType runeRarityType = RuneRarityType.Base)
     {
         List<BaseRune> runeList = new List<BaseRune>();
 
@@ -250,32 +165,7 @@ public class RuneManager
             }
             #endregion
 
-            #region Set Rarity
-            RuneRarity rarity = RuneRarity.Normal;
-            RuneRarity[] rarityArray = Enum.GetValues(typeof(RuneRarity)).Cast<RuneRarity>().ToArray();
-            Array.Reverse(rarityArray);
-
-            int rarityMaxValue = 0;
-            for (int i = 0; i < rarityArray.Length - 1; i++)
-            {
-                rarityMaxValue += (int)rarityArray[i];
-            }
-
-            int rarityValue = Random.Range(1, rarityMaxValue + 1);
-            int rarityMinValue = 0;
-            for (int i = 0; i < rarityArray.Length - 1; i++)
-            {
-                if (rarityMinValue <= rarityValue && rarityValue <= (int)rarityArray[i + 1] + rarityMinValue)
-                {
-                    rarity = rarityArray[i];
-                    break;
-                }
-                else
-                {
-                    rarityMinValue += (int)rarityArray[i + 1];
-                }
-            }
-            #endregion
+            RuneRarity rarity = GetRuneRarity(runeRarityType);
 
             List<BaseRune> list = new List<BaseRune>(newRuneList.Where(x => x.BaseRuneSO.AttributeType == attributeType && x.BaseRuneSO.Rarity == rarity));
             BaseRune rune = list[Random.Range(0, list.Count)];
@@ -308,4 +198,59 @@ public class RuneManager
     {
         return _runeHandler.Find(x => x.BaseRuneSO == rune.BaseRuneSO).Clone() as BaseRune;
     }
+
+    private RuneRarity GetRuneRarity(RuneRarityType runeRarityType)
+    {
+        RuneRarity rarity = RuneRarity.Normal;
+        int[] rarityArray = Enum.GetValues(typeof(RuneRarity)).Cast<int>().ToArray();
+        switch(runeRarityType)
+        {
+            case RuneRarityType.Elite:
+                rarityArray = Enum.GetValues(typeof(EliteRuneRarity)).Cast<int>().ToArray();
+                break;
+
+            case RuneRarityType.Boss:
+                rarityArray = Enum.GetValues(typeof(BossRuneRarity)).Cast<int>().ToArray();
+                break;
+        }
+
+        Array.Reverse(rarityArray);
+
+        int rarityMaxValue = 0;
+        for (int i = 0; i < rarityArray.Length - 1; i++)
+        {
+            rarityMaxValue += (int)rarityArray[i];
+        }
+
+        int rarityValue = Random.Range(1, rarityMaxValue + 1);
+        int rarityMinValue = 0;
+        for (int i = 0; i < rarityArray.Length; i++)
+        {
+            if (rarityMinValue <= rarityValue && rarityValue <= (int)rarityArray[i] + rarityMinValue)
+            {
+                switch (runeRarityType)
+                {
+                    case RuneRarityType.Elite:
+                        rarity = (RuneRarity)Enum.Parse(typeof(RuneRarity), ((EliteRuneRarity)rarityArray[i]).ToString());
+                        break;
+
+                    case RuneRarityType.Boss:
+                        rarity = (RuneRarity)Enum.Parse(typeof(RuneRarity), ((BossRuneRarity)rarityArray[i]).ToString());
+                        break;
+
+                    case RuneRarityType.Base:
+                        rarity = (RuneRarity)rarityArray[i];
+                        break;
+                }
+                break;
+            }
+            else
+            {
+                rarityMinValue += (int)rarityArray[i];
+            }
+        }
+        Debug.Log(rarity);
+        return rarity;
+    }
+
 }

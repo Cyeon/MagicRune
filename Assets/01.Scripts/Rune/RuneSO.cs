@@ -67,6 +67,27 @@ public enum RuneRarity
     Legendary = 0, // 맨 마지막으로
 }
 
+public enum EliteRuneRarity
+{
+    Noraml = 30,
+    Rare = 40,
+    Epic = 30
+}
+
+public enum BossRuneRarity
+{
+    Noraml = 0,
+    Rare = 0,
+    Epic = 100
+}
+
+public enum RuneRarityType
+{
+    Base,
+    Elite,
+    Boss
+}
+
 public enum CountType
 { 
     Count,
