@@ -8,19 +8,18 @@ public class AddressableManager
 {
     public void Init()
     {
-        //Addressables.DownloadDependenciesAsync("SO");
+        Addressables.DownloadDependenciesAsync("SO");
+        Addressables.LoadResourceLocationsAsync("SO");
     }
 
     public T Load<T>(string path) where T : Object
     {
         path = "Assets/Addressable/" + path;
-
         if (path.Contains("/SO/"))
         {
-            path = path + ".asset";
+            path += ".asset";
         }
-
-        return Addressables.LoadAssetAsync<T>(path).Result;
+        return Addressables.LoadAssetAsync<T>(path).WaitForCompletion();
     }
 
     public void UnLoad<T>(string path) where T : Object
