@@ -39,19 +39,25 @@ public class BaseRuneSO : ScriptableObject
     [ResizableTextArea, SerializeField]
     private string _runeDescription;
 
-    public string RuneDescription(bool isEnhance = false)
+    public bool IsUseEnhancedDesc = false;
+    [ConditionalField(nameof(IsUseEnhancedDesc))]
+    public string EnhancedRuneDescription;
+
+    public bool IsSeeAbilityValue = true;
+
+    public string RuneDescription(in KeywordName[] keywordList, bool isEnhance = false)
     {
-        string desc = _runeDescription;
+        string desc = IsUseEnhancedDesc ? isEnhance ? EnhancedRuneDescription : _runeDescription : _runeDescription;
         desc = desc.Replace("(dmg)", GetAbillityValue(EffectType.Attack, isEnhance:isEnhance) + " 데미지");
         desc = desc.Replace("(status)", GetAbillityValue(EffectType.Status, isEnhance: isEnhance));
-        desc = desc.Replace("(def)", GetAbillityValue(EffectType.Defence, isEnhance: isEnhance) + " 방어");
+        desc = desc.Replace("(def)", GetAbillityValue(EffectType.Defence, isEnhance: isEnhance)+ " 방어");
         desc = desc.Replace("(dStatus)", GetAbillityValue(EffectType.DestroyStatus, isEnhance: isEnhance));
         desc = desc.Replace("(etc)", GetAbillityValue(EffectType.Etc, isEnhance: isEnhance));
 
-        for (int i = 0; i < KeywardList.Length; i++)
+        for (int i = 0; i < keywordList.Length; i++)
         {
             if (Managers.Keyward.GetKeyward(KeywardList[i]).IsAddDesc)
-                desc += " <color=#FFE951>" + Managers.Keyward.GetKeyward(KeywardList[i]).KeywardName + "</color>";
+                desc += " <color=#FFE951>" + Managers.Keyward.GetKeyward(keywordList[i]).KeywardName + "</color>";
         }
 
         return desc;
@@ -73,6 +79,7 @@ public class BaseRuneSO : ScriptableObject
     public List<AbilityValue> EnhancedAbilityList;
 
     public KeywordName[] KeywardList;
+    public KeywordName[] EnhancedKeywardList;
 
     public string GetAbillityValue(EffectType type, int index = 0, bool isEnhance = false)
     {
@@ -88,7 +95,7 @@ public class BaseRuneSO : ScriptableObject
             if (abilities[index].StatusName != StatusName.Null)
             {
                 string status = Resources.Load("Prefabs/Status/Status_" + abilities[index].StatusName).GetComponent<Status>().debugName;
-                text = value.ToString() + " <color=#FFE951>" + status + "</color>";
+                text = (IsSeeAbilityValue ? value.ToString() : "") + " <color=#FFE951>" + status + "</color>";
             }
         }
 

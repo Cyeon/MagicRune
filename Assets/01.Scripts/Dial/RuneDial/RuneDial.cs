@@ -33,8 +33,12 @@ public class RuneDial : Dial<BaseRuneUI, BaseRune>
         {
             for (int i = 0; i < runeList.Value.Count; i++)
             {
-                runeList.Value[i].transform.DOKill();
-                Managers.Resource.Destroy(runeList.Value[i].gameObject);
+                if(runeList.Value[i] != null)
+                {
+                    runeList.Value[i].transform.DOKill();
+                    Managers.Resource.Destroy(runeList.Value[i].gameObject);
+                    runeList.Value[i] = null;
+                }
             }
         }
         _elementDict.Clear();
@@ -145,6 +149,7 @@ public class RuneDial : Dial<BaseRuneUI, BaseRune>
                 int index = i;
                 MagicCircleGlow(index, true);
                 BaseRune rune = _usingDeck.Find(x => x == _dialElementList[index].SelectElement.Rune);
+                // ????筌ｋ똾寃?
                 _usingDeck.Remove(rune);
 
                 if (rune.IsIncludeKeyword(KeywordName.Consume))
@@ -185,6 +190,7 @@ public class RuneDial : Dial<BaseRuneUI, BaseRune>
             _resonance.Invocation(compareAttributeType);
         }
         yield return new WaitUntil(() => BattleManager.Instance.missileCount <= 0);
+        yield return new WaitForSeconds(0.1f);
         (_dialElementList[outRuneIndex] as RuneDialElement).EffectHandler.Clear();
         for (int i = 0; i < _dialElementList.Count; i++)
         {

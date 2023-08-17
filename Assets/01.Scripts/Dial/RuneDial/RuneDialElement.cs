@@ -21,7 +21,7 @@ public class RuneDialElement : DialElement<BaseRuneUI, BaseRune>
                 _selectElement.RuneColor(new Color(0.26f, 0.26f, 0.26f, 1f));
             }
             _selectElement = value;
-            if (value != null)
+            if (_selectElement != null)
             {
                 //_selectCard.SetActiveOutline(OutlineType.Cyan);
                 _selectElement.RuneColor(Color.white);
@@ -34,7 +34,17 @@ public class RuneDialElement : DialElement<BaseRuneUI, BaseRune>
     protected override bool _isRotateAdditionalCondition => BattleManager.Instance.IsPlayerTurn() && _dial.IsAttack == false;
 
     private RuneEffectHandler _effectHandler;
-    public RuneEffectHandler EffectHandler => _effectHandler;
+    public RuneEffectHandler EffectHandler
+    {
+        get
+        {
+            if (_effectHandler == null)
+            {
+                _effectHandler = Managers.GetPlayer().Visual.GetComponentInChildren<RuneEffectHandler>();
+            }
+            return _effectHandler;
+        }
+    }
 
     protected override void Awake()
     {

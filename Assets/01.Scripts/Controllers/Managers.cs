@@ -116,12 +116,12 @@ public class Managers : MonoBehaviour
         {
             if (_preparedToQuit == false)
             {
-                AndroidToast.Instance.ShowToastMessage("??ル∥?볟슖?る츇?????⑹맶???됯뎡 ??ル∥吏???곕괏??ル∥吏????ル∥吏????ル∥吏????ル∥吏????ル∥吏???⑹맶???됯뎡??ル∥六사춯琉우뒩????ル∥吏???⑹맶???됯뎡??ル∥????덉냷??");
+                AndroidToast.Instance.ShowToastMessage("한번 더 누르면 게임이 종료됩니다.");
                 PreparedToQuit();
             }
             else
             {
-                GameQuit();
+                GameQuit(Managers.GameQuitState.Quit);
             }
         }
     }
@@ -138,14 +138,52 @@ public class Managers : MonoBehaviour
         _preparedToQuit = false;
     }
 
+    public enum GameQuitState
+    {
+        Quit,
+        GiveUp,
+        Restart,
+    }
+
     public static void GameQuit()
     {
-        //AssetDatabase.SaveAssets();
+        if(Scene.CurrentScene is LobbyScene)
+        {
+            GameQuit(GameQuitState.Quit);
+        }
+         else
+        {
+            GameQuit(GameQuitState.GiveUp);
+        }
+    }
+
+    public static void GameQuit(GameQuitState state)
+    {
+        // AssetDatabase.SaveAssets();
+        switch (state)
+        {
+            case GameQuitState.Quit:
 #if UNITY_EDITOR
-        UnityEditor.EditorApplication.isPlaying = false;
+                UnityEditor.EditorApplication.isPlaying = false;
 #else
-        Application.Quit();
+                Application.Quit();
 #endif
+                break;
+            case GameQuitState.GiveUp:
+                Managers.Gold.ResetGoldAmount();
+                Managers.Map.ResetChapter();
+                Destroy(_player.gameObject);
+                _player = null;
+                Scene.LoadScene(Define.Scene.LobbyScene);
+                break;
+            case GameQuitState.Restart:
+                Managers.Gold.ResetGoldAmount();
+                Managers.Map.ResetChapter();
+                Destroy(_player.gameObject);
+                _player = null;
+                Scene.LoadScene(Define.Scene.MapScene);
+                break;
+        }
     }
 
     public static Player GetPlayer()

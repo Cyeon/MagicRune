@@ -50,6 +50,8 @@ public class Resonance : MonoBehaviour
 
     public void Invocation(AttributeType resonanceType)
     {
+        if (resonanceType == AttributeType.NonAttribute) return;
+
         Invoke(resonanceType + "Resonance", 0);
         ActiveAllEffectObject(false);
     }

@@ -86,15 +86,10 @@ public class BattleManager : MonoSingleton<BattleManager>
 
         EventManager.TriggerEvent(Define.ON_START_PLAYER_TURN);
 
-        if (Enemy.isTurnSkip)
-        {
-            Enemy.isTurnSkip = false;
-        }
-        else
-        {
-            if (Enemy.PatternManager.CurrentPattern == null) Enemy.PatternManager.NextPattern();
-            else Enemy.PatternManager.CurrentPattern.NextPattern();
-        }
+        if (Enemy.isTurnSkip) Enemy.isTurnSkip = false;
+
+        if (Enemy.PatternManager.CurrentPattern == null) Enemy.PatternManager.NextPattern();
+        else Enemy.PatternManager.CurrentPattern.NextPattern();
 
         Player.StatusManager.OnTurnStart();
         Enemy.PatternManager.StartAction();
@@ -207,6 +202,7 @@ public class BattleManager : MonoSingleton<BattleManager>
         if (_gameTurn == GameTurn.Player && missileCount <= 0)
         {
             missileCount = 0;
+            //(Define.DialScene?.Dial).IsAttack = false;
             TurnChange();
         }
     }

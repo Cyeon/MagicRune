@@ -5,6 +5,7 @@ using System.Linq;
 using MyBox;
 using System;
 using Random = UnityEngine.Random;
+using static UnityEngine.Rendering.DebugUI;
 
 [Serializable]
 public class BaseRune : Item, ICloneable
@@ -39,7 +40,7 @@ public class BaseRune : Item, ICloneable
     private bool _isEnhanced = false;
     public bool IsEnhanced => _isEnhanced;
 
-    protected List<KeywordName> _keywordList = new List<KeywordName>();
+    public KeywordName[] KeywordList => (_isEnhanced ? _baseRuneSO.EnhancedKeywardList : _baseRuneSO.KeywardList);
     #endregion
 
     #region Item Interface
@@ -63,7 +64,7 @@ public class BaseRune : Item, ICloneable
 
     public virtual void Init()
     {
-        _keywordList = _baseRuneSO.KeywardList.ToList();
+
     }
 
 
@@ -114,13 +115,41 @@ public class BaseRune : Item, ICloneable
 
     public virtual void AbilityAction()
     {
-
     }
 
-    public float GetAbliltiValue(EffectType type, StatusName status = StatusName.Null)
+    public float GetAbliltiValue(EffectType type, StatusName status = StatusName.Null, float ? value = null)
     {
-        float? value = 0;
-        if(status == StatusName.Null)
+        float? currentValue = 0;
+        if (value != null)
+        {
+            currentValue = value.Value;
+        }
+        else
+        {
+            if (status == StatusName.Null)
+            {
+                currentValue = (_isEnhanced ? _baseRuneSO.EnhancedAbilityList : _baseRuneSO.AbilityList).Where(x => x.EffectType == type).Select(x => x.Value).FirstOrDefault();
+            }
+            else
+            {
+                currentValue = (_isEnhanced ? _baseRuneSO.EnhancedAbilityList : _baseRuneSO.AbilityList).Where(x => x.EffectType == type && x.StatusName == status).Select(x => x.Value).FirstOrDefault();
+            }
+        }
+
+        if (currentValue.HasValue)
+        {
+            Managers.StatModifier.GetStatModifierValue(type, ref currentValue);
+
+            return currentValue.Value;
+        }
+
+        return 0;
+    }
+
+    public float GetValue(EffectType type, StatusName status = StatusName.Null)
+    {
+        float value = 0;
+        if (status == StatusName.Null)
         {
             value = (_isEnhanced ? _baseRuneSO.EnhancedAbilityList : _baseRuneSO.AbilityList).Where(x => x.EffectType == type).Select(x => x.Value).FirstOrDefault();
         }
@@ -129,14 +158,7 @@ public class BaseRune : Item, ICloneable
             value = (_isEnhanced ? _baseRuneSO.EnhancedAbilityList : _baseRuneSO.AbilityList).Where(x => x.EffectType == type && x.StatusName == status).Select(x => x.Value).FirstOrDefault();
         }
 
-        if (value.HasValue)
-        {
-            Managers.StatModifier.GetStatModifierValue(type, ref value);
-
-            return value.Value;
-        }
-
-        return 0;
+        return value;
     }
 
     public virtual object Clone()
@@ -149,6 +171,6 @@ public class BaseRune : Item, ICloneable
 
     public bool IsIncludeKeyword(KeywordName keyward)
     {
-        return _keywordList.Contains(keyward);
+        return KeywordList.Contains(keyward);
     }
 }

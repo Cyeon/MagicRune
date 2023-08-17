@@ -11,31 +11,31 @@ using Sequence = DG.Tweening.Sequence;
 
 public class DialScene : BaseScene
 {
+    // Dial
     [SerializeField]
     private RuneDial _dial;
     public RuneDial Dial => _dial;
 
-    // ?곸궠?獄????닿뎄 ???븐꽢
-    [SerializeField]
-    private KeywardRunePanel _cardDescPanel = null;
-
-    // ??⑤객臾??怨대쭜 ???닿뎄 ???븐꽢
+    // Status
     [SerializeField]
     private GameObject _statusDescPanel;
     private TextMeshProUGUI _statusDescName;
     private TextMeshProUGUI _statusDescInfo;
     private RectTransform _statusDescPanelRectTrm;
 
-    // ?熬곥굥?????곌랜?삥묾?
+    // Reward
     [SerializeField]
     private RewardUI _rewardUI;
     public RewardUI RewardUI => _rewardUI;
     private ChooseRuneUI _chooseRuneUI;
 
-    // ??? ??⑤８堉딁뛾?
+    // ETC
+    [SerializeField]
+    private KeywardRunePanel _cardDescPanel = null;
     private UserInfoUI _userInfoUI;
-
     private TextMeshProUGUI _goldPopupText = null;
+
+    
 
     protected override void Init()
     {
@@ -44,7 +44,6 @@ public class DialScene : BaseScene
         SceneType = Define.Scene.DialScene;
 
         #region UI Bind
-
         Managers.UI.Bind<Image>("TurnBackground", Managers.Canvas.GetCanvas("Popup").gameObject);
         Managers.UI.Bind<TextMeshProUGUI>("TurnText", Managers.Canvas.GetCanvas("Popup").gameObject);
 
@@ -62,6 +61,8 @@ public class DialScene : BaseScene
         Managers.UI.Bind<UserInfoUI>("Upper_Frame", Managers.Canvas.GetCanvas("UserInfoPanelCanvas").gameObject);
 
         Managers.UI.Bind<TextMeshProUGUI>("GoldPopupText", Managers.Canvas.GetCanvas("UserInfoPanelCanvas").gameObject);
+
+        
         #endregion
 
         _statusDescPanelRectTrm = _statusDescPanel.transform.Find("Panel").GetComponent<RectTransform>();
@@ -95,7 +96,6 @@ public class DialScene : BaseScene
         Managers.GetPlayer().userInfoUI = _userInfoUI;
 
         Managers.StatModifier.Init();
-
     }
 
     public void Turn(string text)
@@ -268,6 +268,7 @@ public class DialScene : BaseScene
     {
         if (rune == null) return;
 
+        _cardDescPanel.SetRune(rune);
         _cardDescPanel.SetUI(rune.BaseRuneSO, rune != null ? rune.IsEnhanced : false);
         _cardDescPanel.KeywardSetting();
     }
@@ -305,10 +306,10 @@ public class DialScene : BaseScene
 
     public override void Clear()
     {
-        // ?醫롫짗????룸쐻??덉굲?醫롫짗??
+        // ???モ닪筌?????룸챷留?????렊???モ닪筌??
 
-        // ?댄럺???대━??肄붾뱶.
-        // 洹쇰뜲 ?섏쨷???놁븷??????
+        // ??袁⑥쓢?????????袁⑤?獄?
+        // ?잙??????瑜곥돡????怨룸쭑??????
         for(int i = 0; i < _dial.DialElementList.Count; i++)
         {
             if(_dial.DialElementList[i] != null)
@@ -344,4 +345,6 @@ public class DialScene : BaseScene
         _goldPopupText.GetComponent<RectTransform>().DOAnchorPosY(50f * flag, 1f);
         Invoke("GoldPopupDown", 1.2f);
     }
+
+    
 }
