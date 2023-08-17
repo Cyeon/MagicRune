@@ -27,14 +27,14 @@ public class MapManager
     #endregion
 
     #region Period
-    private List<StageType> _firstPeriodStageList = new List<StageType>(); // ??ш끽維곻쭚??딅텑?
-    private List<StageType> _secondPeriodStageList = new List<StageType>(); // ??ш끽維곻쭚??딅텑?
+    private List<StageType> _firstPeriodStageList = new List<StageType>(); // ????썹땟怨살춾???낇뀘?
+    private List<StageType> _secondPeriodStageList = new List<StageType>(); // ????썹땟怨살춾???낇뀘?
 
-    private List<StageType> _currentPeriodStageList = new List<StageType>(); // ??ш끽維????影?됀?
+    private List<StageType> _currentPeriodStageList = new List<StageType>(); // ????썹땟????壤굿????
     public List<StageType> CurrentPeriodStageList => _currentPeriodStageList;
 
-    private int _periodProgress = 0; // ??ш끽維??癲ル슣???몄춿??
-    private int _nextCondition = 7; // 전반/후반부 전환 되려면 몇 개의 스테이지를 클리어 해야하는지 
+    private int _periodProgress = 0; // ????썹땟???꿔꺂????紐꾩뗄??
+    private int _nextCondition = 7; // ?꾨컲/?꾨컲遺 ?꾪솚 ?섎젮硫?紐?媛쒖쓽 ?ㅽ뀒?댁?瑜??대━???댁빞?섎뒗吏 
 
     private PeriodType _periodType = PeriodType.None;
     public PeriodType CurrentPeriodType => _periodType;
@@ -103,7 +103,7 @@ public class MapManager
 
     private void ChapterInit()
     {
-        Managers.GetPlayer().ResetHealth();
+        Managers.GetPlayer()?.ResetHealth();
 
         _currentPeriodStageList.Clear();
         _firstPeriodStageList.Clear();
@@ -129,7 +129,7 @@ public class MapManager
         _firstPeriodStageList.Add(StageType.Attack);
         _firstPeriodStageList.Add(StageType.Attack);
         _firstPeriodStageList.Add(StageType.Attack);
-        _firstPeriodStageList.Add(StageType.Attack); // 나중에 엘리트 방으로 변경 
+        _firstPeriodStageList.Add(StageType.Attack); // ?섏쨷???섎━??諛⑹쑝濡?蹂寃?
         _firstPeriodStageList.Add(StageType.Adventure);
         _firstPeriodStageList.Add(StageType.Adventure);
         _firstPeriodStageList.Add(StageType.Adventure);
@@ -154,11 +154,11 @@ public class MapManager
         }
         _firstPeriodStageList.Shuffle();
 
-        // Second Period
+        // Second Period?
         _secondPeriodStageList.Add(StageType.Attack);
         _secondPeriodStageList.Add(StageType.Attack);
         _secondPeriodStageList.Add(StageType.Attack);
-        _secondPeriodStageList.Add(StageType.Attack); // 나중에 엘리트 방으로 변경
+        _secondPeriodStageList.Add(StageType.Attack); // ?섏쨷???섎━??諛⑹쑝濡?蹂寃?
         _secondPeriodStageList.Add(StageType.Adventure);
         _secondPeriodStageList.Add(StageType.Adventure);
         _secondPeriodStageList.Add(StageType.Adventure);
@@ -272,7 +272,7 @@ public class MapManager
     }
 
     /// <summary>
-    /// ??????????? 癲ル슢?꾤땟洹잕덩?????읐??????壤굿??レ툗?? ??????????true 癲ル슢?꾤땟洹잕덩?????false
+    /// ??????????? ?꿔꺂??袁ㅻ븶域뱀옎???????먃??????鶯ㅺ동????ы닓?? ??????????true ?꿔꺂??袁ㅻ븶域뱀옎??????false
     /// </summary>
     /// <param name="period"></param>
     /// <returns></returns>
@@ -297,7 +297,7 @@ public class MapManager
         _stage = 0;
         _isFirst = true;
         ChapterInit();
-        Managers.GetPlayer().ResetHealth();
+        Managers.GetPlayer()?.ResetHealth();
     }
 
     public void AdventureWar(string text)
@@ -308,7 +308,7 @@ public class MapManager
 
 
     /// <summary>
-    /// 50% ?嶺뚮㉡???
+    /// 50% ?癲ル슢????
     /// </summary>
     /// <returns></returns>
     private bool IsFiftyChance()

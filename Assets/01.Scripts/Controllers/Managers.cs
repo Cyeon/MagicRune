@@ -113,12 +113,12 @@ public class Managers : MonoBehaviour
         {
             if (_preparedToQuit == false)
             {
-                AndroidToast.Instance.ShowToastMessage("???モ닪?蹂잛뒙??뗭툏??????밸㎍?????렊 ???モ닪筌???怨뺢킃???モ닪筌?????モ닪筌?????モ닪筌?????モ닪筌?????モ닪筌????밸㎍?????렊???モ닪筌묒궗異?쭔?곕뮝?????モ닪筌????밸㎍?????렊???モ닪?????됰꺑??");
+                AndroidToast.Instance.ShowToastMessage("한번 더 누르면 게임이 종료됩니다.");
                 PreparedToQuit();
             }
             else
             {
-                GameQuit();
+                GameQuit(Managers.GameQuitState.Quit);
             }
         }
     }
@@ -135,14 +135,52 @@ public class Managers : MonoBehaviour
         _preparedToQuit = false;
     }
 
+    public enum GameQuitState
+    {
+        Quit,
+        GiveUp,
+        Restart,
+    }
+
     public static void GameQuit()
     {
+        if(Scene.CurrentScene is LobbyScene)
+        {
+            GameQuit(GameQuitState.Quit);
+        }
+         else
+        {
+            GameQuit(GameQuitState.GiveUp);
+        }
+    }
+
+    public static void GameQuit(GameQuitState state)
+    {
         AssetDatabase.SaveAssets();
+        switch (state)
+        {
+            case GameQuitState.Quit:
 #if UNITY_EDITOR
-        UnityEditor.EditorApplication.isPlaying = false;
+                UnityEditor.EditorApplication.isPlaying = false;
 #else
-        Application.Quit();
+                Application.Quit();
 #endif
+                break;
+            case GameQuitState.GiveUp:
+                Managers.Gold.ResetGoldAmount();
+                Managers.Map.ResetChapter();
+                Destroy(_player.gameObject);
+                _player = null;
+                Scene.LoadScene(Define.Scene.LobbyScene);
+                break;
+            case GameQuitState.Restart:
+                Managers.Gold.ResetGoldAmount();
+                Managers.Map.ResetChapter();
+                Destroy(_player.gameObject);
+                _player = null;
+                Scene.LoadScene(Define.Scene.MapScene);
+                break;
+        }
     }
 
     public static Player GetPlayer()
