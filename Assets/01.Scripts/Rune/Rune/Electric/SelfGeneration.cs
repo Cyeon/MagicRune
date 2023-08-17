@@ -7,7 +7,7 @@ public class SelfGeneration : BaseRune
 {
     public override void Init()
     {
-        _baseRuneSO = Managers.Resource.Load<BaseRuneSO>("SO/Rune/Electric/" + typeof(SelfGeneration).Name);
+        _baseRuneSO = Managers.Addressable.Load<BaseRuneSO>("SO/Rune/Electric/" + typeof(SelfGeneration).Name);
         base.Init();
     }
 

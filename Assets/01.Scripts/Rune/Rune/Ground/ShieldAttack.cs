@@ -7,7 +7,7 @@ public class ShieldAttack : BaseRune
 {
     public override void Init()
     {
-        _baseRuneSO = Managers.Resource.Load<BaseRuneSO>("SO/Rune/Ground/" + typeof(ShieldAttack).Name);
+        _baseRuneSO = Managers.Addressable.Load<BaseRuneSO>("SO/Rune/Ground/" + typeof(ShieldAttack).Name);
         base.Init();
     }
     public override void AbilityAction()

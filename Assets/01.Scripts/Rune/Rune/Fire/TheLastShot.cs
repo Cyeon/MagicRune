@@ -6,7 +6,7 @@ public class TheLastShot : BaseRune
 {
     public override void Init()
     {
-        _baseRuneSO = Managers.Resource.Load<BaseRuneSO>("SO/Rune/Fire/" + typeof(TheLastShot).Name);
+        _baseRuneSO = Managers.Addressable.Load<BaseRuneSO>("SO/Rune/Fire/" + typeof(TheLastShot).Name);
         base.Init();
     }
 

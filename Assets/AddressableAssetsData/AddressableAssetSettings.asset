@@ -43,6 +43,7 @@ MonoBehaviour:
   m_GroupAssets:
   - {fileID: 11400000, guid: 6d3d37d9b2367334faf05ce82a5c76bb, type: 2}
   - {fileID: 11400000, guid: 6a6d52dc902385f47b74c54a692b64e6, type: 2}
+  - {fileID: 11400000, guid: 460a88f73d92073499928413623eadb4, type: 2}
   m_BuildSettings:
     m_CompileScriptsInVirtualMode: 0
     m_CleanupStreamingAssetsAfterBuilds: 1
@@ -53,6 +54,20 @@ MonoBehaviour:
     - m_InheritedParent: 
       m_Id: 2ecdc4769c0a10840ba8943c25f46a5c
       m_ProfileName: Default
+      m_Values:
+      - m_Id: 31ad331895cd15f4cb0388e3bd3b15e9
+        m_Value: '[UnityEditor.EditorUserBuildSettings.activeBuildTarget]'
+      - m_Id: dc83cab4e70db4a49bc9c0249291ad5b
+        m_Value: '[UnityEngine.AddressableAssets.Addressables.BuildPath]/[BuildTarget]'
+      - m_Id: 409ca484f115ab248acb369eed4f3069
+        m_Value: '{UnityEngine.AddressableAssets.Addressables.RuntimePath}/[BuildTarget]'
+      - m_Id: 8d41ce9f59eb4df4aa64d8bbe37756f1
+        m_Value: ServerData/[BuildTarget]
+      - m_Id: deeb0a5a159ffc04a96d2ed94766281e
+        m_Value: http://[PrivateIpAddress]:[HostingServicePort]
+    - m_InheritedParent: 
+      m_Id: 7e2234d088b81b747934243b0aaac975
+      m_ProfileName: New Profile
       m_Values:
       - m_Id: 31ad331895cd15f4cb0388e3bd3b15e9
         m_Value: '[UnityEditor.EditorUserBuildSettings.activeBuildTarget]'
@@ -84,6 +99,10 @@ MonoBehaviour:
   m_LabelTable:
     m_LabelNames:
     - default
+    - Lobby
+    - Map
+    - Battle
+    - SO
   m_SchemaTemplates: []
   m_GroupTemplateObjects:
   - {fileID: 11400000, guid: 1418e5f7506716b4a92924c04603169f, type: 2}
@@ -102,4 +121,5 @@ MonoBehaviour:
     m_HostingServiceInfos: []
     m_Settings: {fileID: 11400000}
     m_NextInstanceId: 0
-    m_RegisteredServiceTypeRefs: []
+    m_RegisteredServiceTypeRefs:
+    - UnityEditor.AddressableAssets.HostingServices.HttpHostingService, Unity.Addressables.Editor

@@ -9,7 +9,7 @@ public class VariableRune : BaseRune
 
     public override void Init()
     {
-        _baseRuneSO = Managers.Resource.Load<BaseRuneSO>("SO/Rune/Non/" + typeof(VariableRune).Name);
+        _baseRuneSO = Managers.Addressable.Load<BaseRuneSO>("SO/Rune/Non/" + typeof(VariableRune).Name);
         base.Init();
     }
 
