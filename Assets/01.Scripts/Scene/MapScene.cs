@@ -116,7 +116,7 @@ public class MapScene : BaseScene
 
     private void ProgressInit()
     {
-        Transform progress = Managers.Canvas.GetCanvas("UserInfoPanelCanvas").transform.Find("Progress");
+        Transform progress = Managers.Canvas.GetCanvas("MapUICanvas").transform.Find("Progress");
         _leftLine = progress.Find("LeftLine").GetComponent<Image>();
         _rightLine = progress.Find("RightLine").GetComponent<Image>();
         _activeLineColor = _leftLine.color;
