@@ -19,9 +19,9 @@ public class DeckManager
 
     public void Init()
     {
-        SetDefaultDeck(Managers.Resource.Load<DeckSO>("SO/Deck/DefaultDeck").RuneList);
+        SetDefaultDeck(Managers.Addressable.Load<DeckSO>("SO/Deck/DefaultDeck").RuneList);
 
-        _allRuneSO = Managers.Resource.Load<DeckSO>("SO/Deck/AllRuneDeck");
+        _allRuneSO = Managers.Addressable.Load<DeckSO>("SO/Deck/AllRuneDeck");
 
         for (int i = 0; i < (int)AttributeType.MAX_COUNT; i++)
         {
