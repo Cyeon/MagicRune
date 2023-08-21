@@ -2961,6 +2961,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2969a2944a9cf854a8fcb7272006f016, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  RuneRarityType: 0
 --- !u!1 &1359464649
 GameObject:
   m_ObjectHideFlags: 0
@@ -3962,6 +3963,7 @@ MonoBehaviour:
   _dial: {fileID: 6047878870979582954}
   _statusDescPanel: {fileID: 35130150}
   _rewardUI: {fileID: 8337651338890638072}
+  ChooseRuneUI: {fileID: 0}
   _cardDescPanel: {fileID: 1862527877}
 --- !u!4 &1671816844
 Transform:
@@ -3997,7 +3999,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1679534863
 RectTransform:
   m_ObjectHideFlags: 0
