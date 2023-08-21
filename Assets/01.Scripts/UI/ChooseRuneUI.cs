@@ -5,6 +5,7 @@ using UnityEngine;
 public class ChooseRuneUI : MonoBehaviour
 {
     private List<RewardRunePanel> _rewardPanelList = new List<RewardRunePanel>();
+    private RuneRarityType _runeRarityType = RuneRarityType.Base;
 
     private void Awake()
     {
@@ -16,7 +17,17 @@ public class ChooseRuneUI : MonoBehaviour
 
     public void SetUp()
     {
-        BaseRune[] rune = Managers.Rune.GetRandomRune(3, Managers.Deck.DefaultRune, RuneRarityType.Base).ToArray();
+        switch (Managers.Map.CurrentStage.StageType)
+        {
+            case StageType.Boss:
+                _runeRarityType = RuneRarityType.Boss; break;
+            case StageType.Elite:
+                _runeRarityType = RuneRarityType.Elite; break;
+            default:
+                _runeRarityType = RuneRarityType.Base; break;
+        }
+
+        BaseRune[] rune = Managers.Rune.GetRandomRune(3, Managers.Deck.DefaultRune, _runeRarityType).ToArray();
         for(int i = 0; i < rune.Length; i++)
         {
             _rewardPanelList[i].SetUI(rune[i].BaseRuneSO, false);

@@ -201,8 +201,6 @@ public class Unit : MonoBehaviour
 
     public void AddHP(float value, bool isEffect = false)
     {
-        if (value <= 0) return;
-
         if (_isDie == false)
         {
             HP += value.RoundToInt();
