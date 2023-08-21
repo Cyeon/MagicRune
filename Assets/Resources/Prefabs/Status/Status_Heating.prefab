@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5736046982554988565}
   - component: {fileID: 5014004267170453785}
+  - component: {fileID: -2602342712814606292}
   m_Layer: 0
   m_Name: Status_Heating
   m_TagString: Untagged
@@ -48,15 +49,14 @@ MonoBehaviour:
   statusName: 20
   information: "\uCE74\uB4DC\uB97C \uC0AC\uC6A9\uD560 \uB54C\uB9C8\uB2E4 \uC801\uC5D0\uAC8C
     1\uC758 \uD654\uC0C1\uC744 \uBD80\uC5EC\uD55C\uB2E4. \uACFC\uC5F4 \uC2A4\uD0DD\uC774
-    1 \uBBF8\uB9CC\uC77C \uACBD\uC6B0 \uD6A8\uACFC\uAC00 \uC0AC\uB77C\uC9C4\uB2E4."
+    5 \uBBF8\uB9CC\uC77C \uACBD\uC6B0 \uD6A8\uACFC\uAC00 \uC0AC\uB77C\uC9C4\uB2E4."
   textColor: {r: 1, g: 1, b: 1, a: 1}
   type: 0
   isTurnRemove: 1
-  OnAddStatus:
-  - {fileID: 0}
-  - {fileID: 0}
+  OnAddStatus: []
   OnTurnStart: []
-  OnAttack: []
+  OnAttack:
+  - {fileID: -2602342712814606292}
   OnGetDamage: []
   OnTurnEnd: []
   OnRemoveStatus: []
@@ -65,3 +65,15 @@ MonoBehaviour:
   statusSoundType: 1
   getSound: {fileID: 8300000, guid: ac189a9c24d96fb459e664151c9b8765, type: 3}
   activeSound: {fileID: 8300000, guid: 840cae5cf5af6b548b07c6bb93c7a151, type: 3}
+--- !u!114 &-2602342712814606292
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8378743581122507794}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8cdc271d8c35ddb40b1058a45236de5d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
