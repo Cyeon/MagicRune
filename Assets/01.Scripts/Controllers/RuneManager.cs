@@ -259,7 +259,7 @@ public class RuneManager
                 rarityMinValue += (int)rarityArray[i];
             }
         }
-        Debug.Log(runeRarityType);
+
         return rarity;
     }
 
