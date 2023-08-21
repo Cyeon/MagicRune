@@ -234,7 +234,7 @@ public class RuneManager
 
         int rarityValue = Random.Range(1, rarityMaxValue + 1);
         int rarityMinValue = 0;
-        for (int i = 0; i < rarityArray.Length; i++)
+        for (int i = 0; i < rarityArray.Length; i++) 
         {
             if (rarityMinValue <= rarityValue && rarityValue <= (int)rarityArray[i] + rarityMinValue)
             {
