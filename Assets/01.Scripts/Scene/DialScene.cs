@@ -27,7 +27,7 @@ public class DialScene : BaseScene
     [SerializeField]
     private RewardUI _rewardUI;
     public RewardUI RewardUI => _rewardUI;
-    private ChooseRuneUI _chooseRuneUI;
+    public ChooseRuneUI ChooseRuneUI;
 
     // ETC
     [SerializeField]
@@ -69,7 +69,7 @@ public class DialScene : BaseScene
         _statusDescName = Managers.UI.Get<TextMeshProUGUI>("Status_Name_Text");
         _statusDescInfo = Managers.UI.Get<TextMeshProUGUI>("Status_Desc_Text");
 
-        _chooseRuneUI = Managers.UI.Get<ChooseRuneUI>("ChooseRuneUI").GetComponent<ChooseRuneUI>();
+        ChooseRuneUI = Managers.UI.Get<ChooseRuneUI>("ChooseRuneUI").GetComponent<ChooseRuneUI>();
 
         //UIManager.Instance.Get<Button>("Restart Btn").onClick.RemoveAllListeners();
         //UIManager.Instance.Get<Button>("Restart Btn").onClick.AddListener(() =>
@@ -321,13 +321,13 @@ public class DialScene : BaseScene
 
     public void ChooseRuneUISetUp()
     {
-        _chooseRuneUI.gameObject.SetActive(true);
-        _chooseRuneUI.SetUp();
+        ChooseRuneUI.gameObject.SetActive(true);
+        ChooseRuneUI.SetUp();
     }
 
     public void HideChooseRuneUI()
     {
-        _chooseRuneUI.gameObject.SetActive(false);
+        ChooseRuneUI.gameObject.SetActive(false);
     }
 
     private void GoldPopupDown()

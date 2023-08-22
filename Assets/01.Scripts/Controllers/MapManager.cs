@@ -40,11 +40,23 @@ public class MapManager
     public PeriodType CurrentPeriodType => _periodType;
     #endregion
 
+    #region Stage
     private int _stage = 0;
     public int Stage => _stage;
 
+    private Stage _currentStage;
+    public Stage CurrentStage;
+
     private StageSpawner _stageSpawner;
     public StageSpawner StageSpawner => _stageSpawner;
+    #endregion
+
+    #region Adventure
+    private bool _isAdventure = false;
+    public bool IsAdventureWar { get => _isAdventure; set { _isAdventure = value; } }
+    private string _adventureResultText;
+    public string AdventureResultText => _adventureResultText;
+    #endregion
 
     private MapUI _mapSceneUI;
     public MapUI MapSceneUI
@@ -61,14 +73,7 @@ public class MapManager
 
     private bool _isFirst = true;
 
-    #region Adventure
-    private bool _isAdventure = false;
-    public bool IsAdventureWar { get => _isAdventure; set { _isAdventure = value; } }
-    private string _adventureResultText;
-    public string AdventureResultText => _adventureResultText;
-    #endregion
-
-    #region Init
+    #region Init Function
     public void MapInit()
     {
         _mapSceneUI = Managers.Canvas.GetCanvas("MapUI").GetComponent<MapUI>();
@@ -155,10 +160,11 @@ public class MapManager
         _firstPeriodStageList.Shuffle();
 
         // Second Period?
-        _secondPeriodStageList.Add(StageType.Attack);
-        _secondPeriodStageList.Add(StageType.Attack);
-        _secondPeriodStageList.Add(StageType.Attack);
-        _secondPeriodStageList.Add(StageType.Attack); // ?섏쨷???섎━??諛⑹쑝濡?蹂寃?
+        for(int i = 0; i < 4; i++)
+        {
+            _secondPeriodStageList.Add(StageType.Attack);
+        }
+
         _secondPeriodStageList.Add(StageType.Adventure);
         _secondPeriodStageList.Add(StageType.Adventure);
         _secondPeriodStageList.Add(StageType.Adventure);
@@ -188,7 +194,7 @@ public class MapManager
     }
     #endregion
 
-    #region Next
+    #region Next Function
     public void NextChapter()
     {
         if (Chapter < _chapterList.Count)
@@ -241,7 +247,7 @@ public class MapManager
     }
     #endregion
 
-    #region Period
+    #region Period Function
     public void NextPeriod()
     {
         _currentPeriodStageList.Clear();

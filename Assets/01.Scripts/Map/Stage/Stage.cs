@@ -11,7 +11,8 @@ public enum StageType
     Rest,
     Shop,
     Boss,
-    Tutorial
+    Tutorial,
+    Elite
 }
 
 public class Stage : MonoBehaviour
@@ -27,6 +28,7 @@ public class Stage : MonoBehaviour
     {
         Managers.Map.CurrentPeriodStageList.Remove(StageType);
         Managers.Canvas.GetCanvas("MapDial").enabled = false;
+        Managers.Map.CurrentStage = this;
     }
 
     public virtual void Init()
