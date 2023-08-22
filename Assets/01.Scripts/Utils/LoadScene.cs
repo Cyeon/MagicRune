@@ -2,12 +2,14 @@ using UnityEngine.SceneManagement;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using TMPro;
 
 [System.Serializable]
 public struct LoadScene
 {
     public GameObject LoadPanel;
     public Slider ProgressSlider;
+    public TextMeshProUGUI LoadingText;
 
     public IEnumerator LoadSceneCoroutine(string sceneName)
     {
@@ -29,7 +31,11 @@ public struct LoadScene
             else
             {
                 timer += Time.unscaledDeltaTime;
-                ProgressSlider.value = Mathf.Lerp(0.9f, 1f, timer);
+                
+                float timeValue = Mathf.Lerp(0.9f, 1f, timer);
+                ProgressSlider.value = timeValue;
+                LoadingText.SetText(string.Format("룬을 모으는 중...{0}%", Mathf.FloorToInt(timeValue * 100)));
+                
                 if (ProgressSlider.value == 1f)
                 {
                     op.allowSceneActivation = true;
