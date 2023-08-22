@@ -37,9 +37,12 @@ public class DialScene : BaseScene
 
     private void Start()
     {
-        BossAppearanceTimeline bossCutscene = Managers.Resource.Instantiate("Cutscene/BossDirector").GetComponent<BossAppearanceTimeline>();
-        bossCutscene.SetEnemyInfo(1);
-        bossCutscene.Director.Play(); 
+        if(Managers.Map.currentStage.StageType == StageType.Boss)
+        {
+            BossAppearanceTimeline bossCutscene = Managers.Resource.Instantiate("Cutscene/BossDirector").GetComponent<BossAppearanceTimeline>();
+            bossCutscene.SetEnemyInfo((int)Managers.Enemy.CurrentEnemy.enemyType);
+            bossCutscene.Director.Play();
+        }
     }
 
     protected override void Init()
