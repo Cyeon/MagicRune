@@ -8,10 +8,9 @@ public class ChapterTransition : MonoBehaviour
 {
     //private TextMeshProUGUI _chapterNumberText = null;
     private TextMeshProUGUI _chapterNameText = null;
-    private GameObject _chapterNameTextFadeObj;
-
-    private Image _backgroundImage;
+    private GameObject _chapterNameFade;
     private Image _fadeImage;
+    private Transform _outline;
 
     public void Init()
     {
@@ -19,30 +18,34 @@ public class ChapterTransition : MonoBehaviour
 
         //_chapterNumberText = transform.Find("ChapterNumberText").GetComponent<TextMeshProUGUI>();
         _chapterNameText = transform.Find("ChapterNameText").GetComponent<TextMeshProUGUI>();
-        _chapterNameTextFadeObj = _chapterNameText.transform.Find("Fade").gameObject;
-
-        _backgroundImage = transform.Find("Background").GetComponent<Image>();
+        _chapterNameFade = _chapterNameText.transform.GetChild(0).gameObject;
         _fadeImage = transform.Find("FadeImage").GetComponent<Image>();
+        _outline = transform.Find("Outline");
     }
 
     public void Transition()
     {
+        Managers.Canvas.GetCanvas("MapDial").enabled = false;
+        Define.MapScene.mapDial.gameObject.SetActive(false);
         Managers.Canvas.GetCanvas("ChapterTransition").enabled = true;
 
-        _backgroundImage.sprite = Resources.Load<Sprite>("Sprite/MapBg_" + Managers.Map.Chapter.ToString());
         _chapterNameText.SetText(Managers.Map.CurrentChapter.chapterName);
         if (Define.SaveData.IsTutorial)
             _chapterNameText.SetText("튜토리얼");
 
         Sequence seq = DOTween.Sequence();
         seq.Append(_fadeImage.DOFade(0, 0.7f));
-        seq.Append(_chapterNameTextFadeObj.transform.DOScaleX(1, 1f));
-        seq.Append(_chapterNameTextFadeObj.transform.DOScaleX(0, 1f));
-        seq.Append(_backgroundImage.DOFade(0, 0.2f));
+        seq.Append(_outline.DOScaleY(2, 1f));
+        seq.Join(_chapterNameFade.transform.DOScaleY(1, 1f));
+        seq.AppendInterval(0.5f);
+        seq.Append(_outline.DOScaleY(0, 1f));
+        seq.Join(_chapterNameFade.transform.DOScaleY(0, 1f));
         seq.AppendCallback(() =>
         {
             Reset();
             Managers.Canvas.GetCanvas("ChapterTransition").enabled = false;
+            Managers.Canvas.GetCanvas("MapDial").enabled = true;
+            Define.MapScene.mapDial.gameObject.SetActive(true);
             if (Define.SaveData.IsTutorial)
                 Managers.Canvas.GetCanvas("TutorialCanvas").GetComponent<TutorialUI>().Tutorial("MapDial");
         });
@@ -50,7 +53,8 @@ public class ChapterTransition : MonoBehaviour
 
     public void Reset()
     {
-        _backgroundImage.DOFade(1, 0);
         _fadeImage.DOFade(1, 0);
+        _chapterNameFade.transform.DOScaleY(0, 0);
+        _outline.DOScaleY(0, 0);
     }
 }
