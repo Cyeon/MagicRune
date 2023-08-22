@@ -155,7 +155,7 @@ public class Managers : MonoBehaviour
         {
             GameQuit(GameQuitState.GiveUp);
         }
-    }
+    }   
 
     public static void GameQuit(GameQuitState state)
     {

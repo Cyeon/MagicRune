@@ -27,7 +27,6 @@ public class Player : Unit
     public override void Attack(float dmg, bool isTrueDamage = false)
     {
         base.Attack(dmg, ref isTrueDamage);
-        Debug.Log(isTrueDamage);
         BattleManager.Instance.Enemy.TakeDamage(currentDmg, isTrueDamage);
     }
 

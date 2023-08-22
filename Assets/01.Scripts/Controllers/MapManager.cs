@@ -43,12 +43,8 @@ public class MapManager
     #region Stage
     private int _stage = 0;
     public int Stage => _stage;
-
-    private Stage _currentStage;
-    public Stage CurrentStage;
-
-    private StageSpawner _stageSpawner;
-    public StageSpawner StageSpawner => _stageSpawner;
+    public Stage currentStage;
+    public StageSpawner stageSpawner;
     #endregion
 
     #region Adventure
@@ -78,13 +74,6 @@ public class MapManager
     {
         _mapSceneUI = Managers.Canvas.GetCanvas("MapUI").GetComponent<MapUI>();
         _chapterList = new List<Chapter>(Managers.Resource.Load<ChapterListSO>("SO/" + typeof(ChapterListSO).Name).chapterList);
-
-        if (_stageSpawner == null)
-        {
-            StageSpawner portalSpawner = Managers.Resource.Instantiate(typeof(StageSpawner).Name, Managers.Scene.CurrentScene.transform).GetComponent<StageSpawner>();
-            portalSpawner.transform.SetParent(null);
-            _stageSpawner = portalSpawner;
-        }
 
         Managers.Reward.ImageLoad();
         _mapSceneUI.ChapterTransition.Init();
