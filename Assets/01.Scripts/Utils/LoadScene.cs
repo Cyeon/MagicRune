@@ -34,7 +34,7 @@ public struct LoadScene
                 
                 float timeValue = Mathf.Lerp(0.9f, 1f, timer);
                 ProgressSlider.value = timeValue;
-                LoadingText.SetText(string.Format("Loading...{0}%", Mathf.FloorToInt(timeValue * 100)));
+                LoadingText.SetText(string.Format("룬을 모으는 중...{0}%", Mathf.FloorToInt(timeValue * 100)));
                 
                 if (ProgressSlider.value == 1f)
                 {
