@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: -9034214546657118884}
   - component: {fileID: -4083407899862140032}
   m_Layer: 0
-  m_Name: Status_OverHeat
+  m_Name: Status_Overheat
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -56,7 +56,7 @@ MonoBehaviour:
     \uBD80\uC5EC\uD558\uACE0 \uACFC\uC5F4 \uC2A4\uD0DD\uC744 0\uC73C\uB85C \uB418\uB3CC\uB9B0\uB2E4. "
   textColor: {r: 1, g: 1, b: 1, a: 1}
   type: 0
-  isTurnRemove: 1
+  isTurnRemove: 0
   OnAddStatus:
   - {fileID: -6026917876269977229}
   - {fileID: -9034214546657118884}
@@ -85,6 +85,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _conditionStatus: 19
   _conditionCount: 5
+  isConditionStatusRem: 0
   _addStatus: 20
 --- !u!114 &-9034214546657118884
 MonoBehaviour:

@@ -96,6 +96,7 @@ public class StatusManager
         _statusList.Remove(status);
         Define.DialScene?.RemoveStatusPanel(_unit, status.statusName);
 
+        Debug.Log(string.Format("{0} {1}", status.statusName, status.OnRemoveStatus.Count));
         if (status.OnRemoveStatus.Count > 0)
             status.OnRemoveStatus.ForEach(x => x?.Invoke());
 

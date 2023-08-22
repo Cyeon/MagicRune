@@ -76,13 +76,13 @@ public class DialScene : BaseScene
         //{
         //    SceneManagerEX.Instance.LoadScene(Define.Scene.MapScene);
         //    //MapManager.Instance.ResetChapter();
-        //});
+        //}); 
+
         Managers.UI.Get<Button>("Quit Btn").onClick.RemoveAllListeners();
         Managers.UI.Get<Button>("Quit Btn").onClick.AddListener(() => Managers.GameQuit());
 
         Managers.Sound.PlaySound("BGM/DialSceneBGM", SoundType.Bgm, true, 1.0f);
 
-        Debug.Log($"Resolution : {Screen.width}, {Screen.height}");
         _userInfoUI = Managers.UI.Get<UserInfoUI>("Upper_Frame");
 
         _userInfoUI.UpdateHealthText();

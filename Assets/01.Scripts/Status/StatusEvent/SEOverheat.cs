@@ -17,8 +17,7 @@ public class SEOverheat : StatusEvent
             _unit.StatusManager.DeleteStatus(_status);
             _unit.StatusManager.DeleteStatus(StatusName.Heating);
         }
-
-        if(_status.TypeValue < _lessThanCount)
+        else if(_status.TypeValue < _lessThanCount)
         {
             _unit.StatusManager.DeleteStatus(StatusName.Heating);
         }
