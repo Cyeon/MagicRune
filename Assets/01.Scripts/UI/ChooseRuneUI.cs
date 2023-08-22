@@ -17,7 +17,7 @@ public class ChooseRuneUI : MonoBehaviour
 
     public void SetUp()
     {
-        switch (Managers.Map.CurrentStage.StageType)
+        switch (Managers.Map.currentStage.StageType)
         {
             case StageType.Boss:
                 _runeRarityType = RuneRarityType.Boss; break;
