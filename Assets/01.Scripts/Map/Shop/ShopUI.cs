@@ -53,6 +53,7 @@ public class ShopUI : MonoBehaviour
         _selectItem.SetActiveSelectPanel(true);
 
         _keywardRunePanel.SetUI(_selectItem.item.Rune.BaseRuneSO, false);
+        _keywardRunePanel.SetRune(_selectItem.item.Rune);
         _keywardRunePanel.KeywardSetting();
     }
 
