@@ -799,6 +799,7 @@ MonoBehaviour:
   _loadScene:
     LoadPanel: {fileID: 842455381}
     ProgressSlider: {fileID: 2066916557}
+    LoadingText: {fileID: 7983970656112736321}
 --- !u!1 &1367418942
 GameObject:
   m_ObjectHideFlags: 0
@@ -1037,9 +1038,25 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 307968353}
     m_Modifications:
+    - target: {fileID: 7983970656188803173, guid: 22498062a960232439fca10af965191e, type: 3}
+      propertyPath: m_text
+      value: "\uB8EC \uBAA8\uC73C\uB294 \uC911...45%"
+      objectReference: {fileID: 0}
+    - target: {fileID: 7983970656188803173, guid: 22498062a960232439fca10af965191e, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: de698cac60c043e48acdc367e3c9b421, type: 2}
+    - target: {fileID: 7983970656188803173, guid: 22498062a960232439fca10af965191e, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -8018390673986854464, guid: de698cac60c043e48acdc367e3c9b421, type: 2}
     - target: {fileID: 7983970656881156373, guid: 22498062a960232439fca10af965191e, type: 3}
       propertyPath: m_Name
       value: Loading
+      objectReference: {fileID: 0}
+    - target: {fileID: 7983970656881156373, guid: 22498062a960232439fca10af965191e, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7983970656881156374, guid: 22498062a960232439fca10af965191e, type: 3}
       propertyPath: m_Pivot.x
@@ -1125,5 +1142,24 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7983970657034460587, guid: 22498062a960232439fca10af965191e, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7983970657034460587, guid: 22498062a960232439fca10af965191e, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 22498062a960232439fca10af965191e, type: 3}
+--- !u!114 &7983970656112736321 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7983970656188803173, guid: 22498062a960232439fca10af965191e, type: 3}
+  m_PrefabInstance: {fileID: 7983970656112736320}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
