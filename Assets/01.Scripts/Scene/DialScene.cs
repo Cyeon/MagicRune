@@ -35,7 +35,15 @@ public class DialScene : BaseScene
     private UserInfoUI _userInfoUI;
     private TextMeshProUGUI _goldPopupText = null;
 
-    
+    private void Start()
+    {
+        if(Managers.Map.currentStage.StageType == StageType.Boss)
+        {
+            BossAppearanceTimeline bossCutscene = Managers.Resource.Instantiate("Cutscene/BossDirector").GetComponent<BossAppearanceTimeline>();
+            bossCutscene.SetEnemyInfo((int)Managers.Enemy.CurrentEnemy.enemyType);
+            bossCutscene.Director.Play();
+        }
+    }
 
     protected override void Init()
     {

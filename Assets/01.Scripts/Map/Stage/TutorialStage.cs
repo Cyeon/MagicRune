@@ -12,6 +12,7 @@ public class TutorialStage : Stage
     public override void InStage()
     {
         Managers.Enemy.AddEnemy(Resources.Load<Enemy>("Prefabs/Enemy/None/TutorialEnemy"));
+        Managers.Map.currentStage = this;
         Managers.Scene.LoadScene("DialTutorialScene");
     }
 }

@@ -192,6 +192,14 @@ public class RuneManager
 
             if (isIn == false)
             {
+                if (rune.BaseRuneSO.DiscoveryType == DiscoveryType.Unknwon)
+                {
+                    //AssetDatabase.StartAssetEditing();
+                    rune.BaseRuneSO.DiscoveryType = DiscoveryType.Find;
+                    //AssetDatabase.StopAssetEditing();
+                    //EditorUtility.SetDirty(newRuneList[idx].BaseRuneSO);
+                }
+                
                 runeList.Add(rune.Clone() as BaseRune);
             }
         }

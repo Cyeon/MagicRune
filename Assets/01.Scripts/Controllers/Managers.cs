@@ -45,7 +45,7 @@ public class Managers : MonoBehaviour
     public static RelicManager Relic => Instance._relic;
     public static EnemyManager Enemy => Instance._enemy;
     public static SoundManager Sound { get { return Instance._sound; } }
-    public static SwipeManager Swipe { get { return _instance._swipe; } }
+    public static SwipeManager Swipe { get { return Instance._swipe; } }
     public static RewardManager Reward { get { return Instance._reward; } }
     public static CanvasManager Canvas { get { return Instance._canvas; } }
     public static SceneManagerEX Scene { get { return Instance._scene; } }
@@ -155,7 +155,7 @@ public class Managers : MonoBehaviour
         {
             GameQuit(GameQuitState.GiveUp);
         }
-    }
+    }   
 
     public static void GameQuit(GameQuitState state)
     {
