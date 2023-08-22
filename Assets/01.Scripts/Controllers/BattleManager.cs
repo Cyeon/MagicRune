@@ -241,7 +241,7 @@ public class BattleManager : MonoSingleton<BattleManager>
         _tutorialEndPanel.SetActive(true);
 
         Managers.Gold.ResetGoldAmount();
-        Managers.Deck.SetDefaultDeck(Managers.Resource.Load<DeckSO>("SO/Deck/DefaultDeck").RuneList);
+        Managers.Deck.SetDefaultDeck(Managers.Addressable.Load<DeckSO>("SO/Deck/DefaultDeck").RuneList);
 
         Transform panelTrm = _tutorialEndPanel.transform.Find("Panel");
         panelTrm.localScale = Vector3.zero;
