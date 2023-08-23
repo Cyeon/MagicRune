@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class ChooseRuneUI : MonoBehaviour
 {
@@ -35,9 +36,21 @@ public class ChooseRuneUI : MonoBehaviour
 
     public void SelectRewardRunePanel(RewardRunePanel rewardPanel)
     {
-        // rewardPanel의 테두리 끄기( 널이 아니면)
+        if (_selectRewardRunePanel == rewardPanel) return;
+
+        if(_selectRewardRunePanel != null)
+        {
+            Sequence seq = DOTween.Sequence();
+            seq.Append(_selectRewardRunePanel.GetComponent<RectTransform>().DOAnchorPosY(-100, 0.1f).SetRelative());
+            seq.Join(_selectRewardRunePanel.GetComponent<RectTransform>().DOScale(Vector3.one, 0.1f));
+        }
         _selectRewardRunePanel = rewardPanel;
-        // rewardPanel의 테두리 키기(널이 아니면)
+        if(_selectRewardRunePanel != null)
+        {
+            Sequence seq = DOTween.Sequence();
+            seq.Append(_selectRewardRunePanel.GetComponent<RectTransform>().DOAnchorPosY(100, 0.1f).SetRelative());
+            seq.Join(_selectRewardRunePanel.GetComponent<RectTransform>().DOScale(Vector3.one * 1.1f, 0.1f));
+        }
     }
 
     public void SetUp()
