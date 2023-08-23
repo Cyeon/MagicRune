@@ -58,34 +58,10 @@ public enum AttackType
 
 public enum RuneRarity
 {
-    // 다합쳐서 100되게
-    Normal = 70,
-    Rare = 25,
-    Epic = 5,
-
-    // 앤 뺴고
-    Legendary = 0, // 맨 마지막으로
-}
-
-public enum EliteRuneRarity
-{
-    Noraml = 30,
-    Rare = 40,
-    Epic = 30
-}
-
-public enum BossRuneRarity
-{
-    Noraml = 0,
-    Rare = 0,
-    Epic = 100
-}
-
-public enum RuneRarityType
-{
-    Base,
-    Elite,
-    Boss
+    Normal = 0,
+    Rare = 1,
+    Epic = 2,
+    Legendary = 3, 
 }
 
 public enum CountType

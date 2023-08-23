@@ -1,3 +1,4 @@
+using Mono.Cecil.Cil;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -117,7 +118,7 @@ public class RuneManager
         return null;
     }
 
-    public List<BaseRune> GetRandomRune(int count, List<BaseRuneSO> ignoreRuneList = null, RuneRarityType runeRarityType = RuneRarityType.Base)
+    public List<BaseRune> GetRandomRune(int count, List<BaseRuneSO> ignoreRuneList = null)
     {
         List<BaseRune> runeList = new List<BaseRune>();
 
@@ -175,7 +176,7 @@ public class RuneManager
             }
             #endregion
 
-            RuneRarity rarity = GetRuneRarity(runeRarityType);
+            RuneRarity rarity = GetRuneRarity();
 
             List<BaseRune> list = new List<BaseRune>(newRuneList.Where(x => x.BaseRuneSO.AttributeType == attributeType && x.BaseRuneSO.Rarity == rarity));
             BaseRune rune = list[Random.Range(0, list.Count)];
@@ -217,58 +218,15 @@ public class RuneManager
         return _runeHandler.Find(x => x.BaseRuneSO == rune.BaseRuneSO).Clone() as BaseRune;
     }
 
-    private RuneRarity GetRuneRarity(RuneRarityType runeRarityType)
+    private RuneRarity GetRuneRarity()
     {
-        RuneRarity rarity = RuneRarity.Normal;
-        int[] rarityArray = Enum.GetValues(typeof(RuneRarity)).Cast<int>().ToArray();
-        switch(runeRarityType)
-        {
-            case RuneRarityType.Elite:
-                rarityArray = Enum.GetValues(typeof(EliteRuneRarity)).Cast<int>().ToArray();
-                break;
+        int value = Random.Range(0, 101);
+        RuneDropChance chance = Managers.Map.CurrentChapter.runeDropChanceList.Where(x => x.stageType == Managers.Map.currentStage.StageType).FirstOrDefault();
+        if (chance.normal == 0) return RuneRarity.Normal;
 
-            case RuneRarityType.Boss:
-                rarityArray = Enum.GetValues(typeof(BossRuneRarity)).Cast<int>().ToArray();
-                break;
-        }
-
-        Array.Reverse(rarityArray);
-
-        int rarityMaxValue = 0;
-        for (int i = 0; i < rarityArray.Length - 1; i++)
-        {
-            rarityMaxValue += (int)rarityArray[i];
-        }
-
-        int rarityValue = Random.Range(1, rarityMaxValue + 1);
-        int rarityMinValue = 0;
-        for (int i = 0; i < rarityArray.Length; i++) 
-        {
-            if (rarityMinValue <= rarityValue && rarityValue <= (int)rarityArray[i] + rarityMinValue)
-            {
-                switch (runeRarityType)
-                {
-                    case RuneRarityType.Elite:
-                        rarity = (RuneRarity)Enum.Parse(typeof(RuneRarity), ((EliteRuneRarity)rarityArray[i]).ToString());
-                        break;
-
-                    case RuneRarityType.Boss:
-                        rarity = (RuneRarity)Enum.Parse(typeof(RuneRarity), ((BossRuneRarity)rarityArray[i]).ToString());
-                        break;
-
-                    case RuneRarityType.Base:
-                        rarity = (RuneRarity)rarityArray[i];
-                        break;
-                }
-                break;
-            }
-            else
-            {
-                rarityMinValue += (int)rarityArray[i];
-            }
-        }
-
-        return rarity;
+        if (value <= chance.normal) return RuneRarity.Normal;
+        if (value <= chance.Rare) return RuneRarity.Rare;
+        if (value <= chance.Epic) return RuneRarity.Epic;
+        return RuneRarity.Legendary;
     }
-
 }
