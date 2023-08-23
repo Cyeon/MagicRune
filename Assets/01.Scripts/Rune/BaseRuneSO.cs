@@ -66,7 +66,11 @@ public class BaseRuneSO : ScriptableObject
     public DiscoveryType DiscoveryType = DiscoveryType.Unknwon;
     public AttributeType AttributeType;
     public GameObject RuneEffect;
-    public RuneRarity Rarity = RuneRarity.Normal;
+
+    [SerializeField]
+    private RuneRarity _rarity = RuneRarity.Normal;
+    public RuneRarity Rarity => _rarity;
+
     public int CoolTime;
     public EffectDirection Direction;
     public AudioClip RuneSound;
