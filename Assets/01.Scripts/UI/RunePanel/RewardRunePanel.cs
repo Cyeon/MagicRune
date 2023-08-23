@@ -5,14 +5,26 @@ using UnityEngine;
 
 public class RewardRunePanel : BasicRuneAddon
 {
+    private ChooseRuneUI _chooseRuneUI;
+
+    private void Start()
+    {
+        _chooseRuneUI = GetComponentInParent<ChooseRuneUI>();
+    }
+
     public void ChooseRune()
     {
-        Managers.Deck.AddRune(Managers.Rune.GetRune(Basic.Rune));
-        Define.DialScene?.HideChooseRuneUI();
+        //Managers.Deck.AddRune(Managers.Rune.GetRune(Basic.Rune));
+        //Define.DialScene?.HideChooseRuneUI();
 
-        if (Managers.Reward.IsHaveNextClickReward())
+        //if (Managers.Reward.IsHaveNextClickReward())
+        //{
+        //    BattleManager.Instance.NextStage();
+        //}
+
+        if(_chooseRuneUI != null)
         {
-            BattleManager.Instance.NextStage();
+            _chooseRuneUI.SelectRewardRunePanel(this);
         }
     }
 
