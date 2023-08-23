@@ -222,7 +222,6 @@ public class RuneManager
     {
         int value = Random.Range(0, 101);
         RuneDropChance chance = Managers.Map.CurrentChapter.runeDropChanceList.Where(x => x.stageType == Managers.Map.currentStage.StageType).FirstOrDefault();
-        Debug.Log(value);
         if (chance.normal == 0) return RuneRarity.Normal;
 
         if (value <= chance.normal) return RuneRarity.Normal;
