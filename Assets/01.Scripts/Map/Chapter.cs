@@ -60,4 +60,19 @@ public class Chapter
     {
         enemyList.ForEach(x => x.Reset());
     }
+
+    public Enemy GetEliteEnemy()
+    {
+        List<Enemy> list = eliteEnemyList.Where(x => x.isEnter == false).ToList();
+        if(list.Count == 0)
+        {
+            eliteEnemyList.ForEach(x => x.isEnter = false);
+            list = eliteEnemyList;
+        }
+
+        Enemy enemy = list.GetRandom();
+        enemy.isEnter = true;
+
+        return enemy;
+    }
 }
