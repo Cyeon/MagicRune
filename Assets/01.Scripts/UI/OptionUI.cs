@@ -118,10 +118,10 @@ public class OptionUI : MonoBehaviour
 
     private void GameGiveUp()
     {
-        Debug.Log("게임 포기");
-
         Managers.Gold.ResetGoldAmount();
         Managers.Map.ResetChapter();
+        Managers.Deck.Init();
+        Managers.Enemy.ResetEnemy();
         Managers.Scene.LoadScene(Define.Scene.LobbyScene);
     }
 }
