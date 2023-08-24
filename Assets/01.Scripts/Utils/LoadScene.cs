@@ -27,6 +27,7 @@ public struct LoadScene
             if (op.progress < 0.9f)
             {
                 ProgressSlider.value = op.progress;
+                LoadingText.SetText(string.Format("룬을 모으는 중...{0}%", Mathf.FloorToInt(op.progress * 100)));
             }
             else
             {
