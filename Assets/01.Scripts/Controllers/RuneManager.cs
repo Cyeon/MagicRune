@@ -179,6 +179,11 @@ public class RuneManager
             RuneRarity rarity = GetRuneRarity();
 
             List<BaseRune> list = new List<BaseRune>(newRuneList.Where(x => x.BaseRuneSO.AttributeType == attributeType && x.BaseRuneSO.Rarity == rarity));
+            if(list.Count == 0)
+            {
+                list = _runeHandler;
+            }
+
             BaseRune rune = list[Random.Range(0, list.Count)];
 
             bool isIn = false;
