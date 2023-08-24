@@ -21,6 +21,7 @@ public class Chapter
     public Enemy boss;
     public Enemy defaultEnemy;
     public List<AttackMapInfo> enemyList;
+    public List<Enemy> eliteEnemyList;
 
     [Header("Rune Drop Chance")]
     public List<RuneDropChance> runeDropChanceList = new List<RuneDropChance>();

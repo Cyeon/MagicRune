@@ -31,6 +31,8 @@ public class MapDialElement : DialElement<MapRuneUI, MapRuneUI>
         }
     }
 
+    private MapRuneUI _beforeSelectElement;
+
     protected override void ChangeSelectElement(int index)
     {
         if(index == -1)

@@ -16,8 +16,8 @@ MonoBehaviour:
   - chapterName: "\uB208\uC758 \uB300\uC9C0"
     chapter: 1
     background: {fileID: 21300000, guid: 3d675f80edceb684ea695886c6e12515, type: 3}
-    minGold: 50
-    maxGold: 100
+    minGold: 10
+    maxGold: 50
     boss: {fileID: 6412866991698782837, guid: b1fd99e6ae0fd2e40bfb906a533c5879, type: 3}
     defaultEnemy: {fileID: 173477810848962190, guid: 905886a66fa88e141b24f2d6ac936064, type: 3}
     enemyList:
@@ -47,11 +47,16 @@ MonoBehaviour:
       rare: 0
       epic: 100
       legendary: 0
+    - stageType: 3
+      normal: 70
+      rare: 25
+      epic: 5
+      legendary: 0
   - chapterName: "\uBD88\uC758 \uB300\uC9C0"
     chapter: 2
     background: {fileID: 21300000, guid: 4e8218c476b985248a82e79dbad02319, type: 3}
-    minGold: 100
-    maxGold: 150
+    minGold: 25
+    maxGold: 75
     boss: {fileID: 5475244823323083153, guid: ad1cdcaaa49cd5348b0bd8606ab08f40, type: 3}
     defaultEnemy: {fileID: 5383020803786264790, guid: f574733ce0a1f764d831954dc24011f0, type: 3}
     enemyList:
