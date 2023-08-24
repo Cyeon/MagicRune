@@ -46,6 +46,8 @@ public class ChooseRuneUI : MonoBehaviour
             Sequence seq = DOTween.Sequence();
             seq.Append(_selectRewardRunePanel.GetComponent<RectTransform>().DOAnchorPosY(-100, 0.1f).SetRelative());
             seq.Join(_selectRewardRunePanel.GetComponent<RectTransform>().DOScale(Vector3.one, 0.1f));
+
+            _selectRewardRunePanel.GetComponent<KeywardRunePanel>().ClearKeyward();
         }
         _selectRewardRunePanel = _selectRewardRunePanel == rewardPanel ? null : rewardPanel;
         if(_selectRewardRunePanel != null)
@@ -53,6 +55,8 @@ public class ChooseRuneUI : MonoBehaviour
             Sequence seq = DOTween.Sequence();
             seq.Append(_selectRewardRunePanel.GetComponent<RectTransform>().DOAnchorPosY(100, 0.1f).SetRelative());
             seq.Join(_selectRewardRunePanel.GetComponent<RectTransform>().DOScale(Vector3.one * 1.1f, 0.1f));
+            _selectRewardRunePanel.GetComponent<RectTransform>().SetAsLastSibling();
+            _selectRewardRunePanel.GetComponent<KeywardRunePanel>().SetKeyward(_selectRewardRunePanel.Basic.Rune.BaseRuneSO);
         }
     }
 
