@@ -1,3 +1,4 @@
+using MyBox;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -12,6 +13,8 @@ public class KeywardPanel : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI _descText;
 
+    private RectTransform _rectTrm;
+
     private Keyward _keyward;
 
     public void SetKeyward(Keyward keyward)
@@ -19,6 +22,13 @@ public class KeywardPanel : MonoBehaviour
         _keyward = keyward;
 
         UpdateUI();
+    }
+
+    public void SetWidth(float width = 356)
+    {
+        Vector2 size = _rectTrm.sizeDelta;
+        size.x = width;
+        _rectTrm.sizeDelta = size;
     }
 
     private void UpdateUI()
