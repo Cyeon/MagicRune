@@ -64,6 +64,9 @@ public class BasicRunePanel : MonoBehaviour, IPointerClickHandler
 
             _runeIcon.enabled = false;
             _rankIcon.enabled = false;
+
+            _cardPanelImage.sprite = _nonePanel;
+            _cardCooltimeImage.sprite = _noneCoolTime;
             return;
         }
 
@@ -95,7 +98,7 @@ public class BasicRunePanel : MonoBehaviour, IPointerClickHandler
 
         switch(runeSO.AttributeType)
         {
-            case AttributeType.None:
+            case AttributeType.NonAttribute:
                 _cardPanelImage.sprite = _nonePanel;
                 _cardCooltimeImage.sprite = _noneCoolTime;
                 break;
