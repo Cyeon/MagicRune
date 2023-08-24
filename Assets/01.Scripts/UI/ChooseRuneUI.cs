@@ -24,27 +24,30 @@ public class ChooseRuneUI : MonoBehaviour
         _giveBtn.onClick.RemoveAllListeners();
         _giveBtn.onClick.AddListener(() =>
         {
-            Managers.Deck.AddRune(Managers.Rune.GetRune(_selectRewardRunePanel.Basic.Rune));
-            Define.DialScene?.HideChooseRuneUI();
-
-            if (Managers.Reward.IsHaveNextClickReward())
+            if (_selectRewardRunePanel != null)
             {
-                BattleManager.Instance.NextStage();
+                Managers.Deck.AddRune(Managers.Rune.GetRune(_selectRewardRunePanel.Basic.Rune));
+                Define.DialScene?.HideChooseRuneUI();
+
+                if (Managers.Reward.IsHaveNextClickReward())
+                {
+                    BattleManager.Instance.NextStage();
+                }
             }
         });
     }
 
     public void SelectRewardRunePanel(RewardRunePanel rewardPanel)
     {
-        if (_selectRewardRunePanel == rewardPanel) return;
+        _selectRewardRunePanel.DOComplete();
 
-        if(_selectRewardRunePanel != null)
+        if (_selectRewardRunePanel != null)
         {
             Sequence seq = DOTween.Sequence();
             seq.Append(_selectRewardRunePanel.GetComponent<RectTransform>().DOAnchorPosY(-100, 0.1f).SetRelative());
             seq.Join(_selectRewardRunePanel.GetComponent<RectTransform>().DOScale(Vector3.one, 0.1f));
         }
-        _selectRewardRunePanel = rewardPanel;
+        _selectRewardRunePanel = _selectRewardRunePanel == rewardPanel ? null : rewardPanel;
         if(_selectRewardRunePanel != null)
         {
             Sequence seq = DOTween.Sequence();
