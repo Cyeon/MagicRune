@@ -2,6 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// 주의사항
+/// 패시브 이름 지을때 뒤에 (패시브) 붙이기 !!
+/// </summary>
 public abstract class Passive : MonoBehaviour
 {
     protected Enemy Enemy => Managers.Enemy.CurrentEnemy;
