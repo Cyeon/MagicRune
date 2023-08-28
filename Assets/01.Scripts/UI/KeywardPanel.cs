@@ -13,13 +13,13 @@ public class KeywardPanel : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI _descText;
 
+    private Keyword _keyword;
     private RectTransform _rectTrm;
 
-    private Keyward _keyward;
 
-    public void SetKeyward(Keyward keyward)
+    public void SetKeyword(Keyword keyward)
     {
-        _keyward = keyward;
+        _keyword = keyward;
 
         UpdateUI();
     }
@@ -33,13 +33,13 @@ public class KeywardPanel : MonoBehaviour
 
     private void UpdateUI()
     {
-        if (_keyward == null) return;
+        if (_keyword == null) return;
 
-        _nameText.SetText(_keyward.KeywardName);
+        _nameText.SetText(_keyword.KeywardName);
 
-        if(_keyward.KeywardType == KeywardType.Noraml)
-            _descText.SetText(_keyward.KeywardDescription);
+        if(_keyword.KeywardType == KeywordType.Normal)
+            _descText.SetText(_keyword.KeywardDescription);
         else
-            _descText.SetText(Resources.Load("Prefabs/Status/Status_" + _keyward.KeywardStatus).GetComponent<Status>().information);
+            _descText.SetText(Resources.Load("Prefabs/Status/Status_" + _keyword.KeywardStatus).GetComponent<Status>().information);
     }
 }

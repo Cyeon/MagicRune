@@ -56,8 +56,8 @@ public class BaseRuneSO : ScriptableObject
 
         for (int i = 0; i < keywordList.Length; i++)
         {
-            if (Managers.Keyward.GetKeyward(KeywardList[i]).IsAddDesc)
-                desc += " <color=#FFE951>" + Managers.Keyward.GetKeyward(keywordList[i]).KeywardName + "</color>";
+            if (Managers.Keyword.GetKeyword(KeywardList[i]).IsAddDesc)
+                desc += " <color=#FFE951>" + Managers.Keyword.GetKeyword(keywordList[i]).KeywardName + "</color>";
         }
 
         return desc;
