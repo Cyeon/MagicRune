@@ -18,9 +18,9 @@ public class DialScene : BaseScene
 
     // Status
     [SerializeField]
-    private GameObject _statusDescPanel;
-    private TextMeshProUGUI _statusDescName;
-    private TextMeshProUGUI _statusDescInfo;
+    private GameObject _DescriptionPanel;
+    private TextMeshProUGUI _descNameText;
+    private TextMeshProUGUI _descText;
     private RectTransform _statusDescPanelRectTrm;
 
     // Reward
@@ -61,8 +61,8 @@ public class DialScene : BaseScene
         Managers.UI.Bind<Button>("Restart Btn", Managers.Canvas.GetCanvas("Popup").gameObject);
         Managers.UI.Bind<Button>("Quit Btn", Managers.Canvas.GetCanvas("Popup").gameObject);
 
-        Managers.UI.Bind<TextMeshProUGUI>("Status_Name_Text", Managers.Canvas.GetCanvas("Popup").gameObject);
-        Managers.UI.Bind<TextMeshProUGUI>("Status_Desc_Text", Managers.Canvas.GetCanvas("Popup").gameObject);
+        Managers.UI.Bind<TextMeshProUGUI>("NameText", Managers.Canvas.GetCanvas("Popup").gameObject);
+        Managers.UI.Bind<TextMeshProUGUI>("DescText", Managers.Canvas.GetCanvas("Popup").gameObject);
 
         Managers.UI.Bind<ChooseRuneUI>("ChooseRuneUI", Managers.Canvas.GetCanvas("Popup").gameObject);
 
@@ -73,9 +73,9 @@ public class DialScene : BaseScene
         
         #endregion
 
-        _statusDescPanelRectTrm = _statusDescPanel.transform.Find("Panel").GetComponent<RectTransform>();
-        _statusDescName = Managers.UI.Get<TextMeshProUGUI>("Status_Name_Text");
-        _statusDescInfo = Managers.UI.Get<TextMeshProUGUI>("Status_Desc_Text");
+        _statusDescPanelRectTrm = _DescriptionPanel.transform.Find("Panel").GetComponent<RectTransform>();
+        _descNameText = Managers.UI.Get<TextMeshProUGUI>("NameText");
+        _descText = Managers.UI.Get<TextMeshProUGUI>("DescText");
 
         ChooseRuneUI = Managers.UI.Get<ChooseRuneUI>("ChooseRuneUI").GetComponent<ChooseRuneUI>();
 
@@ -138,6 +138,17 @@ public class DialScene : BaseScene
         return statusPanel;
     }
 
+    public StatusPanel GetPassivePanel(Passive passive, Transform parent, bool isPopup = false)
+    {
+        StatusPanel passivePanel = Managers.Resource.Instantiate("Status").GetComponent<StatusPanel>();
+        passivePanel.Init(passive);
+
+        passivePanel.transform.SetParent(parent);
+        passivePanel.transform.localScale = new Vector3(1.7f, 1.7f, 1.7f);
+
+        return passivePanel;
+    }
+
     private Transform GetStatusTrm(Unit unit)
     {
         return unit == BattleManager.Instance.Player ?
@@ -146,7 +157,12 @@ public class DialScene : BaseScene
 
     public void AddStatus(Unit unit, Status status)
     {
-        GetStatusPanel(status, GetStatusTrm(unit));
+        GetStatusPanel(status, GetStatusTrm(Managers.Enemy.CurrentEnemy));
+    }
+
+    public void AddPassive(Passive passive)
+    {
+        GetPassivePanel(passive, GetStatusTrm(Managers.Enemy.CurrentEnemy));
     }
 
     public void ClearStatusPanel(Unit unit)
@@ -154,6 +170,7 @@ public class DialScene : BaseScene
         Transform trm = GetStatusTrm(unit);
         for (int i = trm.childCount - 1; i >= 0; --i)
         {
+            if (trm.GetChild(i).gameObject.name.Contains("패시브")) continue;
             Destroy(trm.GetChild(i).gameObject);
         }
     }
@@ -200,9 +217,9 @@ public class DialScene : BaseScene
             return;
         }
 
-        if(_statusDescName.text == obj.GetComponent<StatusPanel>().Status.debugName)
+        if(_descNameText.text == obj.GetComponent<StatusPanel>().Status.debugName)
         {
-            CloseStatusDescPanel();
+            CloseDescriptionPanel();
         }
 
         Managers.Resource.Destroy(obj);
@@ -286,11 +303,11 @@ public class DialScene : BaseScene
         _cardDescPanel.SetUI(null);
     }
 
-    public void StatusDescPopup(Status status, Vector3 pos)
+    public void DescriptionPopup(string name, string desc, Vector3 pos)
     {
-        _statusDescPanel.SetActive(true);
-        _statusDescPanel.transform.position = pos + new Vector3(0, 20, 0);
-        _statusDescPanel.transform.DOMoveZ(-1, 0);
+        _DescriptionPanel.SetActive(true);
+        _DescriptionPanel.transform.position = pos + new Vector3(0, 20, 0);
+        _DescriptionPanel.transform.DOMoveZ(-1, 0);
 
         if (pos.x < Screen.width / 2 && _statusDescPanelRectTrm.localPosition.x < 0)
         {
@@ -301,13 +318,13 @@ public class DialScene : BaseScene
             _statusDescPanelRectTrm.DOLocalMoveX(-_statusDescPanelRectTrm.localPosition.x, 0);
         }
 
-        _statusDescName.SetText(status.debugName);
-        _statusDescInfo.SetText(status.information);
+        _descNameText.SetText(name);
+        _descText.SetText(desc);
     }
 
-    public void CloseStatusDescPanel()
+    public void CloseDescriptionPanel()
     {
-        _statusDescPanel.SetActive(false);
+        _DescriptionPanel.SetActive(false);
     }
 
     #endregion

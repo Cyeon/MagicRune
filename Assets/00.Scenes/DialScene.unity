@@ -769,7 +769,7 @@ GameObject:
   - component: {fileID: 321787009}
   - component: {fileID: 321787008}
   m_Layer: 5
-  m_Name: Status_Desc_Text
+  m_Name: DescText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2528,7 +2528,7 @@ GameObject:
   - component: {fileID: 1199423690}
   - component: {fileID: 1199423689}
   m_Layer: 5
-  m_Name: Status_Name_Text
+  m_Name: NameText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4238,7 +4238,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _dial: {fileID: 6047878870979582954}
-  _statusDescPanel: {fileID: 35130150}
+  _DescriptionPanel: {fileID: 35130150}
   _rewardUI: {fileID: 8337651338890638072}
   ChooseRuneUI: {fileID: 0}
   _cardDescPanel: {fileID: 1862527877}
@@ -5999,6 +5999,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4752574023005131558, guid: 9d9cc8fc169f27e47814c186ce99ab04, type: 3}
       propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4752574023146445448, guid: 9d9cc8fc169f27e47814c186ce99ab04, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4752574023146445448, guid: 9d9cc8fc169f27e47814c186ce99ab04, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4752574023146445448, guid: 9d9cc8fc169f27e47814c186ce99ab04, type: 3}
+      propertyPath: m_SizeDelta.x
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
