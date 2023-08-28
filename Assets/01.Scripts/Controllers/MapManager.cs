@@ -149,10 +149,12 @@ public class MapManager
         _firstPeriodStageList.Shuffle();
 
         // Second Period?
-        for(int i = 0; i < 4; i++)
+        for(int i = 0; i < 3; i++)
         {
-            _secondPeriodStageList.Add(StageType.Attack);
+            _secondPeriodStageList.Add(StageType.Attack); //3
         }
+
+        _secondPeriodStageList.Add(StageType.Elite);
 
         _secondPeriodStageList.Add(StageType.Adventure);
         _secondPeriodStageList.Add(StageType.Adventure);

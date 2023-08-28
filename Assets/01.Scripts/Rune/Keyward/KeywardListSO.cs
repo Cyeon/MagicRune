@@ -24,7 +24,7 @@ public enum KeywordName
 public enum KeywordType
 {
     Status,
-    Noraml
+    Normal
 }
 
 [Serializable]
@@ -34,9 +34,9 @@ public class Keyword
     public KeywordName TypeName;
     public KeywordType KeywardType;
 
-    [ConditionalField(nameof(KeywardType), false, KeywordType.Noraml)]
+    [ConditionalField(nameof(KeywardType), false, KeywordType.Normal)]
     public bool IsAddDesc = false;
-    [ConditionalField(nameof(KeywardType), false, KeywordType.Noraml)]
+    [ConditionalField(nameof(KeywardType), false, KeywordType.Normal)]
     public string KeywardDescription;
 
     [ConditionalField(nameof(KeywardType), false, KeywordType.Status)]

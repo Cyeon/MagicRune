@@ -37,7 +37,7 @@ public class MapDial : Dial<MapRuneUI, MapRuneUI>
         for (int i = 0; i < Managers.Map.CurrentPeriodStageList.Count; i++)
         {
             StageType type = Managers.Map.CurrentPeriodStageList[i];
-            MapRuneUI rune = Managers.Map.stageSpawner.SpawnStage(Managers.Map.CurrentPeriodStageList[i]).GetComponent<MapRuneUI>();
+            MapRuneUI rune = Managers.Map.stageSpawner.SpawnStage(type).GetComponent<MapRuneUI>();
             rune.transform.SetParent(_dialElementList[0].transform);
             rune.transform.localScale = Vector3.one * 0.144f;
 

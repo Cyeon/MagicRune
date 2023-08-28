@@ -38,6 +38,11 @@ public struct StageSpawner
                 TutorialStage tutorialStage = Managers.Resource.Instantiate("Stage/" + typeof(TutorialStage).Name).GetComponent<TutorialStage>();
                 tutorialStage.Init();
                 return tutorialStage;
+
+            case StageType.Elite:
+                EliteStage eliteStage = Managers.Resource.Instantiate("Stage/" + typeof(EliteStage).Name).GetComponent<EliteStage>();
+                eliteStage.Init();
+                return eliteStage;
         }
 
         return null;

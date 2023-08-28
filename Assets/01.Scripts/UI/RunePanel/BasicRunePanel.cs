@@ -1,11 +1,8 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using UnityEngine.WSA;
 
 public class BasicRunePanel : MonoBehaviour, IPointerClickHandler
 {
@@ -41,6 +38,19 @@ public class BasicRunePanel : MonoBehaviour, IPointerClickHandler
     public Image RuneIcon { get { return _runeIcon; } set { _runeIcon = value; } }
     public TextMeshProUGUI CoolTImeText => _coolTimeText;
     public TextMeshProUGUI DescText => _descText;
+
+    private CanvasGroup _canvasGroup;
+    public CanvasGroup CanvasGroup
+    {
+        get
+        {
+            if(_canvasGroup == null)
+            {
+                _canvasGroup = GetComponent<CanvasGroup>();
+            }
+            return _canvasGroup;
+        }
+    }
     #endregion
 
     private BaseRune _rune;

@@ -11,9 +11,4 @@ public class BossStage : Stage
         Managers.Enemy.AddEnemy(Managers.Map.CurrentChapter.boss);
         Managers.Scene.LoadScene(Define.Scene.DialScene);
     }
-
-    public override void Init()
-    {
-        transform.Find("Icon").GetComponent<SpriteRenderer>().sprite = Managers.Map.CurrentChapter.boss.spriteRenderer.sprite;
-    }
 }
