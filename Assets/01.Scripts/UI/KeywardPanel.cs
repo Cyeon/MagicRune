@@ -12,9 +12,9 @@ public class KeywardPanel : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI _descText;
 
-    private Keyward _keyward;
+    private Keyword _keyward;
 
-    public void SetKeyward(Keyward keyward)
+    public void SetKeyword(Keyword keyward)
     {
         _keyward = keyward;
 
@@ -27,7 +27,7 @@ public class KeywardPanel : MonoBehaviour
 
         _nameText.SetText(_keyward.KeywardName);
 
-        if(_keyward.KeywardType == KeywardType.Noraml)
+        if(_keyward.KeywardType == KeywordType.Noraml)
             _descText.SetText(_keyward.KeywardDescription);
         else
             _descText.SetText(Resources.Load("Prefabs/Status/Status_" + _keyward.KeywardStatus).GetComponent<Status>().information);

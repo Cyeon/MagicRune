@@ -4,9 +4,9 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class KeywardManager
+public class KeywordManager
 {
-    private List<Keyward> _keywardList = new List<Keyward>();
+    private List<Keyword> _keywardList = new List<Keyword>();
 
     public void Init()
     {
@@ -16,23 +16,23 @@ public class KeywardManager
         }
     }
 
-    public Keyward GetKeyward(KeywordName typeName)
+    public Keyword GetKeyword(KeywordName typeName)
     {
-        Keyward keyward = _keywardList.Find(x => x.TypeName == typeName);
+        Keyword keyward = _keywardList.Find(x => x.TypeName == typeName);
         if(keyward == null)
         {
-            keyward = new Keyward();
+            keyward = new Keyword();
         }
 
         return keyward;
     }
 
-    public Keyward GetKeyward(string name)
+    public Keyword GetKeyward(string name)
     {
-        Keyward keyward = _keywardList.Find(x => x.KeywardName == name);
+        Keyword keyward = _keywardList.Find(x => x.KeywardName == name);
         if (keyward == null)
         {
-            keyward = new Keyward();
+            keyward = new Keyword();
         }
 
         return keyward;

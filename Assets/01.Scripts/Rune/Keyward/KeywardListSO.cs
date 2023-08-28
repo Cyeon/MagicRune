@@ -21,32 +21,33 @@ public enum KeywordName
     Bouncing // 척력
 }
 
-public enum KeywardType
+public enum KeywordType
 {
     Status,
     Noraml
 }
 
 [Serializable]
-public class Keyward
+public class Keyword
 {
     public string KeywardName;
     public KeywordName TypeName;
-    public KeywardType KeywardType;
+    public KeywordType KeywardType;
 
-    [ConditionalField(nameof(KeywardType), false, KeywardType.Noraml)]
+    [ConditionalField(nameof(KeywardType), false, KeywordType.Noraml)]
     public bool IsAddDesc = false;
-    [ConditionalField(nameof(KeywardType), false, KeywardType.Noraml)]
+    [ConditionalField(nameof(KeywardType), false, KeywordType.Noraml)]
     public string KeywardDescription;
 
-    [ConditionalField(nameof(KeywardType), false, KeywardType.Status)]
+    [ConditionalField(nameof(KeywardType), false, KeywordType.Status)]
     public StatusName KeywardStatus;
 
-    public Keyward()
+
+    public Keyword()
     {
         KeywardName = "";
         TypeName = KeywordName.None;
-        KeywardType = KeywardType.Status;
+        KeywardType = KeywordType.Status;
         KeywardDescription = "";
     }
 }
@@ -54,5 +55,5 @@ public class Keyward
 [CreateAssetMenu(menuName = "SO/Keyward/KeywardList")]
 public class KeywardListSO : ScriptableObject
 {
-    public List<Keyward> KeywardList;
+    public List<Keyword> KeywardList;
 }
