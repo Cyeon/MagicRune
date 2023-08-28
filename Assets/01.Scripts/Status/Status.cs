@@ -24,29 +24,32 @@ public enum StatusType
 public enum StatusName
 {
     Null,
-    Fire,               // ?붿긽
-    Ice,                // 鍮숆껐
-    Recharging,         // 異⑹쟾
-    ChillinessZip,      // ?쒓린?묒텞
-    Chilliness,         // ?쒓린
-    BladeOfKnife,       // 移쇰궇
-    Impact,             // 異⑷꺽
-    IceShield,          // ?쇱쓬 蹂댄샇留?
-    PoisonousLiquid,    // ?낆븸
-    FoxOrb,             // ?ъ슦援ъ뒳
-    FlameArmor,         // ?붿뿼媛묒샆
-    Boom,               // ??컻
-    Absorptioning,      // ?≪닔 以?
-    Absorption,         // ?≪닔
-    GroundBeat,         // ?낆슱由?
-    Bouncing,           // 泥숇젰
-    DiamondBody,     // 
+    Fire,               // 불
+    Ice,                // 얼음
+    Recharging,         // 충전
+    ChillinessZip,      // 한기응축
+    Chilliness,         // 한기
+    BladeOfKnife,       // 칼날
+    Impact,             // 충격
+    IceShield,          // 얼음막
+    PoisonousLiquid,    // 독액
+    FoxOrb,             // 여우구슬
+    FlameArmor,         // 화염갑옷
+    Boom,               // 폭발
+    Absorptioning,      // 흡수중
+    Absorption,         // 흡수
+    GroundBeat,         // 땅울림
+    Bouncing,           // 척력
+    DiamondBody,     // 금강불괴
     SelfGeneration,   // 자가발전
-    OverHeat,          // 
-    Heating,             // 
-    Penetration,       // 
+    OverHeat,          // 발열
+    Heating,             // 과열
+    Penetration,       // 관통
     Ghost,               // 유체화
     Strength,           // 힘
+    Annoy,              // 짜증
+    Defence,            // 방어막
+    Poison,             // 독
     COUNT
 }
 
