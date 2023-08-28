@@ -29,7 +29,7 @@ public class Managers : MonoBehaviour
     private RewardManager _reward = new RewardManager();
     private CanvasManager _canvas = new CanvasManager();
     private SceneManagerEX _scene = new SceneManagerEX();
-    private KeywardManager _keyward = new KeywardManager();
+    private KeywordManager _keyward = new KeywordManager();
     private ResourceManager _resource = new ResourceManager();
     private StatModifierManager _statModifier = new StatModifierManager();
     private AddressableManager _addressable = new AddressableManager();
@@ -49,7 +49,7 @@ public class Managers : MonoBehaviour
     public static RewardManager Reward { get { return Instance._reward; } }
     public static CanvasManager Canvas { get { return Instance._canvas; } }
     public static SceneManagerEX Scene { get { return Instance._scene; } }
-    public static KeywardManager Keyward { get { return Instance._keyward; } }
+    public static KeywordManager Keyword { get { return Instance._keyward; } }
     public static ResourceManager Resource { get { return Instance._resource; } }
     public static StatModifierManager StatModifier { get { return Instance._statModifier; } }
     public static AddressableManager Addressable { get { return Instance._addressable; } }
