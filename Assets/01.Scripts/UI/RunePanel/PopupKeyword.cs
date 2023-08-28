@@ -32,7 +32,7 @@ public class PopupKeyword : MonoBehaviour
             KeywardPanel panel = Managers.Resource.Instantiate("UI/KeywardPanel", _keywordArea).GetComponent<KeywardPanel>();
             panel.transform.localScale = Vector3.one;
             panel.transform.localPosition = Vector3.zero;
-            panel.SetKeyword(Managers.Keyward.GetKeyword(rune.KeywardList[i]));
+            panel.SetKeyword(Managers.Keyword.GetKeyword(rune.KeywardList[i]));
             _keywordPanelList.Add(panel);
         }
         _isPopUp = true;
