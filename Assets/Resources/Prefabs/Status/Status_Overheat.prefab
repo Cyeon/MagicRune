@@ -56,16 +56,16 @@ MonoBehaviour:
     \uBD80\uC5EC\uD558\uACE0 \uACFC\uC5F4 \uC2A4\uD0DD\uC744 0\uC73C\uB85C \uB418\uB3CC\uB9B0\uB2E4. "
   textColor: {r: 1, g: 1, b: 1, a: 1}
   type: 0
-  isTurnRemove: 0
+  isTurnRemove: 1
   OnAddStatus:
   - {fileID: -6026917876269977229}
   - {fileID: -9034214546657118884}
-  OnTurnStart: []
+  OnTurnStart:
+  - {fileID: -9034214546657118884}
   OnAttack: []
   OnGetDamage: []
   OnTurnEnd: []
-  OnRemoveStatus:
-  - {fileID: -9034214546657118884}
+  OnRemoveStatus: []
   icon: {fileID: 21300000, guid: 96387ec93afa0bf4184a8bcea611c4f0, type: 3}
   color: {r: 1, g: 1, b: 1, a: 1}
   statusSoundType: 1

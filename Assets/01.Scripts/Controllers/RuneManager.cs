@@ -1,9 +1,6 @@
-using Mono.Cecil.Cil;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -227,7 +224,8 @@ public class RuneManager
     {
         int value = Random.Range(0, 101);
         RuneDropChance chance = Managers.Map.CurrentChapter.runeDropChanceList.Where(x => x.stageType == Managers.Map.currentStage.StageType).FirstOrDefault();
-        if (chance.normal == 0) return RuneRarity.Normal;
+
+        if (chance.Epic == 0) return RuneRarity.Normal;
 
         if (value <= chance.normal) return RuneRarity.Normal;
         if (value <= chance.Rare) return RuneRarity.Rare;
