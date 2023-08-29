@@ -10,7 +10,7 @@ public class BoomAction : PatternAction
         base.StartAction();
         if(Enemy.StatusManager.GetStatusValue(StatusName.Boom) == 0)
         {
-            Enemy.StatusManager.AddStatus(StatusName.Boom, 2);
+            Enemy.StatusManager.AddStatus(StatusName.Boom, 3);
         }
 
         Enemy.PatternManager.CurrentPattern.desc = Enemy.StatusManager.GetStatusValue(StatusName.Boom).ToString();

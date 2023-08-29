@@ -72,6 +72,7 @@ public class Unit : MonoBehaviour
     [field: SerializeField] public UnityEvent OnTakeDamageFeedback { get; set; }
     public UnityEvent OnDieEvent;
     public Action OnGetDamage;
+    public UnityEvent OnTurnEnd;
     #endregion
 
     [HideInInspector]
@@ -100,6 +101,7 @@ public class Unit : MonoBehaviour
         _statusManager = new StatusManager(this);
         statusTrm = transform.Find("Status");
         _statusManager.Reset();
+        OnTurnEnd.AddListener(_statusManager.OnTurnEnd);
 
         if (_spriteRenderer != null)
         {
@@ -248,6 +250,7 @@ public class Unit : MonoBehaviour
     {
         if (_isDie == false)
         {
+            value -= StatusManager.GetStatusValue(StatusName.Web) * 2;
             Shield += value.RoundToInt();
         }
     }
@@ -272,6 +275,8 @@ public class Unit : MonoBehaviour
 
     public virtual void Die()
     {
+        OnTurnEnd.RemoveAllListeners();
+
         _isDie = true;
         StopAllCoroutines();
         OnDieEvent?.Invoke();

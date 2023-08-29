@@ -155,7 +155,7 @@ public class BattleManager : MonoSingleton<BattleManager>
 
                 Managers.Sound.PlaySound(_turnChangeSound, SoundType.Effect);
 
-                Player?.StatusManager.OnTurnEnd();
+                Player.OnTurnEnd?.Invoke();
 
                 if (Enemy.Shield > 0) Enemy.ResetShield();
 
@@ -176,7 +176,7 @@ public class BattleManager : MonoSingleton<BattleManager>
 
                 EventManager.TriggerEvent(Define.ON_END_MONSTER_TURN);
 
-                Enemy?.StatusManager.OnTurnEnd();
+                Enemy.OnTurnEnd?.Invoke();
 
                 Enemy.StatusManager.TurnChange();
                 Player.StatusManager.TurnChange();
