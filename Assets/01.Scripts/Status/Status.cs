@@ -50,6 +50,8 @@ public enum StatusName
     Annoy,               // 짜증
     PoisonousLiquid, // 독액
     Faint,                 // 기절
+    BatUpgrade,        // 방망이 강화
+    FlameBody,         // 화염신체
     COUNT
 }
 

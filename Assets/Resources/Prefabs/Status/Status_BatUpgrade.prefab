@@ -10,10 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 5736046982554988565}
   - component: {fileID: 5014004267170453785}
-  - component: {fileID: 7392289059857716425}
-  - component: {fileID: -1413031566626580312}
+  - component: {fileID: -5419438862847067255}
+  - component: {fileID: 7791157812867754133}
   m_Layer: 0
-  m_Name: Status_FoxOrb
+  m_Name: Status_BatUpgrade
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -46,26 +46,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cde2e363b5d96b742919b2129a9046bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  debugName: "\uC5EC\uC6B0\uAD6C\uC2AC"
-  statusName: 10
-  information: "\uC2A4\uD0DD\uB2F9 \uACF5\uACA9\uB825 5\uC774 \uB298\uC5B4\uB09C\uB2E4.
-    \uAE30\uC220 \uC900\uBE44\uC911\uC5D0 \uB9DE\uC73C\uBA74 \uCDE8\uC18C\uB41C\uB2E4."
+  debugName: "\uBC29\uB9DD\uC774 \uAC15\uD654"
+  statusName: 27
+  information: "\uC2A4\uD0DD \uB2F9 \uACF5\uACA9\uB825\uC774 10 \uC99D\uAC00\uD569\uB2C8\uB2E4."
   textColor: {r: 1, g: 1, b: 1, a: 1}
   type: 0
   isTurnRemove: 0
   OnAddStatus: []
   OnTurnStart: []
-  OnAttack:
-  - {fileID: 7392289059857716425}
+  OnAttack: []
   OnGetDamage: []
   OnTurnEnd: []
   OnRemoveStatus: []
-  icon: {fileID: 21300000, guid: 2d3e2be60a3271840b5c287eb771e56b, type: 3}
+  icon: {fileID: 21300000, guid: e0a960b1dc621b940b6631d4a1e25faa, type: 3}
   color: {r: 1, g: 1, b: 1, a: 1}
-  statusSoundType: 2
+  statusSoundType: 3
   getSound: {fileID: 0}
   activeSound: {fileID: 0}
---- !u!114 &7392289059857716425
+--- !u!114 &-5419438862847067255
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8378743581122507794}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1fb6d3b2c3d3fa04d9ffb5368660f72f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isUsing: 0
+--- !u!114 &7791157812867754133
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -79,17 +90,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _addDamageType: 1
   _damage: 0
-  _stackMultipleValue: 5
---- !u!114 &-1413031566626580312
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8378743581122507794}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1fb6d3b2c3d3fa04d9ffb5368660f72f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isUsing: 0
+  _stackMultipleValue: 10
