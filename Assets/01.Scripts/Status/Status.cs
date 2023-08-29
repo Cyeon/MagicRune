@@ -48,8 +48,6 @@ public enum StatusName
     Ghost,                // 유체화
     Strength,            // 힘
     Annoy,               // 짜증
-    Defence,            // 방어막
-    Poison,              // 독
     PoisonousLiquid, // 독액
     Faint,                 // 기절
     COUNT
