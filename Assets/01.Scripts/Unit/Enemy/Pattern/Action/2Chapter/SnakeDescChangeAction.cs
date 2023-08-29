@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SneakDescChangeAction : PatternAction
+public class SnakeDescChangeAction : AttackAction
 {
     SnakeScale snake;
 
@@ -12,10 +12,10 @@ public class SneakDescChangeAction : PatternAction
 
         if(snake == null )
         {
-            Enemy.PatternManager.passive.GetComponent<SnakeScale>();
+            snake = Enemy.PatternManager.passive as SnakeScale;
         }
 
-        Enemy.PatternManager.CurrentPattern.desc = snake.IncreaseDamage.ToString();
+        Enemy.PatternManager.CurrentPattern.desc = (damage + (damage * (snake.IncreasePercent / 100))).ToString();
         Enemy.PatternManager.UpdatePatternUI();
     }
 }
