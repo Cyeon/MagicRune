@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5014004267170453785}
   - component: {fileID: -5419438862847067255}
   - component: {fileID: -1133868236229376037}
+  - component: {fileID: -8793456682465794574}
   m_Layer: 0
   m_Name: Status_Faint
   m_TagString: Untagged
@@ -52,9 +53,11 @@ MonoBehaviour:
   textColor: {r: 1, g: 1, b: 1, a: 1}
   type: 1
   isTurnRemove: 0
+  isFirst: 1
   OnAddStatus: []
   OnTurnStart:
   - {fileID: -1133868236229376037}
+  - {fileID: -8793456682465794574}
   OnAttack: []
   OnGetDamage: []
   OnTurnEnd: []
@@ -89,3 +92,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a8aa350528b13f48b387f283d9dde27, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &-8793456682465794574
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8378743581122507794}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ae0a23744b262244814f6d0614a6598, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _remStackType: 0
+  _value: 1

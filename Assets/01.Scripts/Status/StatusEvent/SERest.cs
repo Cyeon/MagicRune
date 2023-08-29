@@ -9,7 +9,8 @@ public class SERest : StatusEvent
         base.Invoke();
 
         _unit.isTurnSkip = true;
-        Managers.Sound.PlaySound(_status.activeSound, SoundType.Effect);
+        if(_status.activeSound != null)
+            Managers.Sound.PlaySound(_status.activeSound, SoundType.Effect);
         StartCoroutine(TurnChange());
     }
 

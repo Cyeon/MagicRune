@@ -69,6 +69,7 @@ public class Status : MonoBehaviour
     public int TypeValue => _typeValue;
     [ConditionalField(nameof(type), false, StatusType.Stack)]
     public bool isTurnRemove = false;
+    [ConditionalField(nameof(type), false, StatusType.Turn)]
     public bool isFirst = true;
 
     [Header("Function")]
@@ -105,7 +106,7 @@ public class Status : MonoBehaviour
 
     public void RemoveValue(int count)
     {
-        if(isFirst ==  true)
+        if(isFirst ==  true && type == StatusType.Turn)
         {
             isFirst = false;
         }
