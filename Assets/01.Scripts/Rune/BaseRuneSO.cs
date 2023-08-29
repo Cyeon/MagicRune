@@ -56,8 +56,8 @@ public class BaseRuneSO : ScriptableObject
 
         for (int i = 0; i < keywordList.Length; i++)
         {
-            if (Managers.Keyward.GetKeyward(KeywardList[i]).IsAddDesc)
-                desc += " <color=#FFE951>" + Managers.Keyward.GetKeyward(keywordList[i]).KeywardName + "</color>";
+            if (Managers.Keyword.GetKeyword(KeywardList[i]).IsAddDesc)
+                desc += " <color=#FFE951>" + Managers.Keyword.GetKeyword(keywordList[i]).KeywardName + "</color>";
         }
 
         return desc;
@@ -66,7 +66,11 @@ public class BaseRuneSO : ScriptableObject
     public DiscoveryType DiscoveryType = DiscoveryType.Unknwon;
     public AttributeType AttributeType;
     public GameObject RuneEffect;
-    public RuneRarity Rarity;
+
+    [SerializeField]
+    private RuneRarity _rarity = RuneRarity.Normal;
+    public RuneRarity Rarity => _rarity;
+
     public int CoolTime;
     public EffectDirection Direction;
     public AudioClip RuneSound;

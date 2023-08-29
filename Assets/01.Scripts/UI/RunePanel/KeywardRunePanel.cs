@@ -48,7 +48,7 @@ public class KeywardRunePanel : BasicRuneAddon
         {
             KeywardPanel panel = Managers.Resource.Instantiate("UI/KeywardPanel", _keywardArea).GetComponent<KeywardPanel>();
             panel.transform.localScale = Vector3.one;
-            panel.SetKeyward(Managers.Keyward.GetKeyward(rune.KeywardList[i]));
+            panel.SetKeyword(Managers.Keyword.GetKeyword(rune.KeywardList[i]));
             _keywardPanelList.Add(panel);
         }
 

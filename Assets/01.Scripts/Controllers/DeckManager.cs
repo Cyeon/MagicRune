@@ -19,9 +19,9 @@ public class DeckManager
 
     public void Init()
     {
-        SetDefaultDeck(Managers.Resource.Load<DeckSO>("SO/Deck/DefaultDeck").RuneList);
+        SetDefaultDeck(Managers.Addressable.Load<DeckSO>("SO/Deck/DefaultDeck").RuneList);
 
-        _allRuneSO = Managers.Resource.Load<DeckSO>("SO/Deck/AllRuneDeck");
+        _allRuneSO = Managers.Addressable.Load<DeckSO>("SO/Deck/AllRuneDeck");
 
         for (int i = 0; i < (int)AttributeType.MAX_COUNT; i++)
         {
@@ -68,10 +68,10 @@ public class DeckManager
     {
         if (rune.BaseRuneSO.DiscoveryType != DiscoveryType.Known)
         {
-            AssetDatabase.StartAssetEditing();
+            //AssetDatabase.StartAssetEditing();
             rune.BaseRuneSO.DiscoveryType = DiscoveryType.Known;
-            AssetDatabase.StopAssetEditing();
-            EditorUtility.SetDirty(rune.BaseRuneSO);
+            //AssetDatabase.StopAssetEditing();
+            //EditorUtility.SetDirty(rune.BaseRuneSO);
         }
 
         _deck.Add(rune);
@@ -129,10 +129,10 @@ public class DeckManager
 
         if (newRuneList[idx].BaseRuneSO.DiscoveryType == DiscoveryType.Unknwon)
         {
-            AssetDatabase.StartAssetEditing();
+            //AssetDatabase.StartAssetEditing();
             newRuneList[idx].BaseRuneSO.DiscoveryType = DiscoveryType.Find;
-            AssetDatabase.StopAssetEditing();
-            EditorUtility.SetDirty(newRuneList[idx].BaseRuneSO);
+            //AssetDatabase.StopAssetEditing();
+            //EditorUtility.SetDirty(newRuneList[idx].BaseRuneSO);
         }
 
         return newRuneList[idx];

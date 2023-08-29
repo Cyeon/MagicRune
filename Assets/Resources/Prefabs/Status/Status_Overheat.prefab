@@ -60,12 +60,12 @@ MonoBehaviour:
   OnAddStatus:
   - {fileID: -6026917876269977229}
   - {fileID: -9034214546657118884}
-  OnTurnStart: []
+  OnTurnStart:
+  - {fileID: -9034214546657118884}
   OnAttack: []
   OnGetDamage: []
   OnTurnEnd: []
-  OnRemoveStatus:
-  - {fileID: -9034214546657118884}
+  OnRemoveStatus: []
   icon: {fileID: 21300000, guid: 96387ec93afa0bf4184a8bcea611c4f0, type: 3}
   color: {r: 1, g: 1, b: 1, a: 1}
   statusSoundType: 1
@@ -85,6 +85,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _conditionStatus: 19
   _conditionCount: 5
+  isConditionStatusRem: 0
   _addStatus: 20
 --- !u!114 &-9034214546657118884
 MonoBehaviour:

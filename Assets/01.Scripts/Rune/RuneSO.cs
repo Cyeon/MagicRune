@@ -58,13 +58,10 @@ public enum AttackType
 
 public enum RuneRarity
 {
-    // 다합쳐서 100되게
-    Normal = 50,
-    Rare = 35,
-    Epic = 15,
-
-    // 앤 뺴고
-    Legendary = 0, // 맨 마지막으로
+    Normal = 0,
+    Rare = 1,
+    Epic = 2,
+    Legendary = 3, 
 }
 
 public enum CountType

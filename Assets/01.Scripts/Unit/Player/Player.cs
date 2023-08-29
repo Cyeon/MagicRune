@@ -24,9 +24,9 @@ public class Player : Unit
         relicTrm = transform.Find("Relic");
     }
 
-    public override void Attack(float dmg, bool isTrueDamage)
+    public override void Attack(float dmg, bool isTrueDamage = false)
     {
-        base.Attack(dmg);
+        base.Attack(dmg, ref isTrueDamage);
         BattleManager.Instance.Enemy.TakeDamage(currentDmg, isTrueDamage);
     }
 

@@ -417,9 +417,33 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 348654403}
     m_Modifications:
+    - target: {fileID: 79717825850767306, guid: e9631fd8042653b4b9b4eeca96454d79, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 79717825850767306, guid: e9631fd8042653b4b9b4eeca96454d79, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 79717825850767306, guid: e9631fd8042653b4b9b4eeca96454d79, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5440664164345936715, guid: e9631fd8042653b4b9b4eeca96454d79, type: 3}
       propertyPath: m_Name
       value: RuneBookUI
+      objectReference: {fileID: 0}
+    - target: {fileID: 6028279147185321783, guid: e9631fd8042653b4b9b4eeca96454d79, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6028279147185321783, guid: e9631fd8042653b4b9b4eeca96454d79, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8324454468559906841, guid: e9631fd8042653b4b9b4eeca96454d79, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8518393661035914888, guid: e9631fd8042653b4b9b4eeca96454d79, type: 3}
       propertyPath: m_Pivot.x
@@ -896,9 +920,9 @@ MonoBehaviour:
   _selectPanel: {fileID: 634625570}
   _xPosArray:
   - 45
-  - 495
-  - 945
-  - 1395
+  - 365
+  - 720
+  - 1060
   moveBGEase: 1
   moveBGSpeed: 0.25
 --- !u!1 &541284222
@@ -2274,10 +2298,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Loading
       objectReference: {fileID: 0}
-    - target: {fileID: 7983970656881156373, guid: 22498062a960232439fca10af965191e, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 7983970656881156374, guid: 22498062a960232439fca10af965191e, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -2361,14 +2381,6 @@ PrefabInstance:
     - target: {fileID: 7983970656881156374, guid: 22498062a960232439fca10af965191e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7983970657034460587, guid: 22498062a960232439fca10af965191e, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7983970657034460587, guid: 22498062a960232439fca10af965191e, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 22498062a960232439fca10af965191e, type: 3}
@@ -3196,6 +3208,7 @@ MonoBehaviour:
   _loadScene:
     LoadPanel: {fileID: 1047698531}
     ProgressSlider: {fileID: 1047698530}
+    LoadingText: {fileID: 1578390357}
 --- !u!4 &1320849311
 Transform:
   m_ObjectHideFlags: 0
@@ -4642,6 +4655,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1570313600}
   m_CullTransparentMesh: 1
+--- !u!114 &1578390357 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7983970656188803173, guid: 22498062a960232439fca10af965191e, type: 3}
+  m_PrefabInstance: {fileID: 1047698528}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1599909849
 GameObject:
   m_ObjectHideFlags: 0

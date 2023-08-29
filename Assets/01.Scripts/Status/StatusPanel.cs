@@ -10,11 +10,13 @@ public class StatusPanel : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
     private Status _status;
     public Status Status => _status;
-    private Image _image;
-    private TextMeshProUGUI _duration;
-
     public StatusName StatusName => _status.statusName;
 
+    private Passive _passive;
+    public Passive Passive => _passive;
+
+    private Image _image;
+    private TextMeshProUGUI _duration;
     private Image _effectImage;
     private Sequence _effectSeq;
 
@@ -22,16 +24,17 @@ public class StatusPanel : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     {
         _image = GetComponent<Image>();
         _duration = GetComponentInChildren<TextMeshProUGUI>();
-
-        _effectImage = transform.Find("Effect").GetComponent<Image>();
     }
 
-    private void OnEnable()
+    public void Init(Status status)
     {
-        _effectImage.color = new Color(1, 1, 1, 0);
+        _status = status;
+        transform.name = status.debugName;
 
-        if (_effectImage != null)
+        if (transform.Find("Effect").TryGetComponent(out _effectImage))
         {
+            _effectImage.color = new Color(1, 1, 1, 0);
+
             _effectSeq = DOTween.Sequence();
             _effectSeq.Append(_effectImage?.transform.DOScale(Vector2.one * 2, 0));
             _effectSeq.Join(_effectImage?.DOFade(0.5f, 0));
@@ -40,11 +43,6 @@ public class StatusPanel : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
             _effectSeq.Join(_effectImage?.transform.DOScale(Vector2.one, 0.5f));
             _effectSeq.Append(_effectImage?.DOFade(0, 0));
         }
-    }
-
-    public void Init(Status status)
-    {
-        _status = status;
 
         _image.sprite = _status.icon;
         _image.color = _status.color;
@@ -52,17 +50,32 @@ public class StatusPanel : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         _effectImage.color = _status.color;
         _duration.SetText(_status.TypeValue.ToString());
 
+
         Effect();
+    }
+
+    public void Init(Passive passive)
+    {
+        _passive = passive;
+        transform.name = passive.passiveName;
+
+        _image.sprite = passive.passiveIcon;
+        _image.color = Color.white;
+
+        _duration.SetText("");
     }
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        Define.DialScene?.StatusDescPopup(_status, eventData.position);
+        if(_passive != null)
+            Define.DialScene?.DescriptionPopup(_passive.passiveName, _passive.passiveDescription, eventData.position);
+        else
+            Define.DialScene?.DescriptionPopup(_status.debugName, _status.information, eventData.position);
     }
 
     public void OnPointerUp(PointerEventData eventData)
     {
-        Define.DialScene?.CloseStatusDescPanel();
+        Define.DialScene?.CloseDescriptionPanel();
     }
 
     public void UpdateDurationText()

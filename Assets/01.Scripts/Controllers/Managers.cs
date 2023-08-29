@@ -10,7 +10,7 @@ public class Managers : MonoBehaviour
 {
     #region Instance
     private static Managers _instance;
-    private static Managers Instance { get { Init(); return _instance; } }
+    private static Managers Instance { get { if (_instance == null) Init(); return _instance; } }
     #endregion
 
     #region CORE
@@ -29,9 +29,10 @@ public class Managers : MonoBehaviour
     private RewardManager _reward = new RewardManager();
     private CanvasManager _canvas = new CanvasManager();
     private SceneManagerEX _scene = new SceneManagerEX();
-    private KeywardManager _keyward = new KeywardManager();
+    private KeywordManager _keyward = new KeywordManager();
     private ResourceManager _resource = new ResourceManager();
     private StatModifierManager _statModifier = new StatModifierManager();
+    private AddressableManager _addressable = new AddressableManager();
 
     public static UIManager UI { get { return Instance._ui; } }
     public static MapManager Map { get { return Instance._map; } }
@@ -44,13 +45,14 @@ public class Managers : MonoBehaviour
     public static RelicManager Relic => Instance._relic;
     public static EnemyManager Enemy => Instance._enemy;
     public static SoundManager Sound { get { return Instance._sound; } }
-    public static SwipeManager Swipe {  get { return _instance._swipe; } }
+    public static SwipeManager Swipe { get { return Instance._swipe; } }
     public static RewardManager Reward { get { return Instance._reward; } }
     public static CanvasManager Canvas { get { return Instance._canvas; } }
     public static SceneManagerEX Scene { get { return Instance._scene; } }
-    public static KeywardManager Keyward { get { return Instance._keyward; } }
+    public static KeywordManager Keyword { get { return Instance._keyward; } }
     public static ResourceManager Resource { get { return Instance._resource; } }
     public static StatModifierManager StatModifier { get { return Instance._statModifier; } }
+    public static AddressableManager Addressable { get { return Instance._addressable; } }
     #endregion
 
     private bool _preparedToQuit = false;
@@ -87,6 +89,7 @@ public class Managers : MonoBehaviour
             _instance._gold.Init();
             _instance._keyward.Init();
             _instance._swipe.Init();
+            _instance._addressable.Init();
         }
 
         if (_player == null)
@@ -100,7 +103,7 @@ public class Managers : MonoBehaviour
         BackButtonAction();
         Swipe.Update(Time.deltaTime);
 
-        if(Define.SaveData.IsTimerPlay)
+        if (Define.SaveData.IsTimerPlay)
         {
             Define.SaveData.TimerSecond += Time.deltaTime;
             Managers.Json.SaveJson<SaveData>("SaveData", Define.SaveData);
@@ -113,12 +116,12 @@ public class Managers : MonoBehaviour
         {
             if (_preparedToQuit == false)
             {
-                AndroidToast.Instance.ShowToastMessage("???モ닪?蹂잛뒙??뗭툏??????밸㎍?????렊 ???モ닪筌???怨뺢킃???モ닪筌?????モ닪筌?????モ닪筌?????モ닪筌?????モ닪筌????밸㎍?????렊???モ닪筌묒궗異?쭔?곕뮝?????モ닪筌????밸㎍?????렊???モ닪?????됰꺑??");
+                AndroidToast.Instance.ShowToastMessage("한번 더 누르면 게임이 종료됩니다.");
                 PreparedToQuit();
             }
             else
             {
-                GameQuit();
+                GameQuit(Managers.GameQuitState.Quit);
             }
         }
     }
@@ -135,14 +138,52 @@ public class Managers : MonoBehaviour
         _preparedToQuit = false;
     }
 
+    public enum GameQuitState
+    {
+        Quit,
+        GiveUp,
+        Restart,
+    }
+
     public static void GameQuit()
     {
-        AssetDatabase.SaveAssets();
+        if(Scene.CurrentScene is LobbyScene)
+        {
+            GameQuit(GameQuitState.Quit);
+        }
+         else
+        {
+            GameQuit(GameQuitState.GiveUp);
+        }
+    }   
+
+    public static void GameQuit(GameQuitState state)
+    {
+        // AssetDatabase.SaveAssets();
+        switch (state)
+        {
+            case GameQuitState.Quit:
 #if UNITY_EDITOR
-        UnityEditor.EditorApplication.isPlaying = false;
+                UnityEditor.EditorApplication.isPlaying = false;
 #else
-        Application.Quit();
+                Application.Quit();
 #endif
+                break;
+            case GameQuitState.GiveUp:
+                Managers.Gold.ResetGoldAmount();
+                Managers.Map.ResetChapter();
+                Destroy(_player.gameObject);
+                _player = null;
+                Scene.LoadScene(Define.Scene.LobbyScene);
+                break;
+            case GameQuitState.Restart:
+                Managers.Gold.ResetGoldAmount();
+                Managers.Map.ResetChapter();
+                Destroy(_player.gameObject);
+                _player = null;
+                Scene.LoadScene(Define.Scene.MapScene);
+                break;
+        }
     }
 
     public static Player GetPlayer()

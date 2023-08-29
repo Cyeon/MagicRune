@@ -8,7 +8,8 @@ public class SEAddStatus : StatusEvent
     private enum AddStackType
     {
         Int,
-        Dmg
+        Dmg,
+        Stack
     }
 
     [SerializeField] private StatusName _statusName = StatusName.Null;
@@ -30,12 +31,22 @@ public class SEAddStatus : StatusEvent
 
         if(_unit.currentDmg > 0)
         {
-            if (_addStackType == AddStackType.Dmg)
+            switch(_addStackType)
             {
-                _value = Mathf.FloorToInt(_unit.currentDmg);
+                case AddStackType.Dmg:
+                    _value = Mathf.FloorToInt(_unit.currentDmg);
+                    unit.StatusManager.AddStatus(_statusName, _value);
+                    break;
+
+                case AddStackType.Int:
+                    unit.StatusManager.AddStatus(_statusName, _value);
+                    break;
+
+                case AddStackType.Stack:
+                    unit.StatusManager.AddStatus(_statusName, _status.TypeValue);
+                    break;
             }
 
-            unit.StatusManager.AddStatus(_statusName, _value);
         }
     }
 }

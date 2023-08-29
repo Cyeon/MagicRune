@@ -38,6 +38,7 @@ public class MapScene : BaseScene
     private Color _activeTextColor;
     private Color _inactiveTextColor;
 
+    private MapRuneUI _currentMapUI;
 
     protected override void Init()
     {
@@ -110,13 +111,24 @@ public class MapScene : BaseScene
 
     public void MapDescChange(MapRuneUI ui)
     {
-        _mapDescText.SetText(ui.GetComponent<Stage>().StageDesc);
-        _mapDescIcon.sprite = ui.transform.Find("Icon").GetComponent<SpriteRenderer>().sprite;
+        if(_currentMapUI != ui)
+        {
+            if (_currentMapUI != null)
+            {
+                _currentMapUI.UnSelect();
+            }
+
+            _currentMapUI = ui;
+
+            _currentMapUI.Select();
+            _mapDescText.SetText(ui.GetComponent<Stage>().StageDesc);
+            _mapDescIcon.sprite = _currentMapUI.IconImage.sprite;
+        }
     }
 
     private void ProgressInit()
     {
-        Transform progress = Managers.Canvas.GetCanvas("UserInfoPanelCanvas").transform.Find("Progress");
+        Transform progress = Managers.Canvas.GetCanvas("MapUICanvas").transform.Find("Progress");
         _leftLine = progress.Find("LeftLine").GetComponent<Image>();
         _rightLine = progress.Find("RightLine").GetComponent<Image>();
         _activeLineColor = _leftLine.color;

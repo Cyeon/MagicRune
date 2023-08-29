@@ -9,6 +9,8 @@ public class SEAddStatusOnStackOverflow : StatusEvent
     private StatusName _conditionStatus = StatusName.Null;
     [SerializeField]
     public int _conditionCount;
+    [SerializeField]
+    public bool isConditionStatusRem = true;
 
     [Header("Result 결과")]
     [SerializeField]
@@ -20,7 +22,7 @@ public class SEAddStatusOnStackOverflow : StatusEvent
 
         if (_unit.StatusManager.GetStatus(_conditionStatus)?.TypeValue >= _conditionCount)
         {
-            _unit.StatusManager.RemoveStatus(_conditionStatus, _conditionCount);
+            if(isConditionStatusRem == true) _unit.StatusManager.RemoveStatus(_conditionStatus, _conditionCount);
             _unit.StatusManager.AddStatus(_addStatus, 1);
         }
     }

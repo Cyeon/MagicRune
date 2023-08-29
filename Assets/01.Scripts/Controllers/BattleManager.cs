@@ -59,7 +59,13 @@ public class BattleManager : MonoSingleton<BattleManager>
             Managers.Scene.LoadScene("EndScene");
         });
 
-        if(Define.SaveData.IsTutorial)
+        if (Enemy.PatternManager.passive != null)
+        {
+            Enemy.PatternManager.passive.Init();
+            Define.DialScene?.AddPassive(Enemy.PatternManager.passive);
+        }
+
+        if (Define.SaveData.IsTutorial)
         {
             TutorialUI ui = Managers.Canvas.GetCanvas("Tutorial").GetComponent<TutorialUI>();
             ui.Tutorial("Tutorial", 1);
@@ -136,10 +142,12 @@ public class BattleManager : MonoSingleton<BattleManager>
         {
             case GameTurn.Ready:
                 EventManager.TriggerEvent(Define.ON_START_PLAYER_TURN);
+
                 Define.DialScene?.Turn("Player Turn");
                 _gameTurn = GameTurn.EnemyEnd;
+
                 Player.ResetShield();
-                //Player.UpdateHealthUI();
+
                 break;
 
             case GameTurn.Player:
@@ -241,7 +249,7 @@ public class BattleManager : MonoSingleton<BattleManager>
         _tutorialEndPanel.SetActive(true);
 
         Managers.Gold.ResetGoldAmount();
-        Managers.Deck.SetDefaultDeck(Managers.Resource.Load<DeckSO>("SO/Deck/DefaultDeck").RuneList);
+        Managers.Deck.SetDefaultDeck(Managers.Addressable.Load<DeckSO>("SO/Deck/DefaultDeck").RuneList);
 
         Transform panelTrm = _tutorialEndPanel.transform.Find("Panel");
         panelTrm.localScale = Vector3.zero;

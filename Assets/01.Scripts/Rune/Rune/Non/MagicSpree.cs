@@ -6,7 +6,7 @@ public class MagicSpree : BaseRune
 {
     public override void Init()
     {
-        _baseRuneSO = Managers.Resource.Load<BaseRuneSO>("SO/Rune/Non/" + typeof(MagicSpree).Name);
+        _baseRuneSO = Managers.Addressable.Load<BaseRuneSO>("SO/Rune/Non/" + typeof(MagicSpree).Name);
         base.Init();
     }
 

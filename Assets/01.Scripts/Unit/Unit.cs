@@ -167,6 +167,13 @@ public class Unit : MonoBehaviour
         currentDmg = damage.RoundToInt();
         StatusManager.OnAttack();
         Managers.Sound.PlaySound(attackSound, SoundType.Effect);
+    }
+
+    public virtual void Attack(float damage, ref bool isTrueDamage)
+    {
+        currentDmg = damage.RoundToInt();
+        StatusManager.OnAttack();
+        Managers.Sound.PlaySound(attackSound, SoundType.Effect);
 
         if (StatusManager.IsHaveStatus(StatusName.Penetration))
         {
@@ -201,8 +208,6 @@ public class Unit : MonoBehaviour
 
     public void AddHP(float value, bool isEffect = false)
     {
-        if (value <= 0) return;
-
         if (_isDie == false)
         {
             HP += value.RoundToInt();

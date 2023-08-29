@@ -7,7 +7,7 @@ public class Bouncing : BaseRune
 {
     public override void Init()
     {
-        _baseRuneSO = Managers.Resource.Load<BaseRuneSO>("SO/Rune/Ground/" + typeof(Bouncing).Name);
+        _baseRuneSO = Managers.Addressable.Load<BaseRuneSO>("SO/Rune/Ground/" + typeof(Bouncing).Name);
         base.Init();
     }
 

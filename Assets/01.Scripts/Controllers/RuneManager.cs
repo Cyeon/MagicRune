@@ -1,8 +1,6 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -13,46 +11,56 @@ public class RuneManager
 
     public void Init()
     {
-        _runeHandler.Add(new Fire());
-        _runeHandler.Add(new FirePunch());
-        _runeHandler.Add(new FireRegeneration());
-        _runeHandler.Add(new FireBreath());
-        _runeHandler.Add(new RapidFire());
-        _runeHandler.Add(new Reload());
-        _runeHandler.Add(new TheLastShot());
+        if (_runeHandler.Count != 0) { return; }
 
-        _runeHandler.Add(new Ice());
-        _runeHandler.Add(new SnowBall());
-        _runeHandler.Add(new IceShield());
-        _runeHandler.Add(new IceSmash());
-        _runeHandler.Add(new IceHeart());
-        _runeHandler.Add(new AbsorptionChilliness());
-        _runeHandler.Add(new BreathOfIceDragon());
+        HandlerAdd(new Fire());
+        HandlerAdd(new FirePunch());
+        HandlerAdd(new FireRegeneration());
+        HandlerAdd(new FireBreath());
+        HandlerAdd(new RapidFire());
+        HandlerAdd(new Reload());
+        HandlerAdd(new TheLastShot());
 
-        _runeHandler.Add(new ShieldAttack());
-        _runeHandler.Add(new Attack());
-        _runeHandler.Add(new ThreeAttack());
-        _runeHandler.Add(new GroundShield());
-        _runeHandler.Add(new GroundBeat());
-        _runeHandler.Add(new Bouncing());
-        _runeHandler.Add(new DiamondBody());
+        HandlerAdd(new Ice());
+        HandlerAdd(new SnowBall());
+        HandlerAdd(new IceShield());
+        HandlerAdd(new IceSmash());
+        HandlerAdd(new IceHeart());
+        HandlerAdd(new AbsorptionChilliness());
+        HandlerAdd(new BreathOfIceDragon());
 
-        _runeHandler.Add(new Charge());
-        _runeHandler.Add(new RailGun());
-        _runeHandler.Add(new LightingRod());
-        _runeHandler.Add(new Release());
-        _runeHandler.Add(new ElectricBarrier());
-        _runeHandler.Add(new ElectricAbsorption());
-        _runeHandler.Add(new SelfGeneration());
+        HandlerAdd(new ShieldAttack());
+        HandlerAdd(new Attack());
+        HandlerAdd(new ThreeAttack());
+        HandlerAdd(new GroundShield());
+        HandlerAdd(new GroundBeat());
+        HandlerAdd(new Bouncing());
+        HandlerAdd(new DiamondBody());
 
-        _runeHandler.Add(new MagicBullet());
-        _runeHandler.Add(new MagicShield());
-        _runeHandler.Add(new MagicSpree());
-        _runeHandler.Add(new VariableRune());
+        HandlerAdd(new Charge());
+        HandlerAdd(new RailGun());
+        HandlerAdd(new LightingRod());
+        HandlerAdd(new Release());
+        HandlerAdd(new ElectricBarrier());
+        HandlerAdd(new ElectricAbsorption());
+        HandlerAdd(new SelfGeneration());
+
+        HandlerAdd(new MagicBullet());
+        HandlerAdd(new MagicShield());
+        HandlerAdd(new MagicSpree());
+        HandlerAdd(new VariableRune());
 
         for (int i = 0; i < _runeHandler.Count; i++)
         {
             _runeHandler[i].Init();
+        }
+    }
+
+    private void HandlerAdd(BaseRune rune)
+    {
+        if (!_runeHandler.Contains(rune))
+        {
+            _runeHandler.Add(rune);
         }
     }
 
@@ -105,91 +113,6 @@ public class RuneManager
     public List<BaseRune> GetRandomRuneOfRarity(int count, RuneRarity rarity, List<BaseRune> ignoreRuneList = null)
     {
         return null;
-    }
-
-    public BaseRune GetRandomRune(List<BaseRuneSO> ignoreRuneList = null)
-    {
-        List<BaseRune> newRuneList = new List<BaseRune>(_runeHandler);
-        List<BaseRune> runeList = new List<BaseRune>();
-
-        if (ignoreRuneList != null)
-        {
-            foreach (BaseRune item in newRuneList)
-            {
-                if (ignoreRuneList.Contains(item.BaseRuneSO))
-                {
-                    runeList.Add(item);
-                }
-            }
-        }
-
-        for (int i = 0; i < runeList.Count; i++)
-        {
-            newRuneList.Remove(runeList[i]);
-        }
-
-        runeList.Clear();
-
-        #region Set Attribute
-        AttributeType attributeType = AttributeType.None;
-        int attributeMaxValue = 0;
-        for (int i = 2; i < (int)AttributeType.MAX_COUNT; i++)
-        {
-            if (_selectAttributeType == (AttributeType)i)
-            {
-                attributeMaxValue += 30;
-            }
-            else
-            {
-                attributeMaxValue += 10;
-            }
-        }
-        int attributeValue = Random.Range(0, attributeMaxValue + 1);
-        int attributeMinValue = 0;
-        for (int i = 2; i < (int)AttributeType.MAX_COUNT; i++)
-        {
-            if (attributeMinValue <= attributeValue && ((AttributeType)i == _selectAttributeType ? 30 : 10) + attributeMinValue >= attributeValue)
-            {
-                attributeType = (AttributeType)i;
-                break;
-            }
-            else
-            {
-                attributeMinValue += (AttributeType)i == _selectAttributeType ? 30 : 10;
-            }
-        }
-        #endregion
-
-        #region Set Rarity
-        RuneRarity rarity = RuneRarity.Normal;
-        RuneRarity[] rarityArray = Enum.GetValues(typeof(RuneRarity)).Cast<RuneRarity>().ToArray();
-
-        int rarityMaxValue = 0;
-        for (int i = 0; i < rarityArray.Length; i++)
-        {
-            rarityMaxValue += (int)rarityArray[i];
-        }
-
-        int rarityValue = Random.Range(1, rarityMaxValue + 1);
-        int rarityMinValue = 0;
-        for (int i = 0; i < rarityArray.Length; i++)
-        {
-            if (rarityMinValue <= rarityValue && rarityValue >= (int)rarityArray[i + 1])
-            {
-                rarity = rarityArray[i];
-                break;
-            }
-            else
-            {
-                rarityMinValue += (int)rarityArray[i + 1];
-            }
-        }
-        #endregion
-
-        newRuneList = newRuneList.Where(x => x.BaseRuneSO.AttributeType == attributeType && x.BaseRuneSO.Rarity == rarity).ToList();
-
-        int idx = Random.Range(0, newRuneList.Count);
-        return newRuneList[idx].Clone() as BaseRune;
     }
 
     public List<BaseRune> GetRandomRune(int count, List<BaseRuneSO> ignoreRuneList = null)
@@ -250,34 +173,14 @@ public class RuneManager
             }
             #endregion
 
-            #region Set Rarity
-            RuneRarity rarity = RuneRarity.Normal;
-            RuneRarity[] rarityArray = Enum.GetValues(typeof(RuneRarity)).Cast<RuneRarity>().ToArray();
-            Array.Reverse(rarityArray);
-
-            int rarityMaxValue = 0;
-            for (int i = 0; i < rarityArray.Length - 1; i++)
-            {
-                rarityMaxValue += (int)rarityArray[i];
-            }
-
-            int rarityValue = Random.Range(1, rarityMaxValue + 1);
-            int rarityMinValue = 0;
-            for (int i = 0; i < rarityArray.Length - 1; i++)
-            {
-                if (rarityMinValue <= rarityValue && rarityValue <= (int)rarityArray[i + 1] + rarityMinValue)
-                {
-                    rarity = rarityArray[i];
-                    break;
-                }
-                else
-                {
-                    rarityMinValue += (int)rarityArray[i + 1];
-                }
-            }
-            #endregion
+            RuneRarity rarity = GetRuneRarity();
 
             List<BaseRune> list = new List<BaseRune>(newRuneList.Where(x => x.BaseRuneSO.AttributeType == attributeType && x.BaseRuneSO.Rarity == rarity));
+            if(list.Count == 0)
+            {
+                list = _runeHandler;
+            }
+
             BaseRune rune = list[Random.Range(0, list.Count)];
 
             bool isIn = false;
@@ -292,6 +195,14 @@ public class RuneManager
 
             if (isIn == false)
             {
+                if (rune.BaseRuneSO.DiscoveryType == DiscoveryType.Unknwon)
+                {
+                    //AssetDatabase.StartAssetEditing();
+                    rune.BaseRuneSO.DiscoveryType = DiscoveryType.Find;
+                    //AssetDatabase.StopAssetEditing();
+                    //EditorUtility.SetDirty(newRuneList[idx].BaseRuneSO);
+                }
+                
                 runeList.Add(rune.Clone() as BaseRune);
             }
         }
@@ -301,11 +212,24 @@ public class RuneManager
 
     public BaseRune GetRune(BaseRuneSO runeSO)
     {
-        return _runeHandler.Find(x => x.BaseRuneSO == runeSO).Clone() as BaseRune;
+        return _runeHandler.Find(x => x.BaseRuneSO.name == runeSO.name).Clone() as BaseRune;
     }
 
     public BaseRune GetRune(BaseRune rune)
     {
         return _runeHandler.Find(x => x.BaseRuneSO == rune.BaseRuneSO).Clone() as BaseRune;
+    }
+
+    private RuneRarity GetRuneRarity()
+    {
+        int value = Random.Range(0, 101);
+        RuneDropChance chance = Managers.Map.CurrentChapter.runeDropChanceList.Where(x => x.stageType == Managers.Map.currentStage.StageType).FirstOrDefault();
+
+        if (chance.Epic == 0) return RuneRarity.Normal;
+
+        if (value <= chance.normal) return RuneRarity.Normal;
+        if (value <= chance.Rare) return RuneRarity.Rare;
+        if (value <= chance.Epic) return RuneRarity.Epic;
+        return RuneRarity.Legendary;
     }
 }
