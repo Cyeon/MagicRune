@@ -19,6 +19,8 @@ public class PatternManager : MonoBehaviour
     private string _treeName;
     private bool _treeChange = false;
 
+    public Passive passive;
+
     [Header("UI")]
     [SerializeField] private SpriteRenderer _patternSprite;
     [SerializeField] private TextMeshPro _patternText;
@@ -46,6 +48,7 @@ public class PatternManager : MonoBehaviour
                 }
             }
         }
+
     }
 
     /// <summary>

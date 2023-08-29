@@ -18,11 +18,12 @@ public class EnemyManager
             enemy.Init();
             enemy.OnDieEvent.RemoveAllListeners();
             enemy.OnDieEvent.AddListener(() => EnemyDie());
+            enemy.OnDieEvent.AddListener(() => enemy.PatternManager.passive?.Disable());
             spawnEnemyList.Add(enemy);
         }
 
         _enemyList = spawnEnemyList;
-        _currentEnemy = _enemyList.GetRandom(); 
+        _currentEnemy = _enemyList.GetRandom();
     }
 
     public void ResetEnemy()
