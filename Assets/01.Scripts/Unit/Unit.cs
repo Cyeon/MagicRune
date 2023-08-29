@@ -290,6 +290,8 @@ public class Unit : MonoBehaviour
 
         _shieldBar.DOScaleX(0, 0);
         _shieldIcon.gameObject.SetActive(false);
+
+        UpdateShieldUI();
     }
 
     public virtual void UpdateHealthUI()

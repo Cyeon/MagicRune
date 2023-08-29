@@ -69,6 +69,7 @@ public class Status : MonoBehaviour
     public int TypeValue => _typeValue;
     [ConditionalField(nameof(type), false, StatusType.Stack)]
     public bool isTurnRemove = false;
+    public bool isFirst = true;
 
     [Header("Function")]
     public List<StatusEvent> OnAddStatus = new List<StatusEvent>();
@@ -104,11 +105,18 @@ public class Status : MonoBehaviour
 
     public void RemoveValue(int count)
     {
-        _typeValue = Mathf.Clamp(_typeValue - count, 0, _typeValue);
-        if (_typeValue <= 0)
+        if(isFirst ==  true)
         {
-            _unit.StatusManager.DeleteStatus(this);
-            return;
+            isFirst = false;
+        }
+        else
+        {
+            _typeValue = Mathf.Clamp(_typeValue - count, 0, _typeValue);
+            if (_typeValue <= 0)
+            {
+                _unit.StatusManager.DeleteStatus(this);
+                return;
+            }
         }
 
         Define.DialScene?.ReloadStatusPanel(_unit, this);

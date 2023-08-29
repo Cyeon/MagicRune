@@ -103,7 +103,7 @@ public class StatusManager
 
         for (int i = 0; i < _unit.statusTrm.childCount; ++i)
         {
-            if (_unit.statusTrm.GetChild(i).name == "Status_" + status.statusName)
+            if (_unit.statusTrm.GetChild(i).name == status.debugName)
             {
                 Managers.Resource.Destroy(_unit.statusTrm.GetChild(i).gameObject);
             }

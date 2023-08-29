@@ -157,7 +157,7 @@ public class DialScene : BaseScene
 
     public void AddStatus(Unit unit, Status status)
     {
-        GetStatusPanel(status, GetStatusTrm(Managers.Enemy.CurrentEnemy));
+        GetStatusPanel(status, GetStatusTrm(unit));
     }
 
     public void AddPassive(Passive passive)
@@ -183,7 +183,7 @@ public class DialScene : BaseScene
         GameObject obj = null;
         for (int i = 0; i < trm.childCount; i++)
         {
-            if (trm.GetChild(i).GetComponent<StatusPanel>().StatusName == name)
+            if (trm.GetChild(i).GetComponent<StatusPanel>().Status.statusName == name)
             {
                 obj = trm.GetChild(i).gameObject;
             }

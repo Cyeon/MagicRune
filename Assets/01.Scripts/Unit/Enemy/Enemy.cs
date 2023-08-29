@@ -45,6 +45,7 @@ public class Enemy : Unit
     {
         base.Attack(damage);
         BattleManager.Instance.Player.TakeDamage(currentDmg, isTrueDamage);
+        currentDmg = 0;
     }
 
     public override void Die()
