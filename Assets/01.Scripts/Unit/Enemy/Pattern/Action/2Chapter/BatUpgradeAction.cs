@@ -8,13 +8,13 @@ public class BatUpgradeAction : PatternAction
 
     public override void TurnAction()
     {
-        base.TurnAction();
-
         if(Enemy.HP + Enemy.StatusManager.GetStatusValue(StatusName.Fire) > 10 
             && Enemy.StatusManager.GetStatusValue(StatusName.BatUpgrade) <= 5)
         {
             Enemy.StatusManager.AddStatus(StatusName.BatUpgrade, 1);
             Enemy.RemTrueHP(_removeHP);
         }
+
+        base.TurnAction();
     }
 }

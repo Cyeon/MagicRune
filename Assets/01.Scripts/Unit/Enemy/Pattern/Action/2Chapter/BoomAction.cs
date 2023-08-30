@@ -19,7 +19,7 @@ public class BoomAction : PatternAction
 
     public override void TurnAction()
     {
-        base.TurnAction();
         Enemy.StatusManager.RemoveStatus(StatusName.Boom, 1);
+        base.TurnAction();
     }
 }
