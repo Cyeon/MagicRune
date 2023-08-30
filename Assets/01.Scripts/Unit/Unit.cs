@@ -279,11 +279,11 @@ public class Unit : MonoBehaviour
 
     public void UISetting()
     {
-        _healthBar.DOScaleX((float)HP / MaxHP, 0);
-        _healthFeedbackBar.DOScaleX(0, 0);
+        _healthBar.DOLocalMoveX(-(0.9f + (float)HP / MaxHP * -0.9f), 0);
+        _healthFeedbackBar.DOLocalMoveX(_healthBar.transform.localPosition.x, 0);
         _healthText.text = string.Format("{0}/{1}", HP.ToString(), MaxHP.ToString());
 
-        _shieldBar.DOScaleX(0, 0);
+        _shieldBar.DOLocalMoveX(0.9f, 0);
         _shieldIcon.gameObject.SetActive(false);
     }
 
@@ -292,8 +292,8 @@ public class Unit : MonoBehaviour
         bool isChange = _healthBar.localScale.x != (float)HP / MaxHP;
 
         _healthFeedbackBar.DOScaleX(_healthBar.localScale.x, 0);
-        _healthBar.DOScaleX((float)HP / MaxHP, 0);
-
+        _healthBar.DOLocalMoveX(-(0.9f + (float)HP / MaxHP * -0.9f), 0);
+            
         _healthText.text = string.Format("{0}/{1}", HP.ToString(), MaxHP.ToString());
 
         if (Shield > 0)
