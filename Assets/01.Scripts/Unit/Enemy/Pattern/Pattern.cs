@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Security.Cryptography;
 using Unity.VisualScripting;
 using UnityEngine;
+using MyBox;
 using UnityEngine.Events;
 
 public class Pattern : MonoBehaviour
@@ -148,4 +149,19 @@ public class Pattern : MonoBehaviour
         desc = description;
         Managers.Enemy.CurrentEnemy.PatternManager.UpdatePatternUI();
     }
+
+#if UNITY_EDITOR
+    [ButtonMethod]
+    private void IconApply()
+    {
+        transform.parent.parent.Find("UI/Pattern/PatternIcon").GetComponent<SpriteRenderer>().sprite = icon;
+        transform.parent.parent.Find("UI/Pattern/PatternIcon").transform.localScale = iconSize;
+    }
+
+    [ButtonMethod]
+    private void IconReset()
+    {
+        transform.parent.parent.Find("UI/Pattern/PatternIcon").GetComponent<SpriteRenderer>().sprite = null;
+    }
+#endif
 }

@@ -8,7 +8,6 @@ public class BroadeningDescChangeAction : AttackAction
 
     public override void StartAction()
     {
-        base.StartAction();
 
         if(_broadening != null)
         {
@@ -16,5 +15,6 @@ public class BroadeningDescChangeAction : AttackAction
         }
 
         Enemy.PatternManager.CurrentPattern.ChangePatternDescription(damage + _broadening.AddDmg.ToString());
+        base.StartAction();
     }
 }

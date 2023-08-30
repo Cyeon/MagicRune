@@ -7,7 +7,6 @@ public class BoomAction : PatternAction
 {
     public override void StartAction()
     {
-        base.StartAction();
         if(Enemy.StatusManager.GetStatusValue(StatusName.Boom) == 0)
         {
             Enemy.StatusManager.AddStatus(StatusName.Boom, 3);
@@ -15,6 +14,8 @@ public class BoomAction : PatternAction
 
         Enemy.PatternManager.CurrentPattern.desc = Enemy.StatusManager.GetStatusValue(StatusName.Boom).ToString();
         Enemy.PatternManager.UpdatePatternUI();
+
+        base.StartAction();
     }
 
     public override void TurnAction()
