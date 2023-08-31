@@ -30,7 +30,6 @@ public class FoxOrbAction : PatternAction
         base.EndAction();
     }
 
-    [ButtonMethod]
     private void GetDamageCheck(float dmg)
     {
         if(dmg == 0)

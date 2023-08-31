@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 5736046982554988565}
   - component: {fileID: 5014004267170453785}
   - component: {fileID: -5419438862847067255}
-  - component: {fileID: 7791157812867754133}
+  - component: {fileID: -4235267656412775537}
   m_Layer: 0
-  m_Name: Status_BatUpgrade
+  m_Name: Status_DefencePosture
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -46,20 +46,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cde2e363b5d96b742919b2129a9046bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  debugName: "\uBC29\uB9DD\uC774 \uAC15\uD654"
-  statusName: 27
-  information: "\uC2A4\uD0DD \uB2F9 \uACF5\uACA9\uB825\uC774 10 \uC99D\uAC00\uD569\uB2C8\uB2E4."
+  debugName: "\uAC70\uBBF8\uC904"
+  statusName: 29
+  information: "\uBC29\uC5B4\uB825\uC774 \uBD80\uC5EC\uB420 \uB584 2 \uAC10\uC18C\uB429\uB2C8\uB2E4."
   textColor: {r: 1, g: 1, b: 1, a: 1}
-  type: 0
+  type: 1
   isTurnRemove: 0
   isFirst: 1
   OnAddStatus: []
   OnTurnStart: []
   OnAttack: []
-  OnGetDamage: []
+  OnGetDamage:
+  - {fileID: -4235267656412775537}
   OnTurnEnd: []
   OnRemoveStatus: []
-  icon: {fileID: 21300000, guid: 60bb393fd8d81254c8403b0303ad61be, type: 3}
+  icon: {fileID: 21300000, guid: 00a92de8403a42f4cb60e33128bf59d5, type: 3}
   color: {r: 1, g: 1, b: 1, a: 1}
   statusSoundType: 3
   getSound: {fileID: 0}
@@ -77,7 +78,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isUsing: 0
---- !u!114 &7791157812867754133
+--- !u!114 &-4235267656412775537
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -86,9 +87,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 8378743581122507794}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e9aabace8a6cbae4998938a7c31b1f63, type: 3}
+  m_Script: {fileID: 11500000, guid: 9328c96339cd39641807d80842b98764, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _addDamageType: 1
-  _damage: 0
-  _stackMultipleValue: 10
+  _statusName: 5
+  _addStackType: 0
+  _damageMultiple: 1
+  _value: 3
+  _isSelf: 0

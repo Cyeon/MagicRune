@@ -52,6 +52,7 @@ public enum StatusName
     Faint,                 // 기절
     BatUpgrade,        // 방망이 강화
     FlameBody,         // 화염신체
+    DefencePosture,  // 방어자세
     COUNT
 }
 
