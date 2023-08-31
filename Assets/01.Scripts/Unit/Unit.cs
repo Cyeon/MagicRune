@@ -198,16 +198,6 @@ public class Unit : MonoBehaviour
         return false;
     }
 
-    public float GetMaxHP()
-    {
-        return _maxHealth;
-    }
-
-    public float GetHP()
-    {
-        return HP;
-    }
-
     public void AddHP(float value, bool isEffect = false)
     {
         if (_isDie == false)
@@ -253,11 +243,6 @@ public class Unit : MonoBehaviour
             value -= StatusManager.GetStatusValue(StatusName.Web) * 2;
             Shield += value.RoundToInt();
         }
-    }
-
-    public float GetShield()
-    {
-        return _shield;
     }
 
     public void ResetShield()
