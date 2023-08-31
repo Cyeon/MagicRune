@@ -179,6 +179,11 @@ public class DialElement<T1, T2> : MonoBehaviour where T1 : MonoBehaviour where 
         {
             _touchDownTimer += Time.deltaTime;
 
+            if (MathF.Abs(Define.MainCam.ScreenToWorldPoint(Input.GetTouch(_fingerID).position).x) > 1)
+            {
+                _touchDownTimer = 0f;
+            }
+
             if (_touchDownTimer > _dragTouchTime)
             {
                 ElementMoveInLine();
