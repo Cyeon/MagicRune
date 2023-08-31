@@ -9,9 +9,8 @@ public class AnnoyAction : PatternAction
 
     public override void StartAction()
     {
-        base.StartAction();
-
         Enemy.PatternManager.CurrentPattern.desc = _attackAction.damage + (Managers.Enemy.CurrentEnemy.StatusManager.GetStatusValue(StatusName.Annoy) * 5).ToString();
         Enemy.PatternManager.UpdatePatternUI();
+        base.StartAction();
     }
 }

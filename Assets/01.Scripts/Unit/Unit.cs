@@ -72,6 +72,7 @@ public class Unit : MonoBehaviour
     [field: SerializeField] public UnityEvent OnTakeDamageFeedback { get; set; }
     public UnityEvent OnDieEvent;
     public Action OnGetDamage;
+    public UnityEvent OnTurnEnd;
     #endregion
 
     [HideInInspector]
@@ -100,6 +101,7 @@ public class Unit : MonoBehaviour
         _statusManager = new StatusManager(this);
         statusTrm = transform.Find("Status");
         _statusManager.Reset();
+        OnTurnEnd.AddListener(_statusManager.OnTurnEnd);
 
         if (_spriteRenderer != null)
         {
@@ -196,16 +198,6 @@ public class Unit : MonoBehaviour
         return false;
     }
 
-    public float GetMaxHP()
-    {
-        return _maxHealth;
-    }
-
-    public float GetHP()
-    {
-        return HP;
-    }
-
     public void AddHP(float value, bool isEffect = false)
     {
         if (_isDie == false)
@@ -248,13 +240,9 @@ public class Unit : MonoBehaviour
     {
         if (_isDie == false)
         {
+            value -= StatusManager.GetStatusValue(StatusName.Web) * 2;
             Shield += value.RoundToInt();
         }
-    }
-
-    public float GetShield()
-    {
-        return _shield;
     }
 
     public void ResetShield()
@@ -272,6 +260,8 @@ public class Unit : MonoBehaviour
 
     public virtual void Die()
     {
+        OnTurnEnd.RemoveAllListeners();
+
         _isDie = true;
         StopAllCoroutines();
         OnDieEvent?.Invoke();
@@ -285,6 +275,8 @@ public class Unit : MonoBehaviour
 
         _shieldBar.DOScaleX(0, 0);
         _shieldIcon.gameObject.SetActive(false);
+
+        UpdateShieldUI();
     }
 
     public virtual void UpdateHealthUI()

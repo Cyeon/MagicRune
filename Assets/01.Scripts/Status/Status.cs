@@ -24,32 +24,35 @@ public enum StatusType
 public enum StatusName
 {
     Null,
-    Fire,               // 불
-    Ice,                // 얼음
+    Fire,                    // 불
+    Ice,                     // 얼음
     Recharging,         // 충전
-    ChillinessZip,      // 한기응축
-    Chilliness,         // 한기
-    BladeOfKnife,       // 칼날
-    Impact,             // 충격
-    IceShield,          // 얼음막
-    PoisonousLiquid,    // 독액
-    FoxOrb,             // 여우구슬
+    ChillinessZip,       // 한기응축
+    Chilliness,           // 한기
+    BladeOfKnife,      // 칼날
+    Impact,              // 충격
+    IceShield,           // 얼음막
+    Web,                  // 거미줄
+    FoxOrb,              // 여우구슬
     FlameArmor,         // 화염갑옷
-    Boom,               // 폭발
-    Absorptioning,      // 흡수중
-    Absorption,         // 흡수
+    Boom,                 // 폭발
+    Absorptioning,       // 흡수중
+    Absorption,           // 흡수
     GroundBeat,         // 땅울림
-    Bouncing,           // 척력
-    DiamondBody,     // 금강불괴
-    SelfGeneration,   // 자가발전
-    OverHeat,          // 발열
-    Heating,             // 과열
-    Penetration,       // 관통
-    Ghost,               // 유체화
-    Strength,           // 힘
-    Annoy,              // 짜증
-    Defence,            // 방어막
-    Poison,             // 독
+    Bouncing,            // 척력
+    DiamondBody,      // 금강불괴
+    SelfGeneration,     // 자가발전
+    OverHeat,            // 발열
+    Heating,              // 과열
+    Penetration,        // 관통
+    Ghost,                // 유체화
+    Strength,            // 힘
+    Annoy,               // 짜증
+    PoisonousLiquid, // 독액
+    Faint,                 // 기절
+    BatUpgrade,        // 방망이 강화
+    FlameBody,         // 화염신체
+    DefencePosture,  // 방어자세
     COUNT
 }
 
@@ -67,6 +70,8 @@ public class Status : MonoBehaviour
     public int TypeValue => _typeValue;
     [ConditionalField(nameof(type), false, StatusType.Stack)]
     public bool isTurnRemove = false;
+    [ConditionalField(nameof(type), false, StatusType.Turn)]
+    public bool isFirst = true;
 
     [Header("Function")]
     public List<StatusEvent> OnAddStatus = new List<StatusEvent>();
@@ -102,11 +107,18 @@ public class Status : MonoBehaviour
 
     public void RemoveValue(int count)
     {
-        _typeValue = Mathf.Clamp(_typeValue - count, 0, _typeValue);
-        if (_typeValue <= 0)
+        if(isFirst ==  true && type == StatusType.Turn)
         {
-            _unit.StatusManager.DeleteStatus(this);
-            return;
+            isFirst = false;
+        }
+        else
+        {
+            _typeValue = Mathf.Clamp(_typeValue - count, 0, _typeValue);
+            if (_typeValue <= 0)
+            {
+                _unit.StatusManager.DeleteStatus(this);
+                return;
+            }
         }
 
         Define.DialScene?.ReloadStatusPanel(_unit, this);

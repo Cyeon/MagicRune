@@ -10,7 +10,6 @@ public class StatusPanel : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
     private Status _status;
     public Status Status => _status;
-    public StatusName StatusName => _status.statusName;
 
     private Passive _passive;
     public Passive Passive => _passive;

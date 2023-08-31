@@ -28,6 +28,7 @@ public class PatternManager : MonoBehaviour
 
     private bool _isEffecting = false;
     public bool IsEffecting => _isEffecting;
+    [HideInInspector]
     public bool isPatternActioning = false;
 
     public void Init()
