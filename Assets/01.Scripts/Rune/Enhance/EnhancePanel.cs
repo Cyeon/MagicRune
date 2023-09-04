@@ -29,6 +29,9 @@ public class EnhancePanel : MonoBehaviour
         _beforeRune.SetUI(null, false);
         _afterRune.SetUI(null, false);
 
+        _beforeRune.gameObject.SetActive(false);
+        _afterRune.gameObject.SetActive(false);
+
         _enhanceBtn.onClick.RemoveAllListeners();
         _enhanceBtn.onClick.AddListener(() =>
         {
@@ -99,6 +102,9 @@ public class EnhancePanel : MonoBehaviour
     public void SetSelectRune(BaseRune rune)
     {
         _selectRune = rune;
+
+        _beforeRune.gameObject.SetActive(true);
+        _afterRune.gameObject.SetActive(true);
 
         _beforeRune.SetUI(rune.BaseRuneSO, false);
         _afterRune.SetUI(rune.BaseRuneSO, true);
