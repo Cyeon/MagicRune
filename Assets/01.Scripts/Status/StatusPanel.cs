@@ -43,11 +43,14 @@ public class StatusPanel : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
             _effectSeq.Append(_effectImage?.DOFade(0, 0));
         }
 
-        _image.sprite = _status.icon;
-        _image.color = _status.color;
-        _effectImage.sprite = _status.icon;
-        _effectImage.color = _status.color;
-        _duration.SetText(_status.TypeValue.ToString());
+        if(_image != null && _effectImage != null)
+        {
+            _image.sprite = _status.icon;
+            _image.color = _status.color;
+            _effectImage.sprite = _status.icon;
+            _effectImage.color = _status.color;
+            _duration?.SetText(_status.TypeValue.ToString());
+        }
 
 
         Effect();
@@ -89,5 +92,11 @@ public class StatusPanel : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     private void Effect()
     {
         _effectSeq.Restart();
+    }
+
+    private void OnDestroy()
+    {
+        transform.DOKill();
+        _effectSeq.Kill();
     }
 }
