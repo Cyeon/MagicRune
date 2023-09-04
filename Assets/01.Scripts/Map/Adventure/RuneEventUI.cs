@@ -41,9 +41,10 @@ public class RuneEventUI : MonoBehaviour
             seq.AppendCallback(() => _selectedRuneObject.gameObject.SetActive(false));
 
             ReturnRunePanels();
+            Managers.UI.Get<Button>("NextStageButton_Button").gameObject.SetActive(false);
             //DistracotrFuncList.NextStage(); // 전투 씬에서 작동시키면 이거 때문에 버그 날 수도 있을듯? 일단 메모 
         });
-
+        Managers.UI.Get<Button>("NextStageButton_Button").gameObject.SetActive(false);
         _scrollView.SetActive(false);
         _selectedRuneObject.gameObject.SetActive(false);
     }
@@ -69,7 +70,7 @@ public class RuneEventUI : MonoBehaviour
         _selectedRuneObject.SetUI(rune.BaseRuneSO);
         _selectedRuneObject.gameObject.SetActive(true);
         _selectedRuneObject.transform.localScale = Vector3.zero;
-
+        Managers.UI.Get<Button>("NextStageButton_Button").gameObject.SetActive(true);
         Sequence seq = DOTween.Sequence();
         seq.Append(_selectedRuneObject.transform.DOScale(1.2f, 0.2f));
         seq.Append(_selectedRuneObject.transform.DOScale(1f, 0.1f));
