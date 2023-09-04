@@ -14,6 +14,7 @@ public class Pattern : MonoBehaviour
     public string desc = "";
     [TextArea(1, 10)]
     public string PatternDescription = "";
+    public List<PatternAction> patternActionDescList = new List<PatternAction>();
     [Tooltip("순환 패턴 목록에 포함되는가?")]
     public bool isIncluding = true;
 
@@ -145,10 +146,32 @@ public class Pattern : MonoBehaviour
         BattleManager.Instance.Enemy.PatternManager.NextPattern();
     }
 
-    public void ChangePatternDescription(string description)
+    public void ChangePatternValue(string description)
     {
         desc = description;
         Managers.Enemy.CurrentEnemy.PatternManager.UpdatePatternUI();
+    }
+
+    public void DescriptionInit()
+    {
+        if(patternActionDescList.Count > 0)
+        {
+            string desc = "";
+            for(int i = 0; i < patternActionDescList.Count; i++)
+            {
+                desc += patternActionDescList[i].Description;
+                if(i + 1 == patternActionDescList.Count)
+                {
+                    desc += " 하려고 합니다.";
+                }
+                else
+                {
+                    desc += " 후, ";
+                }
+            }
+
+            PatternDescription = desc;
+        }
     }
 
 #if UNITY_EDITOR
