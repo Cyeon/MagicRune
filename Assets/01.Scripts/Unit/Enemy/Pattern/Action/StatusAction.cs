@@ -8,6 +8,19 @@ public class StatusAction : PatternAction
     public int value;
     public bool isSelf;
 
+    public override string Description
+    {
+        get
+        {
+            if(isSelf)
+            {
+                return Define.BENEFIC_DESC;
+            }
+
+            return Define.INJURIOUS_DESC;
+        }
+    }
+
     public override void StartAction()
     {
         Status();

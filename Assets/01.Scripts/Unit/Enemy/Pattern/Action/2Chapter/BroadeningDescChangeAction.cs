@@ -14,7 +14,7 @@ public class BroadeningDescChangeAction : AttackAction
             _broadening = Enemy.PatternManager.passive as Broadening;
         }
 
-        Enemy.PatternManager.CurrentPattern.ChangePatternDescription(damage + _broadening.AddDmg.ToString());
+        Enemy.PatternManager.CurrentPattern.ChangePatternValue(damage + _broadening.AddDmg.ToString());
         base.StartAction();
     }
 }

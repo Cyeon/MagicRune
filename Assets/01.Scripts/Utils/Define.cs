@@ -134,4 +134,16 @@ public class Define
         MapScene,
         DialScene,
     }
+
+    public const string BENEFIC_DESC = "본인한테 <color=#F9B41F>이로운 효과</color> 를 부여";
+    public const string INJURIOUS_DESC = "본인한테 <color=#F9B41F>해로운 효과</color> 를 부여";
+    public static string DamageDesc(int damage, int count = 1)
+    {
+        if(count > 1)
+        {
+            return "<color=#369AC2>" + damage + "</color> 데미지로 <color=#369AC2>" + count + "</color> 번 <color=#F9B41F>공격</color>";
+        }
+
+        return "<color=#369AC2>" + damage + "</color> 데미지로 <color=#F9B41F>공격</color>";
+    }
 }

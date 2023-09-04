@@ -8,6 +8,8 @@ public class AttackAction : PatternAction
     public int damage = 10;
     public int count = 1;
 
+    public override string Description => Define.DamageDesc(damage, count);
+
     public override void TurnAction()
     {
         if (Managers.Enemy.CurrentEnemy.IsDie == false)
