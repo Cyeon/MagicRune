@@ -621,8 +621,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   patternName: "\uCE7C\uB0A0\uD3ED\uD48D"
   desc: 8
-  PatternDescription: "\uBCF8\uC778\uC5D0\uAC8C \uC774\uB85C\uC6B4 \uD6A8\uACFC\uB97C
-    \uBD80\uC5EC\uD558\uB824\uACE0 \uD569\uB2C8\uB2E4."
+  PatternDescription: "\uC774\uB85C\uC6B4 \uD6A8\uACFC\uB97C \uBD80\uC5EC\uD558\uB824\uACE0
+    \uD569\uB2C8\uB2E4."
   isIncluding: 0
   icon: {fileID: 21300000, guid: 14e249f917459b4469fef5e512dadcae, type: 3}
   iconSize: {x: 0.2, y: 0.2, z: 1}
@@ -1613,6 +1613,9 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   OnDieEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  OnTurnEnd:
     m_PersistentCalls:
       m_Calls: []
   statusTrm: {fileID: 0}
