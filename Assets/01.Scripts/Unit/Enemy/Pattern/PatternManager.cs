@@ -129,7 +129,7 @@ public class PatternManager : MonoBehaviour
     public void UpdatePatternUI()
     {
         _patternSprite.sprite = _currentPattern.icon;
-        _patternSprite.transform.localScale = _currentPattern.iconSize;
+        _patternSprite.transform.localScale = _currentPattern.IconSize;
         _patternText.text = _currentPattern.desc;
     }
 
@@ -152,7 +152,7 @@ public class PatternManager : MonoBehaviour
             sprite.transform.localPosition = Vector2.zero;
 
             Sequence seq = DOTween.Sequence();
-            seq.Append(sprite.transform.DOScale(_currentPattern.iconSize * 1.5f, 0.3f));
+            seq.Append(sprite.transform.DOScale(_currentPattern.IconSize * 1.5f, 0.3f));
             seq.Join(sprite.DOFade(0, 0.3f));
             seq.AppendCallback(()=>Managers.Resource.Destroy(sprite.gameObject));
 

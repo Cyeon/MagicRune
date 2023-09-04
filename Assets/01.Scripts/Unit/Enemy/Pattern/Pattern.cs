@@ -19,7 +19,8 @@ public class Pattern : MonoBehaviour
 
     [Header("패턴 아이콘")]
     public Sprite icon;
-    public Vector3 iconSize = Vector3.one;
+    [SerializeField] private float _iconSize = 1f;
+    public Vector2 IconSize => new Vector2(_iconSize, _iconSize);
 
     [Header("패턴 실행 행동들")]
     public List<PatternAction> startPatternAction;
@@ -155,7 +156,7 @@ public class Pattern : MonoBehaviour
     private void IconApply()
     {
         transform.parent.parent.Find("UI/Pattern/PatternIcon").GetComponent<SpriteRenderer>().sprite = icon;
-        transform.parent.parent.Find("UI/Pattern/PatternIcon").transform.localScale = iconSize;
+        transform.parent.parent.Find("UI/Pattern/PatternIcon").transform.localScale = IconSize;
     }
 
     [ButtonMethod]
