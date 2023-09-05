@@ -20,6 +20,6 @@ public class VisualPlayer : MonoBehaviour
     public void UISetting()
     {
         Managers.GetPlayer().UISetting(_healthBar, _shieldBar, _healthFeedbackBar, _shieldIcon, _healthText, _shieldText);
-        Managers.GetPlayer().Animator = transform.Find("UI/Sprite").GetComponent<Animator>();
+        Managers.GetPlayer().Animator = transform.Find("UI/PlayerSprite").GetComponent<Animator>();
     }
 }

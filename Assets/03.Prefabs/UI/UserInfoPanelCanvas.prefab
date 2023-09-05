@@ -623,14 +623,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.8679245, g: 0.8679245, b: 0.8679245, a: 1}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: c3d1bf40cba854879a506916099f1c87, type: 3}
+  m_Sprite: {fileID: 0}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1175,7 +1175,7 @@ GameObject:
   - component: {fileID: 3368404495101990035}
   - component: {fileID: 2770906460488729347}
   m_Layer: 5
-  m_Name: Background_Image
+  m_Name: Frame
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1197,9 +1197,9 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 0}
+  m_AnchoredPosition: {x: 0, y: 6}
+  m_SizeDelta: {x: 0, y: 20.88}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3368404495101990035
 CanvasRenderer:
@@ -1229,8 +1229,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 27dd3f74e9c8d483a81c0e94016ce21a, type: 3}
-  m_Type: 0
+  m_Sprite: {fileID: 21300000, guid: 8fb14d267ddcb354f921c6b15077368b, type: 3}
+  m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -2874,14 +2874,6 @@ PrefabInstance:
     - target: {fileID: 4056931234772982402, guid: 8851da7ad3d23aa49ba29ebf4654b673, type: 3}
       propertyPath: m_AnchorMin.x
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4056931235406678885, guid: 8851da7ad3d23aa49ba29ebf4654b673, type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: c1c5b0962253f1d4c962f711a931e80f, type: 3}
-    - target: {fileID: 4056931235406678885, guid: 8851da7ad3d23aa49ba29ebf4654b673, type: 3}
-      propertyPath: m_PixelsPerUnitMultiplier
-      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 4056931235464166325, guid: 8851da7ad3d23aa49ba29ebf4654b673, type: 3}
       propertyPath: m_Pivot.x
