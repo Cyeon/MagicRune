@@ -70,9 +70,9 @@ public class StatusPanel : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     public void OnPointerDown(PointerEventData eventData)
     {
         if(_passive != null)
-            Define.DialScene?.DescriptionPopup(_passive.passiveName, _passive.passiveDescription, eventData.position);
+            Define.DialScene?.DescriptionPopup(_passive.passiveName, _passive.passiveDescription, eventData.pointerPressRaycast.worldPosition);
         else
-            Define.DialScene?.DescriptionPopup(_status.debugName, _status.information, eventData.position);
+            Define.DialScene?.DescriptionPopup(_status.debugName, _status.information, eventData.pointerPressRaycast.worldPosition);
     }
 
     public void OnPointerUp(PointerEventData eventData)
