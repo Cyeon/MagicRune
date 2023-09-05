@@ -11,12 +11,6 @@ using UnityEngine.UI;
 /// </summary>
 public class RuneEventUI : MonoBehaviour
 {
-    #region Selected RunePanel
-    private Image _runeSpriteImage = null;
-    private TextMeshProUGUI _runeNameText = null;
-    private TextMeshProUGUI _runeDescText = null;
-    #endregion
-
     private BasicRunePanel _selectedRuneObject = null;
     private GameObject _scrollView = null;
     private Transform _content = null;
