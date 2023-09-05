@@ -6,21 +6,30 @@ using UnityEngine.UI;
 public class RuneWeiget : MonoBehaviour
 {
     private Button _btn;
-    private GameObject _emphasis;
-    private bool _isEmphasis = false;
+    private Image _runeImage;
+    private bool _isSelect = false;
     private RuneWeigetPanel _parent;
+
+    [SerializeField] private Sprite _onAttribute;
+    [SerializeField] private Sprite _offAttribute;
 
     [SerializeField]
     private AttributeType _attributeType;
     public AttributeType AttributeType => _attributeType;
 
-    public bool IsEmphasis
+    public bool IsSelect
     {
-        get => _isEmphasis;
+        get => _isSelect;
         set
         {
-            _isEmphasis = value;
-            _emphasis.gameObject.SetActive(value);
+            _isSelect = value;
+            if(_runeImage)
+            {
+                if (_isSelect)
+                    _runeImage.sprite = _onAttribute;
+                else
+                    _runeImage.sprite = _offAttribute;
+            }
         }
     }
 
@@ -28,7 +37,12 @@ public class RuneWeiget : MonoBehaviour
     {
         _btn = GetComponent<Button>();
         _parent = GetComponentInParent<RuneWeigetPanel>();
-        _emphasis = transform.Find("Emphasis").gameObject;
+        _runeImage = transform.Find("Image").GetComponent<Image>();
+
+        if(AttributeType == Managers.Rune.GetSelectAttribute())
+        {
+            IsSelect = true;
+        }
 
         _btn.onClick.AddListener(() => _parent.Select = this);
     }
