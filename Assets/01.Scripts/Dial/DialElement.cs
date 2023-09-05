@@ -179,6 +179,11 @@ public class DialElement<T1, T2> : MonoBehaviour where T1 : MonoBehaviour where 
         {
             _touchDownTimer += Time.deltaTime;
 
+            if (MathF.Abs(Define.MainCam.ScreenToWorldPoint(Input.GetTouch(_fingerID).position).x) > 1)
+            {
+                _touchDownTimer = 0f;
+            }
+
             if (_touchDownTimer > _dragTouchTime)
             {
                 ElementMoveInLine();
@@ -359,7 +364,7 @@ public class DialElement<T1, T2> : MonoBehaviour where T1 : MonoBehaviour where 
 
     }
 
-    public void ElementMoveInLine()
+    public void ElementMoveInLine(bool isTween = true)
     {
         if (_elementList.Count > 0 && _isRotateAdditionalCondition)
         {
@@ -372,40 +377,66 @@ public class DialElement<T1, T2> : MonoBehaviour where T1 : MonoBehaviour where 
                 {
                     int index = (int)(transform.eulerAngles.z / oneDinstance) % (_elementList.Count);
                     transform.DOKill();
-                    DOTween.To(() => transform.eulerAngles, x => transform.eulerAngles = x,
-                        new Vector3(0, 0, ((int)(transform.eulerAngles.z / oneDinstance)) * oneDinstance),
-                        0.3f
-                    )
-                        .OnComplete(() =>
+                    if (isTween == true)
                     {
+                        DOTween.To(() => transform.eulerAngles, x => transform.eulerAngles = x,
+                            new Vector3(0, 0, ((int)(transform.eulerAngles.z / oneDinstance)) * oneDinstance),
+                            0.3f
+                        )
+                            .OnComplete(() =>
+                        {
+                            if (_selectElement != null)
+                            {
+                                //UpdateSelectElement();
+                                //SelectElement = SelectElement;
+                                OnSelectElementAction();
+                            }
+                        });
+                    }
+                    else
+                    {
+                        transform.eulerAngles = new Vector3(0, 0, ((int)(transform.eulerAngles.z / oneDinstance)) * oneDinstance);
                         if (_selectElement != null)
                         {
                             //UpdateSelectElement();
                             //SelectElement = SelectElement;
                             OnSelectElementAction();
                         }
-                    });
+                    }
                 }
                 else if (outBoolean)
                 {
                     int index = ((int)(transform.eulerAngles.z / oneDinstance) + 1) % (_elementList.Count);
                     index = (index + 1) % _elementList.Count;
                     transform.DOKill();
-                    DOTween.To(
-                        () => transform.eulerAngles,
-                        x => transform.eulerAngles = x,
-                        new Vector3(0, 0, ((int)(transform.eulerAngles.z / oneDinstance)) * oneDinstance + _dial.StartAngle),
-                        0.3f
-                    )
-                        .OnComplete(() =>
+                    if (isTween)
                     {
+                        DOTween.To(
+                            () => transform.eulerAngles,
+                            x => transform.eulerAngles = x,
+                            new Vector3(0, 0, ((int)(transform.eulerAngles.z / oneDinstance)) * oneDinstance + _dial.StartAngle),
+                            0.3f
+                        )
+                            .OnComplete(() =>
+                        {
+                            if (_selectElement != null)
+                            {
+                                //UpdateSelectElement();
+                                //SelectElement = SelectElement;
+                                OnSelectElementAction();
+                            }
+                        });
+                    }
+                    else
+                    {
+                        transform.eulerAngles = new Vector3(0, 0, ((int)(transform.eulerAngles.z / oneDinstance)) * oneDinstance + _dial.StartAngle);
                         if (_selectElement != null)
                         {
                             //UpdateSelectElement();
                             //SelectElement = SelectElement;
                             OnSelectElementAction();
                         }
-                    });
+                    }
                 }
             }
             else
@@ -413,34 +444,59 @@ public class DialElement<T1, T2> : MonoBehaviour where T1 : MonoBehaviour where 
                 float oneDinstance = _dial.DialAngle / _elementList.Count;
                 int index = (int)(transform.eulerAngles.z / oneDinstance) % (_elementList.Count);
 
+                transform.DOKill();
                 float distance = transform.eulerAngles.z % oneDinstance;
                 if (distance >= oneDinstance / 2f)
                 {
-                    transform.DOKill();
-                    transform.DORotate(new Vector3(0, 0, ((index + 1) % _elementList.Count * oneDinstance)), 0.3f, RotateMode.Fast)
-                        .OnComplete(() =>
-                        {
-                            if (_selectElement != null)
+                    if (isTween)
+                    {
+                        transform.DORotate(new Vector3(0, 0, ((index + 1) % _elementList.Count * oneDinstance)), 0.3f, RotateMode.Fast)
+                            .OnComplete(() =>
                             {
-                                //UpdateSelectElement();
-                                //SelectElement = SelectElement;
-                                OnSelectElementAction();
-                            }
-                        });
+                                if (_selectElement != null)
+                                {
+                                    //UpdateSelectElement();
+                                    //SelectElement = SelectElement;
+                                    OnSelectElementAction();
+                                }
+                            });
+                    }
+                    else
+                    {
+                        transform.rotation = Quaternion.Euler(new Vector3(0, 0, (index + 1) % _elementList.Count * oneDinstance));
+                        if (_selectElement != null)
+                        {
+                            //UpdateSelectElement();
+                            //SelectElement = SelectElement;
+                            OnSelectElementAction();
+                        }
+                    }
                 }
                 else
                 {
-                    transform.DOKill();
-                    transform.DORotate(new Vector3(0, 0, ((index) * oneDinstance)), 0.3f, RotateMode.Fast)
-                        .OnComplete(() =>
-                        {
-                            if (_selectElement != null)
+                    if (isTween)
+                    {
+                        transform.DORotate(new Vector3(0, 0, ((index) * oneDinstance)), 0.3f, RotateMode.Fast)
+                            .OnComplete(() =>
                             {
-                                //UpdateSelectElement();
-                                //SelectElement = SelectElement;
-                                OnSelectElementAction();
-                            }
-                        });
+                                if (_selectElement != null)
+                                {
+                                    //UpdateSelectElement();
+                                    //SelectElement = SelectElement;
+                                    OnSelectElementAction();
+                                }
+                            });
+                    }
+                    else
+                    {
+                        transform.rotation = Quaternion.Euler(new Vector3(0, 0, (index) * oneDinstance));
+                        if (_selectElement != null)
+                        {
+                            //UpdateSelectElement();
+                            //SelectElement = SelectElement;
+                            OnSelectElementAction();
+                        }
+                    }
                 }
             }
         }

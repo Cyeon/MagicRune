@@ -10,9 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 5736046982554988565}
   - component: {fileID: 5014004267170453785}
-  - component: {fileID: -34693724260595452}
-  - component: {fileID: 8273221343028018595}
   - component: {fileID: -5419438862847067255}
+  - component: {fileID: 7622745448175721408}
   m_Layer: 0
   m_Name: Status_PoisonousLiquid
   m_TagString: Untagged
@@ -48,50 +47,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   debugName: "\uB3C5\uC561"
-  statusName: 9
-  information: "\uC801\uC758 \uACF5\uACA9\uC73C\uB85C \uCCB4\uB825\uC774 \uB2EC\uBA74
-    \uC2DC\uC804\uC790\uC758 \uD55C\uD134\uC744 \uB118\uAE41\uB2C8\uB2E4."
+  statusName: 25
+  information: "\uB3C5\uC561\uC774 10\uC2A4\uD0DD\uC774 \uC313\uC77C \uC2DC \uAE30\uC808\uD569\uB2C8\uB2E4."
   textColor: {r: 1, g: 1, b: 1, a: 1}
-  type: 1
+  type: 0
   isTurnRemove: 0
+  isFirst: 1
   OnAddStatus:
-  - {fileID: -34693724260595452}
+  - {fileID: 7622745448175721408}
   OnTurnStart: []
   OnAttack: []
   OnGetDamage: []
   OnTurnEnd: []
-  OnRemoveStatus:
-  - {fileID: 8273221343028018595}
+  OnRemoveStatus: []
   icon: {fileID: 21300000, guid: e0a960b1dc621b940b6631d4a1e25faa, type: 3}
   color: {r: 1, g: 1, b: 1, a: 1}
   statusSoundType: 3
   getSound: {fileID: 0}
   activeSound: {fileID: 0}
-  unit: {fileID: 0}
---- !u!114 &-34693724260595452
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8378743581122507794}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c4f815c58ba7af14fb04ebc780cf8889, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &8273221343028018595
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8378743581122507794}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7c9402f0d60d74848a40034b2560cb4b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &-5419438862847067255
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -105,3 +78,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isUsing: 0
+--- !u!114 &7622745448175721408
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8378743581122507794}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f897e79e0a9cfb4990550bb63ac16bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _conditionStatus: 25
+  _conditionCount: 10
+  isConditionStatusRem: 1
+  _addStatus: 26

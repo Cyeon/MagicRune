@@ -49,10 +49,11 @@ MonoBehaviour:
   debugName: "\uC790\uAC00\uBC1C\uC804"
   statusName: 18
   information: "\uACF5\uACA9\uC744 \uD558\uAC70\uB098, \uACF5\uACA9\uC744 \uBC1B\uC744
-    \uB54C \uB9C8\uB2E4 1\uCDA9\uC804\uC744 \uD68D\uB4DD\uD55C\uB2E4. "
+    \uB54C \uB9C8\uB2E4 1\uCDA9\uC804\uC744 \uD68D\uB4DD\uD569\uB2C8\uB2E4. "
   textColor: {r: 1, g: 1, b: 1, a: 1}
   type: 0
   isTurnRemove: 0
+  isFirst: 1
   OnAddStatus: []
   OnTurnStart: []
   OnAttack:
@@ -80,6 +81,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _statusName: 3
   _addStackType: 2
+  _damageMultiple: 1
   _value: 1
   _isSelf: 1
 --- !u!114 &-4746811393546434561

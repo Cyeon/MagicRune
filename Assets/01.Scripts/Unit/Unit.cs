@@ -72,6 +72,7 @@ public class Unit : MonoBehaviour
     [field: SerializeField] public UnityEvent OnTakeDamageFeedback { get; set; }
     public UnityEvent OnDieEvent;
     public Action OnGetDamage;
+    public UnityEvent OnTurnEnd;
     #endregion
 
     [HideInInspector]
@@ -100,6 +101,7 @@ public class Unit : MonoBehaviour
         _statusManager = new StatusManager(this);
         statusTrm = transform.Find("Status");
         _statusManager.Reset();
+        OnTurnEnd.AddListener(_statusManager.OnTurnEnd);
 
         if (_spriteRenderer != null)
         {
@@ -196,16 +198,6 @@ public class Unit : MonoBehaviour
         return false;
     }
 
-    public float GetMaxHP()
-    {
-        return _maxHealth;
-    }
-
-    public float GetHP()
-    {
-        return HP;
-    }
-
     public void AddHP(float value, bool isEffect = false)
     {
         if (_isDie == false)
@@ -248,13 +240,9 @@ public class Unit : MonoBehaviour
     {
         if (_isDie == false)
         {
+            value -= StatusManager.GetStatusValue(StatusName.Web) * 2;
             Shield += value.RoundToInt();
         }
-    }
-
-    public float GetShield()
-    {
-        return _shield;
     }
 
     public void ResetShield()
@@ -272,56 +260,62 @@ public class Unit : MonoBehaviour
 
     public virtual void Die()
     {
+        OnTurnEnd.RemoveAllListeners();
+
         _isDie = true;
         StopAllCoroutines();
+        transform.DOKill();
         OnDieEvent?.Invoke();
     }
 
     public void UISetting()
     {
-        _healthBar.DOLocalMoveX(-(0.9f + (float)HP / MaxHP * -0.9f), 0);
-        _healthFeedbackBar.DOLocalMoveX(_healthBar.transform.localPosition.x, 0);
+        _healthBar.DOScaleX((float)HP / MaxHP, 0);
+        _healthFeedbackBar.DOScaleX(0, 0);
         _healthText.text = string.Format("{0}/{1}", HP.ToString(), MaxHP.ToString());
 
-        _shieldBar.DOLocalMoveX(0.9f, 0);
+        _shieldBar.DOScaleX(0, 0);
         _shieldIcon.gameObject.SetActive(false);
+
+        UpdateShieldUI();
     }
 
     public virtual void UpdateHealthUI()
     {
         bool isChange = _healthBar.localScale.x != (float)HP / MaxHP;
 
-        _healthFeedbackBar.DOScaleX(_healthBar.localScale.x, 0);
-        _healthBar.DOLocalMoveX(-(0.9f + (float)HP / MaxHP * -0.9f), 0);
-            
-        _healthText.text = string.Format("{0}/{1}", HP.ToString(), MaxHP.ToString());
+        _healthFeedbackBar?.DOScaleX(_healthBar.localScale.x, 0);
+        _healthBar?.DOScaleX((float)HP / MaxHP, 0);
+
+        if(_healthText)
+            _healthText.text = string.Format("{0}/{1}", HP.ToString(), MaxHP.ToString());
 
         if (Shield > 0)
         {
             if (HP + Shield > MaxHP)
             {
-                _shieldBar.DOScaleX(1, 0);
-                _healthBar.DOScaleX((float)HP / (MaxHP + Shield), 0);
+                _shieldBar?.DOScaleX(1, 0);
+                _healthBar?.DOScaleX((float)HP / (MaxHP + Shield), 0);
             }
             else
             {
-                _shieldBar.DOScaleX((float)(HP + Shield) / MaxHP, 0);
+                _shieldBar?.DOScaleX((float)(HP + Shield) / MaxHP, 0);
             }
         }
         else
         {
-            _shieldBar.DOScaleX(0, 0);
+            _shieldBar?.DOScaleX(0, 0);
         }
 
         Sequence seq = DOTween.Sequence();
         seq.AppendInterval(0.5f);
-        seq.Append(_healthFeedbackBar.DOScaleX((float)HP / MaxHP, 0.2f));
+        seq.Append(_healthFeedbackBar?.DOScaleX((float)HP / MaxHP, 0.2f));
 
         if (isChange)
         {
             Sequence vibrateSeq = DOTween.Sequence();
-            vibrateSeq.Append(_healthFeedbackBar.parent.DOShakeScale(0.1f));
-            vibrateSeq.Append(_healthFeedbackBar.parent.DOScale(1f, 0));
+            vibrateSeq.Append(_healthFeedbackBar?.parent.DOShakeScale(0.1f));
+            vibrateSeq.Append(_healthFeedbackBar?.parent.DOScale(1f, 0));
         }
     }
 
@@ -332,7 +326,7 @@ public class Unit : MonoBehaviour
             if(_shieldIcon.gameObject.activeSelf)
             {
                 _shieldIcon.gameObject.SetActive(false);
-                _shieldBar.DOScaleX(0, 0);
+                _shieldBar?.DOScaleX(0, 0);
                 UpdateHealthUI();
             }
             return;
@@ -346,8 +340,8 @@ public class Unit : MonoBehaviour
         UpdateHealthUI();
 
         Sequence seq = DOTween.Sequence();
-        seq.Append(_shieldText.transform.parent.DOScale(1.2f, 0.1f));
-        seq.Append(_shieldText.transform.parent.DOScale(1f, 0.1f));
+        seq.Append(_shieldText?.transform.parent.DOScale(1.2f, 0.1f));
+        seq.Append(_shieldText?.transform.parent.DOScale(1f, 0.1f));
     }
 
     public void PlayAnimation(string name)

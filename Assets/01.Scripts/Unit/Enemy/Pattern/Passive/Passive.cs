@@ -9,6 +9,7 @@ using UnityEngine;
 public abstract class Passive : MonoBehaviour
 {
     protected Enemy Enemy => Managers.Enemy.CurrentEnemy;
+    protected Player Player => Managers.GetPlayer();
 
     public Sprite passiveIcon;
     [Tooltip("** 뒤에 (패시브) 붙이기 **")]

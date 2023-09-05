@@ -9,6 +9,7 @@ public class GameResultPanel : MonoBehaviour
 {
     [SerializeField]
     private Transform _titleObj;
+    private TextMeshProUGUI _titleText;
     [SerializeField]
     private Transform _panel;
     [SerializeField]
@@ -17,6 +18,17 @@ public class GameResultPanel : MonoBehaviour
     private float _titleFinishPositionY;
     private List<TextMeshProUGUI> _textList = new List<TextMeshProUGUI>();
 
+    [Header("Text")]
+    [SerializeField]
+    private string _defeatMessage;
+    [SerializeField]
+    private Color _defeatColor;
+
+    [SerializeField]
+    private string _winMessage;
+    [SerializeField]
+    private Color _winColor;
+
     private void Start()
     {
         _titleFinishPositionY = _titleObj.localPosition.y;
@@ -24,6 +36,8 @@ public class GameResultPanel : MonoBehaviour
         _panel.localScale = new Vector3(_panel.localScale.x, 0, _panel.localScale.z);
         _titleObj.localPosition = Vector3.zero;
         _titleObj.localScale = Vector3.zero;
+
+        _titleText = _titleText.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
 
         for (int i = 0; i < _textListObj.childCount; i++)
         {
@@ -38,6 +52,9 @@ public class GameResultPanel : MonoBehaviour
 
     private void Popup()
     {
+        _titleText.text = _winMessage;
+        _titleText.color = _winColor;
+
         Sequence seq = DOTween.Sequence();
         seq.AppendInterval(0.1f);
         seq.Append(_titleObj.DOScale(Vector3.one * 1.1f, 0.5f));

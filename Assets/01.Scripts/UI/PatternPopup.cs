@@ -36,8 +36,8 @@ public class PatternPopup : MonoBehaviour, IPointerUpHandler, IPointerDownHandle
         Pattern pattern = BattleManager.Instance.Enemy.PatternManager.CurrentPattern;
         if (_isPoup && pattern != null)
         {
-            _patternNameText.text = pattern.patternName;
-            _patternDescText.text = pattern.PatternDescription;
+            _patternNameText.text = "<color=#F9B41F>" + pattern.patternName + "</color>";
+            _patternDescText.text = pattern.PatternDescription; 
         }
     }
 

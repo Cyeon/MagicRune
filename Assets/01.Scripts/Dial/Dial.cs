@@ -216,8 +216,17 @@ public class Dial<T1, T2> : MonoBehaviour where T1 : MonoBehaviour where T2 : cl
         int dialFLine = 3 - fLine;
         int dialSLine = 3 - sLine;
 
-        _dialElementList[dialFLine].ElementMoveInLine();
-        _dialElementList[dialSLine].ElementMoveInLine();
+        _dialElementList[dialFLine].ElementMoveInLine(false);
+        _dialElementList[dialSLine].ElementMoveInLine(false);
+        for (int i = 0; i < _dialElementList[dialFLine].ElementList.Count; i++)
+        {
+            _dialElementList[dialFLine].ElementList[i].transform.DOComplete(true);
+        }
+        for (int i = 0; i < _dialElementList[dialSLine].ElementList.Count; i++)
+        {
+            _dialElementList[dialSLine].ElementList[i].transform.DOComplete(true);
+        }
+
 
         List<T1> newList = new List<T1>(_elementDict[fLine]);
         _elementDict[fLine].Clear();
@@ -230,53 +239,44 @@ public class Dial<T1, T2> : MonoBehaviour where T1 : MonoBehaviour where T2 : cl
         Quaternion dialFRot = _dialElementList[dialFLine].transform.localRotation;
         Quaternion dialSRot = _dialElementList[dialSLine].transform.localRotation;
 
-        //_dialElementList[dialFLine].transform.rotation = _dialElementList[dialSLine].transform.rotation;
-        //Quaternion rot = _dialElementList[dialFLine].transform.rotation;
-        //_dialElementList[dialSLine].transform.rotation = rot;
-
-        //T1 rune = _dialElementList[dialFLine].SelectElement;
-        //_dialElementList[dialFLine].SelectElement = _dialElementList[dialSLine].SelectElement;
-        //_dialElementList[dialSLine].SelectElement = rune;
-
         _dialElementList[dialFLine].transform.rotation = Quaternion.identity;
         _dialElementList[dialSLine].transform.rotation = Quaternion.identity;
 
         _dialElementList[dialFLine]?.SetRuneList(_elementDict[fLine]);
         _dialElementList[dialSLine]?.SetRuneList(_elementDict[sLine]);
 
-        float offset = _lineDistanceArray[dialFLine] / _lineDistanceArray[dialSLine];
+        
+
+        float fOffset = _lineDistanceArray[dialFLine] / _lineDistanceArray[dialSLine];
         for (int i = 0; i < _dialElementList[dialFLine].ElementList.Count; i++)
         {
             if (_dialElementList[dialFLine] != null && _dialElementList[dialFLine].ElementList[i] != null)
             {
-                _dialElementList[dialFLine].ElementList[i].transform.DOComplete();
+                //_dialElementList[dialFLine].ElementList[i].transform.DOComplete();
                 _dialElementList[dialFLine].ElementList[i].transform.SetParent(_dialElementList[dialFLine].transform);
                 _dialElementList[dialFLine].ElementList[i].transform.localScale = new Vector3(0.1f, 0.1f, 1f);
-                _dialElementList[dialFLine].ElementList[i].transform.DOLocalMove(_dialElementList[dialFLine].ElementList[i].transform.localPosition * offset, 0.2f);
+                _dialElementList[dialFLine].ElementList[i].transform.DOLocalMove(_dialElementList[dialFLine].ElementList[i].transform.localPosition * fOffset, 0.2f);
+                //_dialElementList[dialFLine].ElementList[i].transform.localPosition *= fOffset;
             }
         }
 
-        offset = _lineDistanceArray[dialSLine] / _lineDistanceArray[dialFLine];
+        float sOffset = _lineDistanceArray[dialSLine] / _lineDistanceArray[dialFLine];
         for (int i = 0; i < _dialElementList[dialSLine].ElementList.Count; i++)
         {
             if (_dialElementList[dialSLine] != null && _dialElementList[dialSLine].ElementList[i] != null)
             {
-                _dialElementList[dialSLine].ElementList[i].transform.DOComplete();
+                //_dialElementList[dialSLine].ElementList[i].transform.DOComplete();
                 _dialElementList[dialSLine].ElementList[i].transform.SetParent(_dialElementList[dialSLine].transform);
                 _dialElementList[dialSLine].ElementList[i].transform.localScale = new Vector3(0.1f, 0.1f, 1f);
-                _dialElementList[dialSLine].ElementList[i].transform.DOLocalMove(_dialElementList[dialSLine].ElementList[i].transform.localPosition * offset, 0.2f);
+                _dialElementList[dialSLine].ElementList[i].transform.DOLocalMove(_dialElementList[dialSLine].ElementList[i].transform.localPosition * sOffset, 0.2f);
+                //_dialElementList[dialSLine].ElementList[i].transform.localPosition *= sOffset;
             }
         }
 
-        yield return new WaitForSeconds(0.3f);
+        //yield return new WaitForSeconds(0.3f);
 
-        //Debug.Log($"{_dialElementList[dialFLine].transform.eulerAngles}, {dialSRot}, {Quaternion.Euler(dialSRot)}");
-        //_dialElementList[dialFLine].transform.rotation = Quaternion.Euler(0, 0, dialSRot.z > 180 ? 360f - dialSRot.z : dialSRot.z);
         _dialElementList[dialFLine].transform.localRotation = dialSRot;
-        //Debug.Log($"{_dialElementList[dialFLine].transform.eulerAngles}");
-        //Debug.Log($"{_dialElementList[dialSLine].transform.eulerAngles}, {dialFRot}, {Quaternion.Euler(dialFRot)}");
         _dialElementList[dialSLine].transform.localRotation = dialFRot;
-        //Debug.Log($"{_dialElementList[dialSLine].transform.eulerAngles}");
 
         //RuneSort(true);
 

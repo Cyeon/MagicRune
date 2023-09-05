@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Security.Cryptography;
 using Unity.VisualScripting;
 using UnityEngine;
+using MyBox;
 using UnityEngine.Events;
 
 public class Pattern : MonoBehaviour
@@ -13,12 +14,14 @@ public class Pattern : MonoBehaviour
     public string desc = "";
     [TextArea(1, 10)]
     public string PatternDescription = "";
+    public List<PatternAction> patternActionDescList = new List<PatternAction>();
     [Tooltip("순환 패턴 목록에 포함되는가?")]
     public bool isIncluding = true;
 
     [Header("패턴 아이콘")]
     public Sprite icon;
-    public Vector3 iconSize = Vector3.one;
+    [SerializeField] private float _iconSize = 1f;
+    public Vector2 IconSize => new Vector2(_iconSize, _iconSize);
 
     [Header("패턴 실행 행동들")]
     public List<PatternAction> startPatternAction;
@@ -124,7 +127,7 @@ public class Pattern : MonoBehaviour
         foreach (PatternTransition transition in transitions)
         {
             bool result = false;
-            foreach(PatternDecision decision in transition.decisions)
+            foreach (PatternDecision decision in transition.decisions)
             {
                 result = decision.MakeADecision();
                 if (!result) break;
@@ -142,4 +145,47 @@ public class Pattern : MonoBehaviour
 
         BattleManager.Instance.Enemy.PatternManager.NextPattern();
     }
+
+    public void ChangePatternValue(string description)
+    {
+        desc = description;
+        Managers.Enemy.CurrentEnemy.PatternManager.UpdatePatternUI();
+    }
+
+    public void DescriptionInit()
+    {
+        if(patternActionDescList.Count > 0)
+        {
+            string desc = "";
+            for(int i = 0; i < patternActionDescList.Count; i++)
+            {
+                desc += patternActionDescList[i].Description;
+                if(i + 1 == patternActionDescList.Count)
+                {
+                    desc += " 하려고 합니다.";
+                }
+                else
+                {
+                    desc += " 후, ";
+                }
+            }
+
+            PatternDescription = desc;
+        }
+    }
+
+#if UNITY_EDITOR
+    [ButtonMethod]
+    private void IconApply()
+    {
+        transform.parent.parent.Find("UI/Pattern/PatternIcon").GetComponent<SpriteRenderer>().sprite = icon;
+        transform.parent.parent.Find("UI/Pattern/PatternIcon").transform.localScale = IconSize;
+    }
+
+    [ButtonMethod]
+    private void IconReset()
+    {
+        transform.parent.parent.Find("UI/Pattern/PatternIcon").GetComponent<SpriteRenderer>().sprite = null;
+    }
+#endif
 }
