@@ -124,7 +124,7 @@ public class RuneBookUI : RuneListViewUI
             _nowIndex = null;
         }
 
-        _nowIndex = transform.Find("RuneListView_ScrollView/IndexButtons").GetChild(typeIndex);
-        transform.Find("RuneListView_ScrollView/IndexButtons").GetChild(typeIndex).position -= Vector3.right * 20;
+        _nowIndex = transform.Find("IndexButtons").GetChild(typeIndex);
+        transform.Find("IndexButtons").GetChild(typeIndex).position -= Vector3.right * 20;
     }
 }

@@ -31,12 +31,11 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 5759191512834821654}
   - {fileID: 2463531748685021223}
   - {fileID: 79717825850767306}
   - {fileID: 9116549806905776213}
   m_Father: {fileID: 8518393661035914888}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -135,7 +134,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 386876163757637203}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -85, y: 0.00012207031, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -145,8 +144,8 @@ Transform:
   - {fileID: 863197471453771253}
   - {fileID: 5288790891761465760}
   - {fileID: 4087267186546878269}
-  m_Father: {fileID: 6552173832168128258}
-  m_RootOrder: 0
+  m_Father: {fileID: 8518393661035914888}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &428483679068484886
 GameObject:
@@ -747,7 +746,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -570, y: 635.5}
+  m_AnchoredPosition: {x: -570, y: 715}
   m_SizeDelta: {x: 120, y: 250}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8385420994893700568
@@ -857,9 +856,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   topReference:
-    target: {fileID: 0}
-    edge: 0
-    offset: 0
+    target: {fileID: 4552876632024957327}
+    edge: 3
+    offset: 60
   bottomReference:
     target: {fileID: 0}
     edge: 0
@@ -869,9 +868,9 @@ MonoBehaviour:
     edge: 0
     offset: 0
   rightReference:
-    target: {fileID: 79717825850767306}
-    edge: 4
-    offset: -15
+    target: {fileID: 0}
+    edge: 0
+    offset: 0
   allowChangeSize: 1
   disableOnStart: 1
   settings: {fileID: 11400000, guid: 19a960b6dee4ca444928b817d66a256d, type: 2}
@@ -1201,7 +1200,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -570, y: 446.90002}
+  m_AnchoredPosition: {x: -570, y: 530}
   m_SizeDelta: {x: 120, y: 250}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1069841382799244428
@@ -1311,9 +1310,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   topReference:
-    target: {fileID: 0}
-    edge: 0
-    offset: 0
+    target: {fileID: 863197471453771253}
+    edge: 3
+    offset: 60
   bottomReference:
     target: {fileID: 0}
     edge: 0
@@ -1323,9 +1322,9 @@ MonoBehaviour:
     edge: 0
     offset: 0
   rightReference:
-    target: {fileID: 79717825850767306}
-    edge: 4
-    offset: -15
+    target: {fileID: 0}
+    edge: 0
+    offset: 0
   allowChangeSize: 1
   disableOnStart: 1
   settings: {fileID: 11400000, guid: 19a960b6dee4ca444928b817d66a256d, type: 2}
@@ -1368,7 +1367,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -570, y: 1015}
+  m_AnchoredPosition: {x: -570, y: 1085}
   m_SizeDelta: {x: 120, y: 250}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1305113770583949291
@@ -1478,9 +1477,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   topReference:
-    target: {fileID: 0}
-    edge: 0
-    offset: 0
+    target: {fileID: 7999754305270541317}
+    edge: 1
+    offset: 270
   bottomReference:
     target: {fileID: 0}
     edge: 0
@@ -1490,9 +1489,9 @@ MonoBehaviour:
     edge: 0
     offset: 0
   rightReference:
-    target: {fileID: 2463531748685021223}
-    edge: 4
-    offset: -15
+    target: {fileID: 0}
+    edge: 0
+    offset: 0
   allowChangeSize: 1
   disableOnStart: 1
   settings: {fileID: 11400000, guid: 19a960b6dee4ca444928b817d66a256d, type: 2}
@@ -1535,7 +1534,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -570, y: -125}
+  m_AnchoredPosition: {x: -570, y: 160}
   m_SizeDelta: {x: 120, y: 250}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5034045046920231523
@@ -1645,9 +1644,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   topReference:
-    target: {fileID: 0}
-    edge: 0
-    offset: 0
+    target: {fileID: 4087267186546878269}
+    edge: 3
+    offset: 60
   bottomReference:
     target: {fileID: 0}
     edge: 0
@@ -1657,9 +1656,9 @@ MonoBehaviour:
     edge: 0
     offset: 0
   rightReference:
-    target: {fileID: 79717825850767306}
-    edge: 4
-    offset: -15
+    target: {fileID: 0}
+    edge: 0
+    offset: 0
   allowChangeSize: 1
   disableOnStart: 1
   settings: {fileID: 11400000, guid: 19a960b6dee4ca444928b817d66a256d, type: 2}
@@ -1770,7 +1769,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6552173832168128258}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -1940,7 +1939,7 @@ GameObject:
   - component: {fileID: 7436740074303851478}
   - component: {fileID: 7542079611449178065}
   - component: {fileID: 3390674974987264864}
-  - component: {fileID: 8404686631047886523}
+  - component: {fileID: 1591395375147582121}
   m_Layer: 5
   m_Name: FireButton
   m_TagString: Untagged
@@ -1967,7 +1966,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -570, y: 824.30005}
+  m_AnchoredPosition: {x: -570, y: 900}
   m_SizeDelta: {x: 120, y: 250}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7436740074303851478
@@ -2064,7 +2063,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &8404686631047886523
+--- !u!114 &1591395375147582121
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2077,9 +2076,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   topReference:
-    target: {fileID: 0}
-    edge: 0
-    offset: 0
+    target: {fileID: 24081488526926815}
+    edge: 3
+    offset: 60
   bottomReference:
     target: {fileID: 0}
     edge: 0
@@ -2089,9 +2088,9 @@ MonoBehaviour:
     edge: 0
     offset: 0
   rightReference:
-    target: {fileID: 79717825850767306}
-    edge: 4
-    offset: -15
+    target: {fileID: 0}
+    edge: 0
+    offset: 0
   allowChangeSize: 1
   disableOnStart: 1
   settings: {fileID: 11400000, guid: 19a960b6dee4ca444928b817d66a256d, type: 2}
@@ -2494,7 +2493,7 @@ RectTransform:
   m_Children:
   - {fileID: 5467233469028867916}
   m_Father: {fileID: 6552173832168128258}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -2621,7 +2620,7 @@ RectTransform:
   m_Children:
   - {fileID: 8324454468559906841}
   m_Father: {fileID: 6552173832168128258}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -2709,6 +2708,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7999754305270541317}
+  - {fileID: 5759191512834821654}
   - {fileID: 6552173832168128258}
   - {fileID: 4585214443564147206}
   m_Father: {fileID: 0}
@@ -2763,7 +2763,7 @@ Transform:
   - {fileID: 1214045362950569060}
   - {fileID: 4918263728387504304}
   m_Father: {fileID: 8518393661035914888}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6563810531270607224
 GameObject:
@@ -3378,7 +3378,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -570, y: 257.5}
+  m_AnchoredPosition: {x: -570, y: 345}
   m_SizeDelta: {x: 120, y: 250}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8379819132287890450
@@ -3488,9 +3488,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   topReference:
-    target: {fileID: 0}
-    edge: 0
-    offset: 0
+    target: {fileID: 5288790891761465760}
+    edge: 3
+    offset: 60
   bottomReference:
     target: {fileID: 0}
     edge: 0
@@ -3500,9 +3500,9 @@ MonoBehaviour:
     edge: 0
     offset: 0
   rightReference:
-    target: {fileID: 79717825850767306}
-    edge: 4
-    offset: -15
+    target: {fileID: 0}
+    edge: 0
+    offset: 0
   allowChangeSize: 1
   disableOnStart: 1
   settings: {fileID: 11400000, guid: 19a960b6dee4ca444928b817d66a256d, type: 2}
