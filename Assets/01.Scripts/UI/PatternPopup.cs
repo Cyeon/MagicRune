@@ -7,7 +7,8 @@ using UnityEngine.EventSystems;
 
 public class PatternPopup : MonoBehaviour, IPointerUpHandler, IPointerDownHandler
 {
-    bool _isPoup = false;
+    private bool _isPoup = false;
+    public bool IsPopup => _isPoup;
     [SerializeField] private GameObject _patternPopupObj;
 
     private TextMeshProUGUI _patternNameText;

@@ -25,6 +25,7 @@ public class PatternManager : MonoBehaviour
     [SerializeField] private SpriteRenderer _patternSprite;
     [SerializeField] private TextMeshPro _patternText;
     [SerializeField] private int _patternEffectCount = 8;
+    private PatternPopup _patternPopup;
 
     private bool _isEffecting = false;
     public bool IsEffecting => _isEffecting;
@@ -82,6 +83,14 @@ public class PatternManager : MonoBehaviour
         _currentPattern = pattern;
         UpdatePatternUI();
         pattern.DescriptionInit();
+
+        if (_patternPopup == null)
+            _patternPopup = Managers.Canvas.GetCanvas("Popup").transform.GetComponentInChildren<PatternPopup>();
+
+        if(_patternPopup.IsPopup)
+        {
+            _patternPopup.Popup(true);
+        }
     }
 
     public void NextPattern()
