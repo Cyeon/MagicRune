@@ -7,9 +7,9 @@ using UnityEngine.Events;
 public class VisualPlayer : MonoBehaviour
 {
     [Header("UI")]
-    [SerializeField] protected Transform _healthBar;
-    [SerializeField] protected Transform _shieldBar;
-    [SerializeField] protected Transform _healthFeedbackBar;
+    [SerializeField] protected SpriteRenderer _healthBar;
+    [SerializeField] protected SpriteRenderer _shieldBar;
+    [SerializeField] protected SpriteRenderer _healthFeedbackBar;
     [SerializeField] protected Transform _shieldIcon;
     [SerializeField] protected TextMeshPro _healthText;
     [SerializeField] protected TextMeshPro _shieldText;

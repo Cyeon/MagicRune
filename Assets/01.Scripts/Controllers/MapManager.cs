@@ -34,7 +34,7 @@ public class MapManager
     public List<StageType> CurrentPeriodStageList => _currentPeriodStageList;
 
     private int _periodProgress = 0; // ????썹땟???꿔꺂????紐꾩뗄??
-    private int _nextCondition = 1; // ?꾨컲/?꾨컲遺 ?꾪솚 ?섎젮硫?紐?媛쒖쓽 ?ㅽ뀒?댁?瑜??대━???댁빞?섎뒗吏 
+    private int _nextCondition = 7; // ?꾨컲/?꾨컲遺 ?꾪솚 ?섎젮硫?紐?媛쒖쓽 ?ㅽ뀒?댁?瑜??대━???댁빞?섎뒗吏 
 
     private PeriodType _periodType = PeriodType.None;
     public PeriodType CurrentPeriodType => _periodType;

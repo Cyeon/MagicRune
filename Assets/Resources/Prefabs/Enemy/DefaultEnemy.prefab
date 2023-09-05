@@ -1188,9 +1188,9 @@ MonoBehaviour:
   attackSound: {fileID: 8300000, guid: 14b13d596957d594ea53e14e0773678d, type: 3}
   isTurnSkip: 0
   userInfoUI: {fileID: 0}
-  _healthBar: {fileID: 630688763}
-  _shieldBar: {fileID: 583667050}
-  _healthFeedbackBar: {fileID: 1443830142}
+  _healthBar: {fileID: 630688764}
+  _shieldBar: {fileID: 583667051}
+  _healthFeedbackBar: {fileID: 1443830143}
   _shieldIcon: {fileID: 5366149141605548615}
   _healthText: {fileID: 2112612399}
   _shieldText: {fileID: 8465185380246577905}
@@ -1213,6 +1213,9 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   OnDieEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  OnTurnEnd:
     m_PersistentCalls:
       m_Calls: []
   statusTrm: {fileID: 0}
@@ -1470,7 +1473,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 4
+  m_SortingOrder: 5
   m_Sprite: {fileID: 21300000, guid: a73a585ed1e79044cb3db5b656893459, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -1560,7 +1563,7 @@ MeshRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 5
+  m_SortingOrder: 6
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!114 &8465185380246577905
 MonoBehaviour:
