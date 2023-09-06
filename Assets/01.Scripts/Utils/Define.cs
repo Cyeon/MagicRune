@@ -36,6 +36,7 @@ public class SaveData
 
     public void Reset()
     {
+        IsTutorial = true;
         TotalGold = 0;
         KillEnemyAmount = 0;
         IsTimerPlay = false;
