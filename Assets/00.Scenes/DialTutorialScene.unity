@@ -5082,6 +5082,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 762516290395822463, guid: e60d79253b863a044b25c0ee098ce978, type: 3}
+      propertyPath: m_Camera
+      value: 
+      objectReference: {fileID: 519420031}
     - target: {fileID: 762516290860702039, guid: e60d79253b863a044b25c0ee098ce978, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -5093,6 +5097,10 @@ PrefabInstance:
     - target: {fileID: 762516290860702039, guid: e60d79253b863a044b25c0ee098ce978, type: 3}
       propertyPath: m_AnchorMin.x
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 762516291113692576, guid: e60d79253b863a044b25c0ee098ce978, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 1046.9999
       objectReference: {fileID: 0}
     - target: {fileID: 762516291206927714, guid: e60d79253b863a044b25c0ee098ce978, type: 3}
       propertyPath: m_AnchorMax.x
@@ -5113,6 +5121,14 @@ PrefabInstance:
     - target: {fileID: 762516291217596895, guid: e60d79253b863a044b25c0ee098ce978, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 762516291708699903, guid: e60d79253b863a044b25c0ee098ce978, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -0.0000076293945
+      objectReference: {fileID: 0}
+    - target: {fileID: 762516291714977619, guid: e60d79253b863a044b25c0ee098ce978, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -996.9999
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e60d79253b863a044b25c0ee098ce978, type: 3}
@@ -5468,7 +5484,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _dial: {fileID: 6047878870979582954}
-  _DescriptionPanel: {fileID: 35130150}
+  _descriptionPanel: {fileID: 0}
   _rewardUI: {fileID: 8337651338890638072}
   ChooseRuneUI: {fileID: 821305078}
   _cardDescPanel: {fileID: 908599578}
