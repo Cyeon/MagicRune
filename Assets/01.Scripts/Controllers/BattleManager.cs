@@ -74,7 +74,7 @@ public class BattleManager : MonoSingleton<BattleManager>
             Enemy.OnDieEvent.AddListener(() =>
             {
                 ui.Tutorial("RewardRule", 1);
-                Define.SaveData.IsTutorial = true;
+                TutorialEnd();
             });
 
             _tutorialEndPanel = Managers.Canvas.GetCanvas("TutorialCanvas").transform.Find("TutorialEndPanel").gameObject;

@@ -263,7 +263,10 @@ public class TutorialUI : MonoBehaviour
                 case "Attribute_Select":
                     TutorialEnd();
                     Define.DialScene?.Turn("Enemy Turn");
+
                     Define.SaveData.IsTutorial = false;
+                    Managers.Json.SaveJson<SaveData>("SaveData", Define.SaveData);
+
                     _circleReverseMaskRect.gameObject.SetActive(false);
                     _tutorialImage.gameObject.SetActive(false);
                     _attributeRect.gameObject.SetActive(false);

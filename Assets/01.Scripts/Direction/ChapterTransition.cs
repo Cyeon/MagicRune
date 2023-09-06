@@ -31,7 +31,10 @@ public class ChapterTransition : MonoBehaviour
 
         _chapterNameText.SetText(Managers.Map.CurrentChapter.chapterName);
         if (Define.SaveData.IsTutorial)
+        {
             _chapterNameText.SetText("튜토리얼");
+            Managers.Map.ResetChapter();
+        }
 
         Sequence seq = DOTween.Sequence();
         seq.Append(_fadeImage.DOFade(0, 0.7f));

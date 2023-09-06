@@ -6,6 +6,7 @@ public class TutorialReset : MonoBehaviour
 {
     public void TR()
     {
+        Define.SaveData.IsTutorial = true;
         Define.SaveData.Reset();
     }
 }
