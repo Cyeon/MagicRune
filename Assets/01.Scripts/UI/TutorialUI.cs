@@ -92,7 +92,7 @@ public class TutorialUI : MonoBehaviour
         //_tutorialImage.sprite = Resources.Load<Sprite>("Tutorial/" + imageName);
 
         int keyIndex = _tutorialDialogue.FindIndex(x => x.Key == imageName);
-        if(keyIndex > -1 && _tutorialDialogue[keyIndex]?.Value.Count > index)
+        if(keyIndex > -1 && _tutorialDialogue[keyIndex]?.Value.Count > index && _tutorialDialogue[keyIndex]?.Value[index] != null)
         {
             TutorialMessage(_tutorialDialogue[keyIndex].Value[index]);
         }
@@ -304,6 +304,8 @@ public class TutorialUI : MonoBehaviour
 
     private void TutorialMessage(string message)
     {
+        if(_tutorialMessage == null)
+            _tutorialMessage = Managers.Canvas.GetCanvas("Tutorial").transform.Find("TutorialMessage").GetComponent<TextMeshProUGUI>();
         _tutorialMessage.SetText(message);
         _tutorialMessage.enabled = true;
     }
