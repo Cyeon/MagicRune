@@ -48,11 +48,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   patternName: "\uC5EC\uC6B0\uAD6C\uC2AC"
   desc: 
-  PatternDescription: "\uACF5\uACA9\uC744 \uB2F9\uD558\uC9C0 \uC54A\uC73C\uBA74 \uC774\uB85C\uC6B4
-    \uD6A8\uACFC\uB97C \uBD80\uC5EC\uD558\uB824\uACE0 \uD569\uB2C8\uB2E4."
+  PatternDescription: "\uACF5\uACA9\uC744 \uB2F9\uD558\uC9C0 \uC54A\uC73C\uBA74 \uC5EC\uC6B0\uAD6C\uC2AC\uC744
+    \uBD80\uC5EC\uD574 \uACF5\uACA9\uB825\uC774 \uC99D\uAC00\uD569\uB2C8\uB2E4."
+  patternActionDescList: []
   isIncluding: 1
   icon: {fileID: 21300000, guid: 2d3e2be60a3271840b5c287eb771e56b, type: 3}
-  iconSize: {x: 0.5, y: 0.5, z: 1}
+  _iconSize: 0.25
   startPatternAction:
   - {fileID: 7008778228400572866}
   - {fileID: 3652925038008841798}
@@ -134,11 +135,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   patternName: "\uC5EC\uC6B0\uAD6C\uC2AC"
   desc: 
-  PatternDescription: "\uACF5\uACA9\uC744 \uB2F9\uD558\uC9C0 \uC54A\uC73C\uBA74 \uC774\uB85C\uC6B4
-    \uD6A8\uACFC\uB97C \uBD80\uC5EC\uD558\uB824\uACE0 \uD569\uB2C8\uB2E4."
+  PatternDescription: "\uACF5\uACA9\uC744 \uB2F9\uD558\uC9C0 \uC54A\uC73C\uBA74 \uC5EC\uC6B0\uAD6C\uC2AC\uC744
+    \uBD80\uC5EC\uD574 \uACF5\uACA9\uB825\uC774 \uC99D\uAC00\uD569\uB2C8\uB2E4."
+  patternActionDescList:
+  - {fileID: 4358494121351147010}
+  - {fileID: 7808848393700857181}
   isIncluding: 1
   icon: {fileID: 21300000, guid: 2d3e2be60a3271840b5c287eb771e56b, type: 3}
-  iconSize: {x: 0.3, y: 0.3, z: 1}
+  _iconSize: 0.25
   startPatternAction:
   - {fileID: 7808848393700857181}
   - {fileID: 4358494121351147010}
@@ -374,6 +378,34 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5366149141605548615, guid: f1a706a7f0436ee45869c5f1ea4fc0b1, type: 3}
       propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8111781549338509899, guid: f1a706a7f0436ee45869c5f1ea4fc0b1, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 8111781549338509899, guid: f1a706a7f0436ee45869c5f1ea4fc0b1, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 8111781549338509899, guid: f1a706a7f0436ee45869c5f1ea4fc0b1, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8111781549338509900, guid: f1a706a7f0436ee45869c5f1ea4fc0b1, type: 3}
+      propertyPath: m_Size.x
+      value: 10.24
+      objectReference: {fileID: 0}
+    - target: {fileID: 8111781549338509900, guid: f1a706a7f0436ee45869c5f1ea4fc0b1, type: 3}
+      propertyPath: m_Size.y
+      value: 10.24
+      objectReference: {fileID: 0}
+    - target: {fileID: 8111781549338509900, guid: f1a706a7f0436ee45869c5f1ea4fc0b1, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8111781549338509900, guid: f1a706a7f0436ee45869c5f1ea4fc0b1, type: 3}
+      propertyPath: m_WasSpriteAssigned
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8949788419246248273, guid: f1a706a7f0436ee45869c5f1ea4fc0b1, type: 3}

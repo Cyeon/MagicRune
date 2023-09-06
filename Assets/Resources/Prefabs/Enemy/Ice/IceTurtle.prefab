@@ -46,12 +46,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2192153269515d74695b667fe90c4d36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  patternName: "\uBC29\uC5B4&\uBC29\uC5B4\uC790\uC138"
+  patternName: "\uBC29\uC5B4\uC790\uC138"
   desc: 10
-  PatternDescription: "\uBC29\uC5B4\uB97C \uD558\uB824\uACE0 \uD569\uB2C8\uB2E4."
+  PatternDescription: "\uBC29\uC5B4 \uD6C4 \uBC29\uC5B4\uC790\uC138\uB97C \uCDE8\uD569\uB2C8\uB2E4.\n\uBC29\uC5B4\uC790\uC138\uC77C\uB54C
+    \uACF5\uACA9\uC744 \uB2F9\uD558\uBA74 \uD55C\uAE30\uB97C \uBD80\uC5EC\uD569\uB2C8\uB2E4."
+  patternActionDescList:
+  - {fileID: 3068509022203192149}
+  - {fileID: 6754113318494335556}
   isIncluding: 1
   icon: {fileID: 21300000, guid: 00a92de8403a42f4cb60e33128bf59d5, type: 3}
-  iconSize: {x: 0.3, y: 0.3, z: 1}
+  _iconSize: 0.3
   startPatternAction: []
   turnPatternAction:
   - {fileID: 3068509022203192149}
@@ -215,11 +219,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8111781549338509899, guid: f1a706a7f0436ee45869c5f1ea4fc0b1, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.3
+      value: 0.4
       objectReference: {fileID: 0}
     - target: {fileID: 8111781549338509899, guid: f1a706a7f0436ee45869c5f1ea4fc0b1, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.3
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 8111781549338509899, guid: f1a706a7f0436ee45869c5f1ea4fc0b1, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8111781549338509900, guid: f1a706a7f0436ee45869c5f1ea4fc0b1, type: 3}
       propertyPath: m_Size.x

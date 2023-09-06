@@ -236,9 +236,9 @@ public class DialScene : BaseScene
 
         Sequence seq = DOTween.Sequence();
         seq.AppendInterval(0.1f);
-        seq.Append(effect.transform.DOScale(4.5f, 0.5f));
-        seq.Join(effect.DOFade(0f, 0.5f));
-        seq.AppendCallback(() => Managers.Resource.Destroy(effect.gameObject));
+        seq.Append(effect?.transform.DOScale(4.5f, 0.5f));
+        seq.Join(effect?.DOFade(0f, 0.5f));
+        seq.AppendCallback(() => Managers.Resource.Destroy(effect?.gameObject));
     }
 
     #endregion

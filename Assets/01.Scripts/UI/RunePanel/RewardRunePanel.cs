@@ -9,6 +9,15 @@ public class RewardRunePanel : BasicRuneAddon
 {
     private ChooseRuneUI _chooseRuneUI;
 
+    [SerializeField]
+    private Sprite fireIcon = null;
+    [SerializeField]
+    private Sprite iceIcon = null;
+    [SerializeField]
+    private Sprite groundIcon = null;
+    [SerializeField]
+    private Sprite electricIcon = null;
+
     private void Start()
     {
         _chooseRuneUI = GetComponentInParent<ChooseRuneUI>();
@@ -28,7 +37,7 @@ public class RewardRunePanel : BasicRuneAddon
         //    BattleManager.Instance.NextStage();
         //}
 
-        if(_chooseRuneUI != null)
+        if (_chooseRuneUI != null)
         {
             _chooseRuneUI.SelectRewardRunePanel(this);
         }
@@ -43,19 +52,19 @@ public class RewardRunePanel : BasicRuneAddon
                 Debug.Log("무속성은 보상에 없으니까 괜찮아");
                 break;
             case AttributeType.Fire:
-                _attributeIcon.sprite = Managers.Resource.Load<Sprite>("Sprite/Attribute/Fire");
+                _attributeIcon.sprite = fireIcon;
                 _attributeText.SetText("불");
                 break;
             case AttributeType.Ice:
-                _attributeIcon.sprite = Managers.Resource.Load<Sprite>("Sprite/Attribute/Ice");
+                _attributeIcon.sprite = iceIcon;
                 _attributeText.SetText("얼음");
                 break;
             case AttributeType.Electric:
-                _attributeIcon.sprite = Managers.Resource.Load<Sprite>("Sprite/Attribute/Electric");
+                _attributeIcon.sprite = electricIcon;
                 _attributeText.SetText("전기");
                 break;
             case AttributeType.Ground:
-                _attributeIcon.sprite = Managers.Resource.Load<Sprite>("Sprite/Attribute/Ground");
+                _attributeIcon.sprite = groundIcon;
                 _attributeText.SetText("땅");
                 break;
 

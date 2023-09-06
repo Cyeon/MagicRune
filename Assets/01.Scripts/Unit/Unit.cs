@@ -56,12 +56,18 @@ public class Unit : MonoBehaviour
 
     #region UI
     [Header("UI")]
-    [SerializeField] protected Transform _healthBar;
-    [SerializeField] protected Transform _shieldBar;
-    [SerializeField] protected Transform _healthFeedbackBar;
+    [SerializeField] protected SpriteRenderer _healthBar;
+    [SerializeField] protected SpriteRenderer _shieldBar;
+    [SerializeField] protected SpriteRenderer _healthFeedbackBar;
+
+    private Material _healthBarMat;
+    private Material _shieldBarMat;
+    private Material _healthFeedbackBarMat;
+
     [SerializeField] protected Transform _shieldIcon;
     [SerializeField] protected TextMeshPro _healthText;
     [SerializeField] protected TextMeshPro _shieldText;
+    private const string MAT_POSITION_TEXT = "_Position";
     #endregion
 
     protected bool _isDie = false;
@@ -108,6 +114,8 @@ public class Unit : MonoBehaviour
             _defaultMat = _spriteRenderer.material;
         }
         userInfoUI = Managers.UI.Get<UserInfoUI>("Upper_Frame");
+
+       
     }
 
     public void TakeDamage(float damage, bool isTrueDamage = false, Status status = null)
@@ -264,16 +272,25 @@ public class Unit : MonoBehaviour
 
         _isDie = true;
         StopAllCoroutines();
+        transform.DOKill();
         OnDieEvent?.Invoke();
     }
 
     public void UISetting()
     {
-        _healthBar.DOScaleX((float)HP / MaxHP, 0);
-        _healthFeedbackBar.DOScaleX(0, 0);
+        if (_healthBar)
+        {
+            _healthBarMat = _healthBar.material;
+            _shieldBarMat = _shieldBar.material;
+            _healthFeedbackBarMat = _healthFeedbackBar.material;
+        }
+
+        _healthBarMat?.SetVector(MAT_POSITION_TEXT, new Vector4(1 - (float)HP / MaxHP, 0));
+        _healthFeedbackBarMat?.SetVector(MAT_POSITION_TEXT, Vector4.one);
+
         _healthText.text = string.Format("{0}/{1}", HP.ToString(), MaxHP.ToString());
 
-        _shieldBar.DOScaleX(0, 0);
+        _shieldBarMat?.SetVector(MAT_POSITION_TEXT, Vector4.one);
         _shieldIcon.gameObject.SetActive(false);
 
         UpdateShieldUI();
@@ -281,39 +298,42 @@ public class Unit : MonoBehaviour
 
     public virtual void UpdateHealthUI()
     {
-        bool isChange = _healthBar.localScale.x != (float)HP / MaxHP;
+        float vectorX = _healthBarMat.GetVector(MAT_POSITION_TEXT).x;
 
-        _healthFeedbackBar.DOScaleX(_healthBar.localScale.x, 0);
-        _healthBar.DOScaleX((float)HP / MaxHP, 0);
+        bool isChange = vectorX != 1 - (float)HP / MaxHP;
 
-        _healthText.text = string.Format("{0}/{1}", HP.ToString(), MaxHP.ToString());
+        _healthFeedbackBarMat?.SetVector(MAT_POSITION_TEXT, new Vector4(vectorX, 0));
+        _healthBarMat?.SetVector(MAT_POSITION_TEXT, new Vector4(1 - (float)HP / MaxHP, 0));
+
+        if (_healthText)
+            _healthText?.SetText(string.Format("{0}/{1}", HP.ToString(), MaxHP.ToString()));
 
         if (Shield > 0)
         {
             if (HP + Shield > MaxHP)
             {
-                _shieldBar.DOScaleX(1, 0);
-                _healthBar.DOScaleX((float)HP / (MaxHP + Shield), 0);
+                _shieldBarMat?.SetVector(MAT_POSITION_TEXT, Vector4.zero);
+                _healthBarMat?.SetVector(MAT_POSITION_TEXT, new Vector4(1 - (float)HP / (MaxHP + Shield), 0));
             }
             else
             {
-                _shieldBar.DOScaleX((float)(HP + Shield) / MaxHP, 0);
+                _shieldBarMat?.SetVector(MAT_POSITION_TEXT, new Vector4(1 - (float)(HP + Shield) / MaxHP, 0));
             }
         }
         else
         {
-            _shieldBar.DOScaleX(0, 0);
+            _shieldBarMat?.SetVector(MAT_POSITION_TEXT, Vector4.one);
         }
 
         Sequence seq = DOTween.Sequence();
         seq.AppendInterval(0.5f);
-        seq.Append(_healthFeedbackBar.DOScaleX((float)HP / MaxHP, 0.2f));
+        seq.Append(_healthFeedbackBarMat?.DOVector(new Vector4(1 - (float)HP / MaxHP, 0), MAT_POSITION_TEXT, 0.2f));
 
         if (isChange)
         {
             Sequence vibrateSeq = DOTween.Sequence();
-            vibrateSeq.Append(_healthFeedbackBar.parent.DOShakeScale(0.1f));
-            vibrateSeq.Append(_healthFeedbackBar.parent.DOScale(1f, 0));
+            //vibrateSeq.Append(_healthFeedbackBar?.parent.DOShakeScale(0.1f));
+            //vibrateSeq.Append(_healthFeedbackBar?.parent.DOScale(1f, 0));
         }
     }
 
@@ -324,7 +344,7 @@ public class Unit : MonoBehaviour
             if(_shieldIcon.gameObject.activeSelf)
             {
                 _shieldIcon.gameObject.SetActive(false);
-                _shieldBar.DOScaleX(0, 0);
+                _shieldBarMat?.SetVector(MAT_POSITION_TEXT, Vector4.zero);
                 UpdateHealthUI();
             }
             return;
@@ -338,8 +358,8 @@ public class Unit : MonoBehaviour
         UpdateHealthUI();
 
         Sequence seq = DOTween.Sequence();
-        seq.Append(_shieldText.transform.parent.DOScale(1.2f, 0.1f));
-        seq.Append(_shieldText.transform.parent.DOScale(1f, 0.1f));
+        seq.Append(_shieldText?.transform.parent.DOScale(1.2f, 0.1f));
+        seq.Append(_shieldText?.transform.parent.DOScale(1f, 0.1f));
     }
 
     public void PlayAnimation(string name)

@@ -25,6 +25,7 @@ public class PatternManager : MonoBehaviour
     [SerializeField] private SpriteRenderer _patternSprite;
     [SerializeField] private TextMeshPro _patternText;
     [SerializeField] private int _patternEffectCount = 8;
+    private PatternPopup _patternPopup;
 
     private bool _isEffecting = false;
     public bool IsEffecting => _isEffecting;
@@ -81,6 +82,15 @@ public class PatternManager : MonoBehaviour
         _beforePattern = _currentPattern;
         _currentPattern = pattern;
         UpdatePatternUI();
+        pattern.DescriptionInit();
+
+        if (_patternPopup == null)
+            _patternPopup = Managers.Canvas.GetCanvas("Popup").transform.GetComponentInChildren<PatternPopup>();
+
+        if(_patternPopup.IsPopup)
+        {
+            _patternPopup.Popup(true);
+        }
     }
 
     public void NextPattern()
@@ -129,8 +139,10 @@ public class PatternManager : MonoBehaviour
     public void UpdatePatternUI()
     {
         _patternSprite.sprite = _currentPattern.icon;
-        _patternSprite.transform.localScale = _currentPattern.iconSize;
+        _patternSprite.transform.localScale = _currentPattern.IconSize;
         _patternText.text = _currentPattern.desc;
+
+        
     }
 
     public Pattern GetNextPattern()
@@ -147,14 +159,17 @@ public class PatternManager : MonoBehaviour
         {
             SpriteRenderer sprite = Managers.Resource.Instantiate("UI/PatternIcon", trm).GetComponent<SpriteRenderer>();
             sprite.sprite = _currentPattern.icon;
-            sprite.DOFade(1, 0);
+            sprite?.DOFade(1, 0);
 
-            sprite.transform.localPosition = Vector2.zero;
+            if(sprite)
+            {
+                sprite.transform.localPosition = Vector2.zero;
+            }
 
             Sequence seq = DOTween.Sequence();
-            seq.Append(sprite.transform.DOScale(_currentPattern.iconSize * 1.5f, 0.3f));
-            seq.Join(sprite.DOFade(0, 0.3f));
-            seq.AppendCallback(()=>Managers.Resource.Destroy(sprite.gameObject));
+            seq.Append(sprite?.transform.DOScale(_currentPattern.IconSize * 1.5f, 0.3f));
+            seq.Join(sprite?.DOFade(0, 0.3f));
+            seq.AppendCallback(()=>Managers.Resource.Destroy(sprite?.gameObject));
 
             if(_patternEffectCount - 1 == i)
             {

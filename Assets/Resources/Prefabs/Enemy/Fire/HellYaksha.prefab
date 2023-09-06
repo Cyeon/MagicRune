@@ -47,11 +47,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   patternName: "\uBC29\uB9DD\uC774 \uAC15\uD654"
   desc: 
-  PatternDescription: "\uCCB4\uB825\uC744 10 \uAE4E\uACE0 \uACF5\uACA9\uB825 10\uC774
+  PatternDescription: "\uCCB4\uB825\uC744 10 \uC783\uACE0 \uACF5\uACA9\uB825 10\uC774
     \uC99D\uAC00\uD569\uB2C8\uB2E4."
+  patternActionDescList:
+  - {fileID: 4132859099865691816}
   isIncluding: 1
   icon: {fileID: 21300000, guid: 60bb393fd8d81254c8403b0303ad61be, type: 3}
-  iconSize: {x: 0.2, y: 0.2, z: 1}
+  _iconSize: 0.25
   startPatternAction: []
   turnPatternAction:
   - {fileID: 4132859099865691816}
@@ -117,11 +119,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   patternName: "\uD654\uC5FC\uC2E0\uCCB4"
   desc: 
-  PatternDescription: "\uBC1B\uB294 \uB370\uBBF8\uC9C0 / 5 \uB9CC\uD07C \uD50C\uB808\uC774\uC5B4\uC5D0\uAC8C
-    \uD654\uC5FC \uC0C1\uD0DC\uC774\uC0C1\uC744 \uBD80\uC5EC\uD569\uB2C8\uB2E4."
+  PatternDescription: "\uBCF8\uC778\uD55C\uD14C <color=#F9B41F>\uC774\uB85C\uC6B4
+    \uD6A8\uACFC</color> \uB97C \uBD80\uC5EC \uC911 \uC785\uB2C8\uB2E4."
+  patternActionDescList: []
   isIncluding: 1
   icon: {fileID: 21300000, guid: 03fa3f79c79669e4192ccd59157677ff, type: 3}
-  iconSize: {x: 1, y: 1, z: 1}
+  _iconSize: 0.25
   startPatternAction:
   - {fileID: 5468850753501765587}
   turnPatternAction: []
@@ -417,11 +420,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8111781549338509899, guid: f1a706a7f0436ee45869c5f1ea4fc0b1, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.2
+      value: 0.25
       objectReference: {fileID: 0}
     - target: {fileID: 8111781549338509899, guid: f1a706a7f0436ee45869c5f1ea4fc0b1, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.2
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 8111781549338509899, guid: f1a706a7f0436ee45869c5f1ea4fc0b1, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8111781549338509900, guid: f1a706a7f0436ee45869c5f1ea4fc0b1, type: 3}
       propertyPath: m_Size.x

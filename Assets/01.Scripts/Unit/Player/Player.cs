@@ -36,7 +36,7 @@ public class Player : Unit
         OnTakeDamageFeedback = vp.OnTakeDamageEvent;
     }
 
-    public void UISetting(Transform health, Transform shield, Transform healthFeedback, Transform shieldIcon, TextMeshPro healthText, TextMeshPro shieldText)
+    public void UISetting(SpriteRenderer health, SpriteRenderer shield, SpriteRenderer healthFeedback, Transform shieldIcon, TextMeshPro healthText, TextMeshPro shieldText)
     {
         _healthBar = health;
         _shieldBar = shield;

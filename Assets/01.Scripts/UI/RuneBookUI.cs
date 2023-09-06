@@ -21,6 +21,8 @@ public class RuneBookUI : RuneListViewUI
     [SerializeField]
     private Transform _orderByButtons = null;
 
+    private Transform _nowIndex = null;
+
     protected override void Start()
     {
         _backgroundPanel = transform.Find("RuneListView_BGPanel").gameObject;
@@ -52,6 +54,7 @@ public class RuneBookUI : RuneListViewUI
 
     public void ChangeIndex(int typeIndex)
     {
+        ChangeIndexButtonPosition(typeIndex);
         AttributeType type = (AttributeType)typeIndex;
         _orederList.Clear();
         _orederList = Managers.Deck.RuneDictionary[type].ToList();
@@ -111,5 +114,17 @@ public class RuneBookUI : RuneListViewUI
             rotation.z = 270f;
 
         arrow.eulerAngles = rotation;
+    }
+
+    private void ChangeIndexButtonPosition(int typeIndex)
+    {
+        if (_nowIndex != null)
+        {
+            _nowIndex.position += Vector3.right * 20;
+            _nowIndex = null;
+        }
+
+        _nowIndex = transform.Find("IndexButtons").GetChild(typeIndex);
+        transform.Find("IndexButtons").GetChild(typeIndex).position -= Vector3.right * 20;
     }
 }

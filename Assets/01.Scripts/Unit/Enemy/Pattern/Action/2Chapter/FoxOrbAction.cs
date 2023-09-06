@@ -7,6 +7,8 @@ public class FoxOrbAction : PatternAction
 {
     private bool _isGetDamage = false;
 
+    public override string Description => "체력이 깎이지 않으면 " + Define.BENEFIC_DESC;
+
     public override void StartAction()
     {
         BattleManager.Instance.Enemy.OnTakeDamage.AddListener(GetDamageCheck);

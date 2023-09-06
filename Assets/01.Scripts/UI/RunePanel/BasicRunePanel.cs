@@ -18,21 +18,17 @@ public class BasicRunePanel : MonoBehaviour, IPointerClickHandler
     [SerializeField]
     private Image _rankIcon;
 
+    [SerializeField]
+    private bool _isAttributeIcon = false;
+
     [Header("Card Panel Sprite")]
     [SerializeField] private Image _cardPanelImage;
-    [SerializeField] private Image _cardCooltimeImage;
 
     [SerializeField] private Sprite _nonePanel;
     [SerializeField] private Sprite _icePanel;
     [SerializeField] private Sprite _firePanel;
     [SerializeField] private Sprite _groundPanel;
     [SerializeField] private Sprite _electricPanel;
-
-    [SerializeField] private Sprite _noneCoolTime;
-    [SerializeField] private Sprite _iceCoolTime;
-    [SerializeField] private Sprite _fireCoolTime;
-    [SerializeField] private Sprite _groundCoolTime;
-    [SerializeField] private Sprite _electricCoolTime;
 
     public TextMeshProUGUI NameText => _nameText;
     public Image RuneIcon { get { return _runeIcon; } set { _runeIcon = value; } }
@@ -44,7 +40,7 @@ public class BasicRunePanel : MonoBehaviour, IPointerClickHandler
     {
         get
         {
-            if(_canvasGroup == null)
+            if (_canvasGroup == null)
             {
                 _canvasGroup = GetComponent<CanvasGroup>();
             }
@@ -75,14 +71,11 @@ public class BasicRunePanel : MonoBehaviour, IPointerClickHandler
             _runeIcon.enabled = false;
             _rankIcon.enabled = false;
 
-            _cardPanelImage.sprite = _nonePanel;
-            _cardCooltimeImage.sprite = _noneCoolTime;
+            _cardPanelImage.color = Color.clear;
             return;
         }
 
         _runeIcon.enabled = true;
-
-        //_rune = rune;
 
         if (isEnhance == false)
         {
@@ -106,32 +99,36 @@ public class BasicRunePanel : MonoBehaviour, IPointerClickHandler
             _rankIcon.sprite = Resources.Load<Sprite>("Sprite/RankIcon/" + runeSO.Rarity.ToString());
         }
 
-        switch(runeSO.AttributeType)
+        if (_isAttributeIcon)
         {
-            case AttributeType.NonAttribute:
-                _cardPanelImage.sprite = _nonePanel;
-                _cardCooltimeImage.sprite = _noneCoolTime;
-                break;
+            _cardPanelImage.color = Color.white;
+            switch (runeSO.AttributeType)
+            {
+                case AttributeType.NonAttribute:
+                    _cardPanelImage.sprite = _nonePanel;
+                    //_cardCooltimeImage.sprite = _noneCoolTime;
+                    break;
 
-            case AttributeType.Ice:
-                _cardPanelImage.sprite = _icePanel;
-                _cardCooltimeImage.sprite = _iceCoolTime;
-                break;
+                case AttributeType.Ice:
+                    _cardPanelImage.sprite = _icePanel;
+                    //_cardCooltimeImage.sprite = _iceCoolTime;
+                    break;
 
-            case AttributeType.Fire:
-                _cardPanelImage.sprite = _firePanel;
-                _cardCooltimeImage.sprite = _fireCoolTime;
-                break;
+                case AttributeType.Fire:
+                    _cardPanelImage.sprite = _firePanel;
+                    //_cardCooltimeImage.sprite = _fireCoolTime;
+                    break;
 
-            case AttributeType.Ground:
-                _cardPanelImage.sprite = _groundPanel;
-                _cardCooltimeImage.sprite = _groundCoolTime;
-                break;
+                case AttributeType.Ground:
+                    _cardPanelImage.sprite = _groundPanel;
+                    //_cardCooltimeImage.sprite = _groundCoolTime;
+                    break;
 
-            case AttributeType.Electric:
-                _cardPanelImage.sprite = _electricPanel;
-                _cardCooltimeImage.sprite = _electricCoolTime;
-                break;
+                case AttributeType.Electric:
+                    _cardPanelImage.sprite = _electricPanel;
+                    //_cardCooltimeImage.sprite = _electricCoolTime;
+                    break;
+            }
         }
     }
     public virtual void SetRune(BaseRune rune)
