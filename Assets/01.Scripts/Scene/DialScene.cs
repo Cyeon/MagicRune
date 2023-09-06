@@ -74,8 +74,8 @@ public class DialScene : BaseScene
         #endregion
 
         _statusDescPanelRectTrm = _DescriptionPanel.transform.Find("Panel").GetComponent<RectTransform>();
-        _descNameText = Managers.UI.Get<TextMeshProUGUI>("NameText");
-        _descText = Managers.UI.Get<TextMeshProUGUI>("DescText");
+        Managers.UI.TryGet<TextMeshProUGUI>("NameText", out _descNameText);
+        Managers.UI.TryGet<TextMeshProUGUI>("DescText", out _descText);
 
         ChooseRuneUI = Managers.UI.Get<ChooseRuneUI>("ChooseRuneUI").GetComponent<ChooseRuneUI>();
 
@@ -217,9 +217,12 @@ public class DialScene : BaseScene
             return;
         }
 
-        if(_descNameText.text == obj.GetComponent<StatusPanel>().Status.debugName)
+        if (_descNameText != null)
         {
-            CloseDescriptionPanel();
+            if (_descNameText.text == obj.GetComponent<StatusPanel>().Status.debugName)
+            {
+                CloseDescriptionPanel();
+            }
         }
 
         Managers.Resource.Destroy(obj);
@@ -318,8 +321,14 @@ public class DialScene : BaseScene
             _statusDescPanelRectTrm.DOLocalMoveX(-_statusDescPanelRectTrm.localPosition.x, 0);
         }
 
-        _descNameText.SetText(name);
-        _descText.SetText(desc);
+        if(_descNameText != null)
+        {
+            _descNameText.SetText(name);
+        }
+        if(_descText != null)
+        {
+            _descText.SetText(desc);
+        }
     }
 
     public void CloseDescriptionPanel()
