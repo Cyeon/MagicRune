@@ -21,11 +21,11 @@ public class UIManager
     #region Bind
 
     /// <summary>
-    /// UI ¹ÙÀÎµù ÇÔ¼ö
+    /// UI ë°”ì¸ë”© í•¨ìˆ˜
     /// </summary>
-    /// <typeparam name="T">UIÀÇ Å¸ÀÔ</typeparam>
-    /// <param name="name">Á¤ÀÇµÈ UI ÀÌ¸§</param>
-    /// <param name="gameObject">Ã£À» Äµ¹ö½º</param>
+    /// <typeparam name="T">UIì˜ íƒ€ì…</typeparam>
+    /// <param name="name">ì •ì˜ëœ UI ì´ë¦„</param>
+    /// <param name="gameObject">ì°¾ì„ ìº”ë²„ìŠ¤</param>
     public void Bind<T>(string name, GameObject gameObject = null, UIType uiType = UIType.DestroyUI) where T : UnityEngine.Object
     {
         switch (uiType)
@@ -46,6 +46,7 @@ public class UIManager
         if (objects == null)
         {
             Debug.LogWarning($"Failed to bind {name}");
+            return;
         }
         if (_destroyUIDict.ContainsKey(typeof(T)))
         {
@@ -72,6 +73,7 @@ public class UIManager
         if (objects == null)
         {
             Debug.LogWarning($"Failed to bind {name}");
+            return;
         }
         if (_dontDestroyUIDict.ContainsKey(typeof(T)))
         {
@@ -106,6 +108,30 @@ public class UIManager
             default:
                 return null;
         }
+    }
+
+    public bool TryGet<T>(string name, out T result, UIType uIType = UIType.DestroyUI) where T : UnityEngine.Object
+    {
+        if(uIType  == UIType.DestroyUI)
+        {
+            if (_destroyUIDict.ContainsKey(typeof(T)))
+            {
+                result = GetOfDestroyUI<T>(name);
+                return true;
+            }
+
+            result = null;
+            return false;
+        }
+
+        if (_dontDestroyUIDict.ContainsKey(typeof(T)))
+        {
+            result = GetOfDontDestroyUI<T>(name);
+            return true;
+        }
+
+        result = null;
+        return false;
     }
 
     private T GetOfDestroyUI<T>(string name) where T : UnityEngine.Object

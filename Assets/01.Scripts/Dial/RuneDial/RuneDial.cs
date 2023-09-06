@@ -167,7 +167,7 @@ public class RuneDial : Dial<BaseRuneUI, BaseRune>
 
                 (_dialElementList[index] as RuneDialElement).EffectHandler.Attack(3 - index, () =>
                 {
-                    if (_dialElementList[index].SelectElement.Rune is VariableRune && index - 1 >= 0)
+                    if ((_dialElementList[index].SelectElement.Rune is VariableRune) && (index - 1 >= 0))
                     {
                         (_dialElementList[index].SelectElement.Rune as VariableRune).nextRune = _dialElementList[index - 1].SelectElement.Rune;
                     }

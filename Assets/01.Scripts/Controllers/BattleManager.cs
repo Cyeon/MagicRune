@@ -69,7 +69,7 @@ public class BattleManager : MonoSingleton<BattleManager>
         {
             TutorialUI ui = Managers.Canvas.GetCanvas("Tutorial").GetComponent<TutorialUI>();
             ui.Tutorial("Tutorial", 1);
-            ui.CanvasOff();
+            //ui.CanvasOff();
 
             Enemy.OnDieEvent.AddListener(() =>
             {
@@ -77,7 +77,7 @@ public class BattleManager : MonoSingleton<BattleManager>
                 Define.SaveData.IsTutorial = true;
             });
 
-            _tutorialEndPanel = Managers.Canvas.GetCanvas("Popup").transform.Find("TutorialEndPanel").gameObject;
+            _tutorialEndPanel = Managers.Canvas.GetCanvas("TutorialCanvas").transform.Find("TutorialEndPanel").gameObject;
             _tutorialEndPanel.SetActive(false);
             return;
         }
@@ -236,7 +236,9 @@ public class BattleManager : MonoSingleton<BattleManager>
             Managers.Map.ResetChapter();
             Define.DialScene?.HideChooseRuneUI();
 
-            Managers.Canvas.GetCanvas("TutorialCanvas").GetComponent<TutorialUI>().Tutorial("Deck_Explain", 1);
+            TutorialEnd();
+            BattleManager.Instance.TutorialEnd();
+            //Managers.Canvas.GetCanvas("TutorialCanvas").GetComponent<TutorialUI>().Tutorial("Deck_Explain", 1);
 
             return;
         }
