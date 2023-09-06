@@ -28,6 +28,7 @@ public class JsonManager
         {
             _path = Application.dataPath + _pathFileName;
         }
+        Debug.Log(_path);
 
         if (!Directory.Exists(_path))
             Directory.CreateDirectory(_path);

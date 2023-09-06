@@ -36,12 +36,14 @@ public class SaveData
 
     public void Reset()
     {
+        IsTutorial = true;
         TotalGold = 0;
         KillEnemyAmount = 0;
         IsTimerPlay = false;
         TimerSecond = 0;
 
         Managers.Json.SaveJson<SaveData>("SaveData", this);
+        Debug.Log("Reset");
     }
 }
 

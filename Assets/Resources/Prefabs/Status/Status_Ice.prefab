@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5014004267170453785}
   - component: {fileID: 8875799850148368426}
   - component: {fileID: 5336221929477169311}
+  - component: {fileID: 7975414093603490511}
   m_Layer: 0
   m_Name: Status_Ice
   m_TagString: Untagged
@@ -53,9 +54,11 @@ MonoBehaviour:
   textColor: {r: 1, g: 1, b: 1, a: 1}
   type: 1
   isTurnRemove: 0
+  isFirst: 1
   OnAddStatus: []
   OnTurnStart:
   - {fileID: 8875799850148368426}
+  - {fileID: 7975414093603490511}
   OnAttack: []
   OnGetDamage: []
   OnTurnEnd: []
@@ -65,7 +68,6 @@ MonoBehaviour:
   statusSoundType: 1
   getSound: {fileID: 8300000, guid: d9ced816caced7a42a71df0145ce5f32, type: 3}
   activeSound: {fileID: 8300000, guid: 7779b77c15a07a24ea708fb10d083a53, type: 3}
-  unit: {fileID: 0}
 --- !u!114 &8875799850148368426
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -91,3 +93,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isUsing: 0
+--- !u!114 &7975414093603490511
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8378743581122507794}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ae0a23744b262244814f6d0614a6598, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _remStackType: 0
+  _value: 1
