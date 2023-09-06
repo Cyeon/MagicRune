@@ -44,7 +44,7 @@ public class Enemy : Unit
     public override void Attack(float damage, bool isTrueDamage = false)
     {
         base.Attack(damage);
-        BattleManager.Instance.Player.TakeDamage(currentDmg, isTrueDamage);
+        BattleManager.Instance.Player?.TakeDamage(currentDmg, isTrueDamage);
         currentDmg = 0;
     }
 

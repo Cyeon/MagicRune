@@ -10,6 +10,7 @@ public class SEReflectionDamage : StatusEvent
     {
         base.Invoke();
 
+        if (_unit == null) return;
         float dmg = _unit.currentDmg * (_percent * 0.01f);
         _unit.Attack(dmg);
     }
