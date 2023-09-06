@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using System.Data;
@@ -48,6 +49,7 @@ public class KeywardRunePanel : BasicRuneAddon
         {
             KeywardPanel panel = Managers.Resource.Instantiate("UI/KeywardPanel", _keywardArea).GetComponent<KeywardPanel>();
             panel.transform.localScale = Vector3.one;
+            panel.transform.DOMoveZ(0, 0);
             panel.SetKeyword(Managers.Keyword.GetKeyword(rune.KeywardList[i]));
             _keywardPanelList.Add(panel);
         }

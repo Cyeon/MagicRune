@@ -18,7 +18,7 @@ public class DialScene : BaseScene
 
     // Status
     [SerializeField]
-    private GameObject _DescriptionPanel;
+    private GameObject _descriptionPanel;
     private TextMeshProUGUI _descNameText;
     private TextMeshProUGUI _descText;
     private RectTransform _statusDescPanelRectTrm;
@@ -73,7 +73,7 @@ public class DialScene : BaseScene
         
         #endregion
 
-        _statusDescPanelRectTrm = _DescriptionPanel.transform.Find("Panel").GetComponent<RectTransform>();
+        _statusDescPanelRectTrm = _descriptionPanel.transform.Find("Panel").GetComponent<RectTransform>();
         _descNameText = Managers.UI.Get<TextMeshProUGUI>("NameText");
         _descText = Managers.UI.Get<TextMeshProUGUI>("DescText");
 
@@ -305,9 +305,9 @@ public class DialScene : BaseScene
 
     public void DescriptionPopup(string name, string desc, Vector3 pos)
     {
-        _DescriptionPanel.SetActive(true);
-        _DescriptionPanel.transform.position = pos + new Vector3(0, 20, 0);
-        _DescriptionPanel.transform.DOMoveZ(-1, 0);
+        _descriptionPanel.SetActive(true);
+        _descriptionPanel.transform.position = pos;
+        _descriptionPanel.transform.DOMoveZ(-1, 0);
 
         if (pos.x < Screen.width / 2 && _statusDescPanelRectTrm.localPosition.x < 0)
         {
@@ -324,7 +324,7 @@ public class DialScene : BaseScene
 
     public void CloseDescriptionPanel()
     {
-        _DescriptionPanel.SetActive(false);
+        _descriptionPanel.SetActive(false);
     }
 
     #endregion
