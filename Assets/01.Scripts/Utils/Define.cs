@@ -43,7 +43,6 @@ public class SaveData
         TimerSecond = 0;
 
         Managers.Json.SaveJson<SaveData>("SaveData", this);
-        Debug.Log("Reset");
     }
 }
 
