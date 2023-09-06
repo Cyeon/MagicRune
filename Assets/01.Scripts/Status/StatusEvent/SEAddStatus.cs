@@ -31,6 +31,7 @@ public class SEAddStatus : StatusEvent
             else unit = Managers.GetPlayer();
         }
 
+        if (unit == null || unit.StatusManager == null) return;
         if(_unit.currentDmg > 0)
         {
             switch(_addStackType)

@@ -21,6 +21,7 @@ public class StatusManager
 
     public void AddStatus(StatusName statusName, int count)
     {
+        if (_unit == null) return;
         if (_unit.IsDie) return;
 
         Status status;
@@ -47,10 +48,11 @@ public class StatusManager
             status.AddValue(count);
         }
 
+        if (status == null) return;
         switch (status.statusSoundType)
         {
             case StatusSoundType.Main:
-                if (status.getSound != null)
+                if (status?.getSound != null)
                     Managers.Sound.PlaySound(status.getSound, SoundType.Effect);
                 else
                     Debug.LogError($"{status.statusName}'s AudioClip is NULL");
