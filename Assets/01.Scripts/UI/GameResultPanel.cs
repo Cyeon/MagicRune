@@ -65,7 +65,7 @@ public class GameResultPanel : MonoBehaviour
         }
         else
         {
-            _titleText.text = _winMessage;
+            _titleText.SetText(_winMessage);
             _titleText.color = _winColor;
         }
 

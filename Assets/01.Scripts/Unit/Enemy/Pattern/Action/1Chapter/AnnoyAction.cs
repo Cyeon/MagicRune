@@ -9,7 +9,12 @@ public class AnnoyAction : PatternAction
 
     public override void StartAction()
     {
-        Enemy.PatternManager.CurrentPattern.desc = (_attackAction.damage + (Managers.Enemy.CurrentEnemy.StatusManager.GetStatusValue(StatusName.Annoy) * 5)).ToString();
+        if(Enemy.StatusManager.IsHaveStatus(StatusName.Annoy))
+        {
+            _attackAction.damage += 5;
+        }
+
+        Enemy.PatternManager.CurrentPattern.desc = _attackAction.damage.ToString();
         Enemy.PatternManager.UpdatePatternUI();
         base.StartAction();
     }

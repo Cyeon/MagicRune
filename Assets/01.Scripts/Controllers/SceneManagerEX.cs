@@ -30,6 +30,6 @@ public class SceneManagerEX
     public void Clear()
     {
         DOTween.KillAll();
-        CurrentScene.Clear();
+        CurrentScene?.Clear();
     }
 }
