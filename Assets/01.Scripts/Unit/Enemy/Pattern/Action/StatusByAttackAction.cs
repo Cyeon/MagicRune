@@ -8,6 +8,8 @@ public class StatusByAttackAction : PatternAction
     [SerializeField] private StatusName _status;
     private int _damage;
 
+    public override string Description => Define.DamageDesc(_damage);
+
     public override void StartAction()
     {
         _damage = Enemy.StatusManager.GetStatusValue(_status);

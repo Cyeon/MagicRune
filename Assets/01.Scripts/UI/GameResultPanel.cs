@@ -2,8 +2,8 @@ using DG.Tweening;
 using System;
 using System.Collections.Generic;
 using TMPro;
-using Unity.VisualScripting.Antlr3.Runtime.Tree;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameResultPanel : MonoBehaviour
 {
@@ -14,8 +14,10 @@ public class GameResultPanel : MonoBehaviour
     private Transform _panel;
     [SerializeField]
     private Transform _textListObj;
+    [SerializeField]
+    private Button _gameExitButton;
 
-    private float _titleFinishPositionY;
+    private Vector3 _titleFinishPosition;
     private List<TextMeshProUGUI> _textList = new List<TextMeshProUGUI>();
 
     [Header("Text")]
@@ -31,13 +33,14 @@ public class GameResultPanel : MonoBehaviour
 
     private void Start()
     {
-        _titleFinishPositionY = _titleObj.localPosition.y;
+        _titleFinishPosition = _titleObj.GetComponent<RectTransform>().anchoredPosition;
         
         _panel.localScale = new Vector3(_panel.localScale.x, 0, _panel.localScale.z);
-        _titleObj.localPosition = Vector3.zero;
+
+        _titleObj.GetComponent<RectTransform>().DOAnchorPos(Vector2.zero, 0);
         _titleObj.localScale = Vector3.zero;
 
-        _titleText = _titleText.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
+        _titleText = _titleObj.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
 
         for (int i = 0; i < _textListObj.childCount; i++)
         {
@@ -46,20 +49,31 @@ public class GameResultPanel : MonoBehaviour
 
         _textList.ForEach(x => x.gameObject.SetActive(false));
 
+        _gameExitButton.gameObject.SetActive(false);
+        _gameExitButton.onClick.AddListener(Managers.GameQuit);
+
         Define.SaveData.IsTimerPlay = false;
         Popup();
     }
 
     private void Popup()
     {
-        _titleText.text = _winMessage;
-        _titleText.color = _winColor;
+        if(Managers.GetPlayer().HP == 0)
+        {
+            _titleText.SetText(_defeatMessage);
+            _titleText.color = _defeatColor;
+        }
+        else
+        {
+            _titleText.text = _winMessage;
+            _titleText.color = _winColor;
+        }
 
         Sequence seq = DOTween.Sequence();
         seq.AppendInterval(0.1f);
         seq.Append(_titleObj.DOScale(Vector3.one * 1.1f, 0.5f));
         seq.Append(_titleObj.DOScale(Vector3.one, 0.3f));
-        seq.Append(_titleObj.DOLocalMoveY(_titleFinishPositionY, 0.7f));
+        seq.Append(_titleObj.GetComponent<RectTransform>().DOAnchorPos(_titleFinishPosition, 0.7f));
         seq.Join(_panel.DOScaleY(1, 0.7f));
         seq.AppendInterval(0.1f);
         for(int i=0; i < _textList.Count; i++)
@@ -90,5 +104,6 @@ public class GameResultPanel : MonoBehaviour
             seq.Append(_textList[index].transform.DOScale(Vector3.one, 0.2f));
             seq.AppendInterval(0.2f);
         }
+        seq.AppendCallback(()=>_gameExitButton.gameObject.SetActive(true));
     }
 }
