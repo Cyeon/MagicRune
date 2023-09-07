@@ -38,15 +38,15 @@ public class SoundManager
             Object.DontDestroyOnLoad(_audioSource);
         }
 
-        // Effect Audio Source ¾Ø Ç®¸µ
-        // BGM Audio Source µ¿Àû »ı¼º
+        // Effect Audio Source ì•¤ í’€ë§
+        // BGM Audio Source ë™ì  ìƒì„±
     }
 
     /// <summary>
-    /// »ç¿îµå ÇÃ·¹ÀÌ ÇÔ¼ö
+    /// ì‚¬ìš´ë“œ í”Œë ˆì´ í•¨ìˆ˜
     /// </summary>
-    /// <param name="clip">¿Àµğ¿À Å¬¸³</param>
-    /// <param name="isLoop">¹İº¹ ¿©ºÎ</param>
+    /// <param name="clip">ì˜¤ë””ì˜¤ í´ë¦½</param>
+    /// <param name="isLoop">ë°˜ë³µ ì—¬ë¶€</param>
     public void PlaySound(AudioClip clip, SoundType type, bool isLoop = false, float pitch = 1.0f)
     {
         if (_audioClipDict.ContainsKey(clip.name) == false)
@@ -94,7 +94,7 @@ public class SoundManager
     }
 
     /// <summary>
-    /// »ç¿îµå Á¤Áö ÇÔ¼ö
+    /// ì‚¬ìš´ë“œ ì •ì§€ í•¨ìˆ˜
     /// </summary>
     public void StopSound(SoundType type)
     {
