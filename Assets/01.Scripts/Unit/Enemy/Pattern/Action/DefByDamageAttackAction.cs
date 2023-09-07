@@ -6,6 +6,9 @@ public class DefByDamageAttackAction : AttackAction
 {
     public override void StartAction()
     {
+        damage = Mathf.FloorToInt(Enemy.Shield);
+        count = 1;
+
         Enemy.PatternManager.CurrentPattern.desc = Mathf.FloorToInt(Enemy.Shield).ToString();
         Enemy.PatternManager.UpdatePatternUI();
         Pattern.DescriptionInit();
@@ -15,9 +18,6 @@ public class DefByDamageAttackAction : AttackAction
 
     public override void TurnAction()
     {
-        damage = Mathf.FloorToInt(Enemy.Shield);
-        count = 1;
-
         base.TurnAction();
     }
 }

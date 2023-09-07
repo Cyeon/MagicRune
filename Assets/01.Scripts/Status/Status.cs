@@ -71,7 +71,8 @@ public class Status : MonoBehaviour
     [ConditionalField(nameof(type), false, StatusType.Stack)]
     public bool isTurnRemove = false;
     [ConditionalField(nameof(type), false, StatusType.Turn)]
-    public bool isFirst = true;
+    public bool isFirst = true; // 초기화 값
+    private bool _isFirst = true; // 코드에서 처리되는 변수
 
     [Header("Function")]
     public List<StatusEvent> OnAddStatus = new List<StatusEvent>();
@@ -96,6 +97,7 @@ public class Status : MonoBehaviour
     {
         _unit = unit;
         _typeValue = 0;
+        _isFirst = isFirst;
         Define.DialScene?.AddStatus(_unit, this);
     }
 
@@ -107,9 +109,9 @@ public class Status : MonoBehaviour
 
     public void RemoveValue(int count)
     {
-        if(isFirst ==  true && type == StatusType.Turn)
+        if(_isFirst == true && type == StatusType.Turn)
         {
-            isFirst = false;
+            _isFirst = false;
         }
         else
         {
