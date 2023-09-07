@@ -146,6 +146,8 @@ public class DialScene : BaseScene
         passivePanel.transform.SetParent(parent);
         passivePanel.transform.localScale = new Vector3(1.7f, 1.7f, 1.7f);
 
+        Debug.Log(passivePanel.name);
+        Debug.Log(passivePanel.transform.parent.name);
         return passivePanel;
     }
 
