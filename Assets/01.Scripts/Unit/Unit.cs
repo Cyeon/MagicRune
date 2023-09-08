@@ -335,8 +335,8 @@ public class Unit : MonoBehaviour
         if (isChange)
         {
             Sequence vibrateSeq = DOTween.Sequence();
-            //vibrateSeq.Append(_healthFeedbackBar?.parent.DOShakeScale(0.1f));
-            //vibrateSeq.Append(_healthFeedbackBar?.parent.DOScale(1f, 0));
+            vibrateSeq.Append(_healthFeedbackBar.transform.parent.parent?.DOShakeScale(0.1f));
+            vibrateSeq.Append(_healthFeedbackBar.transform.parent.parent?.DOScale(1f, 0));
         }
     }
 
