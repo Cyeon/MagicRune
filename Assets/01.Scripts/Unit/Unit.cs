@@ -147,7 +147,7 @@ public class Unit : MonoBehaviour
 
         if (this is Enemy)
         {
-            Define.DialScene?.DamageUIPopup(currentDmg, Define.MainCam.WorldToScreenPoint(transform.position), status);
+            Define.DialScene?.DamageUIPopup(currentDmg, transform.position, status);
             if (_hitCoroutine != null)
             {
                 StopCoroutine(_hitCoroutine);
