@@ -11,6 +11,8 @@ public class RuneListViewUI : MonoBehaviour
     protected Transform _content = null;
     protected List<GameObject> _usingPanelList = new List<GameObject>();
 
+    private bool _isOpenUI = false;
+
     protected virtual void Start()
     {
         _backgroundPanel = transform.Find("RuneListView_BGPanel").gameObject;
@@ -32,7 +34,7 @@ public class RuneListViewUI : MonoBehaviour
     {
         SettingPanels(Managers.Deck.Deck.FindAll(x => x.IsCoolTime == true), null, true);
         EventManager.StartListening(Define.ON_START_PLAYER_TURN, UpdateCoolTime);
-        ActiveUI(true);
+        ActiveUI();
     }
     /// <summary>
     /// 사용할 수 있는 룬
@@ -40,13 +42,13 @@ public class RuneListViewUI : MonoBehaviour
     public void SetUseRunes()
     {
         SettingPanels(Managers.Deck.Deck.FindAll(x => x.IsCoolTime == false), Define.DialScene?.Dial.ConsumeDeck);
-        ActiveUI(true);
+        ActiveUI();
     }
 
     public void SetAllRunes()
     {
         SettingPanels(Managers.Deck.Deck);
-        ActiveUI(true);
+        ActiveUI();
     }
 
     private void SettingPanels(List<BaseRune> baseRuneList, List<BaseRune> ignoreRuneList = null, bool isCoolTime = false)
@@ -82,6 +84,8 @@ public class RuneListViewUI : MonoBehaviour
 
     protected void ActiveUI(bool isActive)
     {
+        _isOpenUI = isActive;
+
         if (isActive)
         {
             Define.MapScene?.mapDial.DialLock();
@@ -94,6 +98,12 @@ public class RuneListViewUI : MonoBehaviour
         }
         _backgroundPanel.SetActive(isActive);
         _scrollView.SetActive(isActive);
+    }
+
+    protected void ActiveUI()
+    {
+        _isOpenUI = !_isOpenUI;
+        ActiveUI(_isOpenUI);
     }
 
     private void UpdateCoolTime()
