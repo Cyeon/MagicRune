@@ -319,6 +319,9 @@ public class Unit : MonoBehaviour
             {
                 _shieldBarMat?.SetVector(MAT_POSITION_TEXT, new Vector4(1 - (float)(HP + Shield) / MaxHP, 0));
             }
+
+            if (_healthText)
+                _healthText?.SetText(string.Format("{0}<color=#54D3CA>(+{1})</color>/{2}", HP.ToString(), Shield.ToString(), MaxHP.ToString()));
         }
         else
         {
