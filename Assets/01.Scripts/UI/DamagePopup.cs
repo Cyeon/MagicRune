@@ -38,8 +38,9 @@ public class DamagePopup : MonoBehaviour
         transform.GetComponent<RectTransform>().anchoredPosition3D = new Vector3(rectTrm.x, rectTrm.y, 0);
 
         Sequence seq = DOTween.Sequence();
-        seq.Append(transform.DOLocalMoveY(rectTrm.y + 100, 1)).SetEase(Ease.InQuart);
-        seq.Join(_textMesh.DOFade(0, 1f).SetEase(Ease.InQuart));
+        seq.Append(transform.DOLocalMoveY(rectTrm.y + 100, 1)).SetEase(Ease.OutQuart);
+        seq.AppendInterval(0.5f);
+        seq.Append(_textMesh.DOFade(0, 0.5f));
         seq.AppendCallback(() =>
         {
             Managers.Resource.Destroy(gameObject);

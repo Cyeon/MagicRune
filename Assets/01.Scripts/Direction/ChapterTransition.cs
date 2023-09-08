@@ -38,11 +38,11 @@ public class ChapterTransition : MonoBehaviour
 
         Sequence seq = DOTween.Sequence();
         seq.Append(_fadeImage.DOFade(0, 0.7f));
-        seq.Append(_outline.DOScaleY(2, 1f));
-        seq.Join(_chapterNameFade.transform.DOScaleY(1, 1f));
-        seq.AppendInterval(0.5f);
-        seq.Append(_outline.DOScaleY(0, 1f));
-        seq.Join(_chapterNameFade.transform.DOScaleY(0, 1f));
+        seq.Append(_outline.DOScaleY(2, 0.5f));
+        seq.Join(_chapterNameFade.transform.DOScaleY(1, 0.7f));
+        seq.AppendInterval(0.3f);
+        seq.Append(_outline.DOScaleY(0, 0.65f));
+        seq.Join(_chapterNameFade.transform.DOScaleY(0, 0.6f));
         seq.AppendCallback(() =>
         {
             Reset();
