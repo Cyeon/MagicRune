@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5736046982554988565}
   - component: {fileID: 5014004267170453785}
   - component: {fileID: -2829515036734227592}
-  - component: {fileID: -715760302424804144}
+  - component: {fileID: -4974089907875048880}
   m_Layer: 0
   m_Name: Status_FlameBody
   m_TagString: Untagged
@@ -58,7 +58,7 @@ MonoBehaviour:
   OnTurnStart: []
   OnAttack: []
   OnGetDamage:
-  - {fileID: -715760302424804144}
+  - {fileID: -4974089907875048880}
   OnTurnEnd: []
   OnRemoveStatus: []
   icon: {fileID: 21300000, guid: 03fa3f79c79669e4192ccd59157677ff, type: 3}
@@ -79,7 +79,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isUsing: 0
---- !u!114 &-715760302424804144
+--- !u!114 &-4974089907875048880
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -93,6 +93,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _statusName: 1
   _addStackType: 1
-  _damageMultiple: 1
+  _damageMultiple: 0.2
   _value: 0
   _isSelf: 0
