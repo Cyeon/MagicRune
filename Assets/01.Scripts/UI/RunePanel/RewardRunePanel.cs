@@ -73,6 +73,12 @@ public class RewardRunePanel : BasicRuneAddon
             default:
                 break;
         }
+        
+        if (baseRuneSO.AttributeType == Managers.Rune.GetSelectAttribute())
+            _attributeText.color = Color.yellow;
+        else
+            _attributeText.color = Color.white;
+
     }
 
     public override void SetRune(BaseRune rune)
