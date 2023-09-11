@@ -199,8 +199,14 @@ public class BezierMissile : MonoBehaviour
             //CubicBezierCurve(m_points[0].z, m_points[1].z, m_points[2].z, m_points[3].z)
         );
 
+        RectTransform rectTrm;
+        if(transform.TryGetComponent<RectTransform>(out rectTrm))
+        {
+            rectTrm.anchoredPosition3D = new Vector3(rectTrm.anchoredPosition3D.x, rectTrm.anchoredPosition3D.y, 0);
+        }
+
         // 도착한거임
-        if((Vector2)_transform.position == m_points[3])
+        if ((Vector2)_transform.position == m_points[3])
         {
             if (_effect != null)
             {
