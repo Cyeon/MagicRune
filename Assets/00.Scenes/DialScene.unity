@@ -989,6 +989,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3532cad2a816abc41b9acf7d2935ecac, type: 3}
+--- !u!224 &344383281 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 8877079301448398262, guid: 9d9cc8fc169f27e47814c186ce99ab04, type: 3}
+  m_PrefabInstance: {fileID: 4752574022920842985}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &368546382
 GameObject:
   m_ObjectHideFlags: 0
@@ -1890,7 +1895,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 379.5, y: -655}
+  m_AnchoredPosition: {x: 379.49997, y: -654.9999}
   m_SizeDelta: {x: 625, y: 450}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &787803311
@@ -2900,8 +2905,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -380.5, y: -655.0004}
-  m_SizeDelta: {x: 625.00006, y: 450}
+  m_AnchoredPosition: {x: -380.5, y: -655.0002}
+  m_SizeDelta: {x: 624.99994, y: 450}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1204897084
 MonoBehaviour:
@@ -3924,8 +3929,12 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 762516291113692576, guid: e60d79253b863a044b25c0ee098ce978, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 762516291113692576, guid: e60d79253b863a044b25c0ee098ce978, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 1047
+      value: 1046.9996
       objectReference: {fileID: 0}
     - target: {fileID: 762516291206927714, guid: e60d79253b863a044b25c0ee098ce978, type: 3}
       propertyPath: m_AnchorMax.x
@@ -3968,8 +3977,12 @@ PrefabInstance:
       value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 762516291714977619, guid: e60d79253b863a044b25c0ee098ce978, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 762516291714977619, guid: e60d79253b863a044b25c0ee098ce978, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -996.99976
+      value: -997.0002
       objectReference: {fileID: 0}
     - target: {fileID: 1520652531168626511, guid: e60d79253b863a044b25c0ee098ce978, type: 3}
       propertyPath: m_fontAsset
@@ -6315,6 +6328,14 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4752574023146445448, guid: 9d9cc8fc169f27e47814c186ce99ab04, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7697963551237689148, guid: 9d9cc8fc169f27e47814c186ce99ab04, type: 3}
+      propertyPath: _keywordContent
+      value: 
+      objectReference: {fileID: 344383281}
+    - target: {fileID: 8877079301448398262, guid: 9d9cc8fc169f27e47814c186ce99ab04, type: 3}
       propertyPath: m_SizeDelta.x
       value: 0
       objectReference: {fileID: 0}
