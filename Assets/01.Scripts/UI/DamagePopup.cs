@@ -40,7 +40,7 @@ public class DamagePopup : MonoBehaviour
         Sequence seq = DOTween.Sequence();
         seq.Append(transform.DOLocalMoveY(rectTrm.y + 100, 1)).SetEase(Ease.OutQuart);
         seq.AppendInterval(0.5f);
-        seq.Append(_textMesh.DOFade(0, 0.5f));
+        seq.Append(_textMesh.DOFade(0, 0.8f));
         seq.AppendCallback(() =>
         {
             Managers.Resource.Destroy(gameObject);

@@ -15,10 +15,14 @@ public class RuneEventUI : MonoBehaviour
     private GameObject _scrollView = null;
     private Transform _content = null;
     private List<GameObject> _runePanelList = new List<GameObject>();
+    private Image _blur;
 
     private void Start()
     {
         _scrollView = transform.Find("Scroll View").gameObject;
+        _blur = transform.Find("Blur").GetComponent<Image>();
+        _blur.enabled = false;
+
         _content = _scrollView.GetComponent<ScrollRect>().content;
 
         Managers.UI.Bind<Button>("NextStageButton_Button", gameObject);
@@ -28,6 +32,7 @@ public class RuneEventUI : MonoBehaviour
         Managers.UI.Get<Button>("NextStageButton_Button").onClick.AddListener(() =>
         {
             _scrollView.SetActive(false);
+            _blur.enabled = false;
 
             Sequence seq = DOTween.Sequence();
             seq.Append(_selectedRuneObject.transform.DOScale(1.2f, 0.1f));
@@ -63,11 +68,14 @@ public class RuneEventUI : MonoBehaviour
     {
         _selectedRuneObject.SetUI(rune.BaseRuneSO);
         _selectedRuneObject.gameObject.SetActive(true);
-        _selectedRuneObject.transform.localScale = Vector3.zero;
+        _selectedRuneObject.transform.localScale = Vector3.one * 1.8f;
+
         Managers.UI.Get<Button>("NextStageButton_Button").gameObject.SetActive(true);
+        _blur.enabled = true;
+
         Sequence seq = DOTween.Sequence();
-        seq.Append(_selectedRuneObject.transform.DOScale(1.2f, 0.2f));
-        seq.Append(_selectedRuneObject.transform.DOScale(1f, 0.1f));
+        seq.Append(_selectedRuneObject.transform.DOScale(2.2f, 0.2f));
+        seq.Append(_selectedRuneObject.transform.DOScale(2f, 0.1f));
     }
 
     /// <summary>

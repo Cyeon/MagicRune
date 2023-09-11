@@ -3,13 +3,9 @@ using MoreMountains.Feedbacks;
 using MyBox;
 using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Security.Cryptography;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.Rendering;
-using UnityEngine.UI;
 
 public class Unit : MonoBehaviour
 {
@@ -145,9 +141,11 @@ public class Unit : MonoBehaviour
         OnTakeDamageFeedback?.Invoke();
         PlayAnimation(HashHit);
 
+        Vector3 pos = transform.position + new Vector3(UnityEngine.Random.Range(-1f, 1f), UnityEngine.Random.Range(-1f, 1f));
+        Define.DialScene?.DamageUIPopup(currentDmg, pos, status);
+
         if (this is Enemy)
         {
-            Define.DialScene?.DamageUIPopup(currentDmg, transform.position, status);
             if (_hitCoroutine != null)
             {
                 StopCoroutine(_hitCoroutine);
