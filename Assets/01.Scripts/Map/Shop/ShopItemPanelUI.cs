@@ -1,3 +1,4 @@
+using DG.Tweening;
 using MyBox;
 using System;
 using System.Collections;
@@ -40,6 +41,7 @@ public class ShopItemPanelUI : MonoBehaviour
         GoldTextColorUpdate();
 
         transform.localScale = Vector3.one * 0.8f;
+        transform.GetComponent<RectTransform>().DOAnchorPos3DZ(0, 0);
         _soldOutPanel.SetActive(false);
     }
 

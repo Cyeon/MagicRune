@@ -1,20 +1,34 @@
 using DG.Tweening;
 using MyBox;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ShopUI : MonoBehaviour
 {
     private Transform _storeShelf;
     private KeywardRunePanel _keywardRunePanel;
     private ShopItemPanelUI _selectItem;
+    private TextMeshProUGUI _reloadGoldText;
+    private TextMeshProUGUI _deckRemoveGoldText;
+
     [SerializeField] private GameObject _buyCheck;
 
     private ShopItemPanelUI _beforeSelectItem;
+
+    [SerializeField] private int _reloadGold;
+    [SerializeField] private int _deckRemoveGold;
 
     private void Start()
     {
         _storeShelf = transform.Find("StoreShelf");
         _keywardRunePanel = transform.Find("KeywardHorizontal").GetComponent<KeywardRunePanel>();
+
+        _reloadGoldText = transform.Find("ReloadButton/Gold/Text").GetComponent<TextMeshProUGUI>();
+        _deckRemoveGoldText = transform.Find("DeckRemoveButton/Gold/Text").GetComponent<TextMeshProUGUI>();
+
+        _reloadGoldText.SetText(_reloadGold.ToString());
+        _deckRemoveGoldText.SetText(_deckRemoveGold.ToString());
 
         Managers.Canvas.GetCanvas("Shop").enabled = false;
     }
@@ -26,8 +40,7 @@ public class ShopUI : MonoBehaviour
         Managers.Canvas.GetCanvas("MapUI").enabled = true;
     }
 
-
-    public void Open()
+    public void ShopItemReset()
     {
         for (int i = _storeShelf.transform.childCount - 1; i >= 0; --i)
         {
@@ -63,12 +76,7 @@ public class ShopUI : MonoBehaviour
 
         if (_selectItem == null) return;
 
-        if(Managers.Gold.Gold < _selectItem.item.Gold)
-        {
-            InfoMessage message = Managers.Resource.Instantiate("InfoMessage", transform).GetComponent<InfoMessage>();
-            message.Setup("돈이 부족합니다.", Input.GetTouch(0).position);
-            return;
-        }
+        if (GoldLessMessage(_selectItem.item.Gold)) return;
 
         _buyCheck.SetActive(true);
         _buyCheck.transform.localScale = Vector3.zero;
@@ -96,5 +104,39 @@ public class ShopUI : MonoBehaviour
         _keywardRunePanel.SetUI(null);
 
         _storeShelf.transform.GetComponentsInChildren<ShopItemPanelUI>().ForEach(x => x.GoldTextColorUpdate());
+    }
+
+    public void Reload()
+    {
+        if (GoldLessMessage(_reloadGold)) return;
+
+        ShopItemReset();
+        (Managers.Map.currentStage as ShopStage).ShopItemInit();
+        Managers.Gold.AddGold(-1 * _reloadGold);
+    }
+
+    public void DeckRemove()
+    {
+        if (GoldLessMessage(_deckRemoveGold)) return;
+
+        Managers.Gold.AddGold(-1 * _deckRemoveGold);
+        EventManager<RuneSelectMode>.TriggerEvent(Define.RUNE_EVENT_SETTING, RuneSelectMode.Delete);
+        Managers.UI.Get<Button>("NextStageButton_Button").onClick.AddListener(() =>
+        {
+            Managers.Canvas.GetCanvas("Adventure").enabled = false;
+            Managers.UI.Get<Button>("NextStageButton_Button").onClick.RemoveListener(() =>Managers.Canvas.GetCanvas("Adventure").enabled = false);
+        });
+    }
+
+    private bool GoldLessMessage(int gold)
+    {
+        if(Managers.Gold.Gold < gold)
+        {
+            InfoMessage message = Managers.Resource.Instantiate("InfoMessage", transform).GetComponent<InfoMessage>();
+            message.Setup("돈이 부족합니다.", Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position));
+            return true;
+        }
+
+        return false;
     }
 }
