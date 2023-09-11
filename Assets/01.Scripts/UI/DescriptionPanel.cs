@@ -8,7 +8,7 @@ public class DescriptionPanel : MonoBehaviour
     private TextMeshProUGUI _titleText;
     private TextMeshProUGUI _descriptionText;
 
-    private void Awake()
+    private void OnEnable()
     {
         _titleText = transform.Find("Title").GetComponent<TextMeshProUGUI>();
         _descriptionText = transform.Find("Description").GetComponent<TextMeshProUGUI>();
