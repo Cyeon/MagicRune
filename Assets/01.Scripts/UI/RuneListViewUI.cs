@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,6 +8,7 @@ public class RuneListViewUI : MonoBehaviour
 {
     protected GameObject _backgroundPanel = null;
     protected GameObject _scrollView = null;
+    protected CanvasGroup _canvasGroup = null;
 
     protected Transform _content = null;
     protected List<GameObject> _usingPanelList = new List<GameObject>();
@@ -17,6 +19,7 @@ public class RuneListViewUI : MonoBehaviour
     {
         _backgroundPanel = transform.Find("RuneListView_BGPanel").gameObject;
         _scrollView = transform.Find("RuneListView_ScrollView").gameObject;
+        _canvasGroup = _scrollView.GetComponent<CanvasGroup>();
         _content = _scrollView.transform.Find("Viewport").GetChild(0).transform;
 
         ActiveUI(false);
@@ -63,7 +66,7 @@ public class RuneListViewUI : MonoBehaviour
             panel.SetRune(baseRuneList[i]);
             panel.SetUI(baseRuneList[i].BaseRuneSO, baseRuneList[i].IsEnhanced);
             panel.transform.localScale = Vector3.one * 0.9f;
-            panel.transform.position = new Vector3(panel.transform.position.x, panel.transform.position.y, 0);
+            panel.transform.GetComponent<RectTransform>().DOAnchorPos3DZ(0, 0);
             _usingPanelList.Add(panel.gameObject);
 
             if (isCoolTime == false)
@@ -88,16 +91,32 @@ public class RuneListViewUI : MonoBehaviour
 
         if (isActive)
         {
+            _backgroundPanel.SetActive(isActive);
+            _scrollView.SetActive(isActive);
             Define.MapScene?.mapDial.DialLock();
             Define.DialScene?.Dial.DialLock();
+
+            _scrollView.transform.localScale = Vector3.one * 0.8f;
+            _canvasGroup.DOFade(1, 0);
+
+            Sequence seq = DOTween.Sequence();
+            seq.Append(_scrollView.transform.DOScale(Vector3.one * 1.05f, 0.1f).SetEase(Ease.OutExpo));
+            seq.Append(_scrollView.transform.DOScale(Vector3.one, 0.1f));
         }
         else
         {
-            Define.MapScene?.mapDial.DialUnlock();
-            Define.DialScene?.Dial.DialUnlock();
+            Sequence seq = DOTween.Sequence();
+            seq.Append(_scrollView.transform.DOScale(Vector3.one * 1.05f, 0.1f).SetEase(Ease.OutExpo));
+            seq.Append(_scrollView.transform.DOScale(Vector3.one * 0.8f, 0.1f));
+            seq.Join(_canvasGroup.DOFade(0, 0.1f).SetEase(Ease.InExpo));
+            seq.AppendCallback(() =>
+            {
+                Define.MapScene?.mapDial.DialUnlock();
+                Define.DialScene?.Dial.DialUnlock();
+                _backgroundPanel.SetActive(isActive);
+                _scrollView.SetActive(isActive);
+            });
         }
-        _backgroundPanel.SetActive(isActive);
-        _scrollView.SetActive(isActive);
     }
 
     protected void ActiveUI()

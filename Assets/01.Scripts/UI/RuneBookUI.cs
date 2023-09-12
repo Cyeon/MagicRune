@@ -28,6 +28,7 @@ public class RuneBookUI : RuneListViewUI
         _backgroundPanel = transform.Find("RuneListView_BGPanel").gameObject;
         _scrollView = transform.Find("RuneListView_ScrollView").gameObject;
         _content = _scrollView.transform.Find("Viewport").GetChild(0).transform;
+        _canvasGroup = _scrollView.GetComponent<CanvasGroup>();
 
         ActiveUI(true);
         _template = Managers.Resource.Load<RuneBookPanel>("Prefabs/UI/RunePanel/RuneBook");
