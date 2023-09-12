@@ -8,7 +8,14 @@ public class AttackStage : Stage
     {
         base.InStage();
 
-        Managers.Enemy.AddEnemy(Managers.Map.CurrentChapter.GetEnemy());
+        Enemy enemy = Managers.Map.CurrentChapter.GetEnemy();
+        if(enemy.enemyName == "기생충")
+        {
+            Enemy virtualEnemy = Managers.Map.CurrentChapter.GetEnemy();
+            virtualEnemy.isEnter = false;
+            Managers.Enemy.AddEnemy(virtualEnemy);
+        }
+        Managers.Enemy.AddEnemy(enemy);
         Managers.Scene.LoadScene(Define.Scene.DialScene);
     }
 }

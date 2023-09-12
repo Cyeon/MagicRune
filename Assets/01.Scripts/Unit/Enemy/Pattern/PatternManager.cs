@@ -128,12 +128,12 @@ public class PatternManager : MonoBehaviour
 
     public void StartAction()
     {
-        _currentPattern.StartAction();
+        _currentPattern?.StartAction();
     }
 
     public void EndAction()
     {
-        _currentPattern.EndAction();
+        _currentPattern?.EndAction();
     }
 
     public void UpdatePatternUI()
@@ -141,8 +141,6 @@ public class PatternManager : MonoBehaviour
         _patternSprite.sprite = _currentPattern.icon;
         _patternSprite.transform.localScale = _currentPattern.IconSize;
         _patternText.text = _currentPattern.desc;
-
-        
     }
 
     public Pattern GetNextPattern()
