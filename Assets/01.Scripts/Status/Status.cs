@@ -53,6 +53,8 @@ public enum StatusName
     BatUpgrade,        // 방망이 강화
     FlameBody,         // 화염신체
     DefencePosture,  // 방어자세
+    Frost,          // 서리
+    Armor,          // 갑옷   
     COUNT
 }
 
