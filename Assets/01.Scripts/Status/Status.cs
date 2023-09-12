@@ -56,6 +56,7 @@ public enum StatusName
     Frost,          // 서리
     Armor,          // 갑옷   
     MagneticField, // 자기장
+    Crouch, // 웅크리기
     COUNT
 }
 
