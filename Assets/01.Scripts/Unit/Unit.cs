@@ -74,6 +74,7 @@ public class Unit : MonoBehaviour
     [field: SerializeField] public UnityEvent OnTakeDamageFeedback { get; set; }
     public UnityEvent OnDieEvent;
     public Action OnGetDamage;
+    public UnityEvent OnTurnStart;
     public UnityEvent OnTurnEnd;
     #endregion
 

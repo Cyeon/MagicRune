@@ -97,7 +97,7 @@ public class BattleManager : MonoSingleton<BattleManager>
         if (Enemy.PatternManager.CurrentPattern == null) Enemy.PatternManager.NextPattern();
         else Enemy.PatternManager.CurrentPattern.NextPattern();
 
-        Player.StatusManager.OnTurnStart();
+        Player.OnTurnStart?.Invoke();
         Enemy.PatternManager.StartAction();
 
         if (Player.isTurnSkip == true)
@@ -113,7 +113,7 @@ public class BattleManager : MonoSingleton<BattleManager>
 
         EventManager.TriggerEvent(Define.ON_START_MONSTER_TURN);
 
-        Enemy.StatusManager.OnTurnStart();
+        Enemy.OnTurnStart?.Invoke();
         StartCoroutine(EnemyStatusWaitCoroutine());
     }
 

@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 5736046982554988565}
   - component: {fileID: 5014004267170453785}
   - component: {fileID: -4746811393546434561}
-  - component: {fileID: 3793459568047325578}
   m_Layer: 0
   m_Name: Status_Annoy
   m_TagString: Untagged
@@ -55,8 +54,7 @@ MonoBehaviour:
   isFirst: 1
   OnAddStatus: []
   OnTurnStart: []
-  OnAttack:
-  - {fileID: 3793459568047325578}
+  OnAttack: []
   OnGetDamage: []
   OnTurnEnd: []
   OnRemoveStatus: []
@@ -78,18 +76,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isUsing: 0
---- !u!114 &3793459568047325578
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8378743581122507794}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e9aabace8a6cbae4998938a7c31b1f63, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _addDamageType: 1
-  _damage: 0
-  _stackMultipleValue: 5
