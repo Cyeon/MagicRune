@@ -13,13 +13,13 @@ public class IceSmash : BaseRune
 
     public override bool AbilityCondition()
     {
-        return BattleManager.Instance.Enemy.StatusManager.GetStatus(StatusName.Ice) != null;
+        return BattleManager.Instance.Enemy.StatusManager.GetStatusValue(StatusName.Chilliness) >= 5;
     }
 
     public override void AbilityAction()
     {
-        BattleManager.Instance.Enemy.StatusManager.DeleteStatus(StatusName.Ice);
-        Managers.GetPlayer().Attack(GetAbliltiValue(EffectType.Attack),IsIncludeKeyword(KeywordName.Penetration));
+        BattleManager.Instance.Enemy.StatusManager.RemoveStatus(StatusName.Chilliness, 5);
+        Managers.GetPlayer().Attack(GetAbliltiValue(EffectType.Attack), IsIncludeKeyword(KeywordName.Penetration));
     }
 
     public override object Clone()
