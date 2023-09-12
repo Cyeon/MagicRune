@@ -8,7 +8,7 @@ public class AttackStage : Stage
     {
         base.InStage();
 
-        Managers.Enemy.AddEnemy(Managers.Map.CurrentChapter.GetEnemy();
+        Managers.Enemy.AddEnemy(Managers.Map.CurrentChapter.GetEnemy());
         Managers.Scene.LoadScene(Define.Scene.DialScene);
     }
 }
