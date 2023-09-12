@@ -80,7 +80,14 @@ public class BaseRune : Item, ICloneable
 
     public void SetCoolTime()
     {
-        _coolTime = _baseRuneSO.CoolTime;
+        if (_baseRuneSO.EnhancedCoolTime != -1)
+        {
+            _coolTime = _isEnhanced ? _baseRuneSO.EnhancedCoolTime : _baseRuneSO.CoolTime;
+        }
+        else
+        {
+            _coolTime = _baseRuneSO.CoolTime;
+        }
     }
 
     public void SetCoolTime(int value)
@@ -117,7 +124,7 @@ public class BaseRune : Item, ICloneable
     {
     }
 
-    public float GetAbliltiValue(EffectType type, StatusName status = StatusName.Null, float ? value = null)
+    public float GetAbliltiValue(EffectType type, StatusName status = StatusName.Null, float? value = null, int index = 0)
     {
         float? currentValue = 0;
         if (value != null)
@@ -128,11 +135,27 @@ public class BaseRune : Item, ICloneable
         {
             if (status == StatusName.Null)
             {
-                currentValue = (_isEnhanced ? _baseRuneSO.EnhancedAbilityList : _baseRuneSO.AbilityList).Where(x => x.EffectType == type).Select(x => x.Value).FirstOrDefault();
+                List<int> abilityList = (_isEnhanced ? _baseRuneSO.EnhancedAbilityList : _baseRuneSO.AbilityList).Where(x => x.EffectType == type).Select(x => x.Value).ToList();
+                if(abilityList.Count >= index + 1)
+                {
+                    currentValue = abilityList[index];
+                }
+                else
+                {
+                    currentValue = abilityList[0];
+                }
             }
             else
             {
-                currentValue = (_isEnhanced ? _baseRuneSO.EnhancedAbilityList : _baseRuneSO.AbilityList).Where(x => x.EffectType == type && x.StatusName == status).Select(x => x.Value).FirstOrDefault();
+                List<int> abilityList = (_isEnhanced ? _baseRuneSO.EnhancedAbilityList : _baseRuneSO.AbilityList).Where(x => x.EffectType == type && x.StatusName == status).Select(x => x.Value).ToList();
+                if (abilityList.Count >= index + 1)
+                {
+                    currentValue = abilityList[index];
+                }
+                else
+                {
+                    currentValue = abilityList[0];
+                }
             }
         }
 

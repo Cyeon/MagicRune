@@ -48,11 +48,14 @@ public class BaseRuneSO : ScriptableObject
     public string RuneDescription(in KeywordName[] keywordList, bool isEnhance = false)
     {
         string desc = IsUseEnhancedDesc ? isEnhance ? EnhancedRuneDescription : _runeDescription : _runeDescription;
-        desc = desc.Replace("(dmg)", GetAbillityValue(EffectType.Attack, isEnhance:isEnhance) + " 데미지");
+        desc = desc.Replace("(dmg)", GetAbillityValue(EffectType.Attack, isEnhance: isEnhance) + " 데미지");
         desc = desc.Replace("(status)", GetAbillityValue(EffectType.Status, isEnhance: isEnhance));
-        desc = desc.Replace("(def)", GetAbillityValue(EffectType.Defence, isEnhance: isEnhance)+ " 방어");
+        desc = desc.Replace("(status1)", GetAbillityValue(EffectType.Status, 1, isEnhance: isEnhance));
+        desc = desc.Replace("(def)", GetAbillityValue(EffectType.Defence, isEnhance: isEnhance) + " 방어");
         desc = desc.Replace("(dStatus)", GetAbillityValue(EffectType.DestroyStatus, isEnhance: isEnhance));
         desc = desc.Replace("(etc)", GetAbillityValue(EffectType.Etc, isEnhance: isEnhance));
+
+
 
         for (int i = 0; i < keywordList.Length; i++)
         {
@@ -72,6 +75,7 @@ public class BaseRuneSO : ScriptableObject
     public RuneRarity Rarity => _rarity;
 
     public int CoolTime;
+    public int EnhancedCoolTime = -1;
     public EffectDirection Direction;
     public AudioClip RuneSound;
 

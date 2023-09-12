@@ -20,6 +20,8 @@ public class RuneManager
         HandlerAdd(new RapidFire());
         HandlerAdd(new Reload());
         HandlerAdd(new TheLastShot());
+        HandlerAdd(new FireAwake());
+        HandlerAdd(new Arson());
 
         HandlerAdd(new Ice());
         HandlerAdd(new SnowBall());
