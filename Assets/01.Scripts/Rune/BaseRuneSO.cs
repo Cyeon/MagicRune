@@ -12,6 +12,7 @@ public class AbilityValue
 {
     public EffectType EffectType;
     public int Value;
+    public int Count = 1;
 
     [ConditionalField(nameof(EffectType), false, EffectType.Status, EffectType.DestroyStatus)]
     public StatusName StatusName;
@@ -100,6 +101,10 @@ public class BaseRuneSO : ScriptableObject
             {
                 string status = Resources.Load("Prefabs/Status/Status_" + abilities[index].StatusName).GetComponent<Status>().debugName;
                 text = (IsSeeAbilityValue ? value.ToString() : "") + " <color=#FFE951>" + status + "</color>";
+                if(abilities[index].Count > 1)
+                {
+                    text = (IsSeeAbilityValue ? value.ToString() : "") + " <color=#FFE951>" + status + "</color>" + "을 " + abilities[index].Count + "번";
+                }
             }
         }
 

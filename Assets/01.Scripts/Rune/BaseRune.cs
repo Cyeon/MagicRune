@@ -161,6 +161,21 @@ public class BaseRune : Item, ICloneable
         return value;
     }
 
+    public float GetCount(EffectType type, StatusName status = StatusName.Null)
+    {
+        float value = 0;
+        if (status == StatusName.Null)
+        {
+            value = (_isEnhanced ? _baseRuneSO.EnhancedAbilityList : _baseRuneSO.AbilityList).Where(x => x.EffectType == type).Select(x => x.Count).FirstOrDefault();
+        }
+        else
+        {
+            value = (_isEnhanced ? _baseRuneSO.EnhancedAbilityList : _baseRuneSO.AbilityList).Where(x => x.EffectType == type && x.StatusName == status).Select(x => x.Count).FirstOrDefault();
+        }
+
+        return value;
+    }
+
     public virtual object Clone()
     {
         BaseRune rune = new BaseRune();
