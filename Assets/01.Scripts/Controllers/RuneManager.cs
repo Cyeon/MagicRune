@@ -30,6 +30,8 @@ public class RuneManager
         HandlerAdd(new IceHeart());
         HandlerAdd(new AbsorptionChilliness());
         HandlerAdd(new BreathOfIceDragon());
+        HandlerAdd(new FlowerCold());
+        HandlerAdd(new SnowStorm());
 
         HandlerAdd(new ShieldAttack());
         HandlerAdd(new Attack());

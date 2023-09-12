@@ -13,7 +13,7 @@ public class Unit : MonoBehaviour
     public int MaxHP => _maxHealth;
 
     [SerializeField] private int _health = 10;
-    public int HP 
+    public int HP
     {
         get => _health;
         protected set
@@ -111,7 +111,7 @@ public class Unit : MonoBehaviour
         }
         userInfoUI = Managers.UI.Get<UserInfoUI>("Upper_Frame");
 
-       
+
     }
 
     public void TakeDamage(float damage, bool isTrueDamage = false, Status status = null)
@@ -251,9 +251,17 @@ public class Unit : MonoBehaviour
         }
     }
 
+    public void AddShieldPerccent(float value)
+    {
+        if (_isDie == false)
+        {
+            Shield += (int)(value / 100 * Shield);
+        }
+    }
+
     public void ResetShield()
     {
-        if(IsShiledReset)
+        if (IsShiledReset)
             Shield = 0;
     }
 
@@ -340,9 +348,9 @@ public class Unit : MonoBehaviour
 
     public virtual void UpdateShieldUI()
     {
-        if(_shield <= 0)
+        if (_shield <= 0)
         {
-            if(_shieldIcon.gameObject.activeSelf)
+            if (_shieldIcon.gameObject.activeSelf)
             {
                 _shieldIcon.gameObject.SetActive(false);
                 _shieldBarMat?.SetVector(MAT_POSITION_TEXT, Vector4.zero);
@@ -350,7 +358,7 @@ public class Unit : MonoBehaviour
             }
             return;
         }
-        else if(!_shieldIcon.gameObject.activeSelf)
+        else if (!_shieldIcon.gameObject.activeSelf)
         {
             _shieldIcon.gameObject.SetActive(true);
         }
@@ -365,7 +373,7 @@ public class Unit : MonoBehaviour
 
     public void PlayAnimation(string name)
     {
-        if(Animator != null)
+        if (Animator != null)
         {
             Animator.Play(name);
         }

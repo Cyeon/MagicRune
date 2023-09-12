@@ -18,7 +18,9 @@ public enum KeywordName
     CantEnhance, // 강화불과
     GroundBeat, // 땅울림
     SelfGeneration, // 자가발전
-    Bouncing // 척력
+    Bouncing, // 척력
+    Frost, // 서리
+    Armor // 갑옷
 }
 
 public enum KeywordType
