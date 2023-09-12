@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   chapterList:
   - chapterName: "\uB208\uC758 \uB300\uC9C0"
-    chapter: 2
+    chapter: 1
     background: {fileID: 21300000, guid: 3d675f80edceb684ea695886c6e12515, type: 3}
     minGold: 10
     maxGold: 50
@@ -37,13 +37,13 @@ MonoBehaviour:
     runeDropChanceList:
     - stageType: 0
       normal: 70
-      rare: 25
-      epic: 5
+      rare: 30
+      epic: 0
       legendary: 0
     - stageType: 6
-      normal: 30
+      normal: 50
       rare: 40
-      epic: 30
+      epic: 10
       legendary: 0
     - stageType: 4
       normal: 0
@@ -56,7 +56,7 @@ MonoBehaviour:
       epic: 5
       legendary: 0
   - chapterName: "\uBD88\uC758 \uB300\uC9C0"
-    chapter: 1
+    chapter: 2
     background: {fileID: 21300000, guid: 4e8218c476b985248a82e79dbad02319, type: 3}
     minGold: 25
     maxGold: 75
@@ -77,4 +77,24 @@ MonoBehaviour:
       - {fileID: 5383020803786264790, guid: 24bba75548fcabb4fa945c03c665738a, type: 3}
     eliteEnemyList:
     - {fileID: 5383020803786264790, guid: 32272b46329d0804aba5136ae6128147, type: 3}
-    runeDropChanceList: []
+    runeDropChanceList:
+    - stageType: 0
+      normal: 70
+      rare: 25
+      epic: 5
+      legendary: 0
+    - stageType: 6
+      normal: 50
+      rare: 35
+      epic: 15
+      legendary: 0
+    - stageType: 3
+      normal: 70
+      rare: 20
+      epic: 10
+      legendary: 0
+    - stageType: 4
+      normal: 0
+      rare: 0
+      epic: 100
+      legendary: 0
