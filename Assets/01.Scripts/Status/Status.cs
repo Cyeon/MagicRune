@@ -55,6 +55,7 @@ public enum StatusName
     DefencePosture,  // 방어자세
     Frost,          // 서리
     Armor,          // 갑옷   
+    MagneticField, // 자기장
     COUNT
 }
 

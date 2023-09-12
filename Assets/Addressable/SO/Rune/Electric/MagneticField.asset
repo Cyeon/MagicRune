@@ -12,21 +12,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 777df8c134fdc9843b8fb874038466f3, type: 3}
   m_Name: MagneticField
   m_EditorClassIdentifier: 
-  RuneName: 
-  RuneSprite: {fileID: 0}
-  _runeDescription: 
+  RuneName: "\uC790\uAE30\uC7A5"
+  RuneSprite: {fileID: 21300000, guid: aeb38f59eafa7db43ab43104248f88dd, type: 3}
+  _runeDescription: "\uCDA9\uC804\uC744 \uC5BB\uC744 \uB54C\uB9C8\uB2E4 {dmg}\uB97C
+    \uC900\uB2E4."
   IsUseEnhancedDesc: 0
   EnhancedRuneDescription: 
   IsSeeAbilityValue: 1
   DiscoveryType: 0
-  AttributeType: 0
-  RuneEffect: {fileID: 0}
-  _rarity: 0
+  AttributeType: 4
+  RuneEffect: {fileID: 554113071190007814, guid: 85cedb99dadde954a95bd959835489e2, type: 3}
+  _rarity: 1
   CoolTime: 0
   EnhancedCoolTime: -1
   Direction: 0
-  RuneSound: {fileID: 0}
-  AbilityList: []
-  EnhancedAbilityList: []
-  KeywardList: 
-  EnhancedKeywardList: 
+  RuneSound: {fileID: 8300000, guid: 017e03ca19501e34c9e1ac3785d7f698, type: 3}
+  AbilityList:
+  - EffectType: 2
+    Value: 2
+    StatusName: 0
+  EnhancedAbilityList:
+  - EffectType: 2
+    Value: 4
+    StatusName: 0
+  KeywardList: 0100000006000000
+  EnhancedKeywardList: 0100000006000000

@@ -20,7 +20,8 @@ public enum KeywordName
     SelfGeneration, // 자가발전
     Bouncing, // 척력
     Frost, // 서리
-    Armor // 갑옷
+    Armor, // 갑옷
+    MagneticField // 자기장
 }
 
 public enum KeywordType

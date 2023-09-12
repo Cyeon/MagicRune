@@ -12,21 +12,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 777df8c134fdc9843b8fb874038466f3, type: 3}
   m_Name: EnhanceArmor
   m_EditorClassIdentifier: 
-  RuneName: 
-  RuneSprite: {fileID: 0}
-  _runeDescription: 
+  RuneName: "\uAC15\uD654 \uAC11\uC637"
+  RuneSprite: {fileID: 21300000, guid: e9e8180c8a31f4849b3399886e9c75cc, type: 3}
+  _runeDescription: "(def)\uB97C \uD68D\uB4DD\uD558\uACE0, (status)\uB97C \uD68D\uB4DD\uD55C\uB2E4."
   IsUseEnhancedDesc: 0
   EnhancedRuneDescription: 
   IsSeeAbilityValue: 1
   DiscoveryType: 0
-  AttributeType: 0
-  RuneEffect: {fileID: 0}
-  _rarity: 0
-  CoolTime: 0
-  EnhancedCoolTime: -1
-  Direction: 0
-  RuneSound: {fileID: 0}
-  AbilityList: []
-  EnhancedAbilityList: []
-  KeywardList: 
-  EnhancedKeywardList: 
+  AttributeType: 5
+  RuneEffect: {fileID: 5122234373132822427, guid: b9244a59aea12c34b95d41d70dcb34eb, type: 3}
+  _rarity: 1
+  CoolTime: 4
+  EnhancedCoolTime: 3
+  Direction: 1
+  RuneSound: {fileID: 8300000, guid: 653cd4f25969a5f4eb9fa0a7e23b6561, type: 3}
+  AbilityList:
+  - EffectType: 1
+    Value: 7
+    StatusName: 0
+  - EffectType: 0
+    Value: 3
+    StatusName: 31
+  EnhancedAbilityList:
+  - EffectType: 1
+    Value: 10
+    StatusName: 0
+  - EffectType: 0
+    Value: 4
+    StatusName: 31
+  KeywardList: 0e000000
+  EnhancedKeywardList: 0e000000

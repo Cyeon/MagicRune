@@ -1,3 +1,4 @@
+using MyBox;
 using System.Collections;
 using UnityEngine;
 
@@ -9,7 +10,10 @@ public class MagneticField : BaseRune
         base.Init();
     }
 
-    
+    public override void AbilityAction()
+    {
+        BattleManager.Instance.Player.StatusManager.AddStatus(StatusName.MagneticField, GetAbliltiValue(EffectType.Status).RoundToInt());
+    }
 
     public override object Clone()
     {

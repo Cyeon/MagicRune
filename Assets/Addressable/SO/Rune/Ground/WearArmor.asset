@@ -12,21 +12,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 777df8c134fdc9843b8fb874038466f3, type: 3}
   m_Name: WearArmor
   m_EditorClassIdentifier: 
-  RuneName: 
-  RuneSprite: {fileID: 0}
-  _runeDescription: 
+  RuneName: "\uAC11\uC637 \uC7A5\uCC29"
+  RuneSprite: {fileID: 21300000, guid: c7380bd7f642523438616c3b581015ce, type: 3}
+  _runeDescription: "(status)\uC744 \uD68D\uB4DD\uD55C\uB2E4."
   IsUseEnhancedDesc: 0
   EnhancedRuneDescription: 
   IsSeeAbilityValue: 1
   DiscoveryType: 0
-  AttributeType: 0
-  RuneEffect: {fileID: 0}
+  AttributeType: 5
+  RuneEffect: {fileID: 5122234373132822427, guid: b9244a59aea12c34b95d41d70dcb34eb, type: 3}
   _rarity: 0
-  CoolTime: 0
-  EnhancedCoolTime: -1
-  Direction: 0
-  RuneSound: {fileID: 0}
-  AbilityList: []
-  EnhancedAbilityList: []
-  KeywardList: 
-  EnhancedKeywardList: 
+  CoolTime: 5
+  EnhancedCoolTime: 3
+  Direction: 1
+  RuneSound: {fileID: 8300000, guid: 653cd4f25969a5f4eb9fa0a7e23b6561, type: 3}
+  AbilityList:
+  - EffectType: 0
+    Value: 2
+    StatusName: 31
+  EnhancedAbilityList:
+  - EffectType: 0
+    Value: 2
+    StatusName: 31
+  KeywardList: 0e000000
+  EnhancedKeywardList: 0e000000
