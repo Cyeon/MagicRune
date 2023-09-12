@@ -9,6 +9,8 @@ public class EnemyManager
     private Enemy _currentEnemy;
     public Enemy CurrentEnemy => _currentEnemy;
 
+    private int _index = 0;
+
     public void BattleSetting()
     {
         List<Enemy> spawnEnemyList = new List<Enemy>();
@@ -19,11 +21,14 @@ public class EnemyManager
             enemy.OnDieEvent.RemoveAllListeners();
             enemy.OnDieEvent.AddListener(() => EnemyDie());
             enemy.OnDieEvent.AddListener(() => enemy.PatternManager.passive?.Disable());
+            enemy.gameObject.SetActive(false);
             spawnEnemyList.Add(enemy);
         }
 
+        _index = 0;
         _enemyList = spawnEnemyList;
-        _currentEnemy = _enemyList.GetRandom();
+        _currentEnemy = _enemyList[_index];
+        _currentEnemy.gameObject.SetActive(true);
     }
 
     public void ResetEnemy()
@@ -38,11 +43,19 @@ public class EnemyManager
 
     public void EnemyDie()
     {
-        _enemyList.Remove(CurrentEnemy);
-        if(_enemyList.Count == 0)
+        _index++;
+        if (_enemyList.Count == _index)
         {
             RewardPopup();
+            _currentEnemy.StopAllCoroutines();
             return;
+        }
+        else
+        {
+            _currentEnemy = _enemyList[_index];
+            _currentEnemy.gameObject.SetActive(true);
+            _currentEnemy.PatternManager.NextPattern();
+            BattleManager.Instance.TurnChange();
         }
     }
 

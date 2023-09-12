@@ -16,6 +16,7 @@ public class StatusManager
     public StatusManager(Unit unit)
     {
         _unit = unit;
+        _unit.OnTurnStart.AddListener(OnTurnStart);
         _unit.OnGetDamage += OnGetDamage;
     }
 

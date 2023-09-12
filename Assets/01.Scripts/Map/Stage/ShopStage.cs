@@ -20,20 +20,24 @@ public class ShopStage : Stage
         if (_shopUI == null)
             _shopUI = Managers.Canvas.GetCanvas("Shop").GetComponent<ShopUI>();
 
-        _shopUI.Open();
-
-        BaseRune[] rune = Managers.Rune.GetRandomRune(6,Managers.Deck.DefaultRune).ToArray();
-        for (int i = 0; i < 6; i++)
-        {
-            ShopRarityGold rarity = _shopRarityGoldList.Where(x => x.runeRarity == rune[i].BaseRuneSO.Rarity).FirstOrDefault();   
-            rune[i].SetRandomGold(rarity.minGold, rarity.maxGold);
-            _shopUI.RuneItemProduct(rune[i]);
-        }
+        _shopUI.ShopItemReset();
+        ShopItemInit();
     }
 
     public override void Init()
     {
         _shopUI = Managers.Canvas.GetCanvas("Shop").GetComponent<ShopUI>();
+    }
+
+    public void ShopItemInit()
+    {
+        BaseRune[] rune = Managers.Rune.GetRandomRune(6, Managers.Deck.DefaultRune).ToArray();
+        for (int i = 0; i < 6; i++)
+        {
+            ShopRarityGold rarity = _shopRarityGoldList.Where(x => x.runeRarity == rune[i].BaseRuneSO.Rarity).FirstOrDefault();
+            rune[i].SetRandomGold(rarity.minGold, rarity.maxGold);
+            _shopUI.RuneItemProduct(rune[i]);
+        }
     }
 }
 

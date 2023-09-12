@@ -85,6 +85,7 @@ public class RuneEventUI : MonoBehaviour
     private void SettingRunePanels(RuneSelectMode mode)
     {
         if (_runePanelList.Count > 0) { ReturnRunePanels(); }
+        Managers.Canvas.GetCanvas("Adventure").enabled = true;
 
         foreach (BaseRune rune in Managers.Deck.Deck)
         {
@@ -97,6 +98,7 @@ public class RuneEventUI : MonoBehaviour
                 selectPanel.SetMode(mode);
                 selectPanel.transform.SetParent(_content);
                 selectPanel.transform.localScale = Vector3.one;
+                selectPanel.GetComponent<RectTransform>().DOAnchorPos3DZ(-13320, 0);
                 _runePanelList.Add(selectPanel.gameObject);
             }
         }

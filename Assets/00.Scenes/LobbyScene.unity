@@ -701,6 +701,11 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 7999754305270541317, guid: e9631fd8042653b4b9b4eeca96454d79, type: 3}
   m_PrefabInstance: {fileID: 297978411}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &297978415 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 40838088356477425, guid: e9631fd8042653b4b9b4eeca96454d79, type: 3}
+  m_PrefabInstance: {fileID: 297978411}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &348654402
 GameObject:
   m_ObjectHideFlags: 0
@@ -1293,6 +1298,18 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 6552173832168128258, guid: e9631fd8042653b4b9b4eeca96454d79, type: 3}
   m_PrefabInstance: {fileID: 297978411}
   m_PrefabAsset: {fileID: 0}
+--- !u!225 &562637362
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 297978415}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &634625569
 GameObject:
   m_ObjectHideFlags: 0
@@ -3891,7 +3908,7 @@ MonoBehaviour:
       - m_Target: {fileID: 1161921226}
         m_TargetAssemblyTypeName: OptionUI, Assembly-CSharp
         m_MethodName: ActiveUI
-        m_Mode: 6
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine

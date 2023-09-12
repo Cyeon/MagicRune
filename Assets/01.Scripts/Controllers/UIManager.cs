@@ -6,6 +6,7 @@ using DG.Tweening;
 using TMPro;
 using System;
 using System.Linq;
+using UnityEngine.UIElements;
 
 public enum UIType
 {
@@ -214,5 +215,29 @@ public class UIManager
     public void Clear()
     {
         _destroyUIDict.Clear();
+    }
+
+    public void UIPopup(Transform popupTrm, CanvasGroup canvasGroup, bool isOpen = true, TweenCallback callback = null)
+    {
+        if(isOpen)
+        {
+            popupTrm.localScale = Vector3.one * 0.8f;
+            canvasGroup.DOFade(1, 0);
+
+            Sequence seq = DOTween.Sequence();
+            seq.Append(popupTrm.DOScale(Vector3.one * 1.05f, 0.1f).SetEase(Ease.OutExpo));
+            seq.Append(popupTrm.DOScale(Vector3.one, 0.1f));
+        }
+        else
+        {
+            Sequence seq = DOTween.Sequence();
+            seq.Append(popupTrm.DOScale(Vector3.one * 1.05f, 0.1f).SetEase(Ease.OutExpo));
+            seq.Append(popupTrm.DOScale(Vector3.one * 0.8f, 0.1f));
+            seq.Join(canvasGroup.DOFade(0, 0.1f).SetEase(Ease.InExpo));
+            if(callback != null)
+            {
+                seq.AppendCallback(callback);
+            }
+        }
     }
 }

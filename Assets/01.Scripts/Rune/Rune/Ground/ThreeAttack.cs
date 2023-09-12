@@ -13,7 +13,7 @@ public class ThreeAttack : BaseRune
 
     public override void AbilityAction()
     {
-        for(int i = 0; i < GetValue(EffectType.Status); i++)
+        for(int i = 0; i < GetCount(EffectType.Status); i++)
         {
             BattleManager.Instance.Enemy.StatusManager.AddStatus(StatusName.Impact, GetAbliltiValue(EffectType.Status, value:(GetValue(EffectType.Status) / GetValue(EffectType.Status))).RoundToInt());
         }

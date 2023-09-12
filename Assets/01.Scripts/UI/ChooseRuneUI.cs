@@ -28,11 +28,13 @@ public class ChooseRuneUI : MonoBehaviour
             {
                 Managers.Deck.AddRune(Managers.Rune.GetRune(_selectRewardRunePanel.Basic.Rune));
                 Define.DialScene?.HideChooseRuneUI();
-
-                if (Managers.Reward.IsHaveNextClickReward())
+                _selectRewardRunePanel.SelectRuneEffect(0.5f, () =>
                 {
-                    BattleManager.Instance.NextStage();
-                }
+                    if (Managers.Reward.IsHaveNextClickReward())
+                    {
+                        BattleManager.Instance.NextStage();
+                    }
+                });
             }
         });
     }

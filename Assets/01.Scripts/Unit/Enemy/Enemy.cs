@@ -62,7 +62,6 @@ public class Enemy : Unit
         seq.AppendCallback(() =>
         {
             OnDieEvent?.Invoke();
-            StopAllCoroutines();
             Managers.Resource.Destroy(gameObject);
         });
 
