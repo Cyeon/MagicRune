@@ -22,7 +22,7 @@ public class RuneListViewUI : MonoBehaviour
         _canvasGroup = _scrollView.GetComponent<CanvasGroup>();
         _content = _scrollView.transform.Find("Viewport").GetChild(0).transform;
 
-        ActiveUI(false);
+        ActiveOff();
 
         _backgroundPanel.GetComponent<Button>().onClick.AddListener(() =>
         {
@@ -96,27 +96,23 @@ public class RuneListViewUI : MonoBehaviour
             Define.MapScene?.mapDial.DialLock();
             Define.DialScene?.Dial.DialLock();
 
-            _scrollView.transform.localScale = Vector3.one * 0.8f;
-            _canvasGroup.DOFade(1, 0);
-
-            Sequence seq = DOTween.Sequence();
-            seq.Append(_scrollView.transform.DOScale(Vector3.one * 1.05f, 0.1f).SetEase(Ease.OutExpo));
-            seq.Append(_scrollView.transform.DOScale(Vector3.one, 0.1f));
+            Managers.UI.UIPopup(_scrollView.transform, _canvasGroup);
         }
         else
         {
-            Sequence seq = DOTween.Sequence();
-            seq.Append(_scrollView.transform.DOScale(Vector3.one * 1.05f, 0.1f).SetEase(Ease.OutExpo));
-            seq.Append(_scrollView.transform.DOScale(Vector3.one * 0.8f, 0.1f));
-            seq.Join(_canvasGroup.DOFade(0, 0.1f).SetEase(Ease.InExpo));
-            seq.AppendCallback(() =>
+            Managers.UI.UIPopup(_scrollView.transform, _canvasGroup, false, () =>
             {
-                Define.MapScene?.mapDial.DialUnlock();
-                Define.DialScene?.Dial.DialUnlock();
-                _backgroundPanel.SetActive(isActive);
-                _scrollView.SetActive(isActive);
+                ActiveOff();
             });
         }
+    }
+
+    private void ActiveOff()
+    {
+        Define.MapScene?.mapDial.DialUnlock();
+        Define.DialScene?.Dial.DialUnlock();
+        _backgroundPanel.SetActive(false);
+        _scrollView.SetActive(false);
     }
 
     protected void ActiveUI()

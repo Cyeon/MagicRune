@@ -1809,6 +1809,7 @@ GameObject:
   - component: {fileID: 4056931235406678884}
   - component: {fileID: 4056931235406678885}
   - component: {fileID: 79424037557533858}
+  - component: {fileID: 1277357751423092528}
   m_Layer: 5
   m_Name: OptionPanel_Image
   m_TagString: Untagged
@@ -1836,7 +1837,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: -0.0000076293945}
   m_SizeDelta: {x: 1140, y: 2494}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4056931235406678884
@@ -1908,6 +1909,18 @@ MonoBehaviour:
   allowChangeSize: 1
   disableOnStart: 0
   settings: {fileID: 11400000, guid: 19a960b6dee4ca444928b817d66a256d, type: 2}
+--- !u!225 &1277357751423092528
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4056931235406678887}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &4056931235417178315
 GameObject:
   m_ObjectHideFlags: 0

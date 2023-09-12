@@ -10,9 +10,12 @@ public class OptionUI : MonoBehaviour
     private GameObject _panels = null;
     private GameObject _warningPanel = null;
 
+    private CanvasGroup _optionPanelCanvasGroup;
+
     private void Start()
     {
         _panels = transform.Find("Panels").gameObject;
+        _optionPanelCanvasGroup = _panels.transform.GetComponentInChildren<CanvasGroup>();
 
         Managers.UI.Bind<Slider>("Master_Slider", this.gameObject);
         Managers.UI.Bind<Slider>("BGM_Slider", this.gameObject);
@@ -55,17 +58,23 @@ public class OptionUI : MonoBehaviour
     public void ActiveUI()
     {
         _isUsing = !_isUsing;
-        _panels.SetActive(_isUsing);
 
         if (_isUsing)
         {
+            _panels.SetActive(_isUsing);
             Define.MapScene?.mapDial.DialLock();
             Define.DialScene?.Dial.DialLock();
+
+            Managers.UI.UIPopup(_optionPanelCanvasGroup.transform, _optionPanelCanvasGroup);
         }
         else
         {
-            Define.MapScene?.mapDial.DialUnlock();
-            Define.DialScene?.Dial.DialUnlock();
+            Managers.UI.UIPopup(_optionPanelCanvasGroup.transform, _optionPanelCanvasGroup, false, () =>
+            {
+                Define.MapScene?.mapDial.DialUnlock();
+                Define.DialScene?.Dial.DialUnlock();
+                _panels.SetActive(_isUsing);
+            });
         }
     }
 
