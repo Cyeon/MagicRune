@@ -94,6 +94,7 @@ public class BaseRuneSO : ScriptableObject
     {
         List<AbilityValue> abilities = (isEnhance ? EnhancedAbilityList : AbilityList).Where(x => x.EffectType == type).ToList();
         if (abilities.Count == 0) return "";
+        if (abilities.Count <= index) return "";
 
         float? value = abilities[index].Value;
         Managers.StatModifier.GetStatModifierValue(type, ref value);
