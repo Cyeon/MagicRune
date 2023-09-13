@@ -9,9 +9,9 @@ public class DefByDamageAttackAction : AttackAction
         damage = Mathf.FloorToInt(Enemy.Shield);
         count = 1;
 
-        Enemy.PatternManager.CurrentPattern.desc = Mathf.FloorToInt(Enemy.Shield).ToString();
+        Enemy.PatternManager.CurrentPattern.patternValue = Mathf.FloorToInt(Enemy.Shield).ToString();
         Enemy.PatternManager.UpdatePatternUI();
-        Pattern.DescriptionInit();
+        //Pattern.DescriptionInit();
 
         base.StartAction();
     }

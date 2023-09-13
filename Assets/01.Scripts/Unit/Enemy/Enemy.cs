@@ -13,6 +13,8 @@ public class Enemy : Unit
         None
     }
 
+    public int shieldValue = 0;
+
     [Header("Enemy Info")]
     public string enemyName;
     public EnemyType enemyType = EnemyType.Ice;
@@ -44,8 +46,7 @@ public class Enemy : Unit
     public override void Attack(float damage, bool isTrueDamage = false)
     {
         base.Attack(damage);
-        BattleManager.Instance.Player?.TakeDamage(currentDmg, isTrueDamage);
-        currentDmg = 0;
+        BattleManager.Instance.Player?.TakeDamage(attackDamage, isTrueDamage);
     }
 
     public override void Die()
@@ -65,6 +66,13 @@ public class Enemy : Unit
             Managers.Resource.Destroy(gameObject);
         });
 
+    }
+
+    public void ValueInit()
+    {
+        attackDamage = 0;
+        takeDamage = 0;
+        shieldValue = 0;
     }
 
     private void OnDestroy()

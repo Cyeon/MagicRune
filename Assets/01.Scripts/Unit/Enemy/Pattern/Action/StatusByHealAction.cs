@@ -12,7 +12,7 @@ public class StatusByHealAction : PatternAction
     private void Start()
     {
         _value = Enemy.StatusManager.GetStatusValue(_status) / 2;
-        Enemy.PatternManager.CurrentPattern.desc = _value.ToString();
+        Enemy.PatternManager.CurrentPattern.patternValue = _value.ToString();
         Enemy.PatternManager.UpdatePatternUI();
     }
 

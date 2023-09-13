@@ -85,6 +85,8 @@ public class Status : MonoBehaviour
     public List<StatusEvent> OnGetDamage = new List<StatusEvent>();
     public List<StatusEvent> OnTurnEnd = new List<StatusEvent>();
     public List<StatusEvent> OnRemoveStatus = new List<StatusEvent>();
+    public List<StatusEvent> DamageApplyEvent = new List<StatusEvent>();
+    public List<StatusEvent> ShieldApplyEvent = new List<StatusEvent>();
 
     [Header("Resource")]
     [ShowAssetPreview(32, 32)] public Sprite icon;

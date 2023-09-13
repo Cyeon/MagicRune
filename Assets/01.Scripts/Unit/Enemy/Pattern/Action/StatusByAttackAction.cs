@@ -14,7 +14,7 @@ public class StatusByAttackAction : PatternAction
     {
         _damage = Enemy.StatusManager.GetStatusValue(_status);
 
-        Enemy.PatternManager.CurrentPattern.desc = _damage.ToString();
+        Enemy.PatternManager.CurrentPattern.patternValue = _damage.ToString();
         Enemy.PatternManager.UpdatePatternUI();
 
         base.StartAction();

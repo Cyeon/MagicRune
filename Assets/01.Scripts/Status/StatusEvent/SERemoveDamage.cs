@@ -32,11 +32,11 @@ public class SERemoveDamage : StatusEvent
 
         if (removeType == RemoveType.Percent)
         {
-            unit.currentDmg -= (int)(unit.currentDmg * (_percent / 100));
+            unit.attackDamage -= (int)(unit.attackDamage * (_percent / 100));
         }
         else
         {
-            unit.currentDmg -= _value;
+            unit.attackDamage -= _value;
         }
     }
 }

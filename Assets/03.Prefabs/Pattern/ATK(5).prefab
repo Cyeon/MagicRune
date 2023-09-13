@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 7352810476857305136}
   - component: {fileID: 8697291763106708325}
-  - component: {fileID: 1309250264985964211}
   m_Layer: 0
   m_Name: ATK(5)
   m_TagString: Untagged
@@ -46,29 +45,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   patternName: "\uACF5\uACA9"
-  desc: 5
-  PatternDescription: "\uACF5\uACA9 \uD569\uB2C8\uB2E4."
-  patternActionDescList:
-  - {fileID: 1309250264985964211}
+  patternValue: 
+  PatternDescription: 
+  patternActionDescList: []
   isIncluding: 1
+  patternType: 0
+  atkDamage: 5
+  atkCount: 1
+  isTrueDmg: 0
+  atkDamageApplyList: []
+  defValue: 0
+  statusName: 0
+  statusValue: 0
+  isSelf: 0
   icon: {fileID: 21300000, guid: 0ba7bc4db41d35e4099b792db367a0fa, type: 3}
   _iconSize: 1
   startPatternAction: []
-  turnPatternAction:
-  - {fileID: 1309250264985964211}
+  turnPatternAction: []
   endPatternAction: []
   transitions: []
---- !u!114 &1309250264985964211
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4171619748698988129}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: db7864d3a61bcc14a99708ff1475ef25, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damage: 5
-  count: 1

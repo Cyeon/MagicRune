@@ -81,8 +81,10 @@ public class PatternManager : MonoBehaviour
     {
         _beforePattern = _currentPattern;
         _currentPattern = pattern;
+        Managers.Enemy.CurrentEnemy.ValueInit();
+        pattern.Init();
+
         UpdatePatternUI();
-        pattern.DescriptionInit();
 
         if (_patternPopup == null)
             _patternPopup = Managers.Canvas.GetCanvas("Popup").transform.GetComponentInChildren<PatternPopup>();
@@ -140,7 +142,7 @@ public class PatternManager : MonoBehaviour
     {
         _patternSprite.sprite = _currentPattern.icon;
         _patternSprite.transform.localScale = _currentPattern.IconSize;
-        _patternText.text = _currentPattern.desc;
+        _patternText.text = _currentPattern.patternValue;
     }
 
     public Pattern GetNextPattern()

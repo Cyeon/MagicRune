@@ -14,7 +14,7 @@ public class AnnoyAction : PatternAction
             _attackAction.damage += 5;
         }
 
-        Enemy.PatternManager.CurrentPattern.desc = _attackAction.damage.ToString();
+        Enemy.PatternManager.CurrentPattern.patternValue = _attackAction.damage.ToString();
         Enemy.PatternManager.UpdatePatternUI();
         base.StartAction();
     }

@@ -32,12 +32,12 @@ public class SEAddStatus : StatusEvent
         }
 
         if (unit == null || unit.StatusManager == null) return;
-        if(_unit.currentDmg > 0)
+        if(_unit.attackDamage > 0)
         {
             switch(_addStackType)
             {
                 case AddStackType.Dmg:
-                    _value = Mathf.FloorToInt(_unit.currentDmg * _damageMultiple);
+                    _value = Mathf.FloorToInt(_unit.attackDamage * _damageMultiple);
                     unit.StatusManager.AddStatus(_statusName, _value);
                     break;
 

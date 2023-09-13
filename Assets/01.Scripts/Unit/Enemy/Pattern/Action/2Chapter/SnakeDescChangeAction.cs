@@ -15,7 +15,7 @@ public class SnakeDescChangeAction : AttackAction
             snake = Enemy.PatternManager.passive as SnakeScale;
         }
 
-        Enemy.PatternManager.CurrentPattern.desc = (damage + (damage * (snake.IncreasePercent / 100))).ToString();
+        Enemy.PatternManager.CurrentPattern.patternValue = (damage + (damage * (snake.IncreasePercent / 100))).ToString();
         Enemy.PatternManager.UpdatePatternUI();
     }
 }
