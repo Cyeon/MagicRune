@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using NaughtyAttributes;
+using System;
 
 public class TutorialUI : MonoBehaviour
 {
@@ -80,6 +81,18 @@ public class TutorialUI : MonoBehaviour
         //}
     }
 
+    private void Update()
+    {
+        if(_imageName == "LineChange")
+        {
+            if (_index == 3)
+            {
+                Define.DialScene.Dial.DialElementList[1].IsGlow = true;
+            }
+        }
+        // Line Change 연출
+    }
+
     public void Tutorial(string imageName, int index = 0)
     {
         _imageName = imageName;
@@ -99,6 +112,11 @@ public class TutorialUI : MonoBehaviour
         switch (imageName)
         {
             case "Tutorial":
+                if (_attackTutorialImage)
+                {
+                    _attackTutorialImage.gameObject.SetActive(false);
+                    _attackTutorialImage.GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
+                }
                 _circleReverseMaskRect.gameObject.SetActive(true);
                 _circleReverseMaskRect.sizeDelta = new Vector2(1400, 1400);
                 _circleReverseMaskRect.anchoredPosition = new Vector2(0, -1280);
@@ -131,17 +149,6 @@ public class TutorialUI : MonoBehaviour
                 //_tutorialImage.gameObject.SetActive(true);
                 break;
             case "LineChange":
-
-                // Line Change 연출
-                //if(index == 2)
-                //{
-                //    Define.DialScene.Dial.DialElementList[2].IsGlow = true;
-                //}
-                //else if(index == 3)
-                //{
-                //    Define.DialScene.Dial.LineSwap(2, 1);
-                //}
-
                 if (_tutorialDialogue[keyIndex]?.Value.Count == index)
                 {
                     _tutorialImage.sprite = null;
@@ -185,6 +192,11 @@ public class TutorialUI : MonoBehaviour
                 
                 break;
             case "MapDial":
+                if (_tutorialDialogue[keyIndex]?.Value.Count - 1 == index)
+                {
+                    _attackTutorialImage.gameObject.SetActive(true);
+                    _attackTutorialImage.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 832f);
+                }
                 _circleReverseMaskRect.gameObject.SetActive(true);
                 _circleReverseMaskRect.sizeDelta = new Vector2(1300, 1300);
                 _circleReverseMaskRect.anchoredPosition = new Vector2(0, -510);
@@ -244,8 +256,15 @@ public class TutorialUI : MonoBehaviour
                     break;
 
                 case "LineChange":
-                    _index = 1;
-                    Tutorial("RuneCycle", _index);
+                    //_index = 1;
+                    //Tutorial("RuneCycle", _index);
+                    _tutorialImage.gameObject.SetActive(false);
+                    BattleManager.Instance.TurnChange();
+                    TutorialMessage("라인체인지를\n해보세요!");
+                    Define.DialScene.Dial.DialUnlock();
+                    Define.DialScene.Dial.SetAttackable(false);
+                    _circleReverseMaskRect.gameObject.SetActive(false);
+                    Define.DialScene.Dial.OnLineChange += LineChangeAction;
                     break;
 
                 case "Deck_Explain":
@@ -296,7 +315,25 @@ public class TutorialUI : MonoBehaviour
 
         Define.DialScene.Dial.OnDialAttack -= AttackTutorialImageDown;
 
+        _index = 1;
+        
         Tutorial("LineChange", _index);
+        Managers.Canvas.GetCanvas("Main").enabled = true;
+        //Managers.Canvas.GetCanvas("Popup").enabled = true;
+    }
+
+    public void LineChangeAction()
+    {
+        BattleManager.Instance.TurnChange();
+        _tutorialMessage.enabled = false;
+        Define.DialScene.Dial.DialLock();
+        Define.DialScene.Dial.SetAttackable(true);
+        Define.DialScene.Dial.OnLineChange -= LineChangeAction;
+        _tutorialImage.gameObject.SetActive(true);
+        _circleReverseMaskRect.gameObject.SetActive(true);
+
+        _index = 1;
+        Tutorial("RuneCycle", _index);
         Managers.Canvas.GetCanvas("Main").enabled = true;
     }
 

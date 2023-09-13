@@ -75,6 +75,11 @@ public class RuneStarPanel : StarPanel<BaseRuneUI, BaseRune>
             _dial.AllMagicCircleGlow(false);
             (_dial.DialElementList[2] as RuneDialElement).EffectHandler.EditAllEffectScale(1f);
         });
+        Managers.Swipe.AddAction(SwipeType.TouchEnd, (touch) =>
+        {
+            _dial.AllMagicCircleGlow(false);
+            (_dial.DialElementList[2] as RuneDialElement).EffectHandler.EditAllEffectScale(1f);
+        });
         #endregion
     }
 }

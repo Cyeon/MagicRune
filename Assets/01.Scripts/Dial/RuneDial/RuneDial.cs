@@ -18,8 +18,6 @@ public class RuneDial : Dial<BaseRuneUI, BaseRune>
 
     private Resonance _resonance;
 
-    public Action OnDialAttack;
-
     protected override void Awake()
     {
         base.Awake();

@@ -52,6 +52,11 @@ public class Dial<T1, T2> : MonoBehaviour where T1 : MonoBehaviour where T2 : cl
     public bool IsAttack => _isAttack;
     protected virtual bool _isAttackCondition { get; }
 
+    private bool _attackable = true;
+
+    public Action OnDialAttack = null;
+    public Action OnLineChange = null;
+
     protected virtual void Awake()
     {
         #region Initialization 
@@ -76,6 +81,7 @@ public class Dial<T1, T2> : MonoBehaviour where T1 : MonoBehaviour where T2 : cl
 
     protected virtual void Start()
     {
+        SetAttackable(true);
         SettingDialRune(true);
 
         //Debug.Log($"{Quaternion.Euler(new Vector3(0, 0, 60)).eulerAngles}, {Quaternion.Euler(new Vector3(0, 0, 300)).eulerAngles}");
@@ -208,7 +214,7 @@ public class Dial<T1, T2> : MonoBehaviour where T1 : MonoBehaviour where T2 : cl
         if (fLine == sLine) yield break;
 
         if (_elementDict.ContainsKey(fLine) == false || _elementDict.ContainsKey(sLine) == false)
-        {
+        {  
             //Debug.LogWarning("Not have Key");
             yield break;
         }
@@ -294,6 +300,8 @@ public class Dial<T1, T2> : MonoBehaviour where T1 : MonoBehaviour where T2 : cl
         {
             _dialElementList[i].SelectElement = null;
         }
+
+        OnLineChange?.Invoke();
     }
 
     public float GetAngleRadian(float dx, float dy)
@@ -498,6 +506,7 @@ public class Dial<T1, T2> : MonoBehaviour where T1 : MonoBehaviour where T2 : cl
 
     public virtual void Attack()
     {
+        if (_attackable == false) return;
         if (MagicEmpty() == true) return;
 
         if (_isAttack == true) return;
@@ -536,5 +545,10 @@ public class Dial<T1, T2> : MonoBehaviour where T1 : MonoBehaviour where T2 : cl
     public void DialUnlock()
     {
         _dialElementList.ForEach(x => x.IsDialLock = false);
+    }
+
+    public void SetAttackable(bool value)
+    {
+        _attackable = value;
     }
 }

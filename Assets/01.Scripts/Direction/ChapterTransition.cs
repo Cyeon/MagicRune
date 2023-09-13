@@ -50,7 +50,7 @@ public class ChapterTransition : MonoBehaviour
             Managers.Canvas.GetCanvas("MapDial").enabled = true;
             Define.MapScene.mapDial.gameObject.SetActive(true);
             if (Define.SaveData.IsTutorial)
-                Managers.Canvas.GetCanvas("TutorialCanvas").GetComponent<TutorialUI>().Tutorial("MapDial");
+                Managers.Canvas.GetCanvas("TutorialCanvas").GetComponent<TutorialUI>().Tutorial("MapDial", 1);
         });
     }
 
