@@ -206,6 +206,32 @@ public class StatusManager
         }
     }
 
+    public void DamageApply()
+    {
+        if (_unit.IsDie) return;
+
+        for (int i = 0; i < _statusList.Count; ++i)
+        {
+            if (_statusList[i] != null && _statusList[i].DamageApplyEvent.Count > 0)
+            {
+                _statusList[i].DamageApplyEvent.ForEach(x => x?.Invoke());
+            }
+        }
+    }
+
+    public void ShieldApply()
+    {
+        if (_unit.IsDie) return;
+
+        for (int i = 0; i < _statusList.Count; ++i)
+        {
+            if (_statusList[i] != null && _statusList[i].ShieldApplyEvent.Count > 0)
+            {
+                _statusList[i].ShieldApplyEvent.ForEach(x => x?.Invoke());
+            }
+        }
+    }
+
     public void TurnChange()
     {
         if (_unit.IsDie) return;

@@ -10,7 +10,7 @@ public class BreathAction : PatternAction
     public override void StartAction()
     {
         _damage = 50;
-        Enemy.PatternManager.CurrentPattern.desc = _damage.ToString();
+        Enemy.PatternManager.CurrentPattern.patternValue = _damage.ToString();
         Enemy.PatternManager.UpdatePatternUI();
 
         Enemy.OnTakeDamage.AddListener(ReduceDamage);
@@ -20,13 +20,13 @@ public class BreathAction : PatternAction
     public override void TurnAction()
     {
         Enemy.OnTakeDamage.RemoveListener(ReduceDamage);
-        Enemy.Attack(_damage);
+        //Enemy.Attack(_damage);
         base.TurnAction();
     }
 
     private void ReduceDamage(float damage)
     {
         this._damage -= damage.RoundToInt();
-        Enemy.PatternManager.CurrentPattern.desc = _damage.ToString();
+        Enemy.PatternManager.CurrentPattern.patternValue = _damage.ToString();
     }
 }

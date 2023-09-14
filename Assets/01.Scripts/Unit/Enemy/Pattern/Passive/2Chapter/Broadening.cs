@@ -27,6 +27,6 @@ public class Broadening : Passive
     
     private void ApplyDamage()
     {
-        Player.currentDmg += _increaseDamage;
+        Player.attackDamage += _increaseDamage;
     }
 }

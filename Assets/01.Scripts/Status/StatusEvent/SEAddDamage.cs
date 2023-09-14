@@ -24,6 +24,6 @@ public class SEAddDamage : StatusEvent
         {
             _damage = _status.TypeValue * _stackMultipleValue;
         }
-        _unit.currentDmg += _damage;
+        _unit.attackDamage += _damage;
     }
 }

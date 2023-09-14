@@ -12,7 +12,7 @@ public class BoomAction : PatternAction
             Enemy.StatusManager.AddStatus(StatusName.Boom, 3);
         }
 
-        Enemy.PatternManager.CurrentPattern.desc = Enemy.StatusManager.GetStatusValue(StatusName.Boom).ToString();
+        Enemy.PatternManager.CurrentPattern.patternValue = Enemy.StatusManager.GetStatusValue(StatusName.Boom).ToString();
         Enemy.PatternManager.UpdatePatternUI();
 
         base.StartAction();

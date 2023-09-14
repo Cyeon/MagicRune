@@ -10,8 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 7192248380551847130}
   - component: {fileID: 1824320877133604958}
-  - component: {fileID: 3068509022203192149}
-  - component: {fileID: 6754113318494335556}
   m_Layer: 0
   m_Name: DEF(10) + S_DefencePosture(1)
   m_TagString: Untagged
@@ -46,50 +44,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2192153269515d74695b667fe90c4d36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  patternName: "\uBC29\uC5B4\uC790\uC138"
-  desc: 10
+  patternName: "\uBC29\uC5B4"
+  patternValue: 
   PatternDescription: "\uBC29\uC5B4 \uD6C4 \uBC29\uC5B4\uC790\uC138\uB97C \uCDE8\uD569\uB2C8\uB2E4.\n\uBC29\uC5B4\uC790\uC138\uC77C\uB54C
     \uACF5\uACA9\uC744 \uB2F9\uD558\uBA74 \uD55C\uAE30\uB97C \uBD80\uC5EC\uD569\uB2C8\uB2E4."
-  patternActionDescList:
-  - {fileID: 3068509022203192149}
-  - {fileID: 6754113318494335556}
+  patternActionDescList: []
   isIncluding: 1
+  patternType: 4
+  atkDamage: 0
+  atkCount: 1
+  isTrueDmg: 0
+  atkDamageApplyList: []
+  defValue: 10
+  shieldTime: 1
+  statusName: 29
+  statusValue: 1
+  isSelf: 1
+  addStatusTime: 1
   icon: {fileID: 21300000, guid: 00a92de8403a42f4cb60e33128bf59d5, type: 3}
   _iconSize: 0.3
   startPatternAction: []
-  turnPatternAction:
-  - {fileID: 3068509022203192149}
-  - {fileID: 6754113318494335556}
+  turnPatternAction: []
   endPatternAction: []
   transitions: []
---- !u!114 &3068509022203192149
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7733052563598830544}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cfa8887165156c64fa123504b8100fe4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  amount: 10
---- !u!114 &6754113318494335556
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7733052563598830544}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 76e453d0137dffa4c86b004096088636, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  status: 29
-  value: 1
-  isSelf: 1
 --- !u!1001 &506993743257104010
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -273,6 +250,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8697291763106708325, guid: d1772a6a0b275c04bbe588d77c8f0836, type: 3}
       propertyPath: desc
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 8697291763106708325, guid: d1772a6a0b275c04bbe588d77c8f0836, type: 3}
+      propertyPath: atkDamage
       value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []

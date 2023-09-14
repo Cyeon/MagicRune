@@ -20,7 +20,7 @@ public class FierceCharge : Passive
     {
         if(Player.Shield > 0)
         {
-            Player.currentDmg += Player.currentDmg * (_increasePercent / 100);
+            Player.attackDamage += Player.attackDamage * (_increasePercent / 100);
         }
     }
 }

@@ -9,7 +9,7 @@ public class CounterAction : PatternAction
     public override void StartAction()
     {
         _damage = Enemy.PatternManager.BeforePattern.GetComponent<CombitReadinessAction>().absorbDamage;
-        Enemy.PatternManager.CurrentPattern.desc = _damage.ToString();
+        Enemy.PatternManager.CurrentPattern.patternValue = _damage.ToString();
         Enemy.PatternManager.UpdatePatternUI();
 
         base.StartAction();
@@ -17,7 +17,7 @@ public class CounterAction : PatternAction
 
     public override void TurnAction()
     {
-        Enemy.Attack(_damage);
+        //Enemy.Attack(_damage);
         base.TurnAction();
     }
 }

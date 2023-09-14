@@ -24,10 +24,12 @@ public class Player : Unit
         relicTrm = transform.Find("Relic");
     }
 
-    public override void Attack(float dmg, bool isTrueDamage = false)
+    public void Attack(float dmg, bool isTrueDamage = false)
     {
-        base.Attack(dmg, ref isTrueDamage);
-        BattleManager.Instance.Enemy.TakeDamage(currentDmg, isTrueDamage);
+        attackDamage = dmg.RoundToInt();
+        StatusManager.DamageApply();
+        base.Attack(ref isTrueDamage);
+        BattleManager.Instance.Enemy.TakeDamage(attackDamage, isTrueDamage);
     }
 
     public void VisualInit(VisualPlayer vp)

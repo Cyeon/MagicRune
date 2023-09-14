@@ -10,9 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 8649418972959301899}
   - component: {fileID: 698958297900863906}
-  - component: {fileID: 3796768261319830033}
   m_Layer: 0
-  m_Name: S_Web
+  m_Name: S_Web(1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -46,34 +45,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   patternName: "\uAC70\uBBF8\uC904"
-  desc: 
+  patternValue: 
   PatternDescription: "\uAC70\uBBF8\uC904\uC744 \uBC1C\uC0AC\uD569\uB2C8\uB2E4.\n\uBC29\uC5B4\uB825\uC774
     \uBD80\uC5EC\uB420 \uB584 \uC218\uCE58\uAC00 \uAC10\uC18C\uD569\uB2C8\uB2E4."
   patternActionDescList:
-  - {fileID: 3796768261319830033}
+  - {fileID: 0}
   isIncluding: 1
+  patternType: 5
+  atkDamage: 0
+  atkCount: 1
+  isTrueDmg: 0
+  atkDamageApplyList: []
+  defValue: 0
+  statusName: 9
+  statusValue: 1
+  isSelf: 0
   icon: {fileID: 21300000, guid: 8aceab54fa11a5946a739b2e61680c96, type: 3}
   _iconSize: 0.4
   startPatternAction: []
   turnPatternAction:
-  - {fileID: 3796768261319830033}
+  - {fileID: 0}
   endPatternAction: []
   transitions: []
---- !u!114 &3796768261319830033
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2971983514629148634}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 76e453d0137dffa4c86b004096088636, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  status: 9
-  value: 1
-  isSelf: 0
 --- !u!1001 &2720846871861208481
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -131,6 +124,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5349265969605113265, guid: 067aea58a56db9f4ebb6d5715dd0926e, type: 3}
       propertyPath: desc
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 5349265969605113265, guid: 067aea58a56db9f4ebb6d5715dd0926e, type: 3}
+      propertyPath: defValue
       value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 8788963309790822074, guid: 067aea58a56db9f4ebb6d5715dd0926e, type: 3}
@@ -374,6 +371,10 @@ PrefabInstance:
       propertyPath: desc
       value: 20
       objectReference: {fileID: 0}
+    - target: {fileID: 8697291763106708325, guid: d1772a6a0b275c04bbe588d77c8f0836, type: 3}
+      propertyPath: atkDamage
+      value: 20
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d1772a6a0b275c04bbe588d77c8f0836, type: 3}
 --- !u!1001 &8470271732647091009
@@ -437,6 +438,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8697291763106708325, guid: d1772a6a0b275c04bbe588d77c8f0836, type: 3}
       propertyPath: desc
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 8697291763106708325, guid: d1772a6a0b275c04bbe588d77c8f0836, type: 3}
+      propertyPath: atkDamage
       value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []

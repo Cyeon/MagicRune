@@ -10,8 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 6836659432020473506}
   - component: {fileID: 2629544043619287590}
-  - component: {fileID: 1709897805151865133}
-  - component: {fileID: 3416203433038841916}
   m_Layer: 0
   m_Name: DEF(10) + S_Fire(10)
   m_TagString: Untagged
@@ -47,47 +45,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   patternName: "\uBC29\uC5B4&\uD654\uC0C1"
-  desc: 10
+  patternValue: 
   PatternDescription: "\uBC29\uC5B4 \uD6C4 \uD50C\uB808\uC774\uC5B4\uC5D0\uAC8C \uD654\uC0C1\uC744
     \uBD80\uC5EC\uD569\uB2C8\uB2E4."
   patternActionDescList: []
   isIncluding: 1
+  patternType: 4
+  atkDamage: 0
+  atkCount: 1
+  isTrueDmg: 0
+  atkDamageApplyList: []
+  defValue: 10
+  shieldTime: 1
+  statusName: 1
+  statusValue: 10
+  isSelf: 0
+  addStatusTime: 1
   icon: {fileID: 21300000, guid: a73a585ed1e79044cb3db5b656893459, type: 3}
   _iconSize: 3
   startPatternAction: []
-  turnPatternAction:
-  - {fileID: 1709897805151865133}
-  - {fileID: 3416203433038841916}
+  turnPatternAction: []
   endPatternAction: []
   transitions: []
---- !u!114 &1709897805151865133
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6232449832162148776}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cfa8887165156c64fa123504b8100fe4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  amount: 10
---- !u!114 &3416203433038841916
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6232449832162148776}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 76e453d0137dffa4c86b004096088636, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  status: 1
-  value: 10
-  isSelf: 0
 --- !u!1001 &3927241957304435079
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -351,6 +330,10 @@ PrefabInstance:
       propertyPath: desc
       value: 15
       objectReference: {fileID: 0}
+    - target: {fileID: 8697291763106708325, guid: d1772a6a0b275c04bbe588d77c8f0836, type: 3}
+      propertyPath: atkDamage
+      value: 15
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d1772a6a0b275c04bbe588d77c8f0836, type: 3}
 --- !u!1001 &6709607068637391811
@@ -471,6 +454,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8697291763106708325, guid: d1772a6a0b275c04bbe588d77c8f0836, type: 3}
       propertyPath: desc
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 8697291763106708325, guid: d1772a6a0b275c04bbe588d77c8f0836, type: 3}
+      propertyPath: atkDamage
       value: 15
       objectReference: {fileID: 0}
     m_RemovedComponents: []

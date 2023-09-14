@@ -21,6 +21,11 @@ public class PatternAction : MonoBehaviour
 
     public virtual string Description => "";
 
+    public virtual void DamageApplyAction()
+    {
+        BattleManager.Instance.Enemy.PatternManager.CurrentPattern.NextAction();
+    }
+
     public virtual void StartAction()
     {
         BattleManager.Instance.Enemy.PatternManager.CurrentPattern.NextAction();

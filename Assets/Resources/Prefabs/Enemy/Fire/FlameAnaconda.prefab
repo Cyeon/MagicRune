@@ -59,6 +59,10 @@ PrefabInstance:
       propertyPath: desc
       value: 20
       objectReference: {fileID: 0}
+    - target: {fileID: 5349265969605113265, guid: 067aea58a56db9f4ebb6d5715dd0926e, type: 3}
+      propertyPath: defValue
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 8788963309790822074, guid: 067aea58a56db9f4ebb6d5715dd0926e, type: 3}
       propertyPath: amount
       value: 20
@@ -279,15 +283,27 @@ PrefabInstance:
       value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 8697291763106708325, guid: d1772a6a0b275c04bbe588d77c8f0836, type: 3}
+      propertyPath: atkDamage
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 8697291763106708325, guid: d1772a6a0b275c04bbe588d77c8f0836, type: 3}
       propertyPath: startPatternAction.Array.size
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8697291763106708325, guid: d1772a6a0b275c04bbe588d77c8f0836, type: 3}
       propertyPath: turnPatternAction.Array.data[0]
       value: 
       objectReference: {fileID: 9109564837449597847}
     - target: {fileID: 8697291763106708325, guid: d1772a6a0b275c04bbe588d77c8f0836, type: 3}
+      propertyPath: patternActionDescList.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8697291763106708325, guid: d1772a6a0b275c04bbe588d77c8f0836, type: 3}
       propertyPath: startPatternAction.Array.data[0]
+      value: 
+      objectReference: {fileID: 9109564837449597847}
+    - target: {fileID: 8697291763106708325, guid: d1772a6a0b275c04bbe588d77c8f0836, type: 3}
+      propertyPath: patternActionDescList.Array.data[0]
       value: 
       objectReference: {fileID: 9109564837449597847}
     m_RemovedComponents:
@@ -376,15 +392,27 @@ PrefabInstance:
       value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 8697291763106708325, guid: d1772a6a0b275c04bbe588d77c8f0836, type: 3}
+      propertyPath: atkDamage
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 8697291763106708325, guid: d1772a6a0b275c04bbe588d77c8f0836, type: 3}
       propertyPath: startPatternAction.Array.size
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8697291763106708325, guid: d1772a6a0b275c04bbe588d77c8f0836, type: 3}
       propertyPath: turnPatternAction.Array.data[0]
       value: 
       objectReference: {fileID: 5028357092482529189}
     - target: {fileID: 8697291763106708325, guid: d1772a6a0b275c04bbe588d77c8f0836, type: 3}
+      propertyPath: patternActionDescList.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8697291763106708325, guid: d1772a6a0b275c04bbe588d77c8f0836, type: 3}
       propertyPath: startPatternAction.Array.data[0]
+      value: 
+      objectReference: {fileID: 5028357092482529189}
+    - target: {fileID: 8697291763106708325, guid: d1772a6a0b275c04bbe588d77c8f0836, type: 3}
+      propertyPath: patternActionDescList.Array.data[0]
       value: 
       objectReference: {fileID: 5028357092482529189}
     m_RemovedComponents:
@@ -409,7 +437,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 15
   count: 1
---- !u!1001 &9027019292360377244
+--- !u!1001 &8725157577981333159
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -463,10 +491,6 @@ PrefabInstance:
     - target: {fileID: 4635358189758614321, guid: 8e0edaab70846ff48b821bde38e61d69, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6839995153294088292, guid: 8e0edaab70846ff48b821bde38e61d69, type: 3}
-      propertyPath: PatternDescription
-      value: "\uC544\uBB34 \uD589\uB3D9\uB3C4 \uD558\uC9C0 \uC54A\uC2B5\uB2C8\uB2E4."
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8e0edaab70846ff48b821bde38e61d69, type: 3}

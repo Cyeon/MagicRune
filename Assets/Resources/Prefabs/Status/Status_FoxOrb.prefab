@@ -55,11 +55,13 @@ MonoBehaviour:
   isFirst: 1
   OnAddStatus: []
   OnTurnStart: []
-  OnAttack:
-  - {fileID: 7392289059857716425}
+  OnAttack: []
   OnGetDamage: []
   OnTurnEnd: []
   OnRemoveStatus: []
+  DamageApplyEvent:
+  - {fileID: 7392289059857716425}
+  ShieldApplyEvent: []
   icon: {fileID: 21300000, guid: 2d3e2be60a3271840b5c287eb771e56b, type: 3}
   color: {r: 1, g: 1, b: 1, a: 1}
   statusSoundType: 2

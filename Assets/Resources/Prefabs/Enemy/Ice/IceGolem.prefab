@@ -46,17 +46,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   patternName: "\uACF5\uACA9"
-  desc: 
+  patternValue: 
   PatternDescription: "\uBC29\uC5B4\uB825\uB9CC\uD07C \uACF5\uACA9\uD569\uB2C8\uB2E4."
   patternActionDescList:
   - {fileID: 9013268665869361177}
   isIncluding: 1
+  patternType: 0
+  atkDamage: 0
+  atkCount: 1
+  isTrueDmg: 0
+  atkDamageApplyList:
+  - {fileID: 9013268665869361177}
+  defValue: 0
+  shieldTime: 1
+  statusName: 0
+  statusValue: 0
+  isSelf: 0
+  addStatusTime: 1
   icon: {fileID: 21300000, guid: 0ba7bc4db41d35e4099b792db367a0fa, type: 3}
   _iconSize: 1
-  startPatternAction:
-  - {fileID: 9013268665869361177}
-  turnPatternAction:
-  - {fileID: 9013268665869361177}
+  startPatternAction: []
+  turnPatternAction: []
   endPatternAction: []
   transitions: []
 --- !u!114 &9013268665869361177
@@ -71,8 +81,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 291b65b7a47648541b892fa28ebf538e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 0
-  count: 0
 --- !u!1001 &15440920040738014
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -130,6 +138,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5349265969605113265, guid: 067aea58a56db9f4ebb6d5715dd0926e, type: 3}
       propertyPath: desc
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 5349265969605113265, guid: 067aea58a56db9f4ebb6d5715dd0926e, type: 3}
+      propertyPath: defValue
       value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 8788963309790822074, guid: 067aea58a56db9f4ebb6d5715dd0926e, type: 3}

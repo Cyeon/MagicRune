@@ -136,7 +136,9 @@ public class BaseRune : Item, ICloneable
             if (status == StatusName.Null)
             {
                 List<int> abilityList = (_isEnhanced ? _baseRuneSO.EnhancedAbilityList : _baseRuneSO.AbilityList).Where(x => x.EffectType == type).Select(x => x.Value).ToList();
-                if(abilityList.Count >= index + 1)
+                if (abilityList.Count == 0) return 0;
+                
+                if(abilityList.Count > index)
                 {
                     currentValue = abilityList[index];
                 }
