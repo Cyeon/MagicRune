@@ -146,7 +146,7 @@ public class Pattern : MonoBehaviour
 
         if (startPatternAction.Count > _actionIndex)
         {
-            startPatternAction[_actionIndex].StartAction();
+            startPatternAction[_actionIndex]?.StartAction();
         }
     }
 
@@ -179,7 +179,7 @@ public class Pattern : MonoBehaviour
         _patternTime = patternInvokeTime.turn;
         if (turnPatternAction.Count > _actionIndex)
         {
-            turnPatternAction[_actionIndex].TurnAction();
+            turnPatternAction[_actionIndex]?.TurnAction();
         }
         else
         {
@@ -197,7 +197,7 @@ public class Pattern : MonoBehaviour
         _patternTime = patternInvokeTime.end;
         if (endPatternAction.Count > _actionIndex)
         {
-            endPatternAction[_actionIndex].EndAction();
+            endPatternAction[_actionIndex]?.EndAction();
         }
     }
 
@@ -215,7 +215,7 @@ public class Pattern : MonoBehaviour
                 actions = startPatternAction;
                 if (actions.Count > _actionIndex)
                 {
-                    actions[_actionIndex].StartAction();
+                    actions[_actionIndex]?.StartAction();
                 }
                 break;
 
@@ -227,14 +227,14 @@ public class Pattern : MonoBehaviour
                     BattleManager.Instance.Enemy.PatternManager.PatternEnd();
                     return;
                 }
-                actions[_actionIndex].TurnAction();
+                actions[_actionIndex]?.TurnAction();
                 break;
 
             case patternInvokeTime.end:
                 actions = endPatternAction;
                 if (actions.Count > _actionIndex)
                 {
-                    actions[_actionIndex].EndAction();
+                    actions[_actionIndex]?.EndAction();
                 }
                 break;
 
@@ -242,7 +242,7 @@ public class Pattern : MonoBehaviour
                 actions = atkDamageApplyList;
                 if (actions.Count > _actionIndex)
                 {
-                    actions[_actionIndex].DamageApplyAction();
+                    actions[_actionIndex]?.DamageApplyAction();
                 }
                 break;
         }

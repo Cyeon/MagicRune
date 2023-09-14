@@ -6,7 +6,7 @@ public class DefByAddDamageAction : PatternAction
 {
     public override void DamageApplyAction()
     {
-        Enemy.attackDamage += Mathf.FloatToHalf(Enemy.Shield);
+        Enemy.attackDamage += Mathf.FloorToInt(Enemy.Shield);
 
         base.DamageApplyAction();
     }

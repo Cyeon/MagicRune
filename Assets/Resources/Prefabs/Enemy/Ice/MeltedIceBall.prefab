@@ -13,7 +13,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 745667645257002067, guid: e3d3191409c41c74f86b2d5b17c961de, type: 3}
       propertyPath: defValue
-      value: 5
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 745667645257002067, guid: e3d3191409c41c74f86b2d5b17c961de, type: 3}
+      propertyPath: atkDamage
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 745667645257002067, guid: e3d3191409c41c74f86b2d5b17c961de, type: 3}
+      propertyPath: patternName
+      value: "\uACF5\uACA9"
+      objectReference: {fileID: 0}
+    - target: {fileID: 745667645257002067, guid: e3d3191409c41c74f86b2d5b17c961de, type: 3}
+      propertyPath: patternType
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 745667645257002067, guid: e3d3191409c41c74f86b2d5b17c961de, type: 3}
       propertyPath: PatternDescription
@@ -73,7 +85,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7641596251399786317, guid: e3d3191409c41c74f86b2d5b17c961de, type: 3}
       propertyPath: m_Name
-      value: ATK(10) + DEF(5)
+      value: ATK(6)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e3d3191409c41c74f86b2d5b17c961de, type: 3}
@@ -200,7 +212,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4543cc10e5da3f446866b797452db1ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  passiveIcon: {fileID: 0}
+  passiveIcon: {fileID: 21300000, guid: a5db22c227c15dd4892c1c0960af2ce3, type: 3}
   passiveName: "\uB208 \uBC29\uD328"
   passiveDescription: "\uB9E4 \uD134 \uBC29\uC5B4 5\uB97C \uC5BB\uC2B5\uB2C8\uB2E4.5"
   _addShieldValue: 5
