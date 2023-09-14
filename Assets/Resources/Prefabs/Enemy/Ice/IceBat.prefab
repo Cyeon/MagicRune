@@ -270,7 +270,7 @@ PrefabInstance:
     - target: {fileID: 8697291763106708325, guid: d1772a6a0b275c04bbe588d77c8f0836, type: 3}
       propertyPath: atkDamageApplyList.Array.data[0]
       value: 
-      objectReference: {fileID: 3760812711231615481}
+      objectReference: {fileID: 9087003361323630883}
     - target: {fileID: 8697291763106708325, guid: d1772a6a0b275c04bbe588d77c8f0836, type: 3}
       propertyPath: patternActionDescList.Array.size
       value: 0
@@ -278,11 +278,11 @@ PrefabInstance:
     - target: {fileID: 8697291763106708325, guid: d1772a6a0b275c04bbe588d77c8f0836, type: 3}
       propertyPath: startPatternAction.Array.data[0]
       value: 
-      objectReference: {fileID: 3760812711231615481}
+      objectReference: {fileID: 0}
     - target: {fileID: 8697291763106708325, guid: d1772a6a0b275c04bbe588d77c8f0836, type: 3}
       propertyPath: patternActionDescList.Array.data[0]
       value: 
-      objectReference: {fileID: 3760812711231615481}
+      objectReference: {fileID: 9087003361323630883}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d1772a6a0b275c04bbe588d77c8f0836, type: 3}
 --- !u!1 &6849260321431982778 stripped
@@ -290,7 +290,7 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 4171619748698988129, guid: d1772a6a0b275c04bbe588d77c8f0836, type: 3}
   m_PrefabInstance: {fileID: 7415713305627757787}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &3760812711231615481
+--- !u!114 &9087003361323630883
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -299,7 +299,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 6849260321431982778}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0041d31a5ef34ec489437cf29efd4ea0, type: 3}
+  m_Script: {fileID: 11500000, guid: cf2a2ff1b0a40e04c9a7894969d37288, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  annoyMutiple: 5
+  _status: 24
+  _multiple: 5
+  _isDelete: 0

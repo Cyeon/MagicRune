@@ -275,12 +275,6 @@ public class Pattern : MonoBehaviour
         BattleManager.Instance.Enemy.PatternManager.NextPattern();
     }
 
-    public void ChangePatternValue(string description)
-    {
-        patternValue = description;
-        Managers.Enemy.CurrentEnemy.PatternManager.UpdatePatternUI();
-    }
-
     private void DescriptionInit()
     {
         patternActionDescList?.ForEach(x => _patternDescList.Add(x.Description));
