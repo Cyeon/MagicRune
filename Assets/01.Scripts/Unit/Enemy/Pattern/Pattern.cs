@@ -172,7 +172,12 @@ public class Pattern : MonoBehaviour
         if (patternType == PatternType.Status || patternType == PatternType.AtkStatus || patternType == PatternType.DefStatus)
         {
             if(addStatusTime == patternInvokeTime.turn)
-                Managers.Enemy.CurrentEnemy.StatusManager.AddStatus(statusName, statusValue);
+            {
+                if(isSelf)
+                    Managers.Enemy.CurrentEnemy.StatusManager.AddStatus(statusName, statusValue);
+                else
+                    Managers.GetPlayer().StatusManager.AddStatus(statusName, statusValue);
+            }
         }
 
         _actionIndex = 0;
