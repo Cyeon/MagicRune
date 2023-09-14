@@ -11,7 +11,7 @@ public class SEReflectionDamage : StatusEvent
         base.Invoke();
 
         if (_unit == null) return;
-        _unit.attackDamage += Mathf.FloorToInt(_unit.attackDamage * (_percent * 0.01f));
+        _unit.attackDamage += Mathf.FloorToInt(_unit.takeDamage * (_percent * 0.01f));
         _unit.Attack();
     }
 }
