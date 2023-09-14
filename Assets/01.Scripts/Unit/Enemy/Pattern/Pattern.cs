@@ -157,7 +157,10 @@ public class Pattern : MonoBehaviour
     {
         if (patternType == PatternType.Attack || patternType == PatternType.AtkDef || patternType == PatternType.AtkStatus)
         {
-            Managers.Enemy.CurrentEnemy.Attack(isTrueDmg);
+            for(int i = 0; i < atkCount; i++)
+            {
+                Managers.Enemy.CurrentEnemy.Attack(isTrueDmg);
+            }
         }
 
         if (patternType == PatternType.Defence || patternType == PatternType.AtkDef || patternType == PatternType.DefStatus)
