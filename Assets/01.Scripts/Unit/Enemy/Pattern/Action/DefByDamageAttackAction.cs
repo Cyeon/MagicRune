@@ -2,22 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DefByDamageAttackAction : AttackAction
+public class DefByDamageAttackAction : PatternAction
 {
-    public override void StartAction()
+    public override void DamageApplyAction()
     {
-        damage = Mathf.FloorToInt(Enemy.Shield);
-        count = 1;
+        Enemy.attackDamage += Mathf.FloatToHalf(Enemy.Shield);
 
-        Enemy.PatternManager.CurrentPattern.patternValue = Mathf.FloorToInt(Enemy.Shield).ToString();
-        Enemy.PatternManager.UpdatePatternUI();
-        //Pattern.DescriptionInit();
-
-        base.StartAction();
-    }
-
-    public override void TurnAction()
-    {
-        base.TurnAction();
+        base.DamageApplyAction();
     }
 }

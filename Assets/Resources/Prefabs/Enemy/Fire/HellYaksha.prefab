@@ -46,12 +46,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   patternName: "\uBC29\uB9DD\uC774 \uAC15\uD654"
-  desc: 
+  patternValue: 
   PatternDescription: "\uCCB4\uB825\uC744 10 \uC783\uACE0 \uACF5\uACA9\uB825 10\uC774
     \uC99D\uAC00\uD569\uB2C8\uB2E4."
   patternActionDescList:
   - {fileID: 4132859099865691816}
   isIncluding: 1
+  patternType: 6
+  atkDamage: 0
+  atkCount: 1
+  isTrueDmg: 0
+  atkDamageApplyList: []
+  defValue: 0
+  statusName: 0
+  statusValue: 0
+  isSelf: 0
+  addStatusTime: 1
   icon: {fileID: 21300000, guid: 60bb393fd8d81254c8403b0303ad61be, type: 3}
   _iconSize: 0.25
   startPatternAction: []
@@ -82,7 +92,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1783682631149576184}
   - component: {fileID: 5012217743403193968}
-  - component: {fileID: 5468850753501765587}
   m_Layer: 0
   m_Name: S_FlameBody(1)
   m_TagString: Untagged
@@ -118,33 +127,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   patternName: "\uD654\uC5FC\uC2E0\uCCB4"
-  desc: 
+  patternValue: 
   PatternDescription: "\uBCF8\uC778\uD55C\uD14C <color=#F9B41F>\uC774\uB85C\uC6B4
     \uD6A8\uACFC</color> \uB97C \uBD80\uC5EC \uC911 \uC785\uB2C8\uB2E4."
   patternActionDescList: []
   isIncluding: 1
+  patternType: 5
+  atkDamage: 0
+  atkCount: 1
+  isTrueDmg: 0
+  atkDamageApplyList: []
+  defValue: 0
+  statusName: 28
+  statusValue: 1
+  isSelf: 1
+  addStatusTime: 0
   icon: {fileID: 21300000, guid: 03fa3f79c79669e4192ccd59157677ff, type: 3}
   _iconSize: 0.25
-  startPatternAction:
-  - {fileID: 5468850753501765587}
+  startPatternAction: []
   turnPatternAction: []
   endPatternAction: []
   transitions: []
---- !u!114 &5468850753501765587
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2042829363367617831}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 76e453d0137dffa4c86b004096088636, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  status: 28
-  value: 1
-  isSelf: 1
 --- !u!1001 &189640030405182722
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -212,6 +215,14 @@ PrefabInstance:
       propertyPath: desc
       value: 10x2
       objectReference: {fileID: 0}
+    - target: {fileID: 8697291763106708325, guid: d1772a6a0b275c04bbe588d77c8f0836, type: 3}
+      propertyPath: atkCount
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8697291763106708325, guid: d1772a6a0b275c04bbe588d77c8f0836, type: 3}
+      propertyPath: atkDamage
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d1772a6a0b275c04bbe588d77c8f0836, type: 3}
 --- !u!1001 &1812236149858508480
@@ -276,6 +287,10 @@ PrefabInstance:
     - target: {fileID: 8697291763106708325, guid: d1772a6a0b275c04bbe588d77c8f0836, type: 3}
       propertyPath: desc
       value: 5x4
+      objectReference: {fileID: 0}
+    - target: {fileID: 8697291763106708325, guid: d1772a6a0b275c04bbe588d77c8f0836, type: 3}
+      propertyPath: atkCount
+      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d1772a6a0b275c04bbe588d77c8f0836, type: 3}

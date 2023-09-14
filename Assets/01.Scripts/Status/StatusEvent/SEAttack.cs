@@ -4,11 +4,12 @@ using UnityEngine;
 
 public class SEAttack : StatusEvent
 {
-    [SerializeField] private float _damage;
+    [SerializeField] private int _damage;
 
     public override void Invoke()
     {
         base.Invoke();
-        _unit.Attack(_damage);
+        _unit.attackDamage = _damage;
+        _unit.Attack();
     }
 }

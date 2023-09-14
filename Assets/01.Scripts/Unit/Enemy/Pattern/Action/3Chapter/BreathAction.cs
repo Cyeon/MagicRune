@@ -20,7 +20,7 @@ public class BreathAction : PatternAction
     public override void TurnAction()
     {
         Enemy.OnTakeDamage.RemoveListener(ReduceDamage);
-        Enemy.Attack(_damage);
+        //Enemy.Attack(_damage);
         base.TurnAction();
     }
 

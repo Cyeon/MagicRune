@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5280210576495206581}
   - component: {fileID: 6340929083592913888}
-  - component: {fileID: 2525333318819458252}
   m_Layer: 0
   m_Name: S_Chilliness(5)
   m_TagString: Untagged
@@ -46,33 +45,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   patternName: "\uD55C\uAE30\uBD80\uC5EC"
-  desc: 5
-  PatternDescription: "\uD55C\uAE30 5\uB97C \uBD80\uC5EC\uD569\uB2C8\uB2E4."
-  patternActionDescList:
-  - {fileID: 2525333318819458252}
+  patternValue: 
+  PatternDescription: 
+  patternActionDescList: []
   isIncluding: 1
+  patternType: 5
+  atkDamage: 0
+  atkCount: 1
+  isTrueDmg: 0
+  atkDamageApplyList: []
+  defValue: 0
+  statusName: 5
+  statusValue: 5
+  isSelf: 0
   icon: {fileID: 21300000, guid: 1769a7719333303468d34d7a842bb025, type: 3}
   _iconSize: 0.2
   startPatternAction: []
   turnPatternAction:
-  - {fileID: 2525333318819458252}
+  - {fileID: 0}
   endPatternAction: []
   transitions: []
---- !u!114 &2525333318819458252
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1633099878851499748}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 76e453d0137dffa4c86b004096088636, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  status: 5
-  value: 5
-  isSelf: 0
 --- !u!1001 &5083933973787597495
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -134,6 +126,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8697291763106708325, guid: d1772a6a0b275c04bbe588d77c8f0836, type: 3}
       propertyPath: desc
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 8697291763106708325, guid: d1772a6a0b275c04bbe588d77c8f0836, type: 3}
+      propertyPath: atkDamage
       value: 20
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -199,6 +195,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8697291763106708325, guid: d1772a6a0b275c04bbe588d77c8f0836, type: 3}
       propertyPath: desc
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 8697291763106708325, guid: d1772a6a0b275c04bbe588d77c8f0836, type: 3}
+      propertyPath: atkDamage
       value: 20
       objectReference: {fileID: 0}
     m_RemovedComponents: []

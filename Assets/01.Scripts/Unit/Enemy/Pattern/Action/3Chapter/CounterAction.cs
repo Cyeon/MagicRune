@@ -17,7 +17,7 @@ public class CounterAction : PatternAction
 
     public override void TurnAction()
     {
-        Enemy.Attack(_damage);
+        //Enemy.Attack(_damage);
         base.TurnAction();
     }
 }

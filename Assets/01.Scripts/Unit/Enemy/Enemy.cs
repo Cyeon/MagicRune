@@ -43,9 +43,9 @@ public class Enemy : Unit
         transform.localPosition = new Vector3(2.5f, 5.5f, 0);
     }
 
-    public override void Attack(float damage, bool isTrueDamage = false)
+    public override void Attack(bool isTrueDamage = false)
     {
-        base.Attack(damage);
+        base.Attack(isTrueDamage);
         BattleManager.Instance.Player?.TakeDamage(attackDamage, isTrueDamage);
     }
 

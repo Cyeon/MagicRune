@@ -46,11 +46,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   patternName: "\uC544\uC774\uC2A4 \uBE0C\uB808\uC2A4"
-  desc: 
+  patternValue: 
   PatternDescription: "\uACF5\uACA9 \uD569\uB2C8\uB2E4."
   patternActionDescList:
   - {fileID: 910949132635187451}
   isIncluding: 1
+  patternType: 6
+  atkDamage: 0
+  atkCount: 1
+  isTrueDmg: 0
+  atkDamageApplyList: []
+  defValue: 0
+  statusName: 0
+  statusValue: 0
+  isSelf: 0
   icon: {fileID: 21300000, guid: 0ba7bc4db41d35e4099b792db367a0fa, type: 3}
   _iconSize: 1
   startPatternAction: []
@@ -138,6 +147,10 @@ PrefabInstance:
       propertyPath: desc
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 8697291763106708325, guid: d1772a6a0b275c04bbe588d77c8f0836, type: 3}
+      propertyPath: atkDamage
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d1772a6a0b275c04bbe588d77c8f0836, type: 3}
 --- !u!1001 &7275048090074382418
@@ -206,6 +219,10 @@ PrefabInstance:
     - target: {fileID: 8697291763106708325, guid: d1772a6a0b275c04bbe588d77c8f0836, type: 3}
       propertyPath: desc
       value: 5x4
+      objectReference: {fileID: 0}
+    - target: {fileID: 8697291763106708325, guid: d1772a6a0b275c04bbe588d77c8f0836, type: 3}
+      propertyPath: atkCount
+      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d1772a6a0b275c04bbe588d77c8f0836, type: 3}

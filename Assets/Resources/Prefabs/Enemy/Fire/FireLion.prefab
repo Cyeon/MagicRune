@@ -64,17 +64,37 @@ PrefabInstance:
       value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 8697291763106708325, guid: d1772a6a0b275c04bbe588d77c8f0836, type: 3}
+      propertyPath: atkDamage
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 8697291763106708325, guid: d1772a6a0b275c04bbe588d77c8f0836, type: 3}
       propertyPath: startPatternAction.Array.size
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8697291763106708325, guid: d1772a6a0b275c04bbe588d77c8f0836, type: 3}
       propertyPath: turnPatternAction.Array.data[0]
       value: 
       objectReference: {fileID: 4888992761435813951}
     - target: {fileID: 8697291763106708325, guid: d1772a6a0b275c04bbe588d77c8f0836, type: 3}
+      propertyPath: patternActionDescList.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8697291763106708325, guid: d1772a6a0b275c04bbe588d77c8f0836, type: 3}
       propertyPath: startPatternAction.Array.data[0]
       value: 
       objectReference: {fileID: 4888992761435813951}
+    - target: {fileID: 8697291763106708325, guid: d1772a6a0b275c04bbe588d77c8f0836, type: 3}
+      propertyPath: patternActionDescList.Array.data[0]
+      value: 
+      objectReference: {fileID: 4888992761435813951}
+    - target: {fileID: 8697291763106708325, guid: d1772a6a0b275c04bbe588d77c8f0836, type: 3}
+      propertyPath: patternActionDescList.Array.data[1]
+      value: 
+      objectReference: {fileID: 3815014379947607322}
+    - target: {fileID: 8697291763106708325, guid: d1772a6a0b275c04bbe588d77c8f0836, type: 3}
+      propertyPath: patternActionDescList.Array.data[2]
+      value: 
+      objectReference: {fileID: 7863970797114853011}
     m_RemovedComponents:
     - {fileID: 1309250264985964211, guid: d1772a6a0b275c04bbe588d77c8f0836, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: d1772a6a0b275c04bbe588d77c8f0836, type: 3}
@@ -95,8 +115,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: afa8056742046244dbe8687e6908c64d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 10
-  count: 1
 --- !u!1001 &1915498440171172951
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -105,15 +123,39 @@ PrefabInstance:
     m_TransformParent: {fileID: 482703424218209037}
     m_Modifications:
     - target: {fileID: 745667645257002067, guid: e3d3191409c41c74f86b2d5b17c961de, type: 3}
+      propertyPath: defValue
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 745667645257002067, guid: e3d3191409c41c74f86b2d5b17c961de, type: 3}
+      propertyPath: atkDamage
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 745667645257002067, guid: e3d3191409c41c74f86b2d5b17c961de, type: 3}
       propertyPath: startPatternAction.Array.size
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 745667645257002067, guid: e3d3191409c41c74f86b2d5b17c961de, type: 3}
       propertyPath: turnPatternAction.Array.data[0]
       value: 
       objectReference: {fileID: 7863970797114853011}
     - target: {fileID: 745667645257002067, guid: e3d3191409c41c74f86b2d5b17c961de, type: 3}
+      propertyPath: patternActionDescList.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 745667645257002067, guid: e3d3191409c41c74f86b2d5b17c961de, type: 3}
       propertyPath: startPatternAction.Array.data[0]
+      value: 
+      objectReference: {fileID: 7863970797114853011}
+    - target: {fileID: 745667645257002067, guid: e3d3191409c41c74f86b2d5b17c961de, type: 3}
+      propertyPath: patternActionDescList.Array.data[0]
+      value: 
+      objectReference: {fileID: 4888992761435813951}
+    - target: {fileID: 745667645257002067, guid: e3d3191409c41c74f86b2d5b17c961de, type: 3}
+      propertyPath: patternActionDescList.Array.data[1]
+      value: 
+      objectReference: {fileID: 3815014379947607322}
+    - target: {fileID: 745667645257002067, guid: e3d3191409c41c74f86b2d5b17c961de, type: 3}
+      propertyPath: patternActionDescList.Array.data[2]
       value: 
       objectReference: {fileID: 7863970797114853011}
     - target: {fileID: 7333690493490585740, guid: e3d3191409c41c74f86b2d5b17c961de, type: 3}
@@ -184,8 +226,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: afa8056742046244dbe8687e6908c64d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 15
-  count: 1
 --- !u!1001 &3927241957304435079
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -397,17 +437,37 @@ PrefabInstance:
       value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 8697291763106708325, guid: d1772a6a0b275c04bbe588d77c8f0836, type: 3}
+      propertyPath: atkDamage
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 8697291763106708325, guid: d1772a6a0b275c04bbe588d77c8f0836, type: 3}
       propertyPath: startPatternAction.Array.size
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8697291763106708325, guid: d1772a6a0b275c04bbe588d77c8f0836, type: 3}
       propertyPath: turnPatternAction.Array.data[0]
       value: 
       objectReference: {fileID: 3815014379947607322}
     - target: {fileID: 8697291763106708325, guid: d1772a6a0b275c04bbe588d77c8f0836, type: 3}
+      propertyPath: patternActionDescList.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8697291763106708325, guid: d1772a6a0b275c04bbe588d77c8f0836, type: 3}
       propertyPath: startPatternAction.Array.data[0]
       value: 
       objectReference: {fileID: 3815014379947607322}
+    - target: {fileID: 8697291763106708325, guid: d1772a6a0b275c04bbe588d77c8f0836, type: 3}
+      propertyPath: patternActionDescList.Array.data[0]
+      value: 
+      objectReference: {fileID: 4888992761435813951}
+    - target: {fileID: 8697291763106708325, guid: d1772a6a0b275c04bbe588d77c8f0836, type: 3}
+      propertyPath: patternActionDescList.Array.data[1]
+      value: 
+      objectReference: {fileID: 3815014379947607322}
+    - target: {fileID: 8697291763106708325, guid: d1772a6a0b275c04bbe588d77c8f0836, type: 3}
+      propertyPath: patternActionDescList.Array.data[2]
+      value: 
+      objectReference: {fileID: 7863970797114853011}
     m_RemovedComponents:
     - {fileID: 1309250264985964211, guid: d1772a6a0b275c04bbe588d77c8f0836, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: d1772a6a0b275c04bbe588d77c8f0836, type: 3}
@@ -428,8 +488,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: afa8056742046244dbe8687e6908c64d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 10
-  count: 1
 --- !u!1001 &8470271732647091009
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -494,15 +552,27 @@ PrefabInstance:
       value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 8697291763106708325, guid: d1772a6a0b275c04bbe588d77c8f0836, type: 3}
+      propertyPath: atkDamage
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 8697291763106708325, guid: d1772a6a0b275c04bbe588d77c8f0836, type: 3}
       propertyPath: startPatternAction.Array.size
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8697291763106708325, guid: d1772a6a0b275c04bbe588d77c8f0836, type: 3}
       propertyPath: turnPatternAction.Array.data[0]
       value: 
       objectReference: {fileID: 828371417791130027}
     - target: {fileID: 8697291763106708325, guid: d1772a6a0b275c04bbe588d77c8f0836, type: 3}
+      propertyPath: patternActionDescList.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8697291763106708325, guid: d1772a6a0b275c04bbe588d77c8f0836, type: 3}
       propertyPath: startPatternAction.Array.data[0]
+      value: 
+      objectReference: {fileID: 828371417791130027}
+    - target: {fileID: 8697291763106708325, guid: d1772a6a0b275c04bbe588d77c8f0836, type: 3}
+      propertyPath: patternActionDescList.Array.data[0]
       value: 
       objectReference: {fileID: 828371417791130027}
     m_RemovedComponents:
@@ -525,5 +595,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: afa8056742046244dbe8687e6908c64d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 10
-  count: 1

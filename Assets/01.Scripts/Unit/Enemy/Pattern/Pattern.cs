@@ -18,13 +18,15 @@ public enum PatternType
     ETC,
 }
 
+public enum patternInvokeTime { start, turn, end, damage };
+
 public class Pattern : MonoBehaviour
 {
     [Header("[ 기본정보 ]")]
     public string patternName;
     [HideInInspector]
     public string patternValue = "";
-    [TextArea(1, 10)]
+    [ConditionalField(nameof(patternType), false, PatternType.ETC)]
     public string PatternDescription = "";
     public List<PatternAction> patternActionDescList = new List<PatternAction>();
     private List<string> _patternDescList = new List<string>();
@@ -35,21 +37,29 @@ public class Pattern : MonoBehaviour
     public PatternType patternType = PatternType.Attack;
 
     // 공격
-    [Header("> 공격")]
+    [Header("공격"), ConditionalField(nameof(patternType), false, PatternType.Attack, PatternType.AtkDef, PatternType.AtkStatus)]
     public int atkDamage = 0;
+    [ConditionalField(nameof(patternType), false, PatternType.Attack, PatternType.AtkDef, PatternType.AtkStatus)]
     public int atkCount = 1;
+    [ConditionalField(nameof(patternType), false, PatternType.Attack, PatternType.AtkDef, PatternType.AtkStatus)]
     public bool isTrueDmg = false;
     public List<PatternAction> atkDamageApplyList = new List<PatternAction>();
 
     // 방어
-    [Header("> 방어")]
+    [Header("방어"), ConditionalField(nameof(patternType), false, PatternType.Defence, PatternType.AtkDef, PatternType.DefStatus)]
     public int defValue = 0;
+    [ConditionalField(nameof(patternType), false, PatternType.Defence, PatternType.AtkDef, PatternType.DefStatus)]
+    public patternInvokeTime shieldTime = patternInvokeTime.turn;
 
     // 상태이상
-    [Header("> 상태이상")]
+    [Header("상태이상"), ConditionalField(nameof(patternType), false, PatternType.Status, PatternType.DefStatus, PatternType.AtkStatus)]
     public StatusName statusName;
+    [ConditionalField(nameof(patternType), false, PatternType.Status, PatternType.DefStatus, PatternType.AtkStatus)]
     public int statusValue = 0;
+    [ConditionalField(nameof(patternType), false, PatternType.Status, PatternType.DefStatus, PatternType.AtkStatus)]
     public bool isSelf = false;
+    [ConditionalField(nameof(patternType), false, PatternType.Status, PatternType.DefStatus, PatternType.AtkStatus)]
+    public patternInvokeTime addStatusTime = patternInvokeTime.turn;
 
     [Space, Header("[ 패턴 아이콘 ]")]
     public Sprite icon;
@@ -65,11 +75,12 @@ public class Pattern : MonoBehaviour
     public List<PatternTransition> transitions;
 
     private int _actionIndex = 0;
-    private enum patternInvokeTime { start, turn, end, damage };
     private patternInvokeTime _patternTime = patternInvokeTime.start;
 
     public void Init()
     {
+        _patternDescList.Clear();
+
         Enemy enemy = Managers.Enemy.CurrentEnemy;
         if (patternType == PatternType.Attack || patternType == PatternType.AtkDef || patternType == PatternType.AtkStatus)
         {
@@ -117,6 +128,19 @@ public class Pattern : MonoBehaviour
     /// </summary>
     public void StartAction()
     {
+
+        if (patternType == PatternType.Defence || patternType == PatternType.AtkDef || patternType == PatternType.DefStatus)
+        {
+            if (shieldTime == patternInvokeTime.start)
+                Managers.Enemy.CurrentEnemy.AddShield(Managers.Enemy.CurrentEnemy.shieldValue);
+        }
+
+        if (patternType == PatternType.Status || patternType == PatternType.AtkStatus || patternType == PatternType.DefStatus)
+        {
+            if (addStatusTime == patternInvokeTime.start)
+                Managers.Enemy.CurrentEnemy.StatusManager.AddStatus(statusName, statusValue);
+        }
+
         _actionIndex = 0;
         _patternTime = patternInvokeTime.start;
 
@@ -131,6 +155,23 @@ public class Pattern : MonoBehaviour
     /// </summary>
     public void TurnAction()
     {
+        if (patternType == PatternType.Attack || patternType == PatternType.AtkDef || patternType == PatternType.AtkStatus)
+        {
+            Managers.Enemy.CurrentEnemy.Attack(isTrueDmg);
+        }
+
+        if (patternType == PatternType.Defence || patternType == PatternType.AtkDef || patternType == PatternType.DefStatus)
+        {
+            if(shieldTime == patternInvokeTime.turn)
+                Managers.Enemy.CurrentEnemy.AddShield(Managers.Enemy.CurrentEnemy.shieldValue);
+        }
+
+        if (patternType == PatternType.Status || patternType == PatternType.AtkStatus || patternType == PatternType.DefStatus)
+        {
+            if(addStatusTime == patternInvokeTime.turn)
+                Managers.Enemy.CurrentEnemy.StatusManager.AddStatus(statusName, statusValue);
+        }
+
         _actionIndex = 0;
         _patternTime = patternInvokeTime.turn;
         if (turnPatternAction.Count > _actionIndex)
@@ -239,15 +280,15 @@ public class Pattern : MonoBehaviour
 
     private void DescriptionInit()
     {
-        
+        patternActionDescList?.ForEach(x => _patternDescList.Add(x.Description));
 
-        if(patternActionDescList.Count > 0)
+        if(_patternDescList.Count > 0)
         {
             string desc = "";
-            for(int i = 0; i < patternActionDescList.Count; i++)
+            for(int i = 0; i < _patternDescList.Count; i++)
             {
-                desc += patternActionDescList[i].Description;
-                if(i + 1 == patternActionDescList.Count)
+                desc += _patternDescList[i];
+                if(i + 1 == _patternDescList.Count)
                 {
                     desc += " 하려고 합니다.";
                 }
@@ -262,6 +303,47 @@ public class Pattern : MonoBehaviour
     }
 
 #if UNITY_EDITOR
+
+    [ButtonMethod]
+    private void PatternObjectSetting()
+    {
+        if (patternType == PatternType.Attack || patternType == PatternType.AtkDef || patternType == PatternType.AtkStatus)
+        {
+            if (atkCount > 1)
+                gameObject.name = "ATK(" + atkDamage + "x" + atkCount + ")";
+            else
+                gameObject.name = "ATK(" + atkDamage + ")";
+
+            patternName = "공격";
+        }
+
+        if (patternType == PatternType.Defence || patternType == PatternType.AtkDef || patternType == PatternType.DefStatus)
+        {
+            string defName = "DEF(" + defValue + ")";
+            if (patternType == PatternType.AtkDef)
+            {
+                gameObject.name += " + " + defName;
+                patternName += "&방어";
+            }
+            else
+            {
+                gameObject.name = defName;
+                patternName = "방어";
+            }
+        }
+
+        if (patternType == PatternType.Status || patternType == PatternType.AtkStatus || patternType == PatternType.DefStatus)
+        {
+            string statusName = "S_" + this.statusName + "(" + statusValue + ")";
+            if (patternType == PatternType.Status)
+            {
+                gameObject.name = statusName;
+            }
+            else
+                gameObject.name += " + " + statusName;
+        }
+    }
+
     [ButtonMethod]
     private void IconApply()
     {

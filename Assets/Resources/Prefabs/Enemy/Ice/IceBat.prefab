@@ -10,10 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 3224363552356977538}
   - component: {fileID: 3605042980400535767}
-  - component: {fileID: 656987285230401241}
-  - component: {fileID: 1233412185271211601}
   m_Layer: 0
-  m_Name: S_Annoy(1) + DEF(5)
+  m_Name: DEF(5) + S_Annoy(1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -47,48 +45,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   patternName: "\uC9DC\uC99D\uB0B4\uAE30"
-  desc: 
+  patternValue: 
   PatternDescription: "\uBC15\uC950\uAC00 \uC9DC\uC99D\uB0C5\uB2C8\uB2E4."
-  patternActionDescList:
-  - {fileID: 656987285230401241}
-  - {fileID: 1233412185271211601}
+  patternActionDescList: []
   isIncluding: 1
+  patternType: 4
+  atkDamage: 0
+  atkCount: 1
+  isTrueDmg: 0
+  atkDamageApplyList: []
+  defValue: 5
+  shieldTime: 1
+  statusName: 24
+  statusValue: 1
+  isSelf: 1
+  addStatusTime: 1
   icon: {fileID: 21300000, guid: 41a78afe24ca5a34ba6f52a9de82a758, type: 3}
   _iconSize: 0.25
   startPatternAction: []
-  turnPatternAction:
-  - {fileID: 656987285230401241}
-  - {fileID: 1233412185271211601}
+  turnPatternAction: []
   endPatternAction: []
   transitions: []
---- !u!114 &656987285230401241
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8309635773059628499}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 76e453d0137dffa4c86b004096088636, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  status: 24
-  value: 1
-  isSelf: 1
---- !u!114 &1233412185271211601
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8309635773059628499}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cfa8887165156c64fa123504b8100fe4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  amount: 5
 --- !u!1001 &148190431400250722
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -283,11 +260,27 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8697291763106708325, guid: d1772a6a0b275c04bbe588d77c8f0836, type: 3}
+      propertyPath: atkDamageApplyList.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8697291763106708325, guid: d1772a6a0b275c04bbe588d77c8f0836, type: 3}
       propertyPath: startPatternAction.Array.size
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8697291763106708325, guid: d1772a6a0b275c04bbe588d77c8f0836, type: 3}
+      propertyPath: atkDamageApplyList.Array.data[0]
+      value: 
+      objectReference: {fileID: 3760812711231615481}
+    - target: {fileID: 8697291763106708325, guid: d1772a6a0b275c04bbe588d77c8f0836, type: 3}
+      propertyPath: patternActionDescList.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8697291763106708325, guid: d1772a6a0b275c04bbe588d77c8f0836, type: 3}
       propertyPath: startPatternAction.Array.data[0]
+      value: 
+      objectReference: {fileID: 3760812711231615481}
+    - target: {fileID: 8697291763106708325, guid: d1772a6a0b275c04bbe588d77c8f0836, type: 3}
+      propertyPath: patternActionDescList.Array.data[0]
       value: 
       objectReference: {fileID: 3760812711231615481}
     m_RemovedComponents: []
@@ -309,15 +302,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0041d31a5ef34ec489437cf29efd4ea0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _attackAction: {fileID: 8413432034739323496}
---- !u!114 &8413432034739323496 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1309250264985964211, guid: d1772a6a0b275c04bbe588d77c8f0836, type: 3}
-  m_PrefabInstance: {fileID: 7415713305627757787}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6849260321431982778}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: db7864d3a61bcc14a99708ff1475ef25, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  annoyMutiple: 5

@@ -119,33 +119,33 @@ public class Unit : MonoBehaviour
 
     public void TakeDamage(float damage, bool isTrueDamage = false, Status status = null)
     {
-        attackDamage = damage.RoundToInt();
+        takeDamage = damage.RoundToInt();
         OnGetDamage?.Invoke();
 
         if (Shield > 0 && isTrueDamage == false)
         {
-            if (Shield - attackDamage >= 0)
+            if (Shield - takeDamage >= 0)
             {
-                Shield -= attackDamage;
-                attackDamage = 0;
+                Shield -= takeDamage;
+                takeDamage = 0;
             }
             else
             {
-                attackDamage -= Shield;
+                takeDamage -= Shield;
                 Shield = 0;
-                HP -= attackDamage;
+                HP -= takeDamage;
             }
         }
         else
-            HP -= attackDamage;
+            HP -= takeDamage;
 
         if (isTrueDamage == false)
-            OnTakeDamage?.Invoke(attackDamage);
+            OnTakeDamage?.Invoke(takeDamage);
         OnTakeDamageFeedback?.Invoke();
         PlayAnimation(HashHit);
 
         Vector3 pos = transform.position + new Vector3(UnityEngine.Random.Range(-1f, 1f), UnityEngine.Random.Range(-1f, 1f));
-        Define.DialScene?.DamageUIPopup(attackDamage, pos, status);
+        Define.DialScene?.DamageUIPopup(takeDamage, pos, status);
 
         if (this is Enemy)
         {
@@ -173,16 +173,14 @@ public class Unit : MonoBehaviour
         _spriteRenderer.material = _defaultMat;
     }
 
-    public virtual void Attack(float damage, bool isTrueDamage = false)
+    public virtual void Attack(bool isTrueDamage = false)
     {
-        attackDamage = damage.RoundToInt();
         StatusManager.OnAttack();
         Managers.Sound.PlaySound(attackSound, SoundType.Effect);
     }
 
-    public virtual void Attack(float damage, ref bool isTrueDamage)
+    public virtual void Attack(ref bool isTrueDamage)
     {
-        attackDamage = damage.RoundToInt();
         StatusManager.OnAttack();
         Managers.Sound.PlaySound(attackSound, SoundType.Effect);
 

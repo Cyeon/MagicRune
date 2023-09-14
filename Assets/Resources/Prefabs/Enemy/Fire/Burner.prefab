@@ -70,9 +70,8 @@ GameObject:
   m_Component:
   - component: {fileID: 8211426149042748674}
   - component: {fileID: 8196952486571936999}
-  - component: {fileID: 3215006477355493981}
   m_Layer: 0
-  m_Name: Boom(40)
+  m_Name: Boom
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -106,32 +105,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   patternName: "\uD3ED\uBC1C"
-  desc: 50
+  patternValue: 
   PatternDescription: "\uD3ED\uBC1C\uD569\uB2C8\uB2E4."
   patternActionDescList: []
   isIncluding: 0
+  patternType: 6
+  atkDamage: 0
+  atkCount: 1
+  isTrueDmg: 0
+  atkDamageApplyList: []
+  defValue: 0
+  statusName: 12
+  statusValue: -1
+  isSelf: 1
   icon: {fileID: 21300000, guid: ce39f8e6ae6569c4688da44a7e8a66b2, type: 3}
   _iconSize: 0.2
   startPatternAction: []
   turnPatternAction:
-  - {fileID: 3215006477355493981}
+  - {fileID: 0}
   endPatternAction: []
   transitions: []
---- !u!114 &3215006477355493981
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5738959046233562328}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 76e453d0137dffa4c86b004096088636, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  status: 12
-  value: -1
-  isSelf: 1
 --- !u!1 &6792092608420542882
 GameObject:
   m_ObjectHideFlags: 0
@@ -178,10 +171,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   patternName: "\uD3ED\uBC1C \uCE74\uC6B4\uD2B8"
-  desc: 
+  patternValue: 
   PatternDescription: "\uD3ED\uBC1C \uC2A4\uD0DD\uC774 0\uC774 \uB418\uBA74 \uD3ED\uBC1C\uD569\uB2C8\uB2E4."
   patternActionDescList: []
   isIncluding: 1
+  patternType: 6
+  atkDamage: 0
+  atkCount: 1
+  isTrueDmg: 0
+  atkDamageApplyList: []
+  defValue: 0
+  statusName: 0
+  statusValue: 0
+  isSelf: 0
   icon: {fileID: 21300000, guid: ce39f8e6ae6569c4688da44a7e8a66b2, type: 3}
   _iconSize: 0.2
   startPatternAction:

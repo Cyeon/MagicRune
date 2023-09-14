@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4829896965549773931}
   - component: {fileID: 8937827816064519653}
-  - component: {fileID: 3652925038008841798}
   - component: {fileID: 7008778228400572866}
   m_Layer: 0
   m_Name: DEF(25) + S_Orb(1)
@@ -47,34 +46,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   patternName: "\uC5EC\uC6B0\uAD6C\uC2AC"
-  desc: 
+  patternValue: 
   PatternDescription: "\uACF5\uACA9\uC744 \uB2F9\uD558\uC9C0 \uC54A\uC73C\uBA74 \uC5EC\uC6B0\uAD6C\uC2AC\uC744
     \uBD80\uC5EC\uD574 \uACF5\uACA9\uB825\uC774 \uC99D\uAC00\uD569\uB2C8\uB2E4."
   patternActionDescList: []
   isIncluding: 1
+  patternType: 3
+  atkDamage: 0
+  atkCount: 1
+  isTrueDmg: 0
+  atkDamageApplyList: []
+  defValue: 25
+  shieldTime: 0
+  statusName: 0
+  statusValue: 0
+  isSelf: 0
+  addStatusTime: 1
   icon: {fileID: 21300000, guid: 2d3e2be60a3271840b5c287eb771e56b, type: 3}
   _iconSize: 0.25
   startPatternAction:
   - {fileID: 7008778228400572866}
-  - {fileID: 3652925038008841798}
   turnPatternAction:
   - {fileID: 7008778228400572866}
   endPatternAction:
   - {fileID: 7008778228400572866}
   transitions: []
---- !u!114 &3652925038008841798
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4773669890365314538}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cfa8887165156c64fa123504b8100fe4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  amount: 25
 --- !u!114 &7008778228400572866
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -97,7 +93,6 @@ GameObject:
   m_Component:
   - component: {fileID: 8441447981167153549}
   - component: {fileID: 1132859614080230665}
-  - component: {fileID: 4358494121351147010}
   - component: {fileID: 7808848393700857181}
   m_Layer: 0
   m_Name: DEF(25) + S_Orb(1)
@@ -134,36 +129,32 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   patternName: "\uC5EC\uC6B0\uAD6C\uC2AC"
-  desc: 
+  patternValue: 
   PatternDescription: "\uACF5\uACA9\uC744 \uB2F9\uD558\uC9C0 \uC54A\uC73C\uBA74 \uC5EC\uC6B0\uAD6C\uC2AC\uC744
     \uBD80\uC5EC\uD574 \uACF5\uACA9\uB825\uC774 \uC99D\uAC00\uD569\uB2C8\uB2E4."
   patternActionDescList:
-  - {fileID: 4358494121351147010}
   - {fileID: 7808848393700857181}
   isIncluding: 1
+  patternType: 3
+  atkDamage: 0
+  atkCount: 1
+  isTrueDmg: 0
+  atkDamageApplyList: []
+  defValue: 25
+  shieldTime: 0
+  statusName: 0
+  statusValue: 0
+  isSelf: 0
+  addStatusTime: 1
   icon: {fileID: 21300000, guid: 2d3e2be60a3271840b5c287eb771e56b, type: 3}
   _iconSize: 0.25
   startPatternAction:
   - {fileID: 7808848393700857181}
-  - {fileID: 4358494121351147010}
   turnPatternAction:
   - {fileID: 7808848393700857181}
   endPatternAction:
   - {fileID: 7808848393700857181}
   transitions: []
---- !u!114 &4358494121351147010
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9059168397056059015}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cfa8887165156c64fa123504b8100fe4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  amount: 25
 --- !u!114 &7808848393700857181
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -238,6 +229,10 @@ PrefabInstance:
     - target: {fileID: 8697291763106708325, guid: d1772a6a0b275c04bbe588d77c8f0836, type: 3}
       propertyPath: desc
       value: 5x3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8697291763106708325, guid: d1772a6a0b275c04bbe588d77c8f0836, type: 3}
+      propertyPath: atkCount
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d1772a6a0b275c04bbe588d77c8f0836, type: 3}
@@ -449,6 +444,10 @@ PrefabInstance:
     - target: {fileID: 8697291763106708325, guid: d1772a6a0b275c04bbe588d77c8f0836, type: 3}
       propertyPath: desc
       value: 5x3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8697291763106708325, guid: d1772a6a0b275c04bbe588d77c8f0836, type: 3}
+      propertyPath: atkCount
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d1772a6a0b275c04bbe588d77c8f0836, type: 3}

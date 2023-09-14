@@ -4,18 +4,16 @@ using UnityEngine;
 
 public class AnnoyAction : PatternAction
 {
-    [SerializeField]
-    private AttackAction _attackAction;
+    [SerializeField] private int annoyMutiple = 5;
 
-    public override void StartAction()
+    public override void DamageApplyAction()
     {
-        if(Enemy.StatusManager.IsHaveStatus(StatusName.Annoy))
+        int annoyValue = Enemy.StatusManager.GetStatusValue(StatusName.Annoy);
+        if (annoyValue > 0)
         {
-            _attackAction.damage += 5;
+            Enemy.attackDamage += annoyValue * annoyMutiple;
         }
 
-        Enemy.PatternManager.CurrentPattern.patternValue = _attackAction.damage.ToString();
-        Enemy.PatternManager.UpdatePatternUI();
-        base.StartAction();
+        base.DamageApplyAction();
     }
 }
