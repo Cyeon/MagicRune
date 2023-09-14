@@ -28,11 +28,6 @@ public class TutorialUI : MonoBehaviour
     private RectTransform _squareReverseMaskChildrenRect;
 
     [SerializeField]
-    private RectTransform _deckRect;
-    [SerializeField]
-    private RectTransform _attributeRect;
-
-    [SerializeField]
     private Button _giveBtn;
     [SerializeField]
     private Button _warningBtn;
@@ -160,9 +155,19 @@ public class TutorialUI : MonoBehaviour
                 _circleReverseMaskRect.gameObject.SetActive(true);
                 break;
             case "Deck_Explain":
+                _circleReverseMaskRect.gameObject.SetActive(false);
                 if(_tutorialDialogue[keyIndex]?.Value.Count - 1 == index)
                 {
-                    _deckRect.gameObject.SetActive(true);
+                    _squareReverseMaskRect.sizeDelta = new Vector2(150, 150);
+                    _squareReverseMaskRect.anchoredPosition = new Vector2(470, 1310);
+                    _squareReverseMaskChildrenRect.anchoredPosition = new Vector2(-470, -1310);
+                    _squareReverseMaskRect.gameObject.SetActive(true);
+                    _circleReverseMaskRect.gameObject.SetActive(false);
+                }
+                else
+                {
+                    _squareReverseMaskRect.gameObject.SetActive(false);
+                    _circleReverseMaskRect.gameObject.SetActive(true);
                 }
                 if (_tutorialDialogue[keyIndex]?.Value.Count == index)
                 {
@@ -176,9 +181,19 @@ public class TutorialUI : MonoBehaviour
                 
                 break;
             case "Attribute_Select":
+                
                 if(_tutorialDialogue[keyIndex]?.Value.Count - 1 == index)
                 {
-                    _attributeRect.gameObject.SetActive(true);
+                    _squareReverseMaskRect.sizeDelta = new Vector2(150, 150);
+                    _squareReverseMaskRect.anchoredPosition = new Vector2(310, 1310);
+                    _squareReverseMaskChildrenRect.anchoredPosition = new Vector2(-310, -1310);
+                    _squareReverseMaskRect.gameObject.SetActive(true);
+                    _circleReverseMaskRect.gameObject.SetActive(false);
+                }
+                else
+                {
+                    _squareReverseMaskRect.gameObject.SetActive(false);
+                    _circleReverseMaskRect.gameObject.SetActive(true);
                 }
                 if (_tutorialDialogue[keyIndex]?.Value.Count == index)
                 {
@@ -188,12 +203,11 @@ public class TutorialUI : MonoBehaviour
                 {
                     _tutorialImage.sprite = _defaultSprite;
                 }
-                _deckRect.gameObject.SetActive(false);
-                
                 break;
             case "MapDial":
                 if (_tutorialDialogue[keyIndex]?.Value.Count - 1 == index)
                 {
+                    _attackTutorialImage.transform.GetChild(0).GetComponent<Image>().color = new Color(1, 1, 1, 0.8f);
                     _attackTutorialImage.gameObject.SetActive(true);
                     _attackTutorialImage.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 832f);
                 }
@@ -235,6 +249,7 @@ public class TutorialUI : MonoBehaviour
             if (isFirst)
             {
                 BattleManager.Instance.TurnChange();
+                _attackTutorialImage.transform.GetChild(0).GetComponent<Image>().color = new Color(1, 1, 1, 0.4f);
                 _attackTutorialImage.SetActive(true);
                 TutorialMessage("다이얼을 위로 드래그하여\n공격을 해보세요!");
 
@@ -288,7 +303,7 @@ public class TutorialUI : MonoBehaviour
 
                     _circleReverseMaskRect.gameObject.SetActive(false);
                     _tutorialImage.gameObject.SetActive(false);
-                    _attributeRect.gameObject.SetActive(false);
+                    _squareReverseMaskRect.gameObject.SetActive(false);
                     TutorialMessage("자유롭게 다이얼을 조작하여\n적을 처치하세요!");
                     Invoke("TutorialMessageEnalbedFalse", 2f);
                     BattleManager.Instance.Enemy.OnDieEvent.AddListener(() =>
