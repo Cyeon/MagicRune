@@ -62,6 +62,7 @@ public class MapScene : BaseScene
         Managers.UI.Bind<TextMeshProUGUI>("GoldPopupText", Managers.Canvas.GetCanvas("UserInfoPanelCanvas").gameObject);
         _goldPopupText = Managers.UI.Get<TextMeshProUGUI>("GoldPopupText");
 
+        _userInfoUI.WeigetInit();
         _userInfoUI.UpdateHealthText();
         _userInfoUI.UpdateGoldText();
 

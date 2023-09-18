@@ -8,6 +8,7 @@ public class UserInfoUI : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI _hpText;
     [SerializeField] private TextMeshProUGUI _goldText;
+    [SerializeField] private RuneWeigetPanel _runeWeigetPanel;
 
     private Image _weigetImage;
     private Sprite _noneWeigetSprite;
@@ -35,5 +36,10 @@ public class UserInfoUI : MonoBehaviour
         {
             _weigetImage.sprite = sprite;
         }
+    }
+
+    public void WeigetInit()
+    {
+        _runeWeigetPanel.WeigetSetting();
     }
 }

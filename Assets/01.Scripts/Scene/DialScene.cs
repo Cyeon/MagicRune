@@ -93,6 +93,7 @@ public class DialScene : BaseScene
 
         _userInfoUI = Managers.UI.Get<UserInfoUI>("Upper_Frame");
 
+        _userInfoUI.WeigetInit();
         _userInfoUI.UpdateHealthText();
         _userInfoUI.UpdateGoldText();
 

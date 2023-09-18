@@ -17,8 +17,6 @@ public class RuneWeigetPanel : MonoBehaviour
         get => _select;
         set
         {
-            if (_userInfoUI == null) _userInfoUI = Managers.Canvas.GetCanvas("UserInfoPanel").GetComponentInChildren<UserInfoUI>();
-
             if (_select != null)
             {
                 // 이전에 있던 애 강조 표시 없애기
@@ -27,7 +25,7 @@ public class RuneWeigetPanel : MonoBehaviour
                 // 만약 똑같은 특화 선택시, 속성톡화 선택해제
                 if (_select == value)
                 {
-                    _userInfoUI.WeigetInit(null);
+                    UserInfoUI.WeigetInit(null);
                     Managers.Rune.SetSelectAttribute(AttributeType.None);
                     _select = null;
                     return;
@@ -39,15 +37,23 @@ public class RuneWeigetPanel : MonoBehaviour
             {
                 // 현재 있는 애 강조 표시하기
                 _select.IsSelect = true;
-                _userInfoUI.WeigetInit(_select.onAttribute);
+                UserInfoUI.WeigetInit(_select.onAttribute);
                 Managers.Rune.SetSelectAttribute(_select.AttributeType);
             }
         }
     }
 
     private UserInfoUI _userInfoUI;
+    public UserInfoUI UserInfoUI
+    {
+        get
+        {
+            if(_userInfoUI == null) _userInfoUI = Managers.Canvas.GetCanvas("UserInfoPanel").GetComponentInChildren<UserInfoUI>();
+            return _userInfoUI;
+        }
+    }
 
-    void Start()
+    public void WeigetSetting()
     {
         GetComponentsInChildren<RuneWeiget>(_wegetList);
         Select = _wegetList.Where(x => x.AttributeType == Managers.Rune.GetSelectAttribute()).FirstOrDefault();
