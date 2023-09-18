@@ -115,14 +115,15 @@ MonoBehaviour:
   isTrueDmg: 0
   atkDamageApplyList: []
   defValue: 0
+  shieldTime: 1
   statusName: 12
   statusValue: -1
   isSelf: 1
+  addStatusTime: 1
   icon: {fileID: 21300000, guid: ce39f8e6ae6569c4688da44a7e8a66b2, type: 3}
   _iconSize: 0.2
   startPatternAction: []
-  turnPatternAction:
-  - {fileID: 0}
+  turnPatternAction: []
   endPatternAction: []
   transitions: []
 --- !u!1 &6792092608420542882
@@ -181,9 +182,11 @@ MonoBehaviour:
   isTrueDmg: 0
   atkDamageApplyList: []
   defValue: 0
+  shieldTime: 1
   statusName: 0
   statusValue: 0
   isSelf: 0
+  addStatusTime: 1
   icon: {fileID: 21300000, guid: ce39f8e6ae6569c4688da44a7e8a66b2, type: 3}
   _iconSize: 0.2
   startPatternAction:
