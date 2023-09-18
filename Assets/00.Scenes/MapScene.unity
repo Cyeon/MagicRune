@@ -296,7 +296,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2587833444199417379, guid: ce4924ad682723f42a6d2f3e4ca49dde, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -1950559
+      value: -2003417
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ce4924ad682723f42a6d2f3e4ca49dde, type: 3}
@@ -859,6 +859,7 @@ GameObject:
   - component: {fileID: 320506986}
   - component: {fileID: 320506985}
   - component: {fileID: 320506989}
+  - component: {fileID: 320506990}
   m_Layer: 5
   m_Name: MapUICanvas
   m_TagString: Untagged
@@ -959,6 +960,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dbdb6cd3d91b83449b7796b8bdfd534f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &320506990
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 320506984}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54fa2e7ccddf52b408e40e3dbb6806ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &323603007
@@ -1982,7 +1995,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 762516291113692576, guid: e60d79253b863a044b25c0ee098ce978, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 1046.9996
+      value: 1046.9999
       objectReference: {fileID: 0}
     - target: {fileID: 762516291206927714, guid: e60d79253b863a044b25c0ee098ce978, type: 3}
       propertyPath: m_AnchorMax.x
@@ -2034,7 +2047,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 762516291714977619, guid: e60d79253b863a044b25c0ee098ce978, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -997.0002
+      value: -996.99994
       objectReference: {fileID: 0}
     - target: {fileID: 1520652532682514446, guid: e60d79253b863a044b25c0ee098ce978, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -4826,13 +4839,13 @@ MonoBehaviour:
     edge: 2
     offset: 100
   leftReference:
-    target: {fileID: 0}
-    edge: 0
-    offset: 0
+    target: {fileID: 320506988}
+    edge: 4
+    offset: 670
   rightReference:
-    target: {fileID: 0}
-    edge: 0
-    offset: 0
+    target: {fileID: 320506988}
+    edge: 5
+    offset: 670
   allowChangeSize: 1
   disableOnStart: 0
   settings: {fileID: 11400000, guid: 19a960b6dee4ca444928b817d66a256d, type: 2}
