@@ -46,6 +46,8 @@ public class RuneBookUI : RuneListViewUI
             ArrowFlip(_nameAscending, _orderByButtons.Find("NameButton").Find("Image"));
             ChangeOrderBy();
         });
+
+        SetActiveUIFirst();
     }
 
     private void Init()

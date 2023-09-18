@@ -86,7 +86,8 @@ public class AdventureUI : MonoBehaviour
                     }
                 }
 
-                _storyText.text = info.distractors[index].resultText;
+                //_storyText.text = info.distractors[index].resultText;
+                _storyText.SetText(info.distractors[index].resultText);
                 _distractorPanel.SetActive(false);
 
                 _storyPanelClickBtn.onClick.RemoveAllListeners();
