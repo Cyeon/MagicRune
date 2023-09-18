@@ -1,8 +1,10 @@
 using DG.Tweening;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 /// <summary>
@@ -16,20 +18,21 @@ public class RuneEventUI : MonoBehaviour
     private Transform _content = null;
     private List<GameObject> _runePanelList = new List<GameObject>();
     private Image _blur;
+    private Button _selectButton;
+    private Canvas _canvas;
 
     private void Start()
     {
         _scrollView = transform.Find("Scroll View").gameObject;
+        _scrollView.SetActive(false);
+
         _blur = transform.Find("Blur").GetComponent<Image>();
         _blur.enabled = false;
 
         _content = _scrollView.GetComponent<ScrollRect>().content;
 
-        Managers.UI.Bind<Button>("NextStageButton_Button", gameObject);
-
-        _selectedRuneObject = transform.Find("Basic").GetComponent<BasicRunePanel>();
-
-        Managers.UI.Get<Button>("NextStageButton_Button").onClick.AddListener(() =>
+        _selectButton = transform.Find("SelectButton").GetComponent<Button>();
+        _selectButton.onClick.AddListener(() =>
         {
             _scrollView.SetActive(false);
             _blur.enabled = false;
@@ -40,12 +43,16 @@ public class RuneEventUI : MonoBehaviour
             seq.AppendCallback(() => _selectedRuneObject.gameObject.SetActive(false));
 
             ReturnRunePanels();
-            Managers.UI.Get<Button>("NextStageButton_Button").gameObject.SetActive(false);
-            //DistracotrFuncList.NextStage(); // 전투 씬에서 작동시키면 이거 때문에 버그 날 수도 있을듯? 일단 메모 
+            _selectButton.gameObject.SetActive(false);
+            _canvas.enabled = false;
         });
-        Managers.UI.Get<Button>("NextStageButton_Button").gameObject.SetActive(false);
-        _scrollView.SetActive(false);
+        _selectButton.gameObject.SetActive(false);
+
+        _selectedRuneObject = transform.Find("Basic").GetComponent<BasicRunePanel>();
         _selectedRuneObject.gameObject.SetActive(false);
+
+        _canvas = transform.GetComponent<Canvas>();
+        _canvas.enabled = false;
     }
 
     private void OnEnable()
@@ -70,7 +77,7 @@ public class RuneEventUI : MonoBehaviour
         _selectedRuneObject.gameObject.SetActive(true);
         _selectedRuneObject.transform.localScale = Vector3.one * 1.8f;
 
-        Managers.UI.Get<Button>("NextStageButton_Button").gameObject.SetActive(true);
+        _selectButton.gameObject.SetActive(true);
         _blur.enabled = true;
 
         Sequence seq = DOTween.Sequence();
@@ -85,7 +92,7 @@ public class RuneEventUI : MonoBehaviour
     private void SettingRunePanels(RuneSelectMode mode)
     {
         if (_runePanelList.Count > 0) { ReturnRunePanels(); }
-        Managers.Canvas.GetCanvas("Adventure").enabled = true;
+        _canvas.enabled = true;
 
         foreach (BaseRune rune in Managers.Deck.Deck)
         {

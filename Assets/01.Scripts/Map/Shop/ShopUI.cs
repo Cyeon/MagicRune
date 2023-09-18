@@ -121,11 +121,6 @@ public class ShopUI : MonoBehaviour
 
         Managers.Gold.AddGold(-1 * _deckRemoveGold);
         EventManager<RuneSelectMode>.TriggerEvent(Define.RUNE_EVENT_SETTING, RuneSelectMode.Delete);
-        Managers.UI.Get<Button>("NextStageButton_Button").onClick.AddListener(() =>
-        {
-            Managers.Canvas.GetCanvas("Adventure").enabled = false;
-            Managers.UI.Get<Button>("NextStageButton_Button").onClick.RemoveListener(() =>Managers.Canvas.GetCanvas("Adventure").enabled = false);
-        });
     }
 
     private bool GoldLessMessage(int gold)
