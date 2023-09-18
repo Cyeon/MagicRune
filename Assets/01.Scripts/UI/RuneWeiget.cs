@@ -10,7 +10,7 @@ public class RuneWeiget : MonoBehaviour
     private bool _isSelect = false;
     private RuneWeigetPanel _parent;
 
-    [SerializeField] private Sprite _onAttribute;
+    public Sprite onAttribute;
     [SerializeField] private Sprite _offAttribute;
 
     [SerializeField]
@@ -26,7 +26,7 @@ public class RuneWeiget : MonoBehaviour
             if(_runeImage)
             {
                 if (_isSelect)
-                    _runeImage.sprite = _onAttribute;
+                    _runeImage.sprite = onAttribute;
                 else
                     _runeImage.sprite = _offAttribute;
             }
