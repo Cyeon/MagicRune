@@ -47,6 +47,9 @@ public class TutorialUI : MonoBehaviour
     [SerializeField]
     private List<TutorialDiallogue> _tutorialDialogue;
 
+    private Sequence _seq;
+    private CustomCursor _customCursor;
+
     private void Awake()
     {
         _tutorialCanvas = GetComponent<Canvas>();
@@ -121,13 +124,6 @@ public class TutorialUI : MonoBehaviour
                 {
                     _tutorialImage.sprite = null;
                 }
-                //if(index == 3)
-                //{
-                //    CustomCursor cursor = Managers.Resource.Instantiate("CustomCursor").GetComponent<CustomCursor>();
-                //    Sequence seq = DOTween.Sequence();
-                //    cursor.transform.position = Define.DialScene.Dial.transform.position;
-                //    seq.Append(cursor.transform.DOMoveY(100, 0.2f).SetRelative().SetLoops(-1, LoopType.Incremental));
-                //}
                 break;
             case "RuneCycle":
                 if (_tutorialDialogue[keyIndex]?.Value.Count == index)
@@ -263,6 +259,14 @@ public class TutorialUI : MonoBehaviour
                 TutorialMessage("다이얼을 위로 드래그하여\n공격을 해보세요!");
                 _tutorialImage.gameObject.SetActive(false);
                 _circleReverseMaskRect.gameObject.SetActive(false);
+                _customCursor = Managers.Resource.Instantiate("CustomCursor").GetComponent<CustomCursor>();
+                _customCursor.transform.localScale = Vector3.one * 3;
+                _seq = DOTween.Sequence();
+                _customCursor.transform.position = Define.DialScene.Dial.transform.position;
+                _seq.AppendInterval(0.5f);
+                _seq.Append(_customCursor.transform.DOMoveY(-5f, 0.75f));
+                _seq.SetLoops(-1, LoopType.Restart);
+                _seq.Play();
                 Define.DialScene.Dial.OnDialAttack += AttackTutorialImageDown;
             }
         }
@@ -288,6 +292,19 @@ public class TutorialUI : MonoBehaviour
                     Define.DialScene.Dial.DialUnlock();
                     Define.DialScene.Dial.SetAttackable(false);
                     _circleReverseMaskRect.gameObject.SetActive(false);
+
+                    _customCursor = Managers.Resource.Instantiate("CustomCursor").GetComponent<CustomCursor>();
+                    _customCursor.transform.localScale = Vector3.one * 3;
+                    _customCursor.transform.position = new Vector3(0, -6, 0);
+                    _seq = DOTween.Sequence();
+                    _seq.AppendInterval(0.2f);
+                    _seq.AppendCallback(() => _customCursor.IsPressed = true);
+                    _seq.AppendInterval(1f);
+                    _seq.Append(_customCursor.transform.DOMoveY(-1f, 0.4f).SetRelative());
+                    _seq.AppendInterval(0.2f);
+                    _seq.AppendCallback(() => _customCursor.IsPressed = false);
+                    _seq.AppendInterval(0.2f);
+                    _seq.SetLoops(-1, LoopType.Restart);
                     Define.DialScene.Dial.OnLineChange += LineChangeAction;
                     break;
 
@@ -334,6 +351,11 @@ public class TutorialUI : MonoBehaviour
 
     public void AttackTutorialImageDown()
     {
+        _seq.Pause();
+        _seq = null;
+        Managers.Resource.Destroy(_customCursor.gameObject);
+        _customCursor = null;
+
         _attackTutorialImage.SetActive(false);
         _tutorialMessage.enabled = false;
         _tutorialImage.gameObject.SetActive(true);
@@ -349,6 +371,11 @@ public class TutorialUI : MonoBehaviour
 
     public void LineChangeAction()
     {
+        _seq.Pause();
+        _seq = null;
+        Managers.Resource.Destroy(_customCursor.gameObject);
+        _customCursor = null;
+
         BattleManager.Instance.TurnChange();
         _tutorialMessage.enabled = false;
         Define.DialScene.Dial.DialLock();

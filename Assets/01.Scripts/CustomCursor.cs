@@ -38,4 +38,12 @@ public class CustomCursor : MonoBehaviour
             }
         }
     }
+
+    private void Start()
+    {
+        _sr = GetComponent<SpriteRenderer>();
+
+        _isPressed = false;
+        _sr.sprite = _spriteList.Find(x => x.Status == ClickStatus.Default).Sprite;
+    }
 }
