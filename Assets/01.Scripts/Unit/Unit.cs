@@ -293,11 +293,11 @@ public class Unit : MonoBehaviour
         }
 
         _healthBarMat?.SetVector(MAT_POSITION_TEXT, new Vector4(1 - (float)HP / MaxHP, 0));
-        _healthFeedbackBarMat?.SetVector(MAT_POSITION_TEXT, Vector4.one);
+        _healthFeedbackBarMat?.SetVector(MAT_POSITION_TEXT, Vector2.right);
 
         _healthText.text = string.Format("{0}/{1}", HP.ToString(), MaxHP.ToString());
 
-        _shieldBarMat?.SetVector(MAT_POSITION_TEXT, Vector4.one);
+        _shieldBarMat?.SetVector(MAT_POSITION_TEXT, Vector2.right);
         _shieldIcon.gameObject.SetActive(false);
 
         UpdateShieldUI();
@@ -332,7 +332,7 @@ public class Unit : MonoBehaviour
         }
         else
         {
-            _shieldBarMat?.SetVector(MAT_POSITION_TEXT, Vector4.one);
+            _shieldBarMat?.SetVector(MAT_POSITION_TEXT, Vector2.right);
         }
 
         Sequence seq = DOTween.Sequence();
