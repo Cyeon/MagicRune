@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using NaughtyAttributes;
 using System;
+using DG.Tweening;
 
 public class TutorialUI : MonoBehaviour
 {
@@ -120,6 +121,13 @@ public class TutorialUI : MonoBehaviour
                 {
                     _tutorialImage.sprite = null;
                 }
+                //if(index == 3)
+                //{
+                //    CustomCursor cursor = Managers.Resource.Instantiate("CustomCursor").GetComponent<CustomCursor>();
+                //    Sequence seq = DOTween.Sequence();
+                //    cursor.transform.position = Define.DialScene.Dial.transform.position;
+                //    seq.Append(cursor.transform.DOMoveY(100, 0.2f).SetRelative().SetLoops(-1, LoopType.Incremental));
+                //}
                 break;
             case "RuneCycle":
                 if (_tutorialDialogue[keyIndex]?.Value.Count == index)
@@ -207,10 +215,11 @@ public class TutorialUI : MonoBehaviour
             case "MapDial":
                 if (_tutorialDialogue[keyIndex]?.Value.Count - 1 == index)
                 {
-                    _attackTutorialImage.transform.GetChild(0).GetComponent<Image>().color = new Color(1, 1, 1, 0.8f);
+                    _attackTutorialImage.transform.GetChild(0).GetComponent<Image>().color = new Color(1, 0, 0, 0.8f);
                     _attackTutorialImage.gameObject.SetActive(true);
-                    _attackTutorialImage.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 832f);
+                    _attackTutorialImage.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, -25f);
                 }
+                
                 _circleReverseMaskRect.gameObject.SetActive(true);
                 _circleReverseMaskRect.sizeDelta = new Vector2(1300, 1300);
                 _circleReverseMaskRect.anchoredPosition = new Vector2(0, -510);
@@ -249,10 +258,10 @@ public class TutorialUI : MonoBehaviour
             if (isFirst)
             {
                 BattleManager.Instance.TurnChange();
-                _attackTutorialImage.transform.GetChild(0).GetComponent<Image>().color = new Color(1, 1, 1, 0.4f);
+                _attackTutorialImage.transform.GetChild(0).GetComponent<Image>().color = new Color(1, 0, 0, 0.4f);
                 _attackTutorialImage.SetActive(true);
                 TutorialMessage("다이얼을 위로 드래그하여\n공격을 해보세요!");
-
+                _tutorialImage.gameObject.SetActive(false);
                 _circleReverseMaskRect.gameObject.SetActive(false);
                 Define.DialScene.Dial.OnDialAttack += AttackTutorialImageDown;
             }
@@ -327,6 +336,7 @@ public class TutorialUI : MonoBehaviour
     {
         _attackTutorialImage.SetActive(false);
         _tutorialMessage.enabled = false;
+        _tutorialImage.gameObject.SetActive(true);
 
         Define.DialScene.Dial.OnDialAttack -= AttackTutorialImageDown;
 
