@@ -16,6 +16,8 @@ public class EnemyManager
         List<Enemy> spawnEnemyList = new List<Enemy>();
         for(int i = 0; i < _enemyList.Count; i++)
         {
+            if (_enemyList[i] == null) continue;
+
             Enemy enemy = Managers.Resource.Instantiate("Enemy/" + _enemyList[i].enemyType + "/" + _enemyList[i].name).GetComponent<Enemy>();
             enemy.Init();
             enemy.OnDieEvent.RemoveAllListeners();

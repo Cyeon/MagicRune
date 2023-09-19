@@ -250,6 +250,7 @@ public class BattleManager : MonoSingleton<BattleManager>
     {
         _tutorialEndPanel.SetActive(true);
 
+        Managers.Enemy.ResetEnemy();
         Managers.Gold.ResetGoldAmount();
         Managers.Deck.SetDefaultDeck(Managers.Addressable.Load<DeckSO>("SO/Deck/DefaultDeck").RuneList);
 
