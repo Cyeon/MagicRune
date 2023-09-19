@@ -17,6 +17,7 @@ public class ShopUI : MonoBehaviour
     private ShopItemPanelUI _beforeSelectItem;
 
     [SerializeField] private int _reloadGold;
+    [SerializeField] private int _addReloadGold;
     [SerializeField] private int _deckRemoveGold;
 
     private void Start()
@@ -113,6 +114,8 @@ public class ShopUI : MonoBehaviour
         ShopItemReset();
         (Managers.Map.currentStage as ShopStage).ShopItemInit();
         Managers.Gold.AddGold(-1 * _reloadGold);
+        _reloadGold += _addReloadGold;
+        _reloadGoldText.SetText(_reloadGold.ToString());
     }
 
     public void DeckRemove()
