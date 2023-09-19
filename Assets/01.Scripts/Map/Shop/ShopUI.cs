@@ -11,6 +11,7 @@ public class ShopUI : MonoBehaviour
     private ShopItemPanelUI _selectItem;
     private TextMeshProUGUI _reloadGoldText;
     private TextMeshProUGUI _deckRemoveGoldText;
+    private Button _reloadButton;
     private Button _deckRemoveButton;
 
     [SerializeField] private GameObject _buyCheck;
@@ -30,8 +31,9 @@ public class ShopUI : MonoBehaviour
         _storeShelf = transform.Find("StoreShelf");
         _keywardRunePanel = transform.Find("KeywardHorizontal").GetComponent<KeywardRunePanel>();
         _deckRemoveButton = transform.Find("DeckRemoveButton").GetComponent<Button>();
+        _reloadButton = transform.Find("ReloadButton").GetComponent<Button>();
 
-        _reloadGoldText = transform.Find("ReloadButton/Gold/Text").GetComponent<TextMeshProUGUI>();
+        _reloadGoldText = _reloadButton.transform.Find("Gold/Text").GetComponent<TextMeshProUGUI>();
         _deckRemoveGoldText = _deckRemoveButton.transform.Find("Gold/Text").GetComponent<TextMeshProUGUI>();
     }
 
@@ -40,6 +42,10 @@ public class ShopUI : MonoBehaviour
         _deckRemoveCount = 0;
         _deckRemoveButton.transform.Find("Gold/Gold_Icon").gameObject.SetActive(true);
         _deckRemoveButton.enabled = true;
+        _deckRemoveButton.GetComponent<Image>().color = Color.white;
+
+        _reloadButton.enabled = true;
+        _reloadButton.GetComponent<Image>().color = Color.white;
 
         _reloadGold = defaultReloadGold;
         _deckRemoveGold = defaultDeckRemoveGold;
@@ -121,6 +127,7 @@ public class ShopUI : MonoBehaviour
         _keywardRunePanel.SetUI(null);
 
         _storeShelf.transform.GetComponentsInChildren<ShopItemPanelUI>().ForEach(x => x.GoldTextColorUpdate());
+        GoldTextUpdate();
     }
 
     public void Reload()
@@ -133,7 +140,7 @@ public class ShopUI : MonoBehaviour
 
         _reloadGold += addReloadGold;
         _reloadGoldText.SetText(_reloadGold.ToString());
-        if (_reloadGold > Managers.Gold.Gold) _reloadGoldText.color = Color.red;
+        GoldTextUpdate();
     }
 
     public void DeckRemove()
@@ -143,14 +150,15 @@ public class ShopUI : MonoBehaviour
         Managers.Gold.AddGold(-1 * _deckRemoveGold);
         EventManager<RuneSelectMode>.TriggerEvent(Define.RUNE_EVENT_SETTING, RuneSelectMode.Delete);
         _deckRemoveCount++;
-        if (_deckRemoveGold > Managers.Gold.Gold) _deckRemoveGoldText.color = Color.red;
 
+        GoldTextUpdate();
         if (_deckRemoveCount == 2)
         {
             _deckRemoveGoldText.color = Color.red;
             _deckRemoveGoldText.SetText("모든 기회를 소진했습니다.");
             _deckRemoveButton.transform.Find("Gold/Gold_Icon").gameObject.SetActive(false);
             _deckRemoveButton.enabled = false;
+            _deckRemoveButton.GetComponent<Image>().color = Color.gray;
         }
     }
 
@@ -164,5 +172,22 @@ public class ShopUI : MonoBehaviour
         }
 
         return false;
+    }
+
+    private void GoldTextUpdate()
+    {
+        if (_deckRemoveGold > Managers.Gold.Gold)
+        {
+            _deckRemoveGoldText.color = Color.red;
+            _deckRemoveButton.enabled = false;
+            _deckRemoveButton.GetComponent<Image>().color = Color.gray;
+        }
+
+        if (_reloadGold > Managers.Gold.Gold)
+        {
+            _reloadGoldText.color = Color.red;
+            _reloadButton.enabled = false;
+            _reloadButton.GetComponent<Image>().color = Color.gray;
+        }
     }
 }
