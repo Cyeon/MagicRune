@@ -48,8 +48,6 @@ public class ShopUI : MonoBehaviour
         _reloadGoldText.color = _reloadGold > Managers.Gold.Gold ? Color.red : Color.white;
         _deckRemoveGoldText.SetText(_deckRemoveGold.ToString());
         _deckRemoveGoldText.color = _deckRemoveGold > Managers.Gold.Gold ? Color.red : Color.white;
-
-        Managers.Canvas.GetCanvas("Shop").enabled = false;
     }
 
     public void Exit()
