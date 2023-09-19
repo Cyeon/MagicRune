@@ -6,6 +6,6 @@ public class AwakingDecision : PatternDecision
 {
     public override bool MakeADecision()
     {
-        return BattleManager.Instance.Enemy.HP <= BattleManager.Instance.Enemy.MaxHP / 2;
+        return BattleManager.Instance.Enemy.HP <= BattleManager.Instance.Enemy.MaxHP * 0.25f;
     }
 }
