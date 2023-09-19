@@ -21,6 +21,7 @@ public class ShopStage : Stage
             _shopUI = Managers.Canvas.GetCanvas("Shop").GetComponent<ShopUI>();
 
         _shopUI.ShopItemReset();
+        _shopUI.Init();
         ShopItemInit();
     }
 
