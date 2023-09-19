@@ -256,7 +256,7 @@ public class TutorialUI : MonoBehaviour
                 BattleManager.Instance.TurnChange();
                 _attackTutorialImage.transform.GetChild(0).GetComponent<Image>().color = new Color(1, 0, 0, 0.4f);
                 _attackTutorialImage.SetActive(true);
-                TutorialMessage("다이얼을 위로 드래그하여\n공격을 해보세요!");
+                TutorialMessage("마법진을 위로 드래그하여\n공격을 해보세요!");
                 _tutorialImage.gameObject.SetActive(false);
                 _circleReverseMaskRect.gameObject.SetActive(false);
                 _customCursor = Managers.Resource.Instantiate("CustomCursor").GetComponent<CustomCursor>();
@@ -330,7 +330,7 @@ public class TutorialUI : MonoBehaviour
                     _circleReverseMaskRect.gameObject.SetActive(false);
                     _tutorialImage.gameObject.SetActive(false);
                     _squareReverseMaskRect.gameObject.SetActive(false);
-                    TutorialMessage("자유롭게 다이얼을 조작하여\n적을 처치하세요!");
+                    TutorialMessage("자유롭게 마법진을 조작하여\n적을 처치하세요!");
                     Invoke("TutorialMessageEnalbedFalse", 2f);
                     BattleManager.Instance.Enemy.OnDieEvent.AddListener(() =>
                     {
