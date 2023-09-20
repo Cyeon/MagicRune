@@ -51,6 +51,11 @@ public class RuneDialElement : DialElement<BaseRuneUI, BaseRune>
         base.Awake();
     }
 
+    public void ElementInit()
+    {
+        ChangeSelectElement(0);
+    }
+
     protected override void ChangeSelectElement(int index)
     {
         if (_dial.IsAttack == true) return;
@@ -68,6 +73,7 @@ public class RuneDialElement : DialElement<BaseRuneUI, BaseRune>
         }
         else
         {
+            if (_elementList.Count <= index) return;
             if(SelectElement == _elementList[index]) return;
             if (_elementList[index].Rune.IsCoolTime == false)
             {

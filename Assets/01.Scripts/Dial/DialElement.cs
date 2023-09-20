@@ -168,7 +168,6 @@ public class DialElement<T1, T2> : MonoBehaviour where T1 : MonoBehaviour where 
         });
         #endregion
 
-        //ChangeSelectElement(0);
     }
 
     protected virtual void Update()

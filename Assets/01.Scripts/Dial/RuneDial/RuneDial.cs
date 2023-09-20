@@ -24,6 +24,11 @@ public class RuneDial : Dial<BaseRuneUI, BaseRune>
         _resonance = GetComponent<Resonance>();
     }
 
+    protected override void Start()
+    {
+        base.Start();
+    }
+
     public override void SettingDialRune(bool isReset)
     {
         #region Clear
@@ -122,6 +127,10 @@ public class RuneDial : Dial<BaseRuneUI, BaseRune>
         #endregion
 
         RuneSort();
+        DialElementList.ForEach(x =>
+        {
+            (x as RuneDialElement).ElementInit();
+         });
     }
 
     protected override IEnumerator AttackCoroutine()

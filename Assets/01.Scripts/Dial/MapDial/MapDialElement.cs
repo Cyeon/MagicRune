@@ -6,6 +6,12 @@ using UnityEngine;
 
 public class MapDialElement : DialElement<MapRuneUI, MapRuneUI>
 {
+    protected override void Start()
+    {
+        base.Start();
+        ChangeSelectElement(0);
+    }
+
     public override MapRuneUI SelectElement
     {
         get => _selectElement;
