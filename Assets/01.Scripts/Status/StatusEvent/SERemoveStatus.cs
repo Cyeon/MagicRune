@@ -22,7 +22,7 @@ public class SERemoveStatus : StatusEvent
 
         if (_remStackType == RemStackType.Dmg)
         {
-            _value = Mathf.FloorToInt(_unit.attackDamage);
+            _value = Mathf.FloorToInt(_unit.takeDamage);
         }
         _status.RemoveValue(_value);
     }
