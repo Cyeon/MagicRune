@@ -126,7 +126,6 @@ public class ShopUI : MonoBehaviour
         _selectItem = null;
         _keywardRunePanel.SetUI(null);
 
-        _storeShelf.transform.GetComponentsInChildren<ShopItemPanelUI>().ForEach(x => x.GoldTextColorUpdate());
         GoldTextUpdate();
     }
 
@@ -176,6 +175,8 @@ public class ShopUI : MonoBehaviour
 
     private void GoldTextUpdate()
     {
+        _storeShelf.transform.GetComponentsInChildren<ShopItemPanelUI>().ForEach(x => x.GoldTextColorUpdate());
+
         if (_deckRemoveGold > Managers.Gold.Gold)
         {
             _deckRemoveGoldText.color = Color.red;
