@@ -24,6 +24,11 @@ public class SEAddStatusOnStackOverflow : StatusEvent
         {
             if(isConditionStatusRem == true) _unit.StatusManager.RemoveStatus(_conditionStatus, _conditionCount);
             _unit.StatusManager.AddStatus(_addStatus, 1);
+
+            if(BattleManager.Instance.GameTurn == GameTurn.Enemy)
+            {
+                _unit.StatusManager.GetStatus(_addStatus).isFirst = true;
+            }
         }
     }
 }
