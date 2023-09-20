@@ -83,6 +83,7 @@ public class Dial<T1, T2> : MonoBehaviour where T1 : MonoBehaviour where T2 : cl
     {
         SetAttackable(true);
         SettingDialRune(true);
+        ResetDial();
 
         //Debug.Log($"{Quaternion.Euler(new Vector3(0, 0, 60)).eulerAngles}, {Quaternion.Euler(new Vector3(0, 0, 300)).eulerAngles}");
         //Debug.Log($"{new Quaternion(0, 0, 0.5f, -1).eulerAngles}, {new Quaternion(0, 0, 0.5f, 1).eulerAngles}");

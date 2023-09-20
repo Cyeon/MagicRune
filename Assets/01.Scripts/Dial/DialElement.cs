@@ -167,6 +167,8 @@ public class DialElement<T1, T2> : MonoBehaviour where T1 : MonoBehaviour where 
             }
         });
         #endregion
+
+        //ChangeSelectElement(0);
     }
 
     protected virtual void Update()
@@ -242,33 +244,33 @@ public class DialElement<T1, T2> : MonoBehaviour where T1 : MonoBehaviour where 
         }
     }
 
+    private int _prevIdx = 0;
     public void UpdateSelectElement()
     {
         if (_elementList.Count > 0 && _isRotateAdditionalCondition)
         {
-            float oneDinstance = _dial.DialAngle / _elementList.Count;
-            bool inBoolean = (transform.eulerAngles.z % oneDinstance) <= _selectOffset;
-            bool outBoolean = (oneDinstance - (transform.eulerAngles.z % oneDinstance)) <= _selectOffset;
-            if (inBoolean && transform.eulerAngles.z >= 0)
+            if(IsChangeIndex(out int idx))
             {
-                int index = (int)(transform.eulerAngles.z / oneDinstance) % (_elementList.Count);
-                ChangeSelectElement(index);
-            }
-            else if (outBoolean && transform.eulerAngles.z <= 360)
-            {
-                int index = (int)(transform.eulerAngles.z / oneDinstance) % (_elementList.Count);
-                index = (index + 1) % (_elementList.Count);
-                ChangeSelectElement(index);
-            }
-            else
-            {
-                ChangeSelectElement(-1);
-                if (_isTouchDown == true)
-                {
-                    OnSelectElementAction();
-                }
+                ChangeSelectElement(idx);
+                _prevIdx = idx;
             }
         }
+    }
+    private bool IsChangeIndex(out int index)
+    {
+        float angle = transform.eulerAngles.z;
+        float oneAngle = _dial.DialAngle / _elementList.Count; // 51.42857
+        float halfAngle = oneAngle * 0.5f;
+        if (angle < halfAngle || angle > _dial.DialAngle - halfAngle)
+        {
+            index = 0;
+        }
+        else
+        {
+            index = Mathf.FloorToInt((angle - halfAngle) / oneAngle + 1);
+        } 
+        return index != _prevIdx;
+        
     }
 
     protected virtual void ChangeSelectElement(int index)
