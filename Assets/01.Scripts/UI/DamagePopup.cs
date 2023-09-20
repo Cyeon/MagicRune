@@ -20,6 +20,7 @@ public class DamagePopup : MonoBehaviour
         transform.position = pos;
         transform.localScale = _originalSize;
         _textMesh.DOFade(1, 0);
+        _textMesh.color = Color.red;
 
         _textMesh.SetText(damageAmount.ToString());
         if(status != null)
@@ -28,7 +29,7 @@ public class DamagePopup : MonoBehaviour
             _textMesh.SetText(string.Format("{0} {1}", status.debugName, damageAmount.ToString()));
         }
 
-        if(damageAmount == 0)
+        if (damageAmount == 0)
         {
             _textMesh.SetText("방어");
             _textMesh.color = Color.blue;
