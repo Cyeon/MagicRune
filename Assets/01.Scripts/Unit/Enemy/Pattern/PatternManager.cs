@@ -84,8 +84,6 @@ public class PatternManager : MonoBehaviour
         Managers.Enemy.CurrentEnemy.ValueInit();
         pattern.Init();
 
-        UpdatePatternUI();
-
         if (_patternPopup == null)
             _patternPopup = Managers.Canvas.GetCanvas("Popup").transform.GetComponentInChildren<PatternPopup>();
 

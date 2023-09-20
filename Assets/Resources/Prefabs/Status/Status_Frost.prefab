@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5014004267170453785}
   - component: {fileID: 1893814940241671955}
   - component: {fileID: -8083547487814776350}
+  - component: {fileID: -1508011920023554193}
   m_Layer: 0
   m_Name: Status_Frost
   m_TagString: Untagged
@@ -53,14 +54,15 @@ MonoBehaviour:
   type: 0
   isTurnRemove: 1
   isFirst: 1
-  OnAddStatus: []
+  OnAddStatus:
+  - {fileID: -1508011920023554193}
   OnTurnStart: []
-  OnAttack:
-  - {fileID: 1893814940241671955}
+  OnAttack: []
   OnGetDamage: []
   OnTurnEnd: []
   OnRemoveStatus: []
-  DamageApplyEvent: []
+  DamageApplyEvent:
+  - {fileID: 1893814940241671955}
   ShieldApplyEvent: []
   icon: {fileID: 21300000, guid: c81cf1e1ba9433c44a92d06e449af121, type: 3}
   color: {r: 1, g: 1, b: 1, a: 1}
@@ -97,3 +99,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isUsing: 0
+--- !u!114 &-1508011920023554193
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8378743581122507794}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8ab5af99b0102c4cb3c90104c2e4669, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

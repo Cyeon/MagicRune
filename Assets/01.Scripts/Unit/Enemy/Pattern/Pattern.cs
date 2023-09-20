@@ -121,6 +121,7 @@ public class Pattern : MonoBehaviour
         }
 
         DescriptionInit();
+        enemy.PatternManager.UpdatePatternUI();
     }
 
     /// <summary>
