@@ -17,7 +17,6 @@ public class BaseRuneUI : MonoBehaviour
         _enhanceSr = transform.Find("Enhance").gameObject;
         //_enhanceSr.gameObject.SetActive(false);
         RuneColor(new Color(0.26f, 0.26f, 0.26f, 1f));
-
     }
 
     public void SetRune(BaseRune rune)
