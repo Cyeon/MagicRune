@@ -297,10 +297,10 @@ public class Dial<T1, T2> : MonoBehaviour where T1 : MonoBehaviour where T2 : cl
         //    RuneLineMove(i, true);
         //}
 
-        for (int i = 0; i < _dialElementList.Count; i++)
-        {
-            _dialElementList[i].SelectElement = null;
-        }
+        //for (int i = 0; i < _dialElementList.Count; i++)
+        //{
+        //    _dialElementList[i].SelectElement = null;
+        //}
 
         OnLineChange?.Invoke();
     }

@@ -156,7 +156,6 @@ public class RuneDial : Dial<BaseRuneUI, BaseRune>
                 int index = i;
                 MagicCircleGlow(index, true);
                 BaseRune rune = _usingDeck.Find(x => x == _dialElementList[index].SelectElement.Rune);
-                // ????筌ｋ똾寃?
                 _usingDeck.Remove(rune);
 
                 if (rune.IsIncludeKeyword(KeywordName.Consume))
