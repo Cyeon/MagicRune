@@ -244,6 +244,11 @@ public class DialElement<T1, T2> : MonoBehaviour where T1 : MonoBehaviour where 
     }
 
     private int _prevIdx = 0;
+    public int PrevIdx
+    {
+        get => _prevIdx;
+        set => _prevIdx = value;
+    }
     public void UpdateSelectElement()
     {
         if (_elementList.Count > 0 && _isRotateAdditionalCondition)

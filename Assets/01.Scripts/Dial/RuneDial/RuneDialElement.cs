@@ -70,11 +70,11 @@ public class RuneDialElement : DialElement<BaseRuneUI, BaseRune>
             if (SelectElement == null) return;
             SelectElement = null;
             _effectHandler.EditEffect(null, _lineID);
-        }
+        } 
         else
         {
             if (_elementList.Count <= index) return;
-            if(SelectElement == _elementList[index]) return;
+            //if(SelectElement == _elementList[index]) return;
             if (_elementList[index].Rune.IsCoolTime == false)
             {
                 SelectElement = _elementList[index];

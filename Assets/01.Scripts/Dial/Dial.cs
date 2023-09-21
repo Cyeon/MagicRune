@@ -287,6 +287,9 @@ public class Dial<T1, T2> : MonoBehaviour where T1 : MonoBehaviour where T2 : cl
         _dialElementList[dialFLine].transform.localRotation = dialSRot;
         _dialElementList[dialSLine].transform.localRotation = dialFRot;
 
+        int prevIdx = _dialElementList[dialFLine].PrevIdx;
+        _dialElementList[dialFLine].PrevIdx = _dialElementList[dialSLine].PrevIdx;
+        _dialElementList[dialSLine].PrevIdx = prevIdx;
         //RuneSort(true);
 
         //for (int i = 0; i < _dialElementList.Count; i++)
@@ -297,11 +300,6 @@ public class Dial<T1, T2> : MonoBehaviour where T1 : MonoBehaviour where T2 : cl
         //for (int i = 1; i <= 3; i++)
         //{
         //    RuneLineMove(i, true);
-        //}
-
-        //for (int i = 0; i < _dialElementList.Count; i++)
-        //{
-        //    _dialElementList[i].SelectElement = null;
         //}
 
         OnLineChange?.Invoke();
